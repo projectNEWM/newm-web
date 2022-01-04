@@ -1,13 +1,15 @@
-import './App.css';
+import "./App.css";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import { Header } from './components/header';
-import { Content } from './components/content';
-import { Box, CssBaseline } from '@mui/material';
+import { Header } from "./components/header";
+import { Content } from "./components/content";
+import { Box, CssBaseline } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
 
-// Design: https://xd.adobe.com/view/2cb4c8ee-234a-46cc-b2d2-683e9ae7031c-79e7/ 
+// Design: https://xd.adobe.com/view/2cb4c8ee-234a-46cc-b2d2-683e9ae7031c-79e7/
 
-const StyledBackground = styled('div')({
+const StyledBackground = styled("div")({
   backgroundImage: `url("https://i.postimg.cc/TPTmSRWB/bg-img.png")`,
   height: "100%",
   position: "absolute",
@@ -42,6 +44,11 @@ const theme = createTheme({
       fontFamily: "Roboto",
       fontSize: 12,
     },
+    tabs: {
+      fontFamily: "Raleway",
+      fontSize: 14,
+      fontWeight: 900,
+    },
   },
 });
 
@@ -50,10 +57,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <StyledBackground>
-        <Box sx={{}}>
-          <Header />
-        </Box>
-        <Content />
+        <Header />
+        <BrowserRouter>
+          <Switch>
+            <Redirect exact from="/" to="/home/songs" />
+            <Redirect exact from="/home" to="/home/songs" />
+            <Route
+              exact
+              path="/home/:page?"
+              render={(props) => <Content {...props} />}
+            />
+          </Switch>
+        </BrowserRouter>
       </StyledBackground>
     </ThemeProvider>
   );
