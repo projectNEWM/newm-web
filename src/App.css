@@ -1,17 +1,5 @@
 .App {
   text-align: center;
-  /* background-image:  url('https://hips.hearstapps.com/hmg-prod/amv-prod-cad-assets/wp-content/uploads/2017/11/Tesla-Roadster-103.jpg'); */
-  background-image:  url('./images/bg-img.png');
-  /* Full height */
-  height: 100%; 
-  position: absolute;
-  left: 0;
-  width: 100%;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
 
 }
 
