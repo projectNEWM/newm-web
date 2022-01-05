@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, styled, Tabs, Tab } from "@mui/material";
 import { Songs } from "./songs.jsx";
-import { borderColor } from "@mui/system";
+import { borderColor, margin } from "@mui/system";
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -68,7 +68,9 @@ export const Content = (props) => {
 
       <Box justifyContent="center">
         <TabPanel value={value} index={0}>
-          <Songs />
+          <Box sx={{width:"1060px", marginLeft:"auto", marginRight:"auto" }}>
+            <Songs history={history} />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
           Playlists

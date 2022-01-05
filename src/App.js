@@ -16,7 +16,7 @@ const StyledBackground = styled("div")({
   left: 0,
   width: "100%",
   backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
+  backgroundRepeat: "repeat",
   backgroundSize: "cover",
 });
 
@@ -63,7 +63,6 @@ function App() {
             <Redirect exact from="/" to="/home/songs" />
             <Redirect exact from="/home" to="/home/songs" />
             <Route
-              exact
               path="/home/:page?"
               render={(props) => <Content {...props} />}
             />
