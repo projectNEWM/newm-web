@@ -22,10 +22,17 @@ const StyledBackground = styled("div")({
 
 const theme = createTheme({
   palette: {
+    primary: {
+      main: "#CC33CC",
+    },
     text: {
       primary: "#FFFFFF",
       secondary: "#707070",
       purple: "#CC33CC",
+    },
+    background: {
+      default: "#0A0A0A",
+      paper: "#0A0A0A",
     },
   },
   typography: {
@@ -40,6 +47,7 @@ const theme = createTheme({
       fontSize: 30,
       fontWeight: 600,
     },
+
     h6: {
       fontFamily: "Roboto",
       fontSize: 12,
@@ -47,6 +55,11 @@ const theme = createTheme({
     tabs: {
       fontFamily: "Raleway",
       fontSize: 14,
+      fontWeight: 900,
+    },
+    formHeader: {
+      fontFamily: "Raleway",
+      fontSize: 16,
       fontWeight: 900,
     },
   },
