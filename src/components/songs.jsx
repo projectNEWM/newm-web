@@ -1,5 +1,9 @@
 import React from "react";
 import useWindowDimensions from "./../hooks/useWindowDimensions.js";
+import addSong from "./../images/add-song.png";
+import Popup from "./popup";
+import AddSongCard from "./addSongCard";
+import SongUploadForm from "./SongUploadForm.jsx";
 import { useState } from "react";
 import {
   Grid,
@@ -8,6 +12,7 @@ import {
   CardContent,
   CardMedia,
   Box,
+  Button,
 } from "@mui/material";
 import { ArtistProfile } from "./artist-profile";
 import songDataMock from "./../mockData";
@@ -15,6 +20,7 @@ import Song from "./song";
 
 export const Songs = (props) => {
   const { history } = props;
+  const [openPopup, setOpenPopup] = useState(false);
 
   const getSong = (songId) => {
     console.log(songData[`${songId}`]);
@@ -41,14 +47,34 @@ export const Songs = (props) => {
       </Grid>
     );
   };
+
   const songDataInitial = songDataMock;
   const [songData, setSongData] = useState(songDataInitial);
   const { height } = useWindowDimensions();
   return (
     <>
+      <Popup title="" openPopup={openPopup} setOpenPopup={setOpenPopup}>
+        <SongUploadForm/>
+      </Popup>
+
       <Box>
-        <Grid container maxHeight={(height - 355)} overflow={"auto"}>
+        <Grid container maxHeight={height - 355} overflow={"auto"}>
           {Object.keys(songData).map((songId) => getSong(songId))}
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            md={3}
+            paddingBottom={2}
+            sx={{ margin: "0px" }}
+          >
+            <AddSongCard
+              handleClick={() => setOpenPopup(true)}
+              history={history}
+              album_image={addSong}
+              id={"add-song"}
+            />
+          </Grid>
         </Grid>
       </Box>
     </>
