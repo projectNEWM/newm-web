@@ -16,106 +16,101 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const initalValues = {
   genre: "",
+  releaseDate: "",
   title: "",
   yourRole: "",
-  releaseDate: "",
 };
 
 export default function SongUploadForm(props) {
   return (
-    <Box sx={{ flexGrow: 1 }} height="522px" width="1062px">
+    <Box sx={ { flexGrow: 1 } } height="522px" width="1062px">
       <Formik
-        initialValues={initalValues}
-        validationSchema={object({
+        initialValues={ initalValues }
+        validationSchema={ object({
           genre: array().required(),
+          releaseDate: string().required(),
           title: string().required(),
           yourRole: array().required(),
-          releaseDate: string().required(),
-        })}
-        onSubmit={(values, formikHelpers) => {
+        }) }
+        onSubmit={ (values, formikHelpers) => {
           formikHelpers.resetForm();
-        }}
+        } }
       >
-        {({ errors, isValid, touched, dirty }) => (
+        { ({ errors, isValid, touched, dirty }) => (
           <Form>
-            <Grid direction="row" container spacing={1}>
-              <Grid item xs={4} sx={{ height: "391px" }}>
-                <Typography variant="formHeader">
-                  Add Your Next Big Hit
-                </Typography>
-                <Grid direction="column" container spacing={1}>
+            <Grid direction="row" container spacing={ 1 }>
+              <Grid item xs={ 4 } sx={ { height: "391px" } }>
+                <Typography variant="formHeader">Add Your Next Big Hit</Typography>
+                <Grid direction="column" container spacing={ 1 }>
                   <Grid
                     item
-
-                    sx={{
+                    sx={ {
                       paddingLeft: "0px !important",
                       paddingTop: "25px !important",
-                    }}
+                    } }
                   >
-                    <Field 
-                      sx={{ width: "325px" }}
+                    <Field
+                      sx={ { width: "325px" } }
                       name="title"
                       size="small"
                       label="Title"
-                      as={StyledTextField}
+                      as={ StyledTextField }
                       variant="outlined"
-                      error={Boolean(errors.title) && Boolean(touched.title)}
+                      error={ Boolean(errors.title) && Boolean(touched.title) }
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  <Grid item sx={{ paddingLeft: "0px !important", paddingTop: "15px !important", }}>
+                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "15px !important" } }>
                     <Field
-                      sx={{ width: "325px" }}
+                      sx={ { width: "325px" } }
                       name="genre"
                       label="Genre"
-                      options={GenreData}
-                      as={MultiDropdown}
-                      error={Boolean(errors.genre) && Boolean(touched.genre)}
-                      helperText={Boolean(touched.genre) && errors.genre}
+                      options={ GenreData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
+                      helperText={ Boolean(touched.genre) && errors.genre }
                     />
                   </Grid>
-                  <Grid item sx={{ paddingLeft: "0px !important", paddingTop: "15px !important",}}>
+                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "15px !important" } }>
                     <Field
-                      sx={{ width: "325px" }}
+                      sx={ { width: "325px" } }
                       name="yourRole"
                       label="Your Role"
-                      options={RoleData}
-                      as={MultiDropdown}
-                      error={Boolean(errors.genre) && Boolean(touched.genre)}
-                      helperText={Boolean(touched.genre) && errors.genre}
+                      options={ RoleData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
+                      helperText={ Boolean(touched.genre) && errors.genre }
                     />
                   </Grid>
-                                    <Grid
+                  <Grid
                     item
-
-                    sx={{
+                    sx={ {
                       paddingLeft: "0px !important",
                       paddingTop: "15px !important",
-                    }}
+                    } }
                   >
-                    <Field 
-                      sx={{ width: "325px" }}
+                    <Field
+                      sx={ { width: "325px" } }
                       name="releaseDate"
                       size="small"
                       label="Release Date"
-                      as={StyledTextField}
+                      as={ StyledTextField }
                       variant="outlined"
-                      error={Boolean(errors.title) && Boolean(touched.title)}
+                      error={ Boolean(errors.title) && Boolean(touched.title) }
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  
                 </Grid>
               </Grid>
-              <Grid item xs={4} sx={{ height: "391px" }}>
-                <Grid direction="column" container spacing={1}>
+              <Grid item xs={ 4 } sx={ { height: "391px" } }>
+                <Grid direction="column" container spacing={ 1 }>
                   <Grid item>
                     <Item>Item</Item>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={4} sx={{ height: "391px" }}>
-                <Grid direction="column" container spacing={1}>
+              <Grid item xs={ 4 } sx={ { height: "391px" } }>
+                <Grid direction="column" container spacing={ 1 }>
                   <Grid item>
                     <Item>Item</Item>
                   </Grid>
@@ -125,18 +120,18 @@ export default function SongUploadForm(props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Box sx={{ textAlign: "center" }} width="1062px">
+            <Box sx={ { textAlign: "center" } } width="1062px">
               <StyledFilledButton
                 type="submit"
                 // sx={{ position: "absolute", left: "50%", right: "50px" }}
                 variant="contained"
-                disabled={!isValid || !dirty}
+                disabled={ !isValid || !dirty }
               >
                 Upload &amp; Mint
               </StyledFilledButton>
             </Box>
           </Form>
-        )}
+        ) }
       </Formik>
     </Box>
   );
@@ -153,8 +148,7 @@ const StyledTextField = styled(TextField)({
 });
 
 const StyledFilledButton = styled(Button)({
-  background:
-    "transparent linear-gradient(180deg, #CC33CC 0%, #333399 100%) 0% 0% no-repeat padding-box;",
+  background: "transparent linear-gradient(180deg, #CC33CC 0%, #333399 100%) 0% 0% no-repeat padding-box;",
   borderRadius: "7px",
   color: "white",
   font: "normal normal bold 14px/30px Raleway",

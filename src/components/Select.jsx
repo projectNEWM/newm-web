@@ -1,12 +1,12 @@
-import React from "react";
-import { TextField, MenuItem } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { useField, useFormikContext } from "formik";
+import React from "react";
 
 const SelectWrapper = ({ name, options, ...otherProps }) => {
   const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(name);
+  const [field, meta,] = useField(name);
 
-  const handleChange = (evt) => {
+  const handleChange = evt => {
     const { value } = evt.target;
     setFieldValue(name, value);
   };
@@ -27,8 +27,8 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
 
   return (
     <TextField
-      {...configSelect}
-      sx={{
+      { ...configSelect }
+      sx={ {
         minWidth: "100px",
         height: "38px",
         border: "1px solid #2F2F2F",
@@ -36,15 +36,15 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
         opacity: 1,
         backgroundColor: "#151515",
         boxShadow: "inset 0px 3px 6px #000000D0",
-      }}
+      } }
     >
-      {Object.keys(options).map((item, pos) => {
+      { Object.keys(options).map((item, pos) => {
         return (
-          <MenuItem key={pos} value={item}>
-            {options[item]}
+          <MenuItem key={ pos } value={ item }>
+            { options[item] }
           </MenuItem>
         );
-      })}
+      }) }
     </TextField>
   );
 };

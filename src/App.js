@@ -8,7 +8,7 @@ import "./App.css";
 // Design: https://xd.adobe.com/view/2cb4c8ee-234a-46cc-b2d2-683e9ae7031c-79e7/
 
 const StyledBackground = styled("div")({
-  backgroundImage: 'url("https://i.postimg.cc/TPTmSRWB/bg-img.png")',
+  backgroundImage: "url(\"https://i.postimg.cc/TPTmSRWB/bg-img.png\")",
   backgroundPosition: "center",
   backgroundRepeat: "repeat",
   backgroundSize: "cover",
@@ -70,7 +70,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={ theme }>
       <CssBaseline />
       <StyledBackground>
         <Header />
@@ -78,10 +78,7 @@ function App() {
           <Switch>
             <Redirect exact from="/" to="/home/songs" />
             <Redirect exact from="/home" to="/home/songs" />
-            <Route
-              path="/home/:page?"
-              render={(props) => <Content {...props} />}
-            />
+            <Route path="/home/:page?" render={ props => <Content { ...props } /> } />
           </Switch>
         </BrowserRouter>
       </StyledBackground>

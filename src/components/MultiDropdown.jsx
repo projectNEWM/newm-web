@@ -21,24 +21,20 @@ const MenuProps = {
 function getStyles(name, fieldState, theme) {
   return {
     fontWeight:
-      fieldState.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+      fieldState.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
   };
 }
 
 export default function MultiDropdown({ name, label, options, ...otherProps }) {
   const theme = useTheme();
-  const [fieldState, setFieldState] = useState([]);
+  const [fieldState, setFieldState,] = useState([]);
   const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(name);
+  const [field, meta,] = useField(name);
 
   const names = options;
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
+  const handleChange = event => {
+    const { target: { value } } = event;
     setFieldValue(name, value);
     setFieldState(
       // On autofill we get a stringified value.
@@ -60,12 +56,12 @@ export default function MultiDropdown({ name, label, options, ...otherProps }) {
 
   return (
     <div>
-      <FormControl sx={{ width: 325 }}>
-        <InputLabel size="small" sx={{}} id="demo-multiple-name-label">
-          {label}
+      <FormControl sx={ { width: 325 } }>
+        <InputLabel size="small" sx={ {} } id="demo-multiple-name-label">
+          { label }
         </InputLabel>
         <Select
-          sx={{
+          sx={ {
             backgroundColor: "#151515",
             border: "1px solid #2F2F2F",
             borderRadius: "9px",
@@ -73,24 +69,20 @@ export default function MultiDropdown({ name, label, options, ...otherProps }) {
             height: "38px",
             minWidth: "100px",
             opacity: 1,
-          }}
+          } }
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           multiple
-          value={fieldState}
-          onChange={handleChange}
-          input={<OutlinedInput sx={{ height: "15px" }} label={label} />}
-          MenuProps={MenuProps}
+          value={ fieldState }
+          onChange={ handleChange }
+          input={ <OutlinedInput sx={ { height: "15px" } } label={ label } /> }
+          MenuProps={ MenuProps }
         >
-          {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, fieldState, theme)}
-            >
-              {name}
+          { names.map(name => (
+            <MenuItem key={ name } value={ name } style={ getStyles(name, fieldState, theme) }>
+              { name }
             </MenuItem>
-          ))}
+          )) }
         </Select>
       </FormControl>
     </div>

@@ -16,16 +16,17 @@ export default function useWindowDimensions() {
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [windowDimensions, setWindowDimensions,] = useState(getWindowDimensions());
 
-  useEffect(() => {
-    if (hasWindow) {
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, [getWindowDimensions, handleResize, hasWindow]);
+  useEffect(
+    () => {
+      if (hasWindow) {
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    },
+    [getWindowDimensions, handleResize, hasWindow,]
+  );
 
   return windowDimensions;
 }

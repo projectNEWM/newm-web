@@ -21,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts}\""
   },
   "browserslist": {
     "production": [
@@ -50,6 +51,7 @@
     "eslint-plugin-testing-library": "^5.0.1",
     "prettier": "1.9.1",
     "prettier-eslint": "10.1.0",
+    "prettier-eslint-cli": "^5.0.1",
     "typescript": "^3.9.3"
   }
 }
