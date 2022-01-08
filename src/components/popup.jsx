@@ -7,6 +7,7 @@ import {
   makeStyles,
   Typography,
   useTheme,
+  IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -21,18 +22,19 @@ export default function Popup(props) {
             {title}
           </Typography>
         </div>
+        <IconButton
+          color="primary"
+          sx={{ position: "absolute", top: "0px", right: "0px" }}
+          onClick={() => {
+            setOpenPopup(false);
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent sx={{ paddingTop: "0px" }} dividers>
         {children}
       </DialogContent>
-      <Button
-        color="secondary"
-        onClick={() => {
-          setOpenPopup(false);
-        }}
-      >
-        Cancel
-      </Button>
     </Dialog>
   );
 }
