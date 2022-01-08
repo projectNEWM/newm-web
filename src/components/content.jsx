@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Box, styled, Tabs, Tab } from "@mui/material";
-import { Songs } from "./songs.jsx";
+import { Songs } from "./Songs.jsx";
 import { borderColor, margin } from "@mui/system";
 
 const StyledTab = styled(Tab)(({ theme }) => ({

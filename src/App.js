@@ -2,8 +2,8 @@ import "./App.css";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import { Header } from "./components/header";
-import { Content } from "./components/content";
+import { Header } from "./components/Header";
+import { Content } from "./components/Content";
 import { Box, CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 
@@ -25,6 +25,9 @@ const theme = createTheme({
     primary: {
       main: "#CC33CC",
     },
+    secondary: {
+      main: "#CC33CC",
+    },
     text: {
       primary: "#FFFFFF",
       secondary: "#707070",
@@ -41,6 +44,9 @@ const theme = createTheme({
     body1: {
       fontFamily: "Montserrat",
       fontSize: 14,
+    },
+    button: {
+      textTransform: "none",
     },
     h2: {
       fontFamily: "Raleway",

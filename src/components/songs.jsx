@@ -1,8 +1,8 @@
 import React from "react";
-import useWindowDimensions from "./../hooks/useWindowDimensions.js";
+import useWindowDimensions from "../hooks/useWindowDimensions.js";
 import addSong from "./../images/add-song.png";
-import Popup from "./popup";
-import AddSongCard from "./addSongCard";
+import Popup from "./Popup";
+import AddSongCard from "./AddSongCard";
 import SongUploadForm from "./SongUploadForm.jsx";
 import { useState } from "react";
 import {
@@ -14,9 +14,9 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { ArtistProfile } from "./artist-profile";
-import songDataMock from "./../mockData";
-import Song from "./song";
+import { ArtistProfile } from "./ArtistProfile";
+import songDataMock from "../mockData";
+import Song from "./Song";
 
 export const Songs = (props) => {
   const { history } = props;

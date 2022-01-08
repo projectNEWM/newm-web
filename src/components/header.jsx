@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Grid, Typography } from "@mui/material";
-import { ArtistProfile } from "./artist-profile";
+import { ArtistProfile } from "./ArtistProfile";
 
 
 

@@ -11,7 +11,7 @@ import {
   CardActions,
   useTheme,
 } from "@mui/material";
-import { ArtistProfile } from "./artist-profile";
+import { ArtistProfile } from "./ArtistProfile";
 import songData from "../mockData";
 import AddIcon from "@mui/icons-material/Add";
 

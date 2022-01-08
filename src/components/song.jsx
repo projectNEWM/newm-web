@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Grid, Typography, Card, CardContent, CardMedia } from "@mui/material";
-import { ArtistProfile } from "./artist-profile";
+import { ArtistProfile } from "./ArtistProfile";
 import songData from "../mockData";
 
 const Song = (props) => {

@@ -1,6 +1,25 @@
 .App {
   text-align: center;
+}
 
+body
+  > div.MuiModal-root.MuiDialog-root.css-zw3mfo-MuiModal-root-MuiDialog-root
+  > div.MuiDialog-container.MuiDialog-scrollPaper.css-hz1bth-MuiDialog-container
+  > div
+  > div
+  > div
+  > form
+  > div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-1.css-a5rdam-MuiGrid-root
+  > div:nth-child(1)
+  > div
+  > div.MuiGrid-root.MuiGrid-item.css-13i4rnv-MuiGrid-root
+  > div
+  > div
+  > div
+  > svg
+  > path {
+  color: #CC33CC;
+  ;
 }
 
 
