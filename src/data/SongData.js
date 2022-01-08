@@ -8,8 +8,7 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2016, 5).toString(),
     description: "Kid Cudi's best",
-    album_image:
-      "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg",
+    album_image: "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
@@ -24,8 +23,7 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2017, 5).toString(),
     description: "J.Cole's best",
-    album_image:
-      "https://images.genius.com/6d0fbbc7ce189a8c81671ef92546446e.1000x1000x1.png",
+    album_image: "https://images.genius.com/6d0fbbc7ce189a8c81671ef92546446e.1000x1000x1.png",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
@@ -40,8 +38,7 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2018, 5).toString(),
     description: "Kendrick's best",
-    album_image:
-      "https://afterlivesofslavery.files.wordpress.com/2018/04/on-top-of-the-world.jpg",
+    album_image: "https://afterlivesofslavery.files.wordpress.com/2018/04/on-top-of-the-world.jpg",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
