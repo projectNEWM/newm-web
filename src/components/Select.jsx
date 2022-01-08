@@ -4,7 +4,7 @@ import React from "react";
 
 const SelectWrapper = ({ name, options, ...otherProps }) => {
   const { setFieldValue } = useFormikContext();
-  const [field, meta,] = useField(name);
+  const [field, meta] = useField(name);
 
   const handleChange = evt => {
     const { value } = evt.target;

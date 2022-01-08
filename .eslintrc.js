@@ -31,7 +31,7 @@ module.exports = {
     "comma-dangle": [
       "error",
       {
-        arrays: "always",
+        arrays: "always-multiline",
         exports: "only-multiline",
         functions: "never",
         imports: "only-multiline",
@@ -46,10 +46,10 @@ module.exports = {
           caseInsensitive: true,
           order: "asc",
         },
-        groups: ["builtin", "external", "index", "sibling", "parent", "internal",],
+        groups: ["builtin", "external", "index", "sibling", "parent", "internal"],
       },
     ],
-    "jsx-quotes": ["warn", "prefer-double",],
+    "jsx-quotes": ["warn", "prefer-double"],
     "max-len": [
       "warn",
       {
@@ -59,8 +59,8 @@ module.exports = {
     "no-console": "warn",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "warn",
-    "object-curly-spacing": ["warn", "always",],
-    quotes: ["warn", "double",],
+    "object-curly-spacing": ["warn", "always"],
+    quotes: ["warn", "double"],
     "react/jsx-curly-spacing": [
       "warn",
       {
@@ -77,7 +77,7 @@ module.exports = {
     "react/jsx-filename-extension": [
       "error",
       {
-        extensions: [".js", ".jsx", ".ts", ".tsx",],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     ],
     "react/prop-types": "warn",

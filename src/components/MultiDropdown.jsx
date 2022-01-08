@@ -27,9 +27,9 @@ function getStyles(name, fieldState, theme) {
 
 export default function MultiDropdown({ name, label, options, ...otherProps }) {
   const theme = useTheme();
-  const [fieldState, setFieldState,] = useState([]);
+  const [fieldState, setFieldState] = useState([]);
   const { setFieldValue } = useFormikContext();
-  const [field, meta,] = useField(name);
+  const [field, meta] = useField(name);
 
   const names = options;
 

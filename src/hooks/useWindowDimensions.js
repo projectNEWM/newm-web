@@ -16,7 +16,7 @@ export default function useWindowDimensions() {
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
-  const [windowDimensions, setWindowDimensions,] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(
     () => {
@@ -25,7 +25,7 @@ export default function useWindowDimensions() {
         return () => window.removeEventListener("resize", handleResize);
       }
     },
-    [getWindowDimensions, handleResize, hasWindow,]
+    [getWindowDimensions, handleResize, hasWindow]
   );
 
   return windowDimensions;
