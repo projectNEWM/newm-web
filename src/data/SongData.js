@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable sort-keys */
 const songData = {
   1: {
     name: "Mr Rager",
@@ -6,14 +8,13 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2016, 5).toString(),
     description: "Kid Cudi's best",
-    album_image:
-      "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg",
+    album_image: "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
-      3: { name: "Cudi", role: "Singer", stake: 0.5 },
+      3: { name: "Cudi", role: "Singer", stake: 0.5 }
     },
-    extra_information: "extra info",
+    extra_information: "extra info"
   },
   2: {
     name: "Neighbors",
@@ -22,14 +23,13 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2017, 5).toString(),
     description: "J.Cole's best",
-    album_image:
-      "https://images.genius.com/6d0fbbc7ce189a8c81671ef92546446e.1000x1000x1.png",
+    album_image: "https://images.genius.com/6d0fbbc7ce189a8c81671ef92546446e.1000x1000x1.png",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
-      3: { name: "J Cole", role: "Singer", stake: 0.5 },
+      3: { name: "J Cole", role: "Singer", stake: 0.5 }
     },
-    extra_information: "extra info",
+    extra_information: "extra info"
   },
   3: {
     name: "Alright",
@@ -38,14 +38,13 @@ const songData = {
     user_role: "Singer",
     release_date: new Date(2018, 5).toString(),
     description: "Kendrick's best",
-    album_image:
-      "https://afterlivesofslavery.files.wordpress.com/2018/04/on-top-of-the-world.jpg",
+    album_image: "https://afterlivesofslavery.files.wordpress.com/2018/04/on-top-of-the-world.jpg",
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
-      3: { name: "Kendrick Lamar", role: "Singer", stake: 0.5 },
+      3: { name: "Kendrick Lamar", role: "Singer", stake: 0.5 }
     },
-    extra_information: "extra info",
+    extra_information: "extra info"
   },
   4: {
     name: "Flower Boy",
@@ -58,9 +57,9 @@ const songData = {
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
-      3: { name: "Tyler the Creator", role: "Singer", stake: 0.5 },
+      3: { name: "Tyler the Creator", role: "Singer", stake: 0.5 }
     },
-    extra_information: "extra info",
+    extra_information: "extra info"
   },
   5: {
     name: "Sad people",
@@ -74,10 +73,10 @@ const songData = {
     contributors: {
       1: { name: "John", role: "Producer", stake: 0.25 },
       2: { name: "Dan", role: "Sound engineer", stake: 0.25 },
-      3: { name: "Kid Cudi", role: "Singer", stake: 0.5 },
+      3: { name: "Kid Cudi", role: "Singer", stake: 0.5 }
     },
-    extra_information: "extra info",
-  },
+    extra_information: "extra info"
+  }
 };
 
 export default songData;
