@@ -10,7 +10,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions.js";
 
 export const Songs = props => {
   const { history } = props;
-  const [openPopup, setOpenPopup,] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
 
   const getSong = songId => {
     const { id, name, album_image } = songData[`${songId}`];
@@ -23,7 +23,7 @@ export const Songs = props => {
   };
 
   const songDataInitial = songDataMock;
-  const [songData, setSongData,] = useState(songDataInitial);
+  const [songData, setSongData] = useState(songDataInitial);
   const { height } = useWindowDimensions();
   return (
     <>

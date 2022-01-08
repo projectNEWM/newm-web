@@ -1,3 +1,3 @@
-const RoleData = ["Producer", "Singer", "Sound Engineer",];
+const RoleData = ["Producer", "Singer", "Sound Engineer"];
 
 export default RoleData;

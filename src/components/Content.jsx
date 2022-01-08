@@ -38,7 +38,7 @@ export const Content = props => {
     wallet: 3,
   };
 
-  const [value, setValue,] = React.useState(indexToTabName[page]);
+  const [value, setValue] = React.useState(indexToTabName[page]);
   const handleChange = (event, newValue) => {
     history.push(`/home/${tabNameToIndex[newValue]}`);
     setValue(newValue);
