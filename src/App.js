@@ -78,7 +78,7 @@ function App() {
           <Switch>
             <Redirect exact from="/" to="/home/songs" />
             <Redirect exact from="/home" to="/home/songs" />
-            <Route exact path="/home/:page?" render={ props => <Content { ...props } /> } />
+            <Route path="/home/:page?" render={ props => <Content { ...props } /> } />
           </Switch>
         </BrowserRouter>
       </StyledBackground>
