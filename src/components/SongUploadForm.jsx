@@ -5,7 +5,9 @@ import TextInput from "./TextInput";
 import { Field, Form, Formik } from "formik";
 import { object, string, array } from "yup";
 import { TextField, Button } from "@mui/material";
-import GenreDropdown from "./GenreDropdown";
+import MultiDropdown from "./MultiDropdown";
+import GenreData from "./../data/GenreData";
+import RoleData from "./../data/RoleData";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -17,8 +19,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const initalValues = {
   title: "",
-  name: "",
-  password: "",
+  genre: "",
+  yourRole: "",
 };
 
 export default function SongUploadForm(props) {
@@ -29,6 +31,7 @@ export default function SongUploadForm(props) {
         validationSchema={object({
           title: string().required(),
           genre: array().required(),
+          yourRole: array().required(),
         })}
         onSubmit={(values, formikHelpers) => {
           console.log(values);
@@ -43,7 +46,14 @@ export default function SongUploadForm(props) {
                   Add Your Next Big Hit
                 </Typography>
                 <Grid direction="column" container spacing={1}>
-                  <Grid item sx={{ marginTop: "25px", marginBottom: "16px" }}>
+                  <Grid
+                    item
+                    sx={{
+                      paddingTop: "0px",
+                      paddingLeft: "0px !important",
+                      marginTop: "15px",
+                    }}
+                  >
                     <Field
                       sx={{ width: "325px" }}
                       id="title"
@@ -56,12 +66,26 @@ export default function SongUploadForm(props) {
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  <Grid item sx={{}}>
+                  <Grid sx={{ paddingTop: "0px", marginTop: "15px" }}>
                     <Field
                       sx={{ width: "325px" }}
                       name="genre"
                       id="genre"
-                      as={GenreDropdown}
+                      label="Genre"
+                      options={GenreData}
+                      as={MultiDropdown}
+                      error={Boolean(errors.genre) && Boolean(touched.genre)}
+                      helperText={Boolean(touched.genre) && errors.genre}
+                    />
+                  </Grid>
+                  <Grid sx={{ paddingTop: "0px", marginTop: "15px" }}>
+                    <Field
+                      sx={{ width: "325px" }}
+                      name="yourRole"
+                      id="yourRole"
+                      label="Your Role"
+                      options={RoleData}
+                      as={MultiDropdown}
                       error={Boolean(errors.genre) && Boolean(touched.genre)}
                       helperText={Boolean(touched.genre) && errors.genre}
                     />

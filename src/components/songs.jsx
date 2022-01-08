@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
-import songDataMock from "../mockData";
+import songDataMock from "../data/SongData";
 import Song from "./Song";
 
 export const Songs = (props) => {
@@ -23,8 +23,6 @@ export const Songs = (props) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   const getSong = (songId) => {
-    console.log(songData[`${songId}`]);
-
     const { id, name, album_image } = songData[`${songId}`];
 
     return (
@@ -54,7 +52,7 @@ export const Songs = (props) => {
   return (
     <>
       <Popup title="" openPopup={openPopup} setOpenPopup={setOpenPopup}>
-        <SongUploadForm/>
+        <SongUploadForm />
       </Popup>
 
       <Box>

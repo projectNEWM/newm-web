@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
-import songData from "../mockData";
+import songData from "../data/SongData";
 import AddIcon from "@mui/icons-material/Add";
 
 const AddSongCard = (props) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Grid, Typography, Card, CardContent, CardMedia } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
-import songData from "../mockData";
+import songData from "../data/SongData";
 
 const Song = (props) => {
   const { id, songId, name, album_image, history } = props;

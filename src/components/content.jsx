@@ -2,7 +2,6 @@ import React from "react";
 
 import { Box, styled, Tabs, Tab } from "@mui/material";
 import { Songs } from "./Songs.jsx";
-import { borderColor, margin } from "@mui/system";
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   color: theme.palette.text.secondary,
