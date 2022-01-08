@@ -13,7 +13,8 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jest/recommended",
     "plugin:testing-library/react",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "prettier"
   ],
   parser: "babel-eslint", // Uses babel-eslint transforms.
   parserOptions: {

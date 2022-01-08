@@ -9,24 +9,23 @@ export default function useWindowDimensions() {
     const height = hasWindow ? window.innerHeight : null;
     return {
       height,
-      width
+      width,
     };
   }
 
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-  useEffect(
-    () => {
-      if (hasWindow) {
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-      }
-    },
-    [getWindowDimensions, handleResize, hasWindow]
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
   );
+
+  useEffect(() => {
+    if (hasWindow) {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, [getWindowDimensions, handleResize, hasWindow]);
 
   return windowDimensions;
 }

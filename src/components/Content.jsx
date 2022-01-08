@@ -9,15 +9,15 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontFamily: theme.typography.tabs.fontFamily,
   fontWeight: theme.typography.tabs.fontWeight,
-  textTransform: "capitalize"
+  textTransform: "capitalize",
 }));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  return <div { ...other }>{ value === index && <Box p={ 3 }>{ children }</Box> }</div>;
+  return <div {...other}>{value === index && <Box p={3}>{children}</Box>}</div>;
 }
 
-export const Content = props => {
+export const Content = (props) => {
   const { match, history } = props;
   const { params } = match;
   const { page } = params;
@@ -27,7 +27,7 @@ export const Content = props => {
     1: "playlists",
     2: "contributors",
     3: "wallet",
-    4: "metrics"
+    4: "metrics",
   };
 
   const indexToTabName = {
@@ -35,7 +35,7 @@ export const Content = props => {
     metrics: 4,
     playlists: 1,
     songs: 0,
-    wallet: 3
+    wallet: 3,
   };
 
   const [value, setValue] = React.useState(indexToTabName[page]);
@@ -45,11 +45,13 @@ export const Content = props => {
   };
 
   return (
-    <Box sx={ { justifyContent: "center", marginLeft: "auto", marginRight: "auto" } }>
+    <Box
+      sx={{ justifyContent: "center", marginLeft: "auto", marginRight: "auto" }}
+    >
       <Tabs
         centered
-        value={ value }
-        onChange={ handleChange }
+        value={value}
+        onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
         aria-label="secondary tabs example"
@@ -62,21 +64,23 @@ export const Content = props => {
       </Tabs>
 
       <Box justifyContent="center">
-        <TabPanel value={ value } index={ 0 }>
-          <Box sx={ { width: "1060px", marginLeft: "auto", marginRight: "auto" } }>
-            <Songs history={ history } />
+        <TabPanel value={value} index={0}>
+          <Box
+            sx={{ width: "1060px", marginLeft: "auto", marginRight: "auto" }}
+          >
+            <Songs history={history} />
           </Box>
         </TabPanel>
-        <TabPanel value={ value } index={ 1 }>
+        <TabPanel value={value} index={1}>
           Playlists
         </TabPanel>
-        <TabPanel value={ value } index={ 2 }>
+        <TabPanel value={value} index={2}>
           Contributors
         </TabPanel>
-        <TabPanel value={ value } index={ 3 }>
+        <TabPanel value={value} index={3}>
           Wallet
         </TabPanel>
-        <TabPanel value={ value } index={ 4 }>
+        <TabPanel value={value} index={4}>
           Metrics
         </TabPanel>
       </Box>
