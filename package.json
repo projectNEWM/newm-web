@@ -21,8 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
-    "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts}\""
+    "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts,tsx}\""
   },
   "browserslist": {
     "production": [
