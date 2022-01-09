@@ -18,6 +18,7 @@ const initalValues = {
   genre: "",
   title: "",
   yourRole: "",
+  releaseDate: "",
 };
 
 export default function SongUploadForm(props) {
@@ -29,6 +30,7 @@ export default function SongUploadForm(props) {
           genre: array().required(),
           title: string().required(),
           yourRole: array().required(),
+          releaseDate: string().required(),
         })}
         onSubmit={(values, formikHelpers) => {
           formikHelpers.resetForm();
@@ -44,15 +46,14 @@ export default function SongUploadForm(props) {
                 <Grid direction="column" container spacing={1}>
                   <Grid
                     item
+
                     sx={{
-                      marginTop: "15px",
                       paddingLeft: "0px !important",
-                      paddingTop: "0px",
+                      paddingTop: "25px !important",
                     }}
                   >
-                    <Field
+                    <Field 
                       sx={{ width: "325px" }}
-                      id="title"
                       name="title"
                       size="small"
                       label="Title"
@@ -62,11 +63,10 @@ export default function SongUploadForm(props) {
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  <Grid sx={{ paddingTop: "0px", marginTop: "15px" }}>
+                  <Grid item sx={{ paddingLeft: "0px !important", paddingTop: "15px !important", }}>
                     <Field
                       sx={{ width: "325px" }}
                       name="genre"
-                      id="genre"
                       label="Genre"
                       options={GenreData}
                       as={MultiDropdown}
@@ -74,11 +74,10 @@ export default function SongUploadForm(props) {
                       helperText={Boolean(touched.genre) && errors.genre}
                     />
                   </Grid>
-                  <Grid sx={{ paddingTop: "0px", marginTop: "15px" }}>
+                  <Grid item sx={{ paddingLeft: "0px !important", paddingTop: "15px !important",}}>
                     <Field
                       sx={{ width: "325px" }}
                       name="yourRole"
-                      id="yourRole"
                       label="Your Role"
                       options={RoleData}
                       as={MultiDropdown}
@@ -86,6 +85,26 @@ export default function SongUploadForm(props) {
                       helperText={Boolean(touched.genre) && errors.genre}
                     />
                   </Grid>
+                                    <Grid
+                    item
+
+                    sx={{
+                      paddingLeft: "0px !important",
+                      paddingTop: "15px !important",
+                    }}
+                  >
+                    <Field 
+                      sx={{ width: "325px" }}
+                      name="releaseDate"
+                      size="small"
+                      label="Release Date"
+                      as={StyledTextField}
+                      variant="outlined"
+                      error={Boolean(errors.title) && Boolean(touched.title)}
+                      // helperText={Boolean(touched.title) && errors.title}
+                    />
+                  </Grid>
+                  
                 </Grid>
               </Grid>
               <Grid item xs={4} sx={{ height: "391px" }}>
