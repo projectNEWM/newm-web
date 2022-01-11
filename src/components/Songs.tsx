@@ -28,7 +28,7 @@ export const Songs = (props: SongsProps) => {
   };
 
   const songDataInitial = songDataMock;
-  const [songData, setSongData] = useState(songDataInitial);
+  const [songData] = useState(songDataInitial);
   const windowDimensions = useWindowDimensions();
   const height = windowDimensions && windowDimensions.height;
 
