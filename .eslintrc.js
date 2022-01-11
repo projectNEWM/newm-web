@@ -8,6 +8,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
@@ -25,6 +26,7 @@ module.exports = {
   },
   plugins: [
     "import", // eslint-plugin-import plugin. https://www.npmjs.com/package/eslint-plugin-import
+    "@typescript-eslint",
   ],
   root: true, // For configuration cascading.
   rules: {
@@ -58,7 +60,7 @@ module.exports = {
     ],
     "no-console": "warn",
     "no-duplicate-imports": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "object-curly-spacing": ["warn", "always"],
     quotes: ["warn", "double"],
     "react/jsx-curly-spacing": [
