@@ -15,7 +15,7 @@ module.exports = {
     "plugin:testing-library/react",
     "plugin:react/jsx-runtime",
   ],
-  parser: "babel-eslint", // Uses babel-eslint transforms.
+  parser: "@typescript-eslint/parser", // Uses babel-eslint transforms.
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
