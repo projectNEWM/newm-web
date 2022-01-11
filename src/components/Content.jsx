@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs, styled } from "@mui/material";
 import React from "react";
 
-import { Songs } from "./Songs.jsx";
+import { Songs } from "./Songs";
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   backgroundColor: "transparent",
