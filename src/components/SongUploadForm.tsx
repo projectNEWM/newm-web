@@ -2,9 +2,9 @@ import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Field, Form, Formik } from "formik";
 import { array, object, string } from "yup";
-import GenreData from "./../data/GenreData";
-import RoleData from "./../data/RoleData";
 import MultiDropdown from "./MultiDropdown";
+import GenreData from "../data/GenreData";
+import RoleData from "../data/RoleData";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -21,7 +21,7 @@ const initalValues = {
   yourRole: "",
 };
 
-export default function SongUploadForm(props) {
+export default function SongUploadForm() {
   return (
     <Box sx={ { flexGrow: 1 } } height="522px" width="1062px">
       <Formik

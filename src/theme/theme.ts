@@ -48,10 +48,16 @@ export const theme = createTheme({
     },
   },
 });
-
 declare module "@mui/material/styles/createTypography" {
   export interface TypographyOptions {
     formHeader: TypographyStyleOptions;
     tabs: TypographyStyleOptions;
+  }
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    formHeader: true;
+    tabs: true;
   }
 }
