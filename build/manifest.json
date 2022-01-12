@@ -1,0 +1,9 @@
+{
+  "short_name": "Artist Portal",
+  "name": "NEWM Artist Portal",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

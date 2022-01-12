@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3f10a1d1.css",
+    "main.js": "/static/js/main.fbb6259d.js",
+    "static/js/787.279e5e0d.chunk.js": "/static/js/787.279e5e0d.chunk.js",
+    "static/media/artist-image.svg": "/static/media/artist-image.977112e2e230efb70af3d41aa56bf3ec.svg",
+    "static/media/add-song.png": "/static/media/add-song.6225df14c029f9a25b0e.png",
+    "static/media/genre.svg": "/static/media/genre.7907470ff2c62ac1060fcbd9274688d8.svg",
+    "index.html": "/index.html",
+    "main.3f10a1d1.css.map": "/static/css/main.3f10a1d1.css.map",
+    "main.fbb6259d.js.map": "/static/js/main.fbb6259d.js.map",
+    "787.279e5e0d.chunk.js.map": "/static/js/787.279e5e0d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3f10a1d1.css",
+    "static/js/main.fbb6259d.js"
+  ]
+}
