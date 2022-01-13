@@ -1,4 +1,5 @@
-import { createTheme } from "@mui/material/styles";
+import { TypographyStyle, createTheme } from "@mui/material/styles";
+import { Typography } from "@mui/material/styles/createTypography";
 
 export const theme = createTheme({
   palette: {
@@ -48,16 +49,24 @@ export const theme = createTheme({
     },
   },
 });
-declare module "@mui/material/styles/createTypography" {
-  export interface TypographyOptions {
-    formHeader: TypographyStyleOptions;
-    tabs: TypographyStyleOptions;
+
+declare module "@mui/material/styles" {
+  export interface TypographyVariants {
+    tabs: React.CSSProperties;
+    formHeader: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  export interface TypographyVariantsOptions {
+    tabs?: React.CSSProperties;
+    formHeader?: React.CSSProperties;
   }
 }
 
+// Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides {
-    formHeader: true;
+  export interface TypographyPropsVariantOverrides {
     tabs: true;
+    formHeader: true;
   }
 }

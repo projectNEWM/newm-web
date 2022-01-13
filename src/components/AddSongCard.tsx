@@ -1,7 +1,15 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Card, IconButton, useTheme } from "@mui/material";
+import { History } from "history";
 
-const AddSongCard = props => {
+interface AddSongCardProps {
+  id: string;
+  albumImage: string;
+  handleClick: () => void;
+  history: History;
+}
+
+const AddSongCard = (props: AddSongCardProps) => {
   const theme = useTheme();
   const { id, handleClick, history } = props;
 

@@ -1,7 +1,15 @@
 import { Card, CardContent, CardMedia } from "@mui/material";
+import { History } from "history";
 
-const Song = props => {
-  const { id, songId, name, album_image, history } = props;
+interface SongProps {
+  songId: number;
+  name: string;
+  album_image: string;
+  history: History;
+}
+
+const Song = (props: SongProps) => {
+  const { songId, name, album_image, history } = props;
 
   return (
     <>
@@ -16,7 +24,7 @@ const Song = props => {
           textAlign: "center",
           width: "250px",
         } }
-        onClick={ () => history.push(`/home/song/${id}`) }
+        onClick={ () => history.push(`/home/song/${songId}`) }
       >
         <CardMedia
           image={ album_image }

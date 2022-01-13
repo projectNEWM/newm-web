@@ -1,12 +1,17 @@
-import { useTheme } from "@emotion/react";
+import { Theme, useTheme } from "@emotion/react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import Select from "@mui/material/Select";
-import { useField, useFormikContext } from "formik";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useFormikContext } from "formik";
 import { useState } from "react";
 
+interface MultiDropdpwnProps {
+  name: string;
+  label: string;
+  options: string[];
+}
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -18,48 +23,23 @@ const MenuProps = {
   },
 };
 
-function getStyles(name, fieldState, theme) {
-  return {
-    fontWeight:
-      fieldState.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
-  };
-}
-
-export default function MultiDropdown({ name, label, options, ...otherProps }) {
+export default function MultiDropdown({ name, label, options }: MultiDropdpwnProps) {
   const theme = useTheme();
-  const [fieldState, setFieldState] = useState([]);
+  const [fieldState, setFieldState] = useState<string[]>([]);
   const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(name);
 
   const names = options;
 
-  const handleChange = event => {
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
     const { target: { value } } = event;
     setFieldValue(name, value);
-    setFieldState(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setFieldState(value as string[]);
   };
-  const configSelect = {
-    ...field,
-    ...otherProps,
-    fullWidth: true,
-    onChange: handleChange,
-    select: true,
-    variant: "outlined",
-  };
-  if (meta && meta.touched && meta.error) {
-    configSelect.error = true;
-    configSelect.helperText = meta.error;
-  }
 
   return (
     <div>
       <FormControl sx={ { width: 325 } }>
-        <InputLabel size="small" sx={ {} } id="demo-multiple-name-label">
-          { label }
-        </InputLabel>
+        <InputLabel id="demo-multiple-name-label">{ label }</InputLabel>
         <Select
           sx={ {
             backgroundColor: "#151515",
@@ -87,4 +67,11 @@ export default function MultiDropdown({ name, label, options, ...otherProps }) {
       </FormControl>
     </div>
   );
+
+  function getStyles(name: string, fieldState: string | string[], theme: Theme) {
+    return {
+      fontWeight:
+        fieldState.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+    };
+  }
 }
