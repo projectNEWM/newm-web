@@ -1,13 +1,20 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 
-export default function Popup(props) {
+interface PopupProps {
+  title: string;
+  children: React.ReactNode;
+  openPopup: boolean;
+  setOpenPopup: (open: boolean) => void;
+}
+
+export default function Popup(props: PopupProps) {
   const { title, children, openPopup, setOpenPopup } = props;
 
   return (
-    <Dialog open={ openPopup } maxWidth="">
+    <Dialog open={ openPopup } maxWidth={ false }>
       <DialogTitle>
-        <div sx={ {} } style={ { display: "flex" } }>
+        <div style={ { display: "flex" } }>
           <Typography variant="h6" component="div" style={ { flexGrow: 1 } }>
             { title }
           </Typography>

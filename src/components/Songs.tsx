@@ -18,11 +18,11 @@ export const Songs = (props: SongsProps) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   const getSong = (songId: number) => {
-    const { id, name, album_image } = songData[songId];
+    const { name, album_image } = songData[songId];
 
     return (
       <Grid item xs={ 12 } sm={ 4 } md={ 3 } key={ songId } paddingBottom={ 2 } sx={ { margin: "0px" } }>
-        <Song history={ history } songId={ songId } id={ id } name={ name } album_image={ album_image } />
+        <Song history={ history } songId={ songId } name={ name } album_image={ album_image } />
       </Grid>
     );
   };
@@ -45,7 +45,7 @@ export const Songs = (props: SongsProps) => {
             <AddSongCard
               handleClick={ () => setOpenPopup(true) }
               history={ history }
-              album_image={ addSong }
+              albumImage={ addSong }
               id={ "add-song" }
             />
           </Grid>

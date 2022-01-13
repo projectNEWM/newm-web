@@ -1,7 +1,28 @@
 import { Box, Tab, Tabs, styled } from "@mui/material";
+import { History } from "history";
 import React from "react";
 
 import { Songs } from "./Songs";
+
+interface ContentPropTypes {
+  page?: string;
+  history: History;
+  [x: string]: any;
+}
+
+interface TabPanelProps {
+  value: Page;
+  page: Page;
+  children: React.ReactNode;
+}
+
+enum Page {
+  songs,
+  playlists,
+  contributors,
+  wallet,
+  metrics,
+}
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -12,35 +33,20 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return <div { ...other }>{ value === index && <Box p={ 3 }>{ children }</Box> }</div>;
+function TabPanel(props: TabPanelProps) {
+  const { children, value, page, ...other } = props;
+  return <div { ...other }>{ value === page && <Box p={ 3 }>{ children }</Box> }</div>;
 }
 
-export const Content = props => {
-  const { match, history } = props;
-  const { params } = match;
-  const { page } = params;
+export const Content = (props: ContentPropTypes) => {
+  const { page: pageName, history } = props;
 
-  const tabNameToIndex = {
-    0: "songs",
-    1: "playlists",
-    2: "contributors",
-    3: "wallet",
-    4: "metrics",
-  };
+  const initialPage = (pageName && Page[pageName as keyof typeof Page]) || Page.songs;
 
-  const indexToTabName = {
-    contributors: 2,
-    metrics: 4,
-    playlists: 1,
-    songs: 0,
-    wallet: 3,
-  };
+  const [value, setValue] = React.useState(initialPage);
 
-  const [value, setValue] = React.useState(indexToTabName[page]);
-  const handleChange = (event, newValue) => {
-    history.push(`/home/${tabNameToIndex[newValue]}`);
+  const handleChange = (_event: React.SyntheticEvent, newValue: Page) => {
+    history.push(`/home/${Page[newValue]}`);
     setValue(newValue);
   };
 
@@ -62,21 +68,21 @@ export const Content = props => {
       </Tabs>
 
       <Box justifyContent="center">
-        <TabPanel value={ value } index={ 0 }>
-          <Box sx={ { width: "1060px", marginLeft: "auto", marginRight: "auto" } }>
+        <TabPanel value={ value } page={ Page.songs }>
+          <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
             <Songs history={ history } />
           </Box>
         </TabPanel>
-        <TabPanel value={ value } index={ 1 }>
+        <TabPanel value={ value } page={ Page.playlists }>
           Playlists
         </TabPanel>
-        <TabPanel value={ value } index={ 2 }>
+        <TabPanel value={ value } page={ Page.contributors }>
           Contributors
         </TabPanel>
-        <TabPanel value={ value } index={ 3 }>
+        <TabPanel value={ value } page={ Page.wallet }>
           Wallet
         </TabPanel>
-        <TabPanel value={ value } index={ 4 }>
+        <TabPanel value={ value } page={ Page.metrics }>
           Metrics
         </TabPanel>
       </Box>
