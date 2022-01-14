@@ -1,13 +1,12 @@
 import { Box, Tab, Tabs, styled } from "@mui/material";
 import { History } from "history";
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
 import { Songs } from "./Songs";
 
-interface ContentPropTypes {
+interface ContentPropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
   history: History;
-  [x: string]: any;
 }
 
 interface TabPanelProps {
