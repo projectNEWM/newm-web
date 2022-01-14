@@ -1,8 +1,7 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Field, Form, Formik } from "formik";
-import { array, object, string } from "yup";
-import * as Yup from "yup";
+import { array, date, object, string } from "yup";
 import DatePickerInput from "./DatePickerInput";
 import MultiDropdown from "./MultiDropdown";
 import { StyledFilledButton, StyledTextField } from "./StyledComponents";
@@ -30,7 +29,7 @@ export default function SongUploadForm() {
         initialValues={ initalValues }
         validationSchema={ object({
           genre: array().required(),
-          releaseDate: Yup.date().required(),
+          releaseDate: date().required(),
           title: string().required(),
           yourRole: array().required(),
         }) }
