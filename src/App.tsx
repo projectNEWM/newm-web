@@ -1,6 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, styled } from "@mui/material/styles";
-import { BrowserRouter, Redirect, Route, RouteComponentProps, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Content } from "./components/Content";
 import { Header } from "./components/Header";
 import "./App.css";
@@ -18,11 +18,6 @@ const StyledBackground = styled("div")({
   position: "absolute",
   width: "100%",
 });
-
-interface HomeMatchParams {
-  page: string;
-}
-type HomeMatchProps = RouteComponentProps<HomeMatchParams>;
 
 function App() {
   return (

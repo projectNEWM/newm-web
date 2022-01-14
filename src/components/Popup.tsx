@@ -21,7 +21,7 @@ export default function Popup(props: PopupProps) {
         </div>
         <IconButton
           color="primary"
-          sx={ { position: "absolute", top: "0px", right: "0px" } }
+          sx={ { position: "absolute", right: "0px", top: "0px" } }
           onClick={ () => {
             setOpenPopup(false);
           } }

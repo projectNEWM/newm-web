@@ -1,5 +1,4 @@
-import { TypographyStyle, createTheme } from "@mui/material/styles";
-import { Typography } from "@mui/material/styles/createTypography";
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   palette: {
