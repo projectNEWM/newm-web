@@ -1,11 +1,13 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Field, Form, Formik } from "formik";
 import { array, object, string } from "yup";
+import * as Yup from "yup";
+import DatePickerInput from "./DatePickerInput";
 import MultiDropdown from "./MultiDropdown";
+import { StyledFilledButton, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
-
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   backgroundColor: "grey",
@@ -28,7 +30,7 @@ export default function SongUploadForm() {
         initialValues={ initalValues }
         validationSchema={ object({
           genre: array().required(),
-          releaseDate: string().required(),
+          releaseDate: Yup.date().required(),
           title: string().required(),
           yourRole: array().required(),
         }) }
@@ -78,8 +80,8 @@ export default function SongUploadForm() {
                       label="Your Role"
                       options={ RoleData }
                       as={ MultiDropdown }
-                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
-                      helperText={ Boolean(touched.genre) && errors.genre }
+                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
+                      // helperText={ Boolean(touched.yourRole) && errors.yourRole }
                     />
                   </Grid>
                   <Grid
@@ -92,12 +94,11 @@ export default function SongUploadForm() {
                     <Field
                       sx={ { width: "325px" } }
                       name="releaseDate"
-                      size="small"
                       label="Release Date"
-                      as={ StyledTextField }
-                      variant="outlined"
-                      error={ Boolean(errors.title) && Boolean(touched.title) }
-                      // helperText={Boolean(touched.title) && errors.title}
+                      size="small"
+                      as={ DatePickerInput }
+                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
+                      // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>
                 </Grid>
@@ -136,20 +137,3 @@ export default function SongUploadForm() {
     </Box>
   );
 }
-
-const StyledTextField = styled(TextField)({
-  backgroundColor: "#151515",
-  border: "1px solid #2F2F2F",
-  borderRadius: "9px",
-  boxShadow: "inset 0px 3px 6px #000000D0",
-  height: "38px",
-  minWidth: "100px",
-  opacity: 1,
-});
-
-const StyledFilledButton = styled(Button)({
-  background: "transparent linear-gradient(180deg, #CC33CC 0%, #333399 100%) 0% 0% no-repeat padding-box;",
-  borderRadius: "7px",
-  color: "white",
-  font: "normal normal bold 14px/30px Raleway",
-});
