@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 
 interface PopupProps {
   title: string;
@@ -32,14 +32,6 @@ export const Popup = (props: PopupProps) => {
       <DialogContent sx={ { paddingTop: "0px" } } dividers>
         { children }
       </DialogContent>
-      <Button
-        color="secondary"
-        onClick={ () => {
-          setOpenPopup(false);
-        } }
-      >
-        Cancel
-      </Button>
     </Dialog>
   );
 };

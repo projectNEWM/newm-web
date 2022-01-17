@@ -1,11 +1,32 @@
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles" {
+  interface Theme {
+    inputField: {
+      background: string;
+      border: string;
+    };
+  }
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    inputField?: {
+      background?: string;
+      border?: string;
+    };
+  }
+}
+
 export const theme = createTheme({
+  inputField: {
+    background: "#151515",
+    border: "1px solid #2F2F2F",
+  },
   palette: {
     background: {
       default: "#0A0A0A",
       paper: "#0A0A0A",
     },
+
     primary: {
       main: "#CC33CC",
     },
@@ -17,12 +38,14 @@ export const theme = createTheme({
       secondary: "#707070",
     },
   },
+
   typography: {
     body1: {
       fontFamily: "Montserrat",
       fontSize: 14,
     },
     button: {
+      font: "normal normal bold 14px/30px Raleway",
       textTransform: "none",
     },
     fontFamily: "Montserrat",
