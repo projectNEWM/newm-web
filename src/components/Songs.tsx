@@ -2,10 +2,10 @@ import { Box, Grid } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
 import addSong from "./../images/add-song.png";
-import AddSongCard from "./AddSongCard";
-import Popup from "./Popup";
-import Song from "./Song";
-import SongUploadForm from "./SongUploadForm";
+import { AddSongCard } from "./AddSongCard";
+import { Popup } from "./Popup";
+import { Song } from "./Song";
+import { SongUploadForm } from "./SongUploadForm";
 import songDataMock from "../data/SongData";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 

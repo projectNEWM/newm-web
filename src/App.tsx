@@ -18,13 +18,19 @@ const StyledBackground = styled("div")({
   position: "absolute",
   width: "100%",
 });
-
+const artist = {
+  bio:
+    // eslint-disable-next-line
+    "Oscillating between the worlds of improvisation and composition in her practice, Sam holds a Bachelor of Music in Jazz studies from St. Francis Xavier University and continues to develop her interests in less academic environments. She composes for her solo guitar project, the ever- evolving small group project that ranges from duo to quintet and for commissions. In the fall of 2020 she was commissioned to write a piece for the Upstream.",
+  name: "Miah Jonez",
+  roles: "Singer, Producer",
+};
 function App() {
   return (
     <ThemeProvider theme={ theme }>
       <CssBaseline />
       <StyledBackground>
-        <Header />
+        <Header artist={ artist } />
         <BrowserRouter>
           <Switch>
             <Redirect exact from="/" to="/home/songs" />

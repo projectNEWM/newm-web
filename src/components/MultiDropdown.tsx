@@ -24,7 +24,7 @@ const MenuProps = {
   },
 };
 
-export default function MultiDropdown({ name, label, options, size }: MultiDropdpwnProps) {
+export const MultiDropdown = ({ name, label, options, size }: MultiDropdpwnProps) => {
   const theme = useTheme();
   const [fieldState, setFieldState] = useState<string[]>([]);
   const { setFieldValue } = useFormikContext();
@@ -75,4 +75,4 @@ export default function MultiDropdown({ name, label, options, size }: MultiDropd
         fieldState.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
     };
   }
-}
+};

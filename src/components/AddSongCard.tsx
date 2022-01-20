@@ -9,7 +9,7 @@ interface AddSongCardProps {
   history: History;
 }
 
-const AddSongCard = (props: AddSongCardProps) => {
+export const AddSongCard = (props: AddSongCardProps) => {
   const theme = useTheme();
   const { id, handleClick, history } = props;
 
@@ -44,5 +44,3 @@ const AddSongCard = (props: AddSongCardProps) => {
     </>
   );
 };
-
-export default AddSongCard;
