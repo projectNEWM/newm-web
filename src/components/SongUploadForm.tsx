@@ -2,8 +2,8 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Field, Form, Formik } from "formik";
 import { array, date, object, string } from "yup";
-import DatePickerInput from "./DatePickerInput";
-import MultiDropdown from "./MultiDropdown";
+import { DatePickerInput } from "./DatePickerInput";
+import { MultiDropdown } from "./MultiDropdown";
 import { StyledFilledButton, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
@@ -22,7 +22,7 @@ const initalValues = {
   yourRole: "",
 };
 
-export default function SongUploadForm() {
+export const SongUploadForm = () => {
   return (
     <Box sx={ { flexGrow: 1 } } height="522px" width="1062px">
       <Formik
@@ -135,4 +135,4 @@ export default function SongUploadForm() {
       </Formik>
     </Box>
   );
-}
+};

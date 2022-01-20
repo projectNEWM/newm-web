@@ -8,7 +8,7 @@ interface SongProps {
   history: History;
 }
 
-const Song = (props: SongProps) => {
+export const Song = (props: SongProps) => {
   const { songId, name, album_image, history } = props;
 
   return (
@@ -41,5 +41,3 @@ const Song = (props: SongProps) => {
     </>
   );
 };
-
-export default Song;

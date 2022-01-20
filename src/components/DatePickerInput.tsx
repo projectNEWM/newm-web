@@ -8,7 +8,7 @@ interface DateTimePickerProps {
   size?: "small" | "medium" | undefined;
 }
 
-const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
+export const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
   const [field] = useField(name);
 
   const configDateTimePicker = {
@@ -22,5 +22,3 @@ const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
 
   return <StyledTextField { ...configDateTimePicker } />;
 };
-
-export default DatePickerInput;

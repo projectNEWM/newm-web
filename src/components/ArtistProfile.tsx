@@ -1,13 +1,18 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import ArtistImage from "./../images/artist-image.svg";
 import Genre from "./../images/genre.svg";
+import { Artist } from "../models/artist";
 
-export const ArtistProfile = () => {
+interface ArtistProfileProps {
+  artist: Artist;
+}
+
+export const ArtistProfile = ({ artist }: ArtistProfileProps) => {
   return (
     <div>
       <Grid container>
         <Grid item xs={ 6 } sx={ { justifyContent: "flex-end" } }>
-          <Avatar alt="Remy Sharp" src={ ArtistImage } sx={ { height: 180, marginLeft: "auto", width: 180 } } />
+          <Avatar alt={ artist.name } src={ ArtistImage } sx={ { height: 180, marginLeft: "auto", width: 180 } } />
         </Grid>
 
         <Grid item xs={ 6 }>
@@ -22,9 +27,9 @@ export const ArtistProfile = () => {
               width: "180px",
             } }
           >
-            <Typography variant="h2">Miah Jonez</Typography>
+            <Typography variant="h2">{ artist.name }</Typography>
             <Typography paddingTop={ 1 } paddingBottom={ 1 } variant="h6">
-              Singer, Performing Artist
+              { artist.roles }
             </Typography>
             <img alt="img" src={ Genre } height="30px" width="auto" />
           </Box>

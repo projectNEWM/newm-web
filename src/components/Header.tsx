@@ -1,12 +1,15 @@
 import { Grid, Typography } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
-
-export const Header = () => {
+import { Artist } from "../models/artist";
+interface HeaderProps {
+  artist: Artist;
+}
+export const Header = ({ artist }: HeaderProps) => {
   return (
     <div>
       <Grid container spacing={ 2 }>
         <Grid item xs={ 12 }>
-          <ArtistProfile />
+          <ArtistProfile artist={ artist } />
         </Grid>
         <Grid item xs={ 12 }>
           <div
@@ -21,13 +24,7 @@ export const Header = () => {
               width: "829px",
             } }
           >
-            <Typography variant="body1">
-              Oscillating between the worlds of improvisation and composition in her practice, Sam holds a Bachelor of
-              Music in Jazz studies from St. Francis Xavier University and continues to develop her interests in less
-              academic environments. She composes for her solo guitar project, the ever- evolving small group project
-              that ranges from duo to quintet and for commissions. In the fall of 2020 she was commissioned to write a
-              piece for the Upstream.
-            </Typography>
+            <Typography variant="body1">{ artist.bio }</Typography>
           </div>
         </Grid>
       </Grid>

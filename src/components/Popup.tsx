@@ -8,7 +8,7 @@ interface PopupProps {
   setOpenPopup: (open: boolean) => void;
 }
 
-export default function Popup(props: PopupProps) {
+export const Popup = (props: PopupProps) => {
   const { title, children, openPopup, setOpenPopup } = props;
 
   return (
@@ -42,4 +42,4 @@ export default function Popup(props: PopupProps) {
       </Button>
     </Dialog>
   );
-}
+};
