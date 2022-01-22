@@ -35,7 +35,7 @@ export const Songs = (props: SongsProps) => {
   return (
     <>
       <Popup title="" openPopup={ openPopup } setOpenPopup={ setOpenPopup }>
-        <SongUploadForm />
+        <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
       <Box>

@@ -1,12 +1,14 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Field, Form, Formik } from "formik";
+import { Dispatch, SetStateAction } from "react";
 import { array, date, object, string } from "yup";
 import { DatePickerInput } from "./DatePickerInput";
 import { MultiDropdown } from "./MultiDropdown";
-import { StyledFilledButton, StyledTextField } from "./StyledComponents";
+import { StyledFilledButton, StyledOutlinedButton, StyledTextArea, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   backgroundColor: "grey",
@@ -15,19 +17,25 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const initalValues = {
+const initialValues = {
+  description: "",
   genre: "",
   releaseDate: "",
   title: "",
   yourRole: "",
 };
 
-export const SongUploadForm = () => {
+interface SongUploadFormProps {
+  setOpenPopup: Dispatch<SetStateAction<boolean>>;
+}
+
+export const SongUploadForm = (props: SongUploadFormProps) => {
   return (
     <Box sx={ { flexGrow: 1 } } height="522px" width="1062px">
       <Formik
-        initialValues={ initalValues }
+        initialValues={ initialValues }
         validationSchema={ object({
+          description: string().required(),
           genre: array().required(),
           releaseDate: date().required(),
           title: string().required(),
@@ -40,7 +48,7 @@ export const SongUploadForm = () => {
         { ({ errors, isValid, touched, dirty }) => (
           <Form>
             <Grid direction="row" container spacing={ 1 }>
-              <Grid item xs={ 4 } sx={ { height: "391px" } }>
+              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ { height: "404px" } } item xs={ 4 }>
                 <Typography variant="formHeader">Add Your Next Big Hit</Typography>
                 <Grid direction="column" container spacing={ 1 }>
                   <Grid
@@ -61,7 +69,7 @@ export const SongUploadForm = () => {
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "15px !important" } }>
+                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "16px !important" } }>
                     <Field
                       sx={ { width: "325px" } }
                       name="genre"
@@ -72,7 +80,7 @@ export const SongUploadForm = () => {
                       helperText={ Boolean(touched.genre) && errors.genre }
                     />
                   </Grid>
-                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "15px !important" } }>
+                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "16px !important" } }>
                     <Field
                       sx={ { width: "325px" } }
                       name="yourRole"
@@ -87,7 +95,7 @@ export const SongUploadForm = () => {
                     item
                     sx={ {
                       paddingLeft: "0px !important",
-                      paddingTop: "15px !important",
+                      paddingTop: "16px !important",
                     } }
                   >
                     <Field
@@ -97,6 +105,24 @@ export const SongUploadForm = () => {
                       size="small"
                       as={ DatePickerInput }
                       error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
+                      // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    sx={ {
+                      paddingLeft: "0px !important",
+                      paddingTop: "16px !important",
+                    } }
+                  >
+                    <Field
+                      sx={ { height: "96px", width: "325px" } }
+                      name="description"
+                      label="Description / Tags / Credits"
+                      as={ StyledTextArea }
+                      multiline={ true }
+                      rows={ 3 }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
                       // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>
@@ -120,14 +146,31 @@ export const SongUploadForm = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Box sx={ { textAlign: "center" } } width="1062px">
+            <Box sx={ { paddingTop: "0px", textAlign: "center" } } width="1062px">
+              <StyledOutlinedButton
+                onClick={ () => {
+                  props.setOpenPopup(false);
+                } }
+                sx={ { marginRight: "15px", width: "164px" } }
+                variant="outlined"
+              >
+                Cancel
+              </StyledOutlinedButton>
               <StyledFilledButton
+                sx={ { marginRight: "15px", width: "164px" } }
                 type="submit"
-                // sx={{ position: "absolute", left: "50%", right: "50px" }}
                 variant="contained"
                 disabled={ !isValid || !dirty }
               >
-                Upload &amp; Mint
+                Upload
+              </StyledFilledButton>
+              <StyledFilledButton
+                sx={ { width: "164px" } }
+                type="submit"
+                variant="contained"
+                disabled={ !isValid || !dirty }
+              >
+                Mint
               </StyledFilledButton>
             </Box>
           </Form>
