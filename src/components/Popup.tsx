@@ -6,10 +6,12 @@ interface PopupProps {
   children: React.ReactNode;
   openPopup: boolean;
   setOpenPopup: (open: boolean) => void;
+  width: string;
+  height: string;
 }
 
 export const Popup = (props: PopupProps) => {
-  const { title, children, openPopup, setOpenPopup } = props;
+  const { title, children, openPopup, setOpenPopup, width, height } = props;
 
   return (
     <Dialog open={ openPopup } maxWidth={ false }>
@@ -29,7 +31,10 @@ export const Popup = (props: PopupProps) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={ { paddingTop: "0px" } } dividers>
+      <DialogContent
+        sx={ { height: height, paddingTop: "0px", paddingLeft: "0px", paddingRight: "0px", width: width } }
+        dividers
+      >
         { children }
       </DialogContent>
     </Dialog>
