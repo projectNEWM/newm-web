@@ -6,7 +6,7 @@ interface PopupProps {
   children: React.ReactNode;
   openPopup: boolean;
   setOpenPopup: (open: boolean) => void;
-  width: string;
+  width?: string;
   height: string;
 }
 

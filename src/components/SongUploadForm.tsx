@@ -37,7 +37,7 @@ interface SongUploadFormProps {
 
 export const SongUploadForm = (props: SongUploadFormProps) => {
   return (
-    <Box sx={ { flexGrow: 1 } } width="1062px">
+    <Box sx={ { flexGrow: 1 } }>
       <Formik
         initialValues={ initialValues }
         validationSchema={ object({
@@ -60,7 +60,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
         { ({ errors, isValid, touched, dirty, handleSubmit, setFieldValue }) => (
           <Form onSubmit={ handleSubmit }>
             <Grid direction="row" container maxWidth={ "1060px" }>
-              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ {} } item xs={ 4 }>
+              <Grid item xs={ 12 } md={ 4 }>
                 <Grid direction="column" rowSpacing="16px" container paddingLeft="26px">
                   <Typography paddingTop="16px" variant="formHeader">
                     Add Your Next Big Hit

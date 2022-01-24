@@ -34,7 +34,7 @@ export const Songs = (props: SongsProps) => {
 
   return (
     <>
-      <Popup title="" width="1060px" height="522px" openPopup={ openPopup } setOpenPopup={ setOpenPopup }>
+      <Popup title="" height="522px" openPopup={ openPopup } setOpenPopup={ setOpenPopup }>
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
