@@ -28,8 +28,14 @@ jobs:
         with:
           payload: |
             {
-              "text": "New version of the Artist Portal available",
               "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "## New Version of the Artist Portal"
+                  }
+                },
                 {
                   "type": "section",
                   "text": {
