@@ -30,17 +30,24 @@ jobs:
             {
               "blocks": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "## New Version of the Artist Portal"
-                  }
+                  "type": "divider"
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Preview: ${{ steps.deploy.outputs.details_url }}"
+                    "text": "*New Version of the Artist Portal*"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "Open",
+                      "emoji": true
+                    },
+                    "value": "open_preview",
+                    "url": "${{ steps.deploy.outputs.details_url }}",
+                    "action_id": "button-action"
                   }
                 }
               ]
