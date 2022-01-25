@@ -1,22 +1,13 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, SetStateAction } from "react";
 import { array, date, mixed, object, string } from "yup";
 import { DatePickerInput } from "./DatePickerInput";
-import { ImageUpload } from "./ImageUpload";
 import { MultiDropdown } from "./MultiDropdown";
 import { StyledFilledButton, StyledOutlinedButton, StyledTextArea, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  backgroundColor: "grey",
-  color: theme.palette.text.secondary,
-  padding: theme.spacing(1),
-  textAlign: "center",
-}));
 
 const initialValues = {
   description: "",
@@ -49,6 +40,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
           yourRole: array().required(),
         }) }
         onSubmit={ (values, formikHelpers) => {
+          // eslint-disable-next-line no-console
           console.log({
             fileName: values.imageFile.name,
             size: `${values.imageFile.size} bytes`,
@@ -57,7 +49,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
           formikHelpers.resetForm();
         } }
       >
-        { ({ errors, isValid, touched, dirty, handleSubmit, setFieldValue }) => (
+        { ({ errors, isValid, touched, dirty, handleSubmit }) => (
           <Form onSubmit={ handleSubmit }>
             <Grid direction="row" container maxWidth={ "1060px" }>
               <Grid item xs={ 12 } md={ 4 }>

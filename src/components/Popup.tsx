@@ -32,7 +32,7 @@ export const Popup = (props: PopupProps) => {
         </IconButton>
       </DialogTitle>
       <DialogContent
-        sx={ { height: height, paddingTop: "0px", paddingLeft: "0px", paddingRight: "0px", width: width } }
+        sx={ { height: height, paddingLeft: "0px", paddingRight: "0px", paddingTop: "0px", width: width } }
         dividers
       >
         { children }
