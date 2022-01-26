@@ -12,6 +12,7 @@ interface MultiDropdpwnProps {
   label: string;
   options: string[];
   size?: "small" | "medium" | undefined;
+  width?: string;
 }
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -24,7 +25,7 @@ const MenuProps = {
   },
 };
 
-export const MultiDropdown = ({ name, label, options, size }: MultiDropdpwnProps) => {
+export const MultiDropdown = ({ name, label, options, size, width }: MultiDropdpwnProps) => {
   const theme = useTheme();
   const [fieldState, setFieldState] = useState<string[]>([]);
   const { setFieldValue } = useFormikContext();
@@ -39,7 +40,7 @@ export const MultiDropdown = ({ name, label, options, size }: MultiDropdpwnProps
 
   return (
     <div>
-      <FormControl size={ size || "small" } sx={ { width: 325 } }>
+      <FormControl size={ size || "small" } sx={ { width: width ?? "-webkit-fill-available" } }>
         <InputLabel id="demo-multiple-name-label">{ label }</InputLabel>
         <Select
           sx={ {

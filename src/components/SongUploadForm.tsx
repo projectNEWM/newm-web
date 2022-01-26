@@ -1,25 +1,22 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, SetStateAction } from "react";
-import { array, date, object, string } from "yup";
+import { array, date, mixed, object, string } from "yup";
 import { DatePickerInput } from "./DatePickerInput";
 import { MultiDropdown } from "./MultiDropdown";
 import { StyledFilledButton, StyledOutlinedButton, StyledTextArea, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  backgroundColor: "grey",
-  color: theme.palette.text.secondary,
-  padding: theme.spacing(1),
-  textAlign: "center",
-}));
 
 const initialValues = {
   description: "",
   genre: "",
+  imageFile: {
+    name: "",
+    size: "",
+    type: "",
+  },
   releaseDate: "",
   title: "",
   yourRole: "",
@@ -31,35 +28,112 @@ interface SongUploadFormProps {
 
 export const SongUploadForm = (props: SongUploadFormProps) => {
   return (
-    <Box sx={ { flexGrow: 1 } } height="522px" width="1062px">
+    <Box sx={ { flexGrow: 1 } }>
       <Formik
         initialValues={ initialValues }
         validationSchema={ object({
           description: string().required(),
           genre: array().required(),
+          imageFile: mixed().required(),
           releaseDate: date().required(),
           title: string().required(),
           yourRole: array().required(),
         }) }
         onSubmit={ (values, formikHelpers) => {
+          // eslint-disable-next-line no-console
+          console.log({
+            fileName: values.imageFile.name,
+            size: `${values.imageFile.size} bytes`,
+            type: values.imageFile.type,
+          });
           formikHelpers.resetForm();
         } }
       >
-        { ({ errors, isValid, touched, dirty }) => (
-          <Form>
-            <Grid direction="row" container spacing={ 1 }>
-              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ { height: "404px" } } item xs={ 4 }>
-                <Typography variant="formHeader">Add Your Next Big Hit</Typography>
-                <Grid direction="column" container spacing={ 1 }>
+        { ({ errors, isValid, touched, dirty, handleSubmit }) => (
+          <Form onSubmit={ handleSubmit }>
+            <Grid direction="row" container maxWidth={ "1060px" }>
+              <Grid item xs={ 12 } md={ 4 }>
+                <Grid direction="column" rowSpacing="16px" container paddingLeft="26px">
+                  <Typography paddingTop="16px" variant="formHeader">
+                    Add Your Next Big Hit
+                  </Typography>
+
                   <Grid
                     item
                     sx={ {
-                      paddingLeft: "0px !important",
-                      paddingTop: "25px !important",
+                      paddingTop: "0px",
                     } }
                   >
                     <Field
-                      sx={ { width: "325px" } }
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="title"
+                      size="small"
+                      label="Title"
+                      as={ StyledTextField }
+                      variant="outlined"
+                      error={ Boolean(errors.title) && Boolean(touched.title) }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="genre"
+                      label="Genre"
+                      options={ GenreData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
+                      helperText={ Boolean(touched.genre) && errors.genre }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="yourRole"
+                      label="Your Role"
+                      options={ RoleData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="releaseDate"
+                      label="Release Date"
+                      size="small"
+                      as={ DatePickerInput }
+                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { height: "96px", width: "-webkit-fill-available" } }
+                      name="description"
+                      label="Description / Tags / Credits"
+                      as={ StyledTextArea }
+                      multiline={ true }
+                      rows={ 3 }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              { /* SECOND COLUMN */ }
+
+              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ {} } item xs={ 4 }>
+                <Grid direction="column" rowSpacing="16px" container paddingLeft="16px">
+                  <Typography paddingTop="16px" variant="formHeader">
+                    Add Your Next Big Hit
+                  </Typography>
+
+                  <Grid
+                    item
+                    sx={ {
+                      paddingTop: "0px",
+                    } }
+                  >
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
                       name="title"
                       size="small"
                       label="Title"
@@ -69,9 +143,9 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
-                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "16px !important" } }>
+                  <Grid item sx={ {} }>
                     <Field
-                      sx={ { width: "325px" } }
+                      sx={ { width: "-webkit-fill-available" } }
                       name="genre"
                       label="Genre"
                       options={ GenreData }
@@ -80,9 +154,8 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       helperText={ Boolean(touched.genre) && errors.genre }
                     />
                   </Grid>
-                  <Grid item sx={ { paddingLeft: "0px !important", paddingTop: "16px !important" } }>
+                  <Grid item sx={ {} }>
                     <Field
-                      sx={ { width: "325px" } }
                       name="yourRole"
                       label="Your Role"
                       options={ RoleData }
@@ -91,15 +164,9 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       // helperText={ Boolean(touched.yourRole) && errors.yourRole }
                     />
                   </Grid>
-                  <Grid
-                    item
-                    sx={ {
-                      paddingLeft: "0px !important",
-                      paddingTop: "16px !important",
-                    } }
-                  >
+                  <Grid item sx={ {} }>
                     <Field
-                      sx={ { width: "325px" } }
+                      sx={ { width: "-webkit-fill-available" } }
                       name="releaseDate"
                       label="Release Date"
                       size="small"
@@ -108,15 +175,9 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>
-                  <Grid
-                    item
-                    sx={ {
-                      paddingLeft: "0px !important",
-                      paddingTop: "16px !important",
-                    } }
-                  >
+                  <Grid item sx={ {} }>
                     <Field
-                      sx={ { height: "96px", width: "325px" } }
+                      sx={ { height: "96px", width: "-webkit-fill-available" } }
                       name="description"
                       label="Description / Tags / Credits"
                       as={ StyledTextArea }
@@ -128,10 +189,96 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={ 4 } sx={ { height: "391px" } }>
+              { /* THIRD COLUMN */ }
+              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ { height: "404px" } } item xs={ 4 }>
+                <Grid
+                  direction="column"
+                  rowSpacing="16px"
+                  container
+                  paddingLeft="16px"
+                  paddingRight="25px"
+                  marginRight="18px"
+                >
+                  <Typography paddingTop="16px" variant="formHeader">
+                    Add Your Next Big Hit
+                  </Typography>
+
+                  <Grid
+                    item
+                    sx={ {
+                      paddingTop: "0px",
+                    } }
+                  >
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="title"
+                      size="small"
+                      label="Title"
+                      as={ StyledTextField }
+                      variant="outlined"
+                      error={ Boolean(errors.title) && Boolean(touched.title) }
+                      // helperText={Boolean(touched.title) && errors.title}
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="genre"
+                      label="Genre"
+                      options={ GenreData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
+                      helperText={ Boolean(touched.genre) && errors.genre }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="yourRole"
+                      label="Your Role"
+                      options={ RoleData }
+                      as={ MultiDropdown }
+                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
+                      // helperText={ Boolean(touched.yourRole) && errors.yourRole }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { width: "-webkit-fill-available" } }
+                      name="releaseDate"
+                      label="Release Date"
+                      size="small"
+                      as={ DatePickerInput }
+                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
+                      // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
+                    />
+                  </Grid>
+                  <Grid item sx={ {} }>
+                    <Field
+                      sx={ { height: "96px", width: "-webkit-fill-available" } }
+                      name="description"
+                      label="Description / Tags / Credits"
+                      as={ StyledTextArea }
+                      multiline={ true }
+                      rows={ 3 }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
+                      // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              { /* SECOND COLUMN */ }
+              { /* <Grid item xs={ 4 } sx={ { height: "391px", paddingLeft: "0px" } }>
+                <Typography variant="formHeader">Add Your Album Art </Typography>
                 <Grid direction="column" container spacing={ 1 }>
-                  <Grid item>
-                    <Item>Item</Item>
+                  <Grid
+                    item
+                    sx={ {
+                      paddingTop: "25px !important",
+                    } }
+                  >
+                    <ImageUpload errors={ errors } touched={ touched } setFieldValue={ setFieldValue } />
                   </Grid>
                 </Grid>
               </Grid>
@@ -144,7 +291,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                     <Item>Item</Item>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */ }
             </Grid>
             <Box sx={ { paddingTop: "0px", textAlign: "center" } } width="1062px">
               <StyledOutlinedButton
