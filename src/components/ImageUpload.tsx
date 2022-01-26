@@ -10,6 +10,27 @@ import { StyledPaperInput } from "./StyledComponents";
 
 interface ImageUploadProps {
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+  errors: FormikErrors<{
+    description: string;
+    genre: string;
+    imageFile: {
+      name: string;
+      size: string;
+      type: string;
+    };
+  }>;
+  touched: FormikTouched<{
+    description: string;
+    genre: string;
+    imageFile: {
+      name: string;
+      size: null;
+      type: string;
+    };
+    releaseDate: string;
+    title: string;
+    yourRole: string;
+  }>;
 }
 
 export const ImageUpload = (props: ImageUploadProps) => {

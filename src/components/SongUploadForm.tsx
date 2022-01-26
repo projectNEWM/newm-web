@@ -13,9 +13,9 @@ const initialValues = {
   description: "",
   genre: "",
   imageFile: {
-    name: null,
-    size: null,
-    type: null,
+    name: "",
+    size: "",
+    type: "",
   },
   releaseDate: "",
   title: "",
