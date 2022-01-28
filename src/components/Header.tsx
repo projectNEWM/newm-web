@@ -10,12 +10,12 @@ export const Header = ({ artist }: HeaderProps) => {
   return (
     <div>
       <Grid container spacing={ 2 }>
-        <Box component={ Grid } item xs={ 2 } display={ { sm: "block", xs: "none" } }>
-          <Box p={ 2 }>
+        <Box component={ Grid } item xs={ 3 } display={ { sm: "block", xs: "none" } }>
+          <Box p="61.89px 0 0 64.44px">
             <NEWMLogo />
           </Box>
         </Box>
-        <Grid item xs={ 12 } sm={ 8 }>
+        <Grid item xs={ 12 } sm={ 6 }>
           <ArtistProfile artist={ artist } />
         </Grid>
         <Grid item xs={ 12 }>
