@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
 import { NEWMLogo } from "./NEWMLogo";
 import { Artist } from "../models/artist";
@@ -10,11 +10,7 @@ export const Header = ({ artist }: HeaderProps) => {
   return (
     <div>
       <Grid container spacing={ 2 }>
-        <Box component={ Grid } item xs={ 3 } display={ { sm: "block", xs: "none" } }>
-          <Box p="61.89px 0 0 64.44px">
-            <NEWMLogo />
-          </Box>
-        </Box>
+        <NEWMLogo />
         <Grid item xs={ 12 } sm={ 6 }>
           <ArtistProfile artist={ artist } />
         </Grid>
