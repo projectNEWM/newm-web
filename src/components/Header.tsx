@@ -1,6 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import { ArtistProfile } from "./ArtistProfile";
+import { NEWMLogo } from "./NEWMLogo";
 import { Artist } from "../models/artist";
+
 interface HeaderProps {
   artist: Artist;
 }
@@ -8,7 +10,8 @@ export const Header = ({ artist }: HeaderProps) => {
   return (
     <div>
       <Grid container spacing={ 2 }>
-        <Grid item xs={ 12 }>
+        <NEWMLogo />
+        <Grid item xs={ 12 } sm={ 6 }>
           <ArtistProfile artist={ artist } />
         </Grid>
         <Grid item xs={ 12 }>
