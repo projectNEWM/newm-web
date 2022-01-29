@@ -4,6 +4,7 @@ on:
     paths:
       - "public/**"
       - "src/**"
+      - .github/workflows/firebase-hosting-pull-request.yml
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -14,6 +15,7 @@ jobs:
       - run: npm run build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}'

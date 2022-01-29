@@ -4,6 +4,7 @@ on:
     paths:
       - "src/**"
       - "public/**"
+      - .github/workflows/test-pull-request.yml
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
