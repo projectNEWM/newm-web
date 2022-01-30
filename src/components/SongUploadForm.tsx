@@ -3,11 +3,11 @@ import { Field, Form, Formik } from "formik";
 import { Dispatch, SetStateAction } from "react";
 import { array, date, mixed, object, string } from "yup";
 import { DatePickerInput } from "./DatePickerInput";
+import { ImageUpload } from "./ImageUpload";
 import { MultiDropdown } from "./MultiDropdown";
 import { StyledFilledButton, StyledOutlinedButton, StyledTextArea, StyledTextField } from "./StyledComponents";
 import GenreData from "../data/GenreData";
 import RoleData from "../data/RoleData";
-
 
 const initialValues = {
   description: "",
@@ -52,6 +52,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
         { ({ errors, isValid, touched, dirty, handleSubmit }) => (
           <Form onSubmit={ handleSubmit }>
             <Grid direction="row" container maxWidth={ "1060px" }>
+              { /* FIRST COLUMN */ }
               <Grid item xs={ 12 } md={ 4 }>
                 <Grid direction="column" rowSpacing="16px" container paddingLeft="26px">
                   <Typography paddingTop="16px" variant="formHeader">
@@ -123,9 +124,8 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
               <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ {} } item xs={ 4 }>
                 <Grid direction="column" rowSpacing="16px" container paddingLeft="16px">
                   <Typography paddingTop="16px" variant="formHeader">
-                    Add Your Next Big Hit
+                    Add Your Album Art
                   </Typography>
-
                   <Grid
                     item
                     sx={ {
@@ -136,48 +136,16 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { width: "-webkit-fill-available" } }
                       name="title"
                       size="small"
-                      label="Title"
-                      as={ StyledTextField }
+                      as={ ImageUpload }
                       variant="outlined"
                       error={ Boolean(errors.title) && Boolean(touched.title) }
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
                   <Grid item sx={ {} }>
+                    <Typography variant="formHeader">Add Contributors</Typography>
                     <Field
-                      sx={ { width: "-webkit-fill-available" } }
-                      name="genre"
-                      label="Genre"
-                      options={ GenreData }
-                      as={ MultiDropdown }
-                      error={ Boolean(errors.genre) && Boolean(touched.genre) }
-                      helperText={ Boolean(touched.genre) && errors.genre }
-                    />
-                  </Grid>
-                  <Grid item sx={ {} }>
-                    <Field
-                      name="yourRole"
-                      label="Your Role"
-                      options={ RoleData }
-                      as={ MultiDropdown }
-                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
-                      // helperText={ Boolean(touched.yourRole) && errors.yourRole }
-                    />
-                  </Grid>
-                  <Grid item sx={ {} }>
-                    <Field
-                      sx={ { width: "-webkit-fill-available" } }
-                      name="releaseDate"
-                      label="Release Date"
-                      size="small"
-                      as={ DatePickerInput }
-                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
-                      // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
-                    />
-                  </Grid>
-                  <Grid item sx={ {} }>
-                    <Field
-                      sx={ { height: "96px", width: "-webkit-fill-available" } }
+                      sx={ { height: "96px", marginTop: "26px", width: "-webkit-fill-available" } }
                       name="description"
                       label="Description / Tags / Credits"
                       as={ StyledTextArea }

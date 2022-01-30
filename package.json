@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
+    "cloudinary-react": "^1.7.1",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",
     "mui-image": "^1.0.4",
@@ -24,19 +25,12 @@
     "test": "react-scripts test",
     "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.tsx,.ts .",
     "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts,tsx}\""
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
