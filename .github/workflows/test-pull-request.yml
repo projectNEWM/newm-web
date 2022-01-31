@@ -2,8 +2,12 @@ name: Test on PR
 on:
   pull_request:
     paths:
-      - "src/**"
+      - .github/workflows/test-pull-request.yml
       - "public/**"
+      - "src/**"
+      - "**.json"
+      - ".**.js"
+      - "**.js"
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
