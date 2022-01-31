@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
-import  { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 
@@ -57,43 +57,49 @@ export const ImageUpload = () => {
     multiple: false,
     onDrop,
   });
-  return (
-    <Box>
+  let render = <div />;
+  if (!uploadedFilePublicId) {
+    render = (
       <div { ...getRootProps({ className: "dropzone" }) }>
-        { !uploadedFilePublicId ? (
-          <div>
-            <input { ...getInputProps() } />
-            <StyledPaperInput
-              sx= { {
-                height: !isDragActive ? "38px" : "158px",
-                width: "webkit-fill-available",
-              } }
-            >
-              { isDragActive ? "Drop That Art" : " Drag & Drop" }
-            </StyledPaperInput>
-            { !isDragActive ? (
-              <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
-                <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
-                  OR
-                </Typography>
-                <StyledFilledButton sx={ { width: "164px" } }>Upload Image</StyledFilledButton>
-              </Box>
-            ) : (
-              ""
-            ) }
-          </div>
-        ) : (
-          <Box sx={ { alignItems: "center", display: "flex", justifyContent: "center" } }>
-            <Image
-              cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
-              publicId={ uploadedFilePublicId + ".png" }
-              height="145"
-              radius="max"
-              width="145"
-            />
-          </Box>
-        ) }
+        <div>
+          <input { ...getInputProps() } />
+          <StyledPaperInput
+            sx={ {
+              height: !isDragActive ? "38px" : "158px",
+              width: "webkit-fill-available",
+            } }
+          >
+            { isDragActive ? "Drop That Art" : " Drag & Drop" }
+          </StyledPaperInput>
+          { !isDragActive ? (
+            <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
+              <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
+                OR
+              </Typography>
+              <StyledFilledButton sx={ { width: "164px" } }>Upload Image</StyledFilledButton>
+            </Box>
+          ) : (
+            ""
+          ) }
+        </div>
       </div>
-    </Box>
-  );
+    );
+  } else {
+    render = (
+      <div { ...getRootProps({ className: "dropzone" }) }>
+        <input { ...getInputProps() } />
+        <Box sx={ { alignItems: "center", display: "flex", justifyContent: "center" } }>
+          <Image
+            cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
+            publicId={ uploadedFilePublicId + ".png" }
+            height="145"
+            radius="max"
+            width="145"
+          />
+        </Box>
+      </div>
+    );
+  }
+
+  return render;
 };
