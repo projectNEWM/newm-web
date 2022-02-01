@@ -4,43 +4,15 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 
-// interface ImageUploadProps {
-//   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-//   errors: FormikErrors<{
-//     description: string;
-//     genre: string;
-//     imageFile: {
-//       name: string;
-//       size: string;
-//       type: string;
-//     };
-//   }>;
-//   touched: FormikTouched<{
-//     description: string;
-//     genre: string;
-//     imageFile: {
-//       name: string;
-//       size: null;
-//       type: string;
-//     };
-//     releaseDate: string;
-//     title: string;
-//     yourRole: string;
-//   }>;
-// }
-
 export const ImageUpload = () => {
-  const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
-    PUBLIC_CLOUDINARY_UPLOAD_PRESET = "rvktckuk";
-
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(acceptedFiles => {
-    const url = `https://api.cloudinary.com/v1_1/${PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
     acceptedFiles.forEach(async (acceptedFile: File) => {
       const formData = new FormData();
       formData.append("file", acceptedFile);
-      formData.append("upload_preset", PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+      formData.append("upload_preset", String(process.env.REACT_APP_PUBLIC_CLOUDINARY_UPLOAD_PRESET));
 
       const response = await fetch(url, {
         body: formData,
@@ -90,8 +62,9 @@ export const ImageUpload = () => {
         <input { ...getInputProps() } />
         <Box sx={ { alignItems: "center", display: "flex", justifyContent: "center" } }>
           <Image
-            cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
-            publicId={ uploadedFilePublicId + ".png" }
+            format="png"
+            cloudName={ process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME }
+            publicId={ uploadedFilePublicId }
             height="145"
             radius="max"
             width="145"
@@ -103,3 +76,28 @@ export const ImageUpload = () => {
 
   return render;
 };
+
+// interface ImageUploadProps {
+//   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+//   errors: FormikErrors<{
+//     description: string;
+//     genre: string;
+//     imageFile: {
+//       name: string;
+//       size: string;
+//       type: string;
+//     };
+//   }>;
+//   touched: FormikTouched<{
+//     description: string;
+//     genre: string;
+//     imageFile: {
+//       name: string;
+//       size: null;
+//       type: string;
+//     };
+//     releaseDate: string;
+//     title: string;
+//     yourRole: string;
+//   }>;
+// }
