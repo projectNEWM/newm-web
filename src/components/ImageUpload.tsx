@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 
 export const ImageUpload = () => {
+  const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(acceptedFiles => {
     const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
@@ -60,8 +61,16 @@ export const ImageUpload = () => {
     render = (
       <div { ...getRootProps({ className: "dropzone" }) }>
         <input { ...getInputProps() } />
-        <Box sx={ { alignItems: "center", display: "flex", justifyContent: "center" } }>
+        <Box
+          sx={ { alignItems: "center", display: "flex", justifyContent: "center", minHeight: !imgLoaded ? "150px" : "" } }
+        >
+          { !imgLoaded ? <CircularProgress /> : "" }
+
           <Image
+            style={ imgLoaded ? { display: "" } : { display: "none" } }
+            onLoad={ () => {
+              setImgLoaded(true);
+            } }
             format="png"
             cloudName={ process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME }
             publicId={ uploadedFilePublicId }
