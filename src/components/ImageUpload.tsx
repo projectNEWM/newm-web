@@ -41,7 +41,7 @@ export const ImageUpload = () => {
               width: "webkit-fill-available",
             } }
           >
-            { isDragActive ? "Drop That Art" : " Drag & Drop (square image only)" }
+            { isDragActive ? "Drop That Art" : " Drag & Drop (Square Image Only)" }
           </StyledPaperInput>
           { !isDragActive ? (
             <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
