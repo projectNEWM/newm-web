@@ -8,7 +8,12 @@ import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
   PUBLIC_CLOUDINARY_UPLOAD_PRESET = "rvktckuk";
 
-export const ImageUpload = () => {
+interface ImageUploadProps {
+  fileType?: ".png" | ".jpg" | ".jpeg" | ".wdp" | ".jp2" | ".bmp" | ".pdf" | ".tiff" | ".ico" | ".eps";
+  label?: string;
+}
+
+export const ImageUpload = ({ fileType = ".png", label = "Drag & Drop (Square Image Only)" }: ImageUploadProps) => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(acceptedFiles => {
@@ -47,7 +52,7 @@ export const ImageUpload = () => {
               width: "webkit-fill-available",
             } }
           >
-            { isDragActive ? "Drop That Art" : " Drag & Drop (Square Image Only)" }
+            { isDragActive ? "Drop That Art" : label }
           </StyledPaperInput>
           { !isDragActive ? (
             <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
@@ -81,7 +86,7 @@ export const ImageUpload = () => {
             onLoad={ () => {
               setImgLoaded(true);
             } }
-            format="png"
+            format={ fileType }
             cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
             publicId={ uploadedFilePublicId }
             height="145"
