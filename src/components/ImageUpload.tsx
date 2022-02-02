@@ -4,16 +4,20 @@ import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 
+// once we have backend authentication we will need to protect these variables
+const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
+  PUBLIC_CLOUDINARY_UPLOAD_PRESET = "rvktckuk";
+
 export const ImageUpload = () => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(acceptedFiles => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
     acceptedFiles.forEach(async (acceptedFile: File) => {
       const formData = new FormData();
       formData.append("file", acceptedFile);
-      formData.append("upload_preset", String(process.env.REACT_APP_PUBLIC_CLOUDINARY_UPLOAD_PRESET));
+      formData.append("upload_preset", String(PUBLIC_CLOUDINARY_UPLOAD_PRESET));
 
       const response = await fetch(url, {
         body: formData,
@@ -22,6 +26,7 @@ export const ImageUpload = () => {
 
       const data = await response.json();
       setUploadedFilePublicId(data.public_id);
+      setImgLoaded(false);
     });
   }, []);
 
@@ -62,7 +67,12 @@ export const ImageUpload = () => {
       <div { ...getRootProps({ className: "dropzone" }) }>
         <input { ...getInputProps() } />
         <Box
-          sx={ { alignItems: "center", display: "flex", justifyContent: "center", minHeight: !imgLoaded ? "150px" : "" } }
+          sx={ {
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            minHeight: !imgLoaded ? "150px" : "",
+          } }
         >
           { !imgLoaded ? <CircularProgress /> : "" }
 
@@ -72,7 +82,7 @@ export const ImageUpload = () => {
               setImgLoaded(true);
             } }
             format="png"
-            cloudName={ process.env.REACT_APP_PUBLIC_CLOUDINARY_CLOUD_NAME }
+            cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
             publicId={ uploadedFilePublicId }
             height="145"
             radius="max"
