@@ -13,8 +13,8 @@ interface ImageUploadProps {
   dropzoneLabel?: string;
   buttonLabel?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-  setTouched: (fields: { [field: string]: boolean }, shouldValidate?: boolean) => void;
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+  setTouched?: (fields: { [field: string]: boolean }, shouldValidate?: boolean) => void;
 }
 
 export const ImageUpload = ({
@@ -41,7 +41,7 @@ export const ImageUpload = ({
 
       const data = await response.json();
       setUploadedFilePublicId(data.public_id);
-      setFieldValue("uploadedImageId", data.public_id, true);
+      setFieldValue && setFieldValue("uploadedImageId", data.public_id, true);
       setImgLoaded(false);
     });
   }, []);
@@ -59,7 +59,7 @@ export const ImageUpload = ({
           <input
             { ...getInputProps() }
             onClick={ () => {
-              setTouched({ ["uploadedImageId"]: true });
+              setTouched && setTouched({ ["uploadedImageId"]: true });
             } }
           />
           <StyledPaperInput
