@@ -12,13 +12,9 @@ import RoleData from "../data/RoleData";
 const initialValues = {
   description: "",
   genre: "",
-  imageFile: {
-    name: "",
-    size: "",
-    type: "",
-  },
   releaseDate: "",
   title: "",
+  uploadedImageId: "",
   yourRole: "",
 };
 
@@ -31,25 +27,20 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
     <Box sx={ { flexGrow: 1 } }>
       <Formik
         initialValues={ initialValues }
+        enableReinitialize
         validationSchema={ object({
           description: string().required(),
           genre: array().required(),
-          imageFile: mixed().required(),
           releaseDate: date().required(),
           title: string().required(),
+          uploadedImageId: string().required(),
           yourRole: array().required(),
         }) }
         onSubmit={ (values, formikHelpers) => {
-          // eslint-disable-next-line no-console
-          console.log({
-            fileName: values.imageFile.name,
-            size: `${values.imageFile.size} bytes`,
-            type: values.imageFile.type,
-          });
           formikHelpers.resetForm();
         } }
       >
-        { ({ errors, isValid, touched, dirty, handleSubmit }) => (
+        { ({ errors, isValid, touched, dirty, handleSubmit, setFieldValue, setTouched }) => (
           <Form onSubmit={ handleSubmit }>
             <Grid direction="row" container maxWidth={ "1060px" }>
               { /* FIRST COLUMN */ }
@@ -134,11 +125,13 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                   >
                     <Field
                       sx={ { width: "-webkit-fill-available" } }
-                      name="title"
+                      name="uploadedImageId"
                       size="small"
                       as={ ImageUpload }
+                      setFieldValue={ setFieldValue }
                       variant="outlined"
-                      error={ Boolean(errors.title) && Boolean(touched.title) }
+                      error={ Boolean(errors.uploadedImageId) && Boolean(touched.uploadedImageId) }
+                      setTouched={ setTouched }
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>

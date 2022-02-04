@@ -12,12 +12,17 @@ interface ImageUploadProps {
   fileType?: "png" | "jpg" | "jpeg" | "wdp" | "jp2" | "bmp" | "pdf" | "tiff" | "ico" | "eps";
   dropzoneLabel?: string;
   buttonLabel?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+  setTouched: (fields: { [field: string]: boolean }, shouldValidate?: boolean) => void;
 }
 
 export const ImageUpload = ({
   fileType = "png",
   dropzoneLabel = "Drag & Drop (Square Image Only)",
   buttonLabel = "Upload Image",
+  setFieldValue,
+  setTouched,
 }: ImageUploadProps) => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
@@ -36,6 +41,7 @@ export const ImageUpload = ({
 
       const data = await response.json();
       setUploadedFilePublicId(data.public_id);
+      setFieldValue("uploadedImageId", data.public_id, true);
       setImgLoaded(false);
     });
   }, []);
@@ -50,7 +56,12 @@ export const ImageUpload = ({
     render = (
       <div data-testid="dropzone" { ...getRootProps({ className: "dropzone" }) }>
         <div>
-          <input { ...getInputProps() } />
+          <input
+            { ...getInputProps() }
+            onClick={ () => {
+              setTouched({ ["uploadedImageId"]: true });
+            } }
+          />
           <StyledPaperInput
             data-testid="paper-dropzone"
             sx={ {
@@ -113,28 +124,3 @@ export const ImageUpload = ({
 
   return render;
 };
-
-// interface ImageUploadProps {
-//   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-//   errors: FormikErrors<{
-//     description: string;
-//     genre: string;
-//     imageFile: {
-//       name: string;
-//       size: string;
-//       type: string;
-//     };
-//   }>;
-//   touched: FormikTouched<{
-//     description: string;
-//     genre: string;
-//     imageFile: {
-//       name: string;
-//       size: null;
-//       type: string;
-//     };
-//     releaseDate: string;
-//     title: string;
-//     yourRole: string;
-//   }>;
-// }
