@@ -9,11 +9,16 @@ const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
   PUBLIC_CLOUDINARY_UPLOAD_PRESET = "rvktckuk";
 
 interface ImageUploadProps {
-  fileType?: ".png" | ".jpg" | ".jpeg" | ".wdp" | ".jp2" | ".bmp" | ".pdf" | ".tiff" | ".ico" | ".eps";
-  label?: string;
+  fileType?: "png" | "jpg" | "jpeg" | "wdp" | "jp2" | "bmp" | "pdf" | "tiff" | "ico" | "eps";
+  dropzoneLabel?: string;
+  buttonLabel?: string;
 }
 
-export const ImageUpload = ({ fileType = ".png", label = "Drag & Drop (Square Image Only)" }: ImageUploadProps) => {
+export const ImageUpload = ({
+  fileType = "png",
+  dropzoneLabel = "Drag & Drop (Square Image Only)",
+  buttonLabel = "Upload Image",
+}: ImageUploadProps) => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(acceptedFiles => {
@@ -43,23 +48,24 @@ export const ImageUpload = ({ fileType = ".png", label = "Drag & Drop (Square Im
   let render = <div />;
   if (!uploadedFilePublicId) {
     render = (
-      <div { ...getRootProps({ className: "dropzone" }) }>
+      <div data-testid="dropzone" { ...getRootProps({ className: "dropzone" }) }>
         <div>
           <input { ...getInputProps() } />
           <StyledPaperInput
+            data-testid="paper-dropzone"
             sx={ {
               height: !isDragActive ? "38px" : "158px",
               width: "webkit-fill-available",
             } }
           >
-            { isDragActive ? "Drop That Art" : label }
+            { isDragActive ? "Drop That Art" : dropzoneLabel }
           </StyledPaperInput>
           { !isDragActive ? (
             <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
               <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
                 OR
               </Typography>
-              <StyledFilledButton sx={ { width: "164px" } }>Upload Image</StyledFilledButton>
+              <StyledFilledButton sx={ { width: "164px" } }>{ buttonLabel }</StyledFilledButton>
             </Box>
           ) : (
             ""
@@ -79,9 +85,16 @@ export const ImageUpload = ({ fileType = ".png", label = "Drag & Drop (Square Im
             minHeight: !imgLoaded ? "150px" : "",
           } }
         >
-          { !imgLoaded ? <CircularProgress /> : "" }
+          { !imgLoaded ? (
+            <div data-testid="loadingIcon">
+              <CircularProgress />
+            </div>
+          ) : (
+            ""
+          ) }
 
           <Image
+            data-testid="uploadedImage"
             style={ imgLoaded ? { display: "" } : { display: "none" } }
             onLoad={ () => {
               setImgLoaded(true);
