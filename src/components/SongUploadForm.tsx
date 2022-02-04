@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { Dispatch, SetStateAction } from "react";
-import { array, date, mixed, object, string } from "yup";
+import { array, date, object, string } from "yup";
 import { DatePickerInput } from "./DatePickerInput";
 import { ImageUpload } from "./ImageUpload";
 import { MultiDropdown } from "./MultiDropdown";
