@@ -26,25 +26,28 @@ export const ImageUpload = ({
 }: ImageUploadProps) => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
-  const onDrop = useCallback(acceptedFiles => {
-    const url = `https://api.cloudinary.com/v1_1/${PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+  const onDrop = useCallback(
+    acceptedFiles => {
+      const url = `https://api.cloudinary.com/v1_1/${PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
-    acceptedFiles.forEach(async (acceptedFile: File) => {
-      const formData = new FormData();
-      formData.append("file", acceptedFile);
-      formData.append("upload_preset", String(PUBLIC_CLOUDINARY_UPLOAD_PRESET));
+      acceptedFiles.forEach(async (acceptedFile: File) => {
+        const formData = new FormData();
+        formData.append("file", acceptedFile);
+        formData.append("upload_preset", String(PUBLIC_CLOUDINARY_UPLOAD_PRESET));
 
-      const response = await fetch(url, {
-        body: formData,
-        method: "post",
+        const response = await fetch(url, {
+          body: formData,
+          method: "post",
+        });
+
+        const data = await response.json();
+        setUploadedFilePublicId(data.public_id);
+        setFieldValue && setFieldValue("uploadedImageId", data.public_id, true);
+        setImgLoaded(false);
       });
-
-      const data = await response.json();
-      setUploadedFilePublicId(data.public_id);
-      setFieldValue && setFieldValue("uploadedImageId", data.public_id, true);
-      setImgLoaded(false);
-    });
-  }, []);
+    },
+    [setFieldValue]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
