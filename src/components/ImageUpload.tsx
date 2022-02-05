@@ -54,9 +54,8 @@ export const ImageUpload = ({
     multiple: false,
     onDrop,
   });
-  let render = <div />;
   if (!uploadedFilePublicId) {
-    render = (
+    return (
       <div data-testid="dropzone" { ...getRootProps({ className: "dropzone" }) }>
         <div>
           <input
@@ -88,43 +87,40 @@ export const ImageUpload = ({
         </div>
       </div>
     );
-  } else {
-    render = (
-      <div { ...getRootProps({ className: "dropzone" }) }>
-        <input { ...getInputProps() } />
-        <Box
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-            minHeight: !imgLoaded ? "150px" : "",
-          } }
-        >
-          { !imgLoaded ? (
-            <div data-testid="loadingIcon">
-              <CircularProgress />
-            </div>
-          ) : (
-            ""
-          ) }
-
-          <Image
-            data-testid="uploadedImage"
-            style={ imgLoaded ? { display: "" } : { display: "none" } }
-            onLoad={ () => {
-              setImgLoaded(true);
-            } }
-            format={ fileType }
-            cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
-            publicId={ uploadedFilePublicId }
-            height="145"
-            radius="max"
-            width="145"
-          />
-        </Box>
-      </div>
-    );
   }
+  return (
+    <div { ...getRootProps({ className: "dropzone" }) }>
+      <input { ...getInputProps() } />
+      <Box
+        sx={ {
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+          minHeight: !imgLoaded ? "150px" : "",
+        } }
+      >
+        { !imgLoaded ? (
+          <div data-testid="loadingIcon">
+            <CircularProgress />
+          </div>
+        ) : (
+          ""
+        ) }
 
-  return render;
+        <Image
+          data-testid="uploadedImage"
+          style={ imgLoaded ? { display: "" } : { display: "none" } }
+          onLoad={ () => {
+            setImgLoaded(true);
+          } }
+          format={ fileType }
+          cloudName={ PUBLIC_CLOUDINARY_CLOUD_NAME }
+          publicId={ uploadedFilePublicId }
+          height="145"
+          radius="max"
+          width="145"
+        />
+      </Box>
+    </div>
+  );
 };
