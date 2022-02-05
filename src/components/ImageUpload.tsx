@@ -57,6 +57,7 @@ export const ImageUpload = ({
       <div data-testid="dropzone" { ...getRootProps({ className: "dropzone" }) }>
         <div>
           <input
+            data-testid="drop-input"
             { ...getInputProps() }
             onClick={ () => {
               setTouched && setTouched({ ["uploadedImageId"]: true });
