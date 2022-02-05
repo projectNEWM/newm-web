@@ -30,7 +30,7 @@ export const Popup = (props: PopupProps) => {
   );
 };
 
-const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+const StyledDialogContent = styled(DialogContent)(() => ({
   animation: `10s ${rotate} linear infinite;`,
   border: "1.5px solid transparent;",
   borderImage: "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
