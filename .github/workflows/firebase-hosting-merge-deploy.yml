@@ -26,7 +26,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "Artist Portal updated. View at: ${{ steps.deploy.outputs.details_url }}"
+              "text": "Artist Portal updated. View at https://newm-artist-portal.web.app"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
