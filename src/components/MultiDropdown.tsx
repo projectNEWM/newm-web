@@ -40,7 +40,7 @@ export const MultiDropdown = ({ name, label, options, size, width }: MultiDropdp
 
   return (
     <div>
-      <FormControl size={ size || "small" } sx={ { width: width ?? "-webkit-fill-available" } }>
+      <FormControl size={ size ?size:"small" } sx={ { width: width ?? "-webkit-fill-available" } }>
         <InputLabel id="demo-multiple-name-label">{ label }</InputLabel>
         <Select
           sx={ {
