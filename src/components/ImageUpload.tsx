@@ -75,7 +75,14 @@ export const ImageUpload = ({
             { isDragActive ? "Drop That Art" : dropzoneLabel }
           </StyledPaperInput>
           { !isDragActive ? (
-            <Box sx={ { alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center" } }>
+            <Box
+              sx={ {
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              } }
+            >
               <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
                 OR
               </Typography>

@@ -138,7 +138,11 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                   <Grid item sx={ {} }>
                     <Typography variant="formHeader">Add Contributors</Typography>
                     <Field
-                      sx={ { height: "96px", marginTop: "26px", width: "-webkit-fill-available" } }
+                      sx={ {
+                        height: "96px",
+                        marginTop: "26px",
+                        width: "-webkit-fill-available",
+                      } }
                       name="description"
                       label="Description / Tags / Credits"
                       as={ StyledTextArea }

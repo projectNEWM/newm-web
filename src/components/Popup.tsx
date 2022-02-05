@@ -1,8 +1,7 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
+import { keyframes, styled } from "@mui/material/styles";
 
 interface PopupProps {
-  title: string;
   children: React.ReactNode;
   openPopup: boolean;
   setOpenPopup: (open: boolean) => void;
@@ -11,32 +10,37 @@ interface PopupProps {
 }
 
 export const Popup = (props: PopupProps) => {
-  const { title, children, openPopup, setOpenPopup, width, height } = props;
+  const { children, openPopup, width, height } = props;
 
   return (
     <Dialog open={ openPopup } maxWidth={ false }>
-      <DialogTitle>
-        <div style={ { display: "flex" } }>
-          <Typography variant="h6" component="div" style={ { flexGrow: 1 } }>
-            { title }
-          </Typography>
-        </div>
-        <IconButton
-          color="primary"
-          sx={ { position: "absolute", right: "0px", top: "0px" } }
-          onClick={ () => {
-            setOpenPopup(false);
-          } }
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent
-        sx={ { height: height, paddingLeft: "0px", paddingRight: "0px", paddingTop: "0px", width: width } }
+      <StyledDialogContent
+        sx={ {
+          height: height,
+          paddingLeft: "0px",
+          paddingRight: "0px",
+          paddingTop: "30px",
+          width: width,
+        } }
         dividers
       >
         { children }
-      </DialogContent>
+      </StyledDialogContent>
     </Dialog>
   );
 };
+
+const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+  animation: `10s ${rotate} linear infinite;`,
+  border: "1.5px solid transparent;",
+  borderImage: "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
+  borderImageSlice: " 1;",
+}));
+
+// --angle property defined in app.css
+const rotate = keyframes`
+  to {
+    --angle: 360deg; 
+  }
+}
+`;
