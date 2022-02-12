@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ artist }: HeaderProps) => {
-  const [isTextVisible, setIsVisible] = useState(true);
+  const [isTextVisible, setIsTextVisible] = useState(true);
 
   useEffect(() => {
     const listenToScroll = () => {
@@ -19,9 +19,9 @@ export const Header = ({ artist }: HeaderProps) => {
       console.log(winScroll); 
   
       if (winScroll && winScroll > heightToHideFrom) {
-        isTextVisible && setIsVisible(false); // to limit setting state only the first time
+        isTextVisible && setIsTextVisible(false); // to limit setting state only the first time
       } else {
-        setIsVisible(true);
+        setIsTextVisible(true);
       }
     };
     document && document.getElementById("content")?.addEventListener("scroll", listenToScroll);
