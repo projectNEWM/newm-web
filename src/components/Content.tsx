@@ -1,8 +1,9 @@
 import { Box, Tab, Tabs, styled } from "@mui/material";
 import { History } from "history";
 import React, { HTMLAttributes } from "react";
-
 import { Songs } from "./Songs";
+import useWindowDimensions from "../hooks/useWindowDimensions";
+
 
 interface ContentPropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
@@ -38,6 +39,9 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export const Content = (props: ContentPropTypes) => {
+  const windowDimensions = useWindowDimensions();
+  const height = windowDimensions && windowDimensions.height;
+
   const { page: pageName, history } = props;
 
   const initialPage = (pageName && Page[pageName as keyof typeof Page]) || Page.songs;
@@ -45,8 +49,16 @@ export const Content = (props: ContentPropTypes) => {
   const [value, setValue] = React.useState(initialPage);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: Page) => {
-    history.push(`/home/${Page[newValue]}`);
+    history?.push(`/home/${Page[newValue]}`);
     setValue(newValue);
+  };
+
+  const getArtistBioHeight = ():number => {
+    if (document.getElementById("artist bio")) {
+      return Number(document.getElementById("artist bio")?.getBoundingClientRect().height);
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -66,7 +78,8 @@ export const Content = (props: ContentPropTypes) => {
         <StyledTab label="Metrics" />
       </Tabs>
 
-      <Box justifyContent="center">
+      <Box justifyContent="center" maxHeight={ height && height - getArtistBioHeight() }
+        overflow={"auto"} id="content">
         <TabPanel value={ value } page={ Page.songs }>
           <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
             <Songs history={ history } />

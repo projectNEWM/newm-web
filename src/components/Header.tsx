@@ -1,4 +1,4 @@
-import { Collapse, Grid, Grow, Typography } from "@mui/material";
+import { Collapse, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ArtistProfile } from "./ArtistProfile";
 import { NEWMLogo } from "./NEWMLogo";
@@ -9,31 +9,24 @@ interface HeaderProps {
 }
 
 export const Header = ({ artist }: HeaderProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-
+  const [isTextVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-
     const listenToScroll = () => {
-  
       const heightToHideFrom = 50;
-      const winScroll = document.getElementById("songs")?.scrollTop;
+      const winScroll = document.getElementById("content")?.scrollTop;
       // eslint-disable-next-line no-console
       console.log(winScroll); 
   
-  
       if (winScroll && winScroll > heightToHideFrom) {
-        isVisible && setIsVisible(false); // to limit setting state only the first time
+        isTextVisible && setIsVisible(false); // to limit setting state only the first time
       } else {
         setIsVisible(true);
       }
     };
-    document && document.getElementById("songs")?.addEventListener("scroll", listenToScroll);
-
-
-    return () => document.getElementById("songs")?.addEventListener("scroll", listenToScroll);
-  }, [isVisible]);
+    document && document.getElementById("content")?.addEventListener("scroll", listenToScroll);
+    return () => document.getElementById("content")?.removeEventListener("scroll", listenToScroll);
+  }, [isTextVisible]);
 
   
   return (
@@ -56,10 +49,9 @@ export const Header = ({ artist }: HeaderProps) => {
               width: "829px",
             } }
           >
-            <Collapse in={isVisible} unmountOnExit>
-                  <Typography variant="body1">{artist.bio}</Typography>
+            <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
+                  <Typography id="artistBio" variant="body1">{ artist.bio }</Typography>
             </Collapse> 
-            
           </div>
         </Grid>
       </Grid>
