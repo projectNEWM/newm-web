@@ -39,7 +39,7 @@ export const Songs = (props: SongsProps) => {
       </Popup>
 
       <Box>
-        <Grid container maxHeight={ height && height - 355 } overflow={ "auto" }>
+        <Grid id="songs" container maxHeight={ height && height - 355 } overflow={ "auto" }>
           { Object.keys(songData).map(songId => getSong(parseInt(songId))) }
           <Grid item xs={ 12 } sm={ 4 } md={ 3 } paddingBottom={ 2 } sx={ { margin: "0px" } }>
             <AddSongCard
