@@ -1,4 +1,4 @@
-import { Collapse, Grid, Typography } from "@mui/material";
+import { Box, Collapse, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ArtistProfile } from "./ArtistProfile";
 import { NEWMLogo } from "./NEWMLogo";
@@ -13,10 +13,8 @@ export const Header = ({ artist }: HeaderProps) => {
 
   useEffect(() => {
     const listenToScroll = () => {
-      const heightToHideFrom = 50;
+      const heightToHideFrom = 37;
       const winScroll = document.getElementById("content")?.scrollTop;
-      // eslint-disable-next-line no-console
-      console.log(winScroll); 
   
       if (winScroll && winScroll > heightToHideFrom) {
         isTextVisible && setIsTextVisible(false); // to limit setting state only the first time
@@ -50,7 +48,9 @@ export const Header = ({ artist }: HeaderProps) => {
             } }
           >
             <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
-                  <Typography id="artistBio" variant="body1">{ artist.bio }</Typography>
+                  <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
+                    <Typography id="artistBio" variant="body1">{ artist.bio }</Typography>
+                  </Box>
             </Collapse> 
           </div>
         </Grid>

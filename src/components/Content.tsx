@@ -53,14 +53,6 @@ export const Content = (props: ContentPropTypes) => {
     setValue(newValue);
   };
 
-  const getArtistBioHeight = ():number => {
-    if (document.getElementById("artist bio")) {
-      return Number(document.getElementById("artist bio")?.getBoundingClientRect().height);
-    } else {
-      return 0;
-    }
-  };
-
   return (
     <Box sx={ { justifyContent: "center", marginLeft: "auto", marginRight: "auto" } }>
       <Tabs
@@ -78,8 +70,8 @@ export const Content = (props: ContentPropTypes) => {
         <StyledTab label="Metrics" />
       </Tabs>
 
-      <Box justifyContent="center" maxHeight={ height && height - getArtistBioHeight() }
-        overflow={"auto"} id="content">
+      <Box justifyContent="center" maxHeight={ height && height - 215 }
+        overflow={ "scroll" } id="content">
         <TabPanel value={ value } page={ Page.songs }>
           <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
             <Songs history={ history } />

@@ -6,7 +6,7 @@ test("shows artist profile data", () => {
   const roles = "Producer, Singer";
   const bio = "Artist bio";
 
-  render(<Header artist={ { name, roles, bio } } />);
+  render(<Header artist={ { bio, name, roles } } />);
 
   expect(screen.getByText(name)).toBeDefined();
   expect(screen.getByText(roles)).toBeDefined();
