@@ -49,7 +49,7 @@ export const Header = ({ artist }: HeaderProps) => {
           >
             <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
                   <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
-                    <Typography id="artistBio" variant="body1">{ artist.bio }</Typography>
+                    <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
                   </Box>
             </Collapse> 
           </div>

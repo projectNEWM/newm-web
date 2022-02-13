@@ -70,7 +70,7 @@ export const Content = (props: ContentPropTypes) => {
         <StyledTab label="Metrics" />
       </Tabs>
 
-      <Box justifyContent="center" maxHeight={ height && height - 215 }
+      <Box data-testid="contentBox" justifyContent="center" maxHeight={ height && height - 215 }
         overflow={ "scroll" } id="content">
         <TabPanel value={ value } page={ Page.songs }>
           <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
