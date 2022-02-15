@@ -1,4 +1,4 @@
-import { Button, Paper, TextField, badgeClasses } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { theme } from "./../theme/theme";
 
