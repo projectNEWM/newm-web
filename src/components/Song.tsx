@@ -1,7 +1,7 @@
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Card, CardMedia } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
-import SoundWaveSVG from "./SoundWaveSVG";
+import SongHover from "./SongHover";
 
 interface SongProps {
   songId: number;
@@ -41,37 +41,7 @@ export const Song = (props: SongProps) => {
             width: "200px",
           } }
         >
-          { hovering && (
-            <div
-              style={ {
-                alignItems: "center",
-                backgroundColor: "black",
-                borderRadius: "100px",
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                height: "100%",
-                justifyContent: "center",
-                marginLeft: "auto",
-                marginRight: "auto",
-                opacity: "0.6",
-                textAlign: "center",
-              } }
-            >
-              <CardContent
-                sx={ {
-                  color: "#FFFFFF",
-                  font: "normal normal 900 14px/18px Raleway",
-                  letterSpacing: "0px",
-                  opacity: 1,
-                  textAlign: "center",
-                } }
-              >
-                <p>{ name }</p>
-                <SoundWaveSVG />
-              </CardContent>
-            </div>
-          ) }
+          <SongHover hovering={ hovering } name={ name } />
         </CardMedia>
       </Card>
     </>
