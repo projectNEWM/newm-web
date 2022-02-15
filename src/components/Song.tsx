@@ -1,5 +1,7 @@
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Card, CardMedia } from "@mui/material";
 import { History } from "history";
+import { useState } from "react";
+import SongHover from "./SongHover";
 
 interface SongProps {
   songId: number;
@@ -10,7 +12,7 @@ interface SongProps {
 
 export const Song = (props: SongProps) => {
   const { songId, name, album_image, history } = props;
-
+  const [hovering, setHover] = useState(false);
   return (
     <>
       <Card
@@ -28,15 +30,19 @@ export const Song = (props: SongProps) => {
       >
         <CardMedia
           image={ album_image }
+          onMouseEnter={ () => setHover(true) }
+          onMouseLeave={ () => setHover(false) }
           style={ {
             borderRadius: "100px",
             height: "200px",
             margin: "auto",
             marginTop: "25px",
+            opacity: "1",
             width: "200px",
           } }
-        />
-        <CardContent>{ name }</CardContent>
+        >
+          <SongHover hovering={ hovering } name={ name } />
+        </CardMedia>
       </Card>
     </>
   );
