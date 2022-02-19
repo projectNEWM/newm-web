@@ -1,4 +1,5 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Collapse, Grid, Typography } from "@mui/material";
+import { useState } from "react";
 import { ArtistProfile } from "./ArtistProfile";
 import { NEWMLogo } from "./NEWMLogo";
 import { Artist } from "../models/artist";
@@ -6,7 +7,23 @@ import { Artist } from "../models/artist";
 interface HeaderProps {
   artist: Artist;
 }
+
 export const Header = ({ artist }: HeaderProps) => {
+  const [isTextVisible, setIsTextVisible] = useState(true);
+  document.onreadystatechange = function () {
+    document.getElementById("content")?.addEventListener("scroll", listenToScroll);
+  };
+  const listenToScroll = () => {
+    const heightToHideFrom = 37;
+    const winScroll = document.getElementById("content")?.scrollTop;
+
+    if (winScroll && winScroll > heightToHideFrom) {
+      isTextVisible && setIsTextVisible(false); // to limit setting state only the first time
+    } else {
+      setIsTextVisible(true);
+    }
+  };
+
   return (
     <div>
       <Grid container spacing={ 2 }>
@@ -27,10 +44,15 @@ export const Header = ({ artist }: HeaderProps) => {
               width: "829px",
             } }
           >
-            <Typography variant="body1">{ artist.bio }</Typography>
+            <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
+                  <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
+                    <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
+                  </Box>
+            </Collapse> 
           </div>
         </Grid>
       </Grid>
     </div>
   );
 };
+
