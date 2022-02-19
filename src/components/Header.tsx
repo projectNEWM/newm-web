@@ -1,5 +1,5 @@
 import { Box, Collapse, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArtistProfile } from "./ArtistProfile";
 import { NEWMLogo } from "./NEWMLogo";
 import { Artist } from "../models/artist";
@@ -10,23 +10,20 @@ interface HeaderProps {
 
 export const Header = ({ artist }: HeaderProps) => {
   const [isTextVisible, setIsTextVisible] = useState(true);
-
-  useEffect(() => {
-    const listenToScroll = () => {
-      const heightToHideFrom = 37;
-      const winScroll = document.getElementById("content")?.scrollTop;
-  
-      if (winScroll && winScroll > heightToHideFrom) {
-        isTextVisible && setIsTextVisible(false); // to limit setting state only the first time
-      } else {
-        setIsTextVisible(true);
-      }
-    };
+  document.onreadystatechange = function () {
     document && document.getElementById("content")?.addEventListener("scroll", listenToScroll);
-    return () => document.getElementById("content")?.removeEventListener("scroll", listenToScroll);
-  }, [isTextVisible]);
+  };
+  const listenToScroll = () => {
+    const heightToHideFrom = 37;
+    const winScroll = document.getElementById("content")?.scrollTop;
 
-  
+    if (winScroll && winScroll > heightToHideFrom) {
+      isTextVisible && setIsTextVisible(false); // to limit setting state only the first time
+    } else {
+      setIsTextVisible(true);
+    }
+  };
+
   return (
     <div>
       <Grid container spacing={ 2 }>
