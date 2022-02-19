@@ -11,7 +11,7 @@ interface HeaderProps {
 export const Header = ({ artist }: HeaderProps) => {
   const [isTextVisible, setIsTextVisible] = useState(true);
   document.onreadystatechange = function () {
-    document && document.getElementById("content")?.addEventListener("scroll", listenToScroll);
+    document.getElementById("content")?.addEventListener("scroll", listenToScroll);
   };
   const listenToScroll = () => {
     const heightToHideFrom = 37;
