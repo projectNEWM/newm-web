@@ -9,3 +9,4 @@ declare module "*.svg" {
 }
 
 declare module "cloudinary-react";
+declare module "react-transition-group";

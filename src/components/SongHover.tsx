@@ -19,7 +19,7 @@ const SongHover = (props: HoverProps) => {
         justifyContent: "center",
         marginLeft: "auto",
         marginRight: "auto",
-        opacity: props.hovering ? "0.6" : "0",
+        opacity: "0.6",
         textAlign: "center",
       } }
     >

@@ -1,6 +1,7 @@
-import { Card, CardMedia } from "@mui/material";
+import { Box, Card, CardMedia } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
+import { FadeInTransition } from "react-transitions-library";
 import SongHover from "./SongHover";
 
 interface SongProps {
@@ -41,7 +42,13 @@ export const Song = (props: SongProps) => {
             width: "200px",
           } }
         >
-          <SongHover hovering={ hovering } name={ name } />
+          <Box sx={ { height: "inherit" } }>
+            <FadeInTransition timeout={ 400 } from={ 0 } to={ 1 } in={ hovering } style={ { height: "inherit" } }>
+              <Box sx={ { height: "inherit" } }>
+                <SongHover hovering={ hovering } name={ name } />
+              </Box>
+            </FadeInTransition>
+          </Box>
         </CardMedia>
       </Card>
     </>
