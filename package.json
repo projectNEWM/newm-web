@@ -18,7 +18,6 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
     "react-transition-group": "^4.4.2",
-    "react-transitions-library": "^1.10.1",
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },
