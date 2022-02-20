@@ -43,7 +43,7 @@ export const Song = (props: SongProps) => {
           } }
         >
           <Box sx={ { height: "inherit" } }>
-            <FadeInTransition timeout={ 400 } from={ 0 } to={ 1 } in={ hovering } style={ { height: "inherit" } }>
+            <FadeInTransition timeout={ 250 } from={ 0 } to={ 1 } in={ hovering } style={ { height: "inherit" } }>
               <Box sx={ { height: "inherit" } }>
                 <SongHover hovering={ hovering } name={ name } />
               </Box>
