@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Card, IconButton, useTheme } from "@mui/material";
 import { History } from "history";
-import { useState } from "react";
 
 interface AddSongCardProps {
   id: string;
@@ -9,6 +9,7 @@ interface AddSongCardProps {
   handleClick: () => void;
   history: History;
 }
+
 const AddSongIcon = () => {
   return (
     <svg
@@ -45,7 +46,8 @@ const AddSongIcon = () => {
     </svg>
   );
 };
-export const AddSongCard = (props: AddSongCardProps) => {
+
+const AddSongCard = (props: AddSongCardProps) => {
   const theme = useTheme();
   const { id, handleClick, history } = props;
   const [hovering, setHover] = useState(false);
@@ -82,3 +84,5 @@ export const AddSongCard = (props: AddSongCardProps) => {
     </>
   );
 };
+
+export default AddSongCard;

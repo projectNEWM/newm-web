@@ -1,7 +1,7 @@
 import { Box, Collapse, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { ArtistProfile } from "./ArtistProfile";
-import { NEWMLogo } from "./NEWMLogo";
+import NEWMLogo from "components/NEWMLogo";
 import { Artist } from "../models/artist";
 
 interface HeaderProps {
@@ -27,7 +27,14 @@ export const Header = ({ artist }: HeaderProps) => {
   return (
     <div>
       <Grid container spacing={ 2 }>
-        <NEWMLogo />
+        <Box
+          component={ Grid }
+          item xs={ 3 }
+          display={ { sm: "block", xs: "none" } }
+        >
+          <NEWMLogo />
+        </Box>
+
         <Grid item xs={ 12 } sm={ 6 }>
           <ArtistProfile artist={ artist } />
         </Grid>
@@ -48,11 +55,10 @@ export const Header = ({ artist }: HeaderProps) => {
                   <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
                     <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
                   </Box>
-            </Collapse> 
+            </Collapse>
           </div>
         </Grid>
       </Grid>
     </div>
   );
 };
-

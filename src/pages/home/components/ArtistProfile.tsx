@@ -1,13 +1,13 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import ArtistImage from "./../images/artist-image.svg";
-import Genre from "./../images/genre.svg";
-import { Artist } from "../models/artist";
+import ArtistImage from "assets/svg/Artist";
+import Genre from "assets/svg/genre.svg";
+import { Artist } from "modules/artist";
 
 interface ArtistProfileProps {
   artist: Artist;
 }
 
-export const ArtistProfile = ({ artist }: ArtistProfileProps) => {
+const ArtistProfile = ({ artist }: ArtistProfileProps) => {
   return (
     <div>
       <Grid container>
@@ -38,3 +38,5 @@ export const ArtistProfile = ({ artist }: ArtistProfileProps) => {
     </div>
   );
 };
+
+export default ArtistProfile;

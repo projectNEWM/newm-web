@@ -1,18 +1,18 @@
+import React, { useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { History } from "history";
-import { useState } from "react";
-import addSong from "./../images/add-song.png";
-import { AddSongCard } from "./AddSongCard";
-import { Popup } from "./Popup";
-import { Song } from "./Song";
-import { SongUploadForm } from "./SongUploadForm";
-import songDataMock from "../data/SongData";
+import addSong from "assets/png/add-song.png";
+import AddSongCard from "./AddSongCard";
+import Popup from "components/Popup";
+import songDataMock from "data/SongData";
+import Song from "./Song";
+import SongUploadForm from "./SongUploadForm";
 
 export interface SongsProps {
   history: History;
 }
 
-export const Songs = (props: SongsProps) => {
+const Songs = (props: SongsProps) => {
   const { history } = props;
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -51,3 +51,5 @@ export const Songs = (props: SongsProps) => {
     </>
   );
 };
+
+export default Songs;

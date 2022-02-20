@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import { StyledTextField } from "./StyledComponents";
+import { TextField } from "./TextField";
 
 interface DateTimePickerProps {
   name: string;
@@ -8,17 +8,17 @@ interface DateTimePickerProps {
   size?: "small" | "medium" | undefined;
 }
 
-export const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
+const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
   const [field] = useField(name);
 
-  const configDateTimePicker = {
-    ...field,
-    ...otherProps,
-    InputLabelProps: {
-      shrink: true,
-    },
-    type: "date",
-  };
-
-  return <StyledTextField { ...configDateTimePicker } />;
+  return (
+    <TextField
+      InputLabelProps={{ shrink: true }}
+      type="date"
+      {...field}
+      {...otherProps}
+    />
+  );
 };
+
+export default DatePickerInput

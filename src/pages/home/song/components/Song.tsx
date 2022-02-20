@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { Card, CardMedia } from "@mui/material";
 import { History } from "history";
-import { useState } from "react";
 import SongHover from "./SongHover";
 
 interface SongProps {
@@ -10,9 +10,10 @@ interface SongProps {
   history: History;
 }
 
-export const Song = (props: SongProps) => {
+const Song = (props: SongProps) => {
   const { songId, name, album_image, history } = props;
   const [hovering, setHover] = useState(false);
+
   return (
     <>
       <Card
@@ -47,3 +48,5 @@ export const Song = (props: SongProps) => {
     </>
   );
 };
+
+export default Song;

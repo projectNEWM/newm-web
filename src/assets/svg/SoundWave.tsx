@@ -1,4 +1,4 @@
-const SoundWaveSVG = () => {
+const SoundWave = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,4 +21,5 @@ const SoundWaveSVG = () => {
     </svg>
   );
 };
+
 export default SoundWaveSVG;

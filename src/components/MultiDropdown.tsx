@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useFormikContext } from "formik";
 import { useState } from "react";
 
-interface MultiDropdpwnProps {
+interface MultiDropdownProps {
   name: string;
   label: string;
   options: string[];
@@ -25,7 +25,7 @@ const MenuProps = {
   },
 };
 
-export const MultiDropdown = ({ name, label, options, size, width }: MultiDropdpwnProps) => {
+const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps) => {
   const theme = useTheme();
   const [fieldState, setFieldState] = useState<string[]>([]);
   const { setFieldValue } = useFormikContext();
@@ -77,3 +77,5 @@ export const MultiDropdown = ({ name, label, options, size, width }: MultiDropdp
     };
   }
 };
+
+export default MultiDropdown;

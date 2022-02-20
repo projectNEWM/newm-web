@@ -1,13 +1,18 @@
+import React, { Dispatch, SetStateAction } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
-import { Dispatch, SetStateAction } from "react";
 import { array, date, object, string } from "yup";
-import { DatePickerInput } from "./DatePickerInput";
-import { ImageUpload } from "./ImageUpload";
-import { MultiDropdown } from "./MultiDropdown";
-import { StyledFilledButton, StyledOutlinedButton, StyledTextArea, StyledTextField } from "./StyledComponents";
-import GenreData from "../data/GenreData";
-import RoleData from "../data/RoleData";
+import {
+  FilledButton,
+  OutlinedButton,
+  TextArea,
+  TextField,
+  DatePickerInput,
+  MultiDropdown,
+  ImageUpload,
+} from "components";
+import GenreData from "data/GenreData";
+import RoleData from "data/RoleData";
 
 const initialValues = {
   description: "",
@@ -22,7 +27,7 @@ interface SongUploadFormProps {
   setOpenPopup: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SongUploadForm = (props: SongUploadFormProps) => {
+const SongUploadForm = (props: SongUploadFormProps) => {
   return (
     <Box sx={ { flexGrow: 1 } }>
       <Formik
@@ -61,7 +66,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       name="title"
                       size="small"
                       label="Title"
-                      as={ StyledTextField }
+                      as={ TextField }
                       variant="outlined"
                       error={ Boolean(errors.title) && Boolean(touched.title) }
                     />
@@ -102,7 +107,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { height: "96px", width: "-webkit-fill-available" } }
                       name="description"
                       label="Description / Tags / Credits"
-                      as={ StyledTextArea }
+                      as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
                       error={ Boolean(errors.description) && Boolean(touched.description) }
@@ -145,7 +150,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       } }
                       name="description"
                       label="Description / Tags / Credits"
-                      as={ StyledTextArea }
+                      as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
                       error={ Boolean(errors.description) && Boolean(touched.description) }
@@ -179,7 +184,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                       name="title"
                       size="small"
                       label="Title"
-                      as={ StyledTextField }
+                      as={ TextField }
                       variant="outlined"
                       error={ Boolean(errors.title) && Boolean(touched.title) }
                       // helperText={Boolean(touched.title) && errors.title}
@@ -259,7 +264,7 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
               </Grid> */ }
             </Grid>
             <Box sx={ { paddingTop: "0px", textAlign: "center" } } width="1062px">
-              <StyledOutlinedButton
+              <OutlinedButton
                 onClick={ () => {
                   props.setOpenPopup(false);
                 } }
@@ -267,23 +272,23 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
                 variant="outlined"
               >
                 Cancel
-              </StyledOutlinedButton>
-              <StyledFilledButton
+              </OutlinedButton>
+              <FilledButton
                 sx={ { marginRight: "15px", width: "164px" } }
                 type="submit"
                 variant="contained"
                 disabled={ !isValid || !dirty }
               >
                 Upload
-              </StyledFilledButton>
-              <StyledFilledButton
+              </FilledButton>
+              <FilledButton
                 sx={ { width: "164px" } }
                 type="submit"
                 variant="contained"
                 disabled={ !isValid || !dirty }
               >
                 Mint
-              </StyledFilledButton>
+              </FilledButton>
             </Box>
           </Form>
         ) }
@@ -291,3 +296,5 @@ export const SongUploadForm = (props: SongUploadFormProps) => {
     </Box>
   );
 };
+
+export default SongUploadForm;
