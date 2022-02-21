@@ -2,6 +2,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box, Card, IconButton, useTheme } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
+import { SwitchTransition, Transition } from "react-transition-group";
+import styled from "styled-components";
 
 interface AddSongCardProps {
   id: string;
@@ -45,6 +47,7 @@ const AddSongIcon = () => {
     </svg>
   );
 };
+
 export const AddSongCard = (props: AddSongCardProps) => {
   const theme = useTheme();
   const { id, handleClick, history } = props;
@@ -74,11 +77,27 @@ export const AddSongCard = (props: AddSongCardProps) => {
             justifyContent: "center",
           } }
         >
-          <IconButton onClick={ handleClick } sx={ { color: theme.palette.primary.main } }>
-            { hovering ? <AddIcon sx={ { fontSize: "40px" } } /> : <AddSongIcon /> }
-          </IconButton>
+          <SwitchTransition mode="out-in">
+            <FadeTransition key={ hovering ? "bar" : "foo" } timeout={ 100 } unmountOnExit mountOnEnter>
+              <IconButton onClick={ handleClick } sx={ { color: theme.palette.primary.main } }>
+                { hovering ? <AddIcon sx={ { fontSize: "40px" } } /> : <AddSongIcon /> }
+              </IconButton>
+            </FadeTransition>
+          </SwitchTransition>
         </Box>
       </Card>
     </>
   );
 };
+
+// For the fade transition
+const FadeDiv = styled.div`
+  transition: 0.5s;
+  opacity: ${({ state }: never) => (state === "entered" ? 1 : 0)};
+  display: ${({ state }: never) => (state === "exited" ? "none" : "block")};
+`;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FadeTransition = ({ children, ...rest }: any): JSX.Element => (
+  <Transition { ...rest }>{ (state: never) => <FadeDiv state={ state }>{ children }</FadeDiv> }</Transition>
+);

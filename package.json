@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
+    "@types/react-transition-group": "^4.4.4",
     "cloudinary-react": "^1.7.1",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",
@@ -16,6 +17,8 @@
     "react-dropzone": "^11.5.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
+    "react-transition-group": "^4.4.2",
+    "styled-components": "^5.3.3",
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },
@@ -28,8 +31,16 @@
     "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts,tsx}\""
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.2",
