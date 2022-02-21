@@ -1,9 +1,10 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Card, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
 import { SwitchTransition } from "react-transition-group";
 import AddSongSVG from "assets/images/AddSong";
+import SongCard from "./SongCard";
 import { FadeTransition } from "components";
 
 interface AddSongCardProps {
@@ -19,19 +20,7 @@ const AddSongCard = (props: AddSongCardProps) => {
   const [hovering, setHover] = useState(false);
   return (
     <>
-      <Card
-        sx={ {
-          background: "#0A0A0A 0% 0% no-repeat padding-box;",
-          color: "black",
-          height: "250px",
-          margin: "0px",
-          opacity: ".7",
-          padding: "0px",
-          textAlign: "center",
-          width: "250px",
-        } }
-        onClick={ () => history.push(`/home/song/${id}`) }
-      >
+      <SongCard onClick={ () => history.push(`/home/song/${id}`) }>
         <Box
           onMouseEnter={ () => setHover(true) }
           onMouseLeave={ () => setHover(false) }
@@ -61,7 +50,7 @@ const AddSongCard = (props: AddSongCardProps) => {
             </FadeTransition>
           </SwitchTransition>
         </Box>
-      </Card>
+      </SongCard>
     </>
   );
 };
