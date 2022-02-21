@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CardMedia } from "@mui/material";
 import { History } from "history";
+import { Transition } from "react-transition-group";
 import SongCard from "./SongCard"
 import SongHover from "./SongHover";
 
@@ -30,11 +31,47 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
             width: "200px",
           } }
         >
-          <SongHover hovering={ hovering } name={ name } />
+          <Box sx={ { height: "inherit" } }>
+            <Transition in={ hovering } timeout={ duration }>
+              { (
+                state: keyof {
+                  entering: { opacity: number };
+                  entered: { opacity: number };
+                  exiting: { opacity: number };
+                  exited: { opacity: number };
+                }
+              ) => (
+                <div
+                  style={ {
+                    ...styles.default,
+                    ...styles.transition[state],
+                    height: "inherit",
+                  } }
+                >
+                  <SongHover hovering={ hovering } name={ name } />
+                </div>
+              ) }
+            </Transition>
+          </Box>
         </CardMedia>
       </SongCard>
     </>
   );
 };
+
+const duration = 250;
+
+const styles = {
+  default: {
+    opacity: 0,
+    transition: `opacity ${duration}ms ease-in-out`,
+  },
+  transition: {
+    entered: { opacity: 1 },
+    entering: { opacity: 1 },
+    exited: { opacity: 0 },
+    exiting: { opacity: 0 },
+  },
+}
 
 export default Song;
