@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes } from "react";
 import { Box, Tab, Tabs, styled } from "@mui/material";
 import { History } from "history";
-import { Songs } from "../song/components";
+import Songs from "./song/Songs";
 import { useWindowDimensions } from "common/hooks";
 
 interface ContentPropTypes extends HTMLAttributes<HTMLDivElement> {

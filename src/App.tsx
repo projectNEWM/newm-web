@@ -1,8 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, styled } from "@mui/material/styles";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { Content } from "pages/home/components";
 import { Header } from "components";
+import Content from "pages/home/Content";
 import theme from "theme";
 import "./App.css";
 
