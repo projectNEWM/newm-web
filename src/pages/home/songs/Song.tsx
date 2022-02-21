@@ -1,9 +1,9 @@
+import { Box, CardMedia } from "@mui/material";
 import { History } from "history";
 import { useState } from "react";
-import { Box, CardMedia } from "@mui/material";
 import { Transition } from "react-transition-group";
-import SongCard from "./styled/SongCard";
 import SongHover from "./SongHover";
+import SongCard from "./styled/SongCard";
 
 interface SongProps {
   songId: number;
