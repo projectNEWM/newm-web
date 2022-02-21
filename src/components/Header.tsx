@@ -25,7 +25,7 @@ const Header = ({ artist }: HeaderProps) => {
   };
 
   return (
-    <div style={{ paddingTop: 20 }}>
+    <Box pt={ 1.75 }>
       <Grid container spacing={ 2 }>
         <Box
           component={ Grid }
@@ -52,14 +52,18 @@ const Header = ({ artist }: HeaderProps) => {
             } }
           >
             <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
-                  <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
+                  <Box
+                    maxHeight={ 85 }
+                    overflow="scroll"
+                    textOverflow="scroll"
+                  >
                     <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
                   </Box>
             </Collapse>
           </div>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

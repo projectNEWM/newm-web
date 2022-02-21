@@ -34,7 +34,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
         marginRight: "auto",
       } }
     >
-      <Box sx={ { marginTop: 1.8 } }>
+      <Box py={ 2 }>
         <Tabs
           centered
           value={ value }
@@ -54,7 +54,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
       <Box
         data-testid="contentBox"
         justifyContent="center"
-        maxHeight={ height && height - 215 }
+        maxHeight={ height && height - 295 }
         overflow={ "scroll" }
         id="content"
       >

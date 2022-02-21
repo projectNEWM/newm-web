@@ -14,13 +14,13 @@ const TabPanel = ({
   ...other
 }: TabPanelProps) => {
   return (
-    <div { ...other }>
+    <Box { ...other }>
       { value === page && (
-        <Box p={ 3 }>
+        <Box px={ 3 } pt={1}>
           { children }
         </Box>
       ) }
-    </div>
+    </Box>
   );
 };
 
