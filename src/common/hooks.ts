@@ -1,4 +1,6 @@
 import { useLayoutEffect, useState } from "react";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux"
+import { RootState, AppDispatch } from "store"
 
 export interface WindowDimensions {
   height: number;
@@ -33,3 +35,7 @@ export const useWindowDimensions = (): WindowDimensions | undefined => {
 
   return windowDimensions;
 };
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

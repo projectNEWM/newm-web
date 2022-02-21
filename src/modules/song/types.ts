@@ -1,7 +1,9 @@
-export enum Role {
-  Producer,
-  Singer,
-  SoundEngineer,
+import { Role } from "modules/role"
+
+export interface Artist {
+  bio: string;
+  name: string;
+  roles: string;
 }
 
 export interface Contributor {
@@ -14,12 +16,12 @@ export interface Song {
   name: string;
   id: number;
   genre: string;
-  user_role: Role;
-  release_date: string;
+  userRole: Role;
+  releaseDate: string;
   description: string;
-  album_image: string;
+  albumImage: string;
   contributors: {
     [id: number]: Contributor;
   };
-  extra_information: string;
+  extraInformation: string;
 }

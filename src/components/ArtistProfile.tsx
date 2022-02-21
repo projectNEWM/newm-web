@@ -1,7 +1,7 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import artistImage from "assets/images/artist.svg";
 import genre from "assets/images/genre.svg";
-import { Artist } from "modules/artist";
+import { Artist } from "modules/song";
 
 interface ArtistProfileProps {
   artist: Artist;

@@ -2,6 +2,9 @@ import * as React from "react"
 import { Dispatch, SetStateAction } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
+import { useAppSelector } from "common"
+import { selectGenres } from "modules/genre"
+import { selectRoles } from "modules/role"
 import { array, date, object, string } from "yup";
 import {
   FilledButton,
@@ -12,8 +15,6 @@ import {
   MultiDropdown,
   ImageUpload,
 } from "components";
-import GenreData from "data/GenreData";
-import RoleData from "data/RoleData";
 
 const initialValues = {
   description: "",
@@ -29,6 +30,9 @@ interface SongUploadFormProps {
 }
 
 const SongUploadForm = (props: SongUploadFormProps) => {
+  const roles = useAppSelector(selectRoles);
+  const genres = useAppSelector(selectGenres);
+
   return (
     <Box sx={ { flexGrow: 1 } }>
       <Formik
@@ -77,7 +81,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { width: "-webkit-fill-available" } }
                       name="genre"
                       label="Genre"
-                      options={ GenreData }
+                      options={ genres }
                       as={ MultiDropdown }
                       error={ Boolean(errors.genre) && Boolean(touched.genre) }
                       helperText={ Boolean(touched.genre) && errors.genre }
@@ -88,7 +92,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { width: "-webkit-fill-available" } }
                       name="yourRole"
                       label="Your Role"
-                      options={ RoleData }
+                      options={ roles }
                       as={ MultiDropdown }
                       error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
                     />
@@ -196,7 +200,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { width: "-webkit-fill-available" } }
                       name="genre"
                       label="Genre"
-                      options={ GenreData }
+                      options={ genres }
                       as={ MultiDropdown }
                       error={ Boolean(errors.genre) && Boolean(touched.genre) }
                       helperText={ Boolean(touched.genre) && errors.genre }
@@ -207,7 +211,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { width: "-webkit-fill-available" } }
                       name="yourRole"
                       label="Your Role"
-                      options={ RoleData }
+                      options={ roles }
                       as={ MultiDropdown }
                       error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
                       // helperText={ Boolean(touched.yourRole) && errors.yourRole }

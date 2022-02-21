@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
+    "@reduxjs/toolkit": "^1.7.2",
     "cloudinary-react": "^1.7.1",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",

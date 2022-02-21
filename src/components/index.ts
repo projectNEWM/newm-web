@@ -11,3 +11,4 @@ export { default as Popup } from "./Popup";
 export { default as TextArea } from "./TextArea";
 export { default as TextField } from "./TextField";
 export { default as Tab } from "./Tab";
+export { default as BackgroundImage } from "./BackgroundImage";
