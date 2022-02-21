@@ -1,5 +1,6 @@
 import { Box, Collapse, Grid, Typography } from "@mui/material";
 import { Artist } from "modules/artist";
+import { useState } from "react";
 import ArtistProfile from "./ArtistProfile";
 import NEWMLogo from "./NEWMLogo";
 

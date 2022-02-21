@@ -1,6 +1,5 @@
-import { Button, Paper, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "theme";
 
 const OutlinedButton = styled(Button)(({ theme }) => ({
   borderRadius: "7px",

@@ -1,8 +1,8 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
+import { FilledButton, PaperInput } from "components";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import FilledButton from "./FilledButton";
-import PaperInput from "./PaperInput";
 
 // once we have backend authentication we will need to protect these variables
 const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
@@ -17,7 +17,7 @@ interface ImageUploadProps {
   setTouched?: (fields: { [field: string]: boolean }, shouldValidate?: boolean) => void;
 }
 
-const ImageUpload = ({
+export const ImageUpload = ({
   fileType = "png",
   dropzoneLabel = "Drag & Drop (Square Image Only)",
   buttonLabel = "Upload Image",
@@ -54,7 +54,6 @@ const ImageUpload = ({
     multiple: false,
     onDrop,
   });
-
   if (!uploadedFilePublicId) {
     return (
       <div data-testid="dropzone" { ...getRootProps({ className: "dropzone" }) }>

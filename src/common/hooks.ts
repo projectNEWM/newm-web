@@ -12,7 +12,7 @@ const getWindowDimensions = () => {
   const height = hasWindow ? window.innerHeight : null;
 
   return { height, width } as WindowDimensions;
-}
+};
 
 export const useWindowDimensions = (): WindowDimensions | undefined => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
@@ -32,4 +32,4 @@ export const useWindowDimensions = (): WindowDimensions | undefined => {
   );
 
   return windowDimensions;
-}
+};

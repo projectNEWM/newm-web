@@ -1,5 +1,5 @@
-import { Box, Grid } from "@mui/material";
-import newmLogo from "assets/svg/newmLogo.svg"
+import { Box } from "@mui/material";
+import newmLogo from "assets/svg/newm-logo.svg";
 
 const NEWMLogo = () => {
   return (

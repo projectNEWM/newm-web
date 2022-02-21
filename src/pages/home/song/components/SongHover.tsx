@@ -1,5 +1,5 @@
 import { CardContent } from "@mui/material";
-import soundWave from "assets/svg/soundWave.svg";
+import soundWave from "assets/svg/sound-wave.svg";
 
 interface HoverProps {
   name: string;
