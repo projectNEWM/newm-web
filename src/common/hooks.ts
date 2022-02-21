@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux"
-import { RootState, AppDispatch } from "store"
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "store";
 
 export interface WindowDimensions {
   height: number;

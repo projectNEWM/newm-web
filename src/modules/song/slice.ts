@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Role } from "modules/role"
+import { Role } from "modules/role";
 import { Song } from "./types";
 
 interface SongState {
@@ -239,8 +239,8 @@ const initialState: SongState = {
 };
 
 const roleSlice = createSlice({
-  name: "role",
   initialState,
+  name: "role",
   reducers: {},
 });
 

@@ -1,11 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton, useTheme } from "@mui/material";
+import AddSongSVG from "assets/images/AddSong";
+import { FadeTransition } from "components";
 import { History } from "history";
 import { useState } from "react";
 import { SwitchTransition } from "react-transition-group";
-import AddSongSVG from "assets/images/AddSong";
-import SongCard from "./SongCard";
-import { FadeTransition } from "components";
+import SongCard from "./styled/SongCard";
 
 interface AddSongCardProps {
   id: string;

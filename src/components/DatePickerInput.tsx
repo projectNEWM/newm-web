@@ -13,12 +13,12 @@ const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {
 
   return (
     <TextField
-      InputLabelProps={{ shrink: true }}
+      InputLabelProps={ { shrink: true } }
       type="date"
-      {...field}
-      {...otherProps}
+      { ...field }
+      { ...otherProps }
     />
   );
 };
 
-export default DatePickerInput
+export default DatePickerInput;

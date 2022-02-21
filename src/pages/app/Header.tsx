@@ -1,8 +1,8 @@
 import { Box, Collapse, Grid, Typography } from "@mui/material";
+import NEWMLogo from "components/NEWMLogo";
 import { Artist } from "modules/song";
 import { useState } from "react";
 import ArtistProfile from "./ArtistProfile";
-import NEWMLogo from "components/NEWMLogo";
 
 interface HeaderProps {
   artist: Artist;

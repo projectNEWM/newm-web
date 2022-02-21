@@ -11,4 +11,4 @@ const TextArea = styled(TextField)({
   opacity: 1,
 });
 
-export default TextArea
+export default TextArea;

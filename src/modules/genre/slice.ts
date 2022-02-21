@@ -10,8 +10,8 @@ const initialState: GenreState = {
 };
 
 const genreSlice = createSlice({
-  name: "genre",
   initialState,
+  name: "genre",
   reducers: {
     // example action (clears genres)
     clear: (state) => {

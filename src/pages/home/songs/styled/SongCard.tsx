@@ -10,6 +10,6 @@ const SongCard = styled(Card)({
   padding: "0px",
   textAlign: "center",
   width: "250px",
-})
+});
 
 export default SongCard;

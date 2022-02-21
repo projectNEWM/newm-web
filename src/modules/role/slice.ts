@@ -11,8 +11,8 @@ const initialState: RoleState = {
 };
 
 const roleSlice = createSlice({
-  name: "role",
   initialState,
+  name: "role",
   reducers: {},
 });
 

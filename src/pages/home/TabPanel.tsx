@@ -16,7 +16,7 @@ const TabPanel = ({
   return (
     <Box { ...other }>
       { value === page && (
-        <Box px={ 3 } pt={1}>
+        <Box px={ 3 } pt={ 1 }>
           { children }
         </Box>
       ) }
