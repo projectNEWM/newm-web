@@ -1,20 +1,14 @@
-import { ReactNode } from "react";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Header } from "components";
+import { Background, Header } from "pages/app";
 import Home from "pages/home";
+import { Provider } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { Provider } from 'react-redux';
-import { styled } from "@mui/material/styles";
-import store from "./store"
-import theme from "theme";
+import store from "./store";
+import theme from "./theme";
 import "./App.css";
 
 // Design: https://xd.adobe.com/view/2cb4c8ee-234a-46cc-b2d2-683e9ae7031c-79e7/
-
-interface BackgroundProps {
-  children: ReactNode;
-}
 
 const artist = {
   bio:
@@ -34,39 +28,6 @@ const artist = {
   name: "Miah Jonez",
   roles: "Singer, Producer",
 };
-
-const BackgroundImage = styled("div")({
-  backgroundImage: "url(\"https://i.postimg.cc/TPTmSRWB/bg-img.png\")",
-  backgroundPosition: "center",
-  backgroundRepeat: "repeat",
-  backgroundSize: "cover",
-  height: "100%",
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  position: "absolute",
-});
-
-const BackgroundOverlay = styled("div")({
-  backgroundColor: "rgba(0, 0, 0, 0.25)",
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  position: "absolute",
-});
-
-/**
- * Background image with darkened overlay.
- */
-const Background = ({ children }: BackgroundProps) => (
-  <BackgroundImage>
-    <BackgroundOverlay>
-      { children }
-    </BackgroundOverlay>
-  </BackgroundImage>
-);
 
 const App = () => {
   return (

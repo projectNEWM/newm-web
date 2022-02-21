@@ -2,7 +2,7 @@ import { Box, Collapse, Grid, Typography } from "@mui/material";
 import { Artist } from "modules/song";
 import { useState } from "react";
 import ArtistProfile from "./ArtistProfile";
-import NEWMLogo from "./NEWMLogo";
+import NEWMLogo from "components/NEWMLogo";
 
 interface HeaderProps {
   artist: Artist;
@@ -13,6 +13,7 @@ const Header = ({ artist }: HeaderProps) => {
   document.onreadystatechange = function () {
     document.getElementById("content")?.addEventListener("scroll", listenToScroll);
   };
+
   const listenToScroll = () => {
     const heightToHideFrom = 37;
     const winScroll = document.getElementById("content")?.scrollTop;

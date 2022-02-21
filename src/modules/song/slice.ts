@@ -10,6 +10,8 @@ interface SongState {
 
 const initialState: SongState = {
   // TEMP: Data is mocked until API data is available
+  /* eslint-disable max-len */
+  /* eslint-disable sort-keys */
   songs: {
     1: {
       name: "Mr Rager",
@@ -232,6 +234,8 @@ const initialState: SongState = {
       extraInformation: "extra info",
     },
   },
+  /* eslint-enable max-len */
+  /* eslint-enable sort-keys */
 };
 
 const roleSlice = createSlice({

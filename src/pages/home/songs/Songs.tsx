@@ -53,7 +53,13 @@ const Songs = ({ history }: SongsProps) => {
           }) }
 
           <Grid
-            item xs={ 12 } sm={ 4 } md={ 3 } paddingBottom={ 2 } sx={ { margin: "0px" } }>
+            item
+            xs={ 12 }
+            sm={ 4 }
+            md={ 3 }
+            paddingBottom={ 2 }
+            sx={ { margin: "0px" } }
+          >
             <AddSongCard
               handleClick={ () => setOpenPopup(true) }
               history={ history }
