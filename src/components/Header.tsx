@@ -25,7 +25,7 @@ const Header = ({ artist }: HeaderProps) => {
   };
 
   return (
-    <div>
+    <div style={{ paddingTop: 20 }}>
       <Grid container spacing={ 2 }>
         <Box
           component={ Grid }

@@ -27,24 +27,37 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
   };
 
   return (
-    <Box sx={ { justifyContent: "center", marginLeft: "auto", marginRight: "auto" } }>
-      <Tabs
-        centered
-        value={ value }
-        onChange={ handleChange }
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="secondary tabs example"
-      >
-        <Tab label="Songs" />
-        <Tab label="Playlists" />
-        <Tab label="Contributors" />
-        <Tab label="Wallet" />
-        <Tab label="Metrics" />
-      </Tabs>
+    <Box
+      sx={ {
+        justifyContent: "center",
+        marginLeft: "auto",
+        marginRight: "auto",
+      } }
+    >
+      <Box sx={ { marginTop: 1.8 } }>
+        <Tabs
+          centered
+          value={ value }
+          onChange={ handleChange }
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="secondary tabs example"
+        >
+          <Tab label="Songs" />
+          <Tab label="Playlists" />
+          <Tab label="Contributors" />
+          <Tab label="Wallet" />
+          <Tab label="Metrics" />
+        </Tabs>
+      </Box>
 
-      <Box data-testid="contentBox" justifyContent="center" maxHeight={ height && height - 215 }
-        overflow={ "scroll" } id="content">
+      <Box
+        data-testid="contentBox"
+        justifyContent="center"
+        maxHeight={ height && height - 215 }
+        overflow={ "scroll" }
+        id="content"
+      >
         <TabPanel value={ value } page={ Page.songs }>
           <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
             <Songs history={ history } />
