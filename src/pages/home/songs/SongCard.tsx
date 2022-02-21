@@ -1,11 +1,7 @@
 import { Card } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-interface SongCardProps {
-  onClick: VoidFunction
-}
-
-const SongCard = styled(Card)<SongCardProps>({
+const SongCard = styled(Card)({
   background: "#0A0A0A 0% 0% no-repeat padding-box",
   color: "black",
   height: "250px",
