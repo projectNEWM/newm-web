@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import Song from "../components/Song";
+import Song from "./Song";
 const history = createMemoryHistory();
 
 describe("<Song />", () => {

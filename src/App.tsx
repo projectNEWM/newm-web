@@ -1,8 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, styled } from "@mui/material/styles";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Header } from "components";
-import Content from "pages/home/Content";
+import Home from "pages/home";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import theme from "theme";
 import "./App.css";
 
@@ -52,19 +52,19 @@ const App = () => {
             <Redirect exact from="/home" to="/home/songs" />
             <Route
               path="/home/:page?"
-              render={({ match, history, ...otherProps }) => (
-                <Content
+              render={ ({ match, history, ...otherProps }) => (
+                <Home
                   page={ match.params.page }
                   history={ history }
                   { ...otherProps }
                 />
-              )}
+              ) }
             />
           </Switch>
         </BrowserRouter>
       </StyledBackground>
     </ThemeProvider>
   );
-}
+};
 
 export default App;

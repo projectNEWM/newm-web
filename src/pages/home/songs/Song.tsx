@@ -1,36 +1,24 @@
 import { useState } from "react";
-import { Card, CardMedia } from "@mui/material";
+import { CardMedia } from "@mui/material";
 import { History } from "history";
+import SongCard from "./SongCard"
 import SongHover from "./SongHover";
 
 interface SongProps {
   songId: number;
   name: string;
-  album_image: string;
+  albumImage: string;
   history: History;
 }
 
-const Song = (props: SongProps) => {
-  const { songId, name, album_image, history } = props;
+const Song = ({ songId, name, albumImage, history }: SongProps) => {
   const [hovering, setHover] = useState(false);
 
   return (
     <>
-      <Card
-        sx={ {
-          background: "#0A0A0A 0% 0% no-repeat padding-box;",
-          color: "black",
-          height: "250px",
-          margin: "0px",
-          opacity: ".7",
-          padding: "0px",
-          textAlign: "center",
-          width: "250px",
-        } }
-        onClick={ () => history.push(`/home/song/${songId}`) }
-      >
+      <SongCard onClick={ () => history.push(`/home/song/${songId}`) }>
         <CardMedia
-          image={ album_image }
+          image={ albumImage }
           onMouseEnter={ () => setHover(true) }
           onMouseLeave={ () => setHover(false) }
           style={ {
@@ -44,7 +32,7 @@ const Song = (props: SongProps) => {
         >
           <SongHover hovering={ hovering } name={ name } />
         </CardMedia>
-      </Card>
+      </SongCard>
     </>
   );
 };

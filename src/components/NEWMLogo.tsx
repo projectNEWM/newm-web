@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
-import newmLogo from "assets/svg/newm-logo.svg";
+import NEWMLogoSVG from "assets/images/NEWMLogo";
 
 const NEWMLogo = () => {
   return (
     <Box p="61.89px 0 0 64.44px">
-      <img alt="img" src={ newmLogo } />
+      <NEWMLogoSVG />
     </Box>
   );
 };

@@ -1,55 +1,17 @@
-import React, { FunctionComponent, HTMLAttributes } from "react";
-import { Box, Tab, Tabs, styled } from "@mui/material";
+import { useWindowDimensions, Page } from "common";
 import { History } from "history";
-import Songs from "./song/Songs";
-import { useWindowDimensions } from "common/hooks";
+import React, { FunctionComponent, HTMLAttributes } from "react";
+import { Box, Tabs } from "@mui/material";
+import { Tab } from "components";
+import Songs from "./songs";
+import TabPanel from "./TabPanel";
 
-interface ContentPropTypes extends HTMLAttributes<HTMLDivElement> {
+interface HomePropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
   history: History;
 }
 
-interface TabPanelProps {
-  value: Page;
-  page: Page;
-  children: React.ReactNode;
-}
-
-enum Page {
-  songs,
-  playlists,
-  contributors,
-  wallet,
-  metrics,
-}
-
-const StyledTab = styled(Tab)(({ theme }) => ({
-  backgroundColor: "transparent",
-  border: "none",
-  color: theme.palette.text.secondary,
-  fontFamily: theme.typography.tabs.fontFamily,
-  fontWeight: theme.typography.tabs.fontWeight,
-  textTransform: "capitalize",
-}));
-
-const TabPanel: FunctionComponent<TabPanelProps> = ({
-  children,
-  value,
-  page,
-  ...other
-}) => {
-  return (
-    <div { ...other }>
-      { value === page && (
-        <Box p={ 3 }>
-          { children }
-        </Box>
-      ) }
-    </div>
-  );
-}
-
-const Content: FunctionComponent<ContentPropTypes> = (props) => {
+const Home: FunctionComponent<HomePropTypes> = (props) => {
   const windowDimensions = useWindowDimensions();
   const height = windowDimensions && windowDimensions.height;
 
@@ -74,11 +36,11 @@ const Content: FunctionComponent<ContentPropTypes> = (props) => {
         indicatorColor="secondary"
         aria-label="secondary tabs example"
       >
-        <StyledTab label="Songs" />
-        <StyledTab label="Playlists" />
-        <StyledTab label="Contributors" />
-        <StyledTab label="Wallet" />
-        <StyledTab label="Metrics" />
+        <Tab label="Songs" />
+        <Tab label="Playlists" />
+        <Tab label="Contributors" />
+        <Tab label="Wallet" />
+        <Tab label="Metrics" />
       </Tabs>
 
       <Box data-testid="contentBox" justifyContent="center" maxHeight={ height && height - 215 }
@@ -105,4 +67,4 @@ const Content: FunctionComponent<ContentPropTypes> = (props) => {
   );
 };
 
-export default Content;
+export default Home;
