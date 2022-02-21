@@ -1,6 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Header, BackgroundImage } from "components";
+import { BackgroundImage, Header } from "components";
 import Home from "pages/home";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux'

@@ -1,4 +1,4 @@
-import { Role } from "modules/role"
+import { Role } from "modules/role";
 
 export interface Artist {
   bio: string;

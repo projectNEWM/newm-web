@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 interface GenreState {
   genres: ReadonlyArray<string>
@@ -15,7 +15,7 @@ const genreSlice = createSlice({
   reducers: {
     // example action (clears genres)
     clear: (state) => {
-      state.genres = []
+      state.genres = [];
     }
   },
 });

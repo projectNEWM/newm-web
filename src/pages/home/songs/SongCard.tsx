@@ -1,5 +1,5 @@
-import { ReactNode } from "react"
 import { Card } from "@mui/material";
+import { ReactNode } from "react";
 
 interface SongCardProps {
   onClick: VoidFunction
@@ -20,7 +20,7 @@ const SongCard = ({ onClick, children }: SongCardProps) => (
     } }
     onClick={ onClick }
   >
-    {children}
+    { children }
   </Card>
 );
 

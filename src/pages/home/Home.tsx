@@ -1,8 +1,8 @@
-import { useWindowDimensions, Page } from "common";
+import { Box, Tabs } from "@mui/material";
+import { Page, useWindowDimensions } from "common";
+import { Tab } from "components";
 import { History } from "history";
 import React, { FunctionComponent, HTMLAttributes } from "react";
-import { Box, Tabs } from "@mui/material";
-import { Tab } from "components";
 import Songs from "./songs";
 import TabPanel from "./TabPanel";
 

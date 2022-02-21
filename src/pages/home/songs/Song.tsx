@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CardMedia } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
 import { History } from "history";
 import { Transition } from "react-transition-group";
-import SongCard from "./SongCard"
+import SongCard from "./SongCard";
 import SongHover from "./SongHover";
 
 interface SongProps {
@@ -72,6 +72,6 @@ const styles = {
     exited: { opacity: 0 },
     exiting: { opacity: 0 },
   },
-}
+};
 
 export default Song;

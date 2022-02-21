@@ -16,7 +16,7 @@ export interface SongsProps {
 const Songs = ({ history }: SongsProps) => {
   const [openPopup, setOpenPopup] = useState(false);
 
-  const songs = useAppSelector(selectSongs)
+  const songs = useAppSelector(selectSongs);
 
   return (
     <>
