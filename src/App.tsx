@@ -35,7 +35,7 @@ const App = () => {
       <Provider store={ store }>
         <CssBaseline />
 
-        <BackgroundImage>
+        <BackgroundImage url="https://i.postimg.cc/TPTmSRWB/bg-img.png">
           <Header artist={ artist } />
 
           <BrowserRouter>

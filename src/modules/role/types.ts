@@ -1,5 +1,5 @@
 export enum Role {
-  Producer,
-  Singer,
-  SoundEngineer,
+  Producer = "Producer",
+  Singer = "Singer",
+  SoundEngineer = "SoundEngineer",
 }

@@ -30,7 +30,7 @@ const Songs = ({ history }: SongsProps) => {
 
       <Box>
         <Grid container>
-          { Object.keys(songs).map(parseInt).map((songId) => {
+          { Object.keys(songs).map(Number).map((songId) => {
             const { name, albumImage } = songs[songId];
 
             return (
