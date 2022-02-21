@@ -1,6 +1,5 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
-import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import FilledButton from "./FilledButton";
 import PaperInput from "./PaperInput";
@@ -67,7 +66,7 @@ const ImageUpload = ({
               setTouched && setTouched({ ["uploadedImageId"]: true });
             } }
           />
-          <StyledPaperInput
+          <PaperInput
             data-testid="paper-dropzone"
             sx={ {
               height: !isDragActive ? "38px" : "158px",
@@ -75,7 +74,7 @@ const ImageUpload = ({
             } }
           >
             { isDragActive ? "Drop That Art" : dropzoneLabel }
-          </StyledPaperInput>
+          </PaperInput>
           { !isDragActive ? (
             <Box
               sx={ {
@@ -88,7 +87,7 @@ const ImageUpload = ({
               <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
                 OR
               </Typography>
-              <StyledFilledButton sx={ { width: "164px" } }>{ buttonLabel }</StyledFilledButton>
+              <FilledButton sx={ { width: "164px" } }>{ buttonLabel }</FilledButton>
             </Box>
           ) : (
             ""

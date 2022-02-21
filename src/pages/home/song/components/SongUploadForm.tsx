@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction } from "react";
+import * as React from "react"
+import { Dispatch, SetStateAction } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { array, date, object, string } from "yup";
@@ -228,7 +229,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       sx={ { height: "96px", width: "-webkit-fill-available" } }
                       name="description"
                       label="Description / Tags / Credits"
-                      as={ StyledTextArea }
+                      as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
                       error={ Boolean(errors.description) && Boolean(touched.description) }

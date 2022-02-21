@@ -1,8 +1,8 @@
-import { Button, Paper, TextField } from "@mui/material";
+import { Button, Paper, TextField as MuiTextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "./../theme/theme";
+import theme from "theme";
 
-const TextField = styled(TextField)(({ theme }) => ({
+const TextField = styled(MuiTextField)(({ theme }) => ({
   backgroundColor: theme.inputField.background,
   border: theme.inputField.border,
   borderRadius: "9px",

@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import ArtistImage from "assets/svg/Artist";
-import Genre from "assets/svg/genre.svg";
+import artistImage from "assets/svg/artist.svg";
+import genre from "assets/svg/genre.svg";
 import { Artist } from "modules/artist";
 
 interface ArtistProfileProps {
@@ -12,7 +12,11 @@ const ArtistProfile = ({ artist }: ArtistProfileProps) => {
     <div>
       <Grid container>
         <Grid item xs={ 6 } sx={ { justifyContent: "flex-end" } }>
-          <Avatar alt={ artist.name } src={ ArtistImage } sx={ { height: 180, marginLeft: "auto", width: 180 } } />
+          <Avatar
+            alt={ artist.name }
+            src={ artistImage }
+            sx={ { height: 180, marginLeft: "auto", width: 180 } }
+          />
         </Grid>
 
         <Grid item xs={ 6 }>
@@ -31,7 +35,8 @@ const ArtistProfile = ({ artist }: ArtistProfileProps) => {
             <Typography paddingTop={ 1 } paddingBottom={ 1 } variant="h6">
               { artist.roles }
             </Typography>
-            <img alt="img" src={ Genre } height="30px" width="auto" />
+
+            <img alt="img" src={ genre } height="30px" width="auto" />
           </Box>
         </Grid>
       </Grid>

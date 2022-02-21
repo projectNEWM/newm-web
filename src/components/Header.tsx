@@ -1,14 +1,13 @@
 import { Box, Collapse, Grid, Typography } from "@mui/material";
-import { useState } from "react";
-import { ArtistProfile } from "./ArtistProfile";
-import NEWMLogo from "components/NEWMLogo";
-import { Artist } from "../models/artist";
+import { Artist } from "modules/artist";
+import ArtistProfile from "./ArtistProfile";
+import NEWMLogo from "./NEWMLogo";
 
 interface HeaderProps {
   artist: Artist;
 }
 
-export const Header = ({ artist }: HeaderProps) => {
+const Header = ({ artist }: HeaderProps) => {
   const [isTextVisible, setIsTextVisible] = useState(true);
   document.onreadystatechange = function () {
     document.getElementById("content")?.addEventListener("scroll", listenToScroll);
@@ -62,3 +61,5 @@ export const Header = ({ artist }: HeaderProps) => {
     </div>
   );
 };
+
+export default Header;

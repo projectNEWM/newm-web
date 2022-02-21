@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-commented-out-tests */
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import App from "../../App";
+import App from "App";
 
 describe("Artist bio", () => {
   it("is shown when content is not scrolled down", () => {

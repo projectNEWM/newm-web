@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, CardMedia } from "@mui/material";
 import { History } from "history";
 import SongHover from "./SongHover";

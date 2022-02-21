@@ -1,9 +1,8 @@
-import React, { HTMLAttributes } from "react";
+import React, { FunctionComponent, HTMLAttributes } from "react";
 import { Box, Tab, Tabs, styled } from "@mui/material";
 import { History } from "history";
 import { Songs } from "../song/components";
 import { useWindowDimensions } from "common/hooks";
-
 
 interface ContentPropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
@@ -33,11 +32,11 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: "capitalize",
 }));
 
-const TabPanel = ({
+const TabPanel: FunctionComponent<TabPanelProps> = ({
   children,
   value,
   page,
-  ...other,
+  ...other
 }) => {
   return (
     <div { ...other }>
@@ -50,7 +49,7 @@ const TabPanel = ({
   );
 }
 
-const Content = (props: ContentPropTypes) => {
+const Content: FunctionComponent<ContentPropTypes> = (props) => {
   const windowDimensions = useWindowDimensions();
   const height = windowDimensions && windowDimensions.height;
 

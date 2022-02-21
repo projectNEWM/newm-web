@@ -1,6 +1,5 @@
-import React from "react"
 import { CardContent } from "@mui/material";
-import SoundWave from "assets/svg/SoundWave";
+import soundWave from "assets/svg/soundWave.svg";
 
 interface HoverProps {
   name: string;
@@ -35,7 +34,7 @@ const SongHover = (props: HoverProps) => {
       >
         <p>{ props.name }</p>
 
-        <SoundWave />
+        <img alt="img" src={ soundWave } />
       </CardContent>
     </div>
   );
