@@ -1,8 +1,8 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
+import { FilledButton, PaperInput } from "components";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { StyledFilledButton, StyledPaperInput } from "./StyledComponents";
 
 // once we have backend authentication we will need to protect these variables
 const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
@@ -65,7 +65,7 @@ export const ImageUpload = ({
               setTouched && setTouched({ ["uploadedImageId"]: true });
             } }
           />
-          <StyledPaperInput
+          <PaperInput
             data-testid="paper-dropzone"
             sx={ {
               height: !isDragActive ? "38px" : "158px",
@@ -73,7 +73,7 @@ export const ImageUpload = ({
             } }
           >
             { isDragActive ? "Drop That Art" : dropzoneLabel }
-          </StyledPaperInput>
+          </PaperInput>
           { !isDragActive ? (
             <Box
               sx={ {
@@ -86,7 +86,7 @@ export const ImageUpload = ({
               <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
                 OR
               </Typography>
-              <StyledFilledButton sx={ { width: "164px" } }>{ buttonLabel }</StyledFilledButton>
+              <FilledButton sx={ { width: "164px" } }>{ buttonLabel }</FilledButton>
             </Box>
           ) : (
             ""
@@ -131,3 +131,5 @@ export const ImageUpload = ({
     </div>
   );
 };
+
+export default ImageUpload;

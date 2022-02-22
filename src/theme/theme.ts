@@ -16,7 +16,28 @@ declare module "@mui/material/styles" {
   }
 }
 
-export const theme = createTheme({
+declare module "@mui/material/styles" {
+  export interface TypographyVariants {
+    tabs: React.CSSProperties;
+    formHeader: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  export interface TypographyVariantsOptions {
+    tabs?: React.CSSProperties;
+    formHeader?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+  export interface TypographyPropsVariantOverrides {
+    tabs: true;
+    formHeader: true;
+  }
+}
+
+export default createTheme({
   inputField: {
     background: "#151515",
     border: "1px solid #2F2F2F",
@@ -71,24 +92,3 @@ export const theme = createTheme({
     },
   },
 });
-
-declare module "@mui/material/styles" {
-  export interface TypographyVariants {
-    tabs: React.CSSProperties;
-    formHeader: React.CSSProperties;
-  }
-
-  // allow configuration using `createTheme`
-  export interface TypographyVariantsOptions {
-    tabs?: React.CSSProperties;
-    formHeader?: React.CSSProperties;
-  }
-}
-
-// Update the Typography's variant prop options
-declare module "@mui/material/Typography" {
-  export interface TypographyPropsVariantOverrides {
-    tabs: true;
-    formHeader: true;
-  }
-}

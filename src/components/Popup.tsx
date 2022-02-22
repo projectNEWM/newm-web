@@ -9,7 +9,7 @@ interface PopupProps {
   height: string;
 }
 
-export const Popup = (props: PopupProps) => {
+const Popup = (props: PopupProps) => {
   const { children, openPopup, width, height } = props;
 
   return (
@@ -40,7 +40,9 @@ const StyledDialogContent = styled(DialogContent)(() => ({
 // --angle property defined in app.css
 const rotate = keyframes`
   to {
-    --angle: 360deg; 
+    --angle: 360deg;
   }
 }
 `;
+
+export default Popup;
