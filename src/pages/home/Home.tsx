@@ -55,7 +55,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
       <Box
         data-testid="contentBox"
         justifyContent="center"
-        maxHeight={ height && height - 295 }
+        maxHeight={ height && height - 380 }
         overflow={ "scroll" }
         id="content"
       >
