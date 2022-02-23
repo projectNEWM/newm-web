@@ -1,9 +1,10 @@
-import { Box, Tabs } from "@mui/material";
+import { Box, Container, Tabs } from "@mui/material";
 import { Page, useWindowDimensions } from "common";
 import { Tab } from "components";
 import { History } from "history";
 import React, { FunctionComponent, HTMLAttributes } from "react";
 import Songs from "./songs";
+import Playlists from "./playlists";
 import TabPanel from "./TabPanel";
 
 interface HomePropTypes extends HTMLAttributes<HTMLDivElement> {
@@ -59,12 +60,14 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
         id="content"
       >
         <TabPanel value={ value } page={ Page.songs }>
-          <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
+          <Container maxWidth="lg">
             <Songs history={ history } />
-          </Box>
+          </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.playlists }>
-          Playlists
+          <Container maxWidth="lg">
+            <Playlists />
+          </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.contributors }>
           Contributors

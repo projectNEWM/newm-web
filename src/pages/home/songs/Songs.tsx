@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import addSong from "assets/images/add-song.png";
 import { useAppSelector } from "common";
 import Popup from "components/Popup";
@@ -28,47 +28,44 @@ const Songs = ({ history }: SongsProps) => {
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
-      <Box>
-        <Grid container>
-          { Object.keys(songs).map(Number).map((songId) => {
-            const { name, albumImage } = songs[songId];
+      <Grid pb={ 2 } spacing={2} container>
+        { Object.keys(songs).map(Number).map((songId) => {
+          const { name, albumImage } = songs[songId];
 
-            return (
-              <Grid
-                item xs={ 12 }
-                sm={ 4 }
-                md={ 3 }
-                key={ songId }
-                paddingBottom={ 2 }
-                sx={ { margin: "0px" } }
-              >
-                <Song
-                  history={ history }
-                  songId={ songId }
-                  name={ name }
-                  albumImage={ albumImage }
-                />
-              </Grid>
-            );
-          }) }
+          return (
+            <Grid
+              item
+              xs={ 12 }
+              md={ 4 }
+              lg={ 3 }
+              key={ songId }
+            >
+              <Song
+                history={ history }
+                songId={ songId }
+                name={ name }
+                albumImage={ albumImage }
+              />
+            </Grid>
+          );
+        }) }
 
-          <Grid
-            item
-            xs={ 12 }
-            sm={ 4 }
-            md={ 3 }
-            paddingBottom={ 2 }
-            sx={ { margin: "0px" } }
-          >
-            <AddSongCard
-              handleClick={ () => setOpenPopup(true) }
-              history={ history }
-              albumImage={ addSong }
-              id={ "add-song" }
-            />
-          </Grid>
+        <Grid
+          item
+          height={ 100 }
+          width= { 100 }
+          xs={ 12 }
+          md={ 4 }
+          lg={ 3 }
+        >
+          <AddSongCard
+            handleClick={ () => setOpenPopup(true) }
+            history={ history }
+            albumImage={ addSong }
+            id={ "add-song" }
+          />
         </Grid>
-      </Box>
+      </Grid>
     </>
   );
 };

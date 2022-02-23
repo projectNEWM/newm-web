@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { genreReducer } from "modules/genre";
+import { playlistReducer } from "modules/playlist";
 import { roleReducer } from "modules/role";
 import { songReducer } from "modules/song";
 import logger from "redux-logger";
@@ -9,6 +10,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
     genre: genreReducer,
+    playlist: playlistReducer,
     role: roleReducer,
     song: songReducer,
   },

@@ -5,7 +5,7 @@ import { FadeTransition } from "components";
 import { History } from "history";
 import { useState } from "react";
 import { SwitchTransition } from "react-transition-group";
-import SongCard from "./styled/SongCard";
+import { SquareGridCard } from "components";
 
 interface AddSongCardProps {
   id: string;
@@ -20,7 +20,7 @@ const AddSongCard = (props: AddSongCardProps) => {
   const [hovering, setHover] = useState(false);
   return (
     <>
-      <SongCard onClick={ () => history.push(`/home/song/${id}`) }>
+      <SquareGridCard onClick={ () => history.push(`/home/song/${id}`) }>
         <Box
           onMouseEnter={ () => setHover(true) }
           onMouseLeave={ () => setHover(false) }
@@ -50,7 +50,7 @@ const AddSongCard = (props: AddSongCardProps) => {
             </FadeTransition>
           </SwitchTransition>
         </Box>
-      </SongCard>
+      </SquareGridCard>
     </>
   );
 };
