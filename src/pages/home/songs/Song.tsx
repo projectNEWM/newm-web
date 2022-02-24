@@ -16,7 +16,10 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
   const [hovering, setHover] = useState(false);
 
   return (
-    <SquareGridCard onClick={ () => history.push(`/home/song/${songId}`) }>
+    <SquareGridCard
+      sx={ { cursor: "pointer" } }
+      onClick={ () => history.push(`/home/song/${songId}`) }
+    >
       <CardMedia
         image={ albumImage }
         onMouseEnter={ () => setHover(true) }

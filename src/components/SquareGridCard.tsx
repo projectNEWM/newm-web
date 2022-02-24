@@ -19,9 +19,10 @@ const StyledGridCard = styled(Card)({
 
 const SquareGridCard: FunctionComponent<CardProps> = ({
   children,
+  ...rest
 }) => {
   return (
-    <StyledGridCard>
+    <StyledGridCard { ...rest }>
       <Box
         position="absolute"
         p={ 3 }

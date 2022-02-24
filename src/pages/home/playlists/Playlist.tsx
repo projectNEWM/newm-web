@@ -20,8 +20,11 @@ const Playlist: FunctionComponent<PlaylistProps> = ({
   const history = useHistory();
 
   return (
-    <>
-      <SquareGridCard onClick={ () => history.push(`/home/playlist/${id}`) }>
+    <Box
+      sx={ { cursor: "pointer" } }
+      onClick={ () => history.push(`/home/playlist/${id}`) }
+    >
+      <SquareGridCard>
         <PlaylistMedia image={ imageUrl } />
       </SquareGridCard>
 
@@ -33,7 +36,7 @@ const Playlist: FunctionComponent<PlaylistProps> = ({
           { songCount } songs
         </Typography>
       </Box>
-    </>
+    </Box>
   );
 };
 
