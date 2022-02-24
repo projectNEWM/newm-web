@@ -33,13 +33,7 @@ const Songs = ({ history }: SongsProps) => {
           const { name, albumImage } = songs[songId];
 
           return (
-            <Grid
-              item
-              xs={ 12 }
-              md={ 4 }
-              lg={ 3 }
-              key={ songId }
-            >
+            <Grid item xs={ 12 } md={ 4 } lg={ 3 }   key={ songId }>
               <Song
                 history={ history }
                 songId={ songId }
@@ -50,12 +44,7 @@ const Songs = ({ history }: SongsProps) => {
           );
         }) }
 
-        <Grid
-          item
-          xs={ 12 }
-          md={ 4 }
-          lg={ 3 }
-        >
+        <Grid item xs={ 12 } md={ 4 } lg={ 3 }>
           <AddSongCard
             handleClick={ () => setOpenPopup(true) }
             history={ history }
