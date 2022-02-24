@@ -1,9 +1,9 @@
 import { Box, CardMedia } from "@mui/material";
+import { SquareGridCard } from "components";
 import { History } from "history";
 import { useState } from "react";
 import { Transition } from "react-transition-group";
 import SongHover from "./SongHover";
-import { SquareGridCard } from "components";
 
 interface SongProps {
   songId: number;
@@ -22,8 +22,8 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
         onMouseEnter={ () => setHover(true) }
         onMouseLeave={ () => setHover(false) }
         style={ {
-          height: "100%",
           borderRadius: "100%",
+          height: "100%",
           margin: "auto",
           opacity: "1",
         } }

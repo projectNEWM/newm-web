@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
 import { Box, Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
 import { SquareGridCard } from "components";
+import { FunctionComponent } from "react";
+import { useHistory } from "react-router-dom";
 import PlaylistMedia from "./styled/PlaylistMedia";
 
 interface PlaylistProps {

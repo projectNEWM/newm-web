@@ -1,11 +1,10 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton, useTheme } from "@mui/material";
 import AddSongSVG from "assets/images/AddSong";
-import { FadeTransition } from "components";
+import { FadeTransition, SquareGridCard } from "components";
 import { History } from "history";
 import { useState } from "react";
 import { SwitchTransition } from "react-transition-group";
-import { SquareGridCard } from "components";
 
 interface AddSongCardProps {
   id: string;
@@ -34,9 +33,9 @@ const AddSongCard = (props: AddSongCardProps) => {
               sx={ {
                 alignItems: "center",
                 display: "flex",
-                width: "100%",
                 height: "100%",
                 justifyContent: "center",
+                width: "100%",
               } }
             >
               <IconButton

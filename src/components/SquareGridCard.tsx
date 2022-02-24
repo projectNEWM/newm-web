@@ -2,19 +2,19 @@
  * A card used with the MUI Grid component that retains a square shape.
  */
 
-import { FunctionComponent } from "react";
 import { Box, Card, CardProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { FunctionComponent } from "react";
 
 const StyledGridCard = styled(Card)({
-  position: "relative",
   background: "#0A0A0A 0% 0% no-repeat padding-box",
   color: "black",
-  width: "100%",
   margin: "0px",
   opacity: ".7",
   paddingBottom: "100%",
+  position: "relative",
   textAlign: "center",
+  width: "100%",
 });
 
 const SquareGridCard: FunctionComponent<CardProps> = ({
@@ -33,7 +33,7 @@ const SquareGridCard: FunctionComponent<CardProps> = ({
         { children }
       </Box>
     </StyledGridCard>
-  )
-}
+  );
+};
 
 export default SquareGridCard;

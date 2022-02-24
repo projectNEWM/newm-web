@@ -28,7 +28,7 @@ const Songs = ({ history }: SongsProps) => {
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
-      <Grid pb={ 2 } spacing={2} container>
+      <Grid pb={ 2 } spacing={ 2 } container>
         { Object.keys(songs).map(Number).map((songId) => {
           const { name, albumImage } = songs[songId];
 

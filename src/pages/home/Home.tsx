@@ -3,8 +3,8 @@ import { Page, useWindowDimensions } from "common";
 import { Tab } from "components";
 import { History } from "history";
 import React, { FunctionComponent, HTMLAttributes } from "react";
-import Songs from "./songs";
 import Playlists from "./playlists";
+import Songs from "./songs";
 import TabPanel from "./TabPanel";
 
 interface HomePropTypes extends HTMLAttributes<HTMLDivElement> {
