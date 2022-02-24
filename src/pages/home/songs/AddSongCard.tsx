@@ -21,22 +21,23 @@ const AddSongCard = (props: AddSongCardProps) => {
   return (
     <>
       <SquareGridCard onClick={ () => history.push(`/home/song/${id}`) }>
-        <Box
-          onMouseEnter={ () => setHover(true) }
-          onMouseLeave={ () => setHover(false) }
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            height: "inherit",
-            justifyContent: "center",
-          } }
-        >
-          <SwitchTransition mode="out-in">
-            <FadeTransition
-              key={ hovering ? "bar" : "foo" }
-              timeout={ 100 }
-              unmountOnExit
-              mountOnEnter
+        <SwitchTransition mode="out-in">
+          <FadeTransition
+            key={ hovering ? "bar" : "foo" }
+            timeout={ 100 }
+            unmountOnExit
+            mountOnEnter
+          >
+            <Box
+              onMouseEnter={ () => setHover(true) }
+              onMouseLeave={ () => setHover(false) }
+              sx={ {
+                alignItems: "center",
+                display: "flex",
+                width: "100%",
+                height: "100%",
+                justifyContent: "center",
+              } }
             >
               <IconButton
                 onClick={ handleClick }
@@ -47,9 +48,9 @@ const AddSongCard = (props: AddSongCardProps) => {
                   : <AddSongSVG />
                 }
               </IconButton>
-            </FadeTransition>
-          </SwitchTransition>
-        </Box>
+            </Box>
+          </FadeTransition>
+        </SwitchTransition>
       </SquareGridCard>
     </>
   );

@@ -7,7 +7,8 @@ import { Box, Card, CardProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 /**
- * A styled component with height equal to its width.
+ * A styled component with height equal to its width. For use inside
+ * the MUI <Grid container> component.
  */
 const StyledGridCard = styled(Card)({
   position: "relative",

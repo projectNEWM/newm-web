@@ -10,7 +10,7 @@ const Playlists: FunctionComponent = () => {
   return (
     <Grid
       pb={ 2 }
-      spacing={2}
+      spacing={ 2 }
       container
     >
       { Object.keys(playlists).map(Number).map((id) => {

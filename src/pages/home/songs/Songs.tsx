@@ -52,8 +52,6 @@ const Songs = ({ history }: SongsProps) => {
 
         <Grid
           item
-          height={ 100 }
-          width= { 100 }
           xs={ 12 }
           md={ 4 }
           lg={ 3 }
