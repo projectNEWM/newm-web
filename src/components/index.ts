@@ -10,5 +10,4 @@ export { default as TextArea } from "./styled/TextArea";
 export { default as TextField } from "./styled/TextField";
 export { default as Tab } from "./styled/Tab";
 export { default as FadeTransition } from "./FadeTransition";
-export { default as GridCard } from "./styled/GridCard";
 export { default as SquareGridCard } from "./SquareGridCard";
