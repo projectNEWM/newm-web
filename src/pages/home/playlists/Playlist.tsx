@@ -32,7 +32,7 @@ const Playlist: FunctionComponent<PlaylistProps> = ({
         <Typography variant="h5" textAlign="center">
           { title }
         </Typography>
-        <Typography   variant="body1"   textAlign="center">
+        <Typography variant="body1" textAlign="center">
           { songCount } songs
         </Typography>
       </Box>
