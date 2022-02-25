@@ -14,9 +14,9 @@ export interface SongsProps {
   setOpenPopup: Dispatch<SetStateAction<boolean>>;
 }
 
-const Songs = ({ history, setOpenPopup }: SongsProps) => {
+const SongGrid = ({ history, setOpenPopup }: SongsProps) => {
     const songs = useAppSelector(selectSongs);
-  if (songs[0] === undefined) {
+  if (Object.values(songs).length === 0) {
     return (
       <div style={ { height: "100%", width: "100%" } }>
         <Typography 
@@ -110,4 +110,4 @@ const Songs = ({ history, setOpenPopup }: SongsProps) => {
   );
 };
 
-export default Songs;
+export default SongGrid;
