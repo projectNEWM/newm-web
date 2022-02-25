@@ -1,8 +1,9 @@
-import { Box, Tabs } from "@mui/material";
+import { Box, Container, Tabs } from "@mui/material";
 import { Page, useWindowDimensions } from "common";
 import { Tab } from "components";
 import { History } from "history";
 import React, { FunctionComponent, HTMLAttributes } from "react";
+import Playlists from "./playlists";
 import Songs from "./songs";
 import TabPanel from "./TabPanel";
 
@@ -54,17 +55,19 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
       <Box
         data-testid="contentBox"
         justifyContent="center"
-        maxHeight={ height && height - 295 }
+        maxHeight={ height && height - 290 }
         overflow={ "scroll" }
         id="content"
       >
         <TabPanel value={ value } page={ Page.songs }>
-          <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
+          <Container maxWidth="lg">
             <Songs history={ history } />
-          </Box>
+          </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.playlists }>
-          Playlists
+          <Container maxWidth="lg">
+            <Playlists />
+          </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.contributors }>
           Contributors

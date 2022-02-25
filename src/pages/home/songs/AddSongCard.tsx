@@ -1,11 +1,10 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, IconButton, useTheme } from "@mui/material";
 import AddSongSVG from "assets/images/AddSong";
-import { FadeTransition } from "components";
+import { FadeTransition, SquareGridCard } from "components";
 import { History } from "history";
 import { useState } from "react";
 import { SwitchTransition } from "react-transition-group";
-import SongCard from "./styled/SongCard";
 
 interface AddSongCardProps {
   id: string;
@@ -20,23 +19,24 @@ const AddSongCard = (props: AddSongCardProps) => {
   const [hovering, setHover] = useState(false);
   return (
     <>
-      <SongCard onClick={ () => history.push(`/home/song/${id}`) }>
-        <Box
-          onMouseEnter={ () => setHover(true) }
-          onMouseLeave={ () => setHover(false) }
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            height: "inherit",
-            justifyContent: "center",
-          } }
-        >
-          <SwitchTransition mode="out-in">
-            <FadeTransition
-              key={ hovering ? "bar" : "foo" }
-              timeout={ 100 }
-              unmountOnExit
-              mountOnEnter
+      <SquareGridCard onClick={ () => history.push(`/home/song/${id}`) }>
+        <SwitchTransition mode="out-in">
+          <FadeTransition
+            key={ hovering ? "bar" : "foo" }
+            timeout={ 100 }
+            unmountOnExit
+            mountOnEnter
+          >
+            <Box
+              onMouseEnter={ () => setHover(true) }
+              onMouseLeave={ () => setHover(false) }
+              sx={ {
+                alignItems: "center",
+                display: "flex",
+                height: "100%",
+                justifyContent: "center",
+                width: "100%",
+              } }
             >
               <IconButton
                 onClick={ handleClick }
@@ -47,10 +47,10 @@ const AddSongCard = (props: AddSongCardProps) => {
                   : <AddSongSVG />
                 }
               </IconButton>
-            </FadeTransition>
-          </SwitchTransition>
-        </Box>
-      </SongCard>
+            </Box>
+          </FadeTransition>
+        </SwitchTransition>
+      </SquareGridCard>
     </>
   );
 };

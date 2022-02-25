@@ -81,6 +81,11 @@ export default createTheme({
       fontSize: 30,
       fontWeight: 600,
     },
+    h5: {
+      fontFamily: "Raleway",
+      fontSize:  16,
+      fontWeight: 900,
+    },
     h6: {
       fontFamily: "Roboto",
       fontSize: 12,

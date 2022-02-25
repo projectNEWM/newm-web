@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 // For the fade transition
 const FadeDiv = styled.div`
+  width: 100%;
+  height: 100%;
   transition: 0.5s;
   opacity: ${({ state }: never) => (state === "entered" ? 1 : 0)};
   display: ${({ state }: never) => (state === "exited" ? "none" : "block")};
