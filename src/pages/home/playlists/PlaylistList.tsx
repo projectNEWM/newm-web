@@ -1,8 +1,13 @@
 import { FunctionComponent } from "react";
 import { useAppSelector } from "common";
-import { TableCell, TableHeadCell, TableLine, TableRow } from "components";
+import {
+  TableCell,
+  TableCellImage,
+  TableHeadCell,
+  TableLine,
+  TableRow,
+} from "components";
 import { selectPlaylists } from "modules/playlist";
-import { useTheme } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -24,7 +29,7 @@ const PlaylistList: FunctionComponent = () => {
             <TableHeadCell>Songs</TableHeadCell>
           </MuiTableRow>
 
-          <TableLine columns={ 3 } style={ { marginBottom: "16px" } } />
+          <TableLine columns={ 3 } />
         </TableHead>
 
         <TableBody>
@@ -34,29 +39,17 @@ const PlaylistList: FunctionComponent = () => {
             songIds,
             coverImageUrl,
           }) => (
-            <>
-              <TableRow key={ id }>
-                <TableCell>
-                  <img
-                    alt={name}
-                    src={coverImageUrl}
-                    style={ {
-                      display: "flex",
-                      width: "44px",
-                      height: "44px",
-                      margin: "10px",
-                      borderRadius: "50%",
-                    } }
-                  />
-                </TableCell>
-                <TableCell>
-                  { name }
-                </TableCell>
-                <TableCell>
-                  { songIds.length } songs
-                </TableCell>
-              </TableRow>
-            </>
+            <TableRow key={ id }>
+              <TableCell>
+                <TableCellImage alt={ name } src={ coverImageUrl } />
+              </TableCell>
+              <TableCell>
+                { name }
+              </TableCell>
+              <TableCell>
+                { songIds.length } songs
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

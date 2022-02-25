@@ -3,14 +3,13 @@
  */
 
 import { useTheme } from "@mui/material";
-import { FunctionComponent, CSSProperties } from "react";
+import { FunctionComponent } from "react";
 
 interface TableLineProps {
   columns: number;
-  style?: CSSProperties;
 }
 
-const TableLine: FunctionComponent<TableLineProps> = ({ columns, style }) => {
+const TableLine: FunctionComponent<TableLineProps> = ({ columns }) => {
   const { palette: { primary, secondary } } = useTheme();
 
   return (
@@ -18,14 +17,14 @@ const TableLine: FunctionComponent<TableLineProps> = ({ columns, style }) => {
       <td colSpan={ columns }>
         <div
           style={ {
-            height: "1px",
-            width: "100%",
             background: `linear-gradient(
               to right,
               ${primary.main},
               ${secondary.main}
             )`,
-            ...style,
+            height: "1px",
+            marginBottom: "16px",
+            width: "100%",
           } }
         />
       </td>
