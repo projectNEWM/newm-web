@@ -1,12 +1,13 @@
 import { Box, Grid, Typography } from "@mui/material";
 import addSong from "assets/images/add-song.png";
 import { useAppSelector } from "common";
-import { FilledButton, PinkTypography } from "components";
+import { FilledButton } from "components";
 import { History } from "history";
 import { selectSongs } from "modules/song";
 import { Dispatch, SetStateAction } from "react";
 import AddSongCard from "./AddSongCard";
 import Song from "./Song";
+import theme from "../../../theme";
 
 export interface SongsProps {
   history: History;
@@ -18,9 +19,17 @@ const Songs = ({ history, setOpenPopup }: SongsProps) => {
   if (songs[0] === undefined) {
     return (
       <div style={ { height: "100%", width: "100%" } }>
-        <PinkTypography align="center" variant="h5">
+        <Typography 
+          sx= { {
+            color: theme.palette.primary.main,
+            fontWeight: 900,
+            padding: "34px 0 40px 0",
+            width: "100%",
+          } } 
+          align="center" variant="h5"
+        >
           Lets Get This Party Started
-        </PinkTypography>
+        </Typography>
         <hr style={ { border: 0, borderTop: "1px solid #CC33CC", width:"100%" } } />
         <div>
           <Typography 
