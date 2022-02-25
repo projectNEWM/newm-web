@@ -41,62 +41,38 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
 
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contributors">Contributors</a></li>
-    <li><a href="#team">Team</a></li>
-    <li><a href="#socials">Join the fam</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+<!-- 📔 ABOUT THE PROJECT -->
 
-<!-- ABOUT THE PROJECT -->
+## 📔 About The Project
 
-## About The Project
+<p> The artist portal allows artists to upload their music and turn it into a fractionalized NFT. 
+They can then distribute ownership of their music by selling fractions of the NFT. This web app also 
+allows artist to create playlists, define contributors, view analytics, and interact with 
+their Cardano wallet. <p>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
 
-* [React.js](https://reactjs.org/)
+* [React.JS](https://reactjs.org/)
 * [Material UI](https://mui.com/)
 * [Redux](https://redux.js.org/)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## 📖 Getting Started
 
 To get a local copy up and running follow these simple example steps.
 
-### 📖 Prerequisites
+### Prerequisites
 
 * npm
   ```sh
   npm install npm@latest -g
   ```
 
-### 🖥️ Installation
+### Installation
 
 1. Clone the repo
    ```sh
@@ -112,7 +88,7 @@ To get a local copy up and running follow these simple example steps.
 
 ## 🚀 MVP Roadmap
 
-* [ ] Implement list view
+* [ ] Content list view
 * [ ] Song Overview
   * [ ] Song Upload Form
 * [ ] Drag and drop capabilities
@@ -150,7 +126,7 @@ Don't forget to give the project a star! ⭐️
 
 <!-- CONTRIBUTORS -->
 
-## 🤝Contributors 
+## 🤝 Contributors 
 
 <table>
   <tr>
@@ -162,7 +138,7 @@ Don't forget to give the project a star! ⭐️
 
 <!-- TEAM -->
 
-## 😎ProjectNEWM Web Development Team
+## 😎 ProjectNEWM Web Development Team
 
 <table>
   <tr>
@@ -175,14 +151,13 @@ Don't forget to give the project a star! ⭐️
 
 <!-- SOCIALS -->
 
-## ❤️ Jointhefam
+## ❤️ Join The Fam
 
 - [Official Telegram](https://t.me/projectNEWMofficial)
 - Discord (Coming Soon)
 - [Twitter](https://twitter.com/projectNEWM)
 - [Facebook](https://www.facebook.com/projectNEWM)
 - [Instagram](https://www.instagram.com/projectnewm.io/)
-- [Youtube](https://www.youtube.com/channel/UCcsBNWGjIf8YarD9uaZEEvw)
 - [Youtube](https://www.youtube.com/channel/UCcsBNWGjIf8YarD9uaZEEvw)
 - [Contact Form](https://us1.list-manage.com/contact-form?u=3bf911620d8791d21fb973749&form_id=48757f902c8daa9f950e8d2563e8133e)
 
