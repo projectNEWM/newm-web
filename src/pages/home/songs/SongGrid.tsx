@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
 import addSong from "assets/images/add-song.png";
-// import { useAppSelector } from "common";
+import { useAppSelector } from "common";
 import { FilledButton, PinkTypography } from "components";
 import { History } from "history";
-// import { selectSongs } from "modules/song";
+import { selectSongs } from "modules/song";
 import { Dispatch, SetStateAction } from "react";
 import AddSongCard from "./AddSongCard";
 import Song from "./Song";
@@ -14,18 +14,24 @@ export interface SongsProps {
 }
 
 const Songs = ({ history, setOpenPopup }: SongsProps) => {
-  //   const songs = useAppSelector(selectSongs);
-  const songs: Array<any> = [];
+    const songs = useAppSelector(selectSongs);
   if (songs[0] === undefined) {
     return (
       <div style={ { height: "100%", width: "100%" } }>
         <PinkTypography align="center" variant="h5">
           Lets Get This Party Started
         </PinkTypography>
-        <hr style={ { border: 0, borderTop: "1px solid #CC33CC" } } />
+        <hr style={ { border: 0, borderTop: "1px solid #CC33CC", width:"100%" } } />
         <div>
+          <Typography 
+            align="center" 
+            variant="body1"
+            marginTop="47px" 
+            marginBottom="40px"
+          >
+            Upload your first big hit to your portal and share your talent with the world!
+          </Typography>
           { /* IMAGE UPLOAD COMPONENT NOT WORKING */ }
-
           <Box
             sx={ {
               alignItems: "center",
@@ -35,10 +41,20 @@ const Songs = ({ history, setOpenPopup }: SongsProps) => {
             } }
           >
             { /* DRAG AND DROP */ }
-            <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
+            <Typography 
+              variant="body1" 
+              align="center" 
+              color="primary" 
+              marginTop="30px" 
+              marginBottom="27px"
+            >
               OR
             </Typography>
-            <FilledButton sx={ { width: "164px" } }>Upload Image</FilledButton>
+            <FilledButton 
+              sx={ { width: "164px" } }
+            >
+              Upload Image
+            </FilledButton>
           </Box>
         </div>
       </div>
@@ -53,14 +69,32 @@ const Songs = ({ history, setOpenPopup }: SongsProps) => {
             const { name, albumImage } = songs[songId];
 
             return (
-              <Grid item xs={ 12 } sm={ 4 } md={ 3 } key={ songId } paddingBottom={ 2 } sx={ { margin: "0px" } }>
-                <Song history={ history } songId={ songId } name={ name } albumImage={ albumImage } />
+              <Grid 
+                item 
+                xs={ 12 } 
+                sm={ 4 } 
+                md={ 3 } 
+                key={ songId } 
+                paddingBottom={ 2 } 
+                sx={ { margin: "0px" } }
+              >
+                <Song 
+                  history={ history } 
+                  songId={ songId } 
+                  name={ name } 
+                  albumImage={ albumImage } 
+                />
               </Grid>
             );
           }) }
 
         <Grid item xs={ 12 } sm={ 4 } md={ 3 } paddingBottom={ 2 } sx={ { margin: "0px" } }>
-          <AddSongCard handleClick={ () => setOpenPopup(true) } history={ history } albumImage={ addSong } id={ "add-song" } />
+          <AddSongCard 
+            handleClick={ () => setOpenPopup(true) } 
+            history={ history } 
+            albumImage={ addSong } 
+            id={ "add-song" } 
+          />
         </Grid>
       </Grid>
     </>
