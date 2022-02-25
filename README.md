@@ -1,13 +1,15 @@
 <div id="top"></div>
 
 <!-- PROJECT SHIELDS -->
+
 <!--
 *** I'm using markdown "reference style" links for readability.
 *** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
 *** See the bottom of this document for the declaration of the reference variables
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
---> 
+-->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -15,9 +17,8 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
 <!-- PROJECT LOGO -->
+
 <br />
 <div align="center">
   <a href="https://projectnewm.io/">
@@ -32,7 +33,7 @@
     <a href="https://projectnewm.io/"><strong>Visit our website</strong></a>
     <br />
     <br />
-    <a href="newm-artist-portal.web.app/">View Artist Portal Demo</a>
+    <a href="https://newm-artist-portal.web.app/home/songs">View Artist Portal Demo</a>
     ·
     <a href="https://github.com/projectNEWM/newm-artist-portal/issues">Report Bug</a>
     ·
@@ -40,9 +41,8 @@
   </p>
 </div>
 
-
-
 <!-- TABLE OF CONTENTS -->
+
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -62,15 +62,17 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#contributors">Contributors</a></li>
+    <li><a href="#team">Team</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
@@ -82,18 +84,19 @@
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+### 📖 Prerequisites
 
 * npm
   ```sh
   npm install npm@latest -g
   ```
 
-### Installation
+### 🖥️ Installation
 
 1. Clone the repo
    ```sh
@@ -103,29 +106,36 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
-<p align="right">(<a href="#top">back to top</a>)</p>
+   <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
-## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+## 🚀 MVP Roadmap
 
-See the [open issues](https://github.com/projectNEWM/newm-artist-portal/issues) for a full list of proposed features (and known issues).
+* [ ] Implement list view
+* [ ] Song Overview
+  * [ ] Song Upload Form
+* [ ] Drag and drop capabilities
+* [ ] Contributor Overview
+  * [ ] Add Contributor Form
+* [ ] Playlist Overview
+  * [ ] Add New Playlist Form
+* [ ] Wallet Overview
+* [ ] Metrics Overview
+* [ ] Registration
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
-## Contributing
+
+## 🤝 Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue and we will get back to you ASAP.
+
+Want to help out but don't have a specific idea or suggestion? Reach out to
+<a href="https://github.com/HenryQuillin"> Henry</a> (hquillin@projectnewm.io) or <a href="https://github.com/HenryQuillin"> Trevor </a> (tscandalios@projectnewm.io) and we can give you a ticket (or two 😉)
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -133,31 +143,52 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+Don't forget to give the project a star! ⭐️
+
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
-## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+## ⚖️ License
+
+Distributed under the Apache License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- CONTRIBUTORS -->
 
+## 🤝Contributors 
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
+  </tr>
+
+</table>
+
+
+<!-- TEAM -->
+
+## 😎ProjectNEWM Web Development Team
+
+<table>
+  <tr>
+    <td align="center"><a href="http://henryquillin.me/"><img src="https://i.ibb.co/64WcvBc/IMG-5268-1.png" width="100px;" alt=""/><br /><sub><b>Henry Quillin</b></sub></a><br /> </td>
+    <td align="center"><a href="https://github.com/scandycuz"><img src="https://avatars.githubusercontent.com/u/5877597?v=4" width="100px;" alt=""/><br /><sub><b>Trevor Scandalios</b></sub></a><br /> </td>
+    <td align="center"><a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br /> </td>
+  </tr>
+
+</table>
 
 <!-- CONTACT -->
+
 ## Contact
 
-Your Name - [@projectNEWM](https://twitter.com/projectNEWM) - hquillin@projectnewm.io
-
-Project Link: [https://github.com/projectNEWM/newm-artist-portal](https://github.com/projectNEWM/newm-artist-portal)
+Henry Quillin - [@projectNEWM](https://twitter.com/projectNEWM) - hquillin@projectnewm.io
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 * []()
@@ -166,10 +197,10 @@ Project Link: [https://github.com/projectNEWM/newm-artist-portal](https://github
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
+
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/projectNEWM/newm-artist-portal.svg?style=for-the-badge
 [contributors-url]: https://github.com/projectNEWM/newm-artist-portal/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/projectNEWM/newm-artist-portal.svg?style=for-the-badge
@@ -181,5 +212,5 @@ Project Link: [https://github.com/projectNEWM/newm-artist-portal](https://github
 [license-shield]: https://img.shields.io/github/license/projectNEWM/newm-artist-portal.svg?style=for-the-badge
 [license-url]: https://github.com/projectNEWM/newm-artist-portal/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/projectNEWM
+[linkedin-url]: https://www.linkedin.com/company/projectnewm/
 [product-screenshot]: images/screenshot.png
