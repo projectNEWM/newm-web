@@ -64,7 +64,7 @@
     <li><a href="#license">License</a></li>
     <li><a href="#contributors">Contributors</a></li>
     <li><a href="#team">Team</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#socials">Join the fam</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -147,13 +147,6 @@ Don't forget to give the project a star! ⭐️
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
-## ⚖️ License
-
-Distributed under the Apache License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTORS -->
 
@@ -180,22 +173,29 @@ Distributed under the Apache License. See `LICENSE.txt` for more information.
 
 </table>
 
-<!-- CONTACT -->
+<!-- SOCIALS -->
 
-## Contact
+## ❤️ Jointhefam
 
-Henry Quillin - [@projectNEWM](https://twitter.com/projectNEWM) - hquillin@projectnewm.io
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-* []()
-* []()
-* []()
+- [Official Telegram](https://t.me/projectNEWMofficial)
+- Discord (Coming Soon)
+- [Twitter](https://twitter.com/projectNEWM)
+- [Facebook](https://www.facebook.com/projectNEWM)
+- [Instagram](https://www.instagram.com/projectnewm.io/)
+- [Youtube](https://www.youtube.com/channel/UCcsBNWGjIf8YarD9uaZEEvw)
+- [Youtube](https://www.youtube.com/channel/UCcsBNWGjIf8YarD9uaZEEvw)
+- [Contact Form](https://us1.list-manage.com/contact-form?u=3bf911620d8791d21fb973749&form_id=48757f902c8daa9f950e8d2563e8133e)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- LICENSE -->
+
+## ⚖️ License
+
+Distributed under the Apache License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
