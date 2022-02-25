@@ -46,7 +46,7 @@
 
 ## 📔 About The Project
 
-<p> The artist portal allows artists to upload their music and turn it into a fractionalized NFT. 
+<p> The artist portal allows music creators to upload their songs and turn them into fractionalized NFTs. 
 They can then distribute ownership of their music by selling fractions of the NFT. This web app also 
 allows artist to create playlists, define contributors, view analytics, and interact with 
 their Cardano wallet. <p>
