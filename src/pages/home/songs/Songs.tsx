@@ -1,6 +1,4 @@
-import { Grid, Box } from "@mui/material";
-import addSong from "assets/images/add-song.png";
-import { useAppSelector } from "common";
+import { Box } from "@mui/material";
 import Popup from "components/Popup";
 import { History } from "history";
 import { useState } from "react";
@@ -25,11 +23,12 @@ const Songs = ({ history }: SongsProps) => {
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
       
-      <Box pb={ 2 } spacing={ 2 }>
+      <Box pb={ 2 }>
         <SongGrid 
           history= { history } 
           setOpenPopup={ setOpenPopup }
         />
+      </Box>
     </>
   );
 };

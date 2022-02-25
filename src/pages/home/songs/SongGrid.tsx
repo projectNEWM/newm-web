@@ -72,7 +72,7 @@ const SongGrid = ({ history, setOpenPopup }: SongsProps) => {
   }
   return (
     <>
-      <Grid container>
+      <Grid spacing={ 2 } container>
         { Object.keys(songs)
           .map(Number)
           .map(songId => {
