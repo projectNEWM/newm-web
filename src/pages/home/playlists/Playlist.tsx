@@ -5,17 +5,17 @@ import { useHistory } from "react-router-dom";
 import PlaylistMedia from "./styled/PlaylistMedia";
 
 interface PlaylistProps {
-  id: number;
-  title: string;
-  imageUrl: string;
+  id: string;
+  name: string;
+  coverImageUrl: string;
   songCount: number;
 }
 
 const Playlist: FunctionComponent<PlaylistProps> = ({
   id,
-  title,
+  name,
   songCount,
-  imageUrl,
+  coverImageUrl,
 }) => {
   const history = useHistory();
 
@@ -25,12 +25,12 @@ const Playlist: FunctionComponent<PlaylistProps> = ({
       onClick={ () => history.push(`/home/playlist/${id}`) }
     >
       <SquareGridCard>
-        <PlaylistMedia image={ imageUrl } />
+        <PlaylistMedia image={ coverImageUrl } />
       </SquareGridCard>
 
       <Box mt={ 2 }>
         <Typography variant="h5" textAlign="center">
-          { title }
+          { name }
         </Typography>
         <Typography variant="body1" textAlign="center">
           { songCount } songs

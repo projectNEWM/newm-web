@@ -1,6 +1,6 @@
 export interface Playlist {
-  id: number;
-  title: string;
-  imageUrl: string;
-  songCount: number;
+  id: string;
+  name: string;
+  coverImageUrl: string;
+  songIds: ReadonlyArray<string>;
 }
