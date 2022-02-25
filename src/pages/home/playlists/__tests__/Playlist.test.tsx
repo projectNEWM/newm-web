@@ -12,10 +12,10 @@ jest.mock("react-router-dom", () => ({
 describe("<Playlist />", () => {
   const playlist = (
     <Playlist
-      id={ 4 }
-      title="Example title"
+      id="T3ST1D"
+      name="Example title"
       songCount={ 12 }
-      imageUrl="https://www.example.com/image.png"
+      coverImageUrl="https://www.example.com/image.png"
     />
   );
 
@@ -35,7 +35,7 @@ describe("<Playlist />", () => {
 
     [media, title, count].forEach((element) => {
       fireEvent.click(element);
-      expect(mockPush).toHaveBeenCalledWith("/home/playlist/4")
+      expect(mockPush).toHaveBeenCalledWith("/home/playlist/T3ST1D")
     })
   });
 })
