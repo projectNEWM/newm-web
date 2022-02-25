@@ -9,8 +9,8 @@ const PlaylistGrid: FunctionComponent = () => {
 
   return (
     <Grid pb={ 2 } spacing={ 2 } container>
-      { Object.keys(playlists).map((id) => {
-        const { name, coverImageUrl, songIds } = playlists[id];
+      { Object.values(playlists).map((playlist) => {
+        const { id, name, coverImageUrl, songIds } = playlist;
 
         return (
           <Grid key={ id } xs={ 12 } md={ 4 } lg={ 3 } item>

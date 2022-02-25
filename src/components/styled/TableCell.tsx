@@ -1,5 +1,5 @@
 /**
- * Styled table cell component. For use with the MUI Table component.
+ * Styled table cell component.
  */
 
 import { styled } from "@mui/material";

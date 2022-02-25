@@ -1,3 +1,7 @@
+/**
+ * A table header cell with adjusted padding and no bottom border.
+ */
+
 import { styled } from "@mui/material";
 import MuiTableCell from "@mui/material/TableCell";
 

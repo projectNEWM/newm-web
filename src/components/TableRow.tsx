@@ -1,6 +1,5 @@
 /**
- * Table row with an extra empty row to act as a spacer. For use
- * with the MUI Table component.
+ * Table row with an extra empty row to act as a spacer.
  */
 
 import { FunctionComponent } from "react"
