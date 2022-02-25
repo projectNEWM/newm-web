@@ -26,20 +26,21 @@ const SongGrid = ({ history, setOpenPopup }: SongsProps) => {
             padding: "34px 0 40px 0",
             width: "100%",
           } } 
-          align="center" variant="h5"
+          align="center" 
+          variant="h5"
         >
           Lets Get This Party Started
         </Typography>
         <hr style={ { border: 0, borderTop: "1px solid #CC33CC", width:"100%" } } />
         <div>
-          <Typography 
-            align="center" 
-            variant="body1"
-            marginTop="47px" 
-            marginBottom="40px"
-          >
-            Upload your first big hit to your portal and share your talent with the world!
-          </Typography>
+          <Box pt="47px" pb="40px">
+            <Typography 
+              align="center" 
+              variant="body1"
+            >
+              Upload your first big hit to your portal and share your talent with the world!
+            </Typography>
+          </Box>
           { /* IMAGE UPLOAD COMPONENT NOT WORKING */ }
           <Box
             sx={ {
