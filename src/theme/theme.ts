@@ -38,10 +38,24 @@ declare module "@mui/material/Typography" {
 }
 
 export default createTheme({
+  breakpoints: {
+    /* ordering breakpoint values alphabetically breaks functionality */
+    /* eslint-disable sort-keys */
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1100,
+      xl: 1536,
+    },
+    /* eslint-enable sort-keys */
+  },
+
   inputField: {
     background: "#151515",
     border: "1px solid #2F2F2F",
   },
+
   palette: {
     background: {
       default: "#0A0A0A",
@@ -80,6 +94,11 @@ export default createTheme({
       fontFamily: "Raleway",
       fontSize: 30,
       fontWeight: 600,
+    },
+    h5: {
+      fontFamily: "Raleway",
+      fontSize:  16,
+      fontWeight: 900,
     },
     h6: {
       fontFamily: "Roboto",

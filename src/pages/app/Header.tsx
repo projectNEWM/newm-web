@@ -1,4 +1,4 @@
-import { Box, Collapse, Grid, Typography } from "@mui/material";
+import { Box, Collapse, Container, Grid, Typography } from "@mui/material";
 import NEWMLogo from "components/NEWMLogo";
 import { Artist } from "modules/song";
 import { useState } from "react";
@@ -39,29 +39,33 @@ const Header = ({ artist }: HeaderProps) => {
         <Grid item xs={ 12 } sm={ 6 }>
           <ArtistProfile artist={ artist } />
         </Grid>
+
         <Grid item xs={ 12 }>
-          <div
-            style={ {
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              marginLeft: "auto",
-              marginRight: "auto",
-              textAlign: "center",
-              width: "829px",
-            } }
-          >
-            <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
-                  <Box
-                    maxHeight={ 85 }
-                    overflow="scroll"
-                    textOverflow="scroll"
+          <Container maxWidth="md">
+            <Box px={ 2 }>
+              <Collapse
+                in={ isTextVisible }
+                unmountOnExit
+                easing={ "linear" }
+                timeout={ 300 }
+              >
+                <Box
+                  maxHeight={ 85 }
+                  overflow="scroll"
+                  textOverflow="scroll"
+                >
+                  <Typography
+                    textAlign="center"
+                    data-testid="artistBio"
+                    id="artistBio"
+                    variant="body1"
                   >
-                    <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
-                  </Box>
-            </Collapse>
-          </div>
+                    { artist.bio }
+                  </Typography>
+                </Box>
+              </Collapse>
+            </Box>
+          </Container>
         </Grid>
       </Grid>
     </Box>
