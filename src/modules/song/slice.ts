@@ -4,8 +4,8 @@ import { Song } from "./types";
 
 interface SongState {
   songs: {
-    [id: number]: Song
-  }
+    [id: number]: Song;
+  };
 }
 
 const initialState: SongState = {
