@@ -76,7 +76,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
           </Container>
             
         </TabPanel>
-        <TabPanel value={value} page={Page.wallet}>
+        <TabPanel value={ value } page={ Page.wallet }>
         <Container maxWidth="lg">
             <WalletOverview />
         </Container>
