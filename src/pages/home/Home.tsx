@@ -6,6 +6,7 @@ import React, { FunctionComponent, HTMLAttributes } from "react";
 import Playlists from "./playlists";
 import Songs from "./songs";
 import TabPanel from "./TabPanel";
+import WalletOverview from "./wallet";
 
 interface HomePropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
@@ -69,11 +70,16 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
             <Playlists />
           </Container>
         </TabPanel>
-        <TabPanel value={ value } page={ Page.contributors }>
-          Contributors
+        <TabPanel value={ value } page= { Page.contributors }>
+        <Container maxWidth="lg">
+           Contributors
+          </Container>
+            
         </TabPanel>
-        <TabPanel value={ value } page={ Page.wallet }>
-          Wallet
+        <TabPanel value={value} page={Page.wallet}>
+        <Container maxWidth="lg">
+            <WalletOverview />
+        </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.metrics }>
           Metrics
