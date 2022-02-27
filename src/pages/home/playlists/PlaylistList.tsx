@@ -7,6 +7,7 @@ import {
   TableLine,
   TableRow,
 } from "components";
+import { useHistory } from "react-router-dom";
 import { selectPlaylists } from "modules/playlist";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -15,6 +16,8 @@ import TableBody from "@mui/material/TableBody";
 import MuiTableRow from "@mui/material/TableRow";
 
 const PlaylistList: FunctionComponent = () => {
+  const history = useHistory();
+
   const playlists = useAppSelector(selectPlaylists);
 
   return (
@@ -39,7 +42,10 @@ const PlaylistList: FunctionComponent = () => {
             songIds,
             coverImageUrl,
           }) => (
-            <TableRow key={ id }>
+            <TableRow
+              key={ id }
+              onClick={ () => history.push(`/home/playlist/${id}`) }
+            >
               <TableCell>
                 <TableCellImage alt={ name } src={ coverImageUrl } />
               </TableCell>

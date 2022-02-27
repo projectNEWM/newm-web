@@ -17,7 +17,7 @@ const Songs = ({ history }: SongsProps) => {
 
   const [openPopup, setOpenPopup] = useState(false);
 
-  if (Object.values(songs).length > 0) {
+  if (Object.values(songs).length === 0) {
     return <PartyStarter />;
   }
 
