@@ -28,7 +28,7 @@ const AddSongCard = (props: AddSongCardProps) => {
             alignItems: "center",
             display: "flex",
             height: "inherit",
-            justifyContent: "center"
+            justifyContent: "center",
           } }
         >
           <SwitchTransition mode="out-in">
@@ -42,11 +42,10 @@ const AddSongCard = (props: AddSongCardProps) => {
                 onClick={ handleClick }
                 sx={ { color: theme.palette.primary.main } }
               >
-                { hovering ? (
-                  <AddIcon sx={ { fontSize: "40px" } } />
-                ) : (
-                  <AddSongSVG />
-                ) }
+                { hovering
+                  ? <AddIcon sx={ { fontSize: "40px" } } />
+                  : <AddSongSVG />
+                }
               </IconButton>
             </FadeTransition>
           </SwitchTransition>

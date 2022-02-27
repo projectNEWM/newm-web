@@ -28,7 +28,7 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
             margin: "auto",
             marginTop: "25px",
             opacity: "1",
-            width: "200px"
+            width: "200px",
           } }
         >
           <Box sx={ { height: "inherit" } }>
@@ -45,7 +45,7 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
                   style={ {
                     ...styles.default,
                     ...styles.transition[state],
-                    height: "inherit"
+                    height: "inherit",
                   } }
                 >
                   <SongHover hovering={ hovering } name={ name } />
@@ -64,14 +64,14 @@ const duration = 250;
 const styles = {
   default: {
     opacity: 0,
-    transition: `opacity ${duration}ms ease-in-out`
+    transition: `opacity ${duration}ms ease-in-out`,
   },
   transition: {
     entered: { opacity: 1 },
     entering: { opacity: 1 },
     exited: { opacity: 0 },
-    exiting: { opacity: 0 }
-  }
+    exiting: { opacity: 0 },
+  },
 };
 
 export default Song;

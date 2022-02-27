@@ -26,7 +26,7 @@ const artist = {
     "duo to quintet and for commissions. In the fall of 2020 she was " +
     "commissioned to write a piece for the Upstream.",
   name: "Miah Jonez",
-  roles: "Singer, Producer"
+  roles: "Singer, Producer",
 };
 
 const App = () => {

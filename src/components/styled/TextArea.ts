@@ -8,7 +8,7 @@ const TextArea = styled(TextField)({
   borderRadius: "9px",
   boxShadow: "inset 0px 3px 6px #000000D0",
   minWidth: "100px",
-  opacity: 1
+  opacity: 1,
 });
 
 export default TextArea;

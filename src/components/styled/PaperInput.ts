@@ -13,7 +13,7 @@ const PaperInput = styled(Paper)({
   justifyContent: "center",
   minWidth: "100px",
   opacity: 1,
-  textAlign: "center"
+  textAlign: "center",
 });
 
 export default PaperInput;

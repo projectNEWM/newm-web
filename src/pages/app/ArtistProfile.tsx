@@ -28,7 +28,7 @@ const ArtistProfile = ({ artist }: ArtistProfileProps) => {
               marginTop: "40px",
               paddingTop: "0px",
               textAlign: "center",
-              width: "180px"
+              width: "180px",
             } }
           >
             <Typography variant="h2">{ artist.name }</Typography>

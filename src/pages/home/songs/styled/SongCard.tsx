@@ -9,7 +9,7 @@ const SongCard = styled(Card)({
   opacity: ".7",
   padding: "0px",
   textAlign: "center",
-  width: "250px"
+  width: "250px",
 });
 
 export default SongCard;

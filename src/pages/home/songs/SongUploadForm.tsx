@@ -7,7 +7,7 @@ import {
   MultiDropdown,
   OutlinedButton,
   TextArea,
-  TextField
+  TextField,
 } from "components";
 import { Field, Form, Formik } from "formik";
 import { selectGenres } from "modules/genre";
@@ -21,7 +21,7 @@ const initialValues = {
   releaseDate: "",
   title: "",
   uploadedImageId: "",
-  yourRole: ""
+  yourRole: "",
 };
 
 interface SongUploadFormProps {
@@ -43,31 +43,18 @@ const SongUploadForm = (props: SongUploadFormProps) => {
           releaseDate: date().required(),
           title: string().required(),
           uploadedImageId: string().required(),
-          yourRole: array().required()
+          yourRole: array().required(),
         }) }
         onSubmit={ (values, formikHelpers) => {
           formikHelpers.resetForm();
         } }
       >
-        { ({
-          errors,
-          isValid,
-          touched,
-          dirty,
-          handleSubmit,
-          setFieldValue,
-          setTouched
-        }) => (
+        { ({ errors, isValid, touched, dirty, handleSubmit, setFieldValue, setTouched }) => (
           <Form onSubmit={ handleSubmit }>
             <Grid direction="row" container maxWidth={ "1060px" }>
               { /* FIRST COLUMN */ }
               <Grid item xs={ 12 } md={ 4 }>
-                <Grid
-                  direction="column"
-                  rowSpacing="16px"
-                  container
-                  paddingLeft="26px"
-                >
+                <Grid direction="column" rowSpacing="16px" container paddingLeft="26px">
                   <Typography paddingTop="16px" variant="formHeader">
                     Add Your Next Big Hit
                   </Typography>
@@ -75,7 +62,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                   <Grid
                     item
                     sx={ {
-                      paddingTop: "0px"
+                      paddingTop: "0px",
                     } }
                   >
                     <Field
@@ -106,9 +93,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       label="Your Role"
                       options={ roles }
                       as={ MultiDropdown }
-                      error={
-                        Boolean(errors.yourRole) && Boolean(touched.yourRole)
-                      }
+                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
                     />
                   </Grid>
                   <Grid item sx={ {} }>
@@ -118,10 +103,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       label="Release Date"
                       size="small"
                       as={ DatePickerInput }
-                      error={
-                        Boolean(errors.releaseDate) &&
-                        Boolean(touched.releaseDate)
-                      }
+                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
                     />
                   </Grid>
                   <Grid item sx={ {} }>
@@ -132,10 +114,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
-                      error={
-                        Boolean(errors.description) &&
-                        Boolean(touched.description)
-                      }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
                     />
                   </Grid>
                 </Grid>
@@ -143,19 +122,14 @@ const SongUploadForm = (props: SongUploadFormProps) => {
               { /* SECOND COLUMN */ }
 
               <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ {} } item xs={ 4 }>
-                <Grid
-                  direction="column"
-                  rowSpacing="16px"
-                  container
-                  paddingLeft="16px"
-                >
+                <Grid direction="column" rowSpacing="16px" container paddingLeft="16px">
                   <Typography paddingTop="16px" variant="formHeader">
                     Add Your Album Art
                   </Typography>
                   <Grid
                     item
                     sx={ {
-                      paddingTop: "0px"
+                      paddingTop: "0px",
                     } }
                   >
                     <Field
@@ -165,46 +139,32 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       as={ ImageUpload }
                       setFieldValue={ setFieldValue }
                       variant="outlined"
-                      error={
-                        Boolean(errors.uploadedImageId) &&
-                        Boolean(touched.uploadedImageId)
-                      }
+                      error={ Boolean(errors.uploadedImageId) && Boolean(touched.uploadedImageId) }
                       setTouched={ setTouched }
                       // helperText={Boolean(touched.title) && errors.title}
                     />
                   </Grid>
                   <Grid item sx={ {} }>
-                    <Typography variant="formHeader">
-                      Add Contributors
-                    </Typography>
+                    <Typography variant="formHeader">Add Contributors</Typography>
                     <Field
                       sx={ {
                         height: "96px",
                         marginTop: "26px",
-                        width: "-webkit-fill-available"
+                        width: "-webkit-fill-available",
                       } }
                       name="description"
                       label="Description / Tags / Credits"
                       as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
-                      error={
-                        Boolean(errors.description) &&
-                        Boolean(touched.description)
-                      }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
                       // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>
                 </Grid>
               </Grid>
               { /* THIRD COLUMN */ }
-              <Grid
-                marginBottom={ 0 }
-                paddingBottom={ 0 }
-                sx={ { height: "404px" } }
-                item
-                xs={ 4 }
-              >
+              <Grid marginBottom={ 0 } paddingBottom={ 0 } sx={ { height: "404px" } } item xs={ 4 }>
                 <Grid
                   direction="column"
                   rowSpacing="16px"
@@ -220,7 +180,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                   <Grid
                     item
                     sx={ {
-                      paddingTop: "0px"
+                      paddingTop: "0px",
                     } }
                   >
                     <Field
@@ -252,9 +212,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       label="Your Role"
                       options={ roles }
                       as={ MultiDropdown }
-                      error={
-                        Boolean(errors.yourRole) && Boolean(touched.yourRole)
-                      }
+                      error={ Boolean(errors.yourRole) && Boolean(touched.yourRole) }
                       // helperText={ Boolean(touched.yourRole) && errors.yourRole }
                     />
                   </Grid>
@@ -265,10 +223,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       label="Release Date"
                       size="small"
                       as={ DatePickerInput }
-                      error={
-                        Boolean(errors.releaseDate) &&
-                        Boolean(touched.releaseDate)
-                      }
+                      error={ Boolean(errors.releaseDate) && Boolean(touched.releaseDate) }
                       // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>
@@ -280,10 +235,7 @@ const SongUploadForm = (props: SongUploadFormProps) => {
                       as={ TextArea }
                       multiline={ true }
                       rows={ 3 }
-                      error={
-                        Boolean(errors.description) &&
-                        Boolean(touched.description)
-                      }
+                      error={ Boolean(errors.description) && Boolean(touched.description) }
                       // helperText={ Boolean(touched.releaseDate) && errors.releaseDate }
                     />
                   </Grid>

@@ -13,4 +13,4 @@ describe("<Header />", () => {
     expect(screen.getByText(roles)).toBeDefined();
     expect(screen.getByAltText(name)).toBeDefined();
   });
-});
+})

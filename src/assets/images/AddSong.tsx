@@ -7,26 +7,10 @@ const AddSong = () => (
     height="250"
     viewBox="0 0 250 250"
   >
-    <rect
-      id="Background"
-      width="250"
-      height="250"
-      fill="#0a0a0a"
-      opacity="0.598"
-    />
+    <rect id="Background" width="250" height="250" fill="#0a0a0a" opacity="0.598" />
     <g id="Add_Song" data-name="Add Song" transform="translate(106 106)">
-      <rect
-        id="Rectangle_194"
-        data-name="Rectangle 194"
-        width="39"
-        height="39"
-        opacity="0"
-      />
-      <g
-        id="Group_362"
-        data-name="Group 362"
-        transform="translate(8.491 6.764)"
-      >
+      <rect id="Rectangle_194" data-name="Rectangle 194" width="39" height="39" opacity="0" />
+      <g id="Group_362" data-name="Group 362" transform="translate(8.491 6.764)">
         <path
           id="Path_2267"
           data-name="Path 2267"

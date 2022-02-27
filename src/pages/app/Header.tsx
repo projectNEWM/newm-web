@@ -11,9 +11,7 @@ interface HeaderProps {
 const Header = ({ artist }: HeaderProps) => {
   const [isTextVisible, setIsTextVisible] = useState(true);
   document.onreadystatechange = function () {
-    document
-      .getElementById("content")
-      ?.addEventListener("scroll", listenToScroll);
+    document.getElementById("content")?.addEventListener("scroll", listenToScroll);
   };
 
   const listenToScroll = () => {
@@ -30,7 +28,11 @@ const Header = ({ artist }: HeaderProps) => {
   return (
     <Box pt={ 1.75 }>
       <Grid container spacing={ 2 }>
-        <Box component={ Grid } item xs={ 3 } display={ { sm: "block", xs: "none" } }>
+        <Box
+          component={ Grid }
+          item xs={ 3 }
+          display={ { sm: "block", xs: "none" } }
+        >
           <NEWMLogo />
         </Box>
 
@@ -47,24 +49,17 @@ const Header = ({ artist }: HeaderProps) => {
               marginLeft: "auto",
               marginRight: "auto",
               textAlign: "center",
-              width: "829px"
+              width: "829px",
             } }
           >
-            <Collapse
-              in={ isTextVisible }
-              unmountOnExit
-              easing={ "linear" }
-              timeout={ 300 }
-            >
-              <Box maxHeight={ 85 } overflow="scroll" textOverflow="scroll">
-                <Typography
-                  data-testid="artistBio"
-                  id="artistBio"
-                  variant="body1"
-                >
-                  { artist.bio }
-                </Typography>
-              </Box>
+            <Collapse in={ isTextVisible } unmountOnExit easing={ "linear" } timeout={ 300 }>
+                  <Box
+                    maxHeight={ 85 }
+                    overflow="scroll"
+                    textOverflow="scroll"
+                  >
+                    <Typography data-testid="artistBio" id="artistBio" variant="body1">{ artist.bio }</Typography>
+                  </Box>
             </Collapse>
           </div>
         </Grid>

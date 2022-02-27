@@ -1,10 +1,5 @@
 /* eslint-disable testing-library/no-render-in-setup */
-import {
-  fireEvent,
-  render,
-  screen,
-  waitForElementToBeRemoved
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ImageUpload from "../ImageUpload";
 
@@ -21,11 +16,7 @@ describe("<ImageUpload />", () => {
       // Mocking the upload to cloudinary
       jest
         .spyOn(global, "fetch")
-        .mockImplementation(
-          jest.fn(() =>
-            Promise.resolve({ json: () => ({ public_id: "test" }) })
-          ) as jest.Mock
-        );
+        .mockImplementation(jest.fn(() => Promise.resolve({ json: () => ({ public_id: "test" }) })) as jest.Mock);
     });
 
     afterEach(() => {
@@ -67,12 +58,7 @@ describe("<ImageUpload />", () => {
   });
 
   function createComponent() {
-    return (
-      <ImageUpload
-        dropzoneLabel="Test Dropzone Text"
-        buttonLabel="Upload Image"
-      />
-    );
+    return <ImageUpload dropzoneLabel="Test Dropzone Text" buttonLabel="Upload Image" />;
   }
 
   function createFileInputElement() {
@@ -81,7 +67,7 @@ describe("<ImageUpload />", () => {
     const file = createFile("file.png", 1234, "image/png");
 
     Object.defineProperty(inputEl, "files", {
-      value: [file]
+      value: [file],
     });
     return inputEl;
   }
@@ -91,8 +77,8 @@ describe("<ImageUpload />", () => {
     Object.defineProperty(file, "size", {
       get() {
         return size;
-      }
+      },
     });
     return file;
   }
-});
+})

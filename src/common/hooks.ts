@@ -17,20 +17,21 @@ const getWindowDimensions = () => {
 };
 
 export const useWindowDimensions = (): WindowDimensions | undefined => {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useLayoutEffect(
+    () => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+
+      if (hasWindow) {
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }
+    },
+    [windowDimensions]
   );
-
-  useLayoutEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    if (hasWindow) {
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, [windowDimensions]);
 
   return windowDimensions;
 };

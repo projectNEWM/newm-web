@@ -7,13 +7,7 @@ const SoundWave = () => (
     viewBox="0 0 44 31"
   >
     <defs>
-      <pattern
-        id="pattern"
-        preserveAspectRatio="none"
-        width="100%"
-        height="100%"
-        viewBox="0 0 238 169"
-      >
+      <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 238 169">
         <image
           width="238"
           height="169"
@@ -21,13 +15,7 @@ const SoundWave = () => (
         />
       </pattern>
     </defs>
-    <rect
-      id="audio_wave_sound"
-      data-name="audio wave sound"
-      width="44"
-      height="31"
-      fill="url(#pattern)"
-    />
+    <rect id="audio_wave_sound" data-name="audio wave sound" width="44" height="31" fill="url(#pattern)" />
   </svg>
 );
 

@@ -7,7 +7,12 @@ interface TabPanelProps {
   children: React.ReactNode;
 }
 
-const TabPanel = ({ children, value, page, ...other }: TabPanelProps) => {
+const TabPanel = ({
+  children,
+  value,
+  page,
+  ...other
+}: TabPanelProps) => {
   return (
     <Box { ...other }>
       { value === page && (
