@@ -15,4 +15,5 @@ export { default as TableRow } from "./TableRow";
 export { default as TableCell } from "./styled/TableCell";
 export { default as TableHeadCell } from "./styled/TableHeadCell";
 export { default as TableLine } from "./TableLine";
+export { default as HorizontalLine } from "./styled/HorizontalLine";
 export { default as TableCellImage } from "./styled/TableCellImage";
