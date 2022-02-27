@@ -9,12 +9,29 @@ const PUBLIC_CLOUDINARY_CLOUD_NAME = "projectnewm",
   PUBLIC_CLOUDINARY_UPLOAD_PRESET = "rvktckuk";
 
 interface ImageUploadProps {
-  fileType?: "png" | "jpg" | "jpeg" | "wdp" | "jp2" | "bmp" | "pdf" | "tiff" | "ico" | "eps";
+  fileType?:
+    | "png"
+    | "jpg"
+    | "jpeg"
+    | "wdp"
+    | "jp2"
+    | "bmp"
+    | "pdf"
+    | "tiff"
+    | "ico"
+    | "eps";
   dropzoneLabel?: string;
   buttonLabel?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setFieldValue?: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
-  setTouched?: (fields: { [field: string]: boolean }, shouldValidate?: boolean) => void;
+  setFieldValue?: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
+  setTouched?: (
+    fields: { [field: string]: boolean },
+    shouldValidate?: boolean
+  ) => void;
 }
 
 export const ImageUpload = ({
@@ -22,22 +39,25 @@ export const ImageUpload = ({
   dropzoneLabel = "Drag & Drop (Square Image Only)",
   buttonLabel = "Upload Image",
   setFieldValue,
-  setTouched,
+  setTouched
 }: ImageUploadProps) => {
   const [imgLoaded, setImgLoaded] = useState<boolean>(false);
   const [uploadedFilePublicId, setUploadedFilePublicId] = useState<string>();
   const onDrop = useCallback(
-    acceptedFiles => {
+    (acceptedFiles) => {
       const url = `https://api.cloudinary.com/v1_1/${PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
       acceptedFiles.forEach(async (acceptedFile: File) => {
         const formData = new FormData();
         formData.append("file", acceptedFile);
-        formData.append("upload_preset", String(PUBLIC_CLOUDINARY_UPLOAD_PRESET));
+        formData.append(
+          "upload_preset",
+          String(PUBLIC_CLOUDINARY_UPLOAD_PRESET)
+        );
 
         const response = await fetch(url, {
           body: formData,
-          method: "post",
+          method: "post"
         });
 
         const data = await response.json();
@@ -52,7 +72,7 @@ export const ImageUpload = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     multiple: false,
-    onDrop,
+    onDrop
   });
   if (!uploadedFilePublicId) {
     return (
@@ -69,7 +89,7 @@ export const ImageUpload = ({
             data-testid="paper-dropzone"
             sx={ {
               height: !isDragActive ? "38px" : "158px",
-              width: "webkit-fill-available",
+              width: "webkit-fill-available"
             } }
           >
             { isDragActive ? "Drop That Art" : dropzoneLabel }
@@ -80,10 +100,16 @@ export const ImageUpload = ({
                 alignItems: "center",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
+                justifyContent: "center"
               } }
             >
-              <Typography variant="body1" align="center" color="primary" marginTop="30px" marginBottom="27px">
+              <Typography
+                variant="body1"
+                align="center"
+                color="primary"
+                marginTop="30px"
+                marginBottom="27px"
+              >
                 OR
               </Typography>
               <FilledButton sx={ { width: "164px" } }>{ buttonLabel }</FilledButton>
@@ -103,7 +129,7 @@ export const ImageUpload = ({
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
-          minHeight: !imgLoaded ? "150px" : "",
+          minHeight: !imgLoaded ? "150px" : ""
         } }
       >
         { !imgLoaded ? (

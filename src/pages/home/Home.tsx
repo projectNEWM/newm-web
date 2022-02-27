@@ -17,7 +17,8 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
 
   const { page: pageName, history } = props;
 
-  const initialPage = (pageName && Page[pageName as keyof typeof Page]) || Page.songs;
+  const initialPage =
+    (pageName && Page[pageName as keyof typeof Page]) || Page.songs;
 
   const [value, setValue] = React.useState(initialPage);
 
@@ -31,7 +32,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
       sx={ {
         justifyContent: "center",
         marginLeft: "auto",
-        marginRight: "auto",
+        marginRight: "auto"
       } }
     >
       <Box py={ 2 }>
@@ -59,7 +60,9 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
         id="content"
       >
         <TabPanel value={ value } page={ Page.songs }>
-          <Box sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }>
+          <Box
+            sx={ { marginLeft: "auto", marginRight: "auto", width: "1060px" } }
+          >
             <Songs history={ history } />
           </Box>
         </TabPanel>

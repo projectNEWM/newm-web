@@ -10,7 +10,7 @@ const Tab = styled(MuiTab)(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontFamily: theme.typography.tabs.fontFamily,
   fontWeight: theme.typography.tabs.fontWeight,
-  textTransform: "capitalize",
+  textTransform: "capitalize"
 }));
 
 export default Tab;

@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface GenreState {
-  genres: ReadonlyArray<string>
+  genres: ReadonlyArray<string>;
 }
 
 const initialState: GenreState = {
   // TEMP: Data is mocked until API data is available
-  genres: ["Rock", "Jazz", "Hip Hop", "Lofi", "Country"],
+  genres: ["Rock", "Jazz", "Hip Hop", "Lofi", "Country"]
 };
 
 const genreSlice = createSlice({
@@ -17,7 +17,7 @@ const genreSlice = createSlice({
     clear: (state) => {
       state.genres = [];
     }
-  },
+  }
 });
 
 export const { clear } = genreSlice.actions;

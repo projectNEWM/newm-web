@@ -11,11 +11,7 @@ const FadeDiv = styled.div`
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FadeTransition = ({ children, ...rest }: any): JSX.Element => (
   <Transition { ...rest }>
-    { (state: never) => (
-      <FadeDiv state={ state }>
-        { children }
-      </FadeDiv>
-    ) }
+    { (state: never) => <FadeDiv state={ state }>{ children }</FadeDiv> }
   </Transition>
 );
 

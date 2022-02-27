@@ -10,8 +10,8 @@ const store = configureStore({
   reducer: {
     genre: genreReducer,
     role: roleReducer,
-    song: songReducer,
-  },
+    song: songReducer
+  }
 });
 
 export type AppDispatch = typeof store.dispatch;

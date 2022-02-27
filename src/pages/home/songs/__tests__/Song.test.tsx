@@ -7,7 +7,8 @@ describe("<Song />", () => {
   test("Hover Effect Works", async () => {
     const songId = 1;
     const name = "string";
-    const album_image = "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg";
+    const album_image =
+      "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg";
     const song = (
       <Song
         history={ history }
@@ -22,4 +23,4 @@ describe("<Song />", () => {
     await waitFor(() => screen.findByText(name));
     expect(screen.getByText(name)).toBeDefined();
   });
-})
+});

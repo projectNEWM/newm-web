@@ -21,7 +21,7 @@ const SongHover = (props: HoverProps) => {
         marginLeft: "auto",
         marginRight: "auto",
         opacity: "0.6",
-        textAlign: "center",
+        textAlign: "center"
       } }
     >
       <CardContent
@@ -29,7 +29,7 @@ const SongHover = (props: HoverProps) => {
           color: "#FFFFFF",
           font: "normal normal 900 14px/18px Raleway",
           letterSpacing: "0px",
-          textAlign: "center",
+          textAlign: "center"
         } }
       >
         <p>{ props.name }</p>

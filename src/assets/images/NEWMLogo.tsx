@@ -32,7 +32,11 @@ const NEWMLogo = () => (
       transform="translate(-694.55 -205.132)"
       fill="url(#linear-gradient)"
     />
-    <g id="Group_346" data-name="Group 346" transform="translate(11.728 18.124)">
+    <g
+      id="Group_346"
+      data-name="Group 346"
+      transform="translate(11.728 18.124)"
+    >
       <path
         id="M"
         d="M470.271,309.9l-9.561,16.685-6.41-11.191V325.87l4.6,8h3.633l8.2-14.284v20.259h5.547V309.9Z"

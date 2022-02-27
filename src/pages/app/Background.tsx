@@ -15,7 +15,7 @@ const BackgroundImage = styled("div")({
   left: 0,
   position: "absolute",
   right: 0,
-  top: 0,
+  top: 0
 });
 
 const BackgroundOverlay = styled("div")({
@@ -24,7 +24,7 @@ const BackgroundOverlay = styled("div")({
   left: 0,
   position: "absolute",
   right: 0,
-  top: 0,
+  top: 0
 });
 
 /**
@@ -32,9 +32,7 @@ const BackgroundOverlay = styled("div")({
  */
 const Background = ({ children }: BackgroundProps) => (
   <BackgroundImage>
-    <BackgroundOverlay>
-      { children }
-    </BackgroundOverlay>
+    <BackgroundOverlay>{ children }</BackgroundOverlay>
   </BackgroundImage>
 );
 

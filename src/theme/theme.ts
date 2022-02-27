@@ -40,55 +40,55 @@ declare module "@mui/material/Typography" {
 export default createTheme({
   inputField: {
     background: "#151515",
-    border: "1px solid #2F2F2F",
+    border: "1px solid #2F2F2F"
   },
   palette: {
     background: {
       default: "#0A0A0A",
-      paper: "#0A0A0A",
+      paper: "#0A0A0A"
     },
 
     primary: {
-      main: "#CC33CC",
+      main: "#CC33CC"
     },
     secondary: {
-      main: "#CC33CC",
+      main: "#CC33CC"
     },
     text: {
       primary: "#FFFFFF",
-      secondary: "#707070",
-    },
+      secondary: "#707070"
+    }
   },
 
   typography: {
     body1: {
       fontFamily: "Montserrat",
-      fontSize: 14,
+      fontSize: 14
     },
     button: {
       font: "normal normal bold 14px/30px Raleway",
-      textTransform: "none",
+      textTransform: "none"
     },
     fontFamily: "Montserrat",
     fontSize: 14,
     formHeader: {
       fontFamily: "Raleway",
       fontSize: 16,
-      fontWeight: 900,
+      fontWeight: 900
     },
     h2: {
       fontFamily: "Raleway",
       fontSize: 30,
-      fontWeight: 600,
+      fontWeight: 600
     },
     h6: {
       fontFamily: "Roboto",
-      fontSize: 12,
+      fontSize: 12
     },
     tabs: {
       fontFamily: "Raleway",
       fontSize: 14,
-      fontWeight: 900,
-    },
-  },
+      fontWeight: 900
+    }
+  }
 });

@@ -20,7 +20,7 @@ const Popup = (props: PopupProps) => {
           paddingLeft: "0px",
           paddingRight: "0px",
           paddingTop: "30px",
-          width: width,
+          width: width
         } }
         dividers
       >
@@ -33,8 +33,9 @@ const Popup = (props: PopupProps) => {
 const StyledDialogContent = styled(DialogContent)(() => ({
   animation: `10s ${rotate} linear infinite;`,
   border: "1.5px solid transparent;",
-  borderImage: "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
-  borderImageSlice: " 1;",
+  borderImage:
+    "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
+  borderImageSlice: " 1;"
 }));
 
 // --angle property defined in app.css

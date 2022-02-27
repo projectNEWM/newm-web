@@ -3,5 +3,5 @@ export enum Page {
   playlists,
   contributors,
   wallet,
-  metrics,
+  metrics
 }

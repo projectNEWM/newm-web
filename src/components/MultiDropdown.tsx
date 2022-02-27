@@ -21,12 +21,18 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
-const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps) => {
+const MultiDropdown = ({
+  name,
+  label,
+  options,
+  size,
+  width
+}: MultiDropdownProps) => {
   const theme = useTheme();
   const [fieldState, setFieldState] = useState<string[]>([]);
   const { setFieldValue } = useFormikContext();
@@ -34,14 +40,19 @@ const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps
   const names = options;
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const { target: { value } } = event;
+    const {
+      target: { value }
+    } = event;
     setFieldValue(name, value);
     setFieldState(value as string[]);
   };
 
   return (
     <div>
-      <FormControl size={ size ?size:"small" } sx={ { width: width ?? "-webkit-fill-available" } }>
+      <FormControl
+        size={ size ? size : "small" }
+        sx={ { width: width ?? "-webkit-fill-available" } }
+      >
         <InputLabel id="demo-multiple-name-label">{ label }</InputLabel>
         <Select
           sx={ {
@@ -51,7 +62,7 @@ const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps
             boxShadow: "inset 0px 3px 6px #000000D0",
             height: "38px",
             minWidth: "100px",
-            opacity: 1,
+            opacity: 1
           } }
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -61,8 +72,12 @@ const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps
           input={ <OutlinedInput sx={ { height: "15px" } } label={ label } /> }
           MenuProps={ MenuProps }
         >
-          { names.map(name => (
-            <MenuItem key={ name } value={ name } style={ getStyles(name, fieldState, theme) }>
+          { names.map((name) => (
+            <MenuItem
+              key={ name }
+              value={ name }
+              style={ getStyles(name, fieldState, theme) }
+            >
               { name }
             </MenuItem>
           )) }
@@ -71,10 +86,16 @@ const MultiDropdown = ({ name, label, options, size, width }: MultiDropdownProps
     </div>
   );
 
-  function getStyles(name: string, fieldState: string | string[], theme: Theme) {
+  function getStyles(
+    name: string,
+    fieldState: string | string[],
+    theme: Theme
+  ) {
     return {
       fontWeight:
-        fieldState.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+        fieldState.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium
     };
   }
 };

@@ -8,7 +8,7 @@ const TextField = styled(MuiTextField)(({ theme }) => ({
   boxShadow: "inset 0px 3px 6px #000000D0",
   height: "38px",
   minWidth: "100px",
-  opacity: 1,
+  opacity: 1
 }));
 
 export default TextField;
