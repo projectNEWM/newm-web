@@ -23,8 +23,6 @@ const PlaylistList: FunctionComponent = () => {
   return (
     <TableContainer>
       <Table>
-        <col style={ { width: "15%" } } />
-
         <TableHead>
           <MuiTableRow>
             <TableHeadCell />

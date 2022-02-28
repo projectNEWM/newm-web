@@ -3,12 +3,13 @@
  */
 
 import { FunctionComponent } from "react"
-import MuiTableRow, { TableRowProps } from '@mui/material/TableRow';
+import { TableRowProps } from '@mui/material/TableRow';
+import StyledTableRow from "./styled/TableRow";
 
 const TableRow: FunctionComponent<TableRowProps> = (props) => {
   return (
     <>
-      <MuiTableRow {...props} />
+      <StyledTableRow {...props} />
       <tr style={ { height: "12px" } } />
     </>
   )
