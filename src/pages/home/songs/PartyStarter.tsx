@@ -2,9 +2,9 @@
  * Empty state component for when there aren't any songs.
  */
 
-import { FunctionComponent } from "react";
 import { Box, Typography } from "@mui/material";
 import { FilledButton } from "components";
+import { FunctionComponent } from "react";
 import theme from "theme";
 
 const PartyStarter: FunctionComponent = () => {
@@ -60,6 +60,6 @@ const PartyStarter: FunctionComponent = () => {
       </Box>
     </Box>
   );
-}
+};
 
 export default PartyStarter;

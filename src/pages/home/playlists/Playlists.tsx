@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { FunctionComponent } from "react";
 import PlaylistGrid from "./PlaylistGrid";
 import PlaylistList from "./PlaylistList";
 

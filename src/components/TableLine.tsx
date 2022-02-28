@@ -16,7 +16,7 @@ const TableLine: FunctionComponent<TableLineProps> = ({ columns }) => {
         <HorizontalLine />
       </td>
     </tr>
-  )
-}
+  );
+};
 
 export default TableLine;

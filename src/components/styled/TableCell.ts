@@ -3,7 +3,7 @@
  */
 
 import { styled } from "@mui/material";
-import MuiTableCell from '@mui/material/TableCell';
+import MuiTableCell from "@mui/material/TableCell";
 
 const borderRadius = "28px";
 
@@ -18,6 +18,6 @@ const TableCell = styled(MuiTableCell)`
     border-top-right-radius: ${borderRadius};
     border-bottom-right-radius: ${borderRadius};
   }
-`
+`;
 
 export default TableCell;
