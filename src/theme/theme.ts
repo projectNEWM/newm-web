@@ -66,7 +66,7 @@ export default createTheme({
       main: "#CC33CC",
     },
     secondary: {
-      main: "#CC33CC",
+      main: "#2C2B71",
     },
     text: {
       primary: "#FFFFFF",

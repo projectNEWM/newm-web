@@ -1,29 +1,18 @@
-import { Grid } from "@mui/material";
-import { useAppSelector } from "common";
-import { selectPlaylists } from "modules/playlist";
+import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { FunctionComponent } from "react";
-import Playlist from "./Playlist";
+import PlaylistGrid from "./PlaylistGrid";
+import PlaylistList from "./PlaylistList";
 
 const Playlists: FunctionComponent = () => {
-  const playlists = useAppSelector(selectPlaylists);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Grid pb={ 2 } spacing={ 2 } container>
-      { Object.keys(playlists).map((id) => {
-        const { name, coverImageUrl, songIds } = playlists[id];
-
-        return (
-          <Grid key={ id } xs={ 12 } md={ 4 } lg={ 3 } item>
-            <Playlist
-              id={ id }
-              name={ name }
-              coverImageUrl={ coverImageUrl }
-              songCount={ songIds.length }
-            />
-          </Grid>
-        );
-      }) }
-    </Grid>
+    <Box>
+      { isSmallScreen ? <PlaylistList /> : <PlaylistGrid /> }
+    </Box>
   );
 };
 

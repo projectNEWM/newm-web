@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import { Page } from "common";
 
 interface TabPanelProps {
-  value: Page;
-  page: Page;
   children: React.ReactNode;
+  page: Page;
+  value: Page;
 }
 
 const TabPanel = ({
@@ -14,9 +14,9 @@ const TabPanel = ({
   ...other
 }: TabPanelProps) => {
   return (
-    <Box { ...other }>
+    <Box { ...other } px={ { md: 3, sm: 0 } }>
       { value === page && (
-        <Box px={ 3 } pt={ 1 }>
+        <Box pt={ 1 }>
           { children }
         </Box>
       ) }

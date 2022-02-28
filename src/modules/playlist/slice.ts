@@ -79,7 +79,7 @@ const initialState: SongState = {
 
 const roleSlice = createSlice({
   initialState,
-  name: "role",
+  name: "playlist",
   reducers: {},
 });
 
