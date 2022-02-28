@@ -17,40 +17,42 @@ const Song = ({ songId, name, albumImage, history }: SongProps) => {
 
   return (
     <SquareGridCard onClick={ () => history.push(`/home/song/${songId}`) }>
-      <CardMedia
-        image={ albumImage }
-        onMouseEnter={ () => setHover(true) }
-        onMouseLeave={ () => setHover(false) }
-        style={ {
-          borderRadius: "100%",
-          height: "100%",
-          margin: "auto",
-          opacity: "1",
-        } }
-      >
-        <Box sx={ { height: "inherit" } }>
-          <Transition in={ hovering } timeout={ duration }>
-            { (
-              state: keyof {
-                entering: { opacity: number };
-                entered: { opacity: number };
-                exiting: { opacity: number };
-                exited: { opacity: number };
-              }
-            ) => (
-              <div
-                style={ {
-                  ...styles.default,
-                  ...styles.transition[state],
-                  height: "inherit",
-                } }
-              >
-                <SongHover hovering={ hovering } name={ name } />
-              </div>
-            ) }
-          </Transition>
-        </Box>
-      </CardMedia>
+      <Box p={ 3 } height="100%">
+        <CardMedia
+          image={ albumImage }
+          onMouseEnter={ () => setHover(true) }
+          onMouseLeave={ () => setHover(false) }
+          style={ {
+            borderRadius: "100%",
+            height: "100%",
+            margin: "auto",
+            opacity: "1",
+          } }
+        >
+          <Box sx={ { height: "inherit" } }>
+            <Transition in={ hovering } timeout={ duration }>
+              { (
+                state: keyof {
+                  entering: { opacity: number };
+                  entered: { opacity: number };
+                  exiting: { opacity: number };
+                  exited: { opacity: number };
+                }
+              ) => (
+                <div
+                  style={ {
+                    ...styles.default,
+                    ...styles.transition[state],
+                    height: "inherit",
+                  } }
+                >
+                  <SongHover hovering={ hovering } name={ name } />
+                </div>
+              ) }
+            </Transition>
+          </Box>
+        </CardMedia>
+      </Box>
     </SquareGridCard>
   );
 };

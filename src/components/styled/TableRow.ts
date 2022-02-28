@@ -8,7 +8,7 @@ import MuiTableRow from '@mui/material/TableRow';
 const TableRow = styled(MuiTableRow)`
   background: rgba(10, 10, 10, 0.7) 0% 0% no-repeat padding-box;
   &:hover {
-    background: rgba(10, 10, 10, 0.95) 0% 0% no-repeat padding-box;
+    background: rgba(10, 10, 10, 1) 0% 0% no-repeat padding-box;
   };
 `;
 

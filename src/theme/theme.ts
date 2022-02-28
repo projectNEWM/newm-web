@@ -51,6 +51,19 @@ export default createTheme({
     /* eslint-enable sort-keys */
   },
 
+  components: {
+    // Name of the component
+    MuiIcon: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          fontSize: '14rem',
+        },
+      },
+    },
+  },
+
   inputField: {
     background: "#151515",
     border: "1px solid #2F2F2F",

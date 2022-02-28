@@ -12,7 +12,7 @@ interface TableLineProps {
 const TableLine: FunctionComponent<TableLineProps> = ({ columns }) => {
   return (
     <tr>
-      <td colSpan={ columns }>
+      <td colSpan={ columns } style={ { paddingBottom: "16px" } }>
         <HorizontalLine />
       </td>
     </tr>

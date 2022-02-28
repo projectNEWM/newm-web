@@ -10,7 +10,7 @@ const StyledGridCard = styled(Card)({
   background: "#0A0A0A 0% 0% no-repeat padding-box",
   color: "black",
   margin: "0px",
-  opacity: ".7",
+  opacity: "0.7",
   paddingBottom: "100%",
   position: "relative",
   textAlign: "center",
@@ -25,7 +25,6 @@ const SquareGridCard: FunctionComponent<CardProps> = ({
     <StyledGridCard { ...rest }>
       <Box
         position="absolute"
-        p={ 3 }
         top={ 0 }
         right={ 0 }
         bottom={ 0 }
