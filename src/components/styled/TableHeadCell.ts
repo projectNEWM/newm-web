@@ -7,9 +7,9 @@ import MuiTableCell from "@mui/material/TableCell";
 
 import theme from "theme";
 
-const Tab = styled(MuiTableCell)({
+const TableHeadCell = styled(MuiTableCell)({
   border: "none",
   padding: theme.spacing(1, 2),
 });
 
-export default Tab;
+export default TableHeadCell;

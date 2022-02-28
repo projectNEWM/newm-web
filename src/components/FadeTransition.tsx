@@ -20,8 +20,7 @@ const FadeTransition: FunctionComponent<any> = ({
   ...rest
 }) => (
   <Transition { ...rest }>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    { (state: any) => (
+    { (state: never) => (
       <FadeDiv state={ state } containerPosition={ containerPosition }>
         { children }
       </FadeDiv>

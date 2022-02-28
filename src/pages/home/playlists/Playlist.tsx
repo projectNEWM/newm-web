@@ -1,8 +1,9 @@
+import { Edit } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { FadeTransition, SquareGridCard } from "components";
 import { FunctionComponent, useState } from "react";
 import { useHistory } from "react-router-dom";
-import PlaylistOverlay from "./PlaylistOverlay";
+import Overlay from "./styled/Overlay";
 import PlaylistMedia from "./styled/PlaylistMedia";
 
 interface PlaylistProps {
@@ -35,7 +36,9 @@ const Playlist: FunctionComponent<PlaylistProps> = ({
           timeout={ 100 }
           containerPosition="absolute"
         >
-          <PlaylistOverlay />
+          <Overlay>
+            <Edit sx={ { fill: "white", fontSize: "64px" } } />
+          </Overlay>
         </FadeTransition>
 
         <Box p={ 3 } width="100%" height="100%">

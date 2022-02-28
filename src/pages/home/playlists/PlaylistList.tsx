@@ -1,4 +1,8 @@
-import { FunctionComponent } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import MuiTableRow from "@mui/material/TableRow";
 import { useAppSelector } from "common";
 import {
   TableCell,
@@ -7,13 +11,9 @@ import {
   TableLine,
   TableRow,
 } from "components";
-import { useHistory } from "react-router-dom";
 import { selectPlaylists } from "modules/playlist";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import MuiTableRow from "@mui/material/TableRow";
+import { FunctionComponent } from "react";
+import { useHistory } from "react-router-dom";
 
 const PlaylistList: FunctionComponent = () => {
   const history = useHistory();
@@ -23,7 +23,9 @@ const PlaylistList: FunctionComponent = () => {
   return (
     <TableContainer>
       <Table>
-        <col style={ { width: "15%" } } />
+        <colgroup>
+          <col style={ { width: "15%" } } />
+        </colgroup>
 
         <TableHead>
           <MuiTableRow>
@@ -36,7 +38,7 @@ const PlaylistList: FunctionComponent = () => {
         </TableHead>
 
         <TableBody>
-          {Object.values(playlists).map(({
+          { Object.values(playlists).map(({
             id,
             name,
             songIds,
@@ -56,11 +58,11 @@ const PlaylistList: FunctionComponent = () => {
                 { songIds.length } songs
               </TableCell>
             </TableRow>
-          ))}
+          )) }
         </TableBody>
       </Table>
     </TableContainer>
-  )
+  );
 };
 
 export default PlaylistList;
