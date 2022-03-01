@@ -8,6 +8,7 @@ export { default as PaperInput } from "./styled/PaperInput";
 export { default as Popup } from "./Popup";
 export { default as TextArea } from "./styled/TextArea";
 export { default as TextField } from "./styled/TextField";
+export { default as AnimatedGradientLine } from "./styled/AnimatedGradientLine";
 export { default as Tab } from "./styled/Tab";
 export { default as FadeTransition } from "./FadeTransition";
 export { default as SquareGridCard } from "./SquareGridCard";
