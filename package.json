@@ -12,6 +12,8 @@
     "cloudinary-react": "^1.7.1",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
     "mui-image": "^1.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

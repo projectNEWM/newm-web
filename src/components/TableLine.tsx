@@ -3,7 +3,7 @@
  */
 
 import { FunctionComponent } from "react";
-import HorizontalLine from "./styled/HorizontalLine";
+import StyledAnimatedGradientLine from "./styled/AnimatedGradientLine";
 
 interface TableLineProps {
   columns: number;
@@ -13,7 +13,7 @@ const TableLine: FunctionComponent<TableLineProps> = ({ columns }) => {
   return (
     <tr>
       <td colSpan={ columns } style={ { paddingBottom: "16px" } }>
-        <HorizontalLine />
+        <StyledAnimatedGradientLine height="2px" animationSpeed="20s" />
       </td>
     </tr>
   );
