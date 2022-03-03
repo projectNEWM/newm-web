@@ -13,7 +13,7 @@ const TableLine: FunctionComponent<TableLineProps> = ({ columns }) => {
   return (
     <tr>
       <td colSpan={ columns } style={ { paddingBottom: "16px" } }>
-        <StyledAnimatedGradientLine height="2px" animationSpeed="20s" />
+        <StyledAnimatedGradientLine height="2px" />
       </td>
     </tr>
   );
