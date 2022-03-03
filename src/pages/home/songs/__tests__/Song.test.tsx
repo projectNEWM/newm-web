@@ -15,7 +15,7 @@ describe("<Song />", () => {
   const songId = 1;
   const name = "string";
   const album_image = "https://upload.wikimedia.org/wikipedia/en/0/0a/Kidcudimanonthemoonthelegendof.jpg";
-  const song = <Song history={ history } songId={ songId } name={ name } albumImage={ album_image } />;
+  const song = <Song songId={ songId } name={ name } albumImage={ album_image } />;
 
   it("renders the song content", () => {
     const { queryByRole } = render(song);
