@@ -11,7 +11,6 @@ import SongGrid from "./SongGrid";
 import SongList from "./SongList";
 import SongUploadForm from "./SongUploadForm";
 
-
 export interface SongsProps {
   history: History;
 }
@@ -29,21 +28,11 @@ const Songs = ({ history }: SongsProps) => {
 
   return (
     <>
-      <Popup
-        height="522px"
-        openPopup={ openPopup }
-        setOpenPopup={ setOpenPopup }
-      >
+      <Popup height="522px" openPopup={ openPopup } setOpenPopup={ setOpenPopup }>
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
-      <Box pb={ 2 }>
-        {/* <SongGrid
-          history= { history }
-          setOpenPopup={ setOpenPopup }
-        /> */}
-        <SongList />
-      </Box>
+      <Box pb={ 2 }>{ isSmallScreen ? <SongList /> : <SongGrid history={ history } setOpenPopup={ setOpenPopup } /> }</Box>
     </>
   );
 };
