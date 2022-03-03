@@ -1,27 +1,29 @@
 import { Box, Container, Tabs } from "@mui/material";
 import { Page, useWindowDimensions } from "common";
 import { Tab } from "components";
-import { History } from "history";
 import React, { FunctionComponent, HTMLAttributes } from "react";
+import { useHistory } from "react-router-dom";
 import Playlists from "./playlists";
 import Songs from "./songs";
 import TabPanel from "./TabPanel";
 import WalletOverview from "./wallet";
 
+
 interface HomePropTypes extends HTMLAttributes<HTMLDivElement> {
   page?: string;
-  history: History;
 }
 
 const Home: FunctionComponent<HomePropTypes> = (props) => {
   const windowDimensions = useWindowDimensions();
   const height = windowDimensions && windowDimensions.height;
 
-  const { page: pageName, history } = props;
+  const { page: pageName } = props;
 
   const initialPage = (pageName && Page[pageName as keyof typeof Page]) || Page.songs;
 
   const [value, setValue] = React.useState(initialPage);
+
+  const history = useHistory();
 
   const handleChange = (_event: React.SyntheticEvent, newValue: Page) => {
     history?.push(`/home/${Page[newValue]}`);
@@ -62,7 +64,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
       >
         <TabPanel value={ value } page={ Page.songs }>
           <Container maxWidth="lg">
-            <Songs history={ history } />
+            <Songs />
           </Container>
         </TabPanel>
         <TabPanel value={ value } page={ Page.playlists }>

@@ -44,13 +44,7 @@ const App = () => {
               <Redirect exact from="/home" to="/home/songs" />
               <Route
                 path="/home/:page?"
-                render={ ({ match, history, ...otherProps }) => (
-                  <Home
-                    page={ match.params.page }
-                    history={ history }
-                    { ...otherProps }
-                  />
-                ) }
+                render={ ({ match, ...otherProps }) => <Home page={ match.params.page } { ...otherProps } /> }
               />
             </Switch>
           </BrowserRouter>

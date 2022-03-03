@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAppSelector } from "common";
 import Popup from "components/Popup";
-import { History } from "history";
 import { selectSongs } from "modules/song";
 import { useState } from "react";
 import theme from "theme";
@@ -11,11 +10,7 @@ import SongGrid from "./SongGrid";
 import SongList from "./SongList";
 import SongUploadForm from "./SongUploadForm";
 
-export interface SongsProps {
-  history: History;
-}
-
-const Songs = ({ history }: SongsProps) => {
+const Songs = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const songs = useAppSelector(selectSongs);
@@ -32,7 +27,7 @@ const Songs = ({ history }: SongsProps) => {
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
-      <Box pb={ 2 }>{ isSmallScreen ? <SongList /> : <SongGrid history={ history } setOpenPopup={ setOpenPopup } /> }</Box>
+      <Box pb={ 2 }>{ isSmallScreen ? <SongList /> : <SongGrid setOpenPopup={ setOpenPopup } /> }</Box>
     </>
   );
 };
