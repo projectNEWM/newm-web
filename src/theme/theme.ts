@@ -64,6 +64,15 @@ export default createTheme({
     gradientEnd: "#323290"
   },
 
+  components: {
+    MuiUseMediaQuery: {
+      defaultProps: {
+        // enables useMediaQuery() value to update when used in components
+        noSsr: true,
+      },
+    },
+  },
+
   inputField: {
     background: "#151515",
     border: "1px solid #2F2F2F",

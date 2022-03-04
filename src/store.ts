@@ -3,6 +3,7 @@ import { genreReducer } from "modules/genre";
 import { playlistReducer } from "modules/playlist";
 import { roleReducer } from "modules/role";
 import { songReducer } from "modules/song";
+import { uiReducer } from "modules/ui";
 import logger from "redux-logger";
 
 const store = configureStore({
@@ -13,6 +14,7 @@ const store = configureStore({
     playlist: playlistReducer,
     role: roleReducer,
     song: songReducer,
+    ui: uiReducer,
   },
 });
 
