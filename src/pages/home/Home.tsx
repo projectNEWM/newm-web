@@ -96,36 +96,17 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
           </TabPanel>
           <TabPanel value={ value } page={ Page.playlists }>
             <Playlists />
-<<<<<<< Updated upstream
-          </Container>
-        </TabPanel>
-        <TabPanel value={ value } page= { Page.contributors }>
-        <Container maxWidth="lg">
-           Contributors
-          </Container>
-            
-        </TabPanel>
-        <TabPanel value={ value } page={ Page.wallet }>
-        <Container maxWidth="lg">
-            <WalletOverview />
-        </Container>
-        </TabPanel>
-        <TabPanel value={ value } page={ Page.metrics }>
-          Metrics
-        </TabPanel>
-=======
           </TabPanel>
           <TabPanel value={ value } page={ Page.contributors }>
             Contributors
           </TabPanel>
           <TabPanel value={ value } page={ Page.wallet }>
-            Wallet
+            <WalletOverview />
           </TabPanel>
           <TabPanel value={ value } page={ Page.metrics }>
             Metrics
           </TabPanel>
         </Box>
->>>>>>> Stashed changes
       </Box>
     </Container>
   );
