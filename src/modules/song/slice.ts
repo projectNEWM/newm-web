@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Role } from "modules/role";
+import moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
 import { Song } from "./types";
 
 interface SongState {
@@ -7,6 +9,7 @@ interface SongState {
     [id: number]: Song;
   };
 }
+momentDurationFormatSetup(moment);
 
 const initialState: SongState = {
   // TEMP: Data is mocked until API data is available
@@ -26,6 +29,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(60, "seconds").format(),
       extraInformation: "extra info",
     },
     2: {
@@ -41,6 +45,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "J Cole", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(80, "seconds").format(),
       extraInformation: "extra info",
     },
     3: {
@@ -56,6 +61,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kendrick Lamar", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(90, "seconds").format(),
       extraInformation: "extra info",
     },
     4: {
@@ -71,6 +77,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Tyler the Creator", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(125, "seconds").format(),
       extraInformation: "extra info",
     },
     5: {
@@ -87,6 +94,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(225, "seconds").format(),
       extraInformation: "extra info",
     },
     6: {
@@ -103,6 +111,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(150, "seconds").format(),
       extraInformation: "extra info",
     },
     7: {
@@ -119,6 +128,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(250, "seconds").format(),
       extraInformation: "extra info",
     },
     8: {
@@ -135,6 +145,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(145, "seconds").format(),
       extraInformation: "extra info",
     },
     9: {
@@ -151,6 +162,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(190, "seconds").format(),
       extraInformation: "extra info",
     },
     10: {
@@ -167,6 +179,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(155, "seconds").format(),
       extraInformation: "extra info",
     },
     11: {
@@ -183,6 +196,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(245, "seconds").format(),
       extraInformation: "extra info",
     },
     12: {
@@ -199,6 +213,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(245, "seconds").format(),
       extraInformation: "extra info",
     },
     13: {
@@ -215,6 +230,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(245, "seconds").format(),
       extraInformation: "extra info",
     },
     14: {
@@ -231,6 +247,7 @@ const initialState: SongState = {
         2: { name: "Dan", role: Role.SoundEngineer, stake: 0.25 },
         3: { name: "Kid Cudi", role: Role.Singer, stake: 0.5 },
       },
+      duration: moment.duration(245, "seconds").format(),
       extraInformation: "extra info",
     },
   },

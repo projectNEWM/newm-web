@@ -23,5 +23,6 @@ export interface Song {
   contributors: {
     [id: number]: Contributor;
   };
+  duration: string;
   extraInformation: string;
 }
