@@ -1,19 +1,20 @@
 import { Grid } from "@mui/material";
 import addSong from "assets/images/add-song.png";
 import { useAppSelector } from "common";
-import { History } from "history";
 import { selectSongs } from "modules/song";
 import { Dispatch, SetStateAction } from "react";
+import { useHistory } from "react-router-dom";
 import AddSongCard from "./AddSongCard";
 import Song from "./Song";
 
+
 export interface SongGridProps {
-  history: History;
   setOpenPopup: Dispatch<SetStateAction<boolean>>;
 }
 
-const SongGrid = ({ history, setOpenPopup }: SongGridProps) => {
+const SongGrid = ({ setOpenPopup }: SongGridProps) => {
   const songs = useAppSelector(selectSongs);
+  const history = useHistory();
 
   return (
     <>
@@ -34,7 +35,6 @@ const SongGrid = ({ history, setOpenPopup }: SongGridProps) => {
                 sx={ { margin: "0px" } }
               >
                 <Song
-                  history={ history }
                   songId={ songId }
                   name={ name }
                   albumImage={ albumImage }

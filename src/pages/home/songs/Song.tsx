@@ -1,7 +1,7 @@
 import { Box, CardMedia } from "@mui/material";
 import { SquareGridCard } from "components";
-import { History } from "history";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Transition } from "react-transition-group";
 import SongHover from "./SongHover";
 
@@ -9,11 +9,11 @@ interface SongProps {
   songId: number;
   name: string;
   albumImage: string;
-  history: History;
 }
 
-const Song = ({ songId, name, albumImage, history }: SongProps) => {
+const Song = ({ songId, name, albumImage }: SongProps) => {
   const [hovering, setHover] = useState(false);
+  const history = useHistory();
 
   return (
     <SquareGridCard onClick={ () => history.push(`/home/song/${songId}`) }>
