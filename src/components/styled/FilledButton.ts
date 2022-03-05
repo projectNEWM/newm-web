@@ -7,7 +7,6 @@ const FilledButton = styled(Button)({
   borderRadius: "7px",
   color: "white",
   font: theme.typography.button.font,
-  height: "38px"
 });
 
 export default FilledButton;

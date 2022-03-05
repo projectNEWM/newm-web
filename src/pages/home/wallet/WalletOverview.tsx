@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { AnimatedGradientLine, FilledButton, OutlinedButton } from "components";
+import { HorizontalLine, FilledButton, OutlinedButton } from "components";
 import theme from "../../../theme";
 
 const WalletOverview = () => {
@@ -27,7 +27,7 @@ const WalletOverview = () => {
 
         <FilledButton>Connect My Wallet</FilledButton>
       </Box>
-      <AnimatedGradientLine />
+      <HorizontalLine />
       <Typography mt="35px" align="center" variant="body1" mb="35px">
         We are currently working on the NEWM App. As soon as our App is live, you will see all your income streams here.
         To be prepared for the big launch, make sure you minted your music!

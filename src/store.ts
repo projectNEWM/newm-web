@@ -15,7 +15,7 @@ const store = configureStore({
       return getDefaultMiddleware();
     }
 
-    return getDefaultMiddleware().concat(logger)
+    return getDefaultMiddleware().concat(logger);
   },
   reducer: {
     genre: genreReducer,
