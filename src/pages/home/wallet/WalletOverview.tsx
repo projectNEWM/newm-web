@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { HorizontalLine, FilledButton, OutlinedButton } from "components";
+import { FilledButton, HorizontalLine, OutlinedButton } from "components";
 import theme from "../../../theme";
 
 const WalletOverview = () => {
