@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
+import { useAppSelector } from "common";
 import { selectHomeViewType } from "modules/ui";
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import PlaylistGrid from "./PlaylistGrid";
 import PlaylistList from "./PlaylistList";
 
 const Playlists: FunctionComponent = () => {
-  const viewType = useSelector(selectHomeViewType);
+  const viewType = useAppSelector(selectHomeViewType);
 
   return (
     <Box>

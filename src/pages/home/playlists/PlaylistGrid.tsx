@@ -13,7 +13,7 @@ const PlaylistGrid: FunctionComponent = () => {
         const { id, name, coverImageUrl, songIds } = playlist;
 
         return (
-          <Grid key={ id } xs={ 12 } md={ 4 } lg={ 3 } item>
+          <Grid key={ id } xs={ 12 } sm={ 6 } md={ 4 } lg={ 3 } item>
             <Playlist
               id={ id }
               name={ name }

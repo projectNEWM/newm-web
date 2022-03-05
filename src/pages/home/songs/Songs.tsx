@@ -1,21 +1,20 @@
 import { Box } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAppSelector } from "common";
 import Popup from "components/Popup";
 import { selectSongs } from "modules/song";
+import { selectHomeViewType } from "modules/ui";
 import { useState } from "react";
-import theme from "theme";
 import PartyStarter from "./PartyStarter";
 import SongGrid from "./SongGrid";
 import SongList from "./SongList";
 import SongUploadForm from "./SongUploadForm";
 
 const Songs = () => {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-
   const songs = useAppSelector(selectSongs);
+  const viewType = useAppSelector(selectHomeViewType);
 
   const [openPopup, setOpenPopup] = useState(false);
+
 
   if (Object.values(songs).length === 0) {
     return <PartyStarter />;
@@ -27,7 +26,13 @@ const Songs = () => {
         <SongUploadForm setOpenPopup={ setOpenPopup } />
       </Popup>
 
-      <Box pb={ 2 }>{ isSmallScreen ? <SongList /> : <SongGrid setOpenPopup={ setOpenPopup } /> }</Box>
+      <Box pb={ 2 }>
+        {
+          viewType === "list"
+            ? <SongList />
+            : <SongGrid setOpenPopup={ setOpenPopup } />
+        }
+      </Box>
     </>
   );
 };
