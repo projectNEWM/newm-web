@@ -45,6 +45,10 @@ module.exports = {
     "import/order": [
       "warn",
       {
+        // alphabetize: {
+        //   caseInsensitive: true,
+        //   order: "asc",
+        // },
         groups: ["builtin", "external", "index", "sibling", "parent", "internal"],
       },
     ],
