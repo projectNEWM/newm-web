@@ -16,7 +16,7 @@ const AnimatedGradient = keyframes`
 const StyledAnimatedGradientLine = styled("hr")(
   ({ height = "2px", animationSpeed = "40s" }: AnimatedGradientLineProps) => ({
     animation: `${AnimatedGradient} ${animationSpeed} ease infinite;`,
-    background: `linear-gradient(270deg, ${theme.custom.gradientStart}, ${theme.custom.gradientEnd});`,
+    background: `linear-gradient(270deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main});`,
     backgroundSize: "400% 400%;",
     border: "none",
     height: `${height}`,

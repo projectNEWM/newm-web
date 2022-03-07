@@ -6,7 +6,6 @@ const OutlinedButton = styled(Button)(({ theme }) => ({
   borderRadius: "7px",
   color: theme.palette.primary.main,
   font: theme.typography.button.font,
-  height: "38px",
 }));
 
 export default OutlinedButton;

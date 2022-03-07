@@ -12,14 +12,7 @@ const initialState: GenreState = {
 const genreSlice = createSlice({
   initialState,
   name: "genre",
-  reducers: {
-    // example action (clears genres)
-    clear: (state) => {
-      state.genres = [];
-    }
-  },
+  reducers: {},
 });
-
-export const { clear } = genreSlice.actions;
 
 export default genreSlice.reducer;

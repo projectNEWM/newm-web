@@ -46,8 +46,9 @@ const SongGrid = ({ setOpenPopup }: SongGridProps) => {
         <Grid
           item
           xs={ 12 }
-          sm={ 4 }
-          md={ 3 }
+          sm={ 6 }
+          md={ 4 }
+          lg={ 3 }
           paddingBottom={ 2 }
           sx={ { margin: "0px" } }
         >

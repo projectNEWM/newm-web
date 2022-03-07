@@ -6,20 +6,12 @@ declare module "@mui/material/styles" {
       background: string;
       border: string;
     };
-    custom: {
-      gradientStart: string;
-      gradientEnd: string;
-    };
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
     inputField?: {
       background?: string;
       border?: string;
-    };
-    custom?: {
-      gradientStart: string;
-      gradientEnd: string;
     };
   }
 }
@@ -58,10 +50,14 @@ export default createTheme({
     },
     /* eslint-enable sort-keys */
   },
-  custom: {
-    gradientStart: "#cc33cc",
-    // eslint-disable-next-line sort-keys
-    gradientEnd: "#323290"
+
+  components: {
+    MuiUseMediaQuery: {
+      defaultProps: {
+        // enables useMediaQuery() value to update when used in components
+        noSsr: true,
+      },
+    },
   },
 
   inputField: {
