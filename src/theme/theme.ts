@@ -87,6 +87,7 @@ export default createTheme({
     body1: {
       fontFamily: "Montserrat",
       fontSize: 14,
+      fontWeight: 500,
     },
     button: {
       font: "normal normal bold 14px/30px Raleway",

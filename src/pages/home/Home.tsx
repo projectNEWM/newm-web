@@ -7,6 +7,7 @@ import { setHomeViewType } from "modules/ui";
 import React, { FunctionComponent, HTMLAttributes, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import MetricsOverview from "./metrics";
 import Playlists from "./playlists";
 import Songs from "./songs";
 import TabButtons from "./TabButtons";
@@ -104,7 +105,7 @@ const Home: FunctionComponent<HomePropTypes> = (props) => {
             <WalletOverview />
           </TabPanel>
           <TabPanel value={ value } page={ Page.metrics }>
-            Metrics
+            <MetricsOverview />
           </TabPanel>
         </Box>
       </Box>
