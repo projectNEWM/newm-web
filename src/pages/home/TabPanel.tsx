@@ -1,21 +1,21 @@
 import { Box } from "@mui/material";
-import { Page } from "common";
+import { TabName } from "modules/ui";
 
 interface TabPanelProps {
   children: React.ReactNode;
-  page: Page;
-  value: Page;
+  tab: TabName;
+  value: TabName;
 }
 
 const TabPanel = ({
   children,
   value,
-  page,
+  tab,
   ...other
 }: TabPanelProps) => {
   return (
     <Box { ...other }>
-      { value === page && (
+      { value === tab && (
         <Box pt={ 1 }>
           { children }
         </Box>

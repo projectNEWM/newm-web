@@ -2,7 +2,6 @@ export { default as DatePickerInput } from "./DatePickerInput";
 export { default as FilledButton } from "./styled/FilledButton";
 export { default as ImageUpload } from "./ImageUpload";
 export { default as MultiDropdown } from "./MultiDropdown";
-export { default as NEWMLogo } from "./NEWMLogo";
 export { default as OutlinedButton } from "./styled/OutlinedButton";
 export { default as PaperInput } from "./styled/PaperInput";
 export { default as Popup } from "./Popup";

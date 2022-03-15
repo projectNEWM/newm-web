@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ViewType } from "./types";
+import { TabName, ViewType } from "./types";
 
 interface UiState {
   home: {

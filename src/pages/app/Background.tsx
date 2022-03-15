@@ -1,21 +1,17 @@
 import { styled } from "@mui/material/styles";
-import { ReactNode } from "react";
-
-interface BackgroundProps {
-  children: ReactNode;
-}
 
 const BackgroundImage = styled("div")({
   backgroundImage: "url(\"https://i.postimg.cc/TPTmSRWB/bg-img.png\")",
-  backgroundPosition: "center",
+  backgroundPosition: "top center",
   backgroundRepeat: "repeat",
-  backgroundSize: "cover",
+  backgroundSize: `${window.innerWidth}px auto`,
   bottom: 0,
   height: "100%",
   left: 0,
   position: "absolute",
   right: 0,
   top: 0,
+  zIndex: -20,
 });
 
 const BackgroundOverlay = styled("div")({
@@ -25,17 +21,17 @@ const BackgroundOverlay = styled("div")({
   position: "absolute",
   right: 0,
   top: 0,
+  zIndex: -10,
 });
 
 /**
  * Background image with darkened overlay.
  */
-const Background = ({ children }: BackgroundProps) => (
-  <BackgroundImage>
-    <BackgroundOverlay>
-      { children }
-    </BackgroundOverlay>
-  </BackgroundImage>
+const Background = () => (
+  <>
+    <BackgroundImage />
+    <BackgroundOverlay />
+  </>
 );
 
 export default Background;
