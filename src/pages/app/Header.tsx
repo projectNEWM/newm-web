@@ -42,8 +42,21 @@ const Header: FunctionComponent = () => {
       <Background />
 
       <Box display="flex" flexDirection="column">
-        <Box display="flex" flex={ 1 } flexDirection="row" justifyContent="between" alignItems="center">
-          <Box sx={ { flex: 0.25, justifyContent: "center", alignItems: "center", display: { xs: "none", md: "flex" } } }>
+        <Box
+          display="flex"
+          flex={ 1 }
+          flexDirection="row"
+          justifyContent="between"
+          alignItems="center"
+        >
+          <Box
+            sx={ {
+              flex: 0.25,
+              justifyContent: "center",
+              alignItems: "center", 
+              display: { xs: "none", md: "flex" },
+            } }
+          >
             <NEWMLogo />
           </Box>
 
