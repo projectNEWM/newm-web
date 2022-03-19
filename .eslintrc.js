@@ -45,10 +45,6 @@ module.exports = {
     "import/order": [
       "warn",
       {
-        alphabetize: {
-          caseInsensitive: true,
-          order: "asc",
-        },
         groups: ["builtin", "external", "index", "sibling", "parent", "internal"],
       },
     ],
@@ -91,15 +87,6 @@ module.exports = {
         ignoreCase: false,
         ignoreDeclarationSort: true,
         ignoreMemberSort: false,
-      },
-    ],
-    "sort-keys": [
-      "warn",
-      "asc",
-      {
-        caseSensitive: true,
-        minKeys: 2,
-        natural: false,
       },
     ],
   },
