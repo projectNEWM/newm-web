@@ -1,3 +1,8 @@
+/**
+ * Wrapper component used to provide the look of an text input without
+ * actual text input functionality.
+ */
+
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "theme";
