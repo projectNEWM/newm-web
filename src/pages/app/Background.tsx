@@ -1,5 +1,5 @@
 /**
- * Fixed position background image with darkened overlay
+ * Fixed position background image with darkened overlay.
  */
 
 import { styled } from "@mui/material/styles";

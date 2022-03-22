@@ -4,6 +4,7 @@ import { PrivateRoute } from "components";
 import { Background } from "pages/app";
 import Login from "pages/login";
 import Home from "pages/home";
+import SignUp from "pages/signUp";
 import { Provider } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import store from "./store";
@@ -18,11 +19,15 @@ const App = () => {
 
         <Background>
           <BrowserRouter>
-            <Redirect to="/home" from="/" />
-
             <Switch>
+              <Redirect exact to="/home" from="/" />
+
               <Route path="/login">
                 <Login />
+              </Route>
+
+              <Route path="/sign-up">
+                <SignUp />
               </Route>
 
               <PrivateRoute path="/home">

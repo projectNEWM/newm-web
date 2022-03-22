@@ -2,7 +2,7 @@ import NEWMLogo from "assets/images/NEWMLogo";
 import { FunctionComponent } from "react";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 
-const Login: FunctionComponent = () => {
+const SignUp: FunctionComponent = () => {
   const theme = useTheme();
 
   return (
@@ -36,7 +36,7 @@ const Login: FunctionComponent = () => {
               variant="h5"
               sx={ { color: theme.palette.primary.main } }
             >
-              Login placeholder
+              Sign up placeholder
             </Typography>
           </Box>
         </Box>
@@ -45,4 +45,4 @@ const Login: FunctionComponent = () => {
   );
 };
 
-export default Login;
+export default SignUp;
