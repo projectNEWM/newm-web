@@ -23,9 +23,9 @@ interface ImageUploadProps {
     | "eps";
   dropzoneLabel?: string;
   buttonLabel?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setFieldValue?: (
     field: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     shouldValidate?: boolean | undefined
   ) => void;
