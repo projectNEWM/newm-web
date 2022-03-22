@@ -39,16 +39,13 @@ declare module "@mui/material/Typography" {
 
 export default createTheme({
   breakpoints: {
-    /* ordering breakpoint values alphabetically breaks functionality */
-    /* eslint-disable sort-keys */
     values: {
       xs: 0,
       sm: 600,
       md: 900,
-      lg: 1100,
+      lg: 1060,
       xl: 1536,
     },
-    /* eslint-enable sort-keys */
   },
 
   components: {
@@ -67,15 +64,15 @@ export default createTheme({
 
   palette: {
     background: {
-      default: "#0A0A0A",
-      paper: "#0A0A0A",
+      default: "#000000",
+      paper: "#000000",
     },
 
     primary: {
-      main: "#CC33CC",
+      main: "#FF3366",
     },
     secondary: {
-      main: "#2C2B71",
+      main: "#CC33CC",
     },
     text: {
       primary: "#FFFFFF",
@@ -90,7 +87,7 @@ export default createTheme({
       fontWeight: 500,
     },
     button: {
-      font: "normal normal bold 14px/30px Raleway",
+      font: "normal normal bold 16px/30px Raleway",
       textTransform: "none",
     },
     fontFamily: "Montserrat",
@@ -102,12 +99,12 @@ export default createTheme({
     },
     h2: {
       fontFamily: "Raleway",
-      fontSize: 30,
       fontWeight: 600,
     },
     h5: {
       fontFamily: "Raleway",
-      fontSize:  16,
+      fontSize: "1.75rem",
+      lineHeight: "1.5rem",
       fontWeight: 900,
     },
     h6: {

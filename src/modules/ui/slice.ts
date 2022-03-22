@@ -1,28 +1,11 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ViewType } from "./types";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface UiState {
-  home: {
-    viewType: ViewType;
-  };
-}
-
-const initialState: UiState = {
-  home: {
-    viewType: "grid",
-  },
-};
+const initialState = {};
 
 const uiSlice = createSlice({
   initialState,
   name: "ui",
-  reducers: {
-    setHomeViewType: (state, action: PayloadAction<ViewType>) => {
-      state.home.viewType = action.payload;
-    },
-  },
+  reducers: {},
 });
-
-export const { setHomeViewType } = uiSlice.actions;
 
 export default uiSlice.reducer;

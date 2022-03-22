@@ -1,3 +1,7 @@
+/**
+ * Fixed position background image with darkened overlay.
+ */
+
 import { styled } from "@mui/material/styles";
 import { ReactNode } from "react";
 
@@ -27,14 +31,9 @@ const BackgroundOverlay = styled("div")({
   top: 0,
 });
 
-/**
- * Background image with darkened overlay.
- */
 const Background = ({ children }: BackgroundProps) => (
   <BackgroundImage>
-    <BackgroundOverlay>
-      { children }
-    </BackgroundOverlay>
+    <BackgroundOverlay>{ children }</BackgroundOverlay>
   </BackgroundImage>
 );
 

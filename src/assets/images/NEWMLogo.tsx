@@ -1,51 +1,49 @@
-const NEWMLogo = () => (
+import { FunctionComponent } from "react";
+
+const NEWMLogo: FunctionComponent = () => (
   <svg
-    id="NEWM-Logo"
     xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    width="63.119"
-    height="63.995"
-    viewBox="0 0 63.119 63.995"
+    width="150"
+    height="150"
+    fill="none"
+    viewBox="0 0 150 150"
   >
+    <g clipPath="url(#clip0_206_5993)">
+      <path
+        fill="#0A0A0A"
+        d="M23.055 126.99a69.837 69.837 0 0050.064 20.465c38.601-.408 69.562-32.041 69.151-70.652a69.796 69.796 0 00-20.466-48.668A69.76 69.76 0 0073.119 7.732C34.553 7.343 2.98 38.294 2.59 76.863a69.848 69.848 0 005.183 27.12 70.889 70.889 0 0015.284 22.996v.011z"
+      ></path>
+      <path
+        fill="url(#paint0_linear_206_5993)"
+        d="M21.999 128.043a74.15 74.15 0 01-16.121-23.969C-10.169 65.879 7.769 21.912 45.945 5.861a74.986 74.986 0 0182.219 16.245 75.028 75.028 0 0116.271 24.552c15.632 38.375-2.797 82.16-41.161 97.796a74.987 74.987 0 01-57.312-.289A74.109 74.109 0 0122 128.043zm1.062-1.06a69.83 69.83 0 0050.058 20.472c38.601-.408 69.562-32.041 69.151-70.652a69.796 69.796 0 00-20.466-48.668A69.76 69.76 0 0073.119 7.732C34.553 7.343 2.98 38.294 2.59 76.863a69.847 69.847 0 005.183 27.12 70.893 70.893 0 0015.283 22.997l.006.003z"
+      ></path>
+      <path
+        fill="#fff"
+        d="M105.149 42.486L82.415 81.6 67.181 55.368l.009 24.556 10.923 18.768h8.638l19.484-33.497V112.7h13.178V42.485h-14.264zM27.86 42.486V112.7h13.182l-.007-44.91 26.147 44.91V88.077L40.614 42.486H27.86z"
+      ></path>
+    </g>
     <defs>
       <linearGradient
-        id="linear-gradient"
-        x1="0.851"
-        y1="0.144"
-        x2="0.146"
-        y2="0.851"
-        gradientUnits="objectBoundingBox"
+        id="paint0_linear_206_5993"
+        x1="21.78"
+        x2="127.896"
+        y1="127.941"
+        y2="22.212"
+        gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor="#09c" />
-        <stop offset="0.143" stopColor="#339" />
-        <stop offset="0.286" stopColor="#c3c" />
-        <stop offset="0.429" stopColor="#f36" />
-        <stop offset="0.572" stopColor="#bf192d" />
-        <stop offset="0.715" stopColor="#f90" />
-        <stop offset="0.858" stopColor="#ff6" />
-        <stop offset="1" stopColor="#6f6" />
+        <stop stopColor="#6F6"></stop>
+        <stop offset="0.14" stopColor="#FF6"></stop>
+        <stop offset="0.28" stopColor="#F90"></stop>
+        <stop offset="0.43" stopColor="#BF192D"></stop>
+        <stop offset="0.57" stopColor="#F36"></stop>
+        <stop offset="0.71" stopColor="#C3C"></stop>
+        <stop offset="0.86" stopColor="#339"></stop>
+        <stop offset="1" stopColor="#09C"></stop>
       </linearGradient>
+      <clipPath id="clip0_206_5993">
+        <path fill="#fff" d="M0 0H150V150H0z"></path>
+      </clipPath>
     </defs>
-    <path
-      id="Eclipse"
-      d="M703.806,259.751a31.739,31.739,0,0,1-6.784-10.228,32.159,32.159,0,0,1,16.863-41.89,31.146,31.146,0,0,1,24.158-.124,31.818,31.818,0,0,1,17.287,17.531,32.173,32.173,0,0,1-17.323,41.723,31.191,31.191,0,0,1-34.2-7.011Zm.453-.452a29.2,29.2,0,0,0,21.064,8.733,29.633,29.633,0,0,0,29.1-30.137,30.333,30.333,0,0,0-2.288-11.22,29.336,29.336,0,0,0-56.495,11.242,29.992,29.992,0,0,0,8.618,21.383Z"
-      transform="translate(-694.55 -205.132)"
-      fill="url(#linear-gradient)"
-    />
-    <g id="Group_346" data-name="Group 346" transform="translate(11.728 18.124)">
-      <path
-        id="M"
-        d="M470.271,309.9l-9.561,16.685-6.41-11.191V325.87l4.6,8h3.633l8.2-14.284v20.259h5.547V309.9Z"
-        transform="translate(-437.754 -309.9)"
-        fill="#fff"
-      />
-      <path
-        id="N"
-        d="M224.3,309.9v29.948h5.547l-.007-19.158,11.007,19.158v-10.5l-11.18-19.45Z"
-        transform="translate(-224.3 -309.9)"
-        fill="#fff"
-      />
-    </g>
   </svg>
 );
 
