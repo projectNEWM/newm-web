@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import api from "api";
 import { genreReducer } from "modules/genre";
 import { playlistReducer } from "modules/playlist";
 import { roleReducer } from "modules/role";
@@ -11,11 +12,13 @@ const isProduction = process.env.NODE_ENV === "production";
 const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
+    const baseMiddleware = [...getDefaultMiddleware(), api.middleware];
+
     if (isProduction) {
-      return getDefaultMiddleware();
+      return baseMiddleware;
     }
 
-    return getDefaultMiddleware().concat(logger);
+    return baseMiddleware.concat(logger);
   },
   reducer: {
     genre: genreReducer,
@@ -23,6 +26,7 @@ const store = configureStore({
     role: roleReducer,
     song: songReducer,
     ui: uiReducer,
+    [api.reducerPath]: api.reducer,
   },
 });
 
