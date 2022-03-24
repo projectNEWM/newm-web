@@ -6,7 +6,6 @@ const extendedApi = api.injectEndpoints({
       query: () => "portal/songs",
     }),
   }),
-  overrideExisting: false,
 });
 
 export default extendedApi;
