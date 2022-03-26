@@ -3,6 +3,7 @@ import api from "api";
 import { genreReducer } from "modules/genre";
 import { playlistReducer } from "modules/playlist";
 import { roleReducer } from "modules/role";
+import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
 import { uiReducer } from "modules/ui";
 import logger from "redux-logger";
@@ -24,6 +25,7 @@ const store = configureStore({
     genre: genreReducer,
     playlist: playlistReducer,
     role: roleReducer,
+    session: sessionReducer,
     song: songReducer,
     ui: uiReducer,
     [api.reducerPath]: api.reducer,
