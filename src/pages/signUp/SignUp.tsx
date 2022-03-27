@@ -1,41 +1,13 @@
-import { extendedApi as sessionApi } from "modules/session";
 import NEWMLogo from "assets/images/NEWMLogo";
+import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
-import GoogleLogin, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
-import GoogleIcon from "@mui/icons-material/Google";
-import {
-  Box,
-  Container,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
 
-  const dispatch = useDispatch();
-
-  const handleGoogleRespSuccess = (
-    resp: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    try {
-      const onlineResponse = resp as GoogleLoginResponse;
-      const accessToken = onlineResponse.accessToken;
-
-      dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
-    } catch (e) {
-      console.log("Google authentication service offline");
-    }
-  };
-
-  const handleGoogleRespFailure = () => {
-    console.log("Google authentication failed");
-  };
+  useAuthenticatedRedirect();
 
   return (
     <Container
@@ -73,7 +45,7 @@ const SignUp: FunctionComponent = () => {
           </Box>
 
           <Typography variant="body2" align="center">
-            Or sign in with
+            Or sign up via
           </Typography>
 
           <Box
@@ -82,20 +54,11 @@ const SignUp: FunctionComponent = () => {
             justifyContent="center"
             alignItems="center"
           >
-            <GoogleLogin
-              clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID || "" }
-              render={ (renderProps) => (
-                <IconButton
-                  onClick={ renderProps.onClick }
-                  disabled={ renderProps.disabled }
-                >
-                  <GoogleIcon style={ { fill: "white" } } />
-                </IconButton>
-              ) }
-              onSuccess={ handleGoogleRespSuccess }
-              onFailure={ handleGoogleRespFailure }
-              cookiePolicy={ "single_host_origin" }
-            />
+            <Stack direction="row" spacing={ 2 }>
+              <GoogleLogin />
+              <FacebookLogin />
+              <LinkedInLogin />
+            </Stack>
           </Box>
         </Box>
       </Box>

@@ -1,7 +1,7 @@
-export interface GoogleAuthBody {
+export interface NewmAuthRequest {
   readonly accessToken: string;
 }
 
-export interface GoogleAuthResponse {
+export interface NewmAuthResponse {
   readonly token: string;
 }

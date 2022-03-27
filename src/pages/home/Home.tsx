@@ -3,7 +3,12 @@ import { FunctionComponent } from "react";
 
 const Home: FunctionComponent = () => {
   return (
-    <Box>
+    <Box
+      display="flex"
+      flexGrow="1"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Typography>Home page</Typography>
     </Box>
   );

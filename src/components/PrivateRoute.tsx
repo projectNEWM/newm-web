@@ -1,8 +1,10 @@
 import { FunctionComponent } from "react";
+import { useSelector } from "react-redux";
+import { selectSession } from "modules/session";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 
 const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
-  const isLoggedIn = false; // placeholder value until auth is in place
+  const { isLoggedIn } = useSelector(selectSession);
 
   return (
     <Route

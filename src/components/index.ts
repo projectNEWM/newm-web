@@ -1,7 +1,11 @@
 export { default as ImageUpload } from "./ImageUpload";
 export { default as NEWMLogo } from "./NEWMLogo";
+export { default as Background } from "./Background";
 export { default as Popup } from "./Popup";
 export { default as FadeTransition } from "./FadeTransition";
 export { default as SquareGridCard } from "./SquareGridCard";
 export { default as PaperInput } from "./styled/PaperInput";
 export { default as PrivateRoute } from "./PrivateRoute";
+export { default as GoogleLogin } from "./GoogleLogin";
+export { default as FacebookLogin } from "./FacebookLogin";
+export { default as LinkedInLogin } from "./LinkedInLogin";
