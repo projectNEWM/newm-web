@@ -1,7 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
+import { useGetSongsQuery } from "modules/song";
 
 const Home: FunctionComponent = () => {
+  useGetSongsQuery("");
+
   return (
     <Box
       display="flex"
