@@ -35,6 +35,14 @@ const sessionSlice = createSlice({
         state.isLoggedIn = true;
       }
     );
+    builder.addMatcher(
+      extendedApi.endpoints.linkedInLogin.matchFulfilled,
+      (state, { payload }) => {
+        Cookie.set("apiToken", payload.token);
+
+        state.isLoggedIn = true;
+      }
+    );
   },
 });
 

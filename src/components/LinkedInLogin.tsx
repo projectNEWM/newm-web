@@ -10,10 +10,9 @@ const LinkedInLogin: FunctionComponent = () => {
 
   const { linkedInLogin } = useLinkedIn({
     clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
-    // clientId: "86v4twvn5jhdyg",
     redirectUri: `${window.location.origin}/linkedin`,
-    onSuccess: (accessToken) => {
-      dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
+    onSuccess: (code) => {
+      dispatch(sessionApi.endpoints.linkedInLogin.initiate({ code }));
     },
   });
 

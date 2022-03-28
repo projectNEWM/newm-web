@@ -1,5 +1,6 @@
 export interface NewmAuthRequest {
-  readonly accessToken: string;
+  readonly accessToken?: string;
+  readonly code?: string;
 }
 
 export interface NewmAuthResponse {
