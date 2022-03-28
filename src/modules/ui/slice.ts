@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface UiState {
-  error: string;
+  errorMessage: string;
 }
 
 const initialState: UiState = {
-  error: "",
+  errorMessage: "",
 };
 
 const uiSlice = createSlice({
@@ -13,7 +13,7 @@ const uiSlice = createSlice({
   name: "ui",
   reducers: {
     setErrorMessage(state, action: PayloadAction<string>) {
-      state.error = action.payload;
+      state.errorMessage = action.payload;
     },
   },
 });
