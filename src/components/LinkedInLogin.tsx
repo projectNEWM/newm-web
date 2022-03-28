@@ -1,3 +1,9 @@
+/**
+ * Retrieves an authorization code from LinkedIn which
+ * can be used to request a LinkedIn access token and
+ * log into the app.
+ */
+
 import { FunctionComponent } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";

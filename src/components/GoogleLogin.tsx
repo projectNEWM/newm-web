@@ -1,5 +1,5 @@
 /**
- * Logs the user into th app using the Google Auth SDK.
+ * Logs the user into the app using the Google Auth SDK.
  */
 
 import { extendedApi as sessionApi } from "modules/session";
@@ -19,14 +19,15 @@ const GoogleLogin: FunctionComponent = () => {
   const handleGoogleRespSuccess = (
     resp: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    try {
-      const onlineResponse = resp as GoogleLoginResponse;
-      const accessToken = onlineResponse.accessToken;
+    const loginResponse = resp as GoogleLoginResponse;
+    const { accessToken } = loginResponse;
 
-      dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
-    } catch (e) {
+    if (!accessToken) {
       dispatch(setErrorMessage("Google authentication service offline"));
+      return;
     }
+
+    dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
   };
 
   const handleGoogleRespFailure = () => {

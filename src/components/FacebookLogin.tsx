@@ -1,5 +1,5 @@
 /**
- * Logs the user into th app using the Facebook Auth SDK.
+ * Logs the user into the app using the Facebook Auth SDK.
  */
 
 import { extendedApi as sessionApi } from "modules/session";
@@ -20,14 +20,15 @@ const FacebookLogin: FunctionComponent = () => {
   const handleFacebookResponse = (
     resp: ReactFacebookLoginInfo | ReactFacebookFailureResponse
   ) => {
-    try {
-      const onlineResponse = resp as ReactFacebookLoginInfo;
-      const accessToken = onlineResponse.accessToken;
+    const loginInfo = resp as ReactFacebookLoginInfo;
+    const { accessToken } = loginInfo;
 
-      dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
-    } catch (e) {
+    if (!accessToken) {
       dispatch(setErrorMessage("Facebook authentication was not successful"));
+      return;
     }
+
+    dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
   };
 
   return (
