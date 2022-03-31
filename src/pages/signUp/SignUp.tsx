@@ -1,7 +1,7 @@
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
-import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
+import { FacebookLogin, GoogleLogin } from "components";
 import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 
 const SignUp: FunctionComponent = () => {
@@ -57,7 +57,10 @@ const SignUp: FunctionComponent = () => {
             <Stack direction="row" spacing={ 2 }>
               <GoogleLogin />
               <FacebookLogin />
-              <LinkedInLogin />
+              { /**
+                // Uncomment once functionality is updated on the back-end
+                <LinkedInLogin />
+              */ }
             </Stack>
           </Box>
         </Box>
