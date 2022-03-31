@@ -14,11 +14,18 @@ import { IconButton } from "@mui/material";
 const LinkedInLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
 
+  const redirectUri = `${window.location.origin}/linkedin`;
+
   const { linkedInLogin } = useLinkedIn({
     clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
-    redirectUri: `${window.location.origin}/linkedin`,
+    redirectUri,
     onSuccess: (code) => {
-      dispatch(sessionApi.endpoints.linkedInLogin.initiate({ code }));
+      dispatch(
+        sessionApi.endpoints.linkedInLogin.initiate({
+          code,
+          redirectUri,
+        })
+      );
     },
   });
 
