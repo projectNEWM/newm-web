@@ -10,6 +10,16 @@ import logger from "redux-logger";
 
 const isProduction = process.env.NODE_ENV === "production";
 
+export const reducer = {
+  genre: genreReducer,
+  playlist: playlistReducer,
+  role: roleReducer,
+  session: sessionReducer,
+  song: songReducer,
+  ui: uiReducer,
+  [api.reducerPath]: api.reducer,
+};
+
 const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
@@ -21,15 +31,7 @@ const store = configureStore({
 
     return baseMiddleware.concat(logger);
   },
-  reducer: {
-    genre: genreReducer,
-    playlist: playlistReducer,
-    role: roleReducer,
-    session: sessionReducer,
-    song: songReducer,
-    ui: uiReducer,
-    [api.reducerPath]: api.reducer,
-  },
+  reducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -41,6 +41,7 @@ const GoogleLogin: FunctionComponent = () => {
         <IconButton
           onClick={ renderProps.onClick }
           disabled={ renderProps.disabled }
+          aria-label="google authorization"
         >
           <GoogleIcon style={ { fill: "white" } } />
         </IconButton>

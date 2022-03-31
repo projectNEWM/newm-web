@@ -5,8 +5,7 @@ import Cookies from "js-cookie";
 const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://staging-newm-server.herokuapp.com/",
-    baseUrl: "https://newm-app-pip-wlara-cors-z40ymg.herokuapp.com/",
+    baseUrl: "https://staging-newm-server.herokuapp.com/",
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const { isLoggedIn } = state.session;

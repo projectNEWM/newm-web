@@ -30,7 +30,7 @@ const LinkedInLogin: FunctionComponent = () => {
   });
 
   return (
-    <IconButton onClick={ linkedInLogin }>
+    <IconButton onClick={ linkedInLogin } aria-label="linkedin authorization">
       <LinkedInIcon />
     </IconButton>
   );

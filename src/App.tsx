@@ -1,15 +1,14 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { PrivateRoute } from "components";
-import { Background } from "components";
+import { Background, PrivateRoute } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import theme from "theme";
 import store from "./store";
-import theme from "./theme";
 import "./App.css";
 
 const App = () => {

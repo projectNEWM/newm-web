@@ -40,6 +40,7 @@ const FacebookLogin: FunctionComponent = () => {
         <IconButton
           onClick={ renderProps.onClick }
           disabled={ renderProps.disabled }
+          aria-label="facebook authorization"
         >
           <FacebookIcon />
         </IconButton>
