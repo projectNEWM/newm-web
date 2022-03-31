@@ -1,5 +1,5 @@
 import api from "api";
-import { NewmOAuthRequest, NewmAuthResponse } from "./types";
+import { NewmAuthResponse, NewmOAuthRequest } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({

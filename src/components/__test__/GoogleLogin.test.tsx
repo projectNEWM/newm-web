@@ -23,6 +23,7 @@ jest.mock("modules/session", () => ({
 
 // mock successful Google auth response on click
 jest.mock("react-google-login", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const MockGoogleLogin = ({ onSuccess, render }: any) => {
     return render({ onClick: () => onSuccess({ accessToken: "MOCK" }) });
   };

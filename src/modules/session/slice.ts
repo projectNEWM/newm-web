@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { extendedApi } from "./api";
+import { isSuccessfulOAuthCall } from "./matchers";
 
 interface SessionState {
   isLoggedIn: boolean;
@@ -15,30 +15,11 @@ const sessionSlice = createSlice({
   name: "session",
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(
-      extendedApi.endpoints.googleLogin.matchFulfilled,
-      (state, { payload }) => {
-        Cookie.set("apiToken", payload.token);
+    builder.addMatcher(isSuccessfulOAuthCall, (state, { payload }) => {
+      Cookie.set("apiToken", payload.token);
 
-        state.isLoggedIn = true;
-      }
-    );
-    builder.addMatcher(
-      extendedApi.endpoints.facebookLogin.matchFulfilled,
-      (state, { payload }) => {
-        Cookie.set("apiToken", payload.token);
-
-        state.isLoggedIn = true;
-      }
-    );
-    builder.addMatcher(
-      extendedApi.endpoints.linkedInLogin.matchFulfilled,
-      (state, { payload }) => {
-        Cookie.set("apiToken", payload.token);
-
-        state.isLoggedIn = true;
-      }
-    );
+      state.isLoggedIn = true;
+    });
   },
 });
 

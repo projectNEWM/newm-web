@@ -19,6 +19,13 @@ interface WrapperProps {
 /**
  * Wraps the element being tested with Theme, Provider, and
  * Router context so that it is available in tests.
+ *
+ * @example
+ *
+ * const renderProps = renderWithContext(
+ *   <Example />,
+ *   { preloadedState: { hello: "world" } }),
+ * );
  */
 export const renderWithContext = (
   ui: ReactElement,

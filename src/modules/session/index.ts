@@ -3,3 +3,4 @@ export * from "./slice";
 export * from "./api";
 export * from "./types";
 export * from "./selectors";
+export * from "./matchers";
