@@ -2,8 +2,10 @@
  * Logs the user into the app using the Facebook Auth SDK.
  */
 
-import { extendedApi as sessionApi } from "modules/session";
-import { setErrorMessage } from "modules/ui";
+import {
+  extendedApi as sessionApi,
+  setSessionErrorMessage,
+} from "modules/session";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import FacebookLoginHelper from "react-facebook-login/dist/facebook-login-render-props";
@@ -24,7 +26,9 @@ const FacebookLogin: FunctionComponent = () => {
     const { accessToken } = loginInfo;
 
     if (!accessToken) {
-      dispatch(setErrorMessage("Facebook authentication was not successful"));
+      dispatch(
+        setSessionErrorMessage("Facebook authentication was not successful")
+      );
       return;
     }
 

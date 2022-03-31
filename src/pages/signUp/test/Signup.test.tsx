@@ -7,6 +7,6 @@ describe("<SignUp />", () => {
 
     expect(queryByLabelText("google authorization")).toBeTruthy();
     expect(queryByLabelText("facebook authorization")).toBeTruthy();
-    // expect(queryByLabelText("linkedin authorization")).toBeTruthy();
+    expect(queryByLabelText("linkedin authorization")).toBeTruthy();
   });
 });

@@ -5,7 +5,6 @@ import { playlistReducer } from "modules/playlist";
 import { roleReducer } from "modules/role";
 import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
-import { uiReducer } from "modules/ui";
 import logger from "redux-logger";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -16,7 +15,6 @@ export const reducer = {
   role: roleReducer,
   session: sessionReducer,
   song: songReducer,
-  ui: uiReducer,
   [api.reducerPath]: api.reducer,
 };
 

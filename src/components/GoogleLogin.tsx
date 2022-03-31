@@ -2,8 +2,10 @@
  * Logs the user into the app using the Google Auth SDK.
  */
 
-import { extendedApi as sessionApi } from "modules/session";
-import { setErrorMessage } from "modules/ui";
+import {
+  extendedApi as sessionApi,
+  setSessionErrorMessage,
+} from "modules/session";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import GoogleLoginHelper, {
@@ -23,7 +25,7 @@ const GoogleLogin: FunctionComponent = () => {
     const { accessToken } = loginResponse;
 
     if (!accessToken) {
-      dispatch(setErrorMessage("Google authentication service offline"));
+      dispatch(setSessionErrorMessage("Google authentication service offline"));
       return;
     }
 
@@ -31,7 +33,7 @@ const GoogleLogin: FunctionComponent = () => {
   };
 
   const handleGoogleRespFailure = () => {
-    dispatch(setErrorMessage("Google authentication failed"));
+    dispatch(setSessionErrorMessage("Google authentication failed"));
   };
 
   return (
