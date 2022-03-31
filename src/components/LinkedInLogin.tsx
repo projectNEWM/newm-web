@@ -19,6 +19,7 @@ const LinkedInLogin: FunctionComponent = () => {
   const { linkedInLogin } = useLinkedIn({
     clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
     redirectUri,
+    scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {
       dispatch(
         sessionApi.endpoints.linkedInLogin.initiate({

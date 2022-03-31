@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { isFailedOAuthCall } from "modules/session";
 
 interface UiState {
   errorMessage: string;
@@ -15,6 +16,11 @@ const uiSlice = createSlice({
     setErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(isFailedOAuthCall, (state) => {
+      state.errorMessage = "An error occurred while logging in";
+    });
   },
 });
 
