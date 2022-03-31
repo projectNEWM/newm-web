@@ -3,6 +3,7 @@ import { FunctionComponent } from "react";
 import { useGetSongsQuery } from "modules/song";
 
 const Home: FunctionComponent = () => {
+  // TEMP: Just for testing to verify authenticated API call is successful
   useGetSongsQuery("");
 
   return (
