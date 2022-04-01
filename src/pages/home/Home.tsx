@@ -1,9 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
+import { useGetSongsQuery } from "modules/song";
 
 const Home: FunctionComponent = () => {
+  // TEMP: Just for testing to verify authenticated API call is successful
+  useGetSongsQuery("");
+
   return (
-    <Box>
+    <Box
+      display="flex"
+      flexGrow="1"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Typography>Home page</Typography>
     </Box>
   );

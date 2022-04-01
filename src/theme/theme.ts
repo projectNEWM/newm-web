@@ -82,15 +82,22 @@ export default createTheme({
 
   typography: {
     body1: {
-      fontFamily: "Montserrat",
+      fontFamily: "Inter",
       fontSize: 14,
-      fontWeight: 500,
+      lineHeight: "1.5rem",
+      fontWeight: 400,
+    },
+    body2: {
+      fontFamily: "Inter",
+      fontSize: 14,
+      lineHeight: "1.5rem",
+      fontWeight: 600,
     },
     button: {
       font: "normal normal bold 16px/30px Raleway",
       textTransform: "none",
     },
-    fontFamily: "Montserrat",
+    fontFamily: "Inter",
     fontSize: 14,
     formHeader: {
       fontFamily: "Raleway",

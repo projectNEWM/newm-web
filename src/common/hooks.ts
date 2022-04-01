@@ -1,6 +1,8 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
+import { selectSession } from "modules/session";
+import { useHistory, useLocation } from "react-router-dom";
 
 export interface WindowDimensions {
   height: number;
@@ -17,21 +19,20 @@ const getWindowDimensions = () => {
 };
 
 export const useWindowDimensions = (): WindowDimensions | undefined => {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-  useLayoutEffect(
-    () => {
-      function handleResize() {
-        setWindowDimensions(getWindowDimensions());
-      }
-
-      if (hasWindow) {
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-      }
-    },
-    [windowDimensions]
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
   );
+
+  useLayoutEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    if (hasWindow) {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, [windowDimensions]);
 
   return windowDimensions;
 };
@@ -39,3 +40,21 @@ export const useWindowDimensions = (): WindowDimensions | undefined => {
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+/**
+ * Redirects the user to their prior route, or home,
+ * once authenticated.
+ */
+export const useAuthenticatedRedirect = () => {
+  const { isLoggedIn } = useSelector(selectSession);
+
+  const history = useHistory();
+  const location = useLocation<{ from?: string }>();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push(location.state?.from || "/home");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn]);
+};
