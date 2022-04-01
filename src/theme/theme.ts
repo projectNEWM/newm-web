@@ -62,16 +62,39 @@ declare module "@mui/material/styles" {
   }
 }
 
+// declare typography custom types
 declare module "@mui/material/styles" {
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
+    xxsBold: React.CSSProperties;
+    xxsMedium: React.CSSProperties;
+    xsBold: React.CSSProperties;
+    xsMedium: React.CSSProperties;
+    sBold: React.CSSProperties;
+    sMedium: React.CSSProperties;
+    sRegular: React.CSSProperties;
+    mBold: React.CSSProperties;
+    mMedium: React.CSSProperties;
+    mRegular: React.CSSProperties;
+    xxlExtraBold: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
+    xxsBold?: React.CSSProperties;
+    xxsMedium?: React.CSSProperties;
+    xsBold?: React.CSSProperties;
+    xsMedium?: React.CSSProperties;
+    sBold?: React.CSSProperties;
+    sMedium?: React.CSSProperties;
+    sRegular?: React.CSSProperties;
+    mBold?: React.CSSProperties;
+    mMedium?: React.CSSProperties;
+    mRegular?: React.CSSProperties;
+    xxlExtraBold?: React.CSSProperties;
   }
 }
 
@@ -80,6 +103,17 @@ declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
     tabs: true;
     formHeader: true;
+    xxsBold: true;
+    xxsMedium: true;
+    xsBold: true;
+    xsMedium: true;
+    sBold: true;
+    sMedium: true;
+    sRegular: true;
+    mBold: true;
+    mMedium: true;
+    mRegular: true;
+    xxlExtraBold: true;
   }
 }
 
@@ -150,40 +184,85 @@ export default createTheme({
   },
 
   typography: {
-    body1: {
-      fontFamily: "Montserrat",
-      fontSize: 14,
-      fontWeight: 500,
+    // default fontFamily 
+    fontFamily: "Inter",
+    // custom font styles 
+    xxsBold: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "700",
+      fontSize: "10px",
+      lineHeight: "20px",
     },
-    button: {
-      font: "normal normal bold 16px/30px Raleway",
-      textTransform: "none",
+    xxsMedium: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "10px",
+      lineHeight: "20px",
     },
-    fontFamily: "Montserrat",
-    fontSize: 14,
-    formHeader: {
-      fontFamily: "Raleway",
-      fontSize: 16,
-      fontWeight: 900,
+    xsBold: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "700",
+      fontSize: "12px",
+      lineHeight: "20px",
     },
-    h2: {
-      fontFamily: "Raleway",
-      fontWeight: 600,
+    xsMedium: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "12px",
+      lineHeight: "20px",
     },
-    h5: {
-      fontFamily: "Raleway",
-      fontSize: "1.75rem",
-      lineHeight: "1.5rem",
-      fontWeight: 900,
+    sBold: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "700",
+      fontSize: "14px",
+      lineHeight: "20px",
     },
-    h6: {
-      fontFamily: "Roboto",
-      fontSize: 12,
+    sMedium: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "14px",
+      lineHeight: "20px",
     },
-    tabs: {
-      fontFamily: "Raleway",
-      fontSize: 14,
-      fontWeight: 900,
+    sRegular: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+    mBold: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "700",
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    mMedium: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "500",
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    mRegular: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    xxlExtraBold: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: "800",
+      fontSize: "32px",
+      lineHeight: "20px",
     },
   },
 });
