@@ -6,6 +6,7 @@ import {
   extendedApi as sessionApi,
   setSessionErrorMessage,
 } from "modules/session";
+import { useLocation } from "react-router-dom";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import FacebookLoginHelper from "react-facebook-login/dist/facebook-login-render-props";
@@ -18,6 +19,8 @@ import { IconButton } from "@mui/material";
 
 const FacebookLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const { pathname } = useLocation();
 
   const handleFacebookResponse = (
     resp: ReactFacebookLoginInfo | ReactFacebookFailureResponse
@@ -39,6 +42,7 @@ const FacebookLogin: FunctionComponent = () => {
     <FacebookLoginHelper
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       callback={ handleFacebookResponse }
+      redirectUri={ `${window.location.origin}/${pathname}` }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render={ (renderProps: any) => (
         <IconButton

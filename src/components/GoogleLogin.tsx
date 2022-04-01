@@ -8,6 +8,7 @@ import {
 } from "modules/session";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import GoogleLoginHelper, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
@@ -17,6 +18,8 @@ import { IconButton } from "@mui/material";
 
 const GoogleLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const { pathname } = useLocation();
 
   const handleGoogleRespSuccess = (
     resp: GoogleLoginResponse | GoogleLoginResponseOffline
@@ -50,6 +53,7 @@ const GoogleLogin: FunctionComponent = () => {
       ) }
       onSuccess={ handleGoogleRespSuccess }
       onFailure={ handleGoogleRespFailure }
+      redirectUri={ `${window.location.origin}/${pathname}` }
       cookiePolicy={ "single_host_origin" }
     />
   );
