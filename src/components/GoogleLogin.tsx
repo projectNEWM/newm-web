@@ -1,5 +1,5 @@
 /**
- * Logs the user into the app using the Google Auth SDK.
+ * Logs the user into the app using the Google Auth API.
  */
 
 import {

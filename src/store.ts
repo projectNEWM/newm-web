@@ -24,7 +24,9 @@ const store = configureStore({
     const baseMiddleware = [...getDefaultMiddleware(), api.middleware];
 
     if (isProduction) {
-      return baseMiddleware;
+      // return baseMiddleware;
+      // TEMP: Enable Redux logging for production builds (to debug staging)
+      return baseMiddleware.concat(logger);
     }
 
     return baseMiddleware.concat(logger);

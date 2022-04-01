@@ -1,5 +1,5 @@
 /**
- * Logs the user into the app using the Facebook Auth SDK.
+ * Logs the user into the app using the Facebook Auth API.
  */
 
 import {
