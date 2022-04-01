@@ -53,7 +53,7 @@ const GoogleLogin: FunctionComponent = () => {
       ) }
       onSuccess={ handleGoogleRespSuccess }
       onFailure={ handleGoogleRespFailure }
-      redirectUri={ `${window.location.origin}/${pathname}` }
+      redirectUri={ `${window.location.origin}${pathname}` }
       cookiePolicy={ "single_host_origin" }
     />
   );

@@ -42,7 +42,7 @@ const FacebookLogin: FunctionComponent = () => {
     <FacebookLoginHelper
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       callback={ handleFacebookResponse }
-      redirectUri={ `${window.location.origin}/${pathname}` }
+      redirectUri={ `${window.location.origin}${pathname}` }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render={ (renderProps: any) => (
         <IconButton
