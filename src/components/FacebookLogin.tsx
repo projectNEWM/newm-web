@@ -43,6 +43,7 @@ const FacebookLogin: FunctionComponent = () => {
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       callback={ handleFacebookResponse }
       redirectUri={ `${window.location.origin}${pathname}` }
+      disableMobileRedirect={ true } // mobile redirect has known issues
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render={ (renderProps: any) => (
         <IconButton
