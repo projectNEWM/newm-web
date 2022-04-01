@@ -1,7 +1,7 @@
 /**
- * Retrieves an authorization code from LinkedIn which
- * can be used to request a LinkedIn access token and
- * log the user into the app.
+ * Retrieves an authorization code from the LinkedIn API
+ * which can be used to request a LinkedIn access token
+ * and log the user into the app.
  */
 
 import { FunctionComponent } from "react";
