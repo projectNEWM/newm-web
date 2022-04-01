@@ -1,9 +1,13 @@
 import NEWMLogo from "assets/images/NEWMLogo";
+import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
-import { Box, Container, Typography, useTheme } from "@mui/material";
+import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
+
+  useAuthenticatedRedirect();
 
   return (
     <Container
@@ -30,14 +34,31 @@ const SignUp: FunctionComponent = () => {
             <NEWMLogo />
           </Box>
 
-          <Box mt={ 11 }>
+          <Box mt={ 11 } mb={ 2 }>
             <Typography
               align="center"
               variant="h5"
               sx={ { color: theme.palette.primary.main } }
             >
-              Sign up placeholder
+              Welcome
             </Typography>
+          </Box>
+
+          <Typography variant="body2" align="center">
+            Or sign up via
+          </Typography>
+
+          <Box
+            mt={ 1 }
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Stack direction="row" spacing={ 2 }>
+              <GoogleLogin />
+              <FacebookLogin />
+              <LinkedInLogin />
+            </Stack>
           </Box>
         </Box>
       </Box>

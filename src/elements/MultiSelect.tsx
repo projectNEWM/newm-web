@@ -11,7 +11,7 @@ interface MultiSelectProps {
   name: string;
   label: string;
   options: string[];
-  size?: "small" | "medium" | undefined;
+  size?: "small" | "medium";
   width?: string;
 }
 

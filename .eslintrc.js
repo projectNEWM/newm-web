@@ -31,6 +31,7 @@ module.exports = {
   ],
   root: true, // For configuration cascading.
   rules: {
+    "testing-library/prefer-screen-queries": 0,
     "comma-dangle": [
       "error",
       {

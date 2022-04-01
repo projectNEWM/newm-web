@@ -1,9 +1,12 @@
 import NEWMLogo from "assets/images/NEWMLogo";
+import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
+
+  useAuthenticatedRedirect();
 
   return (
     <Container

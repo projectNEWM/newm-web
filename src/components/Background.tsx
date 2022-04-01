@@ -23,6 +23,7 @@ const BackgroundImage = styled("div")({
 });
 
 const BackgroundOverlay = styled("div")({
+  display: "flex",
   backgroundColor: "rgba(0, 0, 0, 0.25)",
   bottom: 0,
   left: 0,
