@@ -9,12 +9,12 @@ import { FunctionComponent } from "react";
 interface TypographyProps extends MuiTypogaphyProps {
   color?: keyof Theme["colors"];
   fontFamily?: "Inter" | "Montserrat";
-  fontWeight?: "regular" | "medium" | "bold" | "extraBold";
+  fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
 }
 
 const Typography: FunctionComponent<TypographyProps> = ({
   color = "white",
-  fontWeight = "medium",
+  fontWeight = "semi-bold",
   fontFamily = "Inter",
   sx,
   ...rest
@@ -40,8 +40,9 @@ const Typography: FunctionComponent<TypographyProps> = ({
 const fontWeightMap = {
   regular: 400,
   medium: 500,
+  "semi-bold": 600,
   bold: 700,
-  extraBold: 800,
+  "extra-bold": 800,
 };
 
 export default Typography;

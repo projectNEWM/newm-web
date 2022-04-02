@@ -88,6 +88,7 @@ declare module "@mui/material/styles" {
     sm?: React.CSSProperties;
     md?: React.CSSProperties;
     xxl?: React.CSSProperties;
+    fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
 }
@@ -102,6 +103,7 @@ declare module "@mui/material/Typography" {
     sm: true;
     md: true;
     xxl: true;
+    fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
 }
@@ -177,6 +179,7 @@ export default createTheme({
     fontFamily: "Inter",
     fontWeightRegular: 400,
     fontWeightMedium: 500,
+    fontWeightSemiBold: 600,
     fontWeightBold: 700,
     fontWeightExtraBold: 800,
     // custom font variants
@@ -208,7 +211,6 @@ export default createTheme({
       fontFamily: "Inter",
       fontStyle: "normal",
       fontSize: "32px",
-      lineHeight: "20px",
     },
   },
 });

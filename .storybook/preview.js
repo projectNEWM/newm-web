@@ -1,3 +1,5 @@
+import { withContext } from "common";
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -6,4 +8,19 @@ export const parameters = {
       date: /Date$/,
     },
   },
-}
+  backgrounds: {
+    default: "dark",
+    values: [
+      {
+        name: "light",
+        value: "#fff",
+      },
+      {
+        name: "dark",
+        value: "#000",
+      },
+    ],
+  },
+};
+
+export const decorators = [withContext];

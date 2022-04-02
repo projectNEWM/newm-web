@@ -35,15 +35,11 @@ const SignUp: FunctionComponent = () => {
             <NEWMLogo />
           </Box>
 
-          <Box mt={ 11 } mb={ 2 }>
-            <Typography align="center" variant="h5" color="red">
-              Welcome
+          <Box mt={ 2 } display="flex" justifyContent="center">
+            <Typography variant="xxl" fontWeight="semi-bold" align="center">
+              Or sign up via
             </Typography>
           </Box>
-
-          <Typography variant="body2" align="center">
-            Or sign up via
-          </Typography>
 
           <Box
             mt={ 1 }

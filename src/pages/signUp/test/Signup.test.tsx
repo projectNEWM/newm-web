@@ -1,4 +1,4 @@
-import { renderWithContext } from "common/testUtils";
+import { renderWithContext } from "common";
 import SignUp from "../SignUp";
 
 describe("<SignUp />", () => {
