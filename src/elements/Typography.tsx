@@ -16,6 +16,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
   color = "white",
   fontWeight = "semi-bold",
   fontFamily = "Inter",
+  variant = "sm",
   sx,
   ...rest
 }) => {
@@ -28,6 +29,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
     <MuiTypography
       fontFamily={ fontFamily }
       fontWeight={ fontWeightValue }
+      variant={ variant }
       sx={ {
         color: colorHex,
         ...sx,
