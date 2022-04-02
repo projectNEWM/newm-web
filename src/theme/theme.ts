@@ -72,10 +72,12 @@ declare module "@mui/material/styles" {
     sm: React.CSSProperties;
     md: React.CSSProperties;
     xxl: React.CSSProperties;
+    fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
 
   export interface TypographyOptions {
+    fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
 
