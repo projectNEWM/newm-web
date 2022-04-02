@@ -1,8 +1,9 @@
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
+import { Typography } from "elements";
 import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
-import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
@@ -35,11 +36,7 @@ const SignUp: FunctionComponent = () => {
           </Box>
 
           <Box mt={ 11 } mb={ 2 }>
-            <Typography
-              align="center"
-              variant="h5"
-              sx={ { color: theme.palette.primary.main } }
-            >
+            <Typography align="center" variant="h5" color="red">
               Welcome
             </Typography>
           </Box>
