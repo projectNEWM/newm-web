@@ -36,9 +36,7 @@ const SignUp: FunctionComponent = () => {
           </Box>
 
           <Box mt={ 2 } display="flex" justifyContent="center">
-            <Typography fontWeight="semi-bold" align="center">
-              Or sign up via
-            </Typography>
+            <Typography align="center">Or sign up via</Typography>
           </Box>
 
           <Box
