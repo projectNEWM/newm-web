@@ -1,80 +1,115 @@
 module.exports = {
   env: {
-    browser: true,
     // Browser global variables like `window` etc.
-    commonjs: true,
+    browser: true,
     // CommonJS global variables and CommonJS scoping.Allows require, exports and module.
-    es6: true,
+    commonjs: true,
     // Enable all ECMAScript 6 features except for modules.
-    jest: true,
+    es6: true,
     // Jest global variables like `it` etc.
-    node: true // Defines things like process.env when generating through node
-
+    jest: true,
+    // Defines things like process.env when generating through node
+    node: true,
   },
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended", "plugin:jsx-a11y/recommended", "plugin:react-hooks/recommended", "plugin:jest/recommended", "plugin:testing-library/react", "plugin:react/jsx-runtime", "plugin:storybook/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/react",
+    "plugin:react/jsx-runtime",
+    "plugin:storybook/recommended",
+  ],
   ignorePatterns: ["src/assets/*"],
-  parser: "@typescript-eslint/parser",
   // Uses babel-eslint transforms.
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
-    ecmaVersion: 2018,
     // Allows for the parsing of modern ECMAScript features
-    sourceType: "module" // Allows for the use of imports
-
+    ecmaVersion: 2018,
+    // Allows for the use of imports
+    sourceType: "module",
   },
-  plugins: ["import", // eslint-plugin-import plugin. https://www.npmjs.com/package/eslint-plugin-import
-  "@typescript-eslint"],
-  root: true,
+  // eslint-plugin-import plugin. https://www.npmjs.com/package/eslint-plugin-import
+  plugins: ["import", "@typescript-eslint"],
   // For configuration cascading.
+  root: true,
   rules: {
     "testing-library/prefer-screen-queries": 0,
-    "comma-dangle": ["error", {
-      arrays: "always-multiline",
-      exports: "only-multiline",
-      functions: "never",
-      imports: "only-multiline",
-      objects: "only-multiline"
-    }],
+    "comma-dangle": [
+      "error",
+      {
+        arrays: "always-multiline",
+        exports: "only-multiline",
+        functions: "never",
+        imports: "only-multiline",
+        objects: "only-multiline",
+      },
+    ],
     "eol-last": "error",
-    "import/order": ["warn", {
-      groups: ["builtin", "external", "index", "sibling", "parent", "internal"]
-    }],
+    "import/order": [
+      "warn",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "index",
+          "sibling",
+          "parent",
+          "internal",
+        ],
+      },
+    ],
     "jsx-quotes": ["warn", "prefer-double"],
-    "max-len": ["warn", {
-      code: 120
-    }],
+    "max-len": [
+      "warn",
+      {
+        code: 120,
+      },
+    ],
     "no-console": "warn",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "off",
     "object-curly-spacing": ["warn", "always"],
     quotes: ["warn", "double"],
-    "react/jsx-curly-spacing": ["warn", {
-      allowMultiline: true,
-      children: {
-        when: "always"
+    "react/jsx-curly-spacing": [
+      "warn",
+      {
+        allowMultiline: true,
+        children: {
+          when: "always",
+        },
+        spacing: {
+          objectLiterals: "always",
+        },
+        when: "always",
       },
-      spacing: {
-        objectLiterals: "always"
+    ],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
-      when: "always"
-    }],
-    "react/jsx-filename-extension": ["error", {
-      extensions: [".js", ".jsx", ".ts", ".tsx"]
-    }],
+    ],
     "react/prop-types": "warn",
     semi: "warn",
-    "sort-imports": ["warn", {
-      ignoreCase: false,
-      ignoreDeclarationSort: true,
-      ignoreMemberSort: false
-    }]
+    "sort-imports": [
+      "warn",
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: true,
+        ignoreMemberSort: false,
+      },
+    ],
   },
   settings: {
     react: {
-      version: "detect" // Detect react version
-
-    }
-  }
+      // Detect react version
+      version: "detect",
+    },
+  },
 };
