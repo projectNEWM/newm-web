@@ -14,6 +14,7 @@ export const Variants = () => (
     <Typography variant="xxl">Text xxl</Typography>
   </Stack>
 );
+
 export const FontWeights = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
     <Typography variant="md" fontWeight="regular">
@@ -33,6 +34,7 @@ export const FontWeights = () => (
     </Typography>
   </Stack>
 );
+
 export const FontFamilies = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
     <Typography variant="md" fontFamily="Inter">
@@ -45,7 +47,7 @@ export const FontFamilies = () => (
       Text DM Serif Display
     </Typography>
     <Typography variant="md" fontStyle="italic" fontFamily="DM Serif Display">
-    Text DM Serif Display Italic
+      Text DM Serif Display Italic
     </Typography>
   </Stack>
 );
