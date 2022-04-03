@@ -8,7 +8,7 @@ import { FunctionComponent } from "react";
 
 interface TypographyProps extends MuiTypogaphyProps {
   color?: keyof Theme["colors"];
-  fontFamily?: "Inter" | "Montserrat";
+  fontFamily?: "Inter" | "Raleway" | "DM Serif Display";
   fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
 }
 
