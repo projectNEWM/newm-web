@@ -1,4 +1,4 @@
-import { renderWithContext } from "common/testUtils";
+import { renderWithContext } from "common";
 import { fireEvent } from "@testing-library/react";
 import { extendedApi } from "modules/session";
 import FacebookLogin from "../FacebookLogin";

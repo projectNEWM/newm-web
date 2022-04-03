@@ -67,34 +67,31 @@ declare module "@mui/material/styles" {
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
-    xxsBold: React.CSSProperties;
-    xxsMedium: React.CSSProperties;
-    xsBold: React.CSSProperties;
-    xsMedium: React.CSSProperties;
-    sBold: React.CSSProperties;
-    sMedium: React.CSSProperties;
-    sRegular: React.CSSProperties;
-    mBold: React.CSSProperties;
-    mMedium: React.CSSProperties;
-    mRegular: React.CSSProperties;
-    xxlExtraBold: React.CSSProperties;
+    xxs: React.CSSProperties;
+    xs: React.CSSProperties;
+    sm: React.CSSProperties;
+    md: React.CSSProperties;
+    xxl: React.CSSProperties;
+    fontWeightSemiBold: 600;
+    fontWeightExtraBold: 800;
+  }
+
+  export interface TypographyOptions {
+    fontWeightSemiBold: 600;
+    fontWeightExtraBold: 800;
   }
 
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
-    xxsBold?: React.CSSProperties;
-    xxsMedium?: React.CSSProperties;
-    xsBold?: React.CSSProperties;
-    xsMedium?: React.CSSProperties;
-    sBold?: React.CSSProperties;
-    sMedium?: React.CSSProperties;
-    sRegular?: React.CSSProperties;
-    mBold?: React.CSSProperties;
-    mMedium?: React.CSSProperties;
-    mRegular?: React.CSSProperties;
-    xxlExtraBold?: React.CSSProperties;
+    xxs?: React.CSSProperties;
+    xs?: React.CSSProperties;
+    sm?: React.CSSProperties;
+    md?: React.CSSProperties;
+    xxl?: React.CSSProperties;
+    fontWeightSemiBold: 600;
+    fontWeightExtraBold: 800;
   }
 }
 
@@ -103,17 +100,13 @@ declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
     tabs: true;
     formHeader: true;
-    xxsBold: true;
-    xxsMedium: true;
-    xsBold: true;
-    xsMedium: true;
-    sBold: true;
-    sMedium: true;
-    sRegular: true;
-    mBold: true;
-    mMedium: true;
-    mRegular: true;
-    xxlExtraBold: true;
+    xxs: true;
+    xs: true;
+    sm: true;
+    md: true;
+    xxl: true;
+    fontWeightSemiBold: true;
+    fontWeightExtraBold: true;
   }
 }
 
@@ -184,85 +177,42 @@ export default createTheme({
   },
 
   typography: {
-    // default fontFamily 
+    // default fontFamily
     fontFamily: "Inter",
-    // custom font styles 
-    xxsBold: {
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightSemiBold: 600,
+    fontWeightBold: 700,
+    fontWeightExtraBold: 800,
+    // custom font variants
+    xxs: {
       fontFamily: "Inter",
       fontStyle: "normal",
-      fontWeight: "700",
       fontSize: "10px",
       lineHeight: "20px",
     },
-    xxsMedium: {
+    xs: {
       fontFamily: "Inter",
       fontStyle: "normal",
-      fontWeight: "500",
-      fontSize: "10px",
-      lineHeight: "20px",
-    },
-    xsBold: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "700",
       fontSize: "12px",
       lineHeight: "20px",
     },
-    xsMedium: {
+    sm: {
       fontFamily: "Inter",
       fontStyle: "normal",
-      fontWeight: "500",
-      fontSize: "12px",
-      lineHeight: "20px",
-    },
-    sBold: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "700",
       fontSize: "14px",
       lineHeight: "20px",
     },
-    sMedium: {
+    md: {
       fontFamily: "Inter",
       fontStyle: "normal",
-      fontWeight: "500",
-      fontSize: "14px",
-      lineHeight: "20px",
-    },
-    sRegular: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "400",
-      fontSize: "14px",
-      lineHeight: "20px",
-    },
-    mBold: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "700",
       fontSize: "16px",
       lineHeight: "20px",
     },
-    mMedium: {
+    xxl: {
       fontFamily: "Inter",
       fontStyle: "normal",
-      fontWeight: "500",
-      fontSize: "16px",
-      lineHeight: "20px",
-    },
-    mRegular: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "400",
-      fontSize: "16px",
-      lineHeight: "20px",
-    },
-    xxlExtraBold: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: "800",
       fontSize: "32px",
-      lineHeight: "20px",
     },
   },
 });

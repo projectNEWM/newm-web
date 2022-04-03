@@ -1,10 +1,15 @@
 module.exports = {
   env: {
-    browser: true, // Browser global variables like `window` etc.
-    commonjs: true, // CommonJS global variables and CommonJS scoping.Allows require, exports and module.
-    es6: true, // Enable all ECMAScript 6 features except for modules.
-    jest: true, // Jest global variables like `it` etc.
-    node: true, // Defines things like process.env when generating through node
+    // Browser global variables like `window` etc.
+    browser: true,
+    // CommonJS global variables and CommonJS scoping.Allows require, exports and module.
+    commonjs: true,
+    // Enable all ECMAScript 6 features except for modules.
+    es6: true,
+    // Jest global variables like `it` etc.
+    jest: true,
+    // Defines things like process.env when generating through node
+    node: true,
   },
   extends: [
     "eslint:recommended",
@@ -15,21 +20,24 @@ module.exports = {
     "plugin:jest/recommended",
     "plugin:testing-library/react",
     "plugin:react/jsx-runtime",
+    "plugin:storybook/recommended",
   ],
   ignorePatterns: ["src/assets/*"],
-  parser: "@typescript-eslint/parser", // Uses babel-eslint transforms.
+  // Uses babel-eslint transforms.
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: "module", // Allows for the use of imports
+    // Allows for the parsing of modern ECMAScript features
+    ecmaVersion: 2018,
+    // Allows for the use of imports
+    sourceType: "module",
   },
-  plugins: [
-    "import", // eslint-plugin-import plugin. https://www.npmjs.com/package/eslint-plugin-import
-    "@typescript-eslint",
-  ],
-  root: true, // For configuration cascading.
+  // eslint-plugin-import plugin. https://www.npmjs.com/package/eslint-plugin-import
+  plugins: ["import", "@typescript-eslint"],
+  // For configuration cascading.
+  root: true,
   rules: {
     "testing-library/prefer-screen-queries": 0,
     "comma-dangle": [
@@ -46,7 +54,14 @@ module.exports = {
     "import/order": [
       "warn",
       {
-        groups: ["builtin", "external", "index", "sibling", "parent", "internal"],
+        groups: [
+          "builtin",
+          "external",
+          "index",
+          "sibling",
+          "parent",
+          "internal",
+        ],
       },
     ],
     "jsx-quotes": ["warn", "prefer-double"],
@@ -93,7 +108,8 @@ module.exports = {
   },
   settings: {
     react: {
-      version: "detect", // Detect react version
+      // Detect react version
+      version: "detect",
     },
   },
 };
