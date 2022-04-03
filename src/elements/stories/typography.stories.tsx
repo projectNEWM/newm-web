@@ -14,3 +14,38 @@ export const Variants = () => (
     <Typography variant="xxl">Text xxl</Typography>
   </Stack>
 );
+export const FontWeights = () => (
+  <Stack mt={ 2 } direction="column" spacing={ 2 }>
+    <Typography variant="md" fontWeight="regular">
+      Text Regular Font Weight
+    </Typography>
+    <Typography variant="md" fontWeight="medium">
+      Text Medium Font Weight
+    </Typography>
+    <Typography variant="md" fontWeight="semi-bold">
+      Text Semi Bold Font Weight
+    </Typography>
+    <Typography variant="md" fontWeight="bold">
+      Text Bold Font Weight
+    </Typography>
+    <Typography variant="md" fontWeight="extra-bold">
+      Text Extra Bold Font Weight
+    </Typography>
+  </Stack>
+);
+export const FontFamilies = () => (
+  <Stack mt={ 2 } direction="column" spacing={ 2 }>
+    <Typography variant="md" fontFamily="Inter">
+      Text Inter
+    </Typography>
+    <Typography variant="md" fontFamily="Raleway">
+      Text Raleway
+    </Typography>
+    <Typography variant="md" fontFamily="DM Serif Display">
+      Text DM Serif Display
+    </Typography>
+    <Typography variant="md" fontStyle="italic" fontFamily="DM Serif Display">
+    Text DM Serif Display Italic
+    </Typography>
+  </Stack>
+);
