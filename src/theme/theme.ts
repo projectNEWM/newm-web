@@ -26,8 +26,12 @@ declare module "@mui/material/styles" {
       crypto: string;
     };
     inputField: {
-      background: string;
-      border: string;
+      fontFamily: string;
+      fontStyle: string;
+      fontSize: string;
+      fontWeight: number;
+      lineHeight: string;
+      padding: string;
     };
   }
   // allow configuration using `createTheme`
@@ -56,8 +60,12 @@ declare module "@mui/material/styles" {
       crypto?: string;
     };
     inputField?: {
-      background?: string;
-      border?: string;
+      fontFamily?: string;
+      fontStyle?: string;
+      fontSize?: string;
+      fontWeight?: number;
+      lineHeight?: string;
+      padding?: string;
     };
   }
 }
@@ -153,8 +161,12 @@ export default createTheme({
   },
 
   inputField: {
-    background: "#151515",
-    border: "1px solid #2F2F2F",
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "16px",
+    fontWeight: 400,
+    lineHeight: "24px",
+    padding: "9px 13px",
   },
 
   palette: {
