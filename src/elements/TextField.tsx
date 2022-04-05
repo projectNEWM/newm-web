@@ -88,7 +88,6 @@ const TextField: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
             isHovered,
             isFocused
           ),
-          cursor: disabled ? "default" : "auto",
           borderRadius: "4px",
           overflow: "hidden",
           background: theme.colors.grey500,
