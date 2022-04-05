@@ -28,7 +28,6 @@ const StyledInputElement = styled.input`
   background: transparent;
   color: white;
   border-width: 0;
-  min-width: 312px;
   fontfamily: ${theme.inputField.fontFamily};
   font-size: ${theme.inputField.fontSize};
   font-weight: ${theme.inputField.fontWeight};
