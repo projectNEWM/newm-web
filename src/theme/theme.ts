@@ -26,8 +26,13 @@ declare module "@mui/material/styles" {
       crypto: string;
     };
     inputField: {
-      background: string;
-      border: string;
+      fontFamily: string;
+      fontStyle: string;
+      fontSize: string;
+      fontWeight: number;
+      lineHeight: string;
+      padding: string;
+      borderWidth: string;
     };
   }
   // allow configuration using `createTheme`
@@ -56,8 +61,13 @@ declare module "@mui/material/styles" {
       crypto?: string;
     };
     inputField?: {
-      background?: string;
-      border?: string;
+      fontFamily?: string;
+      fontStyle?: string;
+      fontSize?: string;
+      fontWeight?: number;
+      lineHeight?: string;
+      padding?: string;
+      borderWidth?: string;
     };
   }
 }
@@ -72,6 +82,7 @@ declare module "@mui/material/styles" {
     sm: React.CSSProperties;
     md: React.CSSProperties;
     xxl: React.CSSProperties;
+    xxxl: React.CSSProperties;
     fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
@@ -90,6 +101,7 @@ declare module "@mui/material/styles" {
     sm?: React.CSSProperties;
     md?: React.CSSProperties;
     xxl?: React.CSSProperties;
+    xxxl?: React.CSSProperties;
     fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
@@ -105,6 +117,7 @@ declare module "@mui/material/Typography" {
     sm: true;
     md: true;
     xxl: true;
+    xxxl: true;
     fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
@@ -153,8 +166,13 @@ export default createTheme({
   },
 
   inputField: {
-    background: "#151515",
-    border: "1px solid #2F2F2F",
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "16px",
+    fontWeight: 400,
+    lineHeight: "24px",
+    padding: "9px 13px",
+    borderWidth: "2px",
   },
 
   palette: {
@@ -168,6 +186,9 @@ export default createTheme({
     },
     secondary: {
       main: "#CC33CC",
+    },
+    error: {
+      main: "#FF453A",
     },
 
     text: {
@@ -213,6 +234,12 @@ export default createTheme({
       fontFamily: "Inter",
       fontStyle: "normal",
       fontSize: "32px",
+    },
+    xxxl: {
+      fontFamily: "Raleway",
+      fontStyle: "italic",
+      fontSize: "80px",
+      lineHeight: "86px",
     },
   },
 });

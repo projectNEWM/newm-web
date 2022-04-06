@@ -9,8 +9,10 @@ import theme from "theme";
 
 const PaperInput = styled(Paper)({
   alignItems: "center",
-  backgroundColor: theme.inputField.background,
-  border: theme.inputField.border,
+  backgroundColor: theme.colors.grey500,
+  borderWidth: theme.inputField.borderWidth,
+  borderStyle: "solid",
+  borderColor: theme.colors.grey400,
   borderRadius: "9px",
   boxShadow: "inset 0px 3px 6px #000000D0",
   color: theme.palette.text.secondary,
