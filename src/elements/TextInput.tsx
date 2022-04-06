@@ -52,7 +52,7 @@ const StyledErrorMessage = styled.p`
   color: ${theme.palette.error.main};
 `;
 
-const TextField: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
+const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
   { errorMessage, label, disabled = false, ...rest },
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -79,7 +79,7 @@ const TextField: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
         onMouseEnter={ () => setIsHovered(true) }
         onMouseLeave={ () => setIsHovered(false) }
         sx={ {
-          borderWidth: "2px",
+          borderWidth: theme.inputField.borderWidth,
           borderStyle: "solid",
           borderColor: getBorderColor(
             !!errorMessage,
@@ -134,4 +134,4 @@ const getBorderColor = (
   return theme.colors.grey400;
 };
 
-export default forwardRef(TextField);
+export default forwardRef(TextInput);

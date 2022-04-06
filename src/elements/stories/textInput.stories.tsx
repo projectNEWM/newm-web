@@ -1,21 +1,21 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import theme from "theme";
-import TextField from "../TextField";
+import TextInput from "../TextInput";
 
 export default {
   title: "Text Input",
-  component: TextField,
+  component: TextInput,
 };
 
 export const Variations = () => (
   <Box maxWidth="312px">
     <Stack mt={ 2 } direction="column" spacing={ 4 }>
-      <TextField label="With label" placeholder="Hint" />
+      <TextInput label="With label" placeholder="Hint" />
 
-      <TextField placeholder="Without label" />
+      <TextInput placeholder="Without label" />
 
-      <TextField
+      <TextInput
         placeholder="With icon"
         endAdornment={
           <IconButton sx={ { padding: 0, paddingLeft: "1rem" } }>
@@ -27,9 +27,9 @@ export const Variations = () => (
         }
       />
 
-      <TextField placeholder="Disabled" disabled />
+      <TextInput placeholder="Disabled" disabled />
 
-      <TextField
+      <TextInput
         placeholder="With error"
         errorMessage="This is an error message"
       />

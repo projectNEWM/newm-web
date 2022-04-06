@@ -32,6 +32,7 @@ declare module "@mui/material/styles" {
       fontWeight: number;
       lineHeight: string;
       padding: string;
+      borderWidth: string;
     };
   }
   // allow configuration using `createTheme`
@@ -66,6 +67,7 @@ declare module "@mui/material/styles" {
       fontWeight?: number;
       lineHeight?: string;
       padding?: string;
+      borderWidth?: string;
     };
   }
 }
@@ -167,6 +169,7 @@ export default createTheme({
     fontWeight: 400,
     lineHeight: "24px",
     padding: "9px 13px",
+    borderWidth: "2px",
   },
 
   palette: {
@@ -180,6 +183,9 @@ export default createTheme({
     },
     secondary: {
       main: "#CC33CC",
+    },
+    error: {
+      main: "#FF453A",
     },
 
     text: {
