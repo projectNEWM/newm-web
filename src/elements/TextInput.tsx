@@ -48,7 +48,7 @@ const StyledInputElement = styled.input`
 `;
 
 const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
-  { errorMessage, label, disabled = false, onFocus, onBlur, ...rest },
+  { errorMessage, label, onFocus, onBlur, disabled = false, ...rest },
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
