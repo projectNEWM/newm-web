@@ -9,3 +9,5 @@ export { default as PrivateRoute } from "./PrivateRoute";
 export { default as GoogleLogin } from "./GoogleLogin";
 export { default as FacebookLogin } from "./FacebookLogin";
 export { default as LinkedInLogin } from "./LinkedInLogin";
+export { default as TextInputField } from "./form/TextInputField";
+export { default as GradientTextInputField } from "./form/GradientTextInputField";
