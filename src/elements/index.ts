@@ -6,4 +6,6 @@ export { default as TextArea } from "./styled/TextArea";
 export { default as HorizontalLine } from "./styled/HorizontalLine";
 export { default as Typography } from "./Typography";
 export { default as TextInput } from "./TextInput";
+export * from "./TextInput";
 export { default as GradientTextInput } from "./GradientTextInput";
+export * from "./GradientTextInput";

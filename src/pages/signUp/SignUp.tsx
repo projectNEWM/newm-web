@@ -1,7 +1,7 @@
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useAuthenticatedRedirect } from "common";
 import { FunctionComponent } from "react";
-import { GradientTextInput, Typography } from "elements";
+import { Typography } from "elements";
 import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
 import { Box, Container, Stack, useTheme } from "@mui/material";
 
@@ -33,10 +33,6 @@ const SignUp: FunctionComponent = () => {
         >
           <Box alignSelf="center">
             <NEWMLogo />
-          </Box>
-
-          <Box my={ 4 }>
-            <GradientTextInput value="hello" />
           </Box>
 
           <Box mt={ 2 } display="flex" justifyContent="center">

@@ -9,8 +9,8 @@ import styled from "styled-components";
 import theme from "theme";
 import Typography from "./Typography";
 
-interface GradientTextInputProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as"> {
+export interface GradientTextInputProps
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly errorMessage?: string;
   readonly textAlign?: "left" | "center" | "right";
 }

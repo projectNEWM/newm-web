@@ -1,4 +1,5 @@
 import {
+  FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
   forwardRef,
@@ -10,7 +11,7 @@ import styled from "styled-components";
 import theme from "theme";
 import Typography from "./Typography";
 
-interface TextInputProps extends Omit<InputUnstyledProps, "helperText"> {
+export interface TextInputProps extends Omit<InputUnstyledProps, "helperText"> {
   readonly label?: string;
   readonly errorMessage?: string;
 }
@@ -47,11 +48,33 @@ const StyledInputElement = styled.input`
 `;
 
 const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
-  { errorMessage, label, disabled = false, ...rest },
+  { errorMessage, label, disabled = false, onFocus, onBlur, ...rest },
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(!!rest.autoFocus);
+
+  /**
+   * Calls any onFocus prop being passed and then updates local state
+   */
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    if (onFocus) {
+      onFocus(event);
+    }
+
+    setIsFocused(true);
+  };
+
+  /**
+   * Calls any onBlur prop being passed and then updates local state
+   */
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    if (onBlur) {
+      onBlur(event);
+    }
+
+    setIsFocused(false);
+  };
 
   return (
     <Stack
@@ -92,8 +115,8 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
             Root: StyledRootElement,
             Input: StyledInputElement,
           } }
-          onFocus={ () => setIsFocused(true) }
-          onBlur={ () => setIsFocused(false) }
+          onFocus={ handleFocus }
+          onBlur={ handleBlur }
           disabled={ disabled }
           { ...rest }
           ref={ ref }
