@@ -16,7 +16,7 @@ export interface GradientTextInputProps
 }
 
 interface StyledInputElementProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as"> {
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly hasError: boolean;
   readonly textAlign: "left" | "center" | "right";
 }
