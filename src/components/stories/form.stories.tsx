@@ -14,6 +14,12 @@ interface FormValues {
   readonly email: string;
 }
 
+const initialValues: FormValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+};
+
 /**
  * Validation schema using Yup
  */
@@ -47,7 +53,7 @@ export const Example = () => {
       </Box>
 
       <Formik
-        initialValues={ { firstName: "", lastName: "", email: "" } }
+        initialValues={ initialValues }
         validationSchema={ ExampleSchema }
         onSubmit={ mockHandleSubmit }
       >
