@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { Stack } from "@mui/material";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 import theme from "theme";
 import Typography from "./Typography";
 
@@ -21,7 +21,7 @@ interface StyledInputElementProps
   readonly textAlign: "left" | "center" | "right";
 }
 
-const StyledRootElement = styled.div`
+const StyledRootElement = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,7 +32,7 @@ const StyledRootElement = styled.div`
  * Styled input element with text that has a gradient, or the
  * color red if an error is present.
  */
-const StyledInputElement = styled.input<StyledInputElementProps>`
+const StyledInputElement = styled("input")<StyledInputElementProps>`
   display: flex;
   flex-grow: 1;
   max-width: 100%;

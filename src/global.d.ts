@@ -10,6 +10,7 @@ declare module "*.svg" {
 
 declare module "cloudinary-react";
 declare module "react-transition-group";
+declare module "styled-components";
 declare module "moment-duration-format";
 declare module "moment";
 declare module "react-facebook-login/dist/facebook-login-render-props";
