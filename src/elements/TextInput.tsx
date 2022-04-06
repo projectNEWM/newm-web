@@ -46,12 +46,6 @@ const StyledInputElement = styled.input`
   }
 `;
 
-const StyledErrorMessage = styled.p`
-  font-size: 10px;
-  font-family: 'Inter';
-  color: ${theme.palette.error.main};
-`;
-
 const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
   { errorMessage, label, disabled = false, ...rest },
   ref: ForwardedRef<HTMLDivElement>
@@ -107,7 +101,9 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
       </Box>
 
       { !!errorMessage && (
-        <StyledErrorMessage>{ errorMessage }</StyledErrorMessage>
+        <Typography variant="xs" sx={ { color: theme.palette.error.main } }>
+          { errorMessage }
+        </Typography>
       ) }
     </Stack>
   );

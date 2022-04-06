@@ -40,6 +40,7 @@ module.exports = {
   root: true,
   rules: {
     "testing-library/prefer-screen-queries": 0,
+    "jsx-a11y/no-autofocus": 0,
     "comma-dangle": [
       "error",
       {

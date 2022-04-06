@@ -82,6 +82,7 @@ declare module "@mui/material/styles" {
     sm: React.CSSProperties;
     md: React.CSSProperties;
     xxl: React.CSSProperties;
+    xxxl: React.CSSProperties;
     fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
@@ -100,6 +101,7 @@ declare module "@mui/material/styles" {
     sm?: React.CSSProperties;
     md?: React.CSSProperties;
     xxl?: React.CSSProperties;
+    xxxl?: React.CSSProperties;
     fontWeightSemiBold: 600;
     fontWeightExtraBold: 800;
   }
@@ -115,6 +117,7 @@ declare module "@mui/material/Typography" {
     sm: true;
     md: true;
     xxl: true;
+    xxxl: true;
     fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
@@ -231,6 +234,12 @@ export default createTheme({
       fontFamily: "Inter",
       fontStyle: "normal",
       fontSize: "32px",
+    },
+    xxxl: {
+      fontFamily: "Raleway",
+      fontStyle: "italic",
+      fontSize: "80px",
+      lineHeight: "86px",
     },
   },
 });
