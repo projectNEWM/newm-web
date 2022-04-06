@@ -59,6 +59,10 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   font-size: ${theme.typography.xxxl.fontSize};
   line-height: ${theme.typography.xxxl.lineHeight};
 
+  &::placeholder {
+    color: ${theme.colors.grey100};
+  }
+
   input {
     padding: 0;
   }
