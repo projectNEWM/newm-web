@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
-import { Route, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import * as Yup from "yup";
 
 interface FormValues {
@@ -30,18 +30,26 @@ const CreateProfile: FunctionComponent = () => {
     >
       { () => (
         <Form>
-          <Route path={ `${path}/:what-should-we-call-you` }>
-            { /** <PlaceholderSignUpNameComponent /> */ }
-          </Route>
-          <Route path={ `${path}/:what-is-your-role` }>
-            { /** <PlaceholderSignUpRoleComponent /> */ }
-          </Route>
-          <Route path={ `${path}/:what-is-your-genre` }>
-            { /** <PlaceholderSignUpGenreComponent /> */ }
-          </Route>
-          <Route path={ `${path}/:complete` }>
-            { /** <PlaceholderSignUpCompleteComponent /> */ }
-          </Route>
+          <Switch>
+            <Redirect
+              exact
+              to={ `${path}/what-should-we-call-you` }
+              from={ `${path}` }
+            />
+
+            <Route exact path={ `${path}/what-should-we-call-you` }>
+              { /** <PlaceholderCreatProfileName /> */ }
+            </Route>
+            <Route exact path={ `${path}/what-is-your-role` }>
+              { /** <PlaceholderCreatProfileRole /> */ }
+            </Route>
+            <Route exact path={ `${path}/what-is-your-genre` }>
+              { /** <PlaceholderCreatProfileGenre /> */ }
+            </Route>
+            <Route exact path={ `${path}/complete` }>
+              { /** <PlaceholderCreatProfileComplete /> */ }
+            </Route>
+          </Switch>
         </Form>
       ) }
     </Formik>
