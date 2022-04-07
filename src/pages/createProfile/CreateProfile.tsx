@@ -33,6 +33,15 @@ const CreateProfile: FunctionComponent = () => {
           <Route path={ `${path}/:what-should-we-call-you` }>
             { /** <PlaceholderSignUpNameComponent /> */ }
           </Route>
+          <Route path={ `${path}/:what-is-your-role` }>
+            { /** <PlaceholderSignUpRoleComponent /> */ }
+          </Route>
+          <Route path={ `${path}/:what-is-your-genre` }>
+            { /** <PlaceholderSignUpGenreComponent /> */ }
+          </Route>
+          <Route path={ `${path}/:complete` }>
+            { /** <PlaceholderSignUpCompleteComponent /> */ }
+          </Route>
         </Form>
       ) }
     </Formik>
