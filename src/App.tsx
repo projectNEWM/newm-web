@@ -4,6 +4,7 @@ import { Background, PrivateRoute } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
+import CreateProfile from "pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
@@ -31,6 +32,10 @@ const App = () => {
               <Route path="/sign-up">
                 <SignUp />
               </Route>
+
+              <PrivateRoute path="/create-profile">
+                <CreateProfile />
+              </PrivateRoute>
 
               <PrivateRoute path="/home">
                 <Home />
