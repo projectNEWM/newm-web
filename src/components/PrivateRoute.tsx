@@ -1,28 +1,17 @@
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
-import { Redirect, Route, RouteProps } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
+type PrivateRouteProps = {
+  children: JSX.Element;
+};
+
+const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({ children }) => {
   const { isLoggedIn } = useSelector(selectSession);
 
-  return (
-    <Route
-      { ...rest }
-      render={ ({ location }) =>
-        isLoggedIn ? (
-          children
-        ) : (
-          <Redirect
-            to={ {
-              pathname: "/sign-up",
-              state: { from: location },
-            } }
-          />
-        )
-      }
-    />
-  );
+  return isLoggedIn ? children : <Navigate to={ "/sign-up" } replace />;
+
 };
 
 export default PrivateRoute;

@@ -7,7 +7,7 @@ import SignUp from "pages/signUp";
 import CreateProfile from "pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import store from "./store";
 import "./App.css";
@@ -20,27 +20,31 @@ const App = () => {
 
         <Background>
           <BrowserRouter>
-            <Switch>
-              <Redirect exact to="/home" from="/" />
+            <Routes>
+              <Route path="/" element={ <Navigate to="home" replace /> } />
 
-              <Route exact path="/linkedin" component={ LinkedInCallback } />
+              <Route path="linkedin" element={ LinkedInCallback } />
 
-              <Route path="/login">
-                <Login />
-              </Route>
+              <Route path="login" element={ <Login /> } />
 
-              <Route path="/sign-up">
-                <SignUp />
-              </Route>
-
-              <PrivateRoute path="/create-profile">
-                <CreateProfile />
-              </PrivateRoute>
-
-              <PrivateRoute path="/home">
-                <Home />
-              </PrivateRoute>
-            </Switch>
+              <Route path="sign-up" element={ <SignUp /> } />
+              <Route
+                path="home"
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="create-profile*"
+                element={
+                  <PrivateRoute>
+                    <CreateProfile />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
           </BrowserRouter>
         </Background>
       </Provider>

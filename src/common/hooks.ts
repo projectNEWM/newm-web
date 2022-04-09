@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { selectSession } from "modules/session";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export interface WindowDimensions {
   height: number;
@@ -48,12 +48,11 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAuthenticatedRedirect = () => {
   const { isLoggedIn } = useSelector(selectSession);
 
-  const history = useHistory();
-  const location = useLocation<{ from?: string }>();
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(location.state?.from || "/home");
+      navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
