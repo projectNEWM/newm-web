@@ -8,7 +8,7 @@ interface SessionState {
 }
 
 const initialState: SessionState = {
-  isLoggedIn: true, // set to true for development and tesing
+  isLoggedIn: false, // set to true for development and tesing
   errorMessage: "",
 };
 
