@@ -5,7 +5,7 @@ import { SessionState } from "./types";
 import { handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
-  isLoggedIn: false,
+  isLoggedIn: false, // set to true for development and tesing
   errorMessage: "",
 };
 
