@@ -1,3 +1,8 @@
+export interface SessionState {
+  isLoggedIn: boolean;
+  errorMessage: string;
+}
+
 export interface NewmOAuthRequest {
   readonly accessToken?: string;
   readonly code?: string;
@@ -5,5 +10,6 @@ export interface NewmOAuthRequest {
 }
 
 export interface NewmAuthResponse {
-  readonly token: string;
+  readonly accessToken: string;
+  readonly refreshToken: string;
 }

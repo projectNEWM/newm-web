@@ -33,9 +33,9 @@ const App = () => {
                 <SignUp />
               </Route>
 
-              <PrivateRoute path="/create-profile">
+              <Route path="/create-profile">
                 <CreateProfile />
-              </PrivateRoute>
+              </Route>
 
               <PrivateRoute path="/home">
                 <Home />

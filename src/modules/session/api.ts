@@ -5,21 +5,21 @@ export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: "login/google",
+        url: "v1/auth/login/google",
         method: "POST",
         body,
       }),
     }),
     facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: "login/facebook",
+        url: "v1/auth/login/facebook",
         method: "POST",
         body,
       }),
     }),
     linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: "login/linkedin",
+        url: "v1/auth/login/linkedin",
         method: "POST",
         body,
       }),
