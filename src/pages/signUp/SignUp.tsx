@@ -4,12 +4,9 @@ import { FunctionComponent } from "react";
 import { Typography } from "elements";
 import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
 import { Box, Container, Stack, useTheme } from "@mui/material";
-import { useGetSongsQuery } from "modules/song";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
-
-  useGetSongsQuery("");
 
   useAuthenticatedRedirect();
 
