@@ -6,7 +6,8 @@ import { SessionState } from "./types";
 import { handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
-  isLoggedIn: !!Cookies.get("accessToken"),
+  // if refresh token is present, user is logged in or can refresh session
+  isLoggedIn: !!Cookies.get("refreshToken"),
   errorMessage: "",
 };
 
