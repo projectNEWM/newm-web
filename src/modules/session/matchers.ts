@@ -1,7 +1,8 @@
 import { isAnyOf } from "@reduxjs/toolkit";
 import { extendedApi } from "./api";
 
-export const isSuccessfulOAuthCall = isAnyOf(
+export const isSuccessfulAuthCall = isAnyOf(
+  extendedApi.endpoints.login.matchFulfilled,
   extendedApi.endpoints.googleLogin.matchFulfilled,
   extendedApi.endpoints.facebookLogin.matchFulfilled,
   extendedApi.endpoints.linkedInLogin.matchFulfilled

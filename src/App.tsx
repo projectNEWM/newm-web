@@ -1,13 +1,18 @@
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, PrivateRoute } from "components";
+import {
+  Background,
+  InitialNavigation,
+  PrivateRoute,
+  TempAuthButton,
+} from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
 import CreateProfile from "pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import store from "./store";
 import "./App.css";
@@ -19,15 +24,20 @@ const App = () => {
         <CssBaseline />
 
         <Background>
+          <Box position="absolute" top="2rem" right="2rem">
+            <TempAuthButton />
+          </Box>
+
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={ <Navigate to="home" replace /> } />
+              <Route path="/" element={ <InitialNavigation /> } />
 
-              <Route path="linkedin" element={ LinkedInCallback } />
+              <Route path="linkedin" element={ <LinkedInCallback /> } />
 
               <Route path="login" element={ <Login /> } />
 
               <Route path="sign-up" element={ <SignUp /> } />
+
               <Route
                 path="home"
                 element={
@@ -36,10 +46,9 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+
               <Route
-                // All routes are exact unless the path has a * at the end, 
-                // meaning we can append more routes to the end of this one
-                path="create-profile*"
+                path="create-profile/*"
                 element={
                   <PrivateRoute>
                     <CreateProfile />

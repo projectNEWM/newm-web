@@ -9,10 +9,10 @@ const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as RootState;
       const { isLoggedIn } = state.session;
-      const apiToken = Cookies.get("apiToken");
+      const accessToken = Cookies.get("accessToken");
 
-      if (isLoggedIn && apiToken) {
-        headers.set("Authorization", `Bearer ${apiToken}`);
+      if (isLoggedIn && accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
       }
 
       return headers;

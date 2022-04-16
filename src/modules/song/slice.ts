@@ -18,7 +18,7 @@ const roleSlice = createSlice({
     builder.addMatcher(
       api.endpoints.getSongs.matchFulfilled,
       (state, { payload }) => {
-        state.songs = payload.songs;
+        state.songs = payload;
       }
     );
   },

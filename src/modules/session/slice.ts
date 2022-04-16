@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import Cookie from "js-cookie";
-import { isFailedOAuthCall, isSuccessfulOAuthCall } from "./matchers";
+import Cookies from "js-cookie";
+import api from "./api";
+import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
 
 interface SessionState {
   isLoggedIn: boolean;
@@ -8,7 +9,7 @@ interface SessionState {
 }
 
 const initialState: SessionState = {
-  isLoggedIn: false, // set to true for development and tesing
+  isLoggedIn: !!Cookies.get("accessToken"),
   errorMessage: "",
 };
 
@@ -19,10 +20,16 @@ const sessionSlice = createSlice({
     setSessionErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
+    loggedOut(state) {
+      Cookies.remove("accessToken");
+
+      state.isLoggedIn = false;
+      state.errorMessage = "";
+    },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isSuccessfulOAuthCall, (state, { payload }) => {
-      Cookie.set("apiToken", payload.token);
+    builder.addMatcher(isSuccessfulAuthCall, (state, { payload }) => {
+      Cookies.set("accessToken", payload.accessToken);
 
       state.isLoggedIn = true;
       state.errorMessage = "";
@@ -37,9 +44,21 @@ const sessionSlice = createSlice({
 
       state.errorMessage = "An error occurred while logging in";
     });
+
+    builder.addMatcher(
+      api.endpoints.login.matchRejected,
+      (state, { payload }) => {
+        if (payload?.status === 404 || payload?.status === 401) {
+          state.errorMessage = "Incorrect login credentials";
+          return;
+        }
+
+        state.errorMessage = "An error occurred while logging in";
+      }
+    );
   },
 });
 
-export const { setSessionErrorMessage } = sessionSlice.actions;
+export const { loggedOut, setSessionErrorMessage } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

@@ -5,5 +5,11 @@ export interface NewmOAuthRequest {
 }
 
 export interface NewmAuthResponse {
-  readonly token: string;
+  readonly accessToken: string;
+  readonly refreshToken: string;
+}
+
+export interface LoginRequest {
+  readonly email: string;
+  readonly password: string;
 }
