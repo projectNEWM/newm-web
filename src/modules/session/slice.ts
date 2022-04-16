@@ -1,14 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import Cookie from "js-cookie";
-import { isFailedOAuthCall, isSuccessfulOAuthCall } from "./matchers";
-
-interface SessionState {
-  isLoggedIn: boolean;
-  errorMessage: string;
-}
+import Cookies from "js-cookie";
+import api from "./api";
+import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
+import { SessionState } from "./types";
+import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
-  isLoggedIn: false, // set to true for development and tesing
+  // if refresh token is present, user is logged in or can refresh session
+  isLoggedIn: !!Cookies.get("refreshToken"),
   errorMessage: "",
 };
 
@@ -19,14 +18,10 @@ const sessionSlice = createSlice({
     setSessionErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
+    logOut: handleLogout,
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isSuccessfulOAuthCall, (state, { payload }) => {
-      Cookie.set("apiToken", payload.token);
-
-      state.isLoggedIn = true;
-      state.errorMessage = "";
-    });
+    builder.addMatcher(isSuccessfulAuthCall, handleSuccessfulAuthentication);
 
     builder.addMatcher(isFailedOAuthCall, (state, { payload }) => {
       if (payload?.status === 409) {
@@ -37,9 +32,23 @@ const sessionSlice = createSlice({
 
       state.errorMessage = "An error occurred while logging in";
     });
+
+    builder.addMatcher(
+      api.endpoints.login.matchRejected,
+      (state, { payload }) => {
+        if (payload?.status === 404 || payload?.status === 401) {
+          state.errorMessage = "Incorrect login credentials";
+          return;
+        }
+
+        state.errorMessage = "An error occurred while logging in";
+      }
+    );
+
+    builder.addMatcher(api.endpoints.refreshToken.matchRejected, handleLogout);
   },
 });
 
-export const { setSessionErrorMessage } = sessionSlice.actions;
+export const { logOut, setSessionErrorMessage } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

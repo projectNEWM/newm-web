@@ -11,3 +11,4 @@ export { default as FacebookLogin } from "./FacebookLogin";
 export { default as LinkedInLogin } from "./LinkedInLogin";
 export { default as TextInputField } from "./form/TextInputField";
 export { default as GradientTextInputField } from "./form/GradientTextInputField";
+export { default as TempAuthButton } from "./TempAuthButton";

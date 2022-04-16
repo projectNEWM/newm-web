@@ -1,6 +1,6 @@
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, PrivateRoute } from "components";
+import { Background, PrivateRoute, TempAuthButton } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
@@ -19,15 +19,20 @@ const App = () => {
         <CssBaseline />
 
         <Background>
+          <Box position="absolute" top="2rem" right="2rem">
+            <TempAuthButton />
+          </Box>
+
           <BrowserRouter>
             <Routes>
               <Route path="/" element={ <Navigate to="home" replace /> } />
 
-              <Route path="linkedin" element={ LinkedInCallback } />
+              <Route path="linkedin" element={ <LinkedInCallback /> } />
 
               <Route path="login" element={ <Login /> } />
 
               <Route path="sign-up" element={ <SignUp /> } />
+
               <Route
                 path="home"
                 element={
@@ -36,10 +41,9 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
+
               <Route
-                // All routes are exact unless the path has a * at the end, 
-                // meaning we can append more routes to the end of this one
-                path="create-profile*"
+                path="create-profile/*"
                 element={
                   <PrivateRoute>
                     <CreateProfile />

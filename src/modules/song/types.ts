@@ -1,5 +1,9 @@
 import { Role } from "modules/role";
 
+export interface SongState {
+  songs: ReadonlyArray<Song>;
+}
+
 export interface Artist {
   bio: string;
   name: string;
