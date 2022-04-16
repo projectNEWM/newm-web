@@ -6,7 +6,7 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loggedOut,
+  logOut,
   selectSession,
   extendedApi as sessionApi,
 } from "modules/session";
@@ -27,7 +27,7 @@ const TempAuthButton: FunctionComponent = () => {
   };
 
   const handleLogout = () => {
-    dispatch(loggedOut());
+    dispatch(logOut());
   };
 
   return isLoggedIn ? (

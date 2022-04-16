@@ -18,7 +18,7 @@ const sessionSlice = createSlice({
     setSessionErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
-    loggedOut: handleLogout,
+    logOut: handleLogout,
   },
   extraReducers: (builder) => {
     builder.addMatcher(isSuccessfulAuthCall, handleSuccessfulAuthentication);
@@ -49,6 +49,6 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { loggedOut, setSessionErrorMessage } = sessionSlice.actions;
+export const { logOut, setSessionErrorMessage } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
