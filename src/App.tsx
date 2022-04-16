@@ -1,18 +1,13 @@
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import {
-  Background,
-  InitialNavigation,
-  PrivateRoute,
-  TempAuthButton,
-} from "components";
+import { Background, PrivateRoute, TempAuthButton } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
 import CreateProfile from "pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import store from "./store";
 import "./App.css";
@@ -30,7 +25,7 @@ const App = () => {
 
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={ <InitialNavigation /> } />
+              <Route path="/" element={ <Navigate to="home" replace /> } />
 
               <Route path="linkedin" element={ <LinkedInCallback /> } />
 

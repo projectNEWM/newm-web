@@ -1,6 +1,5 @@
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useAuthenticatedRedirect } from "common";
-import Cookie from "js-cookie";
 import { FunctionComponent } from "react";
 import { Typography } from "elements";
 import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
