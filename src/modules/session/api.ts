@@ -10,6 +10,7 @@ export const extendedApi = api.injectEndpoints({
         body,
       }),
     }),
+
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/google",
@@ -17,6 +18,7 @@ export const extendedApi = api.injectEndpoints({
         body,
       }),
     }),
+
     facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/facebook",
@@ -24,11 +26,21 @@ export const extendedApi = api.injectEndpoints({
         body,
       }),
     }),
+
     linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/linkedin",
         method: "POST",
         body,
+      }),
+    }),
+
+    refreshToken: build.query({
+      query: (refreshToken: string) => ({
+        url: "/v1/auth/refresh",
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
       }),
     }),
   }),

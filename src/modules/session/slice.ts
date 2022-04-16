@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import api from "./api";
 import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
 import { SessionState } from "./types";
-import { handleSuccessfulAuthentication } from "./utils";
+import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
@@ -18,14 +18,7 @@ const sessionSlice = createSlice({
     setSessionErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
-    loggedOut(state) {
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
-
-      state.isLoggedIn = false;
-      state.errorMessage = "";
-    },
-    sessionRefreshed: handleSuccessfulAuthentication,
+    loggedOut: handleLogout,
   },
   extraReducers: (builder) => {
     builder.addMatcher(isSuccessfulAuthCall, handleSuccessfulAuthentication);
@@ -51,10 +44,11 @@ const sessionSlice = createSlice({
         state.errorMessage = "An error occurred while logging in";
       }
     );
+
+    builder.addMatcher(api.endpoints.refreshToken.matchRejected, handleLogout);
   },
 });
 
-export const { loggedOut, sessionRefreshed, setSessionErrorMessage } =
-  sessionSlice.actions;
+export const { loggedOut, setSessionErrorMessage } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

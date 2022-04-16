@@ -2,13 +2,14 @@ import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
+  retry,
 } from "@reduxjs/toolkit/query";
 import Cookies from "js-cookie";
-import { loggedOut, sessionRefreshed } from "modules/session";
+import { extendedApi as sessionApi } from "modules/session";
 
 /**
- * Takes a base query as an argument and wraps it in functionality to attempt
- * to refresh the session when the access token is no longer valid.
+ * Wraps a base query with functionality to refresh the access token
+ * if it is no longer valid and retry the request.
  */
 export const fetchBaseQueryWithReauth = (
   baseQuery: BaseQueryFn<
@@ -24,34 +25,16 @@ export const fetchBaseQueryWithReauth = (
   > = async (args, api, extraOptions) => {
     const refreshToken = Cookies.get("refreshToken");
 
-    let result = await baseQuery(args, api, extraOptions);
+    const result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401 && refreshToken) {
-      const refreshResult = await baseQuery(
-        {
-          url: "/v1/auth/refresh",
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        },
-        api,
-        extraOptions
+      await api.dispatch(
+        sessionApi.endpoints.refreshToken.initiate(refreshToken)
       );
-
-      if (refreshResult.data) {
-        // refresh session
-        api.dispatch(sessionRefreshed(refreshResult.data));
-
-        // retry original request
-        result = await baseQuery(args, api, extraOptions);
-      } else {
-        // log the user out
-        api.dispatch(loggedOut());
-      }
     }
 
     return result;
   };
 
-  return baseQueryWithReauth;
+  return retry(baseQueryWithReauth, { maxRetries: 1 });
 };
