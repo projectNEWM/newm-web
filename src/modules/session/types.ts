@@ -18,3 +18,12 @@ export interface LoginRequest {
   readonly email: string;
   readonly password: string;
 }
+
+export interface DecodedJwt {
+  readonly aud: string;
+  readonly sub: string;
+  readonly iss: string;
+  readonly exp: number;
+  readonly type: string;
+  readonly jti: string;
+}

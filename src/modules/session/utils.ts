@@ -1,13 +1,19 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { NewmAuthResponse, SessionState } from "./types";
+import jwtDecode from "jwt-decode";
+import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
 export const handleSuccessfulAuthentication = (
   state: SessionState,
-  { payload }: PayloadAction<NewmAuthResponse>
+  { payload: { accessToken, refreshToken } }: PayloadAction<NewmAuthResponse>
 ) => {
-  Cookie.set("accessToken", payload.accessToken, { expires: 0.05 });
-  Cookie.set("refreshToken", payload.refreshToken, { expires: 10 });
+  const accessTokenExp = jwtDecode<DecodedJwt>(accessToken).exp;
+  const refreshTokenExp = jwtDecode<DecodedJwt>(refreshToken).exp;
+  const accessTokenExpDate = new Date(accessTokenExp * 1000);
+  const refreshTokenExpDate = new Date(refreshTokenExp * 1000);
+
+  Cookie.set("accessToken", accessToken, { expires: accessTokenExpDate });
+  Cookie.set("refreshToken", refreshToken, { expires: refreshTokenExpDate });
 
   state.isLoggedIn = true;
   state.errorMessage = "";
