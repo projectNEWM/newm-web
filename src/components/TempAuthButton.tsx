@@ -33,7 +33,7 @@ const TempAuthButton: FunctionComponent = () => {
   return isLoggedIn ? (
     <FilledButton onClick={ handleLogout }>Log out</FilledButton>
   ) : (
-    <FilledButton onClick={ handleLogin }> Log in</FilledButton>
+    <FilledButton onClick={ handleLogin }>Log in</FilledButton>
   );
 };
 
