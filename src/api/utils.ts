@@ -26,7 +26,7 @@ export const fetchBaseQueryWithReauth = (
 
     let result = await baseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
+    if (result.error && result.error.status === 401 && refreshToken) {
       const refreshResult = await baseQuery(
         {
           url: "/v1/auth/refresh",
