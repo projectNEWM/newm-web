@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import api from "./api";
-import { Song } from "./types";
-
-interface SongState {
-  songs: ReadonlyArray<Song>;
-}
+import { SongState } from "./types";
 
 const initialState: SongState = {
   songs: [],

@@ -2,11 +2,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import api from "./api";
 import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
-
-interface SessionState {
-  isLoggedIn: boolean;
-  errorMessage: string;
-}
+import { SessionState } from "./types";
+import { handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
   isLoggedIn: !!Cookies.get("accessToken"),
@@ -22,18 +19,15 @@ const sessionSlice = createSlice({
     },
     loggedOut(state) {
       Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
 
       state.isLoggedIn = false;
       state.errorMessage = "";
     },
+    sessionRefreshed: handleSuccessfulAuthentication,
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isSuccessfulAuthCall, (state, { payload }) => {
-      Cookies.set("accessToken", payload.accessToken);
-
-      state.isLoggedIn = true;
-      state.errorMessage = "";
-    });
+    builder.addMatcher(isSuccessfulAuthCall, handleSuccessfulAuthentication);
 
     builder.addMatcher(isFailedOAuthCall, (state, { payload }) => {
       if (payload?.status === 409) {
@@ -59,6 +53,7 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { loggedOut, setSessionErrorMessage } = sessionSlice.actions;
+export const { loggedOut, sessionRefreshed, setSessionErrorMessage } =
+  sessionSlice.actions;
 
 export default sessionSlice.reducer;
