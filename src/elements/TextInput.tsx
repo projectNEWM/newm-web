@@ -132,10 +132,10 @@ export const TextInput: ForwardRefRenderFunction<
 
           <StyledInputElement
             { ...getInputProps() }
+            { ...rest }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
             disabled={ disabled }
-            // { ...rest }
           />
 
           { endAdornment }
