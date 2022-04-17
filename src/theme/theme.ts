@@ -237,9 +237,9 @@ export default createTheme({
     },
     xxxl: {
       fontFamily: "Raleway",
-      fontStyle: "italic",
+      fontStyle: "normal",
       fontSize: "80px",
-      lineHeight: "86px",
+      lineHeight: "96px",
     },
   },
 });

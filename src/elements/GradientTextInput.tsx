@@ -5,14 +5,16 @@ import {
   forwardRef,
 } from "react";
 import { Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { SxProps, styled } from "@mui/material/styles";
 import theme from "theme";
 import Typography from "./Typography";
 
 export interface GradientTextInputProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly errorMessage?: string;
+  readonly helperText?: string;
   readonly textAlign?: "left" | "center" | "right";
+  readonly sx?: SxProps;
 }
 
 interface StyledInputElementProps
@@ -76,7 +78,7 @@ const GradientTextInput: ForwardRefRenderFunction<
   HTMLInputElement,
   GradientTextInputProps
 > = (
-  { errorMessage, textAlign = "left", ...rest },
+  { errorMessage, helperText, textAlign = "left", ...rest },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   return (
@@ -85,19 +87,27 @@ const GradientTextInput: ForwardRefRenderFunction<
         <StyledInputElement
           hasError={ !!errorMessage }
           textAlign={ textAlign }
+          autoCorrect="off"
+          spellCheck="false"
+          autoComplete="off"
           { ...rest }
           ref={ ref }
         />
       </StyledRootElement>
 
-      { !!errorMessage && (
+      { errorMessage ? (
         <Typography
           variant="xs"
-          sx={ { color: theme.palette.error.main, textAlign } }
+          textAlign={ textAlign }
+          sx={ { color: theme.palette.error.main } }
         >
           { errorMessage }
         </Typography>
-      ) }
+      ) : helperText ? (
+        <Typography variant="xs" textAlign={ textAlign } color="grey100">
+          { helperText }
+        </Typography>
+      ) : undefined }
     </Stack>
   );
 };

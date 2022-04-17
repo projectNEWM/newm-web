@@ -1,9 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Role, RoleState } from "./types";
+import { RoleState } from "./types";
 
 const initialState: RoleState = {
   // TEMP: Data is mocked until API data is available
-  roles: [Role.Producer, Role.Singer, Role.SoundEngineer],
+  roles: [
+    "Arranger",
+    "Backup Singer",
+    "Composer",
+    "Instrumentalist",
+    "Lyricist",
+    "Main Talent",
+    "Manager",
+    "Mastering Engineer",
+    "Mix Engineer",
+    "Orchestrator",
+    "Producer",
+    "Recording Engineer",
+  ],
 };
 
 const roleSlice = createSlice({
