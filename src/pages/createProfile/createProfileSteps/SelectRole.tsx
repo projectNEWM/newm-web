@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent, useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
