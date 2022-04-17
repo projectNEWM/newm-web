@@ -48,7 +48,10 @@ const SelectRole: FunctionComponent = () => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [handlePressEnter]);
+
+    // only sets and removes listener, doesn't reference variables that change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">

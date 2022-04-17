@@ -10,8 +10,8 @@ const GradientTextInputField: FunctionComponent<GradientTextInputProps> = (
       { ({ field: { onBlur, ...field }, meta }: FieldProps) => {
         /**
          * Add a slight delay to the on blur functionality because
-         * validations used in the app for this type of field can be
-         * slow. This ensures any resolved errors can be cleared before
+         * validations used in the app for this field can be slow.
+         * This ensures any resolved errors can be cleared before
          * the input is marked as blurred.
          */
         const handleBlur = (event: FormEvent) => {

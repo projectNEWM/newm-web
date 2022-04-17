@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { Box, Container } from "@mui/material";
-import { FullWidthForm } from "components";
 import { useSelector } from "react-redux";
 import { selectRole } from "modules/role";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -53,7 +52,7 @@ const CreateProfile: FunctionComponent = () => {
           validateOnMount={ true }
         >
           { () => (
-            <FullWidthForm>
+            <Form>
               <Routes>
                 <Route
                   path=""
@@ -74,7 +73,7 @@ const CreateProfile: FunctionComponent = () => {
                   element={ <Typography>Complete </Typography> }
                 />
               </Routes>
-            </FullWidthForm>
+            </Form>
           ) }
         </Formik>
       </Container>
