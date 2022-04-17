@@ -1,11 +1,11 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import theme from "theme";
-import TextInput from "../TextInput";
+import TextInput, { TextInput as UnwrappedTextInput } from "../TextInput";
 
 export default {
   title: "Text Input",
-  component: TextInput,
+  component: UnwrappedTextInput,
 };
 
 export const Variations = () => (

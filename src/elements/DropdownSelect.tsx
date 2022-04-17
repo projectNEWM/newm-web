@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent } from "react";
+import { FunctionComponent, KeyboardEvent, MouseEvent } from "react";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styled from "styled-components";
@@ -11,9 +11,8 @@ export interface SelectProps {
   readonly label: string;
   readonly name: string;
   readonly noResultsText?: string;
-  options: { id: number; name: string; value: string }[];
+  readonly options: { id: number; name: string; value: string }[];
   readonly placeholder?: string;
-  readonly required?: boolean;
 }
 
 const StyledDropdownSelectContainer = styled.div`
@@ -61,7 +60,6 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
   noResultsText = "Nothing found",
   options,
   placeholder,
-  required,
 }) => {
   const {
     getInputProps,
@@ -75,23 +73,41 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
   } = useAutocomplete({
     getOptionLabel: (option) => option.name,
     id: "use-autocomplete",
-    options: options,
+    options,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
 
-  // This prevents a form submission when input text does not match any options
+  const { onMouseDown, ...inputProps } = getInputProps();
+
+  /**
+   * This prevents a form submission when input
+   * text does not match any options.
+   */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value?.name)
       event.preventDefault();
+  };
+
+  /**
+   * Disables autocomplete click handler if input is disabled.
+   */
+  const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
+    if (disabled) {
+      return;
+    }
+
+    if (onMouseDown) {
+      onMouseDown(event);
+    }
   };
 
   return (
     <StyledDropdownSelectContainer>
       <div { ...getRootProps() }>
         <TextInput
-          { ...getInputProps() }
+          { ...inputProps }
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
@@ -102,11 +118,11 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
               } }
             />
           }
+          onMouseDown={ handleMouseDown }
           errorMessage={ errorMessage }
           label={ label }
           name={ name }
           placeholder={ placeholder }
-          required={ required }
           onKeyDown={ preventFormSubmit }
         />
       </div>
