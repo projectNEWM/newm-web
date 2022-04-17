@@ -3,11 +3,11 @@ on:
   pull_request:
     paths:
       - .github/workflows/firebase-hosting-pull-request.yml
-      - "public/**"
-      - "src/**"
-      - "**.json"
-      - ".**.js"
-      - "**.js"
+      - 'public/**'
+      - 'src/**'
+      - '**.json'
+      - '.**.js'
+      - '**.js'
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -20,6 +20,8 @@ jobs:
           REACT_APP_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           REACT_APP_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          REACT_APP_TEMP_LOGIN_EMAIL: ${{ secrets.TEMP_LOGIN_EMAIL }}
+          REACT_APP_TEMP_LOGIN_PASSWORD: ${{ secrets.TEMP_LOGIN_PASSWORD }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy

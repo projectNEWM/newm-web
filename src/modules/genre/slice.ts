@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface GenreState {
-  genres: ReadonlyArray<string>;
-}
+import { GenreState } from "./types";
 
 const initialState: GenreState = {
   // TEMP: Data is mocked until API data is available

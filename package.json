@@ -12,6 +12,7 @@
     "cloudinary-react": "^1.7.1",
     "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "material-ui-image": "^3.3.2",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",

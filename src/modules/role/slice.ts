@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Role } from "./types";
-
-interface RoleState {
-  roles: ReadonlyArray<Role>;
-}
+import { Role, RoleState } from "./types";
 
 const initialState: RoleState = {
   // TEMP: Data is mocked until API data is available

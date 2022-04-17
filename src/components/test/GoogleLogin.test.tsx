@@ -11,7 +11,6 @@ jest.mock("react-redux", () => ({
 
 // mock API call thunk
 jest.mock("modules/session", () => ({
-  ...jest.requireActual("modules/session"),
   extendedApi: {
     endpoints: {
       googleLogin: {

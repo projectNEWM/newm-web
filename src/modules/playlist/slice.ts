@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Playlist } from "./types";
-
-interface SongState {
-  playlists: {
-    [id: string]: Playlist;
-  };
-}
+import { SongState } from "./types";
 
 const initialState: SongState = {
   // TEMP: Data is mocked until API data is available
