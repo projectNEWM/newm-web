@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Role } from "./types";
 
 interface RoleState {
-  roles: ReadonlyArray<Role>
+  roles: ReadonlyArray<Role>;
 }
 
 const initialState: RoleState = {

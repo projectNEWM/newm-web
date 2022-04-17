@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface GenreState {
-  genres: ReadonlyArray<string>
+  genres: ReadonlyArray<string>;
 }
 
 const initialState: GenreState = {

@@ -53,7 +53,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   caret-color: ${(props) =>
     props.hasError ? theme.palette.error.main : theme.colors.red};
   text-align: ${(props) => props.textAlign};
-  font-family: 'DM Serif Text';
+  font-family: "DM Serif Text";
   font-style: ${theme.typography.xxxl.fontStyle};
   font-weight: 400;
   font-size: ${theme.typography.xxxl.fontSize};

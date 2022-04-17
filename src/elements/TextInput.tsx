@@ -33,10 +33,7 @@ const StyledInputElement = styled.input`
   font-size: ${theme.inputField.fontSize};
   font-weight: ${theme.inputField.fontWeight};
   line-height: ${theme.inputField.lineHeight};
-
-  input {
-    padding: 0;
-  }
+  padding: ${theme.inputField.padding};
 
   &::placeholder {
     color: ${theme.colors.grey100};
@@ -107,7 +104,6 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
           borderRadius: "4px",
           overflow: "hidden",
           background: theme.colors.grey500,
-          padding: theme.inputField.padding,
         } }
       >
         <InputUnstyled

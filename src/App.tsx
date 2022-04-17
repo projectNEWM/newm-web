@@ -37,7 +37,7 @@ const App = () => {
                 }
               />
               <Route
-                // All routes are exact unless the path has a * at the end, 
+                // All routes are exact unless the path has a * at the end,
                 // meaning we can append more routes to the end of this one
                 path="create-profile*"
                 element={
