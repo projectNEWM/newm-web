@@ -56,8 +56,6 @@ const TextInput: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
 ) => {
   const { getRootProps, getInputProps } = useInput(props, ref);
 
-  console.log(getRootProps(), getInputProps());
-
   const {
     errorMessage,
     label,
@@ -131,8 +129,8 @@ const TextInput: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
           { startAdornment }
 
           <StyledInputElement
-            { ...rest }
             { ...getInputProps() }
+            { ...rest }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
             disabled={ disabled }
