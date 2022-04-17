@@ -5,13 +5,14 @@ import {
   forwardRef,
   useState,
 } from "react";
-import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
+import { InputUnstyledProps, useInput } from "@mui/base";
 import { Box, Stack } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
 import Typography from "./Typography";
 
-export interface TextInputProps extends Omit<InputUnstyledProps, "helperText"> {
+export interface TextInputProps
+  extends Omit<InputUnstyledProps, "ref" | "helperText"> {
   readonly label?: string;
   readonly errorMessage?: string;
 }
@@ -21,6 +22,10 @@ const StyledRootElement = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  padding: ${theme.inputField.padding};
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
 `;
 
 const StyledInputElement = styled.input`
@@ -34,6 +39,7 @@ const StyledInputElement = styled.input`
   font-weight: ${theme.inputField.fontWeight};
   line-height: ${theme.inputField.lineHeight};
   padding: ${theme.inputField.padding};
+  padding-right: 0;
 
   &::placeholder {
     color: ${theme.colors.grey100};
@@ -44,10 +50,25 @@ const StyledInputElement = styled.input`
   }
 `;
 
-const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
-  { errorMessage, label, onFocus, onBlur, disabled = false, ...rest },
-  ref: ForwardedRef<HTMLDivElement>
+const TextInput: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
+  props,
+  ref: ForwardedRef<HTMLInputElement>
 ) => {
+  const { getRootProps, getInputProps } = useInput(props, ref);
+
+  console.log(getRootProps(), getInputProps());
+
+  const {
+    errorMessage,
+    label,
+    onFocus,
+    onBlur,
+    startAdornment,
+    endAdornment,
+    disabled = false,
+    ...rest
+  } = props;
+
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(!!rest.autoFocus);
 
@@ -106,17 +127,19 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
           background: theme.colors.grey500,
         } }
       >
-        <InputUnstyled
-          components={ {
-            Root: StyledRootElement,
-            Input: StyledInputElement,
-          } }
-          onFocus={ handleFocus }
-          onBlur={ handleBlur }
-          disabled={ disabled }
-          { ...rest }
-          ref={ ref }
-        />
+        <StyledRootElement { ...getRootProps() }>
+          { startAdornment }
+
+          <StyledInputElement
+            { ...rest }
+            { ...getInputProps() }
+            onFocus={ handleFocus }
+            onBlur={ handleBlur }
+            disabled={ disabled }
+          />
+
+          { endAdornment }
+        </StyledRootElement>
       </Box>
 
       { !!errorMessage && (
