@@ -23,13 +23,7 @@ const SquareGridCard: FunctionComponent<CardProps> = ({
 }) => {
   return (
     <StyledGridCard { ...rest }>
-      <Box
-        position="absolute"
-        top={ 0 }
-        right={ 0 }
-        bottom={ 0 }
-        left={ 0 }
-      >
+      <Box position="absolute" top={ 0 } right={ 0 } bottom={ 0 } left={ 0 }>
         { children }
       </Box>
     </StyledGridCard>

@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import theme from "theme";
 
-const { palette: { primary, secondary } } = theme;
+const {
+  palette: { primary, secondary },
+} = theme;
 
 const HorizontalLine = styled.div`
   background: linear-gradient(to right, ${primary.main}, ${secondary.main});
