@@ -1,4 +1,4 @@
-import { FunctionComponent, KeyboardEvent, MouseEvent } from "react";
+import { FunctionComponent, KeyboardEvent } from "react";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styled from "styled-components";
