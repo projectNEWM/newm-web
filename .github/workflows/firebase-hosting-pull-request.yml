@@ -14,6 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.0.0
+        with:
+          release_version: "nightly"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
       - run: npm install
       - run: npm run build
         env:
