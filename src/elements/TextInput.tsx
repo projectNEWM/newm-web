@@ -6,7 +6,6 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { useInput } from "@mui/base";
 import { Box, Stack } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
@@ -24,10 +23,6 @@ const StyledRootElement = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  padding: ${theme.inputField.padding};
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 0;
 `;
 
 const StyledInputElement = styled.input`
@@ -41,7 +36,6 @@ const StyledInputElement = styled.input`
   font-weight: ${theme.inputField.fontWeight};
   line-height: ${theme.inputField.lineHeight};
   padding: ${theme.inputField.padding};
-  padding-right: 0;
 
   &::placeholder {
     color: ${theme.colors.grey100};
@@ -55,10 +49,8 @@ const StyledInputElement = styled.input`
 export const TextInput: ForwardRefRenderFunction<
   HTMLInputElement,
   TextInputProps
-> = (props, ref: ForwardedRef<HTMLInputElement>) => {
-  const { getRootProps, getInputProps } = useInput(props, ref);
-
-  const {
+> = (
+  {
     errorMessage,
     label,
     onFocus,
@@ -67,8 +59,9 @@ export const TextInput: ForwardRefRenderFunction<
     endAdornment,
     disabled = false,
     ...rest
-  } = props;
-
+  },
+  ref: ForwardedRef<HTMLInputElement>
+) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(!!rest.autoFocus);
 
@@ -127,15 +120,15 @@ export const TextInput: ForwardRefRenderFunction<
           background: theme.colors.grey500,
         } }
       >
-        <StyledRootElement { ...getRootProps() }>
+        <StyledRootElement>
           { startAdornment }
 
           <StyledInputElement
-            { ...getInputProps() }
             { ...rest }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
             disabled={ disabled }
+            ref={ ref }
           />
 
           { endAdornment }

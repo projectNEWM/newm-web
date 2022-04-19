@@ -79,8 +79,6 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
 
-  const { onMouseDown, ...inputProps } = getInputProps();
-
   /**
    * This prevents a form submission when input
    * text does not match any options.
@@ -90,24 +88,11 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
       event.preventDefault();
   };
 
-  /**
-   * Disables autocomplete click handler if input is disabled.
-   */
-  const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
-    if (disabled) {
-      return;
-    }
-
-    if (onMouseDown) {
-      onMouseDown(event);
-    }
-  };
-
   return (
     <StyledDropdownSelectContainer>
       <div { ...getRootProps() }>
         <TextInput
-          { ...inputProps }
+          { ...getInputProps() }
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
@@ -118,7 +103,6 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
               } }
             />
           }
-          onMouseDown={ handleMouseDown }
           errorMessage={ errorMessage }
           label={ label }
           name={ name }

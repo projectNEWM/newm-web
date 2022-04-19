@@ -18,7 +18,7 @@ export const Variations = () => (
       <TextInput
         placeholder="With icon"
         endAdornment={
-          <IconButton sx={ { padding: 0, paddingLeft: "1rem" } }>
+          <IconButton sx={ { padding: 0, paddingRight: "1rem" } }>
             <VisibilityOutlinedIcon
               fontSize="small"
               sx={ { color: theme.colors.white } }
