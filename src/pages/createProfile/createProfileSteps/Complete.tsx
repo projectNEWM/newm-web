@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import NEWMLogo from "assets/images/NEWMLogo";
-import { Typography } from "elements";
+import { GradientTypography, Typography } from "elements";
 
 const AddProfileInformation: FunctionComponent = () => {
   return (
@@ -10,9 +10,25 @@ const AddProfileInformation: FunctionComponent = () => {
         <NEWMLogo />
       </Box>
 
-      <Typography align="center" fontWeight="extra-bold" variant="xxxl">
+      <Typography
+        align="center"
+        fontWeight="extra-bold"
+        variant="xxxl"
+        fontFamily="Raleway"
+      >
         Aaaaand we&apos;re done.
       </Typography>
+
+      <Box mt={ 1 }>
+        <GradientTypography
+          variant="xxxl"
+          fontFamily="DM Serif Text"
+          fontWeight="regular"
+          fontStyle="italic"
+        >
+          Shall we?
+        </GradientTypography>
+      </Box>
     </Box>
   );
 };

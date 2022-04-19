@@ -93,7 +93,12 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
         <NEWMLogo />
       </Box>
 
-      <Typography align="center" fontWeight="extra-bold" variant="xxxl">
+      <Typography
+        align="center"
+        fontWeight="extra-bold"
+        variant="xxxl"
+        fontFamily="Raleway"
+      >
         { prompt }
       </Typography>
 
@@ -101,7 +106,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
         name={ fieldName }
         textAlign="center"
         helperText={ !isValid ? helperText : "" }
-        sx={ { fontFamily: "DM Serif Display", fontStyle: "italic" } }
+        sx={ { fontFamily: "DM Serif Text", fontStyle: "italic" } }
         ref={ inputRef }
       />
 

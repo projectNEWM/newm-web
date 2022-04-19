@@ -54,6 +54,7 @@ const CreateProfile: FunctionComponent = () => {
    * Don't try to submit form when pressing enter. This is because
    * the form already has custom functionality when pressing enter.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleKeyDown = (event: any) => {
     if ((event.charCode || event.keyCode) === 13) {
       event.preventDefault();

@@ -51,7 +51,6 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
   { errorMessage, label, onFocus, onBlur, disabled = false, ...rest },
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  console.log("props: ", rest);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 

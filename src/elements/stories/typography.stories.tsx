@@ -44,11 +44,11 @@ export const FontFamilies = () => (
     <Typography variant="md" fontFamily="Raleway">
       Text Raleway
     </Typography>
-    <Typography variant="md" fontFamily="DM Serif Display">
-      Text DM Serif Display
+    <Typography variant="md" fontFamily="DM Serif Text">
+      Text DM Serif Text
     </Typography>
-    <Typography variant="md" fontStyle="italic" fontFamily="DM Serif Display">
-      Text DM Serif Display Italic
+    <Typography variant="md" fontStyle="italic" fontFamily="DM Serif Text">
+      Text DM Serif Text Italic
     </Typography>
   </Stack>
 );

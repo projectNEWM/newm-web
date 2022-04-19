@@ -8,7 +8,7 @@ import { FunctionComponent } from "react";
 
 interface TypographyProps extends MuiTypogaphyProps {
   color?: keyof Theme["colors"];
-  fontFamily?: "Inter" | "Raleway" | "DM Serif Display";
+  fontFamily?: "Inter" | "Raleway" | "DM Serif Text";
   fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
   fontStyle?: "normal" | "italic";
 }
@@ -35,6 +35,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
       sx={ {
         color: colorHex,
         fontStyle,
+        padding: "0 0.5rem", // prevent some fonts getting cut off horizontally
         ...sx,
       } }
       { ...rest }
