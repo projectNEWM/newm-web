@@ -53,7 +53,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   -moz-text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
   caret-color: ${(props) =>
-    props.hasError ? theme.palette.error.main : theme.colors.red};
+    props.hasError ? theme.palette.error.main : theme.colors.purple};
   text-align: ${(props) => props.textAlign};
   font-family: 'DM Serif Text';
   font-style: ${theme.typography.xxxl.fontStyle};

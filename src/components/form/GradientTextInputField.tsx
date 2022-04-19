@@ -1,12 +1,13 @@
-import { FormEvent, FunctionComponent } from "react";
-import { FastField, FieldProps } from "formik";
+import { FormEvent, ForwardRefRenderFunction, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
 import { GradientTextInput, GradientTextInputProps } from "elements";
 
-const GradientTextInputField: FunctionComponent<GradientTextInputProps> = (
-  props
-) => {
+const GradientTextInputField: ForwardRefRenderFunction<
+  HTMLInputElement,
+  GradientTextInputProps
+> = (props, ref) => {
   return (
-    <FastField name={ props.name }>
+    <Field name={ props.name }>
       { ({ field: { onBlur, ...field }, meta }: FieldProps) => {
         /**
          * Add a slight delay to the on blur functionality because
@@ -24,13 +25,14 @@ const GradientTextInputField: FunctionComponent<GradientTextInputProps> = (
           <GradientTextInput
             errorMessage={ meta.touched ? meta.error : "" }
             onBlur={ handleBlur }
+            ref={ ref }
             { ...field }
             { ...props }
           />
         );
       } }
-    </FastField>
+    </Field>
   );
 };
 
-export default GradientTextInputField;
+export default forwardRef(GradientTextInputField);

@@ -1,7 +1,6 @@
 import { RootState } from "store";
+import { GenreState } from "./types";
 
-export const selectGenres = (
-  state: RootState
-): RootState["genre"]["genres"] => {
-  return state.genre.genres;
+export const selectGenre = (state: RootState): GenreState => {
+  return state.genre;
 };

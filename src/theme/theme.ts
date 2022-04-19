@@ -191,6 +191,10 @@ export default createTheme({
       main: "#FF453A",
     },
 
+    action: {
+      disabled: "white",
+    },
+
     text: {
       primary: "#FFFFFF",
       secondary: "#707070",

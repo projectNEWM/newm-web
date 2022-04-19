@@ -13,3 +13,4 @@ export { default as TextInputField } from "./form/TextInputField";
 export { default as GradientTextInputField } from "./form/GradientTextInputField";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";
 export { default as TempAuthButton } from "./TempAuthButton";
+export { default as AddProfileInformation } from "./AddProfileInformation";
