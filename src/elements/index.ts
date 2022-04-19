@@ -1,4 +1,4 @@
-export { default as OutlinedButton } from "./styled/OutlinedButton";
+export { default as OutlinedButton } from "./OutlinedButton";
 export { default as FilledButton } from "./styled/FilledButton";
 export { default as MultiSelect } from "./MultiSelect";
 export { default as DatePickerInput } from "./DatePickerInput";
