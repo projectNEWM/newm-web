@@ -1,11 +1,11 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import theme from "theme";
-import TextInput from "../TextInput";
+import TextInput, { TextInput as UnwrappedTextInput } from "../TextInput";
 
 export default {
   title: "Text Input",
-  component: TextInput,
+  component: UnwrappedTextInput,
 };
 
 export const Variations = () => (
@@ -18,7 +18,7 @@ export const Variations = () => (
       <TextInput
         placeholder="With icon"
         endAdornment={
-          <IconButton sx={ { padding: 0, paddingLeft: "1rem" } }>
+          <IconButton sx={ { padding: 0, paddingRight: "1rem" } }>
             <VisibilityOutlinedIcon
               fontSize="small"
               sx={ { color: theme.colors.white } }

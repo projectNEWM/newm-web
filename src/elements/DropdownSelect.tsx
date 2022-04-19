@@ -11,9 +11,8 @@ export interface SelectProps {
   readonly label: string;
   readonly name: string;
   readonly noResultsText?: string;
-  options: { id: number; name: string; value: string }[];
+  readonly options: { id: number; name: string; value: string }[];
   readonly placeholder?: string;
-  readonly required?: boolean;
 }
 
 const StyledDropdownSelectContainer = styled.div`
@@ -61,7 +60,6 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
   noResultsText = "Nothing found",
   options,
   placeholder,
-  required,
 }) => {
   const {
     getInputProps,
@@ -75,13 +73,16 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
   } = useAutocomplete({
     getOptionLabel: (option) => option.name,
     id: "use-autocomplete",
-    options: options,
+    options,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
 
-  // This prevents a form submission when input text does not match any options
+  /**
+   * This prevents a form submission when input
+   * text does not match any options.
+   */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value?.name)
       event.preventDefault();
@@ -106,7 +107,6 @@ const DropdownSelect: FunctionComponent<SelectProps> = ({
           label={ label }
           name={ name }
           placeholder={ placeholder }
-          required={ required }
           onKeyDown={ preventFormSubmit }
         />
       </div>
