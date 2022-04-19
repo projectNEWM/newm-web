@@ -23,6 +23,12 @@ jobs:
           REACT_APP_TEMP_LOGIN_EMAIL: ${{ secrets.TEMP_LOGIN_EMAIL }}
           REACT_APP_TEMP_LOGIN_PASSWORD: ${{ secrets.TEMP_LOGIN_PASSWORD }}
 
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.0.0
+        with:
+          release_version: "nightly"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:
