@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, GradientTypography, Link, Typography } from "elements";
 
-const AddProfileInformation: FunctionComponent = () => {
+const Complete: FunctionComponent = () => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Box mb={ 4 } alignSelf="center">
@@ -44,4 +44,4 @@ const AddProfileInformation: FunctionComponent = () => {
   );
 };
 
-export default AddProfileInformation;
+export default Complete;

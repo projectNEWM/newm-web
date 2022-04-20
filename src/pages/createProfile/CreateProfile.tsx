@@ -6,8 +6,9 @@ import { updateProfile } from "modules/session";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRole } from "modules/role";
 import { selectGenre } from "modules/genre";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import * as Yup from "yup";
+import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
 import SelectRole from "./createProfileSteps/SelectRole";
 import SelectGenre from "./createProfileSteps/SelectGenre";
@@ -89,10 +90,7 @@ const CreateProfile: FunctionComponent = () => {
           { () => (
             <Form onKeyDown={ handleKeyDown }>
               <Routes>
-                <Route
-                  path=""
-                  element={ <Navigate to="what-should-we-call-you" replace /> }
-                />
+                <Route path="" element={ <Begin /> } />
 
                 <Route
                   path="what-should-we-call-you"
