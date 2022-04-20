@@ -1,10 +1,14 @@
 import { Box, Typography } from "@mui/material";
-import { FunctionComponent } from "react";
-import { useGetSongsQuery } from "modules/song";
+import { FunctionComponent, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getInitialData } from "modules/session";
 
 const Home: FunctionComponent = () => {
-  // TEMP: Just for testing to verify authenticated API call is successful
-  useGetSongsQuery("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getInitialData());
+  }, [dispatch]);
 
   return (
     <Box

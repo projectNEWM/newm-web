@@ -1,5 +1,12 @@
 import api from "api";
-import { LoginRequest, NewmAuthResponse, NewmOAuthRequest } from "./types";
+import { EmptyResponse } from "common";
+import {
+  GetProfileResponse,
+  LoginRequest,
+  NewmAuthResponse,
+  NewmOAuthRequest,
+  UpdateProfileRequest,
+} from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -41,6 +48,21 @@ export const extendedApi = api.injectEndpoints({
         headers: {
           Authorization: `Bearer ${refreshToken}`,
         },
+      }),
+    }),
+
+    getProfile: build.query<GetProfileResponse, void>({
+      query: () => ({
+        url: "v1/users/me",
+        method: "GET",
+      }),
+    }),
+
+    updateProfile: build.mutation<EmptyResponse, UpdateProfileRequest>({
+      query: (body) => ({
+        url: "v1/users/me",
+        method: "PATCH",
+        body,
       }),
     }),
   }),

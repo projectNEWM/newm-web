@@ -2,7 +2,8 @@ import { FunctionComponent } from "react";
 import { Form, Formik } from "formik";
 import { Box, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import { updateProfile } from "modules/session";
+import { useDispatch, useSelector } from "react-redux";
 import { selectRole } from "modules/role";
 import { selectGenre } from "modules/genre";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -20,6 +21,8 @@ interface ProfileFormValues {
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
+
+  const dispatch = useDispatch();
 
   const { roles } = useSelector(selectRole);
   const { genres } = useSelector(selectGenre);
@@ -62,7 +65,7 @@ const CreateProfile: FunctionComponent = () => {
   };
 
   const handleSubmit = (values: ProfileFormValues) => {
-    console.log("values: ", values);
+    dispatch(updateProfile(values));
   };
 
   return (
