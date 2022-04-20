@@ -51,7 +51,7 @@ const CreateProfile: FunctionComponent = () => {
   });
 
   /**
-   * Don't try to submit form when pressing enter. This is because
+   * Prevent submitting form when pressing enter. This is because
    * the form already has custom functionality when pressing enter.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,8 +61,8 @@ const CreateProfile: FunctionComponent = () => {
     }
   };
 
-  const handleSubmit = () => {
-    // logic to submit form data here
+  const handleSubmit = (values: ProfileFormValues) => {
+    console.log("values: ", values);
   };
 
   return (

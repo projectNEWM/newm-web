@@ -66,20 +66,20 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   }, [inputRef]);
 
   useEffect(() => {
+    /**
+     * Blurs the form field to show any errors and
+     * calls the navigation handler.
+     */
+    const handlePressEnter = (event: KeyboardEvent) => {
+      handleBlur(event);
+      memoizedHandleNavigate();
+    };
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
       if ((event.charCode || event.keyCode) === 13) {
         handlePressEnter(event);
       }
-    };
-
-    /**
-     * Blurs the form field to show any errors and calls the
-     * navigation handler when the Enter key is pressed.
-     */
-    const handlePressEnter = (event: KeyboardEvent) => {
-      handleBlur(event);
-      memoizedHandleNavigate();
     };
 
     document.addEventListener("keydown", handleKeyDown);
