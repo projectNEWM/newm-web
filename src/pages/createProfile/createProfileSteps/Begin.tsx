@@ -11,7 +11,7 @@ const Begin: FunctionComponent = () => {
     // briefly display page and then navigate to profile form
     setTimeout(() => {
       navigate("/create-profile/what-should-we-call-you");
-    }, 2500);
+    }, 2400);
   }, [navigate]);
 
   return (

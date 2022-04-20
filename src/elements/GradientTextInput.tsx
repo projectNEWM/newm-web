@@ -35,6 +35,8 @@ const StyledRootElement = styled("div")`
  * color red if an error is present.
  */
 const StyledInputElement = styled("input")<StyledInputElementProps>`
+  position: relative;
+  z-index: 100;
   display: flex;
   flex-grow: 1;
   max-width: 100%;
@@ -60,6 +62,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   font-weight: 400;
   font-size: ${theme.typography.xxxl.fontSize};
   line-height: ${theme.typography.xxxl.lineHeight};
+  text-shadow: 0px 0px transparent;
 
   &::placeholder {
     color: ${theme.colors.grey100};

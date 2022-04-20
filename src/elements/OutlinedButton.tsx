@@ -17,16 +17,18 @@ const OutlinedButtonBackground = styled("div")(
 `
 );
 
-const OutlinedButtonMain = styled(Button)(
+const OutlinedButtonMain = styled(Button)`
+  background-color: 'transparent';
+  padding: 12px 16px;
+`;
+
+const GradientText = styled("span")(
   ({ theme }) => `
-  background-color: "transparent";
   font-size: 16px;
   line-height: 18px;
-  color: ${theme.colors.red};
+  white-space: nowrap;
   font: ${theme.typography.button.font};
   text-transform: none;
-  padding: 12px 16px;
-  white-space: nowrap;
   color: transparent;
   background: ${theme.colors.red};
   background: ${theme.gradients.artist};
@@ -36,13 +38,19 @@ const OutlinedButtonMain = styled(Button)(
   text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+  text-shadow: 0px 0px transparent;
 `
 );
 
-const OutlinedButton: FunctionComponent<ButtonProps> = (props) => (
+const OutlinedButton: FunctionComponent<ButtonProps> = ({
+  children,
+  ...props
+}) => (
   <OutlinedButtonGradient>
     <OutlinedButtonBackground>
-      <OutlinedButtonMain { ...props } />
+      <OutlinedButtonMain { ...props }>
+        <GradientText>{ children }</GradientText>
+      </OutlinedButtonMain>
     </OutlinedButtonBackground>
   </OutlinedButtonGradient>
 );

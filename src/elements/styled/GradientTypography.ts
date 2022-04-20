@@ -12,6 +12,7 @@ const GradientTypography = styled(Typography)(
   text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent";
+  text-shadow: 0px 0px transparent;
 `
 );
 
