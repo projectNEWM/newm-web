@@ -7,14 +7,11 @@ import {
 } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { StringMap } from "common";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
 import { FilteredTagsField, GradientTextInputField } from "components";
-
-interface StringMap {
-  readonly [key: string]: string;
-}
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
