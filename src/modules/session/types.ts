@@ -46,7 +46,7 @@ export interface UpdateProfileRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly role?: string;
-  readonly genres?: ReadonlyArray<string>;
+  readonly genres?: Array<string>;
   readonly email?: string;
   readonly newPassword?: string;
   readonly confirmPassword?: string;

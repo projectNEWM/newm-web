@@ -1,10 +1,10 @@
 export interface ContentState {
-  genres: ReadonlyArray<string>;
-  roles: ReadonlyArray<string>;
+  genres: Array<string>;
+  roles: Array<string>;
   errorMessage: string;
 }
 
 export interface ContentResponse {
-  genres: ReadonlyArray<string>;
-  roles: ReadonlyArray<string>;
+  readonly genres: Array<string>;
+  readonly roles: Array<string>;
 }

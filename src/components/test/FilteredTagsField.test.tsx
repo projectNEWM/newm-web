@@ -32,7 +32,7 @@ describe("<FilteredTagsField />", () => {
     expect(queryByText("world")).toBeFalsy();
   });
 
-  it("does not display any tags if form value matches a tag", () => {
+  it("does not display any tags if form value is equal to a tag", () => {
     const { queryByText } = renderWithContext(
       withFormik(
         <FilteredTagsField name="example" tags={ ["hello", "world"] } />,
