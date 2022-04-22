@@ -36,7 +36,6 @@ const StyledRootElement = styled("div")`
  */
 const StyledInputElement = styled("input")<StyledInputElementProps>`
   position: relative;
-  z-index: 100;
   display: flex;
   flex-grow: 1;
   max-width: 100%;
@@ -46,13 +45,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
   background: ${(props) => (props.hasError ? "none" : theme.gradients.artist)};
   background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
   text-fill-color: ${(props) =>
-    props.hasError ? "currentcolor" : "transparent"};
-  -webkit-text-fill-color: ${(props) =>
-    props.hasError ? "currentcolor" : "transparent"};
-  -moz-text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
   caret-color: ${(props) =>
     props.hasError ? theme.palette.error.main : theme.colors.purple};

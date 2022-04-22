@@ -24,8 +24,8 @@ const OutlinedButtonMain = styled(Button)`
 
 const GradientText = styled("span")(
   ({ theme }) => `
-  font-size: 16px;
-  line-height: 18px;
+  font-size: ${theme.button.fontSize};
+  line-height: ${theme.button.lineHeight};
   white-space: nowrap;
   font: ${theme.typography.button.font};
   text-transform: none;
@@ -33,11 +33,7 @@ const GradientText = styled("span")(
   background: ${theme.colors.red};
   background: ${theme.gradients.artist};
   background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
   text-fill-color: transparent;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
   text-shadow: 0px 0px transparent;
 `
 );

@@ -5,8 +5,8 @@ import theme from "theme";
 const FilledButton = styled(Button)<ButtonProps>`
   background: ${theme.gradients.artist};
   border-radius: 7px;
-  font-size: 16px;
-  line-height: 18px;
+  font-size: ${theme.button.fontSize};
+  line-height: ${theme.button.lineHeight};
   color: white;
   font: ${theme.typography.button.font};
   text-transform: none;

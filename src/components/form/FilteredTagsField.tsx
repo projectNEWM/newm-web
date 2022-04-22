@@ -41,14 +41,11 @@ const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
  * tag, hide the remaining tag.
  */
 const filterTags = (query: string) => (tag: string) => {
-  if (
-    query.length === 0 ||
-    (tag !== query && tag.toLowerCase().includes(query.toLowerCase()))
-  ) {
-    return true;
-  }
+  const emptyQuery = query.length === 0;
+  const queryExactlyMatchesTag = tag === query;
+  const tagIncludesQuery = tag.toLowerCase().includes(query.toLowerCase());
 
-  return false;
+  return emptyQuery || (!queryExactlyMatchesTag && tagIncludesQuery);
 };
 
 export default FilteredTagsField;
