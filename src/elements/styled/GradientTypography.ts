@@ -13,6 +13,7 @@ const GradientTypography = styled(Typography)(
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent";
   text-shadow: 0px 0px transparent;
+  padding: 0 0.5rem; // prevent some fonts getting cut off horizontally
 `
 );
 

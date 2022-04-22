@@ -16,7 +16,7 @@ const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
       <Typography
         { ...typographyProps }
         ref={ ref }
-        sx={ { textDecoration: "underline", padding: 0 } }
+        sx={ { textDecoration: "underline" } }
       />
     </RouterLink>
   );

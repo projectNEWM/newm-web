@@ -35,7 +35,6 @@ const Typography: FunctionComponent<TypographyProps> = ({
       sx={ {
         color: colorHex,
         fontStyle,
-        padding: "0 0.5rem", // prevent some fonts getting cut off horizontally
         ...sx,
       } }
       { ...rest }
