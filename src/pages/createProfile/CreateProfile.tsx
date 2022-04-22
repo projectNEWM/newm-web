@@ -4,10 +4,10 @@ import { Box, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { updateProfile } from "modules/session";
 import { useDispatch, useSelector } from "react-redux";
-import { selectRole } from "modules/role";
-import { selectGenre } from "modules/genre";
+import { selectContent } from "modules/content";
 import { Route, Routes } from "react-router-dom";
 import * as Yup from "yup";
+import { useGetContentQuery } from "modules/content";
 import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
 import SelectRole from "./createProfileSteps/SelectRole";
@@ -21,12 +21,13 @@ interface ProfileFormValues {
 }
 
 const CreateProfile: FunctionComponent = () => {
+  useGetContentQuery();
+
   const theme = useTheme();
 
   const dispatch = useDispatch();
 
-  const { roles } = useSelector(selectRole);
-  const { genres } = useSelector(selectGenre);
+  const { roles, genres } = useSelector(selectContent);
 
   const initialValues: ProfileFormValues = {
     nickname: "",

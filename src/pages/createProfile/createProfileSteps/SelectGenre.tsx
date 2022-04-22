@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
 import { useSelector } from "react-redux";
-import { selectGenre } from "modules/genre";
+import { selectContent } from "modules/content";
 
 const SelectGenre: FunctionComponent = () => {
-  const { genres } = useSelector(selectGenre);
+  const { genres } = useSelector(selectContent);
 
   return (
     <AddProfileInformation

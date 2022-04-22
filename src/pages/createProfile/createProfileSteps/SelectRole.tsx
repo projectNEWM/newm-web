@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
 import { useSelector } from "react-redux";
-import { selectRole } from "modules/role";
+import { selectContent } from "modules/content";
 
 const SelectRole: FunctionComponent = () => {
-  const { roles } = useSelector(selectRole);
+  const { roles } = useSelector(selectContent);
 
   return (
     <AddProfileInformation
