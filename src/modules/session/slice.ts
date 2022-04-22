@@ -10,6 +10,8 @@ const initialState: SessionState = {
   isLoggedIn: !!Cookies.get("refreshToken"),
   profile: {
     id: "",
+    oauthId: "",
+    oauthType: "",
     email: "",
     firstName: "",
     lastName: "",

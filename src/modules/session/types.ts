@@ -6,6 +6,8 @@ export interface SessionState {
 
 export interface Profile {
   readonly id: string;
+  readonly oauthType: string;
+  readonly oauthId: string;
   readonly email: string;
   readonly firstName: string;
   readonly lastName: string;
@@ -55,6 +57,8 @@ export interface UpdateProfileRequest {
 
 export interface GetProfileResponse {
   readonly id: string;
+  readonly oauthType: string;
+  readonly oauthId: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly nickname: string;
@@ -62,7 +66,4 @@ export interface GetProfileResponse {
   readonly role: string;
   readonly genres: Array<string>;
   readonly email: string;
-  readonly newPassword: string;
-  readonly confirmPassword: string;
-  readonly authCode: number;
 }

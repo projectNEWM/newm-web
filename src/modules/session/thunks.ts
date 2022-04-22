@@ -6,7 +6,7 @@ const { origin } = window.location;
 
 /**
  * Update the user's profile and navigate to
- * the home page is successful.
+ * the home page if successful.
  */
 export const updateProfile = createAsyncThunk(
   "session/updateProfile",
