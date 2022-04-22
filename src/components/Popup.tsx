@@ -33,7 +33,8 @@ const Popup = (props: PopupProps) => {
 const StyledDialogContent = styled(DialogContent)(() => ({
   animation: `30s ${rotate} linear infinite;`,
   border: "1.5px solid transparent;",
-  borderImage: "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
+  borderImage:
+    "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
   borderImageSlice: " 1;",
 }));
 

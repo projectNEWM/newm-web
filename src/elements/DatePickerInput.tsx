@@ -5,7 +5,6 @@ interface DateTimePickerProps {
   name: string;
   label: string;
   options: string[];
-  size?: "small" | "medium" | undefined;
 }
 
 const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {

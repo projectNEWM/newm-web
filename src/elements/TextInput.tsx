@@ -2,18 +2,20 @@ import {
   FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
+  InputHTMLAttributes,
   forwardRef,
   useState,
 } from "react";
-import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
 import { Box, Stack } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
 import Typography from "./Typography";
 
-export interface TextInputProps extends Omit<InputUnstyledProps, "helperText"> {
+export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
   readonly errorMessage?: string;
+  readonly startAdornment?: JSX.Element;
+  readonly endAdornment?: JSX.Element;
 }
 
 const StyledRootElement = styled.div`
@@ -33,10 +35,7 @@ const StyledInputElement = styled.input`
   font-size: ${theme.inputField.fontSize};
   font-weight: ${theme.inputField.fontWeight};
   line-height: ${theme.inputField.lineHeight};
-
-  input {
-    padding: 0;
-  }
+  padding: ${theme.inputField.padding};
 
   &::placeholder {
     color: ${theme.colors.grey100};
@@ -47,9 +46,21 @@ const StyledInputElement = styled.input`
   }
 `;
 
-const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
-  { errorMessage, label, onFocus, onBlur, disabled = false, ...rest },
-  ref: ForwardedRef<HTMLDivElement>
+export const TextInput: ForwardRefRenderFunction<
+  HTMLInputElement,
+  TextInputProps
+> = (
+  {
+    errorMessage,
+    label,
+    onFocus,
+    onBlur,
+    startAdornment,
+    endAdornment,
+    disabled = false,
+    ...rest
+  },
+  ref: ForwardedRef<HTMLInputElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -107,20 +118,21 @@ const TextInput: ForwardRefRenderFunction<HTMLDivElement, TextInputProps> = (
           borderRadius: "4px",
           overflow: "hidden",
           background: theme.colors.grey500,
-          padding: theme.inputField.padding,
         } }
       >
-        <InputUnstyled
-          components={ {
-            Root: StyledRootElement,
-            Input: StyledInputElement,
-          } }
-          onFocus={ handleFocus }
-          onBlur={ handleBlur }
-          disabled={ disabled }
-          { ...rest }
-          ref={ ref }
-        />
+        <StyledRootElement>
+          { startAdornment }
+
+          <StyledInputElement
+            { ...rest }
+            onFocus={ handleFocus }
+            onBlur={ handleBlur }
+            disabled={ disabled }
+            ref={ ref }
+          />
+
+          { endAdornment }
+        </StyledRootElement>
       </Box>
 
       { !!errorMessage && (
