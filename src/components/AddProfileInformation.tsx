@@ -74,7 +74,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
-      if ((event.charCode || event.keyCode) === 13) {
+      if (event.key === "Enter") {
         handlePressEnter(event);
       }
     };

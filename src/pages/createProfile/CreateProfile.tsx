@@ -58,7 +58,7 @@ const CreateProfile: FunctionComponent = () => {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleKeyDown = (event: any) => {
-    if ((event.charCode || event.keyCode) === 13) {
+    if (event.key === "Enter") {
       event.preventDefault();
     }
   };
@@ -74,9 +74,9 @@ const CreateProfile: FunctionComponent = () => {
 
   return (
     <Box
-      px={ 2 }
-      pt={ 10 }
       sx={ {
+        px: 2,
+        pt: 10,
         display: "flex",
         flex: 1,
         maxWidth: "100%",
