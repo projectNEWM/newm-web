@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
 import { Route, Routes } from "react-router-dom";
 import * as Yup from "yup";
-import { useGetContentQuery } from "modules/content";
 import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
 import SelectRole from "./createProfileSteps/SelectRole";
@@ -21,8 +20,6 @@ interface ProfileFormValues {
 }
 
 const CreateProfile: FunctionComponent = () => {
-  useGetContentQuery();
-
   const theme = useTheme();
 
   const dispatch = useDispatch();
