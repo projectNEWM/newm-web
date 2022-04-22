@@ -8,6 +8,10 @@ interface FilteredTagsFieldProps {
   readonly tags: ReadonlyArray<string>;
 }
 
+/**
+ * Formik field component that displays tags based on the value of
+ * the field. Pressing one of the tags will update the field with that value.
+ */
 const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
   name,
   tags,
