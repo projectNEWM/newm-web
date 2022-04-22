@@ -55,7 +55,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   font-weight: 400;
   font-size: ${theme.typography.xxxl.fontSize};
   line-height: ${theme.typography.xxxl.lineHeight};
-  text-shadow: 0px 0px transparent;
+  text-shadow: 0 0 transparent;
 
   &::placeholder {
     color: ${theme.colors.grey100};

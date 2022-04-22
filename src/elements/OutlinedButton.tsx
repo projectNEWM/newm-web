@@ -34,7 +34,7 @@ const GradientText = styled("span")(
   background: ${theme.gradients.artist};
   background-clip: text;
   text-fill-color: transparent;
-  text-shadow: 0px 0px transparent;
+  text-shadow: 0 0 transparent;
 `
 );
 
