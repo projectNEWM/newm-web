@@ -3,7 +3,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
+import { Form, Formik, FormikConfig } from "formik";
 import { RootState, reducer } from "store";
 import theme from "theme";
 
@@ -14,6 +15,10 @@ interface RenderProps extends RenderOptions {
 
 interface WrapperProps {
   readonly children: ReactElement;
+}
+
+interface FormValues {
+  readonly [key: string]: string;
 }
 
 /**
@@ -49,4 +54,15 @@ export const renderWithContext = (
   };
 
   return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
+export const withFormik = (
+  element: ReactNode,
+  props: FormikConfig<FormValues>
+) => {
+  return (
+    <Formik { ...props }>
+      <Form>{ element }</Form>
+    </Formik>
+  );
 };
