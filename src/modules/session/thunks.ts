@@ -10,8 +10,8 @@ const { origin } = window.location;
  */
 export const updateProfile = createAsyncThunk(
   "session/updateProfile",
-  async (body: UpdateProfileRequest, thunkAPI) => {
-    const response = await thunkAPI.dispatch(
+  async (body: UpdateProfileRequest, thunkApi) => {
+    const response = await thunkApi.dispatch(
       sessionApi.endpoints.updateProfile.initiate(body)
     );
 
@@ -28,7 +28,7 @@ export const updateProfile = createAsyncThunk(
  * navigate to the beginning of the edit profile form.
  */
 export const getInitialData = createAsyncThunk(
-  "session/fetchInitialData",
+  "session/getInitialData",
   async (_, thunkApi) => {
     const profileResponse = await thunkApi.dispatch(
       sessionApi.endpoints.getProfile.initiate()
