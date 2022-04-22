@@ -65,8 +65,13 @@ const CreateProfile: FunctionComponent = () => {
     }
   };
 
-  const handleSubmit = (values: ProfileFormValues) => {
-    dispatch(updateProfile(values));
+  const handleSubmit = ({ genre, ...values }: ProfileFormValues) => {
+    dispatch(
+      updateProfile({
+        ...values,
+        genres: [genre],
+      })
+    );
   };
 
   return (
