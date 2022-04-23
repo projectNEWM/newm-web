@@ -30,10 +30,6 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
     setFieldTouched(fieldName, false);
   }, [setFieldTouched, fieldName]);
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [inputRef]);
-
   /**
    * Add an event listener to submit the form when enter is pressed.
    * Without this Formik will only submit the form when enter is pressed
@@ -51,6 +47,13 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleSubmit]);
+
+  /**
+   * Focus the field on mount.
+   */
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
