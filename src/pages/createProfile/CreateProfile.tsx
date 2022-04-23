@@ -106,7 +106,7 @@ const CreateProfile: FunctionComponent = () => {
       <Container maxWidth="xl">
         <Formik
           initialValues={ initialValues }
-          validationSchema={ () => getValidationSchema() }
+          validationSchema={ getValidationSchema }
           onSubmit={ handleSubmit }
           validateOnMount={ true }
         >

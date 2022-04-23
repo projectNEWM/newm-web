@@ -23,8 +23,8 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
 
   /**
-   * Validate the field on mount (blurring the field validates it and
-   * leaves it unblurred so that the error isn't shown).
+   * Validate the field on mount (setting the blur status to false validates
+   * the field and leaves it unblurred so that the error isn't shown).
    */
   useEffect(() => {
     setFieldTouched(fieldName, false);
