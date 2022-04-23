@@ -24,7 +24,7 @@ interface WizardFormProps extends FormikConfig<FormikValues> {
  * Wizard form component. Takes an array of route objects with a
  * path, element, and validation schema. Each element in the form
  * should have a button with a type of "submit" in order for the
- * validation and submit functionality to work correctly.
+ * navigation, validation, and submit functionality to work correctly.
  */
 const WizardForm: FunctionComponent<WizardFormProps> = ({
   routes,
@@ -66,7 +66,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   };
 
   /**
-   * Navigates to the next route in the form and submits the
+   * Navigates to the next route in the form or submits the
    * form if it is the final route.
    */
   const handleSubmit = (

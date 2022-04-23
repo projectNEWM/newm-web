@@ -61,8 +61,7 @@ const CreateProfile: FunctionComponent = () => {
   };
 
   /**
-   * Navigates to the next route in the form and submits the
-   * form if it is the final route.
+   * Submits the form when on the last route of the form.
    */
   const handleSubmit = ({ genre, ...values }: FormikValues) => {
     dispatch(updateProfile({ ...values, genres: [genre] }));
