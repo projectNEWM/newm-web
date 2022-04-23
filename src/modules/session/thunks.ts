@@ -19,7 +19,7 @@ export const updateProfile = createAsyncThunk(
       return;
     }
 
-    window.location.href = `${origin}/home`;
+    // window.location.href = `${origin}/home`;
   }
 );
 

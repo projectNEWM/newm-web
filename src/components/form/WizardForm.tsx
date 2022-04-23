@@ -13,6 +13,7 @@ interface FormRoute {
   readonly path: string;
   readonly element: JSX.Element;
   readonly validationSchema?: Yup.AnySchema;
+  readonly onSubmitStep?: (values: FormikValues) => void;
 }
 
 interface WizardFormProps extends FormikConfig<FormikValues> {
@@ -73,9 +74,14 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     values: FormikValues,
     helpers: FormikHelpers<FormikValues>
   ) => {
-    const isLastPage = currentIndex === routes.length - 1;
+    const currentRoute = routes[currentIndex];
+    const isLastRoute = currentIndex === routes.length - 1;
 
-    if (isLastPage) {
+    if (currentRoute.onSubmitStep) {
+      currentRoute.onSubmitStep(values);
+    }
+
+    if (isLastRoute) {
       onSubmit(values, helpers);
     } else {
       goForward();
