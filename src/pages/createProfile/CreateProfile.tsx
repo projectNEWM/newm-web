@@ -37,39 +37,48 @@ const CreateProfile: FunctionComponent = () => {
   };
 
   /**
-   * Returns a validation schema depending on what
-   * the current route is.
+   * Yup validations for all fields in the form.
    */
-  const getValidationSchema = () => {
-    const nickname = Yup.string()
+  const validations = {
+    nickname: Yup.string()
       .required("This field is required")
-      .matches(/^[aA-zZ\s]+$/, "Please only use letters");
+      .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
 
-    const role = Yup.string()
+    role: Yup.string()
       .required("This field is required")
       .test(
         "is-role",
         "You need to type or select one of the ones below",
         (value) => (value ? roles.includes(value) : false)
-      );
+      ),
 
-    const genre = Yup.string()
+    genre: Yup.string()
       .required("This field is required")
       .test(
         "is-genre",
         "You need to type or select one of the ones below",
         (value) => (value ? genres.includes(value) : false)
-      );
+      ),
+  };
 
+  /**
+   * Returns a validation schema depending on what
+   * the current route is.
+   */
+  const getValidationSchema = () => {
     switch (location.pathname) {
       case "/create-profile/what-should-we-call-you":
-        return Yup.object().shape({ nickname });
+        return Yup.object().shape({ nickname: validations.nickname });
       case "/create-profile/what-is-your-role":
-        return Yup.object().shape({ role });
+        return Yup.object().shape({ role: validations.role });
       case "/create-profile/what-is-your-genre":
-        return Yup.object().shape({ genre });
+        return Yup.object().shape({ genre: validations.genre });
       case "/create-profile/complete":
-        return Yup.object().shape({ nickname, role, genre });
+        return Yup.object().shape({
+          nickname: validations.nickname,
+          role: validations.role,
+          genre: validations.genre,
+        });
       default:
         return Yup.object().shape({});
     }
