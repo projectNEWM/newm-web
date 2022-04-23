@@ -2,8 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extendedApi as sessionApi } from "./api";
 import { UpdateProfileRequest } from "./types";
 
-const { origin } = window.location;
-
 /**
  * Update the user's profile and navigate to
  * the home page if successful.
@@ -19,7 +17,7 @@ export const updateProfile = createAsyncThunk(
       return;
     }
 
-    // window.location.href = `${origin}/home`;
+    window.location.pathname = "home";
   }
 );
 
@@ -35,7 +33,7 @@ export const getInitialData = createAsyncThunk(
     );
 
     if (!profileResponse?.data?.nickname) {
-      window.location.href = `${origin}/create-profile/what-should-we-call-you`;
+      window.location.pathname = "create-profile/what-should-we-call-you";
     }
   }
 );
