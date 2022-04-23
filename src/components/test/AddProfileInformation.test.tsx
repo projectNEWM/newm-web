@@ -25,7 +25,6 @@ describe("<AddProfileInformation />", () => {
             {
               initialValues: { example: "" },
               onSubmit: jest.fn(),
-              validateOnMount: true,
             }
           )
         );
@@ -56,7 +55,6 @@ describe("<AddProfileInformation />", () => {
             {
               initialValues: { example: "" },
               onSubmit: jest.fn(),
-              validateOnMount: true,
             }
           )
         );
