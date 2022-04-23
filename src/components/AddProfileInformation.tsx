@@ -1,13 +1,5 @@
-import {
-  FunctionComponent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { FunctionComponent, useEffect, useRef } from "react";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { StringMap } from "common";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
@@ -15,7 +7,6 @@ import { FilteredTagsField, GradientTextInputField } from "components";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
-  readonly nextRoute: string;
   readonly prompt: string;
   readonly helperText?: string;
   readonly tags?: ReadonlyArray<string>;
@@ -23,66 +14,43 @@ interface AddProfileInformationProps {
 
 const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   fieldName,
-  nextRoute,
   prompt,
   tags,
   helperText = "",
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const navigate = useNavigate();
-
-  const { errors, handleBlur } = useFormikContext<StringMap>();
-
-  const isValid = !errors[fieldName];
+  const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
 
   /**
-   * Navigates if there aren't any
-   * validation errors for the field.
+   * Validate the field on mount (blurring the field validates it and
+   * leaves it unblurred so that the error isn't shown).
    */
-  const handleNavigate = () => {
-    if (isValid) {
-      navigate(nextRoute);
-    }
-  };
-
-  const memoizedHandleNavigate = useCallback(handleNavigate, [
-    isValid,
-    navigate,
-    nextRoute,
-  ]);
+  useEffect(() => {
+    setFieldTouched(fieldName, false);
+  }, [setFieldTouched, fieldName]);
 
   useEffect(() => {
-    /**
-     * Formik seems to have issues with triggering the input to blur if
-     * it is focused too early. Delaying the auto focus resolves this.
-     */
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
+    inputRef.current?.focus();
   }, [inputRef]);
 
+  /**
+   * Add an event listener to submit the form when enter is pressed.
+   * Without this Formik will only submit the form when enter is pressed
+   * while an input is focused.
+   */
   useEffect(() => {
-    /**
-     * Blurs the form field to show any errors and
-     * calls the navigation handler.
-     */
-    const handlePressEnter = (event: KeyboardEvent) => {
-      handleBlur(event);
-      memoizedHandleNavigate();
-    };
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
       if (event.key === "Enter") {
-        handlePressEnter(event);
+        handleSubmit();
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [memoizedHandleNavigate, handleBlur, fieldName]);
+  }, [handleSubmit]);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -116,7 +84,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
             alignItems="center"
           >
             <Box mb={ 1 }>
-              <FilledButton onClick={ handleNavigate } disabled={ !isValid }>
+              <FilledButton type="submit" disabled={ !isValid }>
                 Next
               </FilledButton>
             </Box>

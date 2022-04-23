@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import { updateProfile } from "modules/session";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
@@ -22,6 +22,10 @@ interface ProfileFormValues {
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
 
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { roles, genres } = useSelector(selectContent);
@@ -32,44 +36,60 @@ const CreateProfile: FunctionComponent = () => {
     genre: "",
   };
 
-  const ValidationSchema = Yup.object().shape({
-    nickname: Yup.string()
+  /**
+   * Returns a validation schema depending on what
+   * the current route is.
+   */
+  const getValidationSchema = () => {
+    const nickname = Yup.string()
       .required("This field is required")
-      .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
-    role: Yup.string()
+      .matches(/^[aA-zZ\s]+$/, "Please only use letters");
+
+    const role = Yup.string()
       .required("This field is required")
       .test(
         "is-role",
         "You need to type or select one of the ones below",
         (value) => (value ? roles.includes(value) : false)
-      ),
-    genre: Yup.string()
+      );
+
+    const genre = Yup.string()
       .required("This field is required")
       .test(
         "is-genre",
         "You need to type or select one of the ones below",
         (value) => (value ? genres.includes(value) : false)
-      ),
-  });
+      );
 
-  /**
-   * Prevent submitting form when pressing enter. This is because
-   * the form already has custom functionality when pressing enter.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
+    switch (location.pathname) {
+      case "/create-profile/what-should-we-call-you":
+        return Yup.object().shape({ nickname });
+      case "/create-profile/what-is-your-role":
+        return Yup.object().shape({ role });
+      case "/create-profile/what-is-your-genre":
+        return Yup.object().shape({ genre });
+      case "/create-profile/complete":
+        return Yup.object().shape({ nickname, role, genre });
+      default:
+        return Yup.object().shape({});
     }
   };
 
+  /**
+   * Calls submit functionality depending on
+   * what the current route is.
+   */
   const handleSubmit = ({ genre, ...values }: ProfileFormValues) => {
-    dispatch(
-      updateProfile({
-        ...values,
-        genres: [genre],
-      })
-    );
+    switch (location.pathname) {
+      case "/create-profile/what-should-we-call-you":
+        return navigate("/create-profile/what-is-your-role");
+      case "/create-profile/what-is-your-role":
+        return navigate("/create-profile/what-is-your-genre");
+      case "/create-profile/what-is-your-genre":
+        return navigate("/create-profile/complete");
+      default:
+        dispatch(updateProfile({ ...values, genres: [genre] }));
+    }
   };
 
   return (
@@ -86,12 +106,12 @@ const CreateProfile: FunctionComponent = () => {
       <Container maxWidth="xl">
         <Formik
           initialValues={ initialValues }
-          validationSchema={ ValidationSchema }
+          validationSchema={ () => getValidationSchema() }
           onSubmit={ handleSubmit }
           validateOnMount={ true }
         >
           { () => (
-            <Form onKeyDown={ handleKeyDown }>
+            <Form>
               <Routes>
                 <Route path="" element={ <Begin /> } />
 

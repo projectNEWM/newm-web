@@ -10,7 +10,6 @@ const SelectRole: FunctionComponent = () => {
     <AddProfileInformation
       fieldName="role"
       prompt="What is your main role?"
-      nextRoute="/create-profile/what-is-your-genre"
       helperText="Type or select a role"
       tags={ roles }
     />

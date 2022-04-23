@@ -6,7 +6,6 @@ const SelectNickname: FunctionComponent = () => {
     <AddProfileInformation
       fieldName="nickname"
       prompt="What should we call you?"
-      nextRoute="/create-profile/what-is-your-role"
     />
   );
 };

@@ -4,13 +4,14 @@ import AddProfileInformation from "../AddProfileInformation";
 
 describe("<AddProfileInformation />", () => {
   describe("when the 'tags' prop is present", () => {
-    describe("when errors are present", () => {
+    describe("when the form is not valid", () => {
       it("displays the tags", () => {
         jest.spyOn(Formik, "useFormikContext").mockImplementation(
           () =>
             ({
-              errors: { example: "example error messge" },
-              handleblur: jest.fn(),
+              isValid: false,
+              setFieldTouched: jest.fn(),
+              handleSubmit: jest.fn(),
             } as any)
         );
 
@@ -18,7 +19,6 @@ describe("<AddProfileInformation />", () => {
           withFormik(
             <AddProfileInformation
               fieldName="example"
-              nextRoute="/example-route"
               prompt="example-prompt"
               tags={ ["hello", "world"] }
             />,
@@ -35,13 +35,14 @@ describe("<AddProfileInformation />", () => {
       });
     });
 
-    describe("when errors are not present", () => {
+    describe("when the form is valid", () => {
       it("does not display the tags", () => {
         jest.spyOn(Formik, "useFormikContext").mockImplementation(
           () =>
             ({
-              errors: {},
-              handleblur: jest.fn(),
+              isValid: true,
+              setFieldTouched: jest.fn(),
+              handleSubmit: jest.fn(),
             } as any)
         );
 
@@ -49,7 +50,6 @@ describe("<AddProfileInformation />", () => {
           withFormik(
             <AddProfileInformation
               fieldName="example"
-              nextRoute="/example-route"
               prompt="example-prompt"
               tags={ ["hello", "world"] }
             />,

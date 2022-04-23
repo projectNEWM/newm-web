@@ -9,7 +9,6 @@ const SelectGenre: FunctionComponent = () => {
   return (
     <AddProfileInformation
       fieldName="genre"
-      nextRoute="/create-profile/complete"
       prompt="What's your music genre?"
       helperText="Type or select a genre"
       tags={ genres }
