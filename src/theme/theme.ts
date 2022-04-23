@@ -34,6 +34,10 @@ declare module "@mui/material/styles" {
       padding: string;
       borderWidth: string;
     };
+    button: {
+      fontSize: string;
+      lineHeight: string;
+    };
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
@@ -68,6 +72,10 @@ declare module "@mui/material/styles" {
       lineHeight?: string;
       padding?: string;
       borderWidth?: string;
+    };
+    button?: {
+      fontSize?: string;
+      lineHeight?: string;
     };
   }
 }
@@ -175,6 +183,11 @@ export default createTheme({
     borderWidth: "2px",
   },
 
+  button: {
+    fontSize: "16px",
+    lineHeight: "18px",
+  },
+
   palette: {
     background: {
       default: "#000000",
@@ -189,6 +202,10 @@ export default createTheme({
     },
     error: {
       main: "#FF453A",
+    },
+
+    action: {
+      disabled: "white",
     },
 
     text: {
@@ -237,9 +254,9 @@ export default createTheme({
     },
     xxxl: {
       fontFamily: "Raleway",
-      fontStyle: "italic",
+      fontStyle: "normal",
       fontSize: "80px",
-      lineHeight: "86px",
+      lineHeight: "96px",
     },
   },
 });

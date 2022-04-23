@@ -10,16 +10,15 @@ interface BackgroundProps {
 }
 
 const BackgroundImage = styled("div")({
+  position: "relative",
+  display: "flex",
+  flexGrow: 1,
   backgroundImage: "url(\"https://i.postimg.cc/TPTmSRWB/bg-img.png\")",
   backgroundPosition: "center",
   backgroundRepeat: "repeat",
   backgroundSize: "cover",
-  bottom: 0,
+  width: "100%",
   height: "100%",
-  left: 0,
-  position: "absolute",
-  right: 0,
-  top: 0,
 });
 
 const BackgroundOverlay = styled("div")({

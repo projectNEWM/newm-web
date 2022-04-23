@@ -6,16 +6,16 @@ import { Box, Card, CardProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
-const StyledGridCard = styled(Card)({
-  background: "#0A0A0A 0% 0% no-repeat padding-box",
-  color: "black",
-  margin: "0px",
+const StyledGridCard = styled(Card)(({ theme }) => ({
+  background: `${theme.colors.black} 0% 0% no-repeat padding-box`,
+  color: theme.colors.black,
+  margin: "0",
   opacity: "0.7",
   paddingBottom: "100%",
   position: "relative",
   textAlign: "center",
   width: "100%",
-});
+}));
 
 const SquareGridCard: FunctionComponent<CardProps> = ({
   children,

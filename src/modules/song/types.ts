@@ -1,5 +1,3 @@
-import { Role } from "modules/role";
-
 export interface SongState {
   songs: ReadonlyArray<Song>;
 }
@@ -12,7 +10,7 @@ export interface Artist {
 
 export interface Contributor {
   name: string;
-  role: Role;
+  role: string;
   stake: number;
 }
 
@@ -20,7 +18,7 @@ export interface Song {
   name: string;
   id: number;
   genre: string;
-  userRole: Role;
+  userRole: string;
   releaseDate: string;
   description: string;
   albumImage: string;

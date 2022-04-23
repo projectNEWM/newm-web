@@ -8,6 +8,18 @@ import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
   isLoggedIn: !!Cookies.get("refreshToken"),
+  profile: {
+    id: "",
+    oauthId: "",
+    oauthType: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    nickname: "",
+    pictureUrl: "",
+    role: "",
+    genres: [],
+  },
   errorMessage: "",
 };
 
@@ -45,7 +57,18 @@ const sessionSlice = createSlice({
       }
     );
 
+    builder.addMatcher(
+      api.endpoints.getProfile.matchFulfilled,
+      (state, { payload }) => {
+        state.profile = payload;
+      }
+    );
+
     builder.addMatcher(api.endpoints.refreshToken.matchRejected, handleLogout);
+
+    builder.addMatcher(api.endpoints.updateProfile.matchRejected, (state) => {
+      state.errorMessage = "An error occurred while updating your profile";
+    });
   },
 });
 

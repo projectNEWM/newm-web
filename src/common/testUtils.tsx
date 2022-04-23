@@ -1,20 +1,13 @@
-import { RenderOptions, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material/styles";
-import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { ReactElement } from "react";
-import { RootState, reducer } from "store";
+import { ReactElement, ReactNode } from "react";
+import { Form, Formik, FormikConfig } from "formik";
+import { reducer } from "store";
 import theme from "theme";
-
-interface RenderProps extends RenderOptions {
-  readonly preloadedState: Partial<RootState>;
-  readonly store: EnhancedStore;
-}
-
-interface WrapperProps {
-  readonly children: ReactElement;
-}
+import { RenderProps, StringMap, WrapperProps } from "./types";
 
 /**
  * Wraps the element being tested with Theme, Provider, and
@@ -49,4 +42,15 @@ export const renderWithContext = (
   };
 
   return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
+export const withFormik = (
+  element: ReactNode,
+  props: FormikConfig<StringMap>
+) => {
+  return (
+    <Formik { ...props }>
+      <Form>{ element }</Form>
+    </Formik>
+  );
 };

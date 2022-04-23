@@ -3,11 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { selectSession } from "modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
-
-export interface WindowDimensions {
-  height: number;
-  width: number;
-}
+import { WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
 

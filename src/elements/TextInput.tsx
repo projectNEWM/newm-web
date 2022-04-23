@@ -63,7 +63,7 @@ export const TextInput: ForwardRefRenderFunction<
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(!!rest.autoFocus);
+  const [isFocused, setIsFocused] = useState(false);
 
   /**
    * Calls any onFocus prop being passed and then updates local state

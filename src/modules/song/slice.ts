@@ -6,9 +6,9 @@ const initialState: SongState = {
   songs: [],
 };
 
-const roleSlice = createSlice({
+const songSlice = createSlice({
   initialState,
-  name: "role",
+  name: "song",
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -20,4 +20,4 @@ const roleSlice = createSlice({
   },
 });
 
-export default roleSlice.reducer;
+export default songSlice.reducer;

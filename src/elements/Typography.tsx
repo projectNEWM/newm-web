@@ -6,16 +6,18 @@ import {
 import { Theme } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
-interface TypographyProps extends MuiTypogaphyProps {
+export interface TypographyProps extends MuiTypogaphyProps {
   color?: keyof Theme["colors"];
-  fontFamily?: "Inter" | "Raleway" | "DM Serif Display";
+  fontFamily?: "Inter" | "Raleway" | "DM Serif Text";
   fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
+  fontStyle?: "normal" | "italic";
 }
 
 const Typography: FunctionComponent<TypographyProps> = ({
   color = "white",
   fontWeight = "semi-bold",
   fontFamily = "Inter",
+  fontStyle = "normal",
   variant = "sm",
   sx,
   ...rest
@@ -32,6 +34,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
       variant={ variant }
       sx={ {
         color: colorHex,
+        fontStyle,
         ...sx,
       } }
       { ...rest }
