@@ -82,13 +82,19 @@ const CreateProfile: FunctionComponent = () => {
   const handleSubmit = ({ genre, ...values }: ProfileFormValues) => {
     switch (location.pathname) {
       case "/create-profile/what-should-we-call-you":
-        return navigate("/create-profile/what-is-your-role");
+        navigate("/create-profile/what-is-your-role");
+        break;
       case "/create-profile/what-is-your-role":
-        return navigate("/create-profile/what-is-your-genre");
+        navigate("/create-profile/what-is-your-genre");
+        break;
       case "/create-profile/what-is-your-genre":
-        return navigate("/create-profile/complete");
-      default:
+        navigate("/create-profile/complete");
+        break;
+      case "/create-profile/complete":
         dispatch(updateProfile({ ...values, genres: [genre] }));
+        break;
+      default:
+        return;
     }
   };
 
