@@ -15,7 +15,7 @@ describe("<DropdownSelect>", () => {
     { id: 7, name: "Lofi", value: "Lofi" },
   ];
 
-  const renderComponent = async (propOverrides = {}) => {
+  const renderComponent = (propOverrides = {}) => {
     const props = {
       disabled: undefined,
       errorMessage: undefined,
@@ -27,7 +27,7 @@ describe("<DropdownSelect>", () => {
       ...propOverrides,
     };
 
-    return await renderWithContext(<DropdownSelect { ...props } />);
+    return renderWithContext(<DropdownSelect { ...props } />);
   };
 
   it("renders with default props when only required props are provided", () => {
