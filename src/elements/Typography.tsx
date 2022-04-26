@@ -1,8 +1,8 @@
 import {
   TypographyProps as MuiTypogaphyProps,
   Typography as MuiTypography,
+  useTheme,
 } from "@mui/material";
-import theme from "theme";
 import { Theme } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
@@ -20,6 +20,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
   sx,
   ...rest
 }) => {
+  const theme = useTheme();
   const colorHex = theme.colors[color];
   const fontWeightValue = fontWeightMap[fontWeight];
 
