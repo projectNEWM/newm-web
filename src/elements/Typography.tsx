@@ -23,7 +23,6 @@ const Typography: FunctionComponent<TypographyProps> = ({
   ...rest
 }) => {
   const theme = useTheme();
-
   const colorHex = theme.colors[color];
   const fontWeightValue = fontWeightMap[fontWeight];
 

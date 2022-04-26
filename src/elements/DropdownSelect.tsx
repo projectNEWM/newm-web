@@ -5,7 +5,7 @@ import styled from "styled-components";
 import theme from "theme";
 import TextInput from "./TextInput";
 
-export interface SelectProps {
+export interface DropdownSelectProps {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly label: string;
@@ -52,7 +52,7 @@ const StyledNoResultsText = styled.span`
   width: 100%;
 `;
 
-const DropdownSelect: FunctionComponent<SelectProps> = ({
+const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
   disabled,
   errorMessage,
   label,
