@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderWithContext } from "common";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import DropdownSelect from "../DropdownSelect";
@@ -26,7 +27,7 @@ describe("<DropdownSelect>", () => {
       ...propOverrides,
     };
 
-    return await render(<DropdownSelect { ...props } />);
+    return await renderWithContext(<DropdownSelect { ...props } />);
   };
 
   it("renders with default props when only required props are provided", () => {
