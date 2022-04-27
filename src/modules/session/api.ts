@@ -1,11 +1,13 @@
 import api from "api";
 import { EmptyResponse } from "common";
 import {
+  CreateAccountRequest,
   GetProfileResponse,
   LoginRequest,
   NewmAuthResponse,
   NewmOAuthRequest,
-  UpdateProfileRequest,
+  Request2FACode,
+  UpdateProfileRequest
 } from "./types";
 
 export const extendedApi = api.injectEndpoints({
@@ -62,6 +64,21 @@ export const extendedApi = api.injectEndpoints({
       query: (body) => ({
         url: "v1/users/me",
         method: "PATCH",
+        body,
+      }),
+    }),
+
+    sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
+      query: () => ({
+        url: "v1/auth/code",
+        method: "GET",
+      }),
+    }),
+
+    createAccount: build.mutation<EmptyResponse, CreateAccountRequest>({
+      query: (body) => ({
+        url: "v1/users",
+        method: "PUT",
         body,
       }),
     }),

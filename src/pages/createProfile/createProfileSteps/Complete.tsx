@@ -6,7 +6,7 @@ import { FilledButton, GradientTypography, Link, Typography } from "elements";
 const Complete: FunctionComponent = () => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={ 4 } alignSelf="center">
+      <Box mb={ 7.5 } alignSelf="center">
         <NEWMLogo />
       </Box>
 
