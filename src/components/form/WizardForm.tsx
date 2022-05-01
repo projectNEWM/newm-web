@@ -66,7 +66,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
    * the current route is.
    */
   const getValidationSchema = () => {
-    return routes[currentIndex].validationSchema || Yup.object().shape({});
+    return routes[currentIndex]?.validationSchema || Yup.object().shape({});
   };
 
   /**

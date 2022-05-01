@@ -3,10 +3,10 @@ import SignUp from "../SignUp";
 
 describe("<SignUp />", () => {
   it("renders social login buttons", () => {
-    const { queryByLabelText } = renderWithContext(<SignUp />);
+    const { getByLabelText } = renderWithContext(<SignUp />);
 
-    expect(queryByLabelText("google authorization")).toBeTruthy();
-    expect(queryByLabelText("facebook authorization")).toBeTruthy();
-    expect(queryByLabelText("linkedin authorization")).toBeTruthy();
+    expect(getByLabelText("google authorization")).toBeTruthy();
+    expect(getByLabelText("facebook authorization")).toBeTruthy();
+    expect(getByLabelText("linkedin authorization")).toBeTruthy();
   });
 });
