@@ -2,11 +2,10 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, Stack, useTheme } from "@mui/material";
-import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, Typography } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
-import { useFormikContext } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import {
   FacebookLogin,
   GoogleLogin,
@@ -17,10 +16,16 @@ import {
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
-  const { isValid } = useFormikContext();
+  const { isValid, values } = useFormikContext();
+  const { newPassword, confirmPassword } = values as FormikValues; 
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordIcon, setShowPasswordIcon] = useState(false);
 
   useAuthenticatedRedirect();
+
+  useEffect(()=> {
+    newPassword || confirmPassword ? setShowPasswordIcon(true) : setShowPasswordIcon(false);
+  },[newPassword, confirmPassword]);
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -29,21 +34,18 @@ const SignUp: FunctionComponent = () => {
   const PasswordEndAdornment = () => {
     const PasswordIcon = showPassword ? VisibilityOffIcon : VisibilityIcon;
 
-    return (
+    return showPasswordIcon ? (
       <IconButton
         aria-label="Change password field visible status"
         onClick={ togglePassword }
       >
         <PasswordIcon sx={ { color: theme.colors.white } } />
       </IconButton>
-    );
+    ) : null;
   };
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
-      <Box alignSelf="center" mb={ 7.5 }>
-        <NEWMLogo />
-      </Box>
       <Typography
         align="center"
         fontFamily="Raleway"
@@ -53,7 +55,7 @@ const SignUp: FunctionComponent = () => {
       >
         Welcome
       </Typography>
-      <Stack maxWidth="312px" mb={ 7.5 } spacing={ 1.5 } width="100%">
+      <Stack maxWidth="312px" mb={ 5 } spacing={ 1.5 } width="100%">
         <TextInputField
           aria-label="Email input field"
           name="email"

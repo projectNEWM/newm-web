@@ -1,18 +1,32 @@
-import { FunctionComponent } from "react";
-import NEWMLogo from "assets/images/NEWMLogo";
-import { FilledButton, GradientTypography, Typography } from "elements";
+import { FunctionComponent, useState } from "react";
+import { FilledButton, GradientTypography, Link, Typography } from "elements";
 import { TextInputField } from "components";
-import { useFormikContext } from "formik";
+import { FormikValues, useFormikContext } from "formik";
+import { useDispatch } from "react-redux";
 import { Box, Stack } from "@mui/material";
+import {
+  extendedApi as sessionApi
+} from "modules/session";
+
 
 const Verification: FunctionComponent = () => {
-  const { isValid } = useFormikContext();
+  const dispatch = useDispatch();
+  const [showResendLink, setShowResendLink] = useState(true);
+  const { isValid, values } = useFormikContext();
+
+
+  const handleResendLink = () => {
+    const { email } = values as FormikValues; 
+
+    setShowResendLink(false);
+
+    dispatch(sessionApi.endpoints.sendVerificationEmail.initiate({ email }));
+
+    setTimeout(() => setShowResendLink(true), 10000);
+  };
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={ 7.5 } alignSelf="center">
-        <NEWMLogo />
-      </Box>
       <Typography
         align="center"
         fontFamily="Raleway"
@@ -33,12 +47,11 @@ const Verification: FunctionComponent = () => {
       >
         Paste your verification code here.
       </GradientTypography>
-
       <Stack spacing={ 1.5 } mb={ 7.5 } maxWidth="312px" width="100%">
         <TextInputField
           aria-labelledby="verificationLabel"
           name="authCode"
-          placeholder="VerificationCode"
+          placeholder="Verification Code"
           type="text"
         />
         <FilledButton type="submit" disabled={ !isValid }>
@@ -46,14 +59,15 @@ const Verification: FunctionComponent = () => {
         </FilledButton>
       </Stack>
 
-      <Typography
-        align="center"
-        bottom="32px"
-        position="absolute"
-      >
-        Didn&apos;t received the email? Resend email.***TURN ME INTO A LINK AND DO SOMETHING ***
-      </Typography>
-    </Box>
+      <Box alignSelf="center" position="absolute" bottom="32px" left="0" right="0" color="grey200">
+        { showResendLink ?
+          <Link to="#" onClick={ handleResendLink }>
+            Didn&apos;t received the email? Resend email.
+          </Link> :
+          <Typography>Email re-sent. Don&apos;t forget to check your spam folder.</Typography>
+        }
+      </Box>
+    </Box >
   );
 };
 

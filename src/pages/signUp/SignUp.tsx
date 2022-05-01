@@ -9,6 +9,7 @@ import {
   createAccount,
   extendedApi as sessionApi
 } from "modules/session";
+import NEWMLogo from "assets/images/NEWMLogo";
 import Verification from "./signUpSteps/Verification";
 import Welcome from "./signUpSteps/Welcome";
 
@@ -41,7 +42,7 @@ const SignUp: FunctionComponent = () => {
  * Yup validations for all form fields.
  */
   const validations = {
-    authCode: Yup.string().required(),
+    authCode: Yup.string().required("Verification code is required"),
     email: Yup.string().email("Please enter a vaild email").required("E-mail is required"),
     newPassword: Yup.string().required("Password is required").matches(
       passwordRegex,
@@ -51,7 +52,7 @@ const SignUp: FunctionComponent = () => {
       .required("Confirm password is required").oneOf([Yup.ref("newPassword")], "Passwords must match"),
   };
 
-  const sendVerificationEmail = (values: FormikValues) => {
+  const handleVerificationEmail = (values: FormikValues) => {
     dispatch(sessionApi.endpoints.sendVerificationEmail.initiate({ email: values.email }));
   };
 
@@ -62,46 +63,50 @@ const SignUp: FunctionComponent = () => {
     dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
   };
 
-    return (
-      <Box
-        sx={ {
-          backgroundColor: theme.colors.black,
-          display: "flex",
-          flex: 1,
-          maxWidth: "100%",
-          pt: 10,
-          px: 2,
-        } }
-      >
-        <Container maxWidth="xl">
-          <WizardForm
-            initialValues={ initialValues }
-            onSubmit={ handleSubmit }
-            rootPath="sign-up"
-            validateOnMount={ true }
-            routes={ [
-              {
-                element: <Welcome />,
-                onSubmitStep: sendVerificationEmail,
-                path: "",
-                validationSchema: Yup.object().shape({
-                  email: validations.email,
-                  newPassword: validations.newPassword,
-                  confirmPassword: validations.confirmPassword,
-                }),
-              },
-              {
-                element: <Verification />,
-                path: "verification",
-                validationSchema: Yup.object().shape({
-                  authCode: validations.authCode,
-                }),
-              },
-            ] }
-          />
-        </Container>
-      </Box>
-    );
+  return (
+    <Box
+      sx={ {
+        backgroundColor: theme.colors.black,
+        display: "flex",
+        flex: 1,
+        maxWidth: "100%",
+        pt: 7.5,
+        px: 2,
+        textAlign: "center",
+      } }
+    >
+      <Container maxWidth="xl">
+        <Box mb={ 4 }>
+          <NEWMLogo />
+        </Box>
+        <WizardForm
+          initialValues={ initialValues }
+          onSubmit={ handleSubmit }
+          rootPath="sign-up"
+          validateOnMount={ true }
+          routes={ [
+            {
+              element: <Welcome />,
+              onSubmitStep: handleVerificationEmail,
+              path: "",
+              validationSchema: Yup.object().shape({
+                email: validations.email,
+                newPassword: validations.newPassword,
+                confirmPassword: validations.confirmPassword,
+              }),
+            },
+            {
+              element: <Verification />,
+              path: "verification",
+              validationSchema: Yup.object().shape({
+                authCode: validations.authCode,
+              }),
+            },
+          ] }
+        />
+      </Container>
+    </Box>
+  );
 };
 
 export default SignUp;

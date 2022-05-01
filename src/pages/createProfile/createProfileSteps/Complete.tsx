@@ -1,14 +1,10 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
-import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, GradientTypography, Link, Typography } from "elements";
 
 const Complete: FunctionComponent = () => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={ 7.5 } alignSelf="center">
-        <NEWMLogo />
-      </Box>
 
       <Typography
         align="center"
@@ -35,7 +31,7 @@ const Complete: FunctionComponent = () => {
       <Box mt={ 2 }>
         <Typography fontWeight="medium" color="grey200">
           By proceeding forward you agree to&nbsp;
-          <Link to="#" color="grey200" fontWeight="medium">
+          <Link to="#" fontWeight="medium">
             projectNEWM&apos;s Terms of Service
           </Link>
         </Typography>

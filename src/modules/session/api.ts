@@ -69,9 +69,10 @@ export const extendedApi = api.injectEndpoints({
     }),
 
     sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
-      query: () => ({
+      query: ({ email }) => ({
         url: "v1/auth/code",
         method: "GET",
+        params: { email }
       }),
     }),
 
