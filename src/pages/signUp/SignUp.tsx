@@ -5,13 +5,11 @@ import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
-import {
-  createAccount,
-  extendedApi as sessionApi
-} from "modules/session";
+import { createAccount } from "modules/session";
 import NEWMLogo from "assets/images/NEWMLogo";
 import Verification from "./signUpSteps/Verification";
 import Welcome from "./signUpSteps/Welcome";
+import { sendVerificationEmail } from "./utils";
 
 interface AccountValues {
   readonly authCode: string;
@@ -52,8 +50,8 @@ const SignUp: FunctionComponent = () => {
       .required("Confirm password is required").oneOf([Yup.ref("newPassword")], "Passwords must match"),
   };
 
-  const handleVerificationEmail = (values: FormikValues) => {
-    dispatch(sessionApi.endpoints.sendVerificationEmail.initiate({ email: values.email }));
+  const handleVerificationEmail = (values: FormikValues):void => {
+    dispatch(sendVerificationEmail(values));
   };
 
   /**

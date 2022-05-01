@@ -4,9 +4,7 @@ import { TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
 import { useDispatch } from "react-redux";
 import { Box, Stack } from "@mui/material";
-import {
-  extendedApi as sessionApi
-} from "modules/session";
+import { sendVerificationEmail } from "../utils";
 
 
 const Verification: FunctionComponent = () => {
@@ -15,12 +13,11 @@ const Verification: FunctionComponent = () => {
   const { isValid, values } = useFormikContext();
 
 
-  const handleResendLink = () => {
-    const { email } = values as FormikValues; 
+  const handleEmailResend = () => {
 
     setShowResendLink(false);
 
-    dispatch(sessionApi.endpoints.sendVerificationEmail.initiate({ email }));
+    dispatch(sendVerificationEmail(values as FormikValues));
 
     setTimeout(() => setShowResendLink(true), 10000);
   };
@@ -61,7 +58,7 @@ const Verification: FunctionComponent = () => {
 
       <Box alignSelf="center" position="absolute" bottom="32px" left="0" right="0" color="grey200">
         { showResendLink ?
-          <Link to="#" onClick={ handleResendLink }>
+          <Link to="#" onClick={ handleEmailResend }>
             Didn&apos;t received the email? Resend email.
           </Link> :
           <Typography>Email re-sent. Don&apos;t forget to check your spam folder.</Typography>
