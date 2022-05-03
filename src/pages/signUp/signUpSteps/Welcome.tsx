@@ -1,7 +1,4 @@
-import IconButton from "@mui/material/IconButton";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
@@ -10,39 +7,27 @@ import {
   FacebookLogin,
   GoogleLogin,
   LinkedInLogin,
+  PasswordInputField,
   TextInputField,
 } from "components";
 
-
 const SignUp: FunctionComponent = () => {
-  const theme = useTheme();
   const { isValid, values } = useFormikContext();
-  const { newPassword, confirmPassword } = values as FormikValues; 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordIcon, setShowPasswordIcon] = useState(false);
+  const { newPassword, confirmPassword } = values as FormikValues;
+  const [showEndAdornment, setShowEndAdornment] = useState(false);
+  const [maskPassword, setMaskPassword] = useState(true);
+
+  const togglePasswordMask = () => {
+    setMaskPassword(!maskPassword);
+  };
 
   useAuthenticatedRedirect();
 
-  useEffect(()=> {
-    newPassword || confirmPassword ? setShowPasswordIcon(true) : setShowPasswordIcon(false);
-  },[newPassword, confirmPassword]);
-
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const PasswordEndAdornment = () => {
-    const PasswordIcon = showPassword ? VisibilityOffIcon : VisibilityIcon;
-
-    return showPasswordIcon ? (
-      <IconButton
-        aria-label="Change password field visible status"
-        onClick={ togglePassword }
-      >
-        <PasswordIcon sx={ { color: theme.colors.white } } />
-      </IconButton>
-    ) : null;
-  };
+  useEffect(() => {
+    newPassword || confirmPassword
+      ? setShowEndAdornment(true)
+      : setShowEndAdornment(false);
+  }, [newPassword, confirmPassword]);
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
@@ -62,19 +47,19 @@ const SignUp: FunctionComponent = () => {
           placeholder="E-mail"
           type="email"
         />
-        <TextInputField
-          aria-label="Password input field"
-          endAdornment={ <PasswordEndAdornment /> }
+        <PasswordInputField
+          endAdornmentHandler={ togglePasswordMask }
+          externalMaskPassword={ maskPassword }
           name="newPassword"
-          placeholder="Password"
-          type={ showPassword ? "text" : "password" }
+          showEndAdornment={ showEndAdornment }
         />
-        <TextInputField
+        <PasswordInputField
           aria-label="Confirm password input field"
-          endAdornment={ <PasswordEndAdornment /> }
+          endAdornmentHandler={ togglePasswordMask }
+          externalMaskPassword={ maskPassword }
           name="confirmPassword"
           placeholder="Confirm password"
-          type={ showPassword ? "text" : "password" }
+          showEndAdornment={ showEndAdornment }
         />
         <FilledButton disabled={ !isValid } type="submit">
           Enter
