@@ -30,11 +30,9 @@ const SignUp: FunctionComponent = () => {
 
   /**
     * Password regex, it must contain the following:
-    * 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and one special character.
+    * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
   */
-  // TODO: Enable the regex when finished testing
-  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  const passwordRegex = /^([a-z])/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
   /**
  * Yup validations for all form fields.
