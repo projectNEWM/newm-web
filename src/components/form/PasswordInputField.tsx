@@ -33,6 +33,7 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
 
   return (
     <TextInputField
+      data-testid="passwordInput"
       endAdornment={
         showEndAdornment ? (
           <IconButton
