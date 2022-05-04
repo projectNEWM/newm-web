@@ -17,8 +17,8 @@ export interface WindowDimensions {
 }
 
 export interface RenderProps extends RenderOptions {
-  readonly preloadedState: Partial<RootState>;
-  readonly store: EnhancedStore;
+  readonly preloadedState?: Partial<RootState>;
+  readonly store?: EnhancedStore;
 }
 
 export interface WrapperProps {
