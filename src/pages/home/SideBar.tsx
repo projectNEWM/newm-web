@@ -1,10 +1,11 @@
 import { FunctionComponent } from "react";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { useSelector } from "react-redux";
 import { selectProfile } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
+import ProfileImage from "./styled/ProfileImage";
 
 const SideBar: FunctionComponent = () => {
   const theme = useTheme();
@@ -24,11 +25,15 @@ const SideBar: FunctionComponent = () => {
         padding: 1.25,
       } }
     >
-      <Box mt={ 3.75 }>
-        <Typography variant="md" fontWeight="bold">
+      <Stack mt={ 3.75 } spacing={ 2 }>
+        { !!profile.pictureUrl && (
+          <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
+        ) }
+
+        <Typography variant="md" fontWeight="bold" align="center">
           { profile.nickname }
         </Typography>
-      </Box>
+      </Stack>
 
       <Box px={ 2.5 } pb={ 2.5 } width="100%" justifyContent="flex-start">
         <NewmLogoSmInverse />
