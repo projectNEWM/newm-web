@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
 import { Box, Stack } from "@mui/material";
 import { Typography } from "elements";
+import { ProfileImage } from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
-import ProfileImage from "./styled/ProfileImage";
 
 const SideBar: FunctionComponent = () => {
   const theme = useTheme();
