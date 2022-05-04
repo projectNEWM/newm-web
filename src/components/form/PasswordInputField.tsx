@@ -21,7 +21,7 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
   const theme = useTheme();
   const [internalMaskPassword, setInternalMaskPassword] = useState(true);
 
-  const isMasked = handlePressEndAdornment ? externalMaskPassword : internalMaskPassword;
+  const isMasked = externalMaskPassword ?? internalMaskPassword;
   const PasswordIcon = isMasked ? VisibilityIcon : VisibilityOffIcon;
 
   /**
