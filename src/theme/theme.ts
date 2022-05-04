@@ -16,6 +16,7 @@ declare module "@mui/material/styles" {
       grey400: string;
       grey500: string;
       black: string;
+      black100: string;
     };
     gradients: {
       company: string;
@@ -55,6 +56,7 @@ declare module "@mui/material/styles" {
       grey400?: string;
       grey500?: string;
       black?: string;
+      black100?: string;
     };
     gradients?: {
       company?: string;
@@ -146,6 +148,7 @@ export default createTheme({
     grey400: "#2C2C2E",
     grey500: "#1C1C1E",
     black: "#000000",
+    black100: "#0A0A0A",
   },
   gradients: {
     company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",

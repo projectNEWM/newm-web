@@ -1,9 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getInitialData } from "modules/session";
+import { useTheme } from "@mui/material/styles";
+import SideBar from "./SideBar";
 
 const Home: FunctionComponent = () => {
+  const theme = useTheme();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -12,12 +16,9 @@ const Home: FunctionComponent = () => {
 
   return (
     <Box
-      display="flex"
-      flexGrow="1"
-      justifyContent="center"
-      alignItems="center"
+      sx={ { display: "flex", flexGrow: 1, background: theme.colors.black100 } }
     >
-      <Typography>Home page</Typography>
+      <SideBar />
     </Box>
   );
 };
