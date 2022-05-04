@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { FilledButton, Typography } from "elements";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
 import { FormikValues, useFormikContext } from "formik";
 import {
@@ -14,20 +14,14 @@ import {
 const SignUp: FunctionComponent = () => {
   const { isValid, values } = useFormikContext();
   const { newPassword, confirmPassword } = values as FormikValues;
-  const [showEndAdornment, setShowEndAdornment] = useState(false);
   const [maskPassword, setMaskPassword] = useState(true);
+  const showEndAdornment = !!(newPassword || confirmPassword);
 
   const togglePasswordMask = () => {
     setMaskPassword(!maskPassword);
   };
 
   useAuthenticatedRedirect();
-
-  useEffect(() => {
-    newPassword || confirmPassword
-      ? setShowEndAdornment(true)
-      : setShowEndAdornment(false);
-  }, [newPassword, confirmPassword]);
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
@@ -48,15 +42,17 @@ const SignUp: FunctionComponent = () => {
           type="email"
         />
         <PasswordInputField
-          endAdornmentHandler={ togglePasswordMask }
+          aria-label="Password input field"
           externalMaskPassword={ maskPassword }
+          handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
+          placeholder="Password"
           showEndAdornment={ showEndAdornment }
         />
         <PasswordInputField
           aria-label="Confirm password input field"
-          endAdornmentHandler={ togglePasswordMask }
           externalMaskPassword={ maskPassword }
+          handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }

@@ -4,32 +4,28 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { TextInputField } from "components";
+import { TextInputProps } from "elements";
 
-interface PasswordInputFieldProps {
-  readonly ariaLabel?: string;
-  readonly endAdornmentHandler?: () => void;
+interface PasswordInputFieldProps extends TextInputProps {
+  readonly handlePressEndAdornment?: VoidFunction;
   readonly externalMaskPassword?: boolean;
-  readonly name: string;
-  readonly placeholder?: string;
   readonly showEndAdornment?: boolean;
 }
 
 const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
-  ariaLabel = "Password input field",
-  endAdornmentHandler,
-  externalMaskPassword = true,
-  name,
-  placeholder = "Password",
+  handlePressEndAdornment,
+  externalMaskPassword,
   showEndAdornment = true,
+  ...rest
 }) => {
   const theme = useTheme();
   const [internalMaskPassword, setInternalMaskPassword] = useState(true);
 
-  const isMasked = endAdornmentHandler ? externalMaskPassword : internalMaskPassword;
+  const isMasked = handlePressEndAdornment ? externalMaskPassword : internalMaskPassword;
   const PasswordIcon = isMasked ? VisibilityIcon : VisibilityOffIcon;
 
   /**
-   * If no endAdornmentHandler is passed, this will handle the show/hide password
+   * If no handlePressEndAdornment is passed, this will handle the show/hide password
    */
   const togglePasswordMask = () => {
     setInternalMaskPassword(!internalMaskPassword);
@@ -37,20 +33,18 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
 
   return (
     <TextInputField
-      aria-label={ ariaLabel }
       endAdornment={
         showEndAdornment ? (
           <IconButton
             aria-label="Change password field visible status"
-            onClick={ endAdornmentHandler || togglePasswordMask }
+            onClick={ handlePressEndAdornment || togglePasswordMask }
           >
             <PasswordIcon sx={ { color: theme.colors.white } } />
           </IconButton>
         ) : undefined
       }
-      name={ name }
-      placeholder={ placeholder }
       type={ isMasked ? "password" : "text" }
+      { ...rest }
     />
   );
 };
