@@ -20,6 +20,7 @@ describe("<PasswordInputField>", () => {
       externalMaskPassword: undefined,
       handlePressEndAdornment: undefined,
       name: "password",
+      placeholder: "password placeholder",
       showEndAdornment: undefined,
       ...propOverrides,
     };
@@ -35,7 +36,7 @@ describe("<PasswordInputField>", () => {
   it("renders with defaults when only required name prop is given", () => {
     renderComponent();
 
-    expect(screen.getByTestId("passwordInput")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("password placeholder")).toBeInTheDocument();
     expect(screen.getByTestId("VisibilityIcon")).toBeInTheDocument();
   });
 
@@ -48,7 +49,7 @@ describe("<PasswordInputField>", () => {
   it("is able to toggle password mask when clicked", () => {
     renderComponent();
 
-    const passwordInput = screen.getByTestId("passwordInput");
+    const passwordInput = screen.getByPlaceholderText("password placeholder");
     const maskIcon = screen.getByTestId("VisibilityIcon");
 
     expect(passwordInput).toHaveAttribute("type", "password");
