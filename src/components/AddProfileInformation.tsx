@@ -1,6 +1,5 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Box } from "@mui/material";
-import NEWMLogo from "assets/images/NEWMLogo";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
 import { FilteredTagsField, GradientTextInputField } from "components";
@@ -57,9 +56,6 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={ 4 } alignSelf="center">
-        <NEWMLogo />
-      </Box>
 
       <Typography
         align="center"

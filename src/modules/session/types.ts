@@ -67,3 +67,20 @@ export interface GetProfileResponse {
   readonly genres: Array<string>;
   readonly email: string;
 }
+
+export interface Request2FACode {
+  readonly email: string;
+}
+
+export interface CreateAccountRequest {
+  readonly authCode: string;
+  readonly confirmPassword: string;
+  readonly email: string;
+  readonly firstName?: string;
+  readonly genres?: Array<string>;
+  readonly lastName?: string;
+  readonly newPassword: string;
+  readonly nickname?: string;
+  readonly pictureUrl?: string;
+  readonly role?: string;
+}

@@ -1,6 +1,5 @@
 import { FunctionComponent, useEffect } from "react";
 import { Box } from "@mui/material";
-import NEWMLogo from "assets/images/NEWMLogo";
 import { useNavigate } from "react-router-dom";
 import { GradientTypography, Typography } from "elements";
 
@@ -16,9 +15,6 @@ const Begin: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={ 4 } alignSelf="center">
-        <NEWMLogo />
-      </Box>
 
       <Typography
         align="center"

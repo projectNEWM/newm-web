@@ -1,59 +1,107 @@
-import NEWMLogo from "assets/images/NEWMLogo";
-import { useAuthenticatedRedirect } from "common";
+import * as Yup from "yup";
+import { Box, Container } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
-import { Typography } from "elements";
-import { FacebookLogin, GoogleLogin, LinkedInLogin } from "components";
-import { Box, Container, Stack, useTheme } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { WizardForm } from "components";
+import { createAccount } from "modules/session";
+import NEWMLogo from "assets/images/NEWMLogo";
+import Verification from "./signUpSteps/Verification";
+import Welcome from "./signUpSteps/Welcome";
+import { sendVerificationEmail } from "./utils";
+
+interface AccountValues {
+  readonly authCode: string;
+  readonly confirmPassword: string;
+  readonly email: string;
+  readonly newPassword: string;
+}
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const initialValues: AccountValues = {
+    email: "",
+    newPassword: "",
+    confirmPassword: "",
+    authCode: "",
+  };
 
-  useAuthenticatedRedirect();
+  /**
+    * Password regex, it must contain the following:
+    * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
+  */
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+  /**
+ * Yup validations for all form fields.
+ */
+  const validations = {
+    authCode: Yup.string().required("Verification code is required"),
+    email: Yup.string().email("Please enter a vaild email").required("E-mail is required"),
+    newPassword: Yup.string().required("Password is required").matches(
+      passwordRegex,
+      "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+    ),
+    confirmPassword: Yup.string()
+      .required("Confirm password is required").oneOf([Yup.ref("newPassword")], "Passwords must match"),
+  };
+
+  const handleVerificationEmail = (values: FormikValues):void => {
+    dispatch(sendVerificationEmail(values));
+  };
+
+  /**
+   * Attempts to create an account on submit of the last form route.
+   */
+  const handleSubmit = ({ authCode, confirmPassword, email, newPassword }: FormikValues): void => {
+    dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
+  };
 
   return (
-    <Container
-      maxWidth="lg"
+    <Box
       sx={ {
+        backgroundColor: theme.colors.black,
         display: "flex",
-        minHeight: "100%",
-        backgroundColor: theme.palette.background.default,
-        justifyContent: "center",
-        alignItems: "center",
+        flex: 1,
+        maxWidth: "100%",
+        pt: 7.5,
+        px: 2,
+        textAlign: "center",
       } }
     >
-      <Box width="312px">
-        <Box
-          sx={ {
-            display: "flex",
-            flexDirection: "column",
-            flexGrow: 1,
-            justifyContent: "center",
-            alignItems: "stretch",
-          } }
-        >
-          <Box alignSelf="center">
-            <NEWMLogo />
-          </Box>
-
-          <Box mt={ 2 } display="flex" justifyContent="center">
-            <Typography align="center">Or sign up via</Typography>
-          </Box>
-
-          <Box
-            mt={ 1 }
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack direction="row" spacing={ 2 }>
-              <GoogleLogin />
-              <FacebookLogin />
-              <LinkedInLogin />
-            </Stack>
-          </Box>
+      <Container maxWidth="xl">
+        <Box mb={ 4 }>
+          <NEWMLogo />
         </Box>
-      </Box>
-    </Container>
+        <WizardForm
+          initialValues={ initialValues }
+          onSubmit={ handleSubmit }
+          rootPath="sign-up"
+          validateOnMount={ true }
+          routes={ [
+            {
+              element: <Welcome />,
+              onSubmitStep: handleVerificationEmail,
+              path: "",
+              validationSchema: Yup.object().shape({
+                email: validations.email,
+                newPassword: validations.newPassword,
+                confirmPassword: validations.confirmPassword,
+              }),
+            },
+            {
+              element: <Verification />,
+              path: "verification",
+              validationSchema: Yup.object().shape({
+                authCode: validations.authCode,
+              }),
+            },
+          ] }
+        />
+      </Container>
+    </Box>
   );
 };
 

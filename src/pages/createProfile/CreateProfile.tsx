@@ -7,6 +7,7 @@ import { WizardForm } from "components";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
 import * as Yup from "yup";
+import NEWMLogo from "assets/images/NEWMLogo";
 import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
 import SelectRole from "./createProfileSteps/SelectRole";
@@ -70,15 +71,19 @@ const CreateProfile: FunctionComponent = () => {
   return (
     <Box
       sx={ {
-        px: 2,
-        pt: 10,
+        backgroundColor: theme.colors.black,
         display: "flex",
         flex: 1,
         maxWidth: "100%",
-        backgroundColor: theme.colors.black,
+        pt: 7.5,
+        px: 2,
+        textAlign: "center",
       } }
     >
       <Container maxWidth="xl">
+        <Box mb={ 4 }>
+          <NEWMLogo />
+        </Box>
         <WizardForm
           initialValues={ initialValues }
           onSubmit={ handleSubmit }

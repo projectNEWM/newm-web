@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { extendedApi as sessionApi } from "./api";
-import { UpdateProfileRequest } from "./types";
+import { CreateAccountRequest, UpdateProfileRequest } from "./types";
 
 /**
  * Update the user's profile and navigate to
@@ -35,5 +35,31 @@ export const getInitialData = createAsyncThunk(
     if (!profileResponse?.data?.nickname) {
       window.location.pathname = "create-profile/what-should-we-call-you";
     }
+  }
+);
+
+export const createAccount = createAsyncThunk(
+  "session/createAccount",
+  async (body: CreateAccountRequest, thunkApi) => {
+    const createAccountResponse = await thunkApi.dispatch(
+      sessionApi.endpoints.createAccount.initiate(body)
+    );
+
+    if ("error" in createAccountResponse) {
+      return;
+    }
+
+    const loginResponse = await thunkApi.dispatch(
+      sessionApi.endpoints.login.initiate({
+        email: body.email,
+        password: body.newPassword,
+      })
+    );
+
+    if ("error" in loginResponse) {
+      return;
+    }
+
+    window.location.pathname = "create-profile";
   }
 );
