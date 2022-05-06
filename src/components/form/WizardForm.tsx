@@ -40,6 +40,14 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
 
   const navigate = useNavigate();
 
+  const removeTrailingSlash = (path: string) => {
+    if (path[path.length - 1] === "/") {
+      return path.slice(0, -1);
+    }
+
+    return path;
+  };
+
   /**
    * Helper function to get full path name from route path.
    */
@@ -51,7 +59,9 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     return `/${rootPath}/${path}`;
   };
 
-  const currentIndex = routes.map(getPathname).indexOf(location.pathname);
+  const currentIndex = routes
+    .map(getPathname)
+    .indexOf(removeTrailingSlash(location.pathname));
 
   /**
    * Navigate to next form route.
@@ -66,7 +76,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
    * the current route is.
    */
   const getValidationSchema = () => {
-    return routes[currentIndex]?.validationSchema || Yup.object().shape({});
+    return routes[currentIndex].validationSchema || Yup.object().shape({});
   };
 
   /**
