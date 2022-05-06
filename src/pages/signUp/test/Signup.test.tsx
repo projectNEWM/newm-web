@@ -1,12 +1,20 @@
 import { renderWithContext } from "common";
 import SignUp from "../SignUp";
 
+// mock useLocation for Wizard form
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "/sign-up",
+  }),
+}));
+
 describe("<SignUp />", () => {
   it("renders social login buttons", () => {
-    const { getByLabelText } = renderWithContext(<SignUp />);
+    const { queryByLabelText } = renderWithContext(<SignUp />);
 
-    expect(getByLabelText("google authorization")).toBeTruthy();
-    expect(getByLabelText("facebook authorization")).toBeTruthy();
-    expect(getByLabelText("linkedin authorization")).toBeTruthy();
+    expect(queryByLabelText("google authorization")).toBeTruthy();
+    expect(queryByLabelText("facebook authorization")).toBeTruthy();
+    expect(queryByLabelText("linkedin authorization")).toBeTruthy();
   });
 });
