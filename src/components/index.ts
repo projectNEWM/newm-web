@@ -18,4 +18,4 @@ export { default as AddProfileInformation } from "./AddProfileInformation";
 export { default as WizardForm } from "./form/WizardForm";
 export { default as ProfileImage } from "./home/styled/ProfileImage";
 export { default as SideBarButton } from "./home/SideBarButton";
-export * from "./home/SideBarButton";
+export { default as SideBarHeader } from "./home/SideBarHeader";

@@ -1,20 +1,14 @@
 import { FunctionComponent } from "react";
 import { Box, Stack } from "@mui/material";
 import { Typography } from "elements";
-import { ProfileImage, SideBarButton } from "components";
+import { ProfileImage, SideBarButton, SideBarHeader } from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import UploadIcon from "assets/images/UploadIcon";
+import FoldersIcon from "assets/images/FoldersIcon";
+import PeopleIcon from "assets/images/PeopleIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
-
-const buttons = [
-  {
-    icon: <UploadIcon />,
-    label: "UPLOAD SONG",
-    to: "/home/upload-song",
-  },
-];
 
 const SideBar: FunctionComponent = () => {
   const theme = useTheme();
@@ -44,11 +38,31 @@ const SideBar: FunctionComponent = () => {
           </Typography>
         </Stack>
 
-        <Stack mt={ 10 } sx={ { width: "100%" } }>
-          { buttons.map(({ icon, label, to }) => (
-            <SideBarButton key={ label } icon={ icon } label={ label } to={ to } />
-          )) }
-        </Stack>
+        <Box mt={ 8.75 } mb={ 3 } width="100%">
+          <SideBarButton
+            icon={ <UploadIcon /> }
+            label="UPLOAD SONG"
+            to="/home/upload-song"
+          />
+
+          <Box mt={ 3.75 } ml={ 2.5 }>
+            <SideBarHeader>YOUR CAREER</SideBarHeader>
+          </Box>
+
+          <Stack mt={ 2.25 } spacing={ 1 } sx={ { width: "100%" } }>
+            <SideBarButton
+              icon={ <FoldersIcon /> }
+              label="LIBRARY"
+              to="/home/library"
+            />
+
+            <SideBarButton
+              icon={ <PeopleIcon /> }
+              label="OWNERS"
+              to="/home/owners"
+            />
+          </Stack>
+        </Box>
       </Box>
 
       <Box px={ 2.5 } pb={ 2.5 } width="100%" justifyContent="flex-start">

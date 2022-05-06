@@ -17,7 +17,7 @@ const TransparentButton = styled(Button)<TransparentButtonProps>`
   color: white;
   font: ${theme.typography.button.font};
   text-transform: none;
-  padding: 12px 16px;
+  padding: 12px 20px;
   opacity: ${(props) => (props.disabled || !props.active ? 0.5 : 1)};
   transition: background-color 0ms;
   &:hover {
