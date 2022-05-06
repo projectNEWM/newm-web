@@ -120,16 +120,6 @@ Don't forget to give the project a star! ⭐️
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- CONTRIBUTORS -->
-
-## 🤝 Contributors
-
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
-  </tr>
-</table>
-
 <!-- TEAM -->
 
 ## 😎 ProjectNEWM Web Development Team
@@ -148,6 +138,16 @@ Don't forget to give the project a star! ⭐️
     <td align="center">
       <a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br />
     </td>
+  </tr>
+</table>
+
+<!-- CONTRIBUTORS -->
+
+## 🤝 Contributors
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
   </tr>
 </table>
 
