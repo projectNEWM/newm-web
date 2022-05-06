@@ -15,7 +15,7 @@ Test and story directories should be placed at the top level of each directory.
 
 - #### common
 
-  - Util files and Redux functionality that isn't specific to a module.
+  - Util and Redux functionality that isn't specific to a module.
 
 - #### components
 
