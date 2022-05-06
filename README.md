@@ -96,7 +96,7 @@ To get a local copy up and running follow these simple example steps.
 
 ## Additional Resources
 
-- #### [Project structure](./docs/projectStructure)
+- [Project structure](src/docs/projectStructure.md)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -140,16 +140,16 @@ Don't forget to give the project a star! ⭐️
 <table>
   <tr>
     <td align="center">
-      <a href="http://henryquillin.me/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Henry-Quinn-300x300-circle.png" width="40px;" alt=""/><br /><sub><b>Henry Quillin</b></sub></a><br />
+      <a href="http://henryquillin.me/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Henry-Quinn-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Henry Quillin</b></sub></a><br />
     </td>
     <td align="center">
-      <a href="https://github.com/scandycuz"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Trevor-Scandelios-300x300-circle.png" width="40px;" alt=""/><br /><sub><b>Trevor Scandalios</b></sub></a><br />
+      <a href="https://github.com/scandycuz"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Trevor-Scandelios-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Trevor Scandalios</b></sub></a><br />
     </td>
     <td align="center">
-      <a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="40px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br />
+      <a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br />
     </td>
     <td align="center">
-      <a href="https://www.jonatanescobar.com/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Jonatan-Escobar-300x300-circle.png" width="40px;" alt=""/><br /><sub><b>Jonatan Escobar</b></sub></a><br />
+      <a href="https://www.jonatanescobar.com/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Jonatan-Escobar-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Jonatan Escobar</b></sub></a><br />
     </td>
   </tr>
 
