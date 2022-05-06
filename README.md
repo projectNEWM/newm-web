@@ -90,8 +90,6 @@ To get a local copy up and running follow these simple example steps.
 - [ ] Metrics Overview
 - [ ] Registration
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- ADDITIONAL RESOURCES -->
 
 ## Additional Resources
@@ -132,8 +130,6 @@ Don't forget to give the project a star! ⭐️
   </tr>
 </table>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- TEAM -->
 
 ## 😎 ProjectNEWM Web Development Team
@@ -154,6 +150,8 @@ Don't forget to give the project a star! ⭐️
     </td>
   </tr>
 </table>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- SOCIALS -->
 
