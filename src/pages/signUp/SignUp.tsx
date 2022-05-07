@@ -5,9 +5,8 @@ import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
-import { createAccount } from "modules/session";
+import { createAccount, sendVerificationEmail } from "modules/session";
 import NEWMLogo from "assets/images/NEWMLogo";
-import { sendVerificationEmail } from "modules/session";
 import Verification from "./signUpSteps/Verification";
 import Welcome from "./signUpSteps/Welcome";
 
@@ -46,7 +45,7 @@ const SignUp: FunctionComponent = () => {
       .required("Password is required")
       .matches(
         passwordRegex,
-        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+        "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
       ),
     confirmPassword: Yup.string()
       .required("Confirm password is required")
