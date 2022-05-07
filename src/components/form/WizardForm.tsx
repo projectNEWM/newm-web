@@ -44,11 +44,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
    * Helper function to get full path name from route path.
    */
   const getPathname = ({ path }: FormRoute) => {
-    if (path === "") {
-      return `/${rootPath}`;
-    }
-
-    return `/${rootPath}/${path}`;
+    return removeTrailingSlash(`/${rootPath}/${path}`);
   };
 
   const currentIndex = routes
