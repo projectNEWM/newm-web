@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import api from "./api";
 import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
 import { SessionState } from "./types";
-import { handleLogout, handleSuccessfulAuthentication } from "./utils";
+import { handleLogout, handleSuccessfulAuthentication } from "./helpers";
 
 const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
