@@ -8,6 +8,9 @@ import { useTheme } from "@mui/material/styles";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
+import WalletIcon from "assets/images/WalletIcon";
+import AnalyticsIcon from "assets/images/AnalyticsIcon";
+import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 
 const SideBar: FunctionComponent = () => {
@@ -28,7 +31,7 @@ const SideBar: FunctionComponent = () => {
       } }
     >
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Stack mt={ 3.75 } spacing={ 2 }>
+        <Stack mt={ 3.5 } spacing={ 2 }>
           { !!profile.pictureUrl && (
             <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
           ) }
@@ -38,18 +41,18 @@ const SideBar: FunctionComponent = () => {
           </Typography>
         </Stack>
 
-        <Box mt={ 8.75 } mb={ 3 } width="100%">
+        <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarButton
             icon={ <UploadIcon /> }
             label="UPLOAD SONG"
             to="/home/upload-song"
           />
 
-          <Box mt={ 3.75 } ml={ 2.5 }>
+          <Box mt={ 2 } ml={ 2.5 }>
             <SideBarHeader>YOUR CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={ 2.25 } spacing={ 1 } sx={ { width: "100%" } }>
+          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
               icon={ <FoldersIcon /> }
               label="LIBRARY"
@@ -62,6 +65,36 @@ const SideBar: FunctionComponent = () => {
               to="/home/owners"
             />
           </Stack>
+
+          <Box mt={ 2 } ml={ 2.5 }>
+            <SideBarHeader>YOUR PERFORMANCE</SideBarHeader>
+          </Box>
+
+          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+            <SideBarButton
+              icon={ <WalletIcon /> }
+              label="WALLET"
+              to="/home/wallet"
+            />
+
+            <SideBarButton
+              icon={ <AnalyticsIcon /> }
+              label="ANALYTICS"
+              to="/home/analytics"
+            />
+          </Stack>
+
+          <Box mt={ 2 } ml={ 2.5 }>
+            <SideBarHeader>GENERAL</SideBarHeader>
+          </Box>
+
+          <Box mt={ 1.75 } sx={ { width: "100%" } }>
+            <SideBarButton
+              icon={ <StarIcon /> }
+              label="YOUR PROFILE"
+              to="/home/profile"
+            />
+          </Box>
         </Box>
       </Box>
 
