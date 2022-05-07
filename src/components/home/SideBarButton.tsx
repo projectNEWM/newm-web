@@ -18,8 +18,6 @@ const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
   const resolved = useResolvedPath(to);
   const match = useMatch(resolved.pathname);
 
-  console.log("match: ", match);
-
   return (
     <Link to={ to } style={ { textDecoration: "none" } }>
       <TransparentButton
