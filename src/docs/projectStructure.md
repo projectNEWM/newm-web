@@ -3,14 +3,16 @@
 The project is organized into the following directory structure. The Structure
 is meant to be fluid and can be reorganized as necessary.
 
-All exports should exported from the top level index.ts file.
-
-Story files should be placed at the top level of the "elements" and "components"
-directories.
+All exports should exported from the index.ts file at the top level of each
+directory, except for the "modules" and "pages" directories, where all exports
+should be exported from the top level of each module or page.
 
 Test files should be placed at the top level of each directory, except for
 the "modules" and "pages" directories, where they should be placed at the top
 level of each module or page.
+
+Story files should be placed at the top level of the "elements" and "components"
+directories.
 
 - #### api
 

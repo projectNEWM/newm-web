@@ -1,6 +1,5 @@
 import sessionApi from "./api";
 
-const sendVerificationEmail = (email: string) =>
-  sessionApi.endpoints.sendVerificationEmail.initiate({ email });
-
-export { sendVerificationEmail };
+export const sendVerificationEmail = (email: string) => {
+  return sessionApi.endpoints.sendVerificationEmail.initiate({ email });
+};
