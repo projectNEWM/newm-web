@@ -5,7 +5,12 @@ is meant to be fluid and can be reorganized as necessary.
 
 All exports should exported from the top level index.ts file.
 
-Test and story directories should be placed at the top level of each directory.
+Story files should be placed at the top level of the "elements" and "components"
+directories.
+
+Test files should be placed at the top level of each directory, except for
+the "modules" and "pages" directories, where they should be placed at the top
+level of each module or page.
 
 - #### api
 
