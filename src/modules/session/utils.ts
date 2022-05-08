@@ -4,21 +4,9 @@ import jwtDecode from "jwt-decode";
 import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
-/**
- * External utils
- * -----------------------------------------------------------------------------
- * Util functions for use outside of the session module.
- */
-
 export const sendVerificationEmail = (email: string) => {
   return sessionApi.endpoints.sendVerificationEmail.initiate({ email });
 };
-
-/**
- * Internal utils
- * -----------------------------------------------------------------------------
- * Util functions for use inside of the session module.
- */
 
 export const handleSuccessfulAuthentication = (
   state: SessionState,
