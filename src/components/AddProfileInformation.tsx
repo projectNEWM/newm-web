@@ -1,22 +1,29 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
-import { FilteredTagsField, GradientTextInputField } from "components";
+import {
+  FilteredTagsField,
+  GradientTextInputField,
+  ResponsiveNEWMLogo,
+} from "components";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
-  readonly prompt: string;
   readonly helperText?: string;
+  readonly placeholder?: string;
+  readonly prompt: string;
   readonly tags?: ReadonlyArray<string>;
 }
 
 const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   fieldName,
+  helperText = "",
+  placeholder,
   prompt,
   tags,
-  helperText = "",
 }) => {
+  const theme = useTheme();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
@@ -56,34 +63,38 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-
-      <Typography
-        align="center"
-        fontWeight="extra-bold"
-        variant="xxxl"
-        fontFamily="Raleway"
-      >
+      <Box mb={ 4 }>
+        <ResponsiveNEWMLogo />
+      </Box>
+      <Typography align="center" sx={ { ...theme.typography.heading } } variant="subtitle1">
         { prompt }
       </Typography>
 
       <GradientTextInputField
-        name={ fieldName }
-        textAlign="center"
         helperText={ !isValid ? helperText : "" }
-        sx={ { fontFamily: "DM Serif Text", fontStyle: "italic" } }
+        name={ fieldName }
+        placeholder={ placeholder }
         ref={ inputRef }
+        sx={ { ...theme.typography.gradient } }
+        textAlign="center"
       />
 
-      <Box mt={ 4 }>
+      <Box sx={ { mt: [2, 2, 4], width: "100%" } }>
         { isValid || !tags ? (
           <Box
-            mt={ 3.25 }
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+              mt: [2, 2, 3.25],
+            } }
           >
-            <Box mb={ 1 }>
-              <FilledButton type="submit" disabled={ !isValid }>
+            <Box mb={ 1 } width="100%">
+              <FilledButton
+                disabled={ !isValid }
+                sx={ { maxWidth: ["352px", "352px", null], width: "100%" } }
+                type="submit"
+              >
                 Next
               </FilledButton>
             </Box>

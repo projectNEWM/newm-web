@@ -85,6 +85,8 @@ declare module "@mui/material/styles" {
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
+    gradient: React.CSSProperties;
+    heading: React.CSSProperties;
     xxs: React.CSSProperties;
     xs: React.CSSProperties;
     sm: React.CSSProperties;
@@ -104,6 +106,8 @@ declare module "@mui/material/styles" {
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
+    gradient?: React.CSSProperties;
+    heading?: React.CSSProperties;
     xxs?: React.CSSProperties;
     xs?: React.CSSProperties;
     sm?: React.CSSProperties;
@@ -120,6 +124,8 @@ declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
     tabs: true;
     formHeader: true;
+    gradient: true;
+    heading: true;
     xxs: true;
     xs: true;
     sm: true;
@@ -131,7 +137,7 @@ declare module "@mui/material/Typography" {
   }
 }
 
-export default createTheme({
+let theme = createTheme({
   colors: {
     blue: "#0099CC",
     purple: "#CC33CC",
@@ -251,6 +257,7 @@ export default createTheme({
       fontFamily: "Inter",
       fontStyle: "normal",
       fontSize: "32px",
+      lineHeight: "48px",
     },
     xxxl: {
       fontFamily: "Raleway",
@@ -260,3 +267,31 @@ export default createTheme({
     },
   },
 });
+
+theme = createTheme(theme, {
+  typography: {
+    heading: {
+      fontFamily: "Raleway",
+      fontSize: theme.typography.xxl.fontSize,
+      fontWeight: theme.typography.fontWeightExtraBold,
+      lineHeight: theme.typography.xxl.lineHeight,
+      "@media (min-width: 900px)": {
+        fontSize: theme.typography.xxxl.fontSize,
+        lineHeight: theme.typography.xxxl.lineHeight,
+      },
+    },
+    gradient: {
+      fontFamily: "DM Serif Text",
+      fontSize: theme.typography.xxl.fontSize,
+      fontStyle: "italic",
+      lineHeight: theme.typography.xxl.lineHeight,
+      fontWeight: theme.typography.fontWeightMedium,
+      "@media (min-width: 900px)": {
+        fontSize: theme.typography.xxxl.fontSize,
+        lineHeight: theme.typography.xxxl.lineHeight,
+      },
+    },
+  },
+});
+
+export default theme;

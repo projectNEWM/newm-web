@@ -5,6 +5,7 @@ const SelectNickname: FunctionComponent = () => {
   return (
     <AddProfileInformation
       fieldName="nickname"
+      placeholder="nickname"
       prompt="What should we call you?"
     />
   );

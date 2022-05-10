@@ -1,10 +1,12 @@
 import { FunctionComponent, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GradientTypography, Typography } from "elements";
+import { ResponsiveNEWMLogo } from "components";
 
 const Begin: FunctionComponent = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     // briefly display page and then navigate to profile form
@@ -15,22 +17,26 @@ const Begin: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
+      <Box mb={ 4 }>
+        <ResponsiveNEWMLogo />
+      </Box>
 
       <Typography
-        align="center"
-        fontWeight="extra-bold"
-        variant="xxxl"
-        fontFamily="Raleway"
+        sx={ {
+          ...theme.typography.heading,
+          marginBottom: 1.5,
+        } }
+        variant="h1"
       >
         Aaaaand you&apos;re in.
       </Typography>
 
       <Box mt={ 1 } mb={ 8 }>
         <GradientTypography
-          variant="xxxl"
-          fontFamily="DM Serif Text"
-          fontWeight="regular"
-          fontStyle="italic"
+          sx={ {
+            ...theme.typography.gradient,
+          } }
+          variant="subtitle1"
         >
           Let&apos;s set you up.
         </GradientTypography>

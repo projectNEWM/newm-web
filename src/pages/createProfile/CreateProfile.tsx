@@ -1,13 +1,11 @@
 import { FunctionComponent } from "react";
 import { FormikValues } from "formik";
-import { Box, Container } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Container, useTheme } from "@mui/material";
 import { updateProfile } from "modules/session";
 import { WizardForm } from "components";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
 import * as Yup from "yup";
-import NEWMLogo from "assets/images/NEWMLogo";
 import Begin from "./createProfileSteps/Begin";
 import SelectNickname from "./createProfileSteps/SelectNickname";
 import SelectRole from "./createProfileSteps/SelectRole";
@@ -22,9 +20,7 @@ interface ProfileFormValues {
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
-
   const dispatch = useDispatch();
-
   const { roles, genres } = useSelector(selectContent);
 
   /**
@@ -81,9 +77,6 @@ const CreateProfile: FunctionComponent = () => {
       } }
     >
       <Container maxWidth="xl">
-        <Box mb={ 4 }>
-          <NEWMLogo />
-        </Box>
         <WizardForm
           initialValues={ initialValues }
           onSubmit={ handleSubmit }

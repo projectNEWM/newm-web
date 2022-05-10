@@ -1,37 +1,52 @@
 import { FunctionComponent } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { FilledButton, GradientTypography, Link, Typography } from "elements";
+import { ResponsiveNEWMLogo } from "components";
 
 const Complete: FunctionComponent = () => {
+  const theme = useTheme();
+
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box
+      sx={ {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1,
+        height: "100%",
+        justifyContent: ["space-between", "space-between", "flex-start"],
+      } }
+    >
+      <div>
+        <Box mb={ 4 }>
+          <ResponsiveNEWMLogo />
+        </Box>
+        <Typography sx={ { ...theme.typography.heading } } variant="h1">
+          Aaaaand we&apos;re done.
+        </Typography>
 
-      <Typography
-        align="center"
-        fontWeight="extra-bold"
-        variant="xxxl"
-        fontFamily="Raleway"
-      >
-        Aaaaand we&apos;re done.
-      </Typography>
-
-      <Box mt={ 1 } mb={ 6 }>
-        <GradientTypography
-          variant="xxxl"
-          fontFamily="DM Serif Text"
-          fontWeight="regular"
-          fontStyle="italic"
+        <Box mt={ 1 } mb={ 6 }>
+          <GradientTypography sx={ { ...theme.typography.gradient } } variant="subtitle1">
+            Shall we?
+          </GradientTypography>
+        </Box>
+      </div>
+      <Box alignItems="center" display="flex" flexDirection="column" mb={ 4 }>
+        <FilledButton
+          sx={ {
+            marginBottom: [null, null, 2],
+            marginTop: [2, 2, null],
+            maxWidth: ["352px", "352px", "220px"],
+            order: ["2", "2", "0"],
+            width: "100%",
+          } }
+          type="submit"
         >
-          Shall we?
-        </GradientTypography>
-      </Box>
-
-      <FilledButton type="submit">Enter NEWM</FilledButton>
-
-      <Box mt={ 2 }>
-        <Typography fontWeight="medium" color="grey200">
+          Enter NEWM
+        </FilledButton>
+        <Typography color="grey200" display="block" fontWeight="medium">
           By proceeding forward you agree to&nbsp;
-          <Link to="#" fontWeight="medium">
+          <Link fontWeight="medium" to="#">
             projectNEWM&apos;s Terms of Service
           </Link>
         </Typography>
