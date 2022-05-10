@@ -26,7 +26,10 @@ const Complete: FunctionComponent = () => {
         </Typography>
 
         <Box mt={ 1 } mb={ 6 }>
-          <GradientTypography sx={ { ...theme.typography.gradient } } variant="subtitle1">
+          <GradientTypography
+            sx={ { ...theme.typography.gradient } }
+            variant="subtitle1"
+          >
             Shall we?
           </GradientTypography>
         </Box>

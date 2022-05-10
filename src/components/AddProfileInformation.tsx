@@ -66,7 +66,11 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
-      <Typography align="center" sx={ { ...theme.typography.heading } } variant="subtitle1">
+      <Typography
+        align="center"
+        sx={ { ...theme.typography.heading } }
+        variant="subtitle1"
+      >
         { prompt }
       </Typography>
 

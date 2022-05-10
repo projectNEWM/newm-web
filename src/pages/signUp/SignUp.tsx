@@ -27,33 +27,43 @@ const SignUp: FunctionComponent = () => {
   };
 
   /**
-    * Password regex, it must contain the following:
-    * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
-  */
+   * Password regex, it must contain the following:
+   * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
+   */
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
   /**
- * Yup validations for all form fields.
- */
+   * Yup validations for all form fields.
+   */
   const validations = {
     authCode: Yup.string().required("Verification code is required"),
-    email: Yup.string().email("Please enter a vaild email").required("E-mail is required"),
-    newPassword: Yup.string().required("Password is required").matches(
-      passwordRegex,
-      "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
-    ),
+    email: Yup.string()
+      .email("Please enter a vaild email")
+      .required("E-mail is required"),
+    newPassword: Yup.string()
+      .required("Password is required")
+      .matches(
+        passwordRegex,
+        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      ),
     confirmPassword: Yup.string()
-      .required("Confirm password is required").oneOf([Yup.ref("newPassword")], "Passwords must match"),
+      .required("Confirm password is required")
+      .oneOf([Yup.ref("newPassword")], "Passwords must match"),
   };
 
-  const handleVerificationEmail = (values: FormikValues):void => {
+  const handleVerificationEmail = (values: FormikValues): void => {
     dispatch(sendVerificationEmail(values));
   };
 
   /**
    * Attempts to create an account on submit of the last form route.
    */
-  const handleSubmit = ({ authCode, confirmPassword, email, newPassword }: FormikValues): void => {
+  const handleSubmit = ({
+    authCode,
+    confirmPassword,
+    email,
+    newPassword,
+  }: FormikValues): void => {
     dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
   };
 

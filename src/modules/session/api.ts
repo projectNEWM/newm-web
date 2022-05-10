@@ -7,7 +7,7 @@ import {
   NewmAuthResponse,
   NewmOAuthRequest,
   Request2FACode,
-  UpdateProfileRequest
+  UpdateProfileRequest,
 } from "./types";
 
 export const extendedApi = api.injectEndpoints({
@@ -72,7 +72,7 @@ export const extendedApi = api.injectEndpoints({
       query: ({ email }) => ({
         url: "v1/auth/code",
         method: "GET",
-        params: { email }
+        params: { email },
       }),
     }),
 
