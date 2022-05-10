@@ -34,23 +34,20 @@
   </p>
 </div>
 
-
 <!-- �ABOUT THE PROJECT -->
 
 ## 📔 About The Project
 
-<p> The artist portal allows music creators to upload their songs and turn them into fractionalized NFTs. 
-They can then distribute ownership of their music by selling fractions of the NFT. This web app also 
-allows artist to create playlists, define contributors, view analytics, and interact with 
+<p> The artist portal allows music creators to upload their songs and turn them into fractionalized NFTs.
+They can then distribute ownership of their music by selling fractions of the NFT. This web app also
+allows artist to create playlists, define contributors, view analytics, and interact with
 their Cardano wallet. <p>
-
 
 ### Built With
 
-* [React.JS](https://reactjs.org/)
-* [Material UI](https://mui.com/)
-* [Redux](https://redux.js.org/)
-
+- [React.JS](https://reactjs.org/)
+- [Material UI](https://mui.com/)
+- [Redux](https://redux.js.org/)
 
 <!-- GETTING STARTED -->
 
@@ -60,7 +57,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-* npm
+- npm
   ```sh
   npm install npm@latest -g
   ```
@@ -81,17 +78,23 @@ To get a local copy up and running follow these simple example steps.
 
 ## 🚀 MVP Roadmap
 
-* [ ] Content list view
-* [ ] Song Overview
-  * [ ] Song Upload Form
-* [ ] Drag and drop capabilities
-* [ ] Contributor Overview
-  * [ ] Add Contributor Form
-* [ ] Playlist Overview
-  * [ ] Add New Playlist Form
-* [ ] Wallet Overview
-* [ ] Metrics Overview
-* [ ] Registration
+- [ ] Content list view
+- [ ] Song Overview
+  - [ ] Song Upload Form
+- [ ] Drag and drop capabilities
+- [ ] Contributor Overview
+  - [ ] Add Contributor Form
+- [ ] Playlist Overview
+  - [ ] Add New Playlist Form
+- [ ] Wallet Overview
+- [ ] Metrics Overview
+- [ ] Registration
+
+<!-- ADDITIONAL RESOURCES -->
+
+## Additional Resources
+
+- [Project structure](src/docs/projectStructure.md)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -110,25 +113,12 @@ If you have a suggestion, please fork the repo and create a pull request. You ca
 5. Open a Pull Request
 
 Want to help out but don't have a specific idea or suggestion? Reach out to
-<a href="https://github.com/HenryQuillin"> Henry</a> (hquillin@projectnewm.io) or <a href="https://github.com/HenryQuillin"> Trevor </a> (tscandalios@projectnewm.io) and we can give you a ticket (or two 😉). We are also open to 
-bringing consistent contributors onto the core team. 
+<a href="https://github.com/HenryQuillin"> Henry</a> (hquillin@projectnewm.io) or <a href="https://github.com/HenryQuillin"> Trevor </a> (tscandalios@projectnewm.io) and we can give you a ticket (or two 😉). We are also open to
+bringing consistent contributors onto the core team.
 
 Don't forget to give the project a star! ⭐️
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-<!-- CONTRIBUTORS -->
-
-## 🤝 Contributors 
-
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
-  </tr>
-
-</table>
-
 
 <!-- TEAM -->
 
@@ -136,12 +126,32 @@ Don't forget to give the project a star! ⭐️
 
 <table>
   <tr>
-    <td align="center"><a href="http://henryquillin.me/"><img src="https://i.ibb.co/64WcvBc/IMG-5268-1.png" width="100px;" alt=""/><br /><sub><b>Henry Quillin</b></sub></a><br /> </td>
-    <td align="center"><a href="https://github.com/scandycuz"><img src="https://avatars.githubusercontent.com/u/5877597?v=4" width="100px;" alt=""/><br /><sub><b>Trevor Scandalios</b></sub></a><br /> </td>
-    <td align="center"><a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br /> </td>
+    <td align="center">
+      <a href="http://henryquillin.me/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Henry-Quinn-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Henry Quillin</b></sub></a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/scandycuz"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Trevor-Scandelios-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Trevor Scandalios</b></sub></a><br />
+    </td>
+    <td align="center">
+      <a href="https://www.jonatanescobar.com/"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Jonatan-Escobar-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Jonatan Escobar</b></sub></a><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/mallow43"><img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_300,h_300/https://projectnewm.io/wp-content/uploads/bb-plugin/cache/Mateo-Sanchez-1-300x300-circle.png" width="100px;" alt=""/><br /><sub><b>Mateo Sanchez</b></sub></a><br />
+    </td>
   </tr>
-
 </table>
+
+<!-- CONTRIBUTORS -->
+
+## 🤝 Contributors
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/j-mateo"><img src="https://avatars.githubusercontent.com/u/3849278?v=4" width="100px;" alt=""/><br /><sub><b>Jose Mateo</b></sub></a><br /> </td>
+  </tr>
+</table>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- SOCIALS -->
 
@@ -176,10 +186,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
 See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 

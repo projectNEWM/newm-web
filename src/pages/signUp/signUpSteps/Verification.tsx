@@ -4,18 +4,18 @@ import { ResponsiveNEWMLogo, TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { sendVerificationEmail } from "../utils";
+import { sendVerificationEmail } from "modules/session";
 
 const Verification: FunctionComponent = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
-  const { isValid, values } = useFormikContext();
+  const { isValid, values } = useFormikContext<FormikValues>();
 
   const handleEmailResend = () => {
     setShowResendLink(false);
 
-    dispatch(sendVerificationEmail(values as FormikValues));
+    dispatch(sendVerificationEmail(values.email));
 
     setTimeout(() => setShowResendLink(true), 10000);
   };

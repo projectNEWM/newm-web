@@ -16,6 +16,7 @@ declare module "@mui/material/styles" {
       grey400: string;
       grey500: string;
       black: string;
+      black100: string;
     };
     gradients: {
       company: string;
@@ -37,6 +38,7 @@ declare module "@mui/material/styles" {
     button: {
       fontSize: string;
       lineHeight: string;
+      fontWeight: number;
     };
   }
   // allow configuration using `createTheme`
@@ -55,6 +57,7 @@ declare module "@mui/material/styles" {
       grey400?: string;
       grey500?: string;
       black?: string;
+      black100?: string;
     };
     gradients?: {
       company?: string;
@@ -76,6 +79,7 @@ declare module "@mui/material/styles" {
     button?: {
       fontSize?: string;
       lineHeight?: string;
+      fontWeight?: number;
     };
   }
 }
@@ -152,6 +156,7 @@ let theme = createTheme({
     grey400: "#2C2C2E",
     grey500: "#1C1C1E",
     black: "#000000",
+    black100: "#0A0A0A",
   },
   gradients: {
     company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",
@@ -192,6 +197,7 @@ let theme = createTheme({
   button: {
     fontSize: "16px",
     lineHeight: "18px",
+    fontWeight: 600,
   },
 
   palette: {

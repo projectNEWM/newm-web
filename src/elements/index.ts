@@ -13,3 +13,4 @@ export { default as GradientTextInput } from "./GradientTextInput";
 export * from "./GradientTextInput";
 export { default as GradientTypography } from "./styled/GradientTypography";
 export { default as Link } from "./Link";
+export { default as TransparentButton } from "./styled/TransparentButton";
