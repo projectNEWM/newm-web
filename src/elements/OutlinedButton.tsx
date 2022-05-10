@@ -26,6 +26,7 @@ const GradientText = styled("span")(
   ({ theme }) => `
   font-size: ${theme.button.fontSize};
   line-height: ${theme.button.lineHeight};
+  font-weight: ${theme.button.fontWeight};
   white-space: nowrap;
   font: ${theme.typography.button.font};
   text-transform: none;

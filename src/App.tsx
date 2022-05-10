@@ -34,7 +34,7 @@ const App = () => {
               <Route path="sign-up/*" element={ <SignUp /> } />
 
               <Route
-                path="home"
+                path="home/*"
                 element={
                   <PrivateRoute>
                     <Home />

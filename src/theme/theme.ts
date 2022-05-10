@@ -38,6 +38,7 @@ declare module "@mui/material/styles" {
     button: {
       fontSize: string;
       lineHeight: string;
+      fontWeight: number;
     };
   }
   // allow configuration using `createTheme`
@@ -78,6 +79,7 @@ declare module "@mui/material/styles" {
     button?: {
       fontSize?: string;
       lineHeight?: string;
+      fontWeight?: number;
     };
   }
 }
@@ -189,6 +191,7 @@ export default createTheme({
   button: {
     fontSize: "16px",
     lineHeight: "18px",
+    fontWeight: 600,
   },
 
   palette: {

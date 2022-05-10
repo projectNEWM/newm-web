@@ -1,7 +1,12 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
+
+export const sendVerificationEmail = (email: string) => {
+  return sessionApi.endpoints.sendVerificationEmail.initiate({ email });
+};
 
 export const handleSuccessfulAuthentication = (
   state: SessionState,

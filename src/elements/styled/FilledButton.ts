@@ -6,6 +6,7 @@ const FilledButton = styled(Button)<ButtonProps>`
   background: ${theme.gradients.artist};
   border-radius: 7px;
   font-size: ${theme.button.fontSize};
+  font-weight: ${theme.button.fontWeight};
   line-height: ${theme.button.lineHeight};
   color: white;
   font: ${theme.typography.button.font};

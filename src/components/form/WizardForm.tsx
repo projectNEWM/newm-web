@@ -7,6 +7,7 @@ import {
   FormikValues,
 } from "formik";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { removeTrailingSlash } from "common";
 import * as Yup from "yup";
 
 interface FormRoute {
@@ -37,21 +38,18 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   ...formikProps
 }) => {
   const location = useLocation();
-
   const navigate = useNavigate();
 
   /**
    * Helper function to get full path name from route path.
    */
   const getPathname = ({ path }: FormRoute) => {
-    if (path === "") {
-      return `/${rootPath}`;
-    }
-
-    return `/${rootPath}/${path}`;
+    return removeTrailingSlash(`/${rootPath}/${path}`);
   };
 
-  const currentIndex = routes.map(getPathname).indexOf(location.pathname);
+  const currentIndex = routes
+    .map(getPathname)
+    .indexOf(removeTrailingSlash(location.pathname));
 
   /**
    * Navigate to next form route.
