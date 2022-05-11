@@ -59,6 +59,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
 
   &::placeholder {
     color: ${theme.colors.grey100};
+    text-fill-color: ${theme.colors.grey100};
   }
 
   input {
