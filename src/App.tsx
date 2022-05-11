@@ -45,9 +45,10 @@ const App = () => {
               <Route
                 path="create-profile/*"
                 element={
-                  <PrivateRoute>
-                    <CreateProfile />
-                  </PrivateRoute>
+                  // TODO: REMOVE THIS BEFORE MERGE
+                  // <PrivateRoute>
+                  <CreateProfile />
+                  // </PrivateRoute>
                 }
               />
             </Routes>
