@@ -34,8 +34,8 @@ const SignUp: FunctionComponent = () => {
         sx={ {
           ...theme.typography.heading,
           marginBottom: 5,
+          display: "block",
         } }
-        variant="h1"
       >
         Welcome
       </Typography>

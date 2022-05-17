@@ -25,8 +25,8 @@ const Begin: FunctionComponent = () => {
         sx={ {
           ...theme.typography.heading,
           marginBottom: 1.5,
+          display: "block",
         } }
-        variant="h1"
       >
         Aaaaand you&apos;re in.
       </Typography>
@@ -35,8 +35,8 @@ const Begin: FunctionComponent = () => {
         <GradientTypography
           sx={ {
             ...theme.typography.gradient,
+            display: "block",
           } }
-          variant="subtitle1"
         >
           Let&apos;s set you up.
         </GradientTypography>

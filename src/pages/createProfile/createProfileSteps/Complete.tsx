@@ -21,7 +21,7 @@ const Complete: FunctionComponent = () => {
         <Box mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
-        <Typography sx={ { ...theme.typography.heading } } variant="h1">
+        <Typography sx={ { ...theme.typography.heading, display: "block" } }>
           Aaaaand we&apos;re done.
         </Typography>
 

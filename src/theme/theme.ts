@@ -86,40 +86,45 @@ declare module "@mui/material/styles" {
 
 // declare typography custom types
 declare module "@mui/material/styles" {
+  interface MediaQueryStyles {
+    "@media (min-width: 900px)"?: React.CSSProperties;
+  }
+
+  type CSSPropertiesWithMediaQueries = React.CSSProperties & MediaQueryStyles;
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
-    gradient: React.CSSProperties;
-    heading: React.CSSProperties;
-    xxs: React.CSSProperties;
-    xs: React.CSSProperties;
-    sm: React.CSSProperties;
-    md: React.CSSProperties;
-    xxl: React.CSSProperties;
-    xxxl: React.CSSProperties;
-    fontWeightSemiBold: 600;
-    fontWeightExtraBold: 800;
+    gradient: CSSPropertiesWithMediaQueries;
+    heading: CSSPropertiesWithMediaQueries;
+    xxs: CSSPropertiesWithMediaQueries;
+    xs: CSSPropertiesWithMediaQueries;
+    sm: CSSPropertiesWithMediaQueries;
+    md: CSSPropertiesWithMediaQueries;
+    xxl: CSSPropertiesWithMediaQueries;
+    xxxl: CSSPropertiesWithMediaQueries;
+    fontWeightSemiBold: number;
+    fontWeightExtraBold: number;
   }
 
   export interface TypographyOptions {
-    fontWeightSemiBold: 600;
-    fontWeightExtraBold: 800;
+    fontWeightSemiBold: number;
+    fontWeightExtraBold: number;
   }
 
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
-    gradient?: React.CSSProperties;
-    heading?: React.CSSProperties;
-    xxs?: React.CSSProperties;
-    xs?: React.CSSProperties;
-    sm?: React.CSSProperties;
-    md?: React.CSSProperties;
-    xxl?: React.CSSProperties;
-    xxxl?: React.CSSProperties;
-    fontWeightSemiBold: 600;
-    fontWeightExtraBold: 800;
+    gradient?: CSSPropertiesWithMediaQueries;
+    heading?: CSSPropertiesWithMediaQueries;
+    xxs?: CSSPropertiesWithMediaQueries;
+    xs?: CSSPropertiesWithMediaQueries;
+    sm?: CSSPropertiesWithMediaQueries;
+    md?: CSSPropertiesWithMediaQueries;
+    xxl?: CSSPropertiesWithMediaQueries;
+    xxxl?: CSSPropertiesWithMediaQueries;
+    fontWeightSemiBold: number;
+    fontWeightExtraBold: number;
   }
 }
 
@@ -141,7 +146,54 @@ declare module "@mui/material/Typography" {
   }
 }
 
-let theme = createTheme({
+const typographyValues = {
+  // default fontFamily
+  fontFamily: "Inter",
+  fontWeightRegular: 400,
+  fontWeightMedium: 500,
+  fontWeightSemiBold: 600,
+  fontWeightBold: 700,
+  fontWeightExtraBold: 800,
+  // custom font variants
+  xxs: {
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "10px",
+    lineHeight: "20px",
+  },
+  xs: {
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "12px",
+    lineHeight: "20px",
+  },
+  sm: {
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "14px",
+    lineHeight: "20px",
+  },
+  md: {
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "16px",
+    lineHeight: "20px",
+  },
+  xxl: {
+    fontFamily: "Inter",
+    fontStyle: "normal",
+    fontSize: "32px",
+    lineHeight: "48px",
+  },
+  xxxl: {
+    fontFamily: "Raleway",
+    fontStyle: "normal",
+    fontSize: "80px",
+    lineHeight: "96px",
+  },
+};
+
+const theme = createTheme({
   colors: {
     blue: "#0099CC",
     purple: "#CC33CC",
@@ -227,74 +279,26 @@ let theme = createTheme({
   },
 
   typography: {
-    // default fontFamily
-    fontFamily: "Inter",
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-    fontWeightSemiBold: 600,
-    fontWeightBold: 700,
-    fontWeightExtraBold: 800,
-    // custom font variants
-    xxs: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontSize: "10px",
-      lineHeight: "20px",
-    },
-    xs: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontSize: "12px",
-      lineHeight: "20px",
-    },
-    sm: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontSize: "14px",
-      lineHeight: "20px",
-    },
-    md: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontSize: "16px",
-      lineHeight: "20px",
-    },
-    xxl: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontSize: "32px",
-      lineHeight: "48px",
-    },
-    xxxl: {
-      fontFamily: "Raleway",
-      fontStyle: "normal",
-      fontSize: "80px",
-      lineHeight: "96px",
-    },
-  },
-});
-
-theme = createTheme(theme, {
-  typography: {
+    ...typographyValues,
     heading: {
       fontFamily: "Raleway",
-      fontSize: theme.typography.xxl.fontSize,
-      fontWeight: theme.typography.fontWeightExtraBold,
-      lineHeight: theme.typography.xxl.lineHeight,
+      fontSize: typographyValues.xxl.fontSize,
+      fontWeight: typographyValues.fontWeightExtraBold,
+      lineHeight: typographyValues.xxl.lineHeight,
       "@media (min-width: 900px)": {
-        fontSize: theme.typography.xxxl.fontSize,
-        lineHeight: theme.typography.xxxl.lineHeight,
+        fontSize: typographyValues.xxxl.fontSize,
+        lineHeight: typographyValues.xxxl.lineHeight,
       },
     },
     gradient: {
       fontFamily: "DM Serif Text",
-      fontSize: theme.typography.xxl.fontSize,
+      fontSize: typographyValues.xxl.fontSize,
       fontStyle: "italic",
-      lineHeight: theme.typography.xxl.lineHeight,
-      fontWeight: theme.typography.fontWeightMedium,
+      lineHeight: typographyValues.xxl.lineHeight,
+      fontWeight: typographyValues.fontWeightMedium,
       "@media (min-width: 900px)": {
-        fontSize: theme.typography.xxxl.fontSize,
-        lineHeight: theme.typography.xxxl.lineHeight,
+        fontSize: typographyValues.xxxl.fontSize,
+        lineHeight: typographyValues.xxxl.lineHeight,
       },
     },
   },

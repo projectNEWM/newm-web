@@ -39,8 +39,8 @@ const Verification: FunctionComponent = () => {
           sx={ {
             ...theme.typography.heading,
             marginBottom: 1.5,
+            display: "block",
           } }
-          variant="h1"
         >
           Check your email!
         </Typography>

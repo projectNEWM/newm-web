@@ -7,6 +7,7 @@ import {
   GradientTextInputField,
   ResponsiveNEWMLogo,
 } from "components";
+import { useUserDevice } from "common";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
@@ -25,8 +26,8 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 }) => {
   const theme = useTheme();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
+  const { isMobileOrTablet } = useUserDevice();
 
   /**
    * Validate the field on mount (setting the blur status to false validates
@@ -68,8 +69,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       </Box>
       <Typography
         align="center"
-        sx={ { ...theme.typography.heading } }
-        variant="subtitle1"
+        sx={ { ...theme.typography.heading, display: "block" } }
       >
         { prompt }
       </Typography>
@@ -77,7 +77,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       <GradientTextInputField
         helperText={ !isValid ? helperText : "" }
         name={ fieldName }
-        placeholder={ placeholder }
+        placeholder={ isMobileOrTablet ? placeholder : undefined }
         ref={ inputRef }
         sx={ { ...theme.typography.gradient } }
         textAlign="center"
