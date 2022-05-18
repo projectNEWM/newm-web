@@ -21,15 +21,7 @@ const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
       const filteredTags = tags.filter(filterTags(field.value));
 
       return (
-        <Box
-          sx={ {
-            display: "flex",
-            flexWrap: [null, null, "wrap"],
-            justifyContent: [null, null, "center"],
-            overflow: "auto",
-            width: "100%",
-          } }
-        >
+        <Box display="flex" flexWrap="wrap" justifyContent="center">
           { filteredTags.map((tag) => (
             <Box key={ tag } m={ 1 }>
               <OutlinedButton onClick={ () => form.handleChange(name)(tag) }>
