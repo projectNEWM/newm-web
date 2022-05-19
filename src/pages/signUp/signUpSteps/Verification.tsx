@@ -1,13 +1,14 @@
 import { FunctionComponent, useState } from "react";
 import { FilledButton, GradientTypography, Link, Typography } from "elements";
-import { TextInputField } from "components";
+import { ResponsiveNEWMLogo, TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
+import { Box, Stack, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { Box, Stack } from "@mui/material";
 import { sendVerificationEmail } from "modules/session";
 
 const Verification: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
   const { isValid, values } = useFormikContext<FormikValues>();
 
@@ -20,47 +21,59 @@ const Verification: FunctionComponent = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Typography
-        align="center"
-        fontFamily="Raleway"
-        fontWeight="extra-bold"
-        marginBottom="12px"
-        variant="xxxl"
-      >
-        Check your email!
-      </Typography>
-      <GradientTypography
-        align="center"
-        fontFamily="DM Serif Text"
-        fontStyle="italic"
-        fontWeight="regular"
-        id="verificationLabel"
-        marginBottom="60px"
-        variant="xxxl"
-      >
-        Paste your verification code here.
-      </GradientTypography>
-      <Stack spacing={ 1.5 } mb={ 7.5 } maxWidth="312px" width="100%">
-        <TextInputField
-          aria-labelledby="verificationLabel"
-          name="authCode"
-          placeholder="Verification Code"
-          type="text"
-        />
-        <FilledButton type="submit" disabled={ !isValid }>
-          Enter
-        </FilledButton>
-      </Stack>
+    <Box
+      sx={ {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1,
+        height: "100%",
+        justifyContent: "space-between",
+      } }
+    >
+      <Box>
+        <Box mb={ 4 }>
+          <ResponsiveNEWMLogo />
+        </Box>
+        <Typography
+          sx={ {
+            ...theme.typography.heading,
+            marginBottom: 1.5,
+            display: "block",
+          } }
+        >
+          Check your email!
+        </Typography>
+        <GradientTypography
+          id="verificationLabel"
+          sx={ {
+            ...theme.typography.gradient,
+            marginBottom: 7.5,
+          } }
+          variant="subtitle1"
+        >
+          Paste your verification code here.
+        </GradientTypography>
+        <Stack
+          spacing={ 1.5 }
+          mb={ 7.5 }
+          margin="0 auto"
+          maxWidth="312px"
+          width="100%"
+        >
+          <TextInputField
+            aria-labelledby="verificationLabel"
+            name="authCode"
+            placeholder="Verification Code"
+            type="text"
+          />
+          <FilledButton type="submit" disabled={ !isValid }>
+            Enter
+          </FilledButton>
+        </Stack>
+      </Box>
 
-      <Box
-        alignSelf="center"
-        position="absolute"
-        bottom="32px"
-        left="0"
-        right="0"
-        color="grey200"
-      >
+      <Box mb={ 4 } mt={ 2 }>
         { showResendLink ? (
           <Link to="#" onClick={ handleEmailResend }>
             Didn&apos;t received the email? Resend email.

@@ -96,7 +96,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
       validationSchema={ getValidationSchema }
     >
       { () => (
-        <Form>
+        <Form style={ { height: "100%" } }>
           <Routes>
             { routes.map(({ path, element }) => (
               <Route key={ path } path={ path } element={ element } />

@@ -36,7 +36,9 @@ describe("<PasswordInputField>", () => {
   it("renders with defaults when only required name prop is given", () => {
     renderComponent();
 
-    expect(screen.getByPlaceholderText("password placeholder")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("password placeholder")
+    ).toBeInTheDocument();
     expect(screen.getByTestId("VisibilityIcon")).toBeInTheDocument();
   });
 
@@ -63,7 +65,10 @@ describe("<PasswordInputField>", () => {
 
   it("does not toggle mask when custom handler provided", () => {
     const mockHandlePressEndAdornment = jest.fn();
-    renderComponent({ externalMaskPassword: true, handlePressEndAdornment: mockHandlePressEndAdornment });
+    renderComponent({
+      externalMaskPassword: true,
+      handlePressEndAdornment: mockHandlePressEndAdornment,
+    });
 
     const maskIcon = screen.getByTestId("VisibilityIcon");
 

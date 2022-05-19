@@ -1,10 +1,18 @@
 import { FunctionComponent } from "react";
 
-const NEWMLogo: FunctionComponent = () => (
+interface NEWMLogoProps {
+  readonly height?: string;
+  readonly width?: string;
+}
+
+const NEWMLogo: FunctionComponent<NEWMLogoProps> = ({
+  height = "150",
+  width = "150",
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="150"
-    height="150"
+    width={ width }
+    height={ height }
     fill="none"
     viewBox="0 0 150 150"
   >

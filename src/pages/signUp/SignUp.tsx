@@ -1,12 +1,10 @@
 import * as Yup from "yup";
-import { Box, Container } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Container, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
 import { createAccount, sendVerificationEmail } from "modules/session";
-import NEWMLogo from "assets/images/NEWMLogo";
 import Verification from "./signUpSteps/Verification";
 import Welcome from "./signUpSteps/Welcome";
 
@@ -31,7 +29,7 @@ const SignUp: FunctionComponent = () => {
    * Password regex, it must contain the following:
    * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
    */
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   /**
    * Yup validations for all form fields.
@@ -81,9 +79,6 @@ const SignUp: FunctionComponent = () => {
       } }
     >
       <Container maxWidth="xl">
-        <Box mb={ 4 }>
-          <NEWMLogo />
-        </Box>
         <WizardForm
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
