@@ -91,17 +91,11 @@ declare module "@mui/material/styles" {
   }
 
   type CSSPropertiesWithMediaQueries = React.CSSProperties & MediaQueryStyles;
+
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
-    gradient: CSSPropertiesWithMediaQueries;
-    heading: CSSPropertiesWithMediaQueries;
-    xxs: CSSPropertiesWithMediaQueries;
-    xs: CSSPropertiesWithMediaQueries;
-    sm: CSSPropertiesWithMediaQueries;
-    md: CSSPropertiesWithMediaQueries;
-    xxl: CSSPropertiesWithMediaQueries;
-    xxxl: CSSPropertiesWithMediaQueries;
+    emphasized: React.CSSProperties;
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
   }
@@ -115,14 +109,8 @@ declare module "@mui/material/styles" {
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
-    gradient?: CSSPropertiesWithMediaQueries;
+    emphasized: React.CSSProperties;
     heading?: CSSPropertiesWithMediaQueries;
-    xxs?: CSSPropertiesWithMediaQueries;
-    xs?: CSSPropertiesWithMediaQueries;
-    sm?: CSSPropertiesWithMediaQueries;
-    md?: CSSPropertiesWithMediaQueries;
-    xxl?: CSSPropertiesWithMediaQueries;
-    xxxl?: CSSPropertiesWithMediaQueries;
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
   }
@@ -135,63 +123,10 @@ declare module "@mui/material/Typography" {
     formHeader: true;
     gradient: true;
     heading: true;
-    xxs: true;
-    xs: true;
-    sm: true;
-    md: true;
-    xxl: true;
-    xxxl: true;
     fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
 }
-
-const typographyValues = {
-  // default fontFamily
-  fontFamily: "Inter",
-  fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightSemiBold: 600,
-  fontWeightBold: 700,
-  fontWeightExtraBold: 800,
-  // custom font variants
-  xxs: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "10px",
-    lineHeight: "20px",
-  },
-  xs: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "12px",
-    lineHeight: "20px",
-  },
-  sm: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "14px",
-    lineHeight: "20px",
-  },
-  md: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "16px",
-    lineHeight: "20px",
-  },
-  xxl: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "32px",
-    lineHeight: "48px",
-  },
-  xxxl: {
-    fontFamily: "Raleway",
-    fontStyle: "normal",
-    fontSize: "80px",
-    lineHeight: "96px",
-  },
-};
 
 const theme = createTheme({
   colors: {
@@ -270,6 +205,10 @@ const theme = createTheme({
 
     action: {
       disabled: "white",
+      active: "white",
+      hover: "white",
+      selected: "white",
+      focus: "white",
     },
 
     text: {
@@ -279,27 +218,68 @@ const theme = createTheme({
   },
 
   typography: {
-    ...typographyValues,
-    heading: {
+    // default fontFamily
+    fontFamily: "Inter",
+
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightSemiBold: 600,
+    fontWeightBold: 700,
+    fontWeightExtraBold: 800,
+
+    // custom font variants
+    h1: {
       fontFamily: "Raleway",
-      fontSize: typographyValues.xxl.fontSize,
-      fontWeight: typographyValues.fontWeightExtraBold,
-      lineHeight: typographyValues.xxl.lineHeight,
-      "@media (min-width: 900px)": {
-        fontSize: typographyValues.xxxl.fontSize,
-        lineHeight: typographyValues.xxxl.lineHeight,
+      fontStyle: "normal",
+      fontWeight: 800,
+      fontSize: "80px",
+      lineHeight: "96px",
+      "@media (max-width: 900px": {
+        fontSize: "32px",
+        lineHeight: "48px",
       },
     },
-    gradient: {
+    h3: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "32px",
+      lineHeight: "48px",
+    },
+    h4: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    h5: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "12px",
+      lineHeight: "20px",
+    },
+    h6: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "10px",
+      lineHeight: "20px",
+    },
+    body1: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+
+    // custom font theme styles
+    emphasized: {
       fontFamily: "DM Serif Text",
-      fontSize: typographyValues.xxl.fontSize,
       fontStyle: "italic",
-      lineHeight: typographyValues.xxl.lineHeight,
-      fontWeight: typographyValues.fontWeightMedium,
-      "@media (min-width: 900px)": {
-        fontSize: typographyValues.xxxl.fontSize,
-        lineHeight: typographyValues.xxxl.lineHeight,
-      },
+      fontWeight: 400,
     },
   },
 });

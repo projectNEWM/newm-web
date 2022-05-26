@@ -5,7 +5,8 @@ import {
   forwardRef,
 } from "react";
 import { Stack } from "@mui/material";
-import { SxProps, styled } from "@mui/material/styles";
+import { SxProps } from "@mui/material/styles";
+import styled from "styled-components";
 import theme from "theme";
 import Typography from "./Typography";
 
@@ -44,6 +45,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
     props.hasError ? theme.palette.error.main : "transparent"};
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
   background: ${(props) => (props.hasError ? "none" : theme.gradients.artist)};
+  -webkit-background-clip: text;
   background-clip: text;
   text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
@@ -51,10 +53,10 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
     props.hasError ? theme.palette.error.main : theme.colors.purple};
   text-align: ${(props) => props.textAlign};
   font-family: 'DM Serif Text';
-  font-style: ${theme.typography.xxxl.fontStyle};
+  font-style: ${theme.typography.h1.fontStyle};
   font-weight: 400;
-  font-size: ${theme.typography.xxxl.fontSize};
-  line-height: ${theme.typography.xxxl.lineHeight};
+  font-size: ${theme.typography.h1.fontSize};
+  line-height: ${theme.typography.h1.lineHeight};
   text-shadow: 0 0 transparent;
 
   &::placeholder {
@@ -94,14 +96,14 @@ const GradientTextInput: ForwardRefRenderFunction<
 
       { errorMessage ? (
         <Typography
-          variant="xs"
+          variant="h5"
           textAlign={ textAlign }
           sx={ { color: theme.palette.error.main } }
         >
           { errorMessage }
         </Typography>
       ) : helperText ? (
-        <Typography variant="xs" textAlign={ textAlign } color="grey100">
+        <Typography variant="h5" textAlign={ textAlign } color="grey100">
           { helperText }
         </Typography>
       ) : undefined }

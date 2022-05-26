@@ -1,4 +1,4 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
@@ -13,7 +13,6 @@ import {
 } from "components";
 
 const SignUp: FunctionComponent = () => {
-  const theme = useTheme();
   const { isValid, values } = useFormikContext();
   const { newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
@@ -31,8 +30,8 @@ const SignUp: FunctionComponent = () => {
         <ResponsiveNEWMLogo />
       </Box>
       <Typography
+        variant="h1"
         sx={ {
-          ...theme.typography.heading,
           marginBottom: 5,
           display: "block",
         } }

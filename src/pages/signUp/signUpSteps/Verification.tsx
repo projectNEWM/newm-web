@@ -36,8 +36,8 @@ const Verification: FunctionComponent = () => {
           <ResponsiveNEWMLogo />
         </Box>
         <Typography
+          variant="h1"
           sx={ {
-            ...theme.typography.heading,
             marginBottom: 1.5,
             display: "block",
           } }
@@ -46,11 +46,11 @@ const Verification: FunctionComponent = () => {
         </Typography>
         <GradientTypography
           id="verificationLabel"
+          variant="h1"
           sx={ {
-            ...theme.typography.gradient,
+            ...theme.typography.emphasized,
             marginBottom: 7.5,
           } }
-          variant="subtitle1"
         >
           Paste your verification code here.
         </GradientTypography>
