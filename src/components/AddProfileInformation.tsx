@@ -76,8 +76,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
         helperText={ !isValid ? helperText : "" }
         name={ fieldName }
         placeholder={ isMobileOrTablet ? placeholder : undefined }
-        style={ { ...theme.typography.emphasized } }
-        textAlign="center"
+        style={ { textAlign: "center", ...theme.typography.emphasized } }
       />
 
       <Box sx={ { mt: [2, 2, 4], width: "100%" } }>

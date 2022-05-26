@@ -65,9 +65,11 @@ const SignUp: FunctionComponent = () => {
           Enter
         </FilledButton>
       </Stack>
+
       <Typography align="center" marginBottom="16px">
         or sign up via
       </Typography>
+
       <Stack direction="row" spacing={ 2 }>
         <GoogleLogin />
         <FacebookLogin />

@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { Theme, createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -41,6 +41,7 @@ declare module "@mui/material/styles" {
       fontWeight: number;
     };
   }
+
   // allow configuration using `createTheme`
   interface ThemeOptions {
     colors?: {
@@ -86,12 +87,6 @@ declare module "@mui/material/styles" {
 
 // declare typography custom types
 declare module "@mui/material/styles" {
-  interface MediaQueryStyles {
-    "@media (min-width: 900px)"?: React.CSSProperties;
-  }
-
-  type CSSPropertiesWithMediaQueries = React.CSSProperties & MediaQueryStyles;
-
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
@@ -110,7 +105,6 @@ declare module "@mui/material/styles" {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
     emphasized: React.CSSProperties;
-    heading?: CSSPropertiesWithMediaQueries;
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
   }
@@ -121,13 +115,14 @@ declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
     tabs: true;
     formHeader: true;
-    gradient: true;
-    heading: true;
     fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
 }
 
+/**
+ * Theme without responsive values
+ */
 const theme = createTheme({
   colors: {
     blue: "#0099CC",
@@ -205,10 +200,6 @@ const theme = createTheme({
 
     action: {
       disabled: "white",
-      active: "white",
-      hover: "white",
-      selected: "white",
-      focus: "white",
     },
 
     text: {
@@ -234,10 +225,6 @@ const theme = createTheme({
       fontWeight: 800,
       fontSize: "80px",
       lineHeight: "96px",
-      "@media (max-width: 900px": {
-        fontSize: "32px",
-        lineHeight: "48px",
-      },
     },
     h3: {
       fontFamily: "Inter",
@@ -284,4 +271,23 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+const { breakpoints } = theme;
+
+/**
+ * Theme with responsive values using defined breakpoints
+ */
+const responsiveTheme: Theme = {
+  ...theme,
+  typography: {
+    ...theme.typography,
+    h1: {
+      ...theme.typography.h1,
+      [breakpoints.down("md")]: {
+        fontSize: "32px",
+        lineHeight: "48px",
+      },
+    },
+  },
+};
+
+export default responsiveTheme;
