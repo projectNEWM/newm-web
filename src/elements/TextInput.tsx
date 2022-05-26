@@ -94,7 +94,7 @@ export const TextInput: ForwardRefRenderFunction<
       sx={ { opacity: disabled ? 0.5 : 1 } }
     >
       { !!label && (
-        <Typography variant="body1" fontWeight="medium" color="grey100">
+        <Typography fontWeight="medium" color="grey100">
           { label }
         </Typography>
       ) }

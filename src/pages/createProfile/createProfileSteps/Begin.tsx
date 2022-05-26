@@ -28,7 +28,7 @@ const Begin: FunctionComponent = () => {
       <Box mt={ 1 } mb={ 8 }>
         <GradientTypography
           variant="h1"
-          style={ { ...theme.typography.emphasized } }
+          sx={ { ...theme.typography.emphasized } }
         >
           Let&apos;s set you up.
         </GradientTypography>

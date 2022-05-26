@@ -28,7 +28,7 @@ const Complete: FunctionComponent = () => {
         <Box mt={ 1 } mb={ 6 }>
           <GradientTypography
             variant="h1"
-            style={ { ...theme.typography.emphasized } }
+            sx={ { ...theme.typography.emphasized } }
           >
             Shall we?
           </GradientTypography>

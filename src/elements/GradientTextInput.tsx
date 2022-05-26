@@ -55,10 +55,11 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   caret-color: ${(props) =>
     props.hasError ? theme.palette.error.main : theme.colors.purple};
   text-align: ${(props) => props.textAlign};
-  font-style: ${theme.typography.h1.fontStyle};
-  font-weight: 400;
   font-size: ${theme.typography.h1.fontSize};
   line-height: ${theme.typography.h1.lineHeight};
+  font-family: ${theme.typography.emphasized.fontFamily};
+  font-style: ${theme.typography.emphasized.fontStyle};
+  font-weight: ${theme.typography.emphasized.fontWeight};
   text-shadow: 0 0 transparent;
 
   &::placeholder {

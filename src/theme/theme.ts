@@ -218,7 +218,7 @@ const theme = createTheme({
     fontWeightBold: 700,
     fontWeightExtraBold: 800,
 
-    // custom font variants
+    // customized font variants
     h1: {
       fontFamily: "Raleway",
       fontStyle: "normal",

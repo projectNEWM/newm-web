@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
 import {
@@ -24,7 +24,6 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   prompt,
   tags,
 }) => {
-  const theme = useTheme();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
   const { isMobileOrTablet } = useUserDevice();
@@ -76,7 +75,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
         helperText={ !isValid ? helperText : "" }
         name={ fieldName }
         placeholder={ isMobileOrTablet ? placeholder : undefined }
-        style={ { textAlign: "center", ...theme.typography.emphasized } }
+        textAlign="center"
       />
 
       <Box sx={ { mt: [2, 2, 4], width: "100%" } }>

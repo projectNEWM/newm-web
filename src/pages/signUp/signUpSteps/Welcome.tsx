@@ -29,15 +29,11 @@ const SignUp: FunctionComponent = () => {
       <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
-      <Typography
-        variant="h1"
-        sx={ {
-          marginBottom: 5,
-          display: "block",
-        } }
-      >
+
+      <Typography variant="h1" mb={ 5 }>
         Welcome
       </Typography>
+
       <Stack maxWidth="312px" mb={ 5 } spacing={ 1.5 } width="100%">
         <TextInputField
           aria-label="Email input field"
