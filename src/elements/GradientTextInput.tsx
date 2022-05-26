@@ -48,7 +48,6 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
     props.hasError ? theme.palette.error.main : "transparent"};
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
   background: ${(props) => (props.hasError ? "none" : theme.gradients.artist)};
-  -webkit-background-clip: text;
   background-clip: text;
   text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
