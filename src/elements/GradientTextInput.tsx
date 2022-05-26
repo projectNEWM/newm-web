@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { Stack } from "@mui/material";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 import theme from "theme";
 import Typography from "./Typography";
 
