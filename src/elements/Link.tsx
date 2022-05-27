@@ -8,7 +8,7 @@ import Typography, { TypographyProps } from "./Typography";
 type LinkProps = RouterLinkProps & TypographyProps;
 
 const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
-  { to, replace, sx, ...typographyProps },
+  { to, replace, color = "white", sx, ...typographyProps },
   ref
 ) => {
   return (
@@ -16,6 +16,7 @@ const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
       <Typography
         { ...typographyProps }
         ref={ ref }
+        color={ color }
         sx={ {
           textDecoration: "underline",
           ...sx,

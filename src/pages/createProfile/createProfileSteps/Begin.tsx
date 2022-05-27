@@ -21,22 +21,14 @@ const Begin: FunctionComponent = () => {
         <ResponsiveNEWMLogo />
       </Box>
 
-      <Typography
-        sx={ {
-          ...theme.typography.heading,
-          marginBottom: 1.5,
-          display: "block",
-        } }
-      >
+      <Typography variant="h1" sx={ { marginBottom: 1.5 } }>
         Aaaaand you&apos;re in.
       </Typography>
 
       <Box mt={ 1 } mb={ 8 }>
         <GradientTypography
-          sx={ {
-            ...theme.typography.gradient,
-            display: "block",
-          } }
+          variant="h1"
+          sx={ { ...theme.typography.emphasized } }
         >
           Let&apos;s set you up.
         </GradientTypography>

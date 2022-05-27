@@ -8,29 +8,30 @@ export default {
 
 export const Variants = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
-    <Typography variant="xxs">Text xxs</Typography>
-    <Typography variant="xs">Text xs</Typography>
-    <Typography variant="sm">Text sm</Typography>
-    <Typography variant="md">Text md</Typography>
-    <Typography variant="xxl">Text xxl</Typography>
+    <Typography variant="h1">h1</Typography>
+    <Typography variant="h3">h3</Typography>
+    <Typography variant="h4">h4</Typography>
+    <Typography variant="h5">h5</Typography>
+    <Typography variant="h6">h6</Typography>
+    <Typography variant="body1">Body 1</Typography>
   </Stack>
 );
 
 export const FontWeights = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
-    <Typography variant="md" fontWeight="regular">
+    <Typography variant="h4" fontWeight="regular">
       Text Regular Font Weight
     </Typography>
-    <Typography variant="md" fontWeight="medium">
+    <Typography variant="h4" fontWeight="medium">
       Text Medium Font Weight
     </Typography>
-    <Typography variant="md" fontWeight="semi-bold">
+    <Typography variant="h4" fontWeight="semi-bold">
       Text Semi Bold Font Weight
     </Typography>
-    <Typography variant="md" fontWeight="bold">
+    <Typography variant="h4" fontWeight="bold">
       Text Bold Font Weight
     </Typography>
-    <Typography variant="md" fontWeight="extra-bold">
+    <Typography variant="h4" fontWeight="extra-bold">
       Text Extra Bold Font Weight
     </Typography>
   </Stack>
@@ -38,16 +39,16 @@ export const FontWeights = () => (
 
 export const FontFamilies = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
-    <Typography variant="md" fontFamily="Inter">
+    <Typography variant="h4" fontFamily="Inter">
       Text Inter
     </Typography>
-    <Typography variant="md" fontFamily="Raleway">
+    <Typography variant="h4" fontFamily="Raleway">
       Text Raleway
     </Typography>
-    <Typography variant="md" fontFamily="DM Serif Text">
+    <Typography variant="h4" fontFamily="DM Serif Text">
       Text DM Serif Text
     </Typography>
-    <Typography variant="md" fontStyle="italic" fontFamily="DM Serif Text">
+    <Typography variant="h4" fontStyle="italic" fontFamily="DM Serif Text">
       Text DM Serif Text Italic
     </Typography>
   </Stack>

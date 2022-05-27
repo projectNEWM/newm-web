@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { Theme, createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -41,6 +41,7 @@ declare module "@mui/material/styles" {
       fontWeight: number;
     };
   }
+
   // allow configuration using `createTheme`
   interface ThemeOptions {
     colors?: {
@@ -86,22 +87,10 @@ declare module "@mui/material/styles" {
 
 // declare typography custom types
 declare module "@mui/material/styles" {
-  interface MediaQueryStyles {
-    "@media (min-width: 900px)"?: React.CSSProperties;
-  }
-
-  type CSSPropertiesWithMediaQueries = React.CSSProperties & MediaQueryStyles;
   export interface TypographyVariants {
     tabs: React.CSSProperties;
     formHeader: React.CSSProperties;
-    gradient: CSSPropertiesWithMediaQueries;
-    heading: CSSPropertiesWithMediaQueries;
-    xxs: CSSPropertiesWithMediaQueries;
-    xs: CSSPropertiesWithMediaQueries;
-    sm: CSSPropertiesWithMediaQueries;
-    md: CSSPropertiesWithMediaQueries;
-    xxl: CSSPropertiesWithMediaQueries;
-    xxxl: CSSPropertiesWithMediaQueries;
+    emphasized: React.CSSProperties;
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
   }
@@ -115,14 +104,7 @@ declare module "@mui/material/styles" {
   export interface TypographyVariantsOptions {
     tabs?: React.CSSProperties;
     formHeader?: React.CSSProperties;
-    gradient?: CSSPropertiesWithMediaQueries;
-    heading?: CSSPropertiesWithMediaQueries;
-    xxs?: CSSPropertiesWithMediaQueries;
-    xs?: CSSPropertiesWithMediaQueries;
-    sm?: CSSPropertiesWithMediaQueries;
-    md?: CSSPropertiesWithMediaQueries;
-    xxl?: CSSPropertiesWithMediaQueries;
-    xxxl?: CSSPropertiesWithMediaQueries;
+    emphasized: React.CSSProperties;
     fontWeightSemiBold: number;
     fontWeightExtraBold: number;
   }
@@ -133,66 +115,14 @@ declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
     tabs: true;
     formHeader: true;
-    gradient: true;
-    heading: true;
-    xxs: true;
-    xs: true;
-    sm: true;
-    md: true;
-    xxl: true;
-    xxxl: true;
     fontWeightSemiBold: true;
     fontWeightExtraBold: true;
   }
 }
 
-const typographyValues = {
-  // default fontFamily
-  fontFamily: "Inter",
-  fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightSemiBold: 600,
-  fontWeightBold: 700,
-  fontWeightExtraBold: 800,
-  // custom font variants
-  xxs: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "10px",
-    lineHeight: "20px",
-  },
-  xs: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "12px",
-    lineHeight: "20px",
-  },
-  sm: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "14px",
-    lineHeight: "20px",
-  },
-  md: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "16px",
-    lineHeight: "20px",
-  },
-  xxl: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "32px",
-    lineHeight: "48px",
-  },
-  xxxl: {
-    fontFamily: "Raleway",
-    fontStyle: "normal",
-    fontSize: "80px",
-    lineHeight: "96px",
-  },
-};
-
+/**
+ * Theme without responsive values
+ */
 const theme = createTheme({
   colors: {
     blue: "#0099CC",
@@ -279,29 +209,85 @@ const theme = createTheme({
   },
 
   typography: {
-    ...typographyValues,
-    heading: {
+    // default fontFamily
+    fontFamily: "Inter",
+
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightSemiBold: 600,
+    fontWeightBold: 700,
+    fontWeightExtraBold: 800,
+
+    // customized font variants
+    h1: {
       fontFamily: "Raleway",
-      fontSize: typographyValues.xxl.fontSize,
-      fontWeight: typographyValues.fontWeightExtraBold,
-      lineHeight: typographyValues.xxl.lineHeight,
-      "@media (min-width: 900px)": {
-        fontSize: typographyValues.xxxl.fontSize,
-        lineHeight: typographyValues.xxxl.lineHeight,
-      },
+      fontStyle: "normal",
+      fontWeight: 800,
+      fontSize: "80px",
+      lineHeight: "96px",
     },
-    gradient: {
+    h3: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "32px",
+      lineHeight: "48px",
+    },
+    h4: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "16px",
+      lineHeight: "20px",
+    },
+    h5: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "12px",
+      lineHeight: "20px",
+    },
+    h6: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "10px",
+      lineHeight: "20px",
+    },
+    body1: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "14px",
+      lineHeight: "20px",
+    },
+
+    // custom font theme styles
+    emphasized: {
       fontFamily: "DM Serif Text",
-      fontSize: typographyValues.xxl.fontSize,
       fontStyle: "italic",
-      lineHeight: typographyValues.xxl.lineHeight,
-      fontWeight: typographyValues.fontWeightMedium,
-      "@media (min-width: 900px)": {
-        fontSize: typographyValues.xxxl.fontSize,
-        lineHeight: typographyValues.xxxl.lineHeight,
-      },
+      fontWeight: 400,
     },
   },
 });
 
-export default theme;
+const { breakpoints } = theme;
+
+/**
+ * Theme with responsive values using defined breakpoints
+ */
+const responsiveTheme: Theme = {
+  ...theme,
+  typography: {
+    ...theme.typography,
+    h1: {
+      ...theme.typography.h1,
+      [breakpoints.down("md")]: {
+        fontSize: "32px",
+        lineHeight: "48px",
+      },
+    },
+  },
+};
+
+export default responsiveTheme;

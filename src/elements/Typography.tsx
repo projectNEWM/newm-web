@@ -1,43 +1,39 @@
+/**
+ * Typography component that allows for easily overridding
+ * color and font-weight styles.
+ */
+
 import {
   TypographyProps as MuiTypogaphyProps,
   Typography as MuiTypography,
+  TypographyVariant,
   useTheme,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
 export interface TypographyProps extends MuiTypogaphyProps {
+  variant?: TypographyVariant;
   color?: keyof Theme["colors"];
-  fontFamily?: "Inter" | "Raleway" | "DM Serif Text";
   fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
-  fontStyle?: "normal" | "italic";
 }
 
 const Typography: FunctionComponent<TypographyProps> = ({
-  color = "white",
-  fontWeight = "semi-bold",
-  fontFamily = "Inter",
-  fontStyle = "normal",
-  variant = "sm",
-  sx,
+  color,
+  fontWeight,
+  children,
   ...rest
 }) => {
   const theme = useTheme();
-  const colorHex = theme.colors[color];
-  const fontWeightValue = fontWeightMap[fontWeight];
 
   return (
     <MuiTypography
-      fontFamily={ fontFamily }
-      fontWeight={ fontWeightValue }
-      variant={ variant }
-      sx={ {
-        color: colorHex,
-        fontStyle,
-        ...sx,
-      } }
+      fontWeight={ fontWeight ? fontWeightMap[fontWeight] : undefined }
+      color={ color ? theme.colors[color] : undefined }
       { ...rest }
-    />
+    >
+      { children }
+    </MuiTypography>
   );
 };
 

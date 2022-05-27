@@ -49,7 +49,7 @@ export const Example = () => {
   return (
     <Box maxWidth="312px">
       <Box mb={ 2 }>
-        <Typography variant="xxl">Example Form</Typography>
+        <Typography variant="h3">Example Form</Typography>
       </Box>
 
       <Formik

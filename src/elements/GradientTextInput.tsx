@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { Stack } from "@mui/material";
-import { SxProps, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import theme from "theme";
 import Typography from "./Typography";
 
@@ -14,7 +14,6 @@ export interface GradientTextInputProps
   readonly errorMessage?: string;
   readonly helperText?: string;
   readonly textAlign?: "left" | "center" | "right";
-  readonly sx?: SxProps;
 }
 
 interface StyledInputElementProps
@@ -22,6 +21,11 @@ interface StyledInputElementProps
   readonly hasError: boolean;
   readonly textAlign: "left" | "center" | "right";
 }
+
+const mdBreakpoint = theme.breakpoints.down("md");
+const mdBreakpointStyles = theme.typography.h1[
+  mdBreakpoint
+] as typeof theme.typography.h1;
 
 const StyledRootElement = styled("div")`
   display: flex;
@@ -50,11 +54,11 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   caret-color: ${(props) =>
     props.hasError ? theme.palette.error.main : theme.colors.purple};
   text-align: ${(props) => props.textAlign};
-  font-family: 'DM Serif Text';
-  font-style: ${theme.typography.xxxl.fontStyle};
-  font-weight: 400;
-  font-size: ${theme.typography.xxxl.fontSize};
-  line-height: ${theme.typography.xxxl.lineHeight};
+  font-size: ${theme.typography.h1.fontSize};
+  line-height: ${theme.typography.h1.lineHeight};
+  font-family: ${theme.typography.emphasized.fontFamily};
+  font-style: ${theme.typography.emphasized.fontStyle};
+  font-weight: ${theme.typography.emphasized.fontWeight};
   text-shadow: 0 0 transparent;
 
   &::placeholder {
@@ -68,6 +72,11 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
 
   &:focus {
     outline: none;
+  }
+
+  ${mdBreakpoint} {
+    font-size: ${mdBreakpointStyles.fontSize};
+    line-height: ${mdBreakpointStyles.lineHeight};
   }
 `;
 
@@ -94,14 +103,14 @@ const GradientTextInput: ForwardRefRenderFunction<
 
       { errorMessage ? (
         <Typography
-          variant="xs"
+          variant="h5"
           textAlign={ textAlign }
           sx={ { color: theme.palette.error.main } }
         >
           { errorMessage }
         </Typography>
       ) : helperText ? (
-        <Typography variant="xs" textAlign={ textAlign } color="grey100">
+        <Typography variant="h5" textAlign={ textAlign } color="grey100">
           { helperText }
         </Typography>
       ) : undefined }

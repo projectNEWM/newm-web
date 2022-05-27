@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { useFormikContext } from "formik";
 import {
@@ -24,7 +24,6 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   prompt,
   tags,
 }) => {
-  const theme = useTheme();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
   const { isMobileOrTablet } = useUserDevice();
@@ -67,19 +66,15 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
-      <Typography
-        align="center"
-        sx={ { ...theme.typography.heading, display: "block" } }
-      >
+      <Typography variant="h1" sx={ { textAlign: "center" } }>
         { prompt }
       </Typography>
 
       <GradientTextInputField
+        ref={ inputRef }
         helperText={ !isValid ? helperText : "" }
         name={ fieldName }
         placeholder={ isMobileOrTablet ? placeholder : undefined }
-        ref={ inputRef }
-        sx={ { ...theme.typography.gradient } }
         textAlign="center"
       />
 
@@ -90,7 +85,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
               alignItems: "center",
               display: "flex",
               flexDirection: "column",
-              mt: [2, 2, 3.25],
+              mt: 2,
             } }
           >
             <Box mb={ 1 } width="100%">
@@ -104,7 +99,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
             </Box>
 
             <Typography
-              variant="xs"
+              variant="h5"
               color="grey100"
               sx={ { opacity: isValid ? 1 : 0.5 } }
             >
