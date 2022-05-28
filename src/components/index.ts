@@ -25,5 +25,4 @@ export { default as SquareGridCard } from "./SquareGridCard";
 export { default as TempAuthButton } from "./TempAuthButton";
 export { default as TextInputField } from "./form/TextInputField";
 export { default as UploadImage } from "./UploadImage";
-export { default as UploadOverlayContent } from "./UploadOverlayContent";
 export { default as WizardForm } from "./form/WizardForm";

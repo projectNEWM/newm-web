@@ -1,24 +1,29 @@
 import { Box, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
+import { Typography } from "elements";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
-import UploadOverlayContent from "./UploadOverlayContent";
 import ImagePreview from "./ImagePreview";
 import DashedOutline from "./styled/DashedOutline";
-
-interface FileWithPreview extends File {
-  readonly preview: string;
-}
 
 interface UploadImageProps {
   readonly onError: (message: string) => void;
 }
 
+interface UploadInstructionsProps {
+  readonly icon: JSX.Element;
+  readonly message: string;
+}
+
+interface FileWithPreview extends File {
+  readonly preview: string;
+}
+
 /**
  * Allows a user to upload an image by either clicking the area to
- * open the file browser or dropping the file onto it.
+ * open the file browser or dropping a file onto it.
  */
 const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
   const [file, setFile] = useState<FileWithPreview>();
@@ -68,7 +73,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
         }
       }
     },
-    [setFile]
+    [setFile, onError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -112,12 +117,12 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
             alignItems="center"
           >
             { isHovering || isDragActive ? (
-              <UploadOverlayContent
+              <UploadInstructions
                 icon={ <AddImageIcon /> }
                 message="Upload a new image"
               />
             ) : (
-              <UploadOverlayContent
+              <UploadInstructions
                 icon={ <CheckCircleIcon /> }
                 message={ file.name }
               />
@@ -126,7 +131,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
         </ImagePreview>
       ) : (
         <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
-          <UploadOverlayContent
+          <UploadInstructions
             icon={ <AddImageIcon /> }
             message="Drag and drop or browse your image"
           />
@@ -135,5 +140,22 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
     </Box>
   );
 };
+
+const UploadInstructions: FunctionComponent<UploadInstructionsProps> = ({
+  icon,
+  message,
+}) => (
+  <Stack
+    spacing={ 1 }
+    direction="column"
+    sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
+  >
+    { icon }
+
+    <Typography variant="h5" textAlign="center" fontWeight="regular">
+      { message }
+    </Typography>
+  </Stack>
+);
 
 export default UploadImage;
