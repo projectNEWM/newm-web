@@ -9,7 +9,7 @@ interface UploadOverlayContentProps {
 
 /**
  * Displays content meant to be overlaid
- * on top of an uplaod image preview.
+ * on top of an upload image preview.
  */
 const UploadOverlayContent: FunctionComponent<UploadOverlayContentProps> = ({
   icon,

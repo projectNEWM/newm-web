@@ -21,7 +21,7 @@ const UploadSong: FunctionComponent = () => {
                 MUSIC
               </Typography>
 
-              <UploadImage />
+              <UploadImage onError={ (message) => console.log(message) } />
             </Stack>
           </Grid>
 
@@ -31,7 +31,7 @@ const UploadSong: FunctionComponent = () => {
                 SONG COVER ART
               </Typography>
 
-              <UploadImage />
+              <UploadImage onError={ (message) => console.log(message) } />
             </Stack>
           </Grid>
         </Grid>

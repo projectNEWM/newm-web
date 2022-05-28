@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { validateImageDimensions } from "common/fileUtils";
+import { validateImageDimensions } from "common";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
@@ -12,23 +12,17 @@ interface FileWithPreview extends File {
   readonly preview: string;
 }
 
+interface UploadImageProps {
+  readonly onError: (message: string) => void;
+}
+
 /**
  * Allows a user to upload an image by either clicking the area to
- * open the file browser or dropping the file onto the upload area.
+ * open the file browser or dropping the file onto it.
  */
-const UploadImage: FunctionComponent = () => {
+const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
   const [file, setFile] = useState<FileWithPreview>();
   const [isHovering, setIsHovering] = useState(false);
-
-  /**
-   * Revokes the data uri to avoid memory
-   * leaks (as per react-dropzone docs).
-   */
-  const handleLoad = useCallback(() => {
-    if (file) {
-      URL.revokeObjectURL(file.preview);
-    }
-  }, [file]);
 
   /**
    * Validates the image and then updates the
@@ -70,7 +64,7 @@ const UploadImage: FunctionComponent = () => {
         setFile(fileWithPreview);
       } catch (error) {
         if (error instanceof Error) {
-          console.log(error.message);
+          onError(error.message);
         }
       }
     },
@@ -83,9 +77,19 @@ const UploadImage: FunctionComponent = () => {
     accept: "image/*",
   });
 
+  /**
+   * Revokes the data uri when the component unmounts
+   * to avoid memory leaks (as per react-dropzone docs).
+   */
   useEffect(() => {
+    const handleLoad = () => {
+      if (file) {
+        URL.revokeObjectURL(file.preview);
+      }
+    };
+
     return handleLoad;
-  }, [handleLoad]);
+  }, [file]);
 
   return (
     <Box
