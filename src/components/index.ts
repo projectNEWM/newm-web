@@ -1,4 +1,4 @@
-// Please list exports in alphabeti order by component name
+// Please list exports in alphabetical order by component name
 
 export { default as AddProfileInformation } from "./AddProfileInformation";
 export { default as Background } from "./Background";
