@@ -1,21 +1,15 @@
-import { Typography } from "elements";
 import { Box, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common/fileUtils";
 import { FileRejection, useDropzone } from "react-dropzone";
-import AddSongIcon from "assets/images/AddSong";
+import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
+import UploadOverlayContent from "./UploadOverlayContent";
+import ImagePreview from "./ImagePreview";
 import DashedOutline from "./styled/DashedOutline";
-import SolidOutline from "./styled/SolidOutline";
 
 interface FileWithPreview extends File {
   readonly preview: string;
-}
-
-interface ImagePreviewProps {
-  readonly filename: string;
-  readonly preview: string;
-  readonly isDragActive: boolean;
 }
 
 /**
@@ -24,6 +18,7 @@ interface ImagePreviewProps {
  */
 const UploadImage: FunctionComponent = () => {
   const [file, setFile] = useState<FileWithPreview>();
+  const [isHovering, setIsHovering] = useState(false);
 
   /**
    * Revokes the data uri to avoid memory
@@ -101,89 +96,39 @@ const UploadImage: FunctionComponent = () => {
 
       { file?.preview ? (
         <ImagePreview
-          filename={ file.name }
-          preview={ file.preview }
-          isDragActive={ isDragActive }
-        />
+          onMouseEnter={ () => setIsHovering(true) }
+          onMouseLeave={ () => setIsHovering(false) }
+          imageUrl={ file.preview }
+        >
+          <Stack
+            spacing={ 1 }
+            direction="column"
+            flexGrow={ 1 }
+            justifyContent="center"
+            alignItems="center"
+          >
+            { isHovering || isDragActive ? (
+              <UploadOverlayContent
+                icon={ <AddImageIcon /> }
+                message="Upload a new image"
+              />
+            ) : (
+              <UploadOverlayContent
+                icon={ <CheckCircleIcon /> }
+                message={ file.name }
+              />
+            ) }
+          </Stack>
+        </ImagePreview>
       ) : (
-        <ImageDropInput />
+        <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
+          <UploadOverlayContent
+            icon={ <AddImageIcon /> }
+            message="Drag and drop or browse your image"
+          />
+        </DashedOutline>
       ) }
     </Box>
-  );
-};
-
-/**
- * Area that the user can either click or drag an image onto.
- */
-const ImageDropInput: FunctionComponent = () => {
-  return (
-    <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
-      <Stack
-        spacing={ 1 }
-        direction="column"
-        sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
-      >
-        <AddSongIcon />
-
-        <Typography variant="h5" textAlign="center" fontWeight="regular">
-          Drag and drop or browse your file
-        </Typography>
-      </Stack>
-    </DashedOutline>
-  );
-};
-
-/**
- * Displays an image preview as well as the file name. Displays
- * a message to upload a new image when the user hovers over it.
- */
-const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
-  filename,
-  preview,
-  isDragActive,
-}) => {
-  const [isHovering, setIsHovering] = useState(false);
-
-  const overlay = "rgba(0, 0, 0, 0.4)";
-
-  return (
-    <SolidOutline
-      onMouseEnter={ () => setIsHovering(true) }
-      onMouseLeave={ () => setIsHovering(false) }
-      sx={ {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexGrow: 1,
-        background: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${preview})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      } }
-    >
-      <Stack
-        spacing={ 1 }
-        direction="column"
-        sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
-      >
-        { isHovering || isDragActive ? (
-          <>
-            <AddSongIcon />
-
-            <Typography variant="h5" textAlign="center" fontWeight="regular">
-              Upload a new image
-            </Typography>
-          </>
-        ) : (
-          <>
-            <CheckCircleIcon />
-
-            <Typography variant="h5" textAlign="center" fontWeight="regular">
-              { filename }
-            </Typography>
-          </>
-        ) }
-      </Stack>
-    </SolidOutline>
   );
 };
 
