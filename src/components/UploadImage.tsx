@@ -1,20 +1,19 @@
-import { Box, Stack } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
-import { Typography } from "elements";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
-import ImagePreview from "./ImagePreview";
+import SolidOutline from "./styled/SolidOutline";
 import DashedOutline from "./styled/DashedOutline";
+import IconMessage from "./IconMessage";
 
 interface UploadImageProps {
   readonly onError: (message: string) => void;
 }
 
-interface UploadInstructionsProps {
-  readonly icon: JSX.Element;
-  readonly message: string;
+interface ImagePreviewProps extends BoxProps {
+  readonly imageUrl: string;
 }
 
 interface FileWithPreview extends File {
@@ -109,29 +108,15 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
           onMouseLeave={ () => setIsHovering(false) }
           imageUrl={ file.preview }
         >
-          <Stack
-            spacing={ 1 }
-            direction="column"
-            flexGrow={ 1 }
-            justifyContent="center"
-            alignItems="center"
-          >
-            { isHovering || isDragActive ? (
-              <UploadInstructions
-                icon={ <AddImageIcon /> }
-                message="Upload a new image"
-              />
-            ) : (
-              <UploadInstructions
-                icon={ <CheckCircleIcon /> }
-                message={ file.name }
-              />
-            ) }
-          </Stack>
+          { isHovering || isDragActive ? (
+            <IconMessage icon={ <AddImageIcon /> } message="Upload a new image" />
+          ) : (
+            <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
+          ) }
         </ImagePreview>
       ) : (
         <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
-          <UploadInstructions
+          <IconMessage
             icon={ <AddImageIcon /> }
             message="Drag and drop or browse your image"
           />
@@ -141,21 +126,34 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
   );
 };
 
-const UploadInstructions: FunctionComponent<UploadInstructionsProps> = ({
-  icon,
-  message,
-}) => (
-  <Stack
-    spacing={ 1 }
-    direction="column"
-    sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
-  >
-    { icon }
+/**
+ * Displays a background image with a dark overlay.
+ */
+const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
+  imageUrl,
+  children,
+  sx,
+  ...boxProps
+}) => {
+  const overlay = "rgba(0, 0, 0, 0.4)";
 
-    <Typography variant="h5" textAlign="center" fontWeight="regular">
-      { message }
-    </Typography>
-  </Stack>
-);
+  return (
+    <SolidOutline
+      sx={ {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexGrow: 1,
+        background: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        ...sx,
+      } }
+      { ...boxProps }
+    >
+      { children }
+    </SolidOutline>
+  );
+};
 
 export default UploadImage;

@@ -1,12 +1,9 @@
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
 import theme from "theme";
 
-const {
-  palette: { primary, secondary },
-} = theme;
-
-const HorizontalLine = styled.div`
-  background: linear-gradient(to right, ${primary.main}, ${secondary.main});
+const HorizontalLine = styled(Box)`
+  background: ${theme.colors.grey500};
   height: 1px;
   width: 100%;
 `;
