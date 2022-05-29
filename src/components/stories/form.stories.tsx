@@ -50,7 +50,7 @@ export const Example = () => {
   return (
     <Box maxWidth={ theme.inputField.maxWidth }>
       <Box mb={ 2 }>
-        <Typography variant="xxl">Example Form</Typography>
+        <Typography variant="h3">Example Form</Typography>
       </Box>
 
       <Formik

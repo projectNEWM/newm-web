@@ -21,14 +21,14 @@ const Complete: FunctionComponent = () => {
         <Box mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
-        <Typography sx={ { ...theme.typography.heading, display: "block" } }>
+        <Typography variant="h1" sx={ { display: "block" } }>
           Aaaaand we&apos;re done.
         </Typography>
 
         <Box mt={ 1 } mb={ 6 }>
           <GradientTypography
-            sx={ { ...theme.typography.gradient } }
-            variant="subtitle1"
+            variant="h1"
+            sx={ { ...theme.typography.emphasized } }
           >
             Shall we?
           </GradientTypography>
@@ -47,9 +47,10 @@ const Complete: FunctionComponent = () => {
         >
           Enter NEWM
         </FilledButton>
-        <Typography color="grey200" display="block" fontWeight="medium">
+
+        <Typography color="grey200" fontWeight="medium">
           By proceeding forward you agree to&nbsp;
-          <Link fontWeight="medium" to="#">
+          <Link fontWeight="medium" color="grey200" to="#">
             projectNEWM&apos;s Terms of Service
           </Link>
         </Typography>

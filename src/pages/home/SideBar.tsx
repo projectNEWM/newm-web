@@ -36,7 +36,7 @@ const SideBar: FunctionComponent = () => {
             <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
           ) }
 
-          <Typography variant="md" fontWeight="bold" align="center">
+          <Typography variant="h4" fontWeight="bold" align="center">
             { profile.nickname }
           </Typography>
         </Stack>

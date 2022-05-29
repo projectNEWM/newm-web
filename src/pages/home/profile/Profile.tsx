@@ -1,17 +1,13 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FilledButton,
-  HorizontalLine,
-  Typography,
-} from "elements";
+import { FilledButton, HorizontalLine, Typography } from "elements";
 import {
   DropdownSelectField,
   PasswordInputField,
   ProfileImage,
   TextInputField,
 } from "components";
-import { Container, Stack, useTheme } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation } from "common";
 import { selectContent } from "modules/content";
@@ -19,7 +15,6 @@ import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 
 const Profile: FunctionComponent = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const { roles, genres } = useSelector(selectContent);
   const {
@@ -29,7 +24,7 @@ const Profile: FunctionComponent = () => {
       genre,
       lastName,
       nickname,
-      pictureUrl = "http://placecorgi.com/250",
+      pictureUrl,
       role,
     } = {},
   } = useSelector(selectSession);
@@ -81,13 +76,7 @@ const Profile: FunctionComponent = () => {
         textAlign: ["center", "center", "initial"],
       } }
     >
-      <Typography
-        sx={ {
-          ...theme.typography.heading,
-          display: "block",
-          marginBottom: 5,
-        } }
-      >
+      <Typography variant="h1" mb={ 5 }>
         YOUR PROFILE
       </Typography>
       { pictureUrl && (
@@ -172,7 +161,7 @@ const Profile: FunctionComponent = () => {
               >
                 <HorizontalLine />
               </Stack>
-              <Typography fontWeight="bold">CHANGE PASSWORD</Typography>
+              <Typography variant="subtitle1" fontWeight="bold">CHANGE PASSWORD</Typography>
               <Stack
                 sx={ {
                   marginTop: 2.5,

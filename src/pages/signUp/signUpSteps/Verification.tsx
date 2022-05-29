@@ -31,26 +31,18 @@ const Verification: FunctionComponent = () => {
         justifyContent: "space-between",
       } }
     >
-      <Box>
+      <Box display="flex" flexDirection="column" alignItems="center">
         <Box mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
-        <Typography
-          sx={ {
-            ...theme.typography.heading,
-            marginBottom: 1.5,
-            display: "block",
-          } }
-        >
+        <Typography variant="h1" mb={ 1.5 }>
           Check your email!
         </Typography>
         <GradientTypography
           id="verificationLabel"
-          sx={ {
-            ...theme.typography.gradient,
-            marginBottom: 7.5,
-          } }
-          variant="subtitle1"
+          variant="h1"
+          mb={ 7.5 }
+          style={ { ...theme.typography.emphasized } }
         >
           Paste your verification code here.
         </GradientTypography>

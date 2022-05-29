@@ -102,7 +102,7 @@ export const TextInput: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography variant="sm" fontWeight="medium" color="grey100">
+        <Typography fontWeight="medium" color="grey100">
           { label }
         </Typography>
       ) }
@@ -144,7 +144,7 @@ export const TextInput: ForwardRefRenderFunction<
       </Box>
 
       { !!errorMessage && (
-        <Typography variant="xs" sx={ { color: theme.palette.error.main } }>
+        <Typography variant="h5" sx={ { color: theme.palette.error.main } }>
           { errorMessage }
         </Typography>
       ) }
