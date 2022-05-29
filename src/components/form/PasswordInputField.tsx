@@ -7,14 +7,16 @@ import { TextInputField } from "components";
 import { TextInputProps } from "elements";
 
 interface PasswordInputFieldProps extends TextInputProps {
-  readonly handlePressEndAdornment?: VoidFunction;
   readonly externalMaskPassword?: boolean;
+  readonly handlePressEndAdornment?: VoidFunction;
+  readonly placeholder?: string;
   readonly showEndAdornment?: boolean;
 }
 
 const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
-  handlePressEndAdornment,
   externalMaskPassword,
+  handlePressEndAdornment,
+  placeholder = "Password",
   showEndAdornment = true,
   ...rest
 }) => {
@@ -43,6 +45,7 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
           </IconButton>
         ) : undefined
       }
+      placeholder= { placeholder }
       type={ isMasked ? "password" : "text" }
       { ...rest }
     />

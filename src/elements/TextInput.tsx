@@ -12,10 +12,11 @@ import theme from "theme";
 import Typography from "./Typography";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  readonly label?: string;
-  readonly errorMessage?: string;
-  readonly startAdornment?: JSX.Element;
   readonly endAdornment?: JSX.Element;
+  readonly errorMessage?: string;
+  readonly label?: string;
+  readonly startAdornment?: JSX.Element;
+  readonly widthType?: "default" | "full";
 }
 
 const StyledRootElement = styled.div`
@@ -58,6 +59,7 @@ export const TextInput: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
+    widthType = "default",
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -91,7 +93,13 @@ export const TextInput: ForwardRefRenderFunction<
     <Stack
       direction="column"
       spacing="4px"
-      sx={ { opacity: disabled ? 0.5 : 1 } }
+      sx={ {
+        margin: ["0 auto", "0 auto", "0"],
+        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        opacity: disabled ? 0.5 : 1,
+        textAlign: "left",
+        width: "100%",
+      } }
     >
       { !!label && (
         <Typography variant="sm" fontWeight="medium" color="grey100">

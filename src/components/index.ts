@@ -1,5 +1,6 @@
 export { default as AddProfileInformation } from "./AddProfileInformation";
 export { default as Background } from "./Background";
+export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as FacebookLogin } from "./FacebookLogin";
 export { default as FadeTransition } from "./FadeTransition";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";

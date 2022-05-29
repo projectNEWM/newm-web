@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { FilledButton, Typography } from "elements";
 import * as Yup from "yup";
+import theme from "theme";
 import TextInputField from "../form/TextInputField";
 
 export default {
@@ -47,7 +48,7 @@ const mockHandleSubmit = (
 
 export const Example = () => {
   return (
-    <Box maxWidth="312px">
+    <Box maxWidth={ theme.inputField.maxWidth }>
       <Box mb={ 2 }>
         <Typography variant="xxl">Example Form</Typography>
       </Box>

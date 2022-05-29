@@ -27,13 +27,14 @@ declare module "@mui/material/styles" {
       crypto: string;
     };
     inputField: {
+      borderWidth: string;
       fontFamily: string;
-      fontStyle: string;
       fontSize: string;
+      fontStyle: string;
       fontWeight: number;
       lineHeight: string;
+      maxWidth: string;
       padding: string;
-      borderWidth: string;
     };
     button: {
       fontSize: string;
@@ -75,6 +76,7 @@ declare module "@mui/material/styles" {
       lineHeight?: string;
       padding?: string;
       borderWidth?: string;
+      maxWidth?: string;
     };
     button?: {
       fontSize?: string;
@@ -244,6 +246,7 @@ const theme = createTheme({
     lineHeight: "24px",
     padding: "9px 13px",
     borderWidth: "2px",
+    maxWidth: "340px",
   },
 
   button: {

@@ -10,7 +10,7 @@ export const mockProfile: Profile = {
   nickname: "Johnny",
   pictureUrl: "",
   role: "Producer",
-  genres: ["Electronic", "Instrumental"],
+  genre: "Instrumental",
 };
 
 export const mockSession: SessionState = {

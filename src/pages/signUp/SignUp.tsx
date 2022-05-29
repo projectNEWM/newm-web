@@ -4,6 +4,7 @@ import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
+import { commonYupValidation } from "common";
 import { createAccount, sendVerificationEmail } from "modules/session";
 import Verification from "./signUpSteps/Verification";
 import Welcome from "./signUpSteps/Welcome";
@@ -26,28 +27,13 @@ const SignUp: FunctionComponent = () => {
   };
 
   /**
-   * Password regex, it must contain the following:
-   * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
-   */
-  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
-  /**
    * Yup validations for all form fields.
    */
   const validations = {
     authCode: Yup.string().required("Verification code is required"),
-    email: Yup.string()
-      .email("Please enter a vaild email")
-      .required("E-mail is required"),
-    newPassword: Yup.string()
-      .required("Password is required")
-      .matches(
-        passwordRegex,
-        "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
-      ),
-    confirmPassword: Yup.string()
-      .required("Confirm password is required")
-      .oneOf([Yup.ref("newPassword")], "Passwords must match"),
+    email: commonYupValidation.email,
+    newPassword: commonYupValidation.newPassword.required("Password is required"),
+    confirmPassword: commonYupValidation.confirmPassword.required("Confirm password is required"),
   };
 
   const handleVerificationEmail = (values: FormikValues): void => {

@@ -58,7 +58,7 @@ const Verification: FunctionComponent = () => {
           spacing={ 1.5 }
           mb={ 7.5 }
           margin="0 auto"
-          maxWidth="312px"
+          maxWidth={ theme.inputField.maxWidth }
           width="100%"
         >
           <TextInputField
