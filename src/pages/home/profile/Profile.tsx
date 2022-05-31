@@ -63,7 +63,20 @@ const Profile: FunctionComponent = () => {
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: FormikValues) => {
-    dispatch(updateProfile({ ...values }));
+    const updatedValues = {
+      ...(email !== values.email && { email: values.email }),
+      ...(firstName !== values.firstName && { firstName: values.firstName }),
+      ...(genre !== values.genre && { genre: values.genre }),
+      ...(lastName !== values.lastName && { lastName: values.lastName }),
+      ...(nickname !== values.nickname && { nickname: values.nickname }),
+      ...(pictureUrl !== values.pictureUrl && { pictureUrl: values.pictureUrl }),
+      ...(role !== values.role && { role: values.role }),
+      ...(values.currentPassword && { currentPassword: values.currentPassword }),
+      ...(values.newPassword && { newPassword: values.newPassword }),
+      ...(values.confirmPassword && { confirmPassword: values.confirmPassword }),
+    };
+
+    dispatch(updateProfile({ ...updatedValues }));
   };
 
   return (
