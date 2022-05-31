@@ -15,6 +15,7 @@ export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleChange?: (newValue: string) => void;
   readonly label: string;
   readonly name: string;
   readonly noResultsText?: string;
@@ -66,11 +67,13 @@ const DropdownSelect: ForwardRefRenderFunction<
   {
     disabled,
     errorMessage,
+    handleChange,
     label,
     name,
     noResultsText = "Nothing found",
     options,
     placeholder,
+    value,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -82,12 +85,17 @@ const DropdownSelect: ForwardRefRenderFunction<
     getRootProps,
     groupedOptions,
     popupOpen,
-    value,
     inputValue,
   } = useAutocomplete({
     getOptionLabel: (option) => option,
     id: name,
+    onChange: (event, newValue) => {
+      if (handleChange) {
+        handleChange(newValue as string);
+      }
+    },
     options,
+    value: value as string,
   });
 
   const hasResults = groupedOptions.length > 0;

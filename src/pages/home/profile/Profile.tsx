@@ -87,6 +87,7 @@ const Profile: FunctionComponent = () => {
         />
       ) }
       <Formik
+        enableReinitialize={ true }
         initialValues={ initialValues }
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
@@ -161,7 +162,9 @@ const Profile: FunctionComponent = () => {
               >
                 <HorizontalLine />
               </Stack>
-              <Typography variant="subtitle1" fontWeight="bold">CHANGE PASSWORD</Typography>
+              <Typography variant="subtitle1" fontWeight="bold">
+                CHANGE PASSWORD
+              </Typography>
               <Stack
                 sx={ {
                   marginTop: 2.5,

@@ -7,11 +7,12 @@ const DropdownSelectField: ForwardRefRenderFunction<
   DropdownSelectProps
 > = (props, ref) => (
   <Field name={ props.name }>
-    { ({ field, meta }: FieldProps) => (
+    { ({ field, form,  meta }: FieldProps) => (
       <DropdownSelect
         { ...field }
         { ...props }
         errorMessage={ meta.touched ? meta.error : "" }
+        handleChange={ form.handleChange(props.name) }
         ref={ ref }
       />
     ) }
