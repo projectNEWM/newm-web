@@ -223,8 +223,8 @@ const theme = createTheme({
       fontFamily: "Raleway",
       fontStyle: "normal",
       fontWeight: 800,
-      fontSize: "80px",
-      lineHeight: "96px",
+      fontSize: "32px",
+      lineHeight: "37.57px",
     },
     h3: {
       fontFamily: "Inter",
