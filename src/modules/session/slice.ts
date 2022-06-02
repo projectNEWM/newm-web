@@ -18,7 +18,7 @@ const initialState: SessionState = {
     nickname: "",
     pictureUrl: "",
     role: "",
-    genres: [],
+    genre: "",
   },
   errorMessage: "",
 };

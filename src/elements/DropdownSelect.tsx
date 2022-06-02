@@ -1,20 +1,27 @@
-import { FunctionComponent, KeyboardEvent } from "react";
+import {
+  ForwardRefRenderFunction,
+  ForwardedRef,
+  HTMLProps,
+  KeyboardEvent,
+  forwardRef,
+} from "react";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import styled from "styled-components";
 import theme from "theme";
 import TextInput from "./TextInput";
 
-export interface DropdownSelectProps {
+export interface DropdownSelectProps
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleChange?: (newValue: string) => void;
   readonly label: string;
   readonly name: string;
   readonly noResultsText?: string;
-  readonly options: { id: number; name: string; value: string }[];
+  readonly options: string[];
   readonly placeholder?: string;
 }
-
 const StyledDropdownSelectContainer = styled.div`
   position: relative;
 `;
@@ -30,6 +37,7 @@ const StyledResultsList = styled.ul`
   padding: 0;
   position: absolute;
   width: 100%;
+  z-index: 10;
 
   li {
     cursor: pointer;
@@ -52,15 +60,24 @@ const StyledNoResultsText = styled.span`
   width: 100%;
 `;
 
-const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
-  disabled,
-  errorMessage,
-  label,
-  name,
-  noResultsText = "Nothing found",
-  options,
-  placeholder,
-}) => {
+const DropdownSelect: ForwardRefRenderFunction<
+  HTMLInputElement,
+  DropdownSelectProps
+> = (
+  {
+    disabled,
+    errorMessage,
+    handleChange,
+    label,
+    name,
+    noResultsText = "Nothing found",
+    options,
+    placeholder,
+    value,
+    ...rest
+  },
+  ref: ForwardedRef<HTMLInputElement>
+) => {
   const {
     getInputProps,
     getListboxProps,
@@ -68,12 +85,17 @@ const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
     getRootProps,
     groupedOptions,
     popupOpen,
-    value,
     inputValue,
   } = useAutocomplete({
-    getOptionLabel: (option) => option.name,
-    id: "use-autocomplete",
+    getOptionLabel: (option) => option,
+    id: name,
+    onChange: (event, newValue) => {
+      if (handleChange) {
+        handleChange(newValue as string);
+      }
+    },
     options,
+    value: value as string,
   });
 
   const hasResults = groupedOptions.length > 0;
@@ -84,14 +106,15 @@ const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
    * text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
-    if (event.key === "Enter" && inputValue !== value?.name)
-      event.preventDefault();
+    if (event.key === "Enter" && inputValue !== value) event.preventDefault();
   };
 
   return (
     <StyledDropdownSelectContainer>
       <div { ...getRootProps() }>
         <TextInput
+          ref={ ref }
+          { ...rest }
           { ...getInputProps() }
           disabled={ disabled }
           endAdornment={
@@ -114,8 +137,8 @@ const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
       { hasResults ? (
         <StyledResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
-            <li { ...getOptionProps({ option, index }) } key={ option.id }>
-              { option.name }
+            <li { ...getOptionProps({ option, index }) } key={ index }>
+              { option }
             </li>
           )) }
         </StyledResultsList>
@@ -128,4 +151,4 @@ const DropdownSelect: FunctionComponent<DropdownSelectProps> = ({
   );
 };
 
-export default DropdownSelect;
+export default forwardRef(DropdownSelect);

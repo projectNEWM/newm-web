@@ -14,7 +14,7 @@ export interface Profile {
   readonly nickname: string;
   readonly pictureUrl: string;
   readonly role: string;
-  readonly genres: Array<string>;
+  readonly genre: string;
 }
 
 export interface NewmOAuthRequest {
@@ -48,7 +48,7 @@ export interface UpdateProfileRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly role?: string;
-  readonly genres?: Array<string>;
+  readonly genre?: string;
   readonly email?: string;
   readonly newPassword?: string;
   readonly confirmPassword?: string;
@@ -64,7 +64,7 @@ export interface GetProfileResponse {
   readonly nickname: string;
   readonly pictureUrl: string;
   readonly role: string;
-  readonly genres: Array<string>;
+  readonly genre: string;
   readonly email: string;
 }
 
@@ -77,7 +77,7 @@ export interface CreateAccountRequest {
   readonly confirmPassword: string;
   readonly email: string;
   readonly firstName?: string;
-  readonly genres?: Array<string>;
+  readonly genre?: string;
   readonly lastName?: string;
   readonly newPassword: string;
   readonly nickname?: string;

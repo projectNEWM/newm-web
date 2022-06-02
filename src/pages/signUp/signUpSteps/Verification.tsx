@@ -46,8 +46,13 @@ const Verification: FunctionComponent = () => {
         >
           Paste your verification code here.
         </GradientTypography>
-
-        <Stack spacing={ 1.5 } mb={ 7.5 } maxWidth="312px" width="100%">
+        <Stack
+          spacing={ 1.5 }
+          mb={ 7.5 }
+          margin="0 auto"
+          maxWidth={ theme.inputField.maxWidth }
+          width="100%"
+        >
           <TextInputField
             aria-labelledby="verificationLabel"
             name="authCode"
