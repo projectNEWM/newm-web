@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { FileRejection, useDropzone } from "react-dropzone";
@@ -7,31 +7,37 @@ import CheckCircleIcon from "assets/images/CheckCircle";
 import SolidOutline from "./styled/SolidOutline";
 import DashedOutline from "./styled/DashedOutline";
 import IconMessage from "./IconMessage";
+import ErrorMessage from "./styled/ErrorMessage";
+
+export interface FileWithPreview extends File {
+  readonly preview: string;
+}
 
 interface UploadImageProps {
+  readonly file: FileWithPreview;
+  readonly onChange: (file: FileWithPreview) => void;
   readonly onError: (message: string) => void;
+  readonly onBlur: VoidFunction;
+  readonly errorMessage?: string;
 }
 
 interface ImagePreviewProps extends BoxProps {
   readonly imageUrl: string;
 }
 
-interface FileWithPreview extends File {
-  readonly preview: string;
-}
-
 /**
  * Allows a user to upload an image by either clicking the area to
  * open the file browser or dropping a file onto it.
  */
-const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
-  const [file, setFile] = useState<FileWithPreview>();
+const UploadImage: FunctionComponent<UploadImageProps> = ({
+  file,
+  onChange,
+  onError,
+  onBlur,
+  errorMessage,
+}) => {
   const [isHovering, setIsHovering] = useState(false);
 
-  /**
-   * Validates the image and then updates the
-   * local state with the file if valid.
-   */
   const handleDrop = useCallback(
     async (
       acceptedFiles: ReadonlyArray<File>,
@@ -65,14 +71,16 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
           );
         }
 
-        setFile(fileWithPreview);
+        onChange(fileWithPreview);
+        onError("");
+        onBlur();
       } catch (error) {
-        if (error instanceof Error) {
+        if (error instanceof Error && onError) {
           onError(error.message);
         }
       }
     },
-    [setFile, onError]
+    [onChange, onError, onBlur]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -96,33 +104,48 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({ onError }) => {
   }, [file]);
 
   return (
-    <Box
-      { ...getRootProps() }
-      sx={ { display: "flex", flexGrow: 1, height: 100, cursor: "pointer" } }
-    >
-      <input { ...getInputProps() } />
+    <Stack direction="column" spacing={ 1 }>
+      <Box
+        { ...getRootProps() }
+        sx={ {
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          height: 100,
+          cursor: "pointer",
+        } }
+      >
+        <input { ...getInputProps() } />
 
-      { file?.preview ? (
-        <ImagePreview
-          onMouseEnter={ () => setIsHovering(true) }
-          onMouseLeave={ () => setIsHovering(false) }
-          imageUrl={ file.preview }
-        >
-          { isHovering || isDragActive ? (
-            <IconMessage icon={ <AddImageIcon /> } message="Upload a new image" />
-          ) : (
-            <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
-          ) }
-        </ImagePreview>
-      ) : (
-        <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
-          <IconMessage
-            icon={ <AddImageIcon /> }
-            message="Drag and drop or browse your image"
-          />
-        </DashedOutline>
+        { file?.preview ? (
+          <ImagePreview
+            onMouseEnter={ () => setIsHovering(true) }
+            onMouseLeave={ () => setIsHovering(false) }
+            imageUrl={ file.preview }
+          >
+            { isHovering || isDragActive ? (
+              <IconMessage
+                icon={ <AddImageIcon /> }
+                message="Upload a new image"
+              />
+            ) : (
+              <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
+            ) }
+          </ImagePreview>
+        ) : (
+          <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
+            <IconMessage
+              icon={ <AddImageIcon /> }
+              message="Drag and drop or browse your file"
+            />
+          </DashedOutline>
+        ) }
+      </Box>
+
+      { !!errorMessage && (
+        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
       ) }
-    </Box>
+    </Stack>
   );
 };
 

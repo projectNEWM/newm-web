@@ -12,7 +12,7 @@ import theme from "theme";
 import { ErrorMessage } from "components";
 import Typography from "./Typography";
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
   readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
@@ -26,7 +26,7 @@ const StyledRootElement = styled.div`
   flex-grow: 1;
 `;
 
-const StyledInputElement = styled.input`
+const StyledTextAreaElement = styled.textarea`
   display: flex;
   flex-grow: 1;
   background: transparent;
@@ -47,9 +47,9 @@ const StyledInputElement = styled.input`
   }
 `;
 
-export const TextInput: ForwardRefRenderFunction<
+export const TextArea: ForwardRefRenderFunction<
   HTMLInputElement,
-  TextInputProps
+  TextAreaProps
 > = (
   {
     errorMessage,
@@ -124,7 +124,7 @@ export const TextInput: ForwardRefRenderFunction<
         <StyledRootElement>
           { startAdornment }
 
-          <StyledInputElement
+          <StyledTextAreaElement
             { ...rest }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
@@ -162,4 +162,4 @@ const getBorderColor = (
   return theme.colors.grey400;
 };
 
-export default forwardRef(TextInput);
+export default forwardRef(TextArea);

@@ -1,25 +1,22 @@
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Box, Grid, Stack } from "@mui/material";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
 import {
   DropdownSelectField,
+  TextAreaField,
   TextInputField,
-  UploadImage,
-  UploadSong as UploadSongPicker,
+  UploadImageField,
+  UploadSongField,
 } from "components";
 import { useTheme } from "@mui/material/styles";
 import * as Yup from "yup";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 
 interface UploadSongFormValues {
-  readonly image: {
-    readonly file: string;
-    readonly signature: string;
-    readonly cloudName: string;
-    readonly apiKey: string;
-  };
+  readonly image?: string;
+  readonly audio: string;
   readonly title: string;
   readonly genre: string;
   readonly description: string;
@@ -37,12 +34,8 @@ const UploadSong: FunctionComponent = () => {
   }));
 
   const initialValues: UploadSongFormValues = {
-    image: {
-      file: "",
-      signature: "",
-      cloudName: "",
-      apiKey: "",
-    },
+    image: "",
+    audio: "",
     title: "",
     genre: "",
     description: "",
@@ -53,21 +46,11 @@ const UploadSong: FunctionComponent = () => {
     console.log(values); // eslint-disable-line
   };
 
-  const handleError = (message: string) => {
-    // TODO: Update Redex UI state
-    console.log(message); // eslint-disable-line
-  };
-
-  const validationSchema = Yup.object().shape({
-    image: Yup.object({
-      file: Yup.string().required("Required"),
-      signature: Yup.string().required("Required"),
-      cloudName: Yup.string().required("Required"),
-      apiKey: Yup.string().required("Required"),
-    }),
-    title: Yup.string().required("Required"),
-    genre: Yup.string().required("Required"),
-    description: Yup.string().required("Required"),
+  const ValidationSchema = Yup.object().shape({
+    image: Yup.string().required("This field is required"),
+    audio: Yup.string().required("This field is required"),
+    title: Yup.string().required("This field is required"),
+    genre: Yup.string().required("This field is required"),
   });
 
   return (
@@ -78,53 +61,66 @@ const UploadSong: FunctionComponent = () => {
 
       <Box pt={ 5 }>
         <Formik
+          validateOnMount={ true }
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
-          validationSchema={ validationSchema }
+          validationSchema={ ValidationSchema }
         >
-          <Grid container spacing={ 2 }>
-            <Grid item xs={ 6 }>
-              <Stack spacing={ 0.5 }>
-                <Typography color="grey100" fontWeight="medium">
-                  MUSIC
-                </Typography>
+          { () => (
+            <Form>
+              <Grid container spacing={ 2 } rowSpacing={ 2.25 }>
+                <Grid item xs={ 6 }>
+                  <Stack spacing={ 0.5 }>
+                    <Typography color="grey100" fontWeight="medium">
+                      MUSIC
+                    </Typography>
 
-                <UploadImage onError={ handleError } />
-              </Stack>
-            </Grid>
+                    <UploadSongField name="audio" />
+                  </Stack>
+                </Grid>
 
-            <Grid item xs={ 6 }>
-              <Stack spacing={ 0.5 }>
-                <Typography color="grey100" fontWeight="medium">
-                  SONG COVER ART
-                </Typography>
+                <Grid item xs={ 6 }>
+                  <Stack spacing={ 0.5 }>
+                    <Typography color="grey100" fontWeight="medium">
+                      SONG COVER ART
+                    </Typography>
 
-                <UploadSongPicker onError={ handleError } />
-              </Stack>
-            </Grid>
+                    <UploadImageField name="image" />
+                  </Stack>
+                </Grid>
 
-            <Grid item xs={ 12 }>
-              <HorizontalLine mt={ 7.5 } mb={ 6.25 } />
-            </Grid>
+                <Grid item xs={ 12 }>
+                  <HorizontalLine mt={ 5.5 } mb={ 4 } />
+                </Grid>
 
-            <Grid item xs={ 6 }>
-              <TextInputField name="title" label="SONG TITLE" />
-            </Grid>
+                <Grid item xs={ 6 }>
+                  <TextInputField name="title" label="SONG TITLE" />
+                </Grid>
 
-            <Grid item xs={ 6 }>
-              <DropdownSelectField
-                name="genre"
-                label="Genre"
-                options={ genreOptions }
-              />
-            </Grid>
+                <Grid item xs={ 6 }>
+                  <DropdownSelectField
+                    name="genre"
+                    label="Genre"
+                    options={ genreOptions }
+                  />
+                </Grid>
 
-            <Grid item xs={ 12 }>
-              <Box mt={ 7.5 }>
-                <FilledButton type="submit">Upload</FilledButton>
-              </Box>
-            </Grid>
-          </Grid>
+                <Grid item xs={ 12 }>
+                  <TextAreaField
+                    name="description"
+                    label="SONG DESCRIPTION"
+                    placeholder="Optional"
+                  />
+                </Grid>
+
+                <Grid item xs={ 12 }>
+                  <Box mt={ 7.5 }>
+                    <FilledButton type="submit">Upload</FilledButton>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Form>
+          ) }
         </Formik>
       </Box>
     </Box>
