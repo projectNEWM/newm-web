@@ -101,7 +101,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
           <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
             <IconMessage
               icon={ <AddSongIcon /> }
-              message="Drag and drop or browse your file"
+              message="Drag and drop or browse your song"
             />
           </DashedOutline>
         ) }

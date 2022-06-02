@@ -136,7 +136,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
             <IconMessage
               icon={ <AddImageIcon /> }
-              message="Drag and drop or browse your file"
+              message="Drag and drop or browse your image"
             />
           </DashedOutline>
         ) }
