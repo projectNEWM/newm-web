@@ -1,7 +1,11 @@
 export { default as DropdownSelect } from "./DropdownSelect";
 export { default as FilledButton } from "./styled/FilledButton";
 export { default as MultiSelect } from "./MultiSelect";
+<<<<<<< HEAD
 export { default as OutlinedButton } from "./OutlinedButton";
+=======
+export { default as DropdownSelect } from "./DropdownSelect";
+>>>>>>> master
 export * from "./DropdownSelect";
 export { default as DatePickerInput } from "./DatePickerInput";
 export { default as GradientTextInput } from "./GradientTextInput";

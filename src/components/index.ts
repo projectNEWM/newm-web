@@ -2,9 +2,13 @@
 
 export { default as AddProfileInformation } from "./AddProfileInformation";
 export { default as Background } from "./Background";
+<<<<<<< HEAD
 export { default as DashedOutline } from "./styled/DashedOutline";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
+=======
+export { default as DropdownSelectField } from "./form/DropdownSelectField";
+>>>>>>> master
 export { default as FacebookLogin } from "./FacebookLogin";
 export { default as FadeTransition } from "./FadeTransition";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";

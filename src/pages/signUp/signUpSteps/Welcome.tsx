@@ -11,6 +11,7 @@ import {
   ResponsiveNEWMLogo,
   TextInputField,
 } from "components";
+import theme from "theme";
 
 const SignUp: FunctionComponent = () => {
   const { isValid, values } = useFormikContext();
@@ -33,8 +34,7 @@ const SignUp: FunctionComponent = () => {
       <Typography variant="h1" mb={ 5 }>
         Welcome
       </Typography>
-
-      <Stack maxWidth="312px" mb={ 5 } spacing={ 1.5 } width="100%">
+      <Stack maxWidth={ theme.inputField.maxWidth } mb={ 5 } spacing={ 1.5 } width="100%">
         <TextInputField
           aria-label="Email input field"
           name="email"
@@ -46,7 +46,6 @@ const SignUp: FunctionComponent = () => {
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
-          placeholder="Password"
           showEndAdornment={ showEndAdornment }
         />
         <PasswordInputField

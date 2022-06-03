@@ -3,6 +3,7 @@ import { FormikValues } from "formik";
 import { Box, Container, useTheme } from "@mui/material";
 import { updateProfile } from "modules/session";
 import { WizardForm } from "components";
+import { commonYupValidation } from "common";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
 import * as Yup from "yup";
@@ -36,32 +37,16 @@ const CreateProfile: FunctionComponent = () => {
    * Yup validations for all form fields.
    */
   const validations = {
-    nickname: Yup.string()
-      .required("This field is required")
-      .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
-
-    role: Yup.string()
-      .required("This field is required")
-      .test(
-        "is-role",
-        "You need to type or select one of the ones below",
-        (value) => (value ? roles.includes(value) : false)
-      ),
-
-    genre: Yup.string()
-      .required("This field is required")
-      .test(
-        "is-genre",
-        "You need to type or select one of the ones below",
-        (value) => (value ? genres.includes(value) : false)
-      ),
+    nickname: commonYupValidation.nickname,
+    role: commonYupValidation.role(roles),
+    genre: commonYupValidation.role(genres),
   };
 
   /**
    * Submits the form when on the last route of the form.
    */
-  const handleSubmit = ({ genre, ...values }: FormikValues) => {
-    dispatch(updateProfile({ ...values, genres: [genre] }));
+  const handleSubmit = (values : FormikValues) => {
+    dispatch(updateProfile({ ...values }));
   };
 
   return (

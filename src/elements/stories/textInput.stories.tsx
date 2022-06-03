@@ -9,7 +9,7 @@ export default {
 };
 
 export const Variations = () => (
-  <Box maxWidth="312px">
+  <Box maxWidth={ theme.inputField.maxWidth }>
     <Stack mt={ 2 } direction="column" spacing={ 4 }>
       <TextInput label="With label" placeholder="Hint" />
 
