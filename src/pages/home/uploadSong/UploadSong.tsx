@@ -65,7 +65,7 @@ const UploadSong: FunctionComponent = () => {
         >
           { () => (
             <Form>
-              <Grid container spacing={ 2 } rowSpacing={ 2.25 }>
+              <Grid container spacing={ 2.5 } rowSpacing={ 2.25 }>
                 <Grid item xs={ 12 } md={ 6 }>
                   <Stack spacing={ 0.5 }>
                     <Typography color="grey100" fontWeight="medium">
