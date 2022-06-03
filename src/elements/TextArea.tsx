@@ -17,6 +17,7 @@ export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
   readonly endAdornment?: JSX.Element;
+  readonly widthType?: "default" | "full";
 }
 
 const StyledRootElement = styled.div`
@@ -59,6 +60,7 @@ export const TextArea: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
+    widthType = "default",
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -92,7 +94,15 @@ export const TextArea: ForwardRefRenderFunction<
     <Stack
       direction="column"
       spacing="4px"
-      sx={ { opacity: disabled ? 0.5 : 1 } }
+      sx={ {
+        opacity: disabled ? 0.5 : 1,
+        width: "100%",
+        textAlign: "left",
+        [theme.breakpoints.down("md")]: {
+          margin: "0 auto",
+          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        },
+      } }
     >
       { !!label && (
         <Typography fontWeight="medium" color="grey100">

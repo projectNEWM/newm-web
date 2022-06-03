@@ -69,11 +69,17 @@ const Profile: FunctionComponent = () => {
       ...(genre !== values.genre && { genre: values.genre }),
       ...(lastName !== values.lastName && { lastName: values.lastName }),
       ...(nickname !== values.nickname && { nickname: values.nickname }),
-      ...(pictureUrl !== values.pictureUrl && { pictureUrl: values.pictureUrl }),
+      ...(pictureUrl !== values.pictureUrl && {
+        pictureUrl: values.pictureUrl,
+      }),
       ...(role !== values.role && { role: values.role }),
-      ...(values.currentPassword && { currentPassword: values.currentPassword }),
+      ...(values.currentPassword && {
+        currentPassword: values.currentPassword,
+      }),
       ...(values.newPassword && { newPassword: values.newPassword }),
-      ...(values.confirmPassword && { confirmPassword: values.confirmPassword }),
+      ...(values.confirmPassword && {
+        confirmPassword: values.confirmPassword,
+      }),
     };
 
     dispatch(updateProfile({ ...updatedValues }));
@@ -89,7 +95,7 @@ const Profile: FunctionComponent = () => {
         textAlign: ["center", "center", "initial"],
       } }
     >
-      <Typography variant="h1" mb={ 5 }>
+      <Typography variant="h3" fontWeight="extra-bold" mb={ 5 }>
         YOUR PROFILE
       </Typography>
       { pictureUrl && (

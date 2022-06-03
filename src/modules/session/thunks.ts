@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { extendedApi as songApi } from "modules/song";
 import { extendedApi as sessionApi } from "./api";
 import { CreateAccountRequest, UpdateProfileRequest } from "./types";
 
@@ -28,6 +29,8 @@ export const updateProfile = createAsyncThunk(
 export const getInitialData = createAsyncThunk(
   "session/getInitialData",
   async (_, thunkApi) => {
+    thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+
     const profileResponse = await thunkApi.dispatch(
       sessionApi.endpoints.getProfile.initiate()
     );

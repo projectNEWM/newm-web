@@ -1,6 +1,7 @@
 import { Box, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
+import { useTheme } from "@mui/material/styles";
 import AddSongIcon from "assets/images/AddSong";
 import CheckCircleIcon from "assets/images/CheckCircle";
 import DashedOutline from "./styled/DashedOutline";
@@ -27,6 +28,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   onBlur,
   errorMessage,
 }) => {
+  const theme = useTheme();
+
   const [isHovering, setIsHovering] = useState(false);
 
   const handleDrop = useCallback(
@@ -67,7 +70,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   });
 
   return (
-    <Stack direction="column" spacing={ 1 }>
+    <Stack direction="column" spacing={ 1 } alignItems="center">
       <Box
         { ...getRootProps() }
         sx={ {
@@ -75,6 +78,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
           flexDirection: "column",
           flexGrow: 1,
           height: 100,
+          width: "100%",
+          maxWidth: theme.inputField.maxWidth,
           cursor: "pointer",
         } }
       >

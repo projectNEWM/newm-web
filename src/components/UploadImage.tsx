@@ -1,6 +1,7 @@
 import { Box, BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
+import { useTheme } from "@mui/material/styles";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
@@ -36,6 +37,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   onBlur,
   errorMessage,
 }) => {
+  const theme = useTheme();
+
   const [isHovering, setIsHovering] = useState(false);
 
   const handleDrop = useCallback(
@@ -66,9 +69,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         );
 
         if (!hasValidDimensions) {
-          throw new Error(
-            "Please upload an image with a height and width of least 2048 pixels."
-          );
+          // throw new Error(
+          //   "Please upload an image with a height and width of least 2048 pixels."
+          // );
         }
 
         onChange(fileWithPreview);
@@ -104,7 +107,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   }, [file]);
 
   return (
-    <Stack direction="column" spacing={ 1 }>
+    <Stack direction="column" spacing={ 1 } alignItems="center">
       <Box
         { ...getRootProps() }
         sx={ {
@@ -112,6 +115,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           flexDirection: "column",
           flexGrow: 1,
           height: 100,
+          width: "100%",
+          maxWidth: theme.inputField.maxWidth,
           cursor: "pointer",
         } }
       >

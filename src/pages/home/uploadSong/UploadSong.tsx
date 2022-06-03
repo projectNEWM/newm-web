@@ -1,8 +1,9 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
-import { Box, Grid, Stack } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
+import { UploadSongFormValues, uploadSong } from "modules/song";
 import {
   DropdownSelectField,
   TextAreaField,
@@ -10,28 +11,13 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { useTheme } from "@mui/material/styles";
 import * as Yup from "yup";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 
-interface UploadSongFormValues {
-  readonly image?: string;
-  readonly audio: string;
-  readonly title: string;
-  readonly genre: string;
-  readonly description: string;
-}
-
 const UploadSong: FunctionComponent = () => {
-  const theme = useTheme();
+  const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
-
-  const genreOptions = genres.map((genre, idx) => ({
-    id: idx + 1,
-    name: genre,
-    value: genre,
-  }));
 
   const initialValues: UploadSongFormValues = {
     image: "",
@@ -44,6 +30,8 @@ const UploadSong: FunctionComponent = () => {
   const handleSubmit = (values: UploadSongFormValues) => {
     // TODO: Submit form
     console.log(values); // eslint-disable-line
+
+    dispatch(uploadSong(values));
   };
 
   const ValidationSchema = Yup.object().shape({
@@ -54,7 +42,16 @@ const UploadSong: FunctionComponent = () => {
   });
 
   return (
-    <Box p={ 7.5 } sx={ { width: "100%", maxWidth: theme.breakpoints.values.md } }>
+    <Container
+      maxWidth={ false }
+      sx={ {
+        marginLeft: [null, null, 4.5],
+        overflow: "auto",
+        paddingY: 7.5,
+        textAlign: ["center", "center", "initial"],
+        maxWidth: [undefined, undefined, "750px"],
+      } }
+    >
       <Typography variant="h3" fontWeight="extra-bold">
         UPLOAD SONG
       </Typography>
@@ -69,7 +66,7 @@ const UploadSong: FunctionComponent = () => {
           { () => (
             <Form>
               <Grid container spacing={ 2 } rowSpacing={ 2.25 }>
-                <Grid item xs={ 6 }>
+                <Grid item xs={ 12 } md={ 6 }>
                   <Stack spacing={ 0.5 }>
                     <Typography color="grey100" fontWeight="medium">
                       MUSIC
@@ -79,7 +76,7 @@ const UploadSong: FunctionComponent = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={ 6 }>
+                <Grid item xs={ 12 } md={ 6 }>
                   <Stack spacing={ 0.5 }>
                     <Typography color="grey100" fontWeight="medium">
                       SONG COVER ART
@@ -89,23 +86,30 @@ const UploadSong: FunctionComponent = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={ 12 }>
+                <Grid
+                  item
+                  xs={ 12 }
+                  sx={ {
+                    marginX: ["auto", "auto", "unset"],
+                    maxWidth: ["340px", "340px", "750px"],
+                  } }
+                >
                   <HorizontalLine mt={ 5.5 } mb={ 4 } />
                 </Grid>
 
-                <Grid item xs={ 6 }>
+                <Grid item xs={ 12 } md={ 6 }>
                   <TextInputField name="title" label="SONG TITLE" />
                 </Grid>
 
-                <Grid item xs={ 6 }>
+                <Grid item xs={ 12 } md={ 6 }>
                   <DropdownSelectField
                     name="genre"
-                    label="Genre"
-                    options={ genreOptions }
+                    label="GENRE"
+                    options={ genres }
                   />
                 </Grid>
 
-                <Grid item xs={ 12 }>
+                <Grid item xs={ 12 } justifyContent="center">
                   <TextAreaField
                     name="description"
                     label="SONG DESCRIPTION"
@@ -114,8 +118,16 @@ const UploadSong: FunctionComponent = () => {
                 </Grid>
 
                 <Grid item xs={ 12 }>
-                  <Box mt={ 7.5 }>
-                    <FilledButton type="submit">Upload</FilledButton>
+                  <Box mt={ 6 }>
+                    <FilledButton
+                      type="submit"
+                      sx={ {
+                        maxWidth: ["340px", "340px", null],
+                        width: "100%",
+                      } }
+                    >
+                      Upload
+                    </FilledButton>
                   </Box>
                 </Grid>
               </Grid>
@@ -123,7 +135,7 @@ const UploadSong: FunctionComponent = () => {
           ) }
         </Formik>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
