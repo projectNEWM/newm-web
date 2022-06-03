@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import cloudinaryApi from "cloudinaryApi";
+import { cloudinaryApi } from "api";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
 

@@ -1,5 +1,4 @@
-import api from "api";
-import { CloudinaryUploadParams } from "cloudinaryApi";
+import api, { CloudinaryUploadParams } from "api";
 import {
   CloudinarySignatureResponse,
   GetSongsResponse,
