@@ -4,9 +4,27 @@ import { TextInput, Typography } from "elements";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import theme from "theme";
 import OwnersTable from "./OwnersTable";
+import mockOwnersData from "./mockOwnersData";
+import NoOwnersYet from "./NoOwnersYet";
 
 const Owners: FunctionComponent = () => {
-  const [filter, setFilter] = useState("");
+  const [filteredData, setFilteredData] = useState(mockOwnersData);
+  const [query, setQuery] = useState("");
+
+  const requestSearch = (searched: string) => {
+    setQuery(searched);
+    if (searched == "") {
+      setFilteredData(mockOwnersData);
+    } else {
+      setFilteredData(
+        mockOwnersData.filter(
+          (owner) =>
+            owner.name.toLowerCase().includes(searched.toLowerCase()) ||
+            owner.song.toLowerCase().includes(searched.toLowerCase())
+        )
+      );
+    }
+  };
 
   return (
     <Box
@@ -22,27 +40,35 @@ const Owners: FunctionComponent = () => {
         OWNERS
       </Typography>
 
-      <Box sx={ { width: { xs: 200, sm: 380 }, pb: 3 } }>
-        <TextInput
-          value={ filter }
-          onChange={ (e) => setFilter(e.target.value) }
-          style={ {
-            width: "380px",
-            maxWidth: "380px",
-          } }
-          startAdornment={
-            <SearchRoundedIcon
-              fontSize="large"
-              sx={ {
-                color: theme.palette.text.secondary,
-                paddingLeft: "8px",
+      { mockOwnersData.length ? (
+        <>
+          <Box sx={ { width: { xs: 200, sm: 380 }, pb: 3 } }>
+            <TextInput
+              value={ query }
+              onChange={ (e) => requestSearch(e.target.value) }
+              style={ {
+                width: "380px",
+                maxWidth: "380px",
               } }
-            />
-          }
-          placeholder="Search by owner or song"
-        ></TextInput>
-      </Box>
-      <OwnersTable filter={ filter } />
+              startAdornment={
+                <SearchRoundedIcon
+                  fontSize="large"
+                  sx={ {
+                    color: theme.palette.text.secondary,
+                    paddingLeft: "8px",
+                  } }
+                />
+              }
+              placeholder="Search by owner or song"
+            ></TextInput>
+          </Box>
+          <OwnersTable ownersData={ filteredData } />
+        </>
+      ) : (
+        <Box sx={ { margin: "auto", position: "relative", bottom: "50px" } }>
+          <NoOwnersYet />
+        </Box>
+      ) }
     </Box>
   );
 };

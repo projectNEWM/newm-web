@@ -1,38 +1,43 @@
-// interface Owner {
-//   name: string;
-//   song: string;
-//   info_tbd: string;
-// }
-function createData(name: string, song: string, info: number) {
-  return { name, song, info };
+// mock data until api is ready
+
+let id = 0;
+function createData(
+  name: string,
+  song: string,
+  info_tbd: number,
+  registered: boolean
+) {
+  id = id + 1;
+  return { id, name, song, info_tbd, registered };
+}
+export interface Owner {
+  id: number;
+  name: string;
+  song: string;
+  info_tbd: number;
+  registered: boolean;
 }
 
-const mockOwnersData = [
-  createData("1 Jane Cooper", "Once upon a time", 1),
-  createData("2Cody Fisher", "Life's away", 4),
-  createData("3Esther Howard", "Once upon a time", 0.5),
-  createData("4Jenny Wilson", "When is it time?", 1),
-  createData("5Kristin Watson", "Can you hold it?", 2),
-  createData("6Cameron Williamson", "Call me", 1),
-  createData("7Jane Cooper", "Once upon a time", 1),
-  createData("8Cody Fisher", "Life's away", 4),
-  createData("9Esther Howard", "Once upon a time", 0.5),
-  createData("10Jenny Wilson", "When is it time?", 1),
-  createData("11Kristin Watson", "Can you hold it?", 2),
-  createData("12Cameron Williamson", "Call me", 1),
-  createData("13Jane Cooper", "Once upon a time", 1),
-  createData("14Cody Fisher", "Life's away", 4),
-  createData("15Esther Howard", "Once upon a time", 0.5),
-  createData("16Jenny Wilson", "When is it time?", 1),
-  createData("17Kristin Watson", "Can you hold it?", 2),
-  createData("18Cameron Williamson", "Call me", 1),
-  createData("19Jane Cooper", "Once upon a time", 1),
-  createData("20Cody Fisher", "Life's away", 4),
-  createData("21Jenny Wilson", "When is it time?", 1),
-  createData("22Kristin Watson", "Can you hold it?", 2),
-  createData("23Cameron Williamson", "Call me", 1),
-  createData("24Jane Cooper", "Once upon a time", 1),
-  createData("25Cody Fisher", "Life's away", 4),
+const mockOwnersData: Owner[] = [
+  createData("Jane Cooper", "Once upon a time", 1, true),
+  createData("Cody Fisher", "Life's away", 4, false),
+  createData("Esther Howard", "Once upon a time", 0.5, false),
+  createData("Jenny Wilson", "When is it time?", 1, true),
+  createData("Kristin Watson", "Can you hold it?", 2, false),
+  createData("Cameron Williamson", "Call me", 1, false),
+  createData("J Cole", "Neighbors", 1, false),
+  createData("Jane Cooper", "Once upon a time", 1, true),
+  createData("Cody Fisher", "Life's away", 4, false),
+  createData("Esther Howard", "Once upon a time", 0.5, false),
+  createData("Jenny Wilson", "When is it time?", 1, true),
+  createData("Kristin Watson", "Can you hold it?", 2, false),
+  createData("Cameron Williamson", "Call me", 1, false),
+  createData("Jane Cooper", "Once upon a time", 1, true),
+  createData("Cody Fisher", "Life's away", 4, false),
+  createData("Esther Howard", "Once upon a time", 0.5, false),
+  createData("Jenny Wilson", "When is it time?", 1, true),
+  createData("Kristin Watson", "Can you hold it?", 2, false),
+  createData("Cameron Williamson", "Call me", 1, false),
 ];
 
 export default mockOwnersData;
