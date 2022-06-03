@@ -69,9 +69,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         );
 
         if (!hasValidDimensions) {
-          // throw new Error(
-          //   "Please upload an image with a height and width of least 2048 pixels."
-          // );
+          throw new Error(
+            "Please upload an image with a height and width of least 2048 pixels."
+          );
         }
 
         onChange(fileWithPreview);
