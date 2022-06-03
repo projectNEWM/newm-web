@@ -28,9 +28,6 @@ const UploadSong: FunctionComponent = () => {
   };
 
   const handleSubmit = (values: UploadSongFormValues) => {
-    // TODO: Submit form
-    console.log(values); // eslint-disable-line
-
     dispatch(uploadSong(values));
   };
 
