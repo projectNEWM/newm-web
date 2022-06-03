@@ -7,11 +7,11 @@ import { commonYupValidation } from "common";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
 import * as Yup from "yup";
-import Begin from "./createProfileSteps/Begin";
-import SelectNickname from "./createProfileSteps/SelectNickname";
-import SelectRole from "./createProfileSteps/SelectRole";
-import SelectGenre from "./createProfileSteps/SelectGenre";
-import Complete from "./createProfileSteps/Complete";
+import Begin from "./Begin";
+import SelectNickname from "./SelectNickname";
+import SelectRole from "./SelectRole";
+import SelectGenre from "./SelectGenre";
+import Complete from "./Complete";
 
 interface ProfileFormValues {
   readonly nickname: string;
@@ -45,7 +45,7 @@ const CreateProfile: FunctionComponent = () => {
   /**
    * Submits the form when on the last route of the form.
    */
-  const handleSubmit = (values : FormikValues) => {
+  const handleSubmit = (values: FormikValues) => {
     dispatch(updateProfile({ ...values }));
   };
 

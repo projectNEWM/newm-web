@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import { createAccount, sendVerificationEmail } from "modules/session";
-import Verification from "./signUpSteps/Verification";
-import Welcome from "./signUpSteps/Welcome";
+import Verification from "./Verification";
+import Welcome from "./Welcome";
 
 interface AccountValues {
   readonly authCode: string;
@@ -32,8 +32,12 @@ const SignUp: FunctionComponent = () => {
   const validations = {
     authCode: Yup.string().required("Verification code is required"),
     email: commonYupValidation.email,
-    newPassword: commonYupValidation.newPassword.required("Password is required"),
-    confirmPassword: commonYupValidation.confirmPassword.required("Confirm password is required"),
+    newPassword: commonYupValidation.newPassword.required(
+      "Password is required"
+    ),
+    confirmPassword: commonYupValidation.confirmPassword.required(
+      "Confirm password is required"
+    ),
   };
 
   const handleVerificationEmail = (values: FormikValues): void => {
