@@ -4,13 +4,13 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import { useTheme } from "@mui/material/styles";
 import AddSongIcon from "assets/images/AddSong";
 import CheckCircleIcon from "assets/images/CheckCircle";
-import DashedOutline from "./styled/DashedOutline";
 import IconMessage from "./IconMessage";
+import DashedOutline from "./styled/DashedOutline";
 import ErrorMessage from "./styled/ErrorMessage";
 import SolidOutline from "./styled/SolidOutline";
 
 interface UploadSongProps {
-  readonly file: File;
+  readonly file?: File;
   readonly onChange: (file: File) => void;
   readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;

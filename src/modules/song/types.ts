@@ -31,6 +31,16 @@ export interface CloudinarySignatureResponse {
   readonly apiKey: string;
 }
 
+export interface Song {
+  readonly id: string;
+  readonly ownerId: string;
+  readonly title: string;
+  readonly genre: string;
+  readonly description?: string;
+  readonly covertArtUrl?: string;
+  readonly createdAt: string;
+}
+
 export interface Artist {
   readonly bio: string;
   readonly name: string;
@@ -41,14 +51,4 @@ export interface Contributor {
   readonly name: string;
   readonly role: string;
   readonly stake: number;
-}
-
-export interface Song {
-  readonly id: string;
-  readonly ownerId: string;
-  readonly title: string;
-  readonly genre: string;
-  readonly description?: string;
-  readonly covertArtUrl?: string;
-  readonly createdAt: string;
 }

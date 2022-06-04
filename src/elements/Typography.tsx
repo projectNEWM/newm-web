@@ -1,23 +1,19 @@
-/**
- * Typography component that allows for easily overridding
- * color and font-weight styles.
- */
-
 import {
   TypographyProps as MuiTypogaphyProps,
   Typography as MuiTypography,
-  TypographyVariant,
-  useTheme,
 } from "@mui/material";
-import { Theme } from "@mui/material/styles";
+import { Theme, useTheme } from "@mui/material/styles";
 import { FunctionComponent } from "react";
 
 export interface TypographyProps extends MuiTypogaphyProps {
-  variant?: TypographyVariant;
   color?: keyof Theme["colors"];
   fontWeight?: "regular" | "medium" | "semi-bold" | "bold" | "extra-bold";
 }
 
+/**
+ * Typography component that allows for easily overridding
+ * color and font-weight styles.
+ */
 const Typography: FunctionComponent<TypographyProps> = ({
   color,
   fontWeight,

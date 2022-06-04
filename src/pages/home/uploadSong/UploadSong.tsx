@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Container, Grid, Stack } from "@mui/material";
+import { FilledButton, HorizontalLine, Typography } from "elements";
+import { Box, Container, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
 import { UploadSongFormValues, uploadSong } from "modules/song";
@@ -12,7 +13,6 @@ import {
   UploadSongField,
 } from "components";
 import * as Yup from "yup";
-import { FilledButton, HorizontalLine, Typography } from "elements";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,6 @@ const UploadSong: FunctionComponent = () => {
         overflow: "auto",
         paddingY: 7.5,
         textAlign: ["center", "center", "initial"],
-        maxWidth: [undefined, undefined, "750px"],
       } }
     >
       <Typography variant="h3" fontWeight="extra-bold">
@@ -62,72 +61,93 @@ const UploadSong: FunctionComponent = () => {
         >
           { () => (
             <Form>
-              <Grid container spacing={ 2.5 } rowSpacing={ 2.25 }>
-                <Grid item xs={ 12 } md={ 6 }>
-                  <Stack spacing={ 0.5 }>
-                    <Typography color="grey100" fontWeight="medium">
-                      MUSIC
-                    </Typography>
+              <Stack
+                sx={ {
+                  display: "grid",
+                  gridTemplateColumns: [
+                    "repeat(1, 1fr)",
+                    null,
+                    "repeat(2, 1fr)",
+                  ],
+                  columnGap: [undefined, undefined, "20px"],
+                  maxWidth: [undefined, undefined, "700px"],
+                  rowGap: ["16px", null, "12px"],
+                } }
+              >
+                <Stack spacing={ 0.5 }>
+                  <Typography color="grey100" fontWeight="medium">
+                    MUSIC
+                  </Typography>
 
-                    <UploadSongField name="audio" />
-                  </Stack>
-                </Grid>
+                  <UploadSongField name="audio" />
+                </Stack>
 
-                <Grid item xs={ 12 } md={ 6 }>
-                  <Stack spacing={ 0.5 }>
-                    <Typography color="grey100" fontWeight="medium">
-                      SONG COVER ART
-                    </Typography>
+                <Stack spacing={ 0.5 }>
+                  <Typography color="grey100" fontWeight="medium">
+                    SONG COVER ART
+                  </Typography>
 
-                    <UploadImageField name="image" />
-                  </Stack>
-                </Grid>
+                  <UploadImageField name="image" />
+                </Stack>
+              </Stack>
 
-                <Grid
-                  item
-                  xs={ 12 }
-                  sx={ {
-                    marginX: ["auto", "auto", "unset"],
-                    maxWidth: ["340px", "340px", "750px"],
-                  } }
-                >
-                  <HorizontalLine mt={ 5.5 } mb={ 4 } />
-                </Grid>
+              <Stack
+                sx={ {
+                  marginY: 7.5,
+                  marginX: ["auto", "auto", "unset"],
+                  maxWidth: ["340px", "340px", "700px"],
+                } }
+              >
+                <HorizontalLine />
+              </Stack>
 
-                <Grid item xs={ 12 } md={ 6 }>
-                  <TextInputField name="title" label="SONG TITLE" />
-                </Grid>
+              <Stack
+                sx={ {
+                  display: "grid",
+                  gridTemplateColumns: [
+                    "repeat(1, 1fr)",
+                    null,
+                    "repeat(2, 1fr)",
+                  ],
+                  rowGap: ["16px", null, "12px"],
+                  columnGap: [undefined, undefined, "20px"],
+                  maxWidth: [undefined, undefined, "700px"],
+                } }
+              >
+                <TextInputField name="title" label="SONG TITLE" />
 
-                <Grid item xs={ 12 } md={ 6 }>
-                  <DropdownSelectField
-                    name="genre"
-                    label="GENRE"
-                    options={ genres }
-                  />
-                </Grid>
+                <DropdownSelectField
+                  name="genre"
+                  label="GENRE"
+                  options={ genres }
+                />
+              </Stack>
 
-                <Grid item xs={ 12 } justifyContent="center">
-                  <TextAreaField
-                    name="description"
-                    label="SONG DESCRIPTION"
-                    placeholder="Optional"
-                  />
-                </Grid>
+              <Stack
+                sx={ {
+                  marginTop: 2.5,
+                  marginX: ["auto", "auto", "unset"],
+                  maxWidth: ["340px", "340px", "700px"],
+                } }
+              >
+                <TextAreaField
+                  name="description"
+                  label="SONG DESCRIPTION"
+                  placeholder="Optional"
+                />
 
-                <Grid item xs={ 12 }>
-                  <Box mt={ 6 }>
-                    <FilledButton
-                      type="submit"
-                      sx={ {
-                        maxWidth: ["340px", "340px", null],
-                        width: "100%",
-                      } }
-                    >
-                      Upload
-                    </FilledButton>
-                  </Box>
-                </Grid>
-              </Grid>
+                <Box mt={ 6 }>
+                  <FilledButton
+                    type="submit"
+                    sx={ {
+                      maxWidth: ["340px", "340px", null],
+                      width: "100%",
+                    } }
+                  >
+                    Upload
+                  </FilledButton>
+                </Box>
+              </Stack>
             </Form>
           ) }
         </Formik>

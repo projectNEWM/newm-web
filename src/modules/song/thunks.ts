@@ -2,11 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
+import { getFileBinary } from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
  * the album cover art image to Cloudinary, upload the song to AWS,
- * then save the song in the NEWM back-end with the file url information.
+ * save the song in the NEWM back-end with the file url information,
+ * and then fetch the user's songs.
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
@@ -22,17 +24,9 @@ export const uploadSong = createAsyncThunk(
 
     const { apiKey, signature, timestamp } = signatureResp.data;
 
-    // create a base64 binary string representation of the file
-    const binaryStr = await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const binaryStr = reader.result;
-        resolve(binaryStr);
-      };
+    const binaryStr = await getFileBinary(body.image);
 
-      reader.readAsDataURL(body.image);
-    });
-
+    // upload image to cloudinary
     const cloudinaryResp = await thunkApi.dispatch(
       cloudinaryApi.endpoints.uploadImage.initiate({
         api_key: apiKey,
@@ -45,6 +39,9 @@ export const uploadSong = createAsyncThunk(
 
     if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
+    // TODO: Upload song file to AWS and include with upload song data
+
+    // create the song in the NEWM API
     const songResp = await thunkApi.dispatch(
       songApi.endpoints.uploadSong.initiate({
         title: body.title,
@@ -56,6 +53,7 @@ export const uploadSong = createAsyncThunk(
 
     if ("error" in songResp) return;
 
+    // fetch user's songs
     thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
   }
 );

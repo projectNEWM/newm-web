@@ -18,3 +18,15 @@ export const mockSession: SessionState = {
   errorMessage: "",
   profile: mockProfile,
 };
+
+export const mockFile = {
+  name: "hello-world.txt",
+  size: 1000,
+  type: "",
+  webkitRelativePath: "/",
+  lastModified: 1234567890,
+  arrayBuffer: jest.fn(),
+  slice: jest.fn(),
+  stream: jest.fn(),
+  text: jest.fn(),
+};
