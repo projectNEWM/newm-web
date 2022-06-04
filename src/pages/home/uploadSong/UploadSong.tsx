@@ -93,7 +93,8 @@ const UploadSong: FunctionComponent = () => {
 
               <Stack
                 sx={ {
-                  marginY: 7.5,
+                  marginTop: 7.5,
+                  marginBottom: 6.5,
                   marginX: ["auto", "auto", "unset"],
                   maxWidth: ["340px", "340px", "700px"],
                 } }
