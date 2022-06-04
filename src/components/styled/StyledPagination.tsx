@@ -24,8 +24,8 @@ const StyledPagination = styled(Pagination)<PaginationProps>({
   },
 
   "& .MuiPaginationItem-ellipsis": {
-    paddingTop: "5px !important",
-    paddingBottom: "5px !important",
+    paddingTop: "4px",
+    paddingBottom: "4px",
   },
 
   "& .Mui-selected": {
