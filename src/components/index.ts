@@ -1,6 +1,6 @@
 // List exports in alphabetical order by component name
 
-export { default as AddProfileInformation } from "./AddProfileInformation";
+export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
 export { default as DashedOutline } from "./styled/DashedOutline";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
