@@ -19,19 +19,19 @@ export const Variants = () => (
 
 export const FontWeights = () => (
   <Stack mt={ 2 } direction="column" spacing={ 2 }>
-    <Typography variant="h4" fontWeight="regular">
+    <Typography variant="h4" fontWeight={ 400 }>
       Text Regular Font Weight
     </Typography>
-    <Typography variant="h4" fontWeight="medium">
+    <Typography variant="h4" fontWeight={ 500 }>
       Text Medium Font Weight
     </Typography>
-    <Typography variant="h4" fontWeight="semi-bold">
+    <Typography variant="h4" fontWeight={ 600 }>
       Text Semi Bold Font Weight
     </Typography>
-    <Typography variant="h4" fontWeight="bold">
+    <Typography variant="h4" fontWeight={ 700 }>
       Text Bold Font Weight
     </Typography>
-    <Typography variant="h4" fontWeight="extra-bold">
+    <Typography variant="h4" fontWeight={ 800 }>
       Text Extra Bold Font Weight
     </Typography>
   </Stack>

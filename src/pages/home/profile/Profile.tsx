@@ -95,7 +95,7 @@ const Profile: FunctionComponent = () => {
         textAlign: ["center", "center", "initial"],
       } }
     >
-      <Typography variant="h3" fontWeight="extra-bold" mb={ 5 }>
+      <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
         YOUR PROFILE
       </Typography>
       { pictureUrl && (
@@ -181,7 +181,7 @@ const Profile: FunctionComponent = () => {
               >
                 <HorizontalLine />
               </Stack>
-              <Typography variant="subtitle1" fontWeight="bold">
+              <Typography variant="subtitle1" fontWeight={ 700 }>
                 CHANGE PASSWORD
               </Typography>
               <Stack

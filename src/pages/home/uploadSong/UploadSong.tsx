@@ -48,7 +48,7 @@ const UploadSong: FunctionComponent = () => {
         textAlign: ["center", "center", "initial"],
       } }
     >
-      <Typography variant="h3" fontWeight="extra-bold">
+      <Typography variant="h3" fontWeight={ 800 }>
         UPLOAD SONG
       </Typography>
 
@@ -75,7 +75,7 @@ const UploadSong: FunctionComponent = () => {
                 } }
               >
                 <Stack spacing={ 0.5 }>
-                  <Typography color="grey100" fontWeight="medium">
+                  <Typography color="grey100" fontWeight={ 500 }>
                     MUSIC
                   </Typography>
 
@@ -83,7 +83,7 @@ const UploadSong: FunctionComponent = () => {
                 </Stack>
 
                 <Stack spacing={ 0.5 }>
-                  <Typography color="grey100" fontWeight="medium">
+                  <Typography color="grey100" fontWeight={ 500 }>
                     SONG COVER ART
                   </Typography>
 

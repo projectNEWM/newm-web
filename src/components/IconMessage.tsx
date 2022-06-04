@@ -21,7 +21,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   >
     { icon }
 
-    <Typography variant="h5" textAlign="center" fontWeight="regular">
+    <Typography variant="h5" textAlign="center" fontWeight={ 400 }>
       { message }
     </Typography>
   </Stack>

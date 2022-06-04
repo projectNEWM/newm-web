@@ -48,9 +48,9 @@ const Complete: FunctionComponent = () => {
           Enter NEWM
         </FilledButton>
 
-        <Typography color="grey200" fontWeight="medium">
+        <Typography color="grey200" fontWeight={ 500 }>
           By proceeding forward you agree to&nbsp;
-          <Link fontWeight="medium" color="grey200" to="#">
+          <Link fontWeight={ 500 } color="grey200" to="#">
             projectNEWM&apos;s Terms of Service
           </Link>
         </Typography>
