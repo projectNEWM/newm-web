@@ -82,8 +82,7 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
                   scope="row"
                 >
                   <Box sx={ { display: "flex", width: "100%" } }>
-                    { /* ID will be removed later. It's included here for testing / development  */ }
-                    { row.id } { row.name }
+                    { row.name }
                     { !row.registered ? (
                       <PendingBadge style={ { marginLeft: "15px" } } />
                     ) : null }

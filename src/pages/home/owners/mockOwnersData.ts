@@ -1,7 +1,7 @@
 // mock data until api is ready
 
 let id = 0;
-function createData(
+export function createData(
   name: string,
   song: string,
   info_tbd: number,

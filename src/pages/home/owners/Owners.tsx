@@ -8,16 +8,18 @@ import mockOwnersData from "./mockOwnersData";
 import NoOwnersYet from "./NoOwnersYet";
 
 const Owners: FunctionComponent = () => {
-  const [filteredData, setFilteredData] = useState(mockOwnersData);
+  const ownersData = mockOwnersData; // temporary until API is ready
+
+  const [filteredData, setFilteredData] = useState(ownersData);
   const [query, setQuery] = useState("");
 
   const requestSearch = (searched: string) => {
     setQuery(searched);
     if (searched == "") {
-      setFilteredData(mockOwnersData);
+      setFilteredData(ownersData);
     } else {
       setFilteredData(
-        mockOwnersData.filter(
+        ownersData.filter(
           (owner) =>
             owner.name.toLowerCase().includes(searched.toLowerCase()) ||
             owner.song.toLowerCase().includes(searched.toLowerCase())
@@ -40,7 +42,7 @@ const Owners: FunctionComponent = () => {
         OWNERS
       </Typography>
 
-      { mockOwnersData.length ? (
+      { ownersData.length ? (
         <>
           <Box sx={ { width: { xs: 200, sm: 380 }, pb: 3 } }>
             <TextInput
