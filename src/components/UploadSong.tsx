@@ -53,7 +53,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         onChange(firstFile);
         onError("");
       } catch (error) {
-        if (error instanceof Error && onError) {
+        if (error instanceof Error) {
           onError(error.message);
         }
       } finally {

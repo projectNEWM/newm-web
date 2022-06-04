@@ -2,7 +2,6 @@ import { Box, BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { useTheme } from "@mui/material/styles";
-import { useFormikContext } from "formik";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
@@ -78,7 +77,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         onChange(fileWithPreview);
         onError("");
       } catch (error) {
-        if (error instanceof Error && onError) {
+        if (error instanceof Error) {
           onError(error.message);
         }
       } finally {
