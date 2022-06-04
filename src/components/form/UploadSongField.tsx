@@ -6,9 +6,9 @@ interface UploadSongFieldProps {
   readonly name: string;
 }
 
-const UploadImageField: FunctionComponent<UploadSongFieldProps> = (props) => {
+const UploadSongField: FunctionComponent<UploadSongFieldProps> = ({ name }) => {
   return (
-    <Field name={ props.name }>
+    <Field name={ name }>
       { ({ form, field, meta }: FieldProps) => {
         return (
           <UploadSong
@@ -24,4 +24,4 @@ const UploadImageField: FunctionComponent<UploadSongFieldProps> = (props) => {
   );
 };
 
-export default UploadImageField;
+export default UploadSongField;

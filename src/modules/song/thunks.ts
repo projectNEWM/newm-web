@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
+import { getFileBinary } from "common";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
-import { getFileBinary } from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload

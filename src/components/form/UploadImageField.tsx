@@ -6,9 +6,11 @@ interface UploadImageFieldProps {
   readonly name: string;
 }
 
-const UploadImageField: FunctionComponent<UploadImageFieldProps> = (props) => {
+const UploadImageField: FunctionComponent<UploadImageFieldProps> = ({
+  name,
+}) => {
   return (
-    <Field name={ props.name }>
+    <Field name={ name }>
       { ({ form, field, meta }: FieldProps) => {
         return (
           <UploadImage
