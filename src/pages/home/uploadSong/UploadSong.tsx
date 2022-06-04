@@ -20,8 +20,8 @@ const UploadSong: FunctionComponent = () => {
   const { genres } = useSelector(selectContent);
 
   const initialValues: UploadSongFormValues = {
-    image: "",
-    audio: "",
+    image: undefined,
+    audio: undefined,
     title: "",
     genre: "",
     description: "",
@@ -32,8 +32,8 @@ const UploadSong: FunctionComponent = () => {
   };
 
   const ValidationSchema = Yup.object().shape({
-    image: Yup.string().required("This field is required"),
-    audio: Yup.string().required("This field is required"),
+    image: Yup.mixed().required("This field is required"),
+    audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
     genre: Yup.string().required("This field is required"),
   });
@@ -54,7 +54,7 @@ const UploadSong: FunctionComponent = () => {
 
       <Box pt={ 5 }>
         <Formik
-          validateOnMount={ true }
+          validateOnBlur={ false }
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
           validationSchema={ ValidationSchema }

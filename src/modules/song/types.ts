@@ -5,8 +5,8 @@ export interface SongState {
 export type GetSongsResponse = Array<Song>;
 
 export interface UploadSongFormValues {
-  readonly image: any; // eslint-disable-line
-  readonly audio: any; // eslint-disable-line
+  readonly image?: any; // eslint-disable-line
+  readonly audio?: any; // eslint-disable-line
   readonly title: string;
   readonly genre: string;
   readonly description: string;
@@ -15,7 +15,7 @@ export interface UploadSongFormValues {
 export interface UploadSongRequest {
   readonly title: string;
   readonly genre: string;
-  readonly covertArtUrl: string;
+  readonly coverArtUrl: string;
   readonly description?: string;
   readonly credits?: string;
 }
@@ -37,7 +37,7 @@ export interface Song {
   readonly title: string;
   readonly genre: string;
   readonly description?: string;
-  readonly covertArtUrl?: string;
+  readonly coverArtUrl?: string;
   readonly createdAt: string;
 }
 

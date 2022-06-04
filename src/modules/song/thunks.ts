@@ -47,7 +47,7 @@ export const uploadSong = createAsyncThunk(
         title: body.title,
         genre: body.genre,
         description: body.description,
-        covertArtUrl: cloudinaryResp.data.secure_url,
+        coverArtUrl: cloudinaryResp.data.secure_url,
       })
     );
 

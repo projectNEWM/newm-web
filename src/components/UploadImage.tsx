@@ -2,6 +2,7 @@ import { Box, BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { useTheme } from "@mui/material/styles";
+import { useFormikContext } from "formik";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
@@ -15,7 +16,7 @@ export interface FileWithPreview extends File {
 }
 
 interface UploadImageProps {
-  readonly file: FileWithPreview;
+  readonly file?: FileWithPreview;
   readonly onChange: (file: FileWithPreview) => void;
   readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;
@@ -33,8 +34,8 @@ interface ImagePreviewProps extends BoxProps {
 const UploadImage: FunctionComponent<UploadImageProps> = ({
   file,
   onChange,
-  onError,
   onBlur,
+  onError,
   errorMessage,
 }) => {
   const theme = useTheme();
@@ -76,14 +77,15 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
 
         onChange(fileWithPreview);
         onError("");
-        onBlur();
       } catch (error) {
         if (error instanceof Error && onError) {
           onError(error.message);
         }
+      } finally {
+        onBlur();
       }
     },
-    [onChange, onError, onBlur]
+    [onChange, onBlur, onError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -122,7 +124,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       >
         <input { ...getInputProps() } />
 
-        { file?.preview ? (
+        { file ? (
           <ImagePreview
             onMouseEnter={ () => setIsHovering(true) }
             onMouseLeave={ () => setIsHovering(false) }

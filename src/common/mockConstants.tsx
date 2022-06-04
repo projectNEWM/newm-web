@@ -25,8 +25,9 @@ export const mockFile = {
   type: "",
   webkitRelativePath: "/",
   lastModified: 1234567890,
-  arrayBuffer: jest.fn(),
-  slice: jest.fn(),
-  stream: jest.fn(),
-  text: jest.fn(),
+  preview: "",
+  arrayBuffer: (() => {}) as any, // eslint-disable-line
+  slice: (() => {}) as any, // eslint-disable-line
+  stream: (() => {}) as any, // eslint-disable-line
+  text: (() => {}) as any, // eslint-disable-line
 };

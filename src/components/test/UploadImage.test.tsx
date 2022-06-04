@@ -1,11 +1,15 @@
 import { mockFile, renderWithContext } from "common";
-import UploadSong from "../UploadSong";
+import UploadImage from "../UploadImage";
 
-describe("<UploadSong>", () => {
+describe("<UploadImage>", () => {
+  beforeEach(() => {
+    global.URL.revokeObjectURL = jest.fn();
+  });
+
   describe("when a file is present", () => {
     it("displays the filename", () => {
       const { queryByText } = renderWithContext(
-        <UploadSong
+        <UploadImage
           file={ mockFile }
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
@@ -18,16 +22,16 @@ describe("<UploadSong>", () => {
   });
 
   describe("when a file is not present", () => {
-    it("displays instructions to upload a song", () => {
+    it("displays instructions to upload an image", () => {
       const { getByText } = renderWithContext(
-        <UploadSong
+        <UploadImage
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
           onError={ jest.fn() }
         />
       );
 
-      const instructions = getByText("Drag and drop or browse your song");
+      const instructions = getByText("Drag and drop or browse your image");
       expect(instructions).toBeTruthy();
     });
   });

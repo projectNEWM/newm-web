@@ -52,14 +52,15 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
 
         onChange(firstFile);
         onError("");
-        onBlur();
       } catch (error) {
         if (error instanceof Error && onError) {
           onError(error.message);
         }
+      } finally {
+        onBlur();
       }
     },
-    [onChange, onError, onBlur]
+    [onChange, onBlur, onError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
