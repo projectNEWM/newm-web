@@ -7,7 +7,7 @@ const DropdownSelectField: ForwardRefRenderFunction<
   DropdownSelectProps
 > = (props, ref) => (
   <Field name={ props.name }>
-    { ({ field, form,  meta }: FieldProps) => (
+    { ({ field, form, meta }: FieldProps) => (
       <DropdownSelect
         { ...field }
         { ...props }

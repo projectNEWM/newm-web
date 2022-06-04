@@ -88,6 +88,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-storybook": "^0.5.7",
     "eslint-plugin-testing-library": "^5.0.5",
+    "jest": "^28.1.0",
     "prettier": "2.5.1 ",
     "prettier-eslint": "13.0.0",
     "prettier-eslint-cli": "^5.0.1",

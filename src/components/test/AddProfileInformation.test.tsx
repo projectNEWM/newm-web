@@ -1,6 +1,6 @@
 import { renderWithContext, withFormik } from "common";
 import * as Formik from "formik";
-import AddProfileInformation from "../AddProfileInformation";
+import AddProfileInformation from "../createProfile/AddProfileInformation";
 
 describe("<AddProfileInformation />", () => {
   describe("when the 'tags' prop is present", () => {

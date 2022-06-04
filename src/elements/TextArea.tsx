@@ -12,11 +12,11 @@ import theme from "theme";
 import { ErrorMessage } from "components";
 import Typography from "./Typography";
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  readonly endAdornment?: JSX.Element;
-  readonly errorMessage?: string;
+export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
+  readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
+  readonly endAdornment?: JSX.Element;
   readonly widthType?: "default" | "full";
 }
 
@@ -27,7 +27,7 @@ const StyledRootElement = styled.div`
   flex-grow: 1;
 `;
 
-const StyledInputElement = styled.input`
+const StyledTextAreaElement = styled.textarea`
   display: flex;
   flex-grow: 1;
   background: transparent;
@@ -48,9 +48,9 @@ const StyledInputElement = styled.input`
   }
 `;
 
-export const TextInput: ForwardRefRenderFunction<
+export const TextArea: ForwardRefRenderFunction<
   HTMLInputElement,
-  TextInputProps
+  TextAreaProps
 > = (
   {
     errorMessage,
@@ -95,11 +95,13 @@ export const TextInput: ForwardRefRenderFunction<
       direction="column"
       spacing="4px"
       sx={ {
-        margin: ["0 auto", "0 auto", "0"],
-        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         opacity: disabled ? 0.5 : 1,
-        textAlign: "left",
         width: "100%",
+        textAlign: "left",
+        [theme.breakpoints.down("md")]: {
+          margin: "0 auto",
+          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        },
       } }
     >
       { !!label && (
@@ -132,7 +134,7 @@ export const TextInput: ForwardRefRenderFunction<
         <StyledRootElement>
           { startAdornment }
 
-          <StyledInputElement
+          <StyledTextAreaElement
             { ...rest }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
@@ -170,4 +172,4 @@ const getBorderColor = (
   return theme.colors.grey400;
 };
 
-export default forwardRef(TextInput);
+export default forwardRef(TextArea);

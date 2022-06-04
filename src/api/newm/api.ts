@@ -19,7 +19,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 const api = createApi({
-  reducerPath: "api",
+  reducerPath: "newmApi",
   baseQuery: fetchBaseQueryWithReauth(baseQuery),
   refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
