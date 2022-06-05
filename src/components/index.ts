@@ -15,6 +15,7 @@ export { default as ImageUpload } from "./ImageUpload";
 export { default as LinkedInLogin } from "./LinkedInLogin";
 export { default as NEWMLogo } from "./NEWMLogo";
 export { default as PaperInput } from "./styled/PaperInput";
+export { default as StyledPagination } from "./styled/StyledPagination";
 export { default as PasswordInputField } from "./form/PasswordInputField";
 export { default as Popup } from "./Popup";
 export { default as PrivateRoute } from "./PrivateRoute";

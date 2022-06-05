@@ -15,6 +15,7 @@ declare module "@mui/material/styles" {
       grey300: string;
       grey400: string;
       grey500: string;
+      grey600: string;
       black: string;
       black100: string;
     };
@@ -58,6 +59,7 @@ declare module "@mui/material/styles" {
       grey300?: string;
       grey400?: string;
       grey500?: string;
+      grey600?: string;
       black?: string;
       black100?: string;
     };
@@ -139,6 +141,7 @@ const theme = createTheme({
     grey300: "#48484A",
     grey400: "#2C2C2E",
     grey500: "#1C1C1E",
+    grey600: "#121214",
     black: "#000000",
     black100: "#0A0A0A",
   },
@@ -230,11 +233,11 @@ const theme = createTheme({
       lineHeight: "96px",
     },
     h3: {
-      fontFamily: "Inter",
+      fontFamily: "Raleway",
       fontStyle: "normal",
-      fontWeight: 600,
+      fontWeight: 800,
       fontSize: "32px",
-      lineHeight: "48px",
+      lineHeight: "38px",
     },
     h4: {
       fontFamily: "Inter",
@@ -264,6 +267,7 @@ const theme = createTheme({
       fontSize: "14px",
       lineHeight: "20px",
     },
+
 
     // custom font theme styles
     emphasized: {
