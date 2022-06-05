@@ -103,7 +103,7 @@ export const TextInput: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography fontWeight="medium" color="grey100">
+        <Typography fontWeight={ 500 } color="grey100">
           { label }
         </Typography>
       ) }
