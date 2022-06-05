@@ -38,19 +38,18 @@ const Owners: FunctionComponent = () => {
       justifyContent="flex-start"
       alignItems="flex-start"
     >
-      <Typography sx={ { pb: 4 } } variant="h1">
+      <Typography sx={ { pb: 4 } } variant="h3">
         OWNERS
       </Typography>
 
       { ownersData.length ? (
         <>
-          <Box sx={ { width: { xs: 200, sm: 380 }, pb: 3 } }>
+          <Box sx={ { pb: 3, width: "340px" } }>
             <TextInput
               value={ query }
               onChange={ (e) => requestSearch(e.target.value) }
               style={ {
-                width: "380px",
-                maxWidth: "380px",
+                width: "100%",
               } }
               startAdornment={
                 <SearchRoundedIcon

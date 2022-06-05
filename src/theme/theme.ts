@@ -229,15 +229,15 @@ const theme = createTheme({
       fontFamily: "Raleway",
       fontStyle: "normal",
       fontWeight: 800,
-      fontSize: "32px",
-      lineHeight: "37.57px",
+      fontSize: "80px",
+      lineHeight: "96px",
     },
     h3: {
-      fontFamily: "Inter",
+      fontFamily: "Raleway",
       fontStyle: "normal",
-      fontWeight: 600,
+      fontWeight: 800,
       fontSize: "32px",
-      lineHeight: "48px",
+      lineHeight: "38px",
     },
     h4: {
       fontFamily: "Inter",
@@ -267,13 +267,7 @@ const theme = createTheme({
       fontSize: "14px",
       lineHeight: "20px",
     },
-    body2: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 500,
-      fontSize: "14px",
-      lineHeight: "20px",
-    },
+
 
     // custom font theme styles
     emphasized: {

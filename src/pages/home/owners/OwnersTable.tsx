@@ -61,7 +61,7 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   return (
     <StyledTableContainer>
       <Table sx={ { minWidth: 500 } } aria-label="Owners pagination table">
-        <TableHead sx={ { lineHeight: "16.94px" } }>
+        <TableHead >
           <TableRow>
             <StyledTableCell>OWNER</StyledTableCell>
             <StyledTableCell>SONG</StyledTableCell>
@@ -115,7 +115,7 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
                   alignItems: "center",
                 } }
               >
-                <Typography variant="body2">
+                <Typography variant="body1" sx={ { fontWeight: 500 } }>
                   Showing { (page - 1) * rowsPerPage + 1 } to { lastRowOnPage } of{ " " }
                   { ownersData.length } owners
                 </Typography>
