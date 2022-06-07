@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, Drawer, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { ProfileImage, SideBarButton, SideBarHeader } from "components";
 import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 
-const SideBar: FunctionComponent = () => {
+export const SideBar: FunctionComponent = () => {
   const theme = useTheme();
 
   const { profile } = useSelector(selectSession);
@@ -106,4 +106,51 @@ const SideBar: FunctionComponent = () => {
   );
 };
 
-export default SideBar;
+interface ResponsiveSideBarProps {
+  mobileOpen: boolean;
+  drawerWidth: number;
+  setMobileOpen: (field: boolean) => void;
+}
+const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
+  props: ResponsiveSideBarProps
+) => {
+  const container =
+    window !== undefined ? () => window.document.body : undefined;
+  return (
+    <>
+      <Drawer
+        container={ container }
+        variant="temporary"
+        open={ props.mobileOpen }
+        onClose={ () => props.setMobileOpen(false) }
+        ModalProps={ {
+          keepMounted: true,
+        } }
+        sx={ {
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: props.drawerWidth,
+          },
+        } }
+      >
+        <SideBar />
+      </Drawer>
+      <Drawer
+        variant="permanent"
+        sx={ {
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: props.drawerWidth,
+          },
+        } }
+        open
+      >
+        <SideBar />
+      </Drawer>
+    </>
+  );
+};
+
+export default ResponsiveSideBar;
