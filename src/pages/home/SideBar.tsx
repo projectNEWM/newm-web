@@ -57,6 +57,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarButton
+            closeMenu={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
             label="UPLOAD SONG"
             to="/home/upload-song"
@@ -68,12 +69,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
               label="OWNERS"
               to="/home/owners"
@@ -86,12 +89,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
 
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <AnalyticsIcon /> }
               label="ANALYTICS"
               to="/home/analytics"
@@ -104,6 +109,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Box mt={ 1.75 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
               label="YOUR PROFILE"
               to="/home/profile"
