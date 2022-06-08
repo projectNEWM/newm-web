@@ -39,12 +39,12 @@ const Home: FunctionComponent = () => {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          marginLeft: { sm: 30 },
+          marginLeft: { md: 30 },
         } }
       >
         <Box position="absolute" left="2rem" top="2rem">
           <IconButton onClick={ () => setMobileOpen(true) }>
-            <MenuIcon />
+            <MenuIcon sx={ { color: "white" } } />
           </IconButton>
         </Box>
         <Routes>

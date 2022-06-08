@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Drawer, Stack } from "@mui/material";
+import { Box, Drawer, IconButton, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { ProfileImage, SideBarButton, SideBarHeader } from "components";
 import { useSelector } from "react-redux";
@@ -12,8 +12,15 @@ import WalletIcon from "assets/images/WalletIcon";
 import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
-export const SideBar: FunctionComponent = () => {
+interface SideBarProps {
+  mobileVersion?: boolean;
+  setMobileOpen: (field: boolean) => void;
+}
+export const SideBar: FunctionComponent<SideBarProps> = (
+  props: SideBarProps
+) => {
   const theme = useTheme();
 
   const { profile } = useSelector(selectSession);
@@ -33,6 +40,12 @@ export const SideBar: FunctionComponent = () => {
     >
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
+          { props.mobileVersion && (
+            <IconButton onClick={ () => props.setMobileOpen(false) }>
+              <MenuOpenIcon sx={ { color: "white" } } />
+            </IconButton>
+          ) }
+
           { !!profile.pictureUrl && (
             <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
           ) }
@@ -127,19 +140,19 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           keepMounted: true,
         } }
         sx={ {
-          display: { xs: "block", sm: "none" },
+          display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: props.drawerWidth,
           },
         } }
       >
-        <SideBar />
+        <SideBar mobileVersion setMobileOpen={ props.setMobileOpen } />
       </Drawer>
       <Drawer
         variant="permanent"
         sx={ {
-          display: { xs: "none", sm: "block" },
+          display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: props.drawerWidth,
@@ -147,7 +160,7 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
         } }
         open
       >
-        <SideBar />
+        <SideBar setMobileOpen={ props.setMobileOpen } />
       </Drawer>
     </>
   );
