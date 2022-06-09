@@ -7,7 +7,7 @@ interface SideBarButtonProps {
   readonly label: string;
   readonly icon: JSX.Element;
   readonly to: string;
-  readonly closeMenu?: () => void;
+  readonly closeMenu?: VoidFunction;
 }
 
 const SideBarButton: FunctionComponent<SideBarButtonProps> = ({

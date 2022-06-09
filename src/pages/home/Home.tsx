@@ -23,13 +23,14 @@ const Home: FunctionComponent = () => {
   useEffect(() => {
     dispatch(getInitialData());
   }, [dispatch]);
-  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const [isMobileOpen, setMobileOpen] = useState(false);
   return (
     <Box
       sx={ { display: "flex", flexGrow: 1, background: theme.colors.black100 } }
     >
       <SideBar
-        mobileOpen={ mobileOpen }
+        isMobileOpen={ isMobileOpen }
         setMobileOpen={ setMobileOpen }
         drawerWidth={ drawerWidth }
       />

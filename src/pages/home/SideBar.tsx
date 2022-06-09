@@ -41,9 +41,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
           { props.mobileVersion && (
-            <IconButton onClick={ () => props.setMobileOpen(false) }>
-              <MenuOpenIcon sx={ { color: "white" } } />
-            </IconButton>
+            <Box display="flex" flexDirection="column" alignItems="left">
+              <IconButton onClick={ () => props.setMobileOpen(false) }>
+                <MenuOpenIcon sx={ { color: "white" } } />
+              </IconButton>
+            </Box>
           ) }
 
           { !!profile.pictureUrl && (
@@ -126,7 +128,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 };
 
 interface ResponsiveSideBarProps {
-  mobileOpen: boolean;
+  isMobileOpen: boolean;
   drawerWidth: number;
   setMobileOpen: (field: boolean) => void;
 }
@@ -140,7 +142,7 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
       <Drawer
         container={ container }
         variant="temporary"
-        open={ props.mobileOpen }
+        open={ props.isMobileOpen }
         onClose={ () => props.setMobileOpen(false) }
         ModalProps={ {
           keepMounted: true,
