@@ -4,6 +4,8 @@ export { default as DropdownSelect } from "./DropdownSelect";
 export { default as FilledButton } from "./styled/FilledButton";
 export { default as MultiSelect } from "./MultiSelect";
 export { default as OutlinedButton } from "./OutlinedButton";
+export { default as Dialog } from "./styled/Dialog";
+export * from "./styled/Dialog";
 export * from "./DropdownSelect";
 export { default as DatePickerInput } from "./DatePickerInput";
 export { default as GradientTextInput } from "./GradientTextInput";

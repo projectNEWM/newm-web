@@ -14,3 +14,7 @@ declare module "styled-components";
 declare module "moment-duration-format";
 declare module "moment";
 declare module "react-facebook-login/dist/facebook-login-render-props";
+
+interface Window {
+  cardano?: any; // eslint-disable-line
+}

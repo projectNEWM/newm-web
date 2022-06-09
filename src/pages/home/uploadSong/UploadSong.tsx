@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 import { Box, Container, Stack } from "@mui/material";
@@ -13,9 +13,12 @@ import {
   UploadSongField,
 } from "components";
 import * as Yup from "yup";
+import MintSongModal from "./MintSongModal";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const [isMintModalOpen, setIsMintModalOpen] = useState(true);
 
   const { genres } = useSelector(selectContent);
 
@@ -152,6 +155,17 @@ const UploadSong: FunctionComponent = () => {
           ) }
         </Formik>
       </Box>
+
+      <Box mt={ 4 }>
+        <FilledButton onClick={ () => setIsMintModalOpen(true) }>
+          Mint song
+        </FilledButton>
+      </Box>
+
+      <MintSongModal
+        open={ isMintModalOpen }
+        onClose={ () => setIsMintModalOpen(false) }
+      />
     </Container>
   );
 };
