@@ -38,16 +38,20 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         padding: 1.25,
       } }
     >
+      { props.mobileVersion && (
+        <IconButton
+          onClick={ () => props.setMobileOpen(false) }
+          sx={ {
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
+          } }
+        >
+          <MenuOpenIcon sx={ { color: "white" } } />
+        </IconButton>
+      ) }
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
-          { props.mobileVersion && (
-            <Box display="flex" flexDirection="column" alignItems="left">
-              <IconButton onClick={ () => props.setMobileOpen(false) }>
-                <MenuOpenIcon sx={ { color: "white" } } />
-              </IconButton>
-            </Box>
-          ) }
-
           { !!profile.pictureUrl && (
             <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
           ) }
@@ -150,11 +154,22 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
         sx={ {
           display: { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
+            overflow: props.isMobileOpen ? "visible" : "hidden",
             boxSizing: "border-box",
             width: props.drawerWidth,
           },
         } }
       >
+        <IconButton
+          onClick={ () => props.setMobileOpen(false) }
+          sx={ {
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
+          } }
+        >
+          <MenuOpenIcon sx={ { color: "white" } } />
+        </IconButton>
         <SideBar mobileVersion setMobileOpen={ props.setMobileOpen } />
       </Drawer>
       <Drawer
