@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, Drawer, IconButton, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { ProfileImage, SideBarButton, SideBarHeader } from "components";
 import { useSelector } from "react-redux";
@@ -12,8 +12,15 @@ import WalletIcon from "assets/images/WalletIcon";
 import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
-const SideBar: FunctionComponent = () => {
+interface SideBarProps {
+  mobileVersion?: boolean;
+  setMobileOpen: (field: boolean) => void;
+}
+export const SideBar: FunctionComponent<SideBarProps> = (
+  props: SideBarProps
+) => {
   const theme = useTheme();
 
   const { profile } = useSelector(selectSession);
@@ -31,6 +38,18 @@ const SideBar: FunctionComponent = () => {
         padding: 1.25,
       } }
     >
+      { props.mobileVersion && (
+        <IconButton
+          onClick={ () => props.setMobileOpen(false) }
+          sx={ {
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
+          } }
+        >
+          <MenuOpenIcon sx={ { color: "white" } } />
+        </IconButton>
+      ) }
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
           { !!profile.pictureUrl && (
@@ -44,6 +63,7 @@ const SideBar: FunctionComponent = () => {
 
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarButton
+            closeMenu={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
             label="UPLOAD SONG"
             to="/home/upload-song"
@@ -55,12 +75,14 @@ const SideBar: FunctionComponent = () => {
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
               label="OWNERS"
               to="/home/owners"
@@ -73,12 +95,14 @@ const SideBar: FunctionComponent = () => {
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
 
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <AnalyticsIcon /> }
               label="ANALYTICS"
               to="/home/analytics"
@@ -91,6 +115,7 @@ const SideBar: FunctionComponent = () => {
 
           <Box mt={ 1.75 } sx={ { width: "100%" } }>
             <SideBarButton
+              closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
               label="YOUR PROFILE"
               to="/home/profile"
@@ -106,4 +131,62 @@ const SideBar: FunctionComponent = () => {
   );
 };
 
-export default SideBar;
+interface ResponsiveSideBarProps {
+  isMobileOpen: boolean;
+  drawerWidth: number;
+  setMobileOpen: (field: boolean) => void;
+}
+const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
+  props: ResponsiveSideBarProps
+) => {
+  const container =
+    window !== undefined ? () => window.document.body : undefined;
+  return (
+    <>
+      <Drawer
+        container={ container }
+        variant="temporary"
+        open={ props.isMobileOpen }
+        onClose={ () => props.setMobileOpen(false) }
+        ModalProps={ {
+          keepMounted: true,
+        } }
+        sx={ {
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            overflow: props.isMobileOpen ? "visible" : "hidden",
+            boxSizing: "border-box",
+            width: props.drawerWidth,
+          },
+        } }
+      >
+        <IconButton
+          onClick={ () => props.setMobileOpen(false) }
+          sx={ {
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
+          } }
+        >
+          <MenuOpenIcon sx={ { color: "white" } } />
+        </IconButton>
+        <SideBar mobileVersion setMobileOpen={ props.setMobileOpen } />
+      </Drawer>
+      <Drawer
+        variant="permanent"
+        sx={ {
+          display: { xs: "none", md: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: props.drawerWidth,
+          },
+        } }
+        open
+      >
+        <SideBar setMobileOpen={ props.setMobileOpen } />
+      </Drawer>
+    </>
+  );
+};
+
+export default ResponsiveSideBar;
