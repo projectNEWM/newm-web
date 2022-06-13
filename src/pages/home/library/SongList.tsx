@@ -3,53 +3,58 @@ import { styled } from "@mui/material/styles";
 
 import {
   Box,
+  IconButton,
   Table,
   TableBody,
   TableCell,
-  TableCellProps,
   TableContainer,
-  TableContainerProps,
-  TableFooter,
+
   TableHead,
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Typography } from "elements";
 import { useWindowDimensions } from "common";
-import { StyledPagination } from "components";
-import PendingBadge from "assets/images/PendingBadge";
+import VerticalEllipsis from "assets/images/VerticalEllipsis";
+import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
+import TablePagination from "components/TablePagination";
 interface SongListProps {
-  songData: Song[];
+  songData: Song[] | null | undefined;
+  rowHeight?: number;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>
 }
-const StyledTableContainer = styled(TableContainer)<TableContainerProps>`
-  border-color: ${theme.colors.grey500};
-`;
-const StyledTableCell = styled(TableCell)<TableCellProps>`
-  border-color: ${theme.colors.grey500};
-  color: ${theme.colors.grey100};
-  height: 60px;
-`;
+const StyledTableCell = styled(TableCell)({
+  borderColor: theme.colors.black100,
+  paddingTop: "4px",
+  paddingBottom: "4px",
+  paddingLeft: "0px",
+});
 
-export default function SongList({ songData }: SongListProps) {
-  const rowHeight = 60;
-  const [page, setPage] = useState(1);
+export default function SongList({ songData, rowHeight = 65, page, setPage }: SongListProps) {
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 1 ? Math.max(0, page * rowsPerPage - songData.length) : 0;
+  const emptyRows = songData
+    ? page > 1
+      ? Math.max(0, page * rowsPerPage - songData.length)
+      : 0
+    : 0;
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
 
   // determines how many rows to display per page
   const windowHeight = useWindowDimensions()?.height;
+
+  // sets the # of rows per page depending on viewport height
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? Math.floor((windowHeight - 245 - rowHeight - 60 - 30) / rowHeight)
+        ? //viewport height - header height - Footer height - bottom padding / row height
+          Math.floor((windowHeight - 245 - 40 - 30) / rowHeight)
         : 5
     );
-  }, [windowHeight]);
+  }, [windowHeight, rowHeight]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -58,79 +63,99 @@ export default function SongList({ songData }: SongListProps) {
     setPage(page);
   };
 
-  return (
-    <StyledTableContainer>
-      <Table sx={ { minWidth: 500 } } aria-label="Owners pagination table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>SONG</StyledTableCell>
-            <StyledTableCell>GENRE</StyledTableCell>
-            <StyledTableCell>TIME</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody sx={ { backgroundColor: theme.colors.grey600 } }>
-          { songData
-            .slice(
-              (page - 1) * rowsPerPage,
-              (page - 1) * rowsPerPage + rowsPerPage
-            )
-            .map((row) => (
-              <TableRow key={ row.id }>
-                <StyledTableCell
-                  sx={ { color: theme.colors.white } }
-                  component="th"
-                  scope="row"
-                >
-                  <Box sx={ { display: "flex", width: "100%" } }>
-                    { row.title }
-                    { !row.createdAt ? (
-                      <PendingBadge style={ { marginLeft: "15px" } } />
-                    ) : null }
-                  </Box>
-                </StyledTableCell>
-                <StyledTableCell>{ row.genre }</StyledTableCell>
-                <StyledTableCell>{ row.createdAt }%</StyledTableCell>
-              </TableRow>
-            )) }
-          { emptyRows > 0 && (
-            <TableRow style={ { height: rowHeight * emptyRows } }>
-              <StyledTableCell
-                sx={ { backgroundColor: theme.colors.black100 } }
-                colSpan={ 6 }
-              />
-            </TableRow>
-          ) }
-        </TableBody>
-        <TableFooter
-          sx={ {
-            backgroundColor: theme.colors.grey600,
-          } }
-        >
-          <TableRow>
-            <StyledTableCell colSpan={ 3 }>
-              <Box
-                sx={ {
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                } }
-              >
-                <Typography variant="body1" sx={ { fontWeight: 500 } }>
-                  Showing { (page - 1) * rowsPerPage + 1 } to { lastRowOnPage } of{ " " }
-                  { songData.length } songs
+  if (songData) {
+    return (
+      <TableContainer
+        sx={ {
+          paddingRight: { xs: 0, md: 5.5 },
+        } }
+      >
+        <Table size="small" sx={ {} } aria-label="Song List">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>
+                <Typography fontWeight={ 700 } color="grey100">
+                  SONG
                 </Typography>
-                <StyledPagination
-                  variant="outlined"
-                  shape="rounded"
-                  page={ page }
-                  count={ Math.ceil(songData.length / rowsPerPage) }
-                  onChange={ handlePageChange }
-                />
-              </Box>
-            </StyledTableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </StyledTableContainer>
-  );
+              </StyledTableCell>
+              <StyledTableCell sx={ { display: { xs: "none", sm: "block" } } }>
+                <Typography fontWeight={ 700 } color="grey100">
+                  GENRE
+                </Typography>
+              </StyledTableCell>
+              <StyledTableCell sx={ { paddingRight: 8 } } align="right">
+                <Typography
+                  fontWeight={ 700 }
+                  color="grey100"
+                  sx={ { display: { xs: "none", sm: "block" } } }
+                >
+                  CREATED ON
+                </Typography>
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            { songData
+              .slice(
+                (page - 1) * rowsPerPage,
+                (page - 1) * rowsPerPage + rowsPerPage
+              )
+              .map((row) => (
+                <TableRow key={ row.id }>
+                  <StyledTableCell>
+                    <Box sx={ { display: "flex", alignItems: "center" } }>
+                      <IconButton sx={ { paddingRight: 4, paddingLeft: 0 } }>
+                        <PlayButton />
+                      </IconButton>
+                      <img
+                        style={ {
+                          borderRadius: "4px",
+                          width: "56px",
+                          height: "56px",
+                        } }
+                        src={ row.coverArtUrl }
+                        alt="Album cover"
+                      />
+                      <span style={ { paddingLeft: "12px" } }>{ row.title }</span>
+                    </Box>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    sx={ { display: { xs: "none", sm: "table-cell" } } }
+                  >
+                    { row.genre }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Box sx={ { display: { xs: "none", sm: "inline" } } }>
+                      { row.createdAt.slice(0, 10) } {" "}
+                    </Box>
+                    <IconButton>
+                      <VerticalEllipsis />
+                    </IconButton>
+                  </StyledTableCell>
+                </TableRow>
+              )) }
+            { emptyRows > 0 && (
+              <TableRow style={ { height: rowHeight * emptyRows } }>
+                <StyledTableCell colSpan={ 3 } />
+              </TableRow>
+            ) }
+          </TableBody>
+          { songData.length > rowsPerPage ? (
+            <TablePagination
+              data={ songData }
+              page={ page }
+              rowsPerPage={ rowsPerPage }
+              lastRowOnPage={ lastRowOnPage }
+              handlePageChange={ handlePageChange }
+              colSpan={ theme.breakpoints.up("sm") ? 3 : 2 }
+            />
+          ) : (
+            ""
+          ) }
+        </Table>
+      </TableContainer>
+    );
+  } else {
+    return <div></div>;
+  }
 }

@@ -46,7 +46,8 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? Math.floor((windowHeight - 245 - rowHeight - 60 - 30) / rowHeight)
+        //viewport height - header height - Footer height - bottom padding / row height 
+        ? Math.floor((windowHeight - 245 - 65 - 30) / rowHeight)
         : 5
     );
   }, [windowHeight]);
@@ -61,11 +62,17 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   return (
     <StyledTableContainer>
       <Table sx={ { minWidth: 500 } } aria-label="Owners pagination table">
-        <TableHead >
+        <TableHead>
           <TableRow>
-            <StyledTableCell>OWNER</StyledTableCell>
-            <StyledTableCell>SONG</StyledTableCell>
-            <StyledTableCell>INFO TBD</StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>OWNER</Typography>
+            </StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>SONG</Typography>
+            </StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>INFO TBD</Typography>
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={ { backgroundColor: theme.colors.grey600 } }>

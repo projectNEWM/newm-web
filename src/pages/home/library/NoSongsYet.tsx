@@ -1,26 +1,39 @@
 import { FunctionComponent } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Typography } from "elements";
-import Owner from "assets/images/Owner";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import { useNavigate } from "react-router-dom";
 
 const NoSongsYet: FunctionComponent = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={ {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingRight: 30,
       } }
     >
-      <Owner />
-
-      <Typography fontWeight="bold" fontSize="16px">
-        There are no owners yet.
+      <Typography
+        fontWeight="bold"
+        fontSize="20px"
+        paddingBottom={ 2 }
+        paddingTop={ 5 }
+      >
+        You have no songs yet
       </Typography>
       <Typography fontWeight="regular" fontSize="14x">
-        As soon as someone owns part of your songs, they’ll be listed here.
+        Click below to upload your first song
       </Typography>
+      <IconButton>
+        <AddCircleOutlineOutlinedIcon
+          onClick={ () => navigate("/home/upload-song") }
+          fontSize="large"
+        />
+      </IconButton>
     </Box>
   );
 };
