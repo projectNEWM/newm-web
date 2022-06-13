@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-// import { getWallet } from "common";
+import { supportedWallets, walletInfo } from "common";
 import {
   Dialog,
   DialogProps,
@@ -8,10 +8,14 @@ import {
   Typography,
 } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import eternlLogoUrl from "assets/images/eternl-logo.png";
 
 interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
+}
+
+interface DialogContent {
+  readonly title: string;
+  readonly subtitle: string;
 }
 
 const MintSongModal: FunctionComponent<MintSongModalProps> = (props) => {
@@ -21,72 +25,83 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = (props) => {
 
   console.log("selected wallet: ", selectedWallet);
 
-  if (!window.cardano) {
-    return (
-      <Box>
-        <Typography>Please install a Cardano wallet</Typography>
-      </Box>
-    );
-  }
-
+  // const availableWallets: ReadonlyArray<any> = []; // for testing
   const availableWallets = supportedWallets.filter((walletName: string) => {
-    return !!window.cardano[walletName];
+    return !!window.cardano && !!window.cardano[walletName];
   });
 
   const handleSelectWallet = (walletName: string) => {
     setSelectedWallet(walletName);
   };
 
+  const walletContent =
+    availableWallets.length > 0
+      ? {
+          title: "Select a connected wallet",
+          subtitle:
+            "Please select a connected to wallet to mint your song with.",
+        }
+      : {
+          title: "Connect a Cardano wallet",
+          subtitle:
+            "Setup and or connect a Cardano wallet using one of the official " +
+            "browser extensions below. After you've connected your wallet, " +
+            "return to this screen to mint your song.",
+        };
+
+  const wallets =
+    availableWallets.length > 0 ? availableWallets : supportedWallets;
+
   return (
-    <Dialog { ...props }>
-      <Stack spacing={ 2 } padding={ 3 } paddingBottom={ 2 }>
-        <Stack spacing={ 0.5 }>
-          <Typography variant="body2">Select a wallet</Typography>
-          <Typography variant="subtitle1">
-            Please select a connected to wallet to mint your song with.
-          </Typography>
+    <Dialog {...props}>
+      <Stack spacing={2} padding={3} paddingBottom={2}>
+        <Stack spacing={0.5}>
+          <Typography variant="body2">{walletContent.title}</Typography>
+          <Typography variant="subtitle1">{walletContent.subtitle}</Typography>
         </Stack>
 
-        <Stack spacing={ 1 }>
-          { availableWallets.map((walletName) => {
+        <Stack spacing={1}>
+          {wallets.map((identifier) => {
+            const info = walletInfo[identifier];
+
             return (
               <TransparentButton
-                key={ walletName }
-                onClick={ () => handleSelectWallet(walletName) }
-                sx={ { opacity: 1, justifyContent: "flex-start" } }
+                key={identifier}
+                onClick={() => handleSelectWallet(identifier)}
+                sx={{ opacity: 1, justifyContent: "flex-start" }}
               >
                 <Stack
                   direction="row"
-                  spacing={ 2 }
+                  spacing={2}
                   justifyContent="flex-start"
                   alignItems="center"
                 >
                   <img
-                    alt="Eternl logo"
-                    src={ eternlLogoUrl }
-                    width={ 24 }
-                    height={ 24 }
+                    alt={`${info.name} logo`}
+                    src={info.logo}
+                    width={30}
+                    height={30}
                   />
-                  <span>{ walletName }</span>
+                  <span>{info.name}</span>
                 </Stack>
               </TransparentButton>
             );
-          }) }
+          })}
         </Stack>
       </Stack>
 
       <Stack
         direction="row"
-        py={ 1.5 }
-        px={ 3 }
-        sx={ {
+        py={1.5}
+        px={3}
+        sx={{
           justifyContent: "flex-end",
           backgroundColor: theme.colors.grey600,
-        } }
+        }}
       >
         <OutlinedButton
-          backgroundColor={ theme.colors.grey600 }
-          onClick={ () => props.onClose() }
+          backgroundColor={theme.colors.grey600}
+          onClick={() => props.onClose()}
         >
           Cancel
         </OutlinedButton>
@@ -96,11 +111,3 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = (props) => {
 };
 
 export default MintSongModal;
-
-const supportedWallets = [
-  "nami",
-  "eternl",
-  "flint",
-  "typhoncip30",
-  "gerowallet",
-];

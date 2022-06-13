@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { RootState } from "store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
@@ -23,4 +23,11 @@ export interface RenderProps extends RenderOptions {
 
 export interface WrapperProps {
   readonly children: ReactElement;
+}
+
+export interface WalletLogos {
+  readonly [key: string]: {
+    readonly name: string;
+    readonly logo: string;
+  }
 }

@@ -1,12 +1,41 @@
 import { Buffer } from "buffer";
+import { WalletLogos } from "common";
+import namiLogo from "assets/images/nami-logo.svg";
+import eternalLogo from "assets/images/eternl-logo.png";
+import flintLogo from "assets/images/flint-logo.svg";
+import cardwalletLogo from "assets/images/cardwallet-logo.svg";
+import gerowalletLogo from "assets/images/gerowallet-logo.png";
 
-const supportedWallets = [
+export const supportedWallets = [
   "nami",
   "eternl",
   "flint",
-  "typhoncip30",
+  "cardwallet",
   "gerowallet",
 ];
+
+export const walletInfo: WalletLogos = {
+  nami: {
+    name: "Nami",
+    logo: namiLogo
+  },
+  eternl: {
+    name: "Eternl",
+    logo: eternalLogo,
+  },
+  flint: {
+    name: "Flint",
+    logo: flintLogo,
+  },
+  cardwallet: {
+    name: "CardWallet",
+    logo: cardwalletLogo,
+  },
+  gerowallet: {
+    name: "GeroWallet",
+    logo: gerowalletLogo,
+  }
+};
 
 export const getWallet = () => {
   const cardano = window.cardano;
