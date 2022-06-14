@@ -17,7 +17,7 @@ interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
   /** Called when declining to mint an NFT */
   readonly onCancel: VoidFunction;
-  /** Called when selecting a wallet to min the NFT */
+  /** Called when selecting a wallet to mint the NFT */
   readonly onConfirm: (walletId: string) => void;
 }
 
@@ -28,6 +28,7 @@ export interface Button extends ButtonProps {
 interface DialogContent {
   readonly title: string;
   readonly subtitle: string;
+  readonly wallets: ReadonlyArray<string>;
   readonly buttons: ReadonlyArray<Button>;
 }
 
@@ -55,6 +56,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         title: "Are you sure you don't want to mint your song?",
         subtitle:
           "Your song can still be uploaded, however an NFT will not be minted.",
+        wallets: [],
         buttons: [
           {
             children: "Never mind",
@@ -74,6 +76,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
       return {
         title: "Select a connected wallet",
         subtitle: "Please select a connected to wallet to mint your song with.",
+        wallets: availableWallets,
         buttons: [
           {
             children: "Cancel",
@@ -90,6 +93,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         "Setup and or connect a Cardano wallet using one of the official " +
         "browser extensions below. After you've connected your wallet, " +
         "return to this screen to mint your song.",
+      wallets: supportedWallets,
       buttons: [
         {
           children: "Cancel",
@@ -98,19 +102,22 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         },
       ],
     };
-  }, [onCancel, values.isMinting, availableWallets.length, dialogProps]);
+  }, [onCancel, values.isMinting, availableWallets, dialogProps]);
 
   const [modalContent, setModalContent] = useState(getModalContent());
 
   /**
    * Set dialog content with a slight delay so that it does
    * not change during the dialog dismiss animation.
+   *
+   * TODO: Confirm that this also changes after a wallet is connected
    */
   useEffect(() => {
     setTimeout(() => {
+      console.log("changing content");
       setModalContent(getModalContent());
-    }, 200);
-  }, [dialogProps.open, getModalContent]);
+    }, 500);
+  }, [getModalContent]);
 
   return (
     <Dialog { ...dialogProps }>
@@ -120,41 +127,29 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
           <Typography variant="subtitle1">{ modalContent.subtitle }</Typography>
         </Stack>
 
-        { !values.isMinting && (
+        { modalContent.wallets.length > 0 && (
           <Stack spacing={ 1 }>
-            { availableWallets.length > 0
-              ? availableWallets.map((id) => {
-                  const info = walletInfo[id];
+            { availableWallets.length > 0 &&
+              modalContent.wallets.map((id) => {
+                const info = walletInfo[id];
+                const targetUrl =
+                  browserName === "Chrome"
+                    ? info.extensionUrl
+                    : info.primaryUrl;
 
-                  return (
-                    <SelectWalletItem
-                      key={ info.name }
-                      name={ info.name }
-                      logo={ info.logo }
-                      onClick={ () => {
-                        onConfirm(id);
-                      } }
-                    />
-                  );
-                })
-              : supportedWallets.map((id) => {
-                  const info = walletInfo[id];
-                  const targetUrl =
-                    browserName === "Chrome"
-                      ? info.extensionUrl
-                      : info.primaryUrl;
-
-                  return (
-                    <SelectWalletItem
-                      key={ info.name }
-                      name={ info.name }
-                      logo={ info.logo }
-                      onClick={ () => {
-                        window.open(targetUrl, "_blank");
-                      } }
-                    />
-                  );
-                }) }
+                return (
+                  <SelectWalletItem
+                    key={ info.name }
+                    name={ info.name }
+                    logo={ info.logo }
+                    onClick={ () => {
+                      availableWallets.length > 0
+                        ? onConfirm(id)
+                        : window.open(targetUrl, "_blank");
+                    } }
+                  />
+                );
+              }) }
           </Stack>
         ) }
       </Stack>

@@ -57,7 +57,7 @@ export const getWallet = (walletId: string) => {
 
     const wallet = cardano[walletId];
     
-    console.log("wallet: ", wallet);
+    console.log("wallet: ", wallet); // eslint-disable-line
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message); // eslint-disable-line

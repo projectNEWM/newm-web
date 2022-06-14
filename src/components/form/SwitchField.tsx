@@ -25,21 +25,3 @@ const SwitchField: FunctionComponent<SwitchFieldProps> = ({
 };
 
 export default SwitchField;
-
-// const TextInputField: ForwardRefRenderFunction<
-//   HTMLInputElement,
-//   TextInputProps
-// > = (props, ref) => {
-//   return (
-//     <Field name={ props.name }>
-//       { ({ field, meta }: FieldProps) => (
-//         <TextInput
-//           errorMessage={ meta.touched ? meta.error : "" }
-//           ref={ ref }
-//           { ...field }
-//           { ...props }
-//         />
-//       ) }
-//     </Field>
-//   );
-// };
