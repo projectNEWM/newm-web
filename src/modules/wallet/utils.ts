@@ -1,5 +1,5 @@
 import { Buffer } from "buffer";
-import { WalletLogos } from "common";
+import { Wallets } from "./types";
 import namiLogo from "assets/images/nami-logo.svg";
 import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
@@ -14,42 +14,50 @@ export const supportedWallets = [
   "gerowallet",
 ];
 
-export const walletInfo: WalletLogos = {
+export const walletInfo: Wallets = {
   nami: {
     name: "Nami",
-    logo: namiLogo
+    logo: namiLogo,
+    extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    primaryUrl: "https://namiwallet.io/",
   },
   eternl: {
     name: "Eternl",
     logo: eternalLogo,
+    extensionUrl: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+    primaryUrl: "https://eternl.io/",
   },
   flint: {
     name: "Flint",
     logo: flintLogo,
+    extensionUrl: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+    primaryUrl: "https://flint-wallet.com/",
   },
   cardwallet: {
     name: "CardWallet",
     logo: cardwalletLogo,
+    extensionUrl: "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
+    primaryUrl: "https://cwallet.finance/",
   },
   gerowallet: {
     name: "GeroWallet",
     logo: gerowalletLogo,
+    extensionUrl: "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
+    primaryUrl: "https://gerowallet.io/",
   }
 };
 
-export const getWallet = () => {
+export const getWallet = (walletId: string) => {
   const cardano = window.cardano;
 
-  const walletName = supportedWallets.find((wallet) => cardano[wallet]);
-
   try {
-    if (!walletName) {
-      throw new Error("Please install a Cardano wallet extension.");
+    if (!window.cardano) {
+      throw new Error("No cardano object found on the window.");
     }
 
-    const wallet = cardano[walletName];
-
-    console.log("buffer: ", Buffer);
+    const wallet = cardano[walletId];
+    
+    console.log("wallet: ", wallet);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message); // eslint-disable-line

@@ -16,5 +16,5 @@ declare module "moment";
 declare module "react-facebook-login/dist/facebook-login-render-props";
 
 interface Window {
-  cardano?: any; // eslint-disable-line
+  readonly cardano?: any; // eslint-disable-line
 }

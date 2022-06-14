@@ -24,10 +24,3 @@ export interface RenderProps extends RenderOptions {
 export interface WrapperProps {
   readonly children: ReactElement;
 }
-
-export interface WalletLogos {
-  readonly [key: string]: {
-    readonly name: string;
-    readonly logo: string;
-  }
-}

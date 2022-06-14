@@ -10,6 +10,7 @@ export interface UploadSongFormValues {
   readonly title: string;
   readonly genre: string;
   readonly description: string;
+  readonly isMinting: boolean;
 }
 
 export interface UploadSongRequest {
