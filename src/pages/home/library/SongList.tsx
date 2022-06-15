@@ -8,7 +8,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-
   TableHead,
   TableRow,
 } from "@mui/material";
@@ -24,7 +23,7 @@ interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
   page: number;
-  setPage: Dispatch<SetStateAction<number>>
+  setPage: Dispatch<SetStateAction<number>>;
 }
 const StyledTableCell = styled(TableCell)({
   borderColor: theme.colors.black100,
@@ -33,7 +32,12 @@ const StyledTableCell = styled(TableCell)({
   paddingLeft: "0px",
 });
 
-export default function SongList({ songData, rowHeight = 65, page, setPage }: SongListProps) {
+export default function SongList({
+  songData,
+  rowHeight = 65,
+  page,
+  setPage,
+}: SongListProps) {
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = songData
@@ -126,7 +130,7 @@ export default function SongList({ songData, rowHeight = 65, page, setPage }: So
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Box sx={ { display: { xs: "none", sm: "inline" } } }>
-                      { row.createdAt.slice(0, 10) } {" "}
+                      { row.createdAt.slice(0, 10) }{ " " }
                     </Box>
                     <IconButton>
                       <VerticalEllipsis />
