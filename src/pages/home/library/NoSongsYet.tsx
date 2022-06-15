@@ -14,7 +14,6 @@ const NoSongsYet: FunctionComponent = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        paddingRight: 30,
       } }
     >
       <Typography

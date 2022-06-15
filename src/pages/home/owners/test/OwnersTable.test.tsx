@@ -39,7 +39,7 @@ describe("<OwnersTable>", () => {
     expect(getByText("Ivy")).toBeTruthy();
   });
   it("Should show correct number of rows per page depending on viewport height", () => {
-    resizeWindow(1440, 550);
+    resizeWindow(1440, 519);
 
     const { getAllByText } = renderWithContext(
       <OwnersTable ownersData={ mockOwnersData } />
@@ -47,14 +47,14 @@ describe("<OwnersTable>", () => {
 
     expect(getAllByText("Jane Cooper")).toHaveLength(2);
   });
-  it("Should render 9 rows per page when viewport height is 950px", () => {
+  it("Should render 10 rows per page when viewport height is 950px", () => {
     resizeWindow(1440, 950);
 
     const { getAllByText } = renderWithContext(
       <OwnersTable ownersData={ mockOwnersData } />
     );
 
-    expect(getAllByText("Jane Cooper")).toHaveLength(9);
+    expect(getAllByText("Jane Cooper")).toHaveLength(10);
   });
   it("Pagination component has correct number of pages", () => {
     resizeWindow(1440, 550);
@@ -63,7 +63,7 @@ describe("<OwnersTable>", () => {
       <OwnersTable ownersData={ mockOwnersData } />
     );
 
-    expect(getByLabelText("Go to page 5")).toBeTruthy();
-    expect(queryByLabelText("Go to page 6")).toBeFalsy();
+    expect(getByLabelText("Go to page 4")).toBeTruthy();
+    expect(queryByLabelText("Go to page 5")).toBeFalsy();
   });
 });
