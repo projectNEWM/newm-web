@@ -1,10 +1,10 @@
 import { Buffer } from "buffer";
-import { Wallets } from "./types";
 import namiLogo from "assets/images/nami-logo.svg";
 import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
+import { Wallets } from "./types";
 
 export const supportedWallets = [
   "nami",
@@ -16,57 +16,91 @@ export const supportedWallets = [
 
 export const walletInfo: Wallets = {
   nami: {
-    name: "Nami",
+    name: "nami",
+    displayName: "Nami",
     logo: namiLogo,
-    extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    extensionUrl:
+      "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     primaryUrl: "https://namiwallet.io/",
   },
   eternl: {
-    name: "Eternl",
+    name: "eternl",
+    displayName: "Eternl",
     logo: eternalLogo,
-    extensionUrl: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+    extensionUrl:
+      "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
     primaryUrl: "https://eternl.io/",
   },
   flint: {
-    name: "Flint",
+    name: "flint",
+    displayName: "Flint",
     logo: flintLogo,
-    extensionUrl: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+    extensionUrl:
+      "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
     primaryUrl: "https://flint-wallet.com/",
   },
   cardwallet: {
-    name: "CardWallet",
+    name: "cardwallet",
+    displayName: "CardWallet",
     logo: cardwalletLogo,
-    extensionUrl: "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
+    extensionUrl:
+      "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
     primaryUrl: "https://cwallet.finance/",
   },
   gerowallet: {
-    name: "GeroWallet",
+    name: "gerowallet",
+    displayName: "GeroWallet",
     logo: gerowalletLogo,
-    extensionUrl: "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
+    extensionUrl:
+      "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
     primaryUrl: "https://gerowallet.io/",
+  },
+};
+
+/**
+ * Called when the app mounts. Initializes
+ * the Wallets object on the window.
+ */
+export const initializeWallets = () => {
+  if (!window.Wallets) {
+    window.Wallets = {};
   }
 };
 
-export const getWallet = (walletId: string) => {
-  const cardano = window.cardano;
+/**
+ * Attempts to an enable a wallet by prompting the user to
+ * connect it in a separate window. Updates the window.Wallets
+ * object with the enabled wallet API.
+ *
+ * @returns true if the wallet was enabled successfully
+ */
+export const enableWallet = async (walletName: string): Promise<boolean> => {
+  const { cardano } = window;
+
+  if (!cardano) {
+    throw new Error("No cardano object found on the window.");
+  }
+
+  const wallet = cardano[walletName];
 
   try {
-    if (!window.cardano) {
-      throw new Error("No cardano object found on the window.");
+    if (!window.Wallets[walletName]) {
+      window.Wallets[walletName] = await wallet.enable();
     }
-
-    const wallet = cardano[walletId];
-    
-    console.log("wallet: ", wallet); // eslint-disable-line
   } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message); // eslint-disable-line
+    if (
+      error instanceof Error &&
+      error.message !== "user canceled connection"
+    ) {
+      throw new Error("Could not connect to the wallet");
     }
   }
+
+  return await wallet.isEnabled();
 };
 
 // 1 = Mainnet, 0 = Testnet
-const network_mode = 1;
+const network_mode = 0;
 
 const protocolParameters = {
   linearFee: {

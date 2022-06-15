@@ -1,20 +1,25 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { WalletState } from "./types";
 
 const initialState: WalletState = {
-  selectedWallet: "",
-}
+  walletName: localStorage.getItem("walletName") || "",
+  errorMessage: "",
+};
 
 const walletSlice = createSlice({
   initialState,
   name: "wallet",
   reducers: {
-    setSelectedWallet(state, action: PayloadAction<string>) {
-      state.selectedWallet = action.payload;
+    setWalletName(state, action: PayloadAction<string>) {
+      localStorage.setItem("walletName", action.payload);
+      state.walletName = action.payload;
+    },
+    setWalletErrorMessage(state, action: PayloadAction<string>) {
+      state.errorMessage = action.payload;
     },
   },
 });
 
-export const { setSelectedWallet } = walletSlice.actions;
+export const { setWalletName, setWalletErrorMessage } = walletSlice.actions;
 
 export default walletSlice.reducer;

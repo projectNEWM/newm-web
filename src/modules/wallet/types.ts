@@ -1,9 +1,11 @@
 export interface WalletState {
-  readonly selectedWallet: string;
+  readonly walletName: string;
+  readonly errorMessage: string;
 }
 
 export interface Wallet {
   readonly name: string;
+  readonly displayName: string;
   readonly logo: string;
   readonly extensionUrl: string;
   readonly primaryUrl: string;

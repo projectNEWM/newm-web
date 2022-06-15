@@ -1,8 +1,12 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Switch, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
-import { getWallet, selectWallet, setSelectedWallet } from "modules/wallet";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  enableWallet,
+  setWalletErrorMessage,
+  setWalletName,
+} from "modules/wallet";
+import { useDispatch } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import MintSongModal from "./MintSongModal";
 
@@ -11,11 +15,31 @@ const MintSong: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { selectedWallet } = useSelector(selectWallet);
 
   const { values, setFieldValue } = useFormikContext<FormikValues>();
 
-  const wallet = getWallet(selectedWallet);
+  /**
+   * Select a wallet, enable it, and update the
+   * window Wallet object with the wallet API.
+   */
+  const handleSelectWallet = async (walletName: string) => {
+    let isEnabled = false;
+
+    try {
+      isEnabled = await enableWallet(walletName);
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(setWalletErrorMessage(error.message));
+      }
+    }
+
+    if (isEnabled) {
+      setFieldValue("isMinting", true);
+    }
+
+    dispatch(setWalletName(walletName));
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -52,11 +76,7 @@ const MintSong: FunctionComponent = () => {
 
       <MintSongModal
         open={ isModalOpen }
-        onConfirm={ (walletId: string) => {
-          setIsModalOpen(false);
-          dispatch(setSelectedWallet(walletId));
-          setFieldValue("isMinting", true);
-        } }
+        onConfirm={ handleSelectWallet }
         onCancel={ () => {
           setIsModalOpen(false);
           setFieldValue("isMinting", false);

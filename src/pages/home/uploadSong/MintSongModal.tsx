@@ -18,7 +18,7 @@ interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
   /** Called when declining to mint an NFT */
   readonly onCancel: VoidFunction;
   /** Called when selecting a wallet to mint the NFT */
-  readonly onConfirm: (walletId: string) => void;
+  readonly onConfirm: (walletName: string) => void;
 }
 
 export interface Button extends ButtonProps {
@@ -74,8 +74,8 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
 
     if (availableWallets.length > 0) {
       return {
-        title: "Select a connected wallet",
-        subtitle: "Please select a connected to wallet to mint your song with.",
+        title: "Select an installed wallet",
+        subtitle: "Please select an installed wallet to mint your song with.",
         wallets: availableWallets,
         buttons: [
           {
@@ -129,27 +129,24 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
 
         { modalContent.wallets.length > 0 && (
           <Stack spacing={ 1 }>
-            { availableWallets.length > 0 &&
-              modalContent.wallets.map((id) => {
-                const info = walletInfo[id];
-                const targetUrl =
-                  browserName === "Chrome"
-                    ? info.extensionUrl
-                    : info.primaryUrl;
+            { modalContent.wallets.map((id) => {
+              const info = walletInfo[id];
+              const targetUrl =
+                browserName === "Chrome" ? info.extensionUrl : info.primaryUrl;
 
-                return (
-                  <SelectWalletItem
-                    key={ info.name }
-                    name={ info.name }
-                    logo={ info.logo }
-                    onClick={ () => {
-                      availableWallets.length > 0
-                        ? onConfirm(id)
-                        : window.open(targetUrl, "_blank");
-                    } }
-                  />
-                );
-              }) }
+              return (
+                <SelectWalletItem
+                  key={ info.name }
+                  name={ info.displayName }
+                  logo={ info.logo }
+                  onClick={ () => {
+                    availableWallets.length > 0
+                      ? onConfirm(id)
+                      : window.open(targetUrl, "_blank");
+                  } }
+                />
+              );
+            }) }
           </Stack>
         ) }
       </Stack>
