@@ -17,7 +17,8 @@ const StyledTableCell = styled(TableCell)<TableCellProps>`
 `;
 
 interface TablePaginationProps {
-  data: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  numberOfRows: number;
   page: number;
   rowsPerPage: number;
   lastRowOnPage: number;
@@ -26,7 +27,7 @@ interface TablePaginationProps {
 }
 
 const TablePagination = ({
-  data,
+  numberOfRows,
   page,
   rowsPerPage,
   lastRowOnPage,
@@ -51,14 +52,16 @@ const TablePagination = ({
                 display: { xs: "none", sm: "block" },
               } }
             >
-              Showing { (page - 1) * rowsPerPage + 1 } to { (lastRowOnPage < data.length) ? lastRowOnPage : data.length } of{ " " }
-              { data.length } songs
+              Showing { (page - 1) * rowsPerPage + 1 } to
+              { lastRowOnPage < numberOfRows
+                ? lastRowOnPage
+                : numberOfRows } of { numberOfRows } songs
             </Typography>
             <StyledPagination
               variant="outlined"
               shape="rounded"
               page={ page }
-              count={ Math.ceil(data.length / rowsPerPage) }
+              count={ Math.ceil(numberOfRows / rowsPerPage) }
               onChange={ handlePageChange }
             />
           </Box>

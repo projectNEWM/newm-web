@@ -142,7 +142,7 @@ export default function SongList({ songData, rowHeight = 65, page, setPage }: So
           </TableBody>
           { songData.length > rowsPerPage ? (
             <TablePagination
-              data={ songData }
+              numberOfRows={ songData.length }
               page={ page }
               rowsPerPage={ rowsPerPage }
               lastRowOnPage={ lastRowOnPage }
