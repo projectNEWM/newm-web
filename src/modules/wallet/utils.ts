@@ -104,7 +104,7 @@ export const enableWallet = async (walletName: string): Promise<boolean> => {
 };
 
 /**
- * Gets the current wallet balance in an integer format.
+ * @returns the current wallet balance as an integer.
  */
 export const getBalance = async (walletName: string) => {
   if (!window.Wallets) {
@@ -129,7 +129,7 @@ export const getBalance = async (walletName: string) => {
 };
 
 /**
- * Gets the wallet utxo amounts in an integer format.
+ * @returns the wallet utxo amounts as an array of integers.
  */
 export const getUtxos = async (walletName: string) => {
   if (!window.Wallets) {
