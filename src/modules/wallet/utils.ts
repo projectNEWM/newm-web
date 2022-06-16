@@ -4,6 +4,7 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
+import * as WASM from "@emurgo/cardano-serialization-lib-asmjs";
 import { Wallets } from "./types";
 
 export const supportedWallets = [
@@ -58,8 +59,8 @@ export const walletInfo: Wallets = {
 };
 
 /**
- * Called when the app mounts. Initializes
- * the Wallets object on the window.
+ * Ensures the Wallets object is accessible on the window
+ * so that it can be used to store the wallet API.
  */
 export const initializeWallets = () => {
   if (!window.Wallets) {
@@ -68,9 +69,8 @@ export const initializeWallets = () => {
 };
 
 /**
- * Attempts to an enable a wallet by prompting the user to
- * connect it in a separate window. Updates the window.Wallets
- * object with the enabled wallet API.
+ * Attempts to an enable a wallet. If successful, updates
+ * the window.Wallets object with the enabled wallet API.
  *
  * @returns true if the wallet was enabled successfully
  */
@@ -79,6 +79,10 @@ export const enableWallet = async (walletName: string): Promise<boolean> => {
 
   if (!cardano) {
     throw new Error("No cardano object found on the window.");
+  }
+
+  if (!window.Wallets) {
+    throw new Error("Wallets has not been initialized");
   }
 
   const wallet = cardano[walletName];
@@ -97,6 +101,55 @@ export const enableWallet = async (walletName: string): Promise<boolean> => {
   }
 
   return await wallet.isEnabled();
+};
+
+/**
+ * Gets the current wallet balance in an integer format.
+ */
+export const getBalance = async (walletName: string) => {
+  if (!window.Wallets) {
+    throw new Error("Wallets has not been initialized");
+  }
+
+  if (!window.Wallets[walletName]) {
+    throw new Error("Wallet has not been initialized");
+  }
+
+  const wallet = window.Wallets[walletName];
+
+  return await new Promise((resolve) => {
+    return wallet.getBalance().then((res: string) => {
+      const balance = WASM.Value.from_bytes(fromHex(res));
+      const lovelaces = balance.coin().to_str();
+      const amount = Number(lovelaces);
+
+      resolve(amount);
+    });
+  });
+};
+
+/**
+ * Gets the wallet utxo amounts in an integer format.
+ */
+export const getUtxos = async (walletName: string) => {
+  if (!window.Wallets) {
+    throw new Error("Wallets has not been initialized");
+  }
+
+  if (!window.Wallets[walletName]) {
+    throw new Error("Wallet has not been initialized");
+  }
+
+  const wallet = window.Wallets[walletName];
+  const utxos = await wallet.getUtxos();
+
+  return utxos.map((utxo: string) => {
+    const result = WASM.TransactionUnspentOutput.from_bytes(fromHex(utxo));
+    const lovelaces = result.output().amount().coin().to_str();
+    const amount = Number(lovelaces);
+
+    return amount;
+  });
 };
 
 // 1 = Mainnet, 0 = Testnet

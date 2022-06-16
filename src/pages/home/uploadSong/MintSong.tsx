@@ -1,12 +1,15 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Switch, Typography } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
   enableWallet,
+  getBalance,
+  getUtxos,
+  selectWallet,
   setWalletErrorMessage,
   setWalletName,
 } from "modules/wallet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import MintSongModal from "./MintSongModal";
 
@@ -17,6 +20,8 @@ const MintSong: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { values, setFieldValue } = useFormikContext<FormikValues>();
+
+  const { walletName } = useSelector(selectWallet);
 
   /**
    * Select a wallet, enable it, and update the
@@ -39,6 +44,14 @@ const MintSong: FunctionComponent = () => {
 
     dispatch(setWalletName(walletName));
     setIsModalOpen(false);
+
+    const balance = await getBalance(walletName);
+
+    console.log("balance: ", balance);
+
+    const utxos = await getUtxos(walletName);
+
+    console.log("utxos: ", utxos);
   };
 
   return (

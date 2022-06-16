@@ -88,11 +88,11 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
     }
 
     return {
-      title: "Connect a Cardano wallet",
+      title: "Install a Cardano wallet",
       subtitle:
         "Setup and or connect a Cardano wallet using one of the official " +
-        "browser extensions below. After you've connected your wallet, " +
-        "return to this screen to mint your song.",
+        "browser extensions below. After you've connected your wallet, return " +
+        "to this screen, refresh the page, and select your installed wallet.",
       wallets: supportedWallets,
       buttons: [
         {
@@ -114,7 +114,6 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
    */
   useEffect(() => {
     setTimeout(() => {
-      console.log("changing content");
       setModalContent(getModalContent());
     }, 500);
   }, [getModalContent]);
@@ -136,7 +135,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
 
               return (
                 <SelectWalletItem
-                  key={ info.name }
+                  key={ id }
                   name={ info.displayName }
                   logo={ info.logo }
                   onClick={ () => {
@@ -161,14 +160,15 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
           backgroundColor: theme.colors.grey600,
         } }
       >
-        { modalContent.buttons.map(({ buttonType, ...buttonProps }) => {
+        { modalContent.buttons.map(({ buttonType, ...buttonProps }, idx) => {
           return buttonType === "outlined" ? (
             <OutlinedButton
+              key={ `modal-button-${idx}` }
               backgroundColor={ theme.colors.grey600 }
               { ...buttonProps }
             />
           ) : (
-            <FilledButton { ...buttonProps } />
+            <FilledButton key={ `modal-button-${idx}` } { ...buttonProps } />
           );
         }) }
       </Stack>
