@@ -118,8 +118,8 @@ export const getBalance = async (walletName: string) => {
   const wallet = window.Wallets[walletName];
 
   return await new Promise((resolve) => {
-    return wallet.getBalance().then((res: string) => {
-      const balance = WASM.Value.from_bytes(fromHex(res));
+    return wallet.getBalance().then((hex: string) => {
+      const balance = WASM.Value.from_bytes(fromHex(hex));
       const lovelaces = balance.coin().to_str();
       const amount = Number(lovelaces);
 
@@ -143,9 +143,9 @@ export const getUtxos = async (walletName: string) => {
   const wallet = window.Wallets[walletName];
   const utxos = await wallet.getUtxos();
 
-  return utxos.map((utxo: string) => {
-    const result = WASM.TransactionUnspentOutput.from_bytes(fromHex(utxo));
-    const lovelaces = result.output().amount().coin().to_str();
+  return utxos.map((hex: string) => {
+    const utxo = WASM.TransactionUnspentOutput.from_bytes(fromHex(hex));
+    const lovelaces = utxo.output().amount().coin().to_str();
     const amount = Number(lovelaces);
 
     return amount;

@@ -59,8 +59,9 @@ const MintSong: FunctionComponent = () => {
       <Box
         sx={ {
           display: "flex",
-          flexDirection: "row",
+          flexDirection: ["column", "column", "row"],
           justifyContent: "space-between",
+          alignItems: ["center", "center", "flex-start"],
           flexWrap: "nowrap",
           backgroundColor: theme.colors.grey600,
           padding: theme.spacing(3),
@@ -79,6 +80,9 @@ const MintSong: FunctionComponent = () => {
         </Stack>
 
         <Switch
+          sx={ {
+            marginTop: [theme.spacing(2), theme.spacing(2), 0],
+          } }
           value={ isModalOpen ? "on" : "off" }
           checked={ values.isMinting }
           onChange={ (event) => {
