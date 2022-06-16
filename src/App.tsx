@@ -19,9 +19,6 @@ const App = () => {
         <CssBaseline />
 
         <Background>
-          <Box position="absolute" top="2rem" right="2rem">
-            <TempAuthButton />
-          </Box>
 
           <BrowserRouter>
             <Routes>
