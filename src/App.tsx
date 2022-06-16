@@ -1,6 +1,6 @@
-import { Box, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, PrivateRoute, TempAuthButton } from "components";
+import { Background, PrivateRoute } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
@@ -19,7 +19,6 @@ const App = () => {
         <CssBaseline />
 
         <Background>
-
           <BrowserRouter>
             <Routes>
               <Route path="/" element={ <Navigate to="home" replace /> } />
