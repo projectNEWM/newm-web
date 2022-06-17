@@ -19,6 +19,7 @@ import VerticalEllipsis from "assets/images/VerticalEllipsis";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import TablePagination from "components/TablePagination";
+
 interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
@@ -65,6 +66,16 @@ export default function SongList({
     page: number
   ) => {
     setPage(page);
+  };
+
+  const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
+    if (!url) {
+      return "";
+    } else if (url.split("/")[2] == "res.cloudinary.com") {
+      return url.replace("upload/", "upload/w_56,c_scale,q_auto,f_auto/");
+    } else {
+      return url;
+    }
   };
 
   if (songData) {
@@ -117,7 +128,7 @@ export default function SongList({
                           width: "56px",
                           height: "56px",
                         } }
-                        src={ row.coverArtUrl }
+                        src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
                         alt="Album cover"
                       />
                       <span style={ { paddingLeft: "12px" } }>{ row.title }</span>

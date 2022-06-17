@@ -8,11 +8,7 @@ import SongList from "./SongList";
 import NoSongsYet from "./NoSongsYet";
 
 const Library: FunctionComponent = () => {
-  const {
-    data = [],
-    isLoading,
-    isSuccess,
-  } = useGetSongsQuery();
+  const { data = [], isLoading, isSuccess } = useGetSongsQuery();
   const songData: Song[] = data;
 
   const [filteredData, setFilteredData] = useState<Song[]>();
@@ -54,7 +50,7 @@ const Library: FunctionComponent = () => {
                 />
               }
               placeholder="Search songs"
-            ></TextInput>
+            />
           </Box>
 
           <Box
@@ -76,29 +72,29 @@ const Library: FunctionComponent = () => {
       );
     } else if (isSuccess && songData.length > 0) {
       return (
-          <>
-            <Box sx={ { pb: 3, width: "340px" } }>
-              <TextInput
-                value={ query }
-                onChange={ (e) => requestSearch(e.target.value) }
-                startAdornment={
-                  <SearchRoundedIcon
-                    fontSize="large"
-                    sx={ {
-                      color: theme.palette.text.secondary,
-                      paddingLeft: "8px",
-                    } }
-                  />
-                }
-                placeholder="Search songs"
-              ></TextInput>
-            </Box>
-            <SongList
-              songData={ query == "" ? songData : filteredData }
-              page={ page }
-              setPage={ setPage }
-            />
-          </>
+        <>
+          <Box sx={ { pb: 3, width: "340px" } }>
+            <TextInput
+              value={ query }
+              onChange={ (e) => requestSearch(e.target.value) }
+              startAdornment={
+                <SearchRoundedIcon
+                  fontSize="large"
+                  sx={ {
+                    color: theme.palette.text.secondary,
+                    paddingLeft: "8px",
+                  } }
+                />
+              }
+              placeholder="Search songs"
+            ></TextInput>
+          </Box>
+          <SongList
+            songData={ query == "" ? songData : filteredData }
+            page={ page }
+            setPage={ setPage }
+          />
+        </>
       );
     }
   };

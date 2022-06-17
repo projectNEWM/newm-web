@@ -17,7 +17,6 @@ const StyledTableCell = styled(TableCell)<TableCellProps>`
 `;
 
 interface TablePaginationProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   numberOfRows: number;
   page: number;
   rowsPerPage: number;
