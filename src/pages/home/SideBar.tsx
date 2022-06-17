@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack } from "@mui/material";
 import { Typography } from "elements";
-import { ProfileImage, SideBarButton, SideBarHeader } from "components";
+import { ProfileImage, SideBarButton, SideBarHeader, TempAuthButton } from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import { useTheme } from "@mui/material/styles";
@@ -124,8 +124,9 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Box>
       </Box>
 
-      <Box px={ 2.5 } pb={ 2.5 } width="100%" justifyContent="flex-start">
+      <Box px={ 2.5 } pb={ 2.5 } width="100%" display="flex" alignItems="center" justifyContent="space-between">
         <NewmLogoSmInverse />
+            <TempAuthButton />
       </Box>
     </Box>
   );
