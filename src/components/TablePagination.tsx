@@ -52,7 +52,7 @@ const TablePagination = ({
               } }
             >
               Showing { (page - 1) * rowsPerPage + 1 } to
-              { lastRowOnPage < numberOfRows
+              { " "}{ lastRowOnPage < numberOfRows
                 ? lastRowOnPage
                 : numberOfRows } of { numberOfRows } songs
             </Typography>
