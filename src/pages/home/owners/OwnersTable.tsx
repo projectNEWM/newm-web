@@ -34,6 +34,9 @@ const StyledTableCell = styled(TableCell)<TableCellProps>`
 
 export default function OwnersTable({ ownersData }: OwnersTableProps) {
   const rowHeight = 60;
+  const headerHeight = 245;
+  const footerHeight = 65;
+  const bottomPadding = 30;
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
@@ -46,7 +49,11 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? Math.floor((windowHeight - 245 - rowHeight - 60 - 30) / rowHeight)
+        ? 
+          Math.floor(
+            (windowHeight - headerHeight - footerHeight - bottomPadding) /
+              rowHeight
+          )
         : 5
     );
   }, [windowHeight]);
@@ -61,11 +68,17 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   return (
     <StyledTableContainer>
       <Table sx={ { minWidth: 500 } } aria-label="Owners pagination table">
-        <TableHead >
+        <TableHead>
           <TableRow>
-            <StyledTableCell>OWNER</StyledTableCell>
-            <StyledTableCell>SONG</StyledTableCell>
-            <StyledTableCell>INFO TBD</StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>OWNER</Typography>
+            </StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>SONG</Typography>
+            </StyledTableCell>
+            <StyledTableCell>
+              <Typography fontWeight={ 700 }>INFO TBD</Typography>
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={ { backgroundColor: theme.colors.grey600 } }>

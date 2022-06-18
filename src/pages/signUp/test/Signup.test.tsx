@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/prefer-presence-queries */
 import { renderWithContext } from "common";
 import SignUp from "../SignUp";
 
