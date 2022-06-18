@@ -4,11 +4,12 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
-import {
-  TransactionUnspentOutput,
-  Value,
-} from "@dcspark/cardano-multiplatform-lib-asmjs";
 import { EnabledWallet, Wallets } from "./types";
+// importing this package breaks tests, required in each function instead
+// import {
+//   TransactionUnspentOutput,
+//   Value,
+// } from "@dcspark/cardano-multiplatform-lib-asmjs";
 
 export const supportedWallets = [
   "nami",
@@ -113,13 +114,13 @@ export const enableWallet = async (
  */
 export const getBalance = async (walletName: string): Promise<number> => {
   // eslint-disable-next-line
-  // const CSL = require('@emurgo/cardano-serialization-lib-asmjs');
+  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
 
   const wallet = selectEnabledWallet(walletName);
 
   return await new Promise((resolve) => {
     return wallet.getBalance().then((hex: string) => {
-      const balance = Value.from_bytes(fromHex(hex));
+      const balance = CSL.Value.from_bytes(fromHex(hex));
       const lovelaces = balance.coin().to_str();
       const amount = Number(lovelaces);
 
@@ -134,11 +135,14 @@ export const getBalance = async (walletName: string): Promise<number> => {
 export const getUtxos = async (
   walletName: string
 ): Promise<ReadonlyArray<number>> => {
+  // eslint-disable-next-line
+  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
+
   const wallet = selectEnabledWallet(walletName);
   const utxos = await wallet.getUtxos();
 
   return utxos.map((hex: string) => {
-    const utxo = TransactionUnspentOutput.from_bytes(fromHex(hex));
+    const utxo = CSL.TransactionUnspentOutput.from_bytes(fromHex(hex));
     const lovelaces = utxo.output().amount().coin().to_str();
     const amount = Number(lovelaces);
 

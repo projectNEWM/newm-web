@@ -1,9 +1,9 @@
-import { mockEnabledWallet } from "common"; // eslint-disable-line
-import { getBalance, getUtxos } from "modules/wallet"; // eslint-disable-line
+import { mockEnabledWallet } from 'common'; // eslint-disable-line
+import { getBalance, getUtxos } from 'modules/wallet'; // eslint-disable-line
 
 /**
- * Tests where @emurgo package is imported break. This issue is being
- * investigated (https://github.com/Emurgo/cardano-serialization-lib/issues/453).
+ * Tests where @dcspark package is imported break. This issue is currently being
+ * investigated with the @emurgo package (https://github.com/Emurgo/cardano-serialization-lib/issues/453).
  * Hopefully it will be fixed in the future and these tests can be uncommented.
  */
 
