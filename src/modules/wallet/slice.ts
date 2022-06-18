@@ -14,12 +14,9 @@ const walletSlice = createSlice({
       localStorage.setItem("walletName", action.payload);
       state.walletName = action.payload;
     },
-    setWalletErrorMessage(state, action: PayloadAction<string>) {
-      state.errorMessage = action.payload;
-    },
   },
 });
 
-export const { setWalletName, setWalletErrorMessage } = walletSlice.actions;
+export const { setWalletName } = walletSlice.actions;
 
 export default walletSlice.reducer;

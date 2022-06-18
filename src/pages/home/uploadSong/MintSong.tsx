@@ -3,14 +3,13 @@ import { Switch, Typography } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
 import {
   enableWallet,
-  getBalance,
   getUtxos,
-  selectWallet,
-  setWalletErrorMessage,
+  protocolParameters,
   setWalletName,
 } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
+import { ErrorMessage } from "components";
 import MintSongModal from "./MintSongModal";
 
 const MintSong: FunctionComponent = () => {
@@ -19,39 +18,37 @@ const MintSong: FunctionComponent = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { values, setFieldValue } = useFormikContext<FormikValues>();
+  const { values, errors, setFieldValue, setFieldError } =
+    useFormikContext<FormikValues>();
 
-  const { walletName } = useSelector(selectWallet);
+  const setError = (message: string) => setFieldError("isMinting", message);
 
   /**
    * Select a wallet, enable it, and update the
    * window Wallet object with the wallet API.
    */
   const handleSelectWallet = async (walletName: string) => {
-    let isEnabled = false;
-
     try {
-      isEnabled = await enableWallet(walletName);
+      const wallet = await enableWallet(walletName);
+
+      if (wallet) {
+        setFieldValue("isMinting", true);
+      }
+
+      dispatch(setWalletName(walletName));
+      setIsModalOpen(false);
+
+      const utxos = await getUtxos(walletName);
+      const largestUtxo = Math.max(...utxos);
+
+      if (largestUtxo < Number(protocolParameters.minUtxo)) {
+        setError("Please add more ADA to your wallet to mint your song.");
+      }
     } catch (error) {
       if (error instanceof Error) {
-        dispatch(setWalletErrorMessage(error.message));
+        setError(error.message);
       }
     }
-
-    if (isEnabled) {
-      setFieldValue("isMinting", true);
-    }
-
-    dispatch(setWalletName(walletName));
-    setIsModalOpen(false);
-
-    const balance = await getBalance(walletName);
-
-    console.log("balance: ", balance);
-
-    const utxos = await getUtxos(walletName);
-
-    console.log("utxos: ", utxos);
   };
 
   return (
@@ -77,6 +74,8 @@ const MintSong: FunctionComponent = () => {
             Minting a song will make it an NFT, becoming a uniquely publishing
             token on the blockchain to make it purchasable.
           </Typography>
+
+          { errors.isMinting && <ErrorMessage>{ errors.isMinting }</ErrorMessage> }
         </Stack>
 
         <Switch
