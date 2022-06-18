@@ -109,8 +109,6 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
   /**
    * Set dialog content with a slight delay so that it does
    * not change during the dialog dismiss animation.
-   *
-   * TODO: Confirm that this also changes after a wallet is connected
    */
   useEffect(() => {
     setTimeout(() => {

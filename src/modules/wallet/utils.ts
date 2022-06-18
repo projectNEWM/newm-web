@@ -73,7 +73,7 @@ export const initializeWallets = () => {
  * Attempts to an enable a wallet. If successful, updates
  * the window.Wallets object with the enabled wallet API.
  *
- * @returns true if the wallet was enabled successfully
+ * @returns the enabled wallet object
  */
 export const enableWallet = async (
   walletName: string
@@ -103,7 +103,7 @@ export const enableWallet = async (
     }
   }
 
-  return await window.Wallets[walletName];
+  return window.Wallets[walletName];
 };
 
 /**

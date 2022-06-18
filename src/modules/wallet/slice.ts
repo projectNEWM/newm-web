@@ -3,7 +3,6 @@ import { WalletState } from "./types";
 
 const initialState: WalletState = {
   walletName: localStorage.getItem("walletName") || "",
-  errorMessage: "",
 };
 
 const walletSlice = createSlice({

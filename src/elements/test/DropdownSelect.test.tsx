@@ -34,7 +34,7 @@ describe("<DropdownSelect>", () => {
     renderComponent();
 
     const dropDown = screen.getByText("Label");
-    const input = screen.getByLabelText("select-input");
+    const input = screen.getByRole("combobox");
 
     expect(dropDown).toBeVisible();
     expect(dropDown).toHaveTextContent("Label");

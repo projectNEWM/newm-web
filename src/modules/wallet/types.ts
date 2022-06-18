@@ -1,6 +1,5 @@
 export interface WalletState {
   readonly walletName: string;
-  readonly errorMessage: string;
 }
 
 // in the future, this can be replaced with actual return values
