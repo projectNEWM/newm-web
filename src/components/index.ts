@@ -3,7 +3,6 @@
 export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
 export { default as DashedOutline } from "./styled/DashedOutline";
-export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
 export { default as FacebookLogin } from "./FacebookLogin";
