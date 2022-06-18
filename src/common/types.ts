@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { ReactElement } from "react";
 import { RootState } from "store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";

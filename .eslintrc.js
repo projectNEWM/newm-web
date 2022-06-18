@@ -22,7 +22,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
   ],
-  ignorePatterns: ["src/assets/*"],
+  ignorePatterns: ["src/assets/*", "node_modules/*"],
   // Uses babel-eslint transforms.
   parser: "@typescript-eslint/parser",
   parserOptions: {

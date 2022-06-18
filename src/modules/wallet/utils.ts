@@ -4,8 +4,9 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
-import * as ASM from "@emurgo/cardano-serialization-lib-asmjs";
-import { InitializedWallet, Wallets } from "./types";
+import { EnabledWallet, Wallets } from "./types";
+// importing package breaks all tests, required in each function instead
+// import * as ASM from "@emurgo/cardano-serialization-lib-asmjs";
 
 export const supportedWallets = [
   "nami",
@@ -76,14 +77,12 @@ export const initializeWallets = () => {
  */
 export const enableWallet = async (
   walletName: string
-): Promise<InitializedWallet> => {
+): Promise<EnabledWallet> => {
   const { cardano } = window;
 
   if (!cardano) {
     throw new Error("No cardano object found on the window.");
   }
-
-  console.log("wall: ", cardano[walletName]);
 
   const unitializedWallet = cardano[walletName];
 
@@ -111,12 +110,14 @@ export const enableWallet = async (
  * @returns the current wallet balance as an integer.
  */
 export const getBalance = async (walletName: string): Promise<number> => {
-  const wallet = selectInitializedWallet(walletName);
+  // eslint-disable-next-line
+  const { Value } = require("@emurgo/cardano-serialization-lib-asmjs");
+
+  const wallet = selectEnabledWallet(walletName);
 
   return await new Promise((resolve) => {
     return wallet.getBalance().then((hex: string) => {
-      console.log("balance hex: ", hex);
-      const balance = ASM.Value.from_bytes(fromHex(hex));
+      const balance = Value.from_bytes(fromHex(hex));
       const lovelaces = balance.coin().to_str();
       const amount = Number(lovelaces);
 
@@ -131,12 +132,16 @@ export const getBalance = async (walletName: string): Promise<number> => {
 export const getUtxos = async (
   walletName: string
 ): Promise<ReadonlyArray<number>> => {
-  const wallet = selectInitializedWallet(walletName);
+  const {
+    TransactionUnspentOutput,
+    // eslint-disable-next-line
+  } = require("@emurgo/cardano-serialization-lib-asmjs");
+
+  const wallet = selectEnabledWallet(walletName);
   const utxos = await wallet.getUtxos();
 
   return utxos.map((hex: string) => {
-    console.log("utxo hex: ", hex);
-    const utxo = ASM.TransactionUnspentOutput.from_bytes(fromHex(hex));
+    const utxo = TransactionUnspentOutput.from_bytes(fromHex(hex));
     const lovelaces = utxo.output().amount().coin().to_str();
     const amount = Number(lovelaces);
 
@@ -144,9 +149,7 @@ export const getUtxos = async (
   });
 };
 
-export const selectInitializedWallet = (
-  walletName: string
-): InitializedWallet => {
+export const selectEnabledWallet = (walletName: string): EnabledWallet => {
   if (!window.Wallets) {
     throw new Error("Wallets has not been initialized");
   }

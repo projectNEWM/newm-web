@@ -1,14 +1,13 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Switch, Typography } from "elements";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import {
   enableWallet,
   getUtxos,
   protocolParameters,
-  selectWallet,
   setWalletName,
 } from "modules/wallet";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import { ErrorMessage } from "components";
 import MintSongModal from "./MintSongModal";
@@ -16,8 +15,6 @@ import MintSongModal from "./MintSongModal";
 const MintSong: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-
-  const { walletName } = useSelector(selectWallet);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

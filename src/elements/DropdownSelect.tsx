@@ -116,6 +116,7 @@ const DropdownSelect: ForwardRefRenderFunction<
           ref={ ref }
           { ...rest }
           { ...getInputProps() }
+          aria-label="select-input"
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon

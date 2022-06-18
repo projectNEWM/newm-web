@@ -33,8 +33,8 @@ describe("<DropdownSelect>", () => {
   it("renders with default props when only required props are provided", () => {
     renderComponent();
 
-    const dropDown = screen.getByRole("combobox");
-    const input = screen.getByRole("textbox");
+    const dropDown = screen.getByText("Label");
+    const input = screen.getByLabelText("select-input");
 
     expect(dropDown).toBeVisible();
     expect(dropDown).toHaveTextContent("Label");
@@ -81,7 +81,7 @@ describe("<DropdownSelect>", () => {
   it("changes the value of the input when an option is selected", () => {
     renderComponent();
 
-    userEvent.click(screen.getByRole("textbox"));
+    userEvent.click(screen.getByRole("combobox"));
     userEvent.click(screen.getByText("Alternative"));
 
     expect(screen.getByDisplayValue("Alternative")).toBeInTheDocument();
@@ -91,7 +91,7 @@ describe("<DropdownSelect>", () => {
   it("displays default text when no options are available", () => {
     renderComponent({ options: [] });
 
-    userEvent.click(screen.getByRole("textbox"));
+    userEvent.click(screen.getByRole("combobox"));
 
     expect(screen.getByText("Nothing found")).toBeInTheDocument();
   });

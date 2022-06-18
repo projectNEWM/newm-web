@@ -9,7 +9,7 @@ type AnyWalletValue = any; // eslint-disable-line
 export interface UnitializedWallet {
   readonly apiVersion: "0.1.0";
   readonly name: "eternl";
-  readonly enable: () => Promise<InitializedWallet>;
+  readonly enable: () => Promise<EnabledWallet>;
   readonly experimental: {
     readonly appVersion: {
       readonly major: number;
@@ -22,7 +22,7 @@ export interface UnitializedWallet {
   readonly isEnabled: () => Promise<boolean>;
 }
 
-export interface InitializedWallet {
+export interface EnabledWallet {
   readonly experimental: {
     readonly appVersion: {
       readonly major: number;
