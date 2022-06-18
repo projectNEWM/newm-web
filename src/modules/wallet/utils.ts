@@ -4,9 +4,11 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
+import {
+  TransactionUnspentOutput,
+  Value,
+} from "@dcspark/cardano-multiplatform-lib-asmjs";
 import { EnabledWallet, Wallets } from "./types";
-// importing breaks all tests, required individually in function instead
-// import * as CSL from "@emurgo/cardano-serialization-lib-asmjs";
 
 export const supportedWallets = [
   "nami",
@@ -111,7 +113,7 @@ export const enableWallet = async (
  */
 export const getBalance = async (walletName: string): Promise<number> => {
   // eslint-disable-next-line
-  const { Value } = require('@emurgo/cardano-serialization-lib-asmjs');
+  // const CSL = require('@emurgo/cardano-serialization-lib-asmjs');
 
   const wallet = selectEnabledWallet(walletName);
 
@@ -132,11 +134,6 @@ export const getBalance = async (walletName: string): Promise<number> => {
 export const getUtxos = async (
   walletName: string
 ): Promise<ReadonlyArray<number>> => {
-  const {
-    TransactionUnspentOutput,
-    // eslint-disable-next-line
-  } = require('@emurgo/cardano-serialization-lib-asmjs');
-
   const wallet = selectEnabledWallet(walletName);
   const utxos = await wallet.getUtxos();
 
