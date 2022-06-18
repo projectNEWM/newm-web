@@ -51,10 +51,9 @@ const TablePagination = ({
                 display: { xs: "none", sm: "block" },
               } }
             >
-              Showing { (page - 1) * rowsPerPage + 1 } to
-              { " "}{ lastRowOnPage < numberOfRows
-                ? lastRowOnPage
-                : numberOfRows } of { numberOfRows } songs
+              Showing { (page - 1) * rowsPerPage + 1 } to{ " " }
+              { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
+              { numberOfRows } songs
             </Typography>
             <StyledPagination
               variant="outlined"
