@@ -5,7 +5,7 @@ import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
 import * as ASM from "@emurgo/cardano-serialization-lib-asmjs";
-import { Wallets } from "./types";
+import { InitializedWallet, Wallets } from "./types";
 
 export const supportedWallets = [
   "nami",
@@ -74,12 +74,16 @@ export const initializeWallets = () => {
  *
  * @returns true if the wallet was enabled successfully
  */
-export const enableWallet = async (walletName: string): Promise<any> => {
+export const enableWallet = async (
+  walletName: string
+): Promise<InitializedWallet> => {
   const { cardano } = window;
 
   if (!cardano) {
     throw new Error("No cardano object found on the window.");
   }
+
+  console.log("wall: ", cardano[walletName]);
 
   const unitializedWallet = cardano[walletName];
 
@@ -106,7 +110,7 @@ export const enableWallet = async (walletName: string): Promise<any> => {
 /**
  * @returns the current wallet balance as an integer.
  */
-export const getBalance = async (walletName: string) => {
+export const getBalance = async (walletName: string): Promise<number> => {
   const wallet = selectInitializedWallet(walletName);
 
   return await new Promise((resolve) => {
@@ -124,7 +128,9 @@ export const getBalance = async (walletName: string) => {
 /**
  * @returns the wallet utxo amounts as an array of integers.
  */
-export const getUtxos = async (walletName: string) => {
+export const getUtxos = async (
+  walletName: string
+): Promise<ReadonlyArray<number>> => {
   const wallet = selectInitializedWallet(walletName);
   const utxos = await wallet.getUtxos();
 
@@ -138,7 +144,9 @@ export const getUtxos = async (walletName: string) => {
   });
 };
 
-export const selectInitializedWallet = (walletName: string) => {
+export const selectInitializedWallet = (
+  walletName: string
+): InitializedWallet => {
   if (!window.Wallets) {
     throw new Error("Wallets has not been initialized");
   }

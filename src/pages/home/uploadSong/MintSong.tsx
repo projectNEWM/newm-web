@@ -5,6 +5,7 @@ import {
   enableWallet,
   getUtxos,
   protocolParameters,
+  selectWallet,
   setWalletName,
 } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,8 @@ import MintSongModal from "./MintSongModal";
 const MintSong: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+
+  const { walletName } = useSelector(selectWallet);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,6 +33,8 @@ const MintSong: FunctionComponent = () => {
   const handleSelectWallet = async (walletName: string) => {
     try {
       const wallet = await enableWallet(walletName);
+
+      if (!wallet) return;
 
       if (wallet) {
         setFieldValue("isMinting", true);
