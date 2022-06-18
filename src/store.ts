@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import api from "api";
+import newmApi, { cloudinaryApi } from "api";
 import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
+import { walletReducer } from "modules/wallet";
 import logger from "redux-logger";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -13,7 +14,9 @@ export const reducer = {
   playlist: playlistReducer,
   session: sessionReducer,
   song: songReducer,
-  [api.reducerPath]: api.reducer,
+  wallet: walletReducer,
+  [newmApi.reducerPath]: newmApi.reducer,
+  [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
 };
 
 const store = configureStore({

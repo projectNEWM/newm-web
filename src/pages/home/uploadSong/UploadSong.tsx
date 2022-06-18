@@ -25,6 +25,8 @@ const UploadSong: FunctionComponent = () => {
     title: "",
     genre: "",
     description: "",
+    isMinting: false,
+    largestUtxo: undefined,
   };
 
   const handleSubmit = (values: UploadSongFormValues) => {

@@ -3,6 +3,7 @@
 export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
 export { default as DashedOutline } from "./styled/DashedOutline";
+export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
 export { default as FacebookLogin } from "./FacebookLogin";
@@ -25,6 +26,7 @@ export { default as SideBarButton } from "./home/SideBarButton";
 export { default as SideBarHeader } from "./home/SideBarHeader";
 export { default as SolidOutline } from "./styled/SolidOutline";
 export { default as SquareGridCard } from "./SquareGridCard";
+export { default as Switch } from "./Switch";
 export { default as TempAuthButton } from "./TempAuthButton";
 export { default as TextAreaField } from "./form/TextAreaField";
 export { default as TextInputField } from "./form/TextInputField";
