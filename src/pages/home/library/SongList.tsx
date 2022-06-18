@@ -72,7 +72,7 @@ export default function SongList({
     if (!url) {
       return "";
     } else if (url.split("/")[2] == "res.cloudinary.com") {
-      return url.replace("upload/", "upload/w_56,c_scale,q_auto,f_auto/");
+      return url.replace("upload/", "upload/w_56,h_56,c_fill,q_auto,f_auto/");
     } else {
       return url;
     }
