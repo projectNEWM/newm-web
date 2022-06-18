@@ -39,6 +39,9 @@ export default function SongList({
   page,
   setPage,
 }: SongListProps) {
+  const headerHeight = 245;
+  const footerHeight = 40;
+  const bottomPadding = 30;
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = songData
@@ -55,8 +58,11 @@ export default function SongList({
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? //viewport height - header height - Footer height - bottom padding / row height
-          Math.floor((windowHeight - 245 - 40 - 30) / rowHeight)
+        ? 
+          Math.floor(
+            (windowHeight - headerHeight - footerHeight - bottomPadding) /
+              rowHeight
+          )
         : 5
     );
   }, [windowHeight, rowHeight]);

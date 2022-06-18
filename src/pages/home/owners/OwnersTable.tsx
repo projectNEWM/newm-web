@@ -34,6 +34,9 @@ const StyledTableCell = styled(TableCell)<TableCellProps>`
 
 export default function OwnersTable({ ownersData }: OwnersTableProps) {
   const rowHeight = 60;
+  const headerHeight = 245;
+  const footerHeight = 65;
+  const bottomPadding = 30;
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
@@ -46,8 +49,11 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        //viewport height - header height - Footer height - bottom padding / row height 
-        ? Math.floor((windowHeight - 245 - 65 - 30) / rowHeight)
+        ? 
+          Math.floor(
+            (windowHeight - headerHeight - footerHeight - bottomPadding) /
+              rowHeight
+          )
         : 5
     );
   }, [windowHeight]);
