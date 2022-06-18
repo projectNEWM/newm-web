@@ -2,62 +2,52 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-// import {
-//   extendedApi as sessionApi,
-//   setSessionErrorMessage,
-// } from "modules/session";
-// import { useLocation } from "react-router-dom";
+import {
+  extendedApi as sessionApi,
+  setSessionErrorMessage,
+} from "modules/session";
+import { useLocation } from "react-router-dom";
 import { FunctionComponent } from "react";
-// import { useDispatch } from "react-redux";
-// import FacebookLoginHelper from "react-facebook-login/dist/facebook-login-render-props";
-// import {
-//   ReactFacebookFailureResponse,
-//   ReactFacebookLoginInfo,
-// } from "react-facebook-login";
+import { useDispatch } from "react-redux";
+import FacebookLoginHelper, {
+  LoginResponse,
+} from "@greatsumini/react-facebook-login";
 import FacebookIcon from "assets/images/FacebookIcon";
-// import { IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 const FacebookLogin: FunctionComponent = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const { pathname } = useLocation();
+  const { pathname } = useLocation();
 
-  // const handleFacebookResponse = (
-  //   resp: ReactFacebookLoginInfo | ReactFacebookFailureResponse
-  // ) => {
-  //   const loginInfo = resp as ReactFacebookLoginInfo;
-  //   const { accessToken } = loginInfo;
+  const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {
+    const accessToken = resp?.accessToken;
 
-  //   if (!accessToken) {
-  //     dispatch(
-  //       setSessionErrorMessage("Facebook authentication was not successful")
-  //     );
-  //     return;
-  //   }
+    if (!accessToken) {
+      return;
+    }
 
-  //   dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
-  // };
+    dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
+  };
 
-  // return (
-  //   <FacebookLoginHelper
-  //     appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
-  //     callback={ handleFacebookResponse }
-  //     redirectUri={ `${window.location.origin}${pathname}` }
-  //     disableMobileRedirect={ true } // mobile redirect has known issues
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     render={ (renderProps: any) => (
-  //       <IconButton
-  //         onClick={ renderProps.onClick }
-  //         disabled={ renderProps.disabled }
-  //         aria-label="facebook authorization"
-  //       >
-  //         <FacebookIcon />
-  //       </IconButton>
-  //     ) }
-  //   />
-  // );
+  const handleFacebookLoginFail = () => {
+    dispatch(
+      setSessionErrorMessage("Facebook authentication was not successful")
+    );
+  };
 
-  return <FacebookIcon />;
+  return (
+    <FacebookLoginHelper
+      appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
+      onSuccess={ handleFacebookLoginSuccess }
+      onFail={ handleFacebookLoginFail }
+      render={ ({ onClick }) => (
+        <IconButton onClick={ onClick } aria-label="facebook authorization">
+          <FacebookIcon />
+        </IconButton>
+      ) }
+    />
+  );
 };
 
 export default FacebookLogin;
