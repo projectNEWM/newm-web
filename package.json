@@ -35,12 +35,12 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts build",
     "test": "react-scripts test",
     "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
-    "format": "prettier-eslint --config .prettierrc.json --write \"src/**/*.{jsx,js,ts,tsx}\"",
+    "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts,tsx}\"",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },

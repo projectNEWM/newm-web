@@ -22,7 +22,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
   ],
-  ignorePatterns: ["src/assets/*"],
+  ignorePatterns: ["src/assets/*", "node_modules/*"],
   // Uses babel-eslint transforms.
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -68,7 +68,7 @@ module.exports = {
     "max-len": [
       "warn",
       {
-        code: 120,
+        code: 80,
       },
     ],
     "no-console": "warn",

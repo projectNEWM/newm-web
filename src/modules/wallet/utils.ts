@@ -4,60 +4,46 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
-import {
-  TransactionUnspentOutput,
-  Value,
-} from "@emurgo/cardano-serialization-lib-asmjs";
 import { EnabledWallet, Wallets } from "./types";
-// importing package breaks all tests, required in each function instead
+// importing breaks all tests, required individually in function instead
+// import * as CSL from "@emurgo/cardano-serialization-lib-asmjs";
 
-export const supportedWallets = [
-  "nami",
-  "eternl",
-  "flint",
-  "cardwallet",
-  "gerowallet",
-];
+export const supportedWallets = ["nami", "eternl", "flint", "cardwallet", "gerowallet"];
 
 export const walletInfo: Wallets = {
   nami: {
     name: "nami",
     displayName: "Nami",
     logo: namiLogo,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     primaryUrl: "https://namiwallet.io/",
   },
   eternl: {
     name: "eternl",
     displayName: "Eternl",
     logo: eternalLogo,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
+    extensionUrl: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
     primaryUrl: "https://eternl.io/",
   },
   flint: {
     name: "flint",
     displayName: "Flint",
     logo: flintLogo,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
+    extensionUrl: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
     primaryUrl: "https://flint-wallet.com/",
   },
   cardwallet: {
     name: "cardwallet",
     displayName: "CardWallet",
     logo: cardwalletLogo,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
+    extensionUrl: "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
     primaryUrl: "https://cwallet.finance/",
   },
   gerowallet: {
     name: "gerowallet",
     displayName: "GeroWallet",
     logo: gerowalletLogo,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
+    extensionUrl: "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
     primaryUrl: "https://gerowallet.io/",
   },
 };
@@ -78,9 +64,7 @@ export const initializeWallets = () => {
  *
  * @returns the enabled wallet object
  */
-export const enableWallet = async (
-  walletName: string
-): Promise<EnabledWallet> => {
+export const enableWallet = async (walletName: string): Promise<EnabledWallet> => {
   const { cardano } = window;
 
   if (!cardano) {
@@ -98,10 +82,7 @@ export const enableWallet = async (
       window.Wallets[walletName] = await unitializedWallet.enable();
     }
   } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message !== "user canceled connection"
-    ) {
+    if (error instanceof Error && error.message !== "user canceled connection") {
       throw new Error("Could not connect to the wallet");
     }
   }
@@ -114,7 +95,7 @@ export const enableWallet = async (
  */
 export const getBalance = async (walletName: string): Promise<number> => {
   // eslint-disable-next-line
-  // const { Value } = require('@emurgo/cardano-serialization-lib-asmjs');
+  const { Value } = require("@emurgo/cardano-serialization-lib-asmjs");
 
   const wallet = selectEnabledWallet(walletName);
 
@@ -132,13 +113,11 @@ export const getBalance = async (walletName: string): Promise<number> => {
 /**
  * @returns the wallet utxo amounts as an array of integers.
  */
-export const getUtxos = async (
-  walletName: string
-): Promise<ReadonlyArray<number>> => {
-  // const {
-  //   TransactionUnspentOutput,
-  //   // eslint-disable-next-line
-  // } = require('@emurgo/cardano-serialization-lib-asmjs');
+export const getUtxos = async (walletName: string): Promise<ReadonlyArray<number>> => {
+  const {
+    TransactionUnspentOutput,
+    // eslint-disable-next-line
+  } = require("@emurgo/cardano-serialization-lib-asmjs");
 
   const wallet = selectEnabledWallet(walletName);
   const utxos = await wallet.getUtxos();
