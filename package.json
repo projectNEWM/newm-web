@@ -13,6 +13,7 @@
     "@types/react-transition-group": "^4.4.4",
     "buffer": "^6.0.3",
     "cloudinary-react": "^1.7.1",
+    "cross-env": "^7.0.3",
     "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
