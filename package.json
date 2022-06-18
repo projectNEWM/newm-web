@@ -40,7 +40,7 @@
     "test": "react-scripts test",
     "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
-    "format": "prettier-eslint --write \"src/**/*.{jsx,js,ts,tsx}\"",
+    "format": "prettier-eslint --config .prettierrc.json --write \"src/**/*.{jsx,js,ts,tsx}\"",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
