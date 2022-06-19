@@ -18,7 +18,7 @@ export interface Owner {
   registered: boolean;
 }
 
-const mockOwnersData: Owner[] = [
+export const mockOwnersData: Owner[] = [
   createData("Jane Cooper", "Once upon a time", 1, true),
   createData("Cody Fisher", "Life's away", 4, false),
   createData("Esther Howard", "Once upon a time", 0.5, false),
@@ -39,5 +39,3 @@ const mockOwnersData: Owner[] = [
   createData("Kristin Watson", "Can you hold it?", 2, false),
   createData("Cameron Williamson", "Call me", 1, false),
 ];
-
-export default mockOwnersData;

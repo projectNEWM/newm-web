@@ -1,6 +1,6 @@
 import { renderWithContext } from "common";
+import { Owner, createData } from "common";
 import OwnersTable from "../OwnersTable";
-import { Owner, createData } from "../mockOwnersData";
 
 const mockOwnersDataSmall: Owner[] = [
   createData("Jane Cooper", "Once upon a time", 1, true),

@@ -19,7 +19,9 @@ import { Typography } from "elements";
 import { useWindowDimensions } from "common";
 import { StyledPagination } from "components";
 import PendingBadge from "assets/images/PendingBadge";
-import { Owner } from "./mockOwnersData";
+import { TablePagination } from "components";
+import { Owner } from "../../../common/mockConstants/mockOwnersData";
+
 interface OwnersTableProps {
   ownersData: Owner[];
 }
@@ -49,8 +51,7 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? 
-          Math.floor(
+        ? Math.floor(
             (windowHeight - headerHeight - footerHeight - bottomPadding) /
               rowHeight
           )
@@ -114,7 +115,7 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
             </TableRow>
           ) }
         </TableBody>
-        <TableFooter
+        { /* <TableFooter
           sx={ {
             backgroundColor: theme.colors.grey600,
           } }
@@ -142,7 +143,15 @@ export default function OwnersTable({ ownersData }: OwnersTableProps) {
               </Box>
             </StyledTableCell>
           </TableRow>
-        </TableFooter>
+        </TableFooter> */ }
+        <TablePagination
+          numberOfRows={ ownersData.length }
+          page={ page }
+          rowsPerPage={ rowsPerPage }
+          lastRowOnPage={ lastRowOnPage }
+          handlePageChange={ handlePageChange }
+          colSpan={ theme.breakpoints.up("sm") ? 3 : 2 }
+        />
       </Table>
     </StyledTableContainer>
   );

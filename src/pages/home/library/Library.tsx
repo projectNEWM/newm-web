@@ -4,11 +4,13 @@ import { TextInput, Typography } from "elements";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import theme from "theme";
 import { Song, useGetSongsQuery } from "modules/song";
+import { mockUseGetSongsQuery } from "common";
+import { SearchInput } from "components";
 import SongList from "./SongList";
 import NoSongsYet from "./NoSongsYet";
 
 const Library: FunctionComponent = () => {
-  const { data = [], isLoading, isSuccess } = useGetSongsQuery();
+  const { data = [], isLoading, isSuccess } = mockUseGetSongsQuery;
   const songData: Song[] = data;
 
   const [filteredData, setFilteredData] = useState<Song[]>();
@@ -36,7 +38,7 @@ const Library: FunctionComponent = () => {
     if (isLoading) {
       return (
         <>
-          <Box sx={ { pb: 3, width: "340px" } }>
+          { /* <Box sx={ { pb: 3, width: "340px" } }>
             <TextInput
               value={ query }
               onChange={ (e) => requestSearch(e.target.value) }
@@ -51,7 +53,15 @@ const Library: FunctionComponent = () => {
               }
               placeholder="Search songs"
             />
-          </Box>
+          </Box> */ }
+          <SearchInput
+            setPaginationPage={ setPage }
+            data={ songData }
+            placeholdeText="Search Songs"
+            filter={ (owner) =>
+              owner.title.toLowerCase().includes(searched.toLowerCase())
+            }
+          />
 
           <Box
             sx={ {
