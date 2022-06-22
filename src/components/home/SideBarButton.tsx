@@ -7,12 +7,14 @@ interface SideBarButtonProps {
   readonly label: string;
   readonly icon: JSX.Element;
   readonly to: string;
+  readonly closeMenu?: VoidFunction;
 }
 
 const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
   label,
   icon,
   to,
+  closeMenu,
   ...rest
 }) => {
   const resolved = useResolvedPath(to);
@@ -23,6 +25,7 @@ const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
       <TransparentButton
         key={ label }
         active={ !!match }
+        onClick={ closeMenu }
         fullWidth={ true }
         sx={ {
           alignItems: "center",

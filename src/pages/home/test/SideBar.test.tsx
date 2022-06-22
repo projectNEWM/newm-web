@@ -1,9 +1,9 @@
 import { mockSession, renderWithContext } from "common";
 import { Profile } from "modules/session";
-import SideBar from "../SideBar";
+import { SideBar } from "../SideBar";
 
 const renderSidebar = (profileData: Partial<Profile> = {}) => {
-  return renderWithContext(<SideBar />, {
+  return renderWithContext(<SideBar setMobileOpen={ () => 1 } />, {
     preloadedState: {
       session: {
         ...mockSession,

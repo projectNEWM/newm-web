@@ -11,6 +11,7 @@ import {
   extendedApi as sessionApi,
 } from "modules/session";
 import { FilledButton } from "elements";
+import { Button } from "@mui/material";
 
 const TempAuthButton: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,14 @@ const TempAuthButton: FunctionComponent = () => {
   };
 
   return isLoggedIn ? (
-    <FilledButton onClick={ handleLogout }>Log out</FilledButton>
+    <Button
+      sx={ { borderRadius: "7px" } }
+      variant="outlined"
+      color="inherit"
+      onClick={ handleLogout }
+    >
+      Log out
+    </Button>
   ) : (
     <FilledButton onClick={ handleLogin }>Log in</FilledButton>
   );
