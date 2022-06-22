@@ -203,6 +203,9 @@ const theme = createTheme({
     error: {
       main: "#FF453A",
     },
+    success: {
+      main: "#30D158",
+    },
 
     action: {
       disabled: "white",

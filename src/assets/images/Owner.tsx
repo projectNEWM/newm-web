@@ -1,5 +1,3 @@
-import * as React from "react"
-
 const Owner = (props:any) => (
   <svg
     width={32}

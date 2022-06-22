@@ -1,6 +1,3 @@
-
-
-
 const PendingBadge = (props: any) => (
   <svg
     width={57}
