@@ -35,7 +35,6 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
 
   const { values } = useFormikContext<FormikValues>();
 
-  // const availableWallets: ReadonlyArray<any> = []; // for testing
   const availableWallets = supportedWallets.filter((walletName: string) => {
     return !!window.cardano && !!window.cardano[walletName];
   });

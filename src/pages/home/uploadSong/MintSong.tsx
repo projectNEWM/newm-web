@@ -32,6 +32,7 @@ const MintSong: FunctionComponent = () => {
     try {
       const wallet = await enableWallet(walletName);
 
+      // if no error thrown and no wallet, user manually exited before enabling
       if (!wallet) return;
 
       if (wallet) {
