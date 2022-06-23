@@ -11,12 +11,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import "./App.css";
 import { useEffect } from "react";
-import { initializeWallets } from "modules/wallet";
+import { ensureWallets } from "modules/wallet";
 import store from "./store";
 
 const App = () => {
   useEffect(() => {
-    initializeWallets();
+    ensureWallets();
   }, []);
 
   return (

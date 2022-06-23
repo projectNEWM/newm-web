@@ -22,6 +22,7 @@ const MintSong: FunctionComponent = () => {
     useFormikContext<FormikValues>();
 
   const setError = (message: string) => setFieldError("isMinting", message);
+  const setValue = (value: boolean) => setFieldValue("isMinting", value);
 
   /**
    * Select a wallet, enable it, and update the
@@ -34,7 +35,7 @@ const MintSong: FunctionComponent = () => {
       if (!wallet) return;
 
       if (wallet) {
-        setFieldValue("isMinting", true);
+        setValue(true);
       }
 
       dispatch(setWalletName(walletName));
@@ -97,7 +98,7 @@ const MintSong: FunctionComponent = () => {
         onConfirm={ handleSelectWallet }
         onCancel={ () => {
           setIsModalOpen(false);
-          setFieldValue("isMinting", false);
+          setValue(false);
         } }
         onClose={ () => {
           setIsModalOpen(false);

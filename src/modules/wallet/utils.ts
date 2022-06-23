@@ -66,7 +66,7 @@ export const walletInfo: Wallets = {
  * Ensures the Wallets object is accessible on the window
  * so that it can be used to store the wallet API.
  */
-export const initializeWallets = () => {
+export const ensureWallets = () => {
   if (!window.Wallets) {
     window.Wallets = {};
   }
@@ -89,9 +89,7 @@ export const enableWallet = async (
 
   const unitializedWallet = cardano[walletName];
 
-  if (!window.Wallets) {
-    window.Wallets = {};
-  }
+  ensureWallets();
 
   try {
     if (!window.Wallets[walletName]) {
@@ -102,7 +100,7 @@ export const enableWallet = async (
       error instanceof Error &&
       error.message !== "user canceled connection"
     ) {
-      throw new Error("Could not connect to the wallet");
+      throw new Error("Could not connect to the wallet.");
     }
   }
 
