@@ -35,8 +35,6 @@ const Owners: FunctionComponent = () => {
       flexDirection="column"
       flexGrow={ 1 }
       flexWrap="nowrap"
-      justifyContent="flex-start"
-      alignItems="flex-start"
     >
       <Typography sx={ { pb: 4 } } variant="h3">
         OWNERS

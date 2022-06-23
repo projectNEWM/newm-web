@@ -41,6 +41,7 @@ export interface Song {
   readonly description?: string;
   readonly coverArtUrl?: string;
   readonly createdAt: string;
+  readonly credits?: string
 }
 
 export interface Artist {
