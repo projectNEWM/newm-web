@@ -1,9 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { Box, CircularProgress, Container } from "@mui/material";
-import { TextInput, Typography } from "elements";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import theme from "theme";
+import { Typography } from "elements";
 import { Song, useGetSongsQuery } from "modules/song";
+import { SearchBox } from "components";
 import SongList from "./SongList";
 import NoSongsYet from "./NoSongsYet";
 
@@ -36,23 +35,7 @@ const Library: FunctionComponent = () => {
     if (isLoading) {
       return (
         <>
-          <Box sx={ { pb: 3, width: "340px" } }>
-            <TextInput
-              value={ query }
-              onChange={ (e) => requestSearch(e.target.value) }
-              startAdornment={
-                <SearchRoundedIcon
-                  fontSize="large"
-                  sx={ {
-                    color: theme.palette.text.secondary,
-                    paddingLeft: "8px",
-                  } }
-                />
-              }
-              placeholder="Search songs"
-            />
-          </Box>
-
+          <SearchBox query={ query } requestSearch={ requestSearch } />
           <Box
             sx={ {
               display: "flex",
@@ -73,22 +56,7 @@ const Library: FunctionComponent = () => {
     } else if (isSuccess && songData.length > 0) {
       return (
         <>
-          <Box sx={ { pb: 3, width: "340px" } }>
-            <TextInput
-              value={ query }
-              onChange={ (e) => requestSearch(e.target.value) }
-              startAdornment={
-                <SearchRoundedIcon
-                  fontSize="large"
-                  sx={ {
-                    color: theme.palette.text.secondary,
-                    paddingLeft: "8px",
-                  } }
-                />
-              }
-              placeholder="Search songs"
-            ></TextInput>
-          </Box>
+          <SearchBox query={ query } requestSearch={ requestSearch } />
           <SongList
             songData={ query == "" ? songData : filteredData }
             page={ page }
