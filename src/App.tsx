@@ -9,10 +9,16 @@ import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
-import store from "./store";
 import "./App.css";
+import { useEffect } from "react";
+import { ensureWallets } from "modules/wallet";
+import store from "./store";
 
 const App = () => {
+  useEffect(() => {
+    ensureWallets();
+  }, []);
+
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>

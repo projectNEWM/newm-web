@@ -13,6 +13,7 @@ import {
   UploadSongField,
 } from "components";
 import * as Yup from "yup";
+import MintSong from "./MintSong";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const UploadSong: FunctionComponent = () => {
     title: "",
     genre: "",
     description: "",
+    isMinting: false,
+    largestUtxo: undefined,
   };
 
   const handleSubmit = (values: UploadSongFormValues) => {
@@ -135,6 +138,10 @@ const UploadSong: FunctionComponent = () => {
                   label="SONG DESCRIPTION"
                   placeholder="Optional"
                 />
+
+                <Box mt={ 5 }>
+                  <MintSong />
+                </Box>
 
                 <Box mt={ 6 }>
                   <FilledButton

@@ -1,6 +1,13 @@
 import { FunctionComponent } from "react";
-import { Button, ButtonProps } from "@mui/material";
+import { Box, Button, ButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import theme from "theme";
+
+interface BackgroundProps {
+  readonly backgroundColor?: string;
+}
+
+type OutlinedButtonProps = ButtonProps & BackgroundProps;
 
 const OutlinedButtonGradient = styled("div")(
   ({ theme }) => `
@@ -10,20 +17,12 @@ const OutlinedButtonGradient = styled("div")(
 `
 );
 
-const OutlinedButtonBackground = styled("div")(
-  ({ theme }) => `
-  background: ${theme.colors.black};
-  border-radius: 7px;
-`
-);
-
 const OutlinedButtonMain = styled(Button)`
-  background-color: 'transparent';
+  background-color: "transparent";
   padding: 12px 16px;
 `;
 
-const GradientText = styled("span")(
-  ({ theme }) => `
+const GradientText = styled("span")`
   font-size: ${theme.button.fontSize};
   line-height: ${theme.button.lineHeight};
   font-weight: ${theme.button.fontWeight};
@@ -36,19 +35,19 @@ const GradientText = styled("span")(
   background-clip: text;
   text-fill-color: transparent;
   text-shadow: 0 0 transparent;
-`
-);
+`;
 
-const OutlinedButton: FunctionComponent<ButtonProps> = ({
+const OutlinedButton: FunctionComponent<OutlinedButtonProps> = ({
   children,
+  backgroundColor = theme.colors.black,
   ...props
 }) => (
   <OutlinedButtonGradient>
-    <OutlinedButtonBackground>
+    <Box sx={ { backgroundColor, borderRadius: "7px" } }>
       <OutlinedButtonMain { ...props }>
         <GradientText>{ children }</GradientText>
       </OutlinedButtonMain>
-    </OutlinedButtonBackground>
+    </Box>
   </OutlinedButtonGradient>
 );
 
