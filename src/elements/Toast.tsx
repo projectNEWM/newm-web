@@ -27,25 +27,25 @@ const StyledSubHeading = styled.p`
 const Toast = () => {
   const dispatch = useDispatch();
   const { toast: { heading, message, severity } } = useSelector(selectUi);
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (heading || message) setOpen(true);
+    if (heading || message) setIsOpen(true);
   }, [heading, message]);
 
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") return;
 
     dispatch(clearToastMessage());
-    setOpen(false);
+    setIsOpen(false);
   };
 
-  return open ? (
+  return isOpen ? (
     <Snackbar
       anchorOrigin={ { vertical: "top", horizontal: "right" } }
       autoHideDuration={ 6000 }
       onClose={ handleClose }
-      open={ open }
+      open={ isOpen }
       sx={ {
         "&.MuiSnackbar-root": {
           left: [null, null, "32px"],
