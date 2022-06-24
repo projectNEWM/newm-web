@@ -1,6 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Background, PrivateRoute } from "components";
+import { Toast } from "elements";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
@@ -16,6 +17,7 @@ const App = () => {
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>
+        <Toast />
         <CssBaseline />
 
         <Background>
