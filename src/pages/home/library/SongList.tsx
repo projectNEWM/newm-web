@@ -18,7 +18,7 @@ import { useWindowDimensions } from "common";
 import VerticalEllipsis from "assets/images/VerticalEllipsis";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
-import TablePagination from "components/TablePagination";
+import { TablePagination } from "components";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
@@ -58,8 +58,7 @@ export default function SongList({
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? 
-          Math.floor(
+        ? Math.floor(
             (windowHeight - headerHeight - footerHeight - bottomPadding) /
               rowHeight
           )
@@ -91,7 +90,7 @@ export default function SongList({
           paddingRight: { xs: 0, md: 5.5 },
         } }
       >
-        <Table size="small" sx={ {} } aria-label="Song List">
+        <Table size="small" aria-label="Song List">
           <TableHead>
             <TableRow>
               <StyledTableCell>
@@ -137,7 +136,16 @@ export default function SongList({
                         src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
                         alt="Album cover"
                       />
-                      <span style={ { paddingLeft: "12px" } }>{ row.title }</span>
+                      <Box
+                        sx={ {
+                          paddingLeft: "12px",
+                          overflow: "scroll",
+                          whiteSpace: "nowrap",
+                          maxWidth: { xs: "148px", sm: "auto" },
+                        } }
+                      >
+                        { row.title }
+                      </Box>
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
@@ -168,7 +176,9 @@ export default function SongList({
               rowsPerPage={ rowsPerPage }
               lastRowOnPage={ lastRowOnPage }
               handlePageChange={ handlePageChange }
-              colSpan={ theme.breakpoints.up("sm") ? 3 : 2 }
+              colSpan={ 3 }
+              rowItemName="song"
+              paddingTop={ "12px" }
             />
           ) : (
             ""

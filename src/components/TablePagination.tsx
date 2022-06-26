@@ -23,6 +23,9 @@ interface TablePaginationProps {
   lastRowOnPage: number;
   handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
   colSpan: number;
+  color?: string;
+  rowItemName?: string;
+  paddingTop?: string | number;
 }
 
 const TablePagination = ({
@@ -32,11 +35,14 @@ const TablePagination = ({
   lastRowOnPage,
   handlePageChange,
   colSpan,
+  color = theme.colors.black100,
+  rowItemName = "row",
+  paddingTop = 0,
 }: TablePaginationProps) => {
   return (
-    <TableFooter>
+    <TableFooter sx={ { backgroundColor: color } }>
       <TableRow>
-        <StyledTableCell colSpan={ colSpan }>
+        <StyledTableCell style={ { paddingTop: paddingTop } } colSpan={ colSpan }>
           <Box
             sx={ {
               display: "flex",
@@ -53,7 +59,7 @@ const TablePagination = ({
             >
               Showing { (page - 1) * rowsPerPage + 1 } to{ " " }
               { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
-              { numberOfRows } songs
+              { numberOfRows } { rowItemName }s
             </Typography>
             <StyledPagination
               variant="outlined"
