@@ -6,10 +6,15 @@ import theme from "theme";
 interface SearchBoxProps {
   query: string;
   requestSearch: (searched: string) => void;
+  placeholder?: string;
 }
-export const SearchBox = ({ query, requestSearch }: SearchBoxProps) => {
+export const SearchBox = ({
+  query,
+  requestSearch,
+  placeholder = "",
+}: SearchBoxProps) => {
   return (
-    <Box sx={ { pb: 3, width: "340px" } }>
+    <Box sx={ { pb: 3, maxWidth: "340px" } }>
       <TextInput
         value={ query }
         onChange={ (e) => requestSearch(e.target.value) }
@@ -22,7 +27,7 @@ export const SearchBox = ({ query, requestSearch }: SearchBoxProps) => {
             } }
           />
         }
-        placeholder="Search songs"
+        placeholder={ placeholder }
       />
     </Box>
   );

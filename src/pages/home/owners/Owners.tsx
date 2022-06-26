@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Box, CircularProgress, Container } from "@mui/material";
 import { Typography } from "elements";
 import { SearchBox } from "components";
@@ -37,7 +37,11 @@ const Owners: FunctionComponent = () => {
     if (isLoading) {
       return (
         <>
-          <SearchBox query={ query } requestSearch={ requestSearch } />
+          <SearchBox
+            placeholder="Search by owner or song"
+            query={ query }
+            requestSearch={ requestSearch }
+          />
 
           <Box
             sx={ {
@@ -59,7 +63,11 @@ const Owners: FunctionComponent = () => {
     } else if (isSuccess && ownersData.length > 0) {
       return (
         <>
-          <SearchBox query={ query } requestSearch={ requestSearch } />
+          <SearchBox
+            placeholder="Search by owner or song"
+            query={ query }
+            requestSearch={ requestSearch }
+          />
 
           <OwnersTable
             ownersData={ query == "" ? ownersData : filteredData }
@@ -73,7 +81,6 @@ const Owners: FunctionComponent = () => {
 
   return (
     <Container
-      maxWidth={ false }
       sx={ {
         marginLeft: [null, null, 4.5],
         paddingTop: "60px",
@@ -84,7 +91,7 @@ const Owners: FunctionComponent = () => {
       } }
     >
       <Typography sx={ { pb: 4 } } variant="h3">
-        LIBRARY
+        OWNERS
       </Typography>
       { renderContent(isLoading, isSuccess, ownersData) }
     </Container>

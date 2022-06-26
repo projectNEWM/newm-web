@@ -35,7 +35,11 @@ const Library: FunctionComponent = () => {
     if (isLoading) {
       return (
         <>
-          <SearchBox query={ query } requestSearch={ requestSearch } />
+          <SearchBox
+            placeholder="Search songs"
+            query={ query }
+            requestSearch={ requestSearch }
+          />
           <Box
             sx={ {
               display: "flex",
@@ -56,7 +60,11 @@ const Library: FunctionComponent = () => {
     } else if (isSuccess && songData.length > 0) {
       return (
         <>
-          <SearchBox query={ query } requestSearch={ requestSearch } />
+          <SearchBox
+            placeholder="Search songs"
+            query={ query }
+            requestSearch={ requestSearch }
+          />
           <SongList
             songData={ query == "" ? songData : filteredData }
             page={ page }
