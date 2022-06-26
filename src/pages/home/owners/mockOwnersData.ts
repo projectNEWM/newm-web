@@ -17,27 +17,36 @@ export interface Owner {
   info_tbd: number;
   registered: boolean;
 }
+export interface OwnersData {
+  data: Owner[];
+  isLoading: boolean;
+  isSuccess: boolean;
+}
 
-const mockOwnersData: Owner[] = [
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Cody Fisher", "Life's away", 4, false),
-  createData("Esther Howard", "Once upon a time", 0.5, false),
-  createData("Jenny Wilson", "When is it time?", 1, true),
-  createData("Kristin Watson", "Can you hold it?", 2, false),
-  createData("Cameron Williamson", "Call me", 1, false),
-  createData("J Cole", "Neighbors", 1, false),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Cody Fisher", "Life's away", 4, false),
-  createData("Esther Howard", "Once upon a time", 0.5, false),
-  createData("Jenny Wilson", "When is it time?", 1, true),
-  createData("Kristin Watson", "Can you hold it?", 2, false),
-  createData("Cameron Williamson", "Call me", 1, false),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Cody Fisher", "Life's away", 4, false),
-  createData("Esther Howard", "Once upon a time", 0.5, false),
-  createData("Jenny Wilson", "When is it time?", 1, true),
-  createData("Kristin Watson", "Can you hold it?", 2, false),
-  createData("Cameron Williamson", "Call me", 1, false),
-];
+const mockOwnersData: OwnersData = {
+  data: [
+    createData("Jane Cooper", "Once upon a time", 1, true),
+    createData("Cody Fisher", "Life's away", 4, false),
+    createData("Esther Howard", "Once upon a time", 0.5, false),
+    createData("Jenny Wilson", "When is it time?", 1, true),
+    createData("Kristin Watson", "Can you hold it?", 2, false),
+    createData("Cameron Williamson", "Call me", 1, false),
+    createData("J Cole", "Neighbors", 1, false),
+    createData("Jane Cooper", "Once upon a time", 1, true),
+    createData("Cody Fisher", "Life's away", 4, false),
+    createData("Esther Howard", "Once upon a time", 0.5, false),
+    createData("Jenny Wilson", "When is it time?", 1, true),
+    createData("Kristin Watson", "Can you hold it?", 2, false),
+    createData("Cameron Williamson", "Call me", 1, false),
+    createData("Jane Cooper", "Once upon a time", 1, true),
+    createData("Cody Fisher", "Life's away", 4, false),
+    createData("Esther Howard", "Once upon a time", 0.5, false),
+    createData("Jenny Wilson", "When is it time?", 1, true),
+    createData("Kristin Watson", "Can you hold it?", 2, false),
+    createData("Cameron Williamson", "Call me", 1, false),
+  ],
+  isLoading: false,
+  isSuccess: true,
+};
 
 export default mockOwnersData;
