@@ -5,24 +5,10 @@ import {
   useState
 } from "react";
 import { clearToastMessage, selectUi } from "modules/ui";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Snackbar, Typography } from "@mui/material";
 import CheckCircleIcon from "assets/images/CheckCircle";
 import CloseCircleFill from "assets/images/CloseCircleFill";
-import styled from "styled-components";
 import theme from "theme";
-
-const StyledHeading = styled.p`
-  margin: 0;
-  font-weight: ${theme.typography.fontWeightBold};
-  font-size: 12px;
-  line-height: 14.52px;
-`;
-
-const StyledSubHeading = styled.p`
-  font-size: 12px;
-  line-height: 14.52px;
-  margin: 8px 0 0;
-`;
 
 const Toast = () => {
   const dispatch = useDispatch();
@@ -84,8 +70,8 @@ const Toast = () => {
         } }
         variant="outlined"
       >
-        <StyledHeading>{ heading }</StyledHeading>
-        <StyledSubHeading>{ message }</StyledSubHeading>
+        <Typography variant="h6">{ heading }</Typography>
+        <Typography sx={ { fontWeight: "400", margin: "8px 0 0" } } variant="h6">{ message }</Typography>
       </Alert>
     </Snackbar>
   ) : null;

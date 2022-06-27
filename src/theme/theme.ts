@@ -260,10 +260,10 @@ const theme = createTheme({
     },
     h6: {
       fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 600,
       fontSize: "10px",
-      lineHeight: "20px",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "14.52px",
     },
     body1: {
       fontFamily: "Inter",
