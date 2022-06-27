@@ -124,27 +124,29 @@ declare module "@mui/material/Typography" {
   }
 }
 
+const colors = {
+  blue: "#0099CC",
+  purple: "#CC33CC",
+  red: "#FF3366",
+  orange: "#FF9900",
+  yellow: "#FFFF66",
+  green: "#66FF66",
+  white: "#FFFFFF",
+  grey100: "#8E8E93",
+  grey200: "#636366",
+  grey300: "#48484A",
+  grey400: "#2C2C2E",
+  grey500: "#1C1C1E",
+  grey600: "#121214",
+  black: "#000000",
+  black100: "#0A0A0A",
+};
+
 /**
  * Theme without responsive values
  */
 const theme = createTheme({
-  colors: {
-    blue: "#0099CC",
-    purple: "#CC33CC",
-    red: "#FF3366",
-    orange: "#FF9900",
-    yellow: "#FFFF66",
-    green: "#66FF66",
-    white: "#FFFFFF",
-    grey100: "#8E8E93",
-    grey200: "#636366",
-    grey300: "#48484A",
-    grey400: "#2C2C2E",
-    grey500: "#1C1C1E",
-    grey600: "#121214",
-    black: "#000000",
-    black100: "#0A0A0A",
-  },
+  colors,
   gradients: {
     company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",
     artist: "linear-gradient(53.48deg, #CC33CC 0%, #FF3366 100%);",
@@ -270,7 +272,21 @@ const theme = createTheme({
       fontSize: "14px",
       lineHeight: "20px",
     },
-
+    body2: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 500,
+      fontSize: "18px",
+      lineHeight: "22px",
+    },
+    subtitle1: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "14px",
+      lineHeight: "20px",
+      color: colors.grey100,
+    },
 
     // custom font theme styles
     emphasized: {

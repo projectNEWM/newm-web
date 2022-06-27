@@ -21,10 +21,10 @@ jest.mock("modules/session", () => ({
 }));
 
 // mock successful Facebook auth response on click
-jest.mock("react-facebook-login/dist/facebook-login-render-props", () => {
+jest.mock("@greatsumini/react-facebook-login", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const MockFacebookLogin = ({ callback, render }: any) => {
-    return render({ onClick: () => callback({ accessToken: "MOCK" }) });
+  const MockFacebookLogin = ({ onSuccess, render }: any) => {
+    return render({ onClick: () => onSuccess({ accessToken: "MOCK" }) });
   };
 
   return MockFacebookLogin;
