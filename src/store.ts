@@ -4,6 +4,7 @@ import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
+import { uiReducer } from "modules/ui";
 import { walletReducer } from "modules/wallet";
 import logger from "redux-logger";
 
@@ -14,6 +15,7 @@ export const reducer = {
   playlist: playlistReducer,
   session: sessionReducer,
   song: songReducer,
+  ui: uiReducer,
   wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
