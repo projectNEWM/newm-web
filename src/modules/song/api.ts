@@ -1,5 +1,7 @@
 import api, { CloudinaryUploadParams } from "api";
 import {
+  AudioUploadUrlRequest,
+  AudioUploadUrlResponse,
   CloudinarySignatureResponse,
   GetSongsResponse,
   UploadSongRequest,
@@ -24,6 +26,16 @@ export const extendedApi = api.injectEndpoints({
     >({
       query: (body) => ({
         url: "v1/cloudinary/sign",
+        method: "POST",
+        body,
+      }),
+    }),
+    getAudioUploadUrl: build.mutation<
+      AudioUploadUrlResponse,
+      AudioUploadUrlRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `/v1/songs/${songId}/upload`,
         method: "POST",
         body,
       }),

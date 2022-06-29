@@ -7,7 +7,7 @@ interface SideBarHeaderProps {
 
 const SideBarHeader: FunctionComponent<SideBarHeaderProps> = ({ children }) => {
   return (
-    <Typography variant="h6" fontWeight={ 700 } color="grey300">
+    <Typography variant="h6" color="grey300">
       { children }
     </Typography>
   );
