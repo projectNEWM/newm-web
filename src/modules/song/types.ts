@@ -49,6 +49,7 @@ export interface Song {
   readonly genre: string;
   readonly description?: string;
   readonly coverArtUrl?: string;
+  readonly audioUrl?: string;
   readonly createdAt: string;
   readonly credits?: string;
 }

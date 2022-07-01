@@ -10,6 +10,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.707476",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -21,6 +22,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:00.350493",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -32,6 +34,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:01.574709",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -43,6 +46,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:39:24.238835",
       title: "My name is Jonas",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -61,6 +65,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:56.629345",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -72,6 +77,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:57.204444",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -83,6 +89,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:58.949314",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -94,6 +101,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.186792",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -105,6 +113,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.445258",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -116,6 +125,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.707476",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -127,6 +137,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:00.350493",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -138,6 +149,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:01.574709",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -149,6 +161,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:39:24.238835",
       title: "My name is Jonas",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -160,6 +173,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:40:00.465598",
       title: "Say It Ain't So",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
@@ -171,6 +185,7 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:40:11.994142",
       title: "Karma Police",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",

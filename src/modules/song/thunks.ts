@@ -53,6 +53,7 @@ export const uploadSong = createAsyncThunk(
 
     const { songId } = songResp.data;
 
+    // get signed upload url for AWS
     const audioUploadUrlResp = await thunkApi.dispatch(
       songApi.endpoints.getAudioUploadUrl.initiate({
         songId,
@@ -63,15 +64,14 @@ export const uploadSong = createAsyncThunk(
     if ("error" in audioUploadUrlResp) return;
 
     const { uploadUrl } = audioUploadUrlResp.data;
-    const audioBinaryStr = await getFileBinary(body.audio);
+    const audioBinaryStr: any = await getFileBinary(body.audio);
 
+    // upload audio to AWS, song will be updated with audioUrl after transcoding
     const AWSResp = await fetch(uploadUrl, {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ file: audioBinaryStr }),
     });
-
-    console.log("aws resp: ", AWSResp);
 
     // fetch user's songs
     thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
