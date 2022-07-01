@@ -67,7 +67,7 @@ export const uploadSong = createAsyncThunk(
     const audioBinaryStr = await getFileBinary(body.audio);
 
     // upload audio to AWS, song audioUrl will be updated after it's transcoded
-    const AWSResp = await fetch(uploadUrl, {
+    await fetch(uploadUrl, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ file: audioBinaryStr }),
