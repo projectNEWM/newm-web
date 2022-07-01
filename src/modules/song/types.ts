@@ -52,6 +52,8 @@ export interface Song {
   readonly audioUrl?: string;
   readonly createdAt: string;
   readonly credits?: string;
+  readonly nftPolicyId?: string;
+  readonly nftName?: string;
 }
 
 export interface Artist {
