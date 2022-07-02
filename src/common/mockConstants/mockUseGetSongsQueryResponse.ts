@@ -38,6 +38,83 @@ export const mockUseGetSongsQueryResponse = {
       credits: "Produced by Max Martin and Oscar Holter",
     },
     {
+      id: "831f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "731f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "631f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "531f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "431f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "331f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
+      id: "231f1899-5f97-468d-a069-ab2fec4a5122",
+      ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
+      createdAt: "2022-06-12T18:39:24.238835",
+      title: "My name is Jonas",
+      genre: "Rock",
+      coverArtUrl:
+        "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      description: "Test description",
+      credits: "Produced by Max Martin and Oscar Holter",
+    },
+    {
       id: "131f1899-5f97-468d-a069-ab2fec4a5122",
       ownerId: "29557f40-8866-4215-a739-1b2c853aa672",
       createdAt: "2022-06-12T18:39:24.238835",

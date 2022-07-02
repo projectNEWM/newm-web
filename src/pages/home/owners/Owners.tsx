@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { Box, CircularProgress, Container } from "@mui/material";
 import { Typography } from "elements";
 import { SearchBox } from "components";
@@ -81,8 +81,11 @@ const Owners: FunctionComponent = () => {
 
   return (
     <Container
+    maxWidth={ false }
+      
       sx={ {
         marginLeft: [null, null, 4.5],
+        paddingRight: [null, null, 7.5],
         paddingTop: "60px",
         display: "flex",
         flexDirection: "column",
