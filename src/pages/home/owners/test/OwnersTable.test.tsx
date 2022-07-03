@@ -1,24 +1,6 @@
 import { renderWithContext } from "common";
-import OwnersTable from "../OwnersTable";
-import { Owner, createData } from "../mockOwnersData";
-
-const mockOwnersDataSmall: Owner[] = [
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Cody Fisher", "Life's away", 4, false),
-  createData("Frank Ocean", "Ivy", 0.5, false),
-];
-const mockOwnersData: Owner[] = [
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-  createData("Jane Cooper", "Once upon a time", 1, true),
-];
+import { fireEvent } from "@testing-library/react";
+import Owners from "../Owners";
 
 const resizeWindow = (width: number, height: number) => {
   window.innerWidth = width;
@@ -27,43 +9,53 @@ const resizeWindow = (width: number, height: number) => {
 };
 
 describe("<OwnersTable>", () => {
-  it("renders data correctly", () => {
-    const { getByText } = renderWithContext(
-      <OwnersTable ownersData={ mockOwnersDataSmall } />
-    );
+  const cases = ["Jane", "Cody", "Call me", "Life's aw"];
+  it.each(cases)("Search box filteres owners correctly", (input: string) => {
+    resizeWindow(1440, 550);
 
-    expect(getByText("Jane Cooper")).toBeTruthy();
-    expect(getByText("Cody Fisher")).toBeTruthy();
-    expect(getByText("Frank Ocean")).toBeTruthy();
-    expect(getByText("Once upon a time")).toBeTruthy();
-    expect(getByText("Ivy")).toBeTruthy();
+    const { getByRole, getAllByRole } = renderWithContext(<Owners />);
+
+    const searchBox = getByRole("textbox");
+
+    fireEvent.change(searchBox, { target: { value: input } });
+
+    const cells = getAllByRole("row");
+
+    // check that all rows contains the input string
+    for (let i = 1; i < cells.length; i++) {
+      const owner = cells[i].childNodes[0].textContent?.includes(input);
+      const song = cells[i].childNodes[1].textContent?.includes(input);
+      const inputExistsInFields = owner || song;
+      expect(inputExistsInFields).toBeTruthy();
+    }
   });
   it("Should show correct number of rows per page depending on viewport height", () => {
     resizeWindow(1440, 519);
 
-    const { getAllByText } = renderWithContext(
-      <OwnersTable ownersData={ mockOwnersData } />
+    const { getAllByRole } = renderWithContext(<Owners />);
+
+    expect(getAllByRole("row")).toHaveLength(4); // header row + 2 data rows + footer row
+  });
+
+  it("Pagination shows has correct number of pages", () => {
+    resizeWindow(1440, 550);
+
+    const { getByLabelText, getByText, queryByLabelText } = renderWithContext(
+      <Owners />
     );
 
-    expect(getAllByText("Jane Cooper")).toHaveLength(2);
+    const rowsPerPage = 3;
+    const totalRows = Number(getByText(/Showing/i).textContent?.split(" ")[5]);
+    const numberOfPages = Math.ceil(totalRows / rowsPerPage);
+
+    expect(getByLabelText(`Go to page ${numberOfPages}`)).toBeTruthy();
+    expect(queryByLabelText(`Go to page ${numberOfPages + 1}`)).toBeFalsy();
   });
   it("Should render 10 rows per page when viewport height is 950px", () => {
     resizeWindow(1440, 950);
 
-    const { getAllByText } = renderWithContext(
-      <OwnersTable ownersData={ mockOwnersData } />
-    );
+    const { getAllByRole } = renderWithContext(<Owners />);
 
-    expect(getAllByText("Jane Cooper")).toHaveLength(10);
-  });
-  it("Pagination component has correct number of pages", () => {
-    resizeWindow(1440, 550);
-
-    const { getByLabelText, queryByLabelText } = renderWithContext(
-      <OwnersTable ownersData={ mockOwnersData } />
-    );
-
-    expect(getByLabelText("Go to page 4")).toBeTruthy();
-    expect(queryByLabelText("Go to page 5")).toBeFalsy();
+    expect(getAllByRole("row")).toHaveLength(12);
   });
 });
