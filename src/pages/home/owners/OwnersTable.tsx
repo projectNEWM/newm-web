@@ -103,10 +103,12 @@ export default function OwnersTable({
                       maxWidth: ["150px", "unset"],
                     } }
                   >
-                    <Box sx={ { display: "flex" } } overflow="scroll" whiteSpace="nowrap">
-                      <Box >
-                        { row.name }
-                      </Box>
+                    <Box
+                      sx={ { display: "flex" } }
+                      overflow="scroll"
+                      whiteSpace="nowrap"
+                    >
+                      <Box>{ row.name }</Box>
                       { row.registered ? (
                         <Box
                           sx={ {
@@ -152,7 +154,7 @@ export default function OwnersTable({
               lastRowOnPage={ lastRowOnPage }
               handlePageChange={ handlePageChange }
               colSpan={ 3 }
-              rowItemName="song"
+              rowItemName="owner"
               paddingTop={ "12px" }
             />
           ) : (

@@ -81,8 +81,7 @@ const Owners: FunctionComponent = () => {
 
   return (
     <Container
-    maxWidth={ false }
-      
+      maxWidth={ false }
       sx={ {
         marginLeft: [null, null, 4.5],
         paddingRight: [null, null, 7.5],
