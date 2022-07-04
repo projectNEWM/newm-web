@@ -10,10 +10,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.707476",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "b3a79fc4-a979-4525-972f-dc4d92e69d64",
@@ -21,10 +24,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:00.350493",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "7ba956dd-0cb8-488d-a5b8-6f7b56c15a95",
@@ -32,10 +38,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:01.574709",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "131f1899-5f97-468d-a069-ab2fec4a5122",
@@ -43,10 +52,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:39:24.238835",
       title: "My name is Jonas",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
   ],
   fulfilledTimeStamp: 1655242844776,
@@ -61,10 +73,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:56.629345",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "b3fb8447-b7bf-41fe-b9ff-970265e0f718",
@@ -72,10 +87,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:57.204444",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "a4626221-3c29-47dc-9651-d2adccec227a",
@@ -83,10 +101,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:58.949314",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "d0b4c8ae-3ad8-43c5-924a-5dd8ebef7dce",
@@ -94,10 +115,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.186792",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "42281de5-8146-4e17-b216-40ed002dab61",
@@ -105,10 +129,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.445258",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "c3bc680b-db0a-4e7e-b008-044e53aa02c2",
@@ -116,10 +143,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:36:59.707476",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "b3a79fc4-a979-4525-972f-dc4d92e69d64",
@@ -127,10 +157,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:00.350493",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "7ba956dd-0cb8-488d-a5b8-6f7b56c15a95",
@@ -138,10 +171,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:37:01.574709",
       title: "Test",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "131f1899-5f97-468d-a069-ab2fec4a5122",
@@ -149,10 +185,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:39:24.238835",
       title: "My name is Jonas",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "2d78237a-33ad-4ec1-b0ff-5fca2940a129",
@@ -160,10 +199,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:40:00.465598",
       title: "Say It Ain't So",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
     {
       id: "5a927c02-7b2d-483b-b684-115b5541edaf",
@@ -171,10 +213,13 @@ export const mockUseGetSongsQueryResponse = {
       createdAt: "2022-06-12T18:40:11.994142",
       title: "Karma Police",
       genre: "Rock",
+      audioUrl: "https://upload.com/example.aac",
       coverArtUrl:
         "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
       description: "Test description",
       credits: "Produced by Max Martin and Oscar Holter",
+      nftPolicyId: "ABCD1234",
+      nftName: "test",
     },
   ],
   isFetching: false,

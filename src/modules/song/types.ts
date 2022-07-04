@@ -33,6 +33,15 @@ export interface CloudinarySignatureResponse {
   readonly apiKey: string;
 }
 
+export interface AudioUploadUrlRequest {
+  readonly songId: string;
+  readonly fileName: string;
+}
+
+export interface AudioUploadUrlResponse {
+  readonly uploadUrl: string;
+}
+
 export interface Song {
   readonly id: string;
   readonly ownerId: string;
@@ -40,8 +49,11 @@ export interface Song {
   readonly genre: string;
   readonly description?: string;
   readonly coverArtUrl?: string;
+  readonly audioUrl?: string;
   readonly createdAt: string;
-  readonly credits?: string
+  readonly credits?: string;
+  readonly nftPolicyId?: string;
+  readonly nftName?: string;
 }
 
 export interface Artist {

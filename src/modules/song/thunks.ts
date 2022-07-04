@@ -24,13 +24,13 @@ export const uploadSong = createAsyncThunk(
 
     const { apiKey, signature, timestamp } = signatureResp.data;
 
-    const binaryStr = await getFileBinary(body.image);
+    const imageBinaryStr = await getFileBinary(body.image);
 
     // upload image to cloudinary
     const cloudinaryResp = await thunkApi.dispatch(
       cloudinaryApi.endpoints.uploadImage.initiate({
         api_key: apiKey,
-        file: binaryStr,
+        file: imageBinaryStr,
         signature,
         timestamp,
         ...uploadParams,
@@ -38,8 +38,6 @@ export const uploadSong = createAsyncThunk(
     );
 
     if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
-
-    // TODO: Upload song file to AWS and include with upload song data
 
     // create the song in the NEWM API
     const songResp = await thunkApi.dispatch(
@@ -52,6 +50,28 @@ export const uploadSong = createAsyncThunk(
     );
 
     if ("error" in songResp) return;
+
+    const { songId } = songResp.data;
+
+    // get signed upload url for AWS
+    const audioUploadUrlResp = await thunkApi.dispatch(
+      songApi.endpoints.getAudioUploadUrl.initiate({
+        songId,
+        fileName: body.audio.name,
+      })
+    );
+
+    if ("error" in audioUploadUrlResp) return;
+
+    const { uploadUrl } = audioUploadUrlResp.data;
+    const audioBinaryStr = await getFileBinary(body.audio);
+
+    // upload audio to AWS, song audioUrl will be updated after it's transcoded
+    await fetch(uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ file: audioBinaryStr }),
+    });
 
     // fetch user's songs
     thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
