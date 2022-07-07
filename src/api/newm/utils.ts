@@ -2,10 +2,9 @@ import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
-  retry,
 } from "@reduxjs/toolkit/query";
 import Cookies from "js-cookie";
-import { extendedApi as sessionApi } from "modules/session";
+import { logOut, receiveRefreshToken } from "modules/session";
 
 /**
  * Wraps a base query with functionality to refresh the access token
@@ -25,16 +24,25 @@ export const fetchBaseQueryWithReauth = (
   > = async (args, api, extraOptions) => {
     const refreshToken = Cookies.get("refreshToken");
 
-    const result = await baseQuery(args, api, extraOptions);
+    let result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401 && refreshToken) {
-      await api.dispatch(
-        sessionApi.endpoints.refreshToken.initiate(refreshToken)
+      const refreshResult = await baseQuery(
+        "/v1/auth/refresh",
+        api,
+        extraOptions
       );
+
+      if (refreshResult.data) {
+        api.dispatch(receiveRefreshToken(refreshResult.data));
+        result = await baseQuery(args, api, extraOptions);
+      } else {
+        api.dispatch(logOut());
+      }
     }
 
     return result;
   };
 
-  return retry(baseQueryWithReauth, { maxRetries: 1 });
+  return baseQueryWithReauth;
 };
