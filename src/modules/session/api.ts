@@ -44,15 +44,6 @@ export const extendedApi = api.injectEndpoints({
       }),
     }),
 
-    refreshToken: build.query<NewmAuthResponse, string>({
-      query: (refreshToken) => ({
-        url: "/v1/auth/refresh",
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }),
-    }),
-
     getProfile: build.query<GetProfileResponse, void>({
       query: () => ({
         url: "v1/users/me",
