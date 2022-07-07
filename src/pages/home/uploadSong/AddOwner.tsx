@@ -14,18 +14,33 @@ const AddOwner: FunctionComponent = () => {
     <>
       <HorizontalLine sx={ { marginTop: 4 } } />
 
-      <Stack sx={ {
-        display: "flex",
-        flexDirection: ["column", "column", "row"],
-        justifyContent: "space-between",
-        marginTop: 4
-      } }>
+      <Stack
+        sx={ {
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
+          justifyContent: "space-between",
+          marginTop: 4,
+        } }
+      >
         <Stack>
           <Typography color="grey100">IP RIGHTS OWNERS</Typography>
 
-          <Stack sx={ { alignItems: "center", display: "flex", flexDirection: "row", gap: 2.5, marginTop: 1.5 } }>
-            <ProfileImage alt="Owner" src="http://placecorgi.com/42" height={ 42 } width={ 42 } />
-            <Stack sx={ { display: "flex", flexDirection: "cloumn", gap: .5 } }>
+          <Stack
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "row",
+              gap: 2.5,
+              marginTop: 1.5,
+            } }
+          >
+            <ProfileImage
+              alt="Owner"
+              src="http://placecorgi.com/42"
+              height={ 42 }
+              width={ 42 }
+            />
+            <Stack sx={ { display: "flex", flexDirection: "cloumn", gap: 0.5 } }>
               <Typography>Miah May</Typography>
               <Typography variant="subtitle1">email@email@gmail.com</Typography>
             </Stack>
@@ -33,17 +48,32 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
 
         <Stack>
-          <Typography color="grey100" id="equity" sx={ { display: ["none", "none", "block"] } }>EQUITY</Typography>
+          <Typography
+            color="grey100"
+            id="equity"
+            sx={ { display: ["none", "none", "block"] } }
+          >
+            EQUITY
+          </Typography>
 
           { /* Change the following block to render dynamically when data is avaialble */ }
-          <Stack sx={ { alignItems: "center", display: "flex", flexDirection: "row", gap: 2.5, marginTop: 1.5 } }>
+          <Stack
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "row",
+              gap: 2.5,
+              marginTop: 1.5,
+            } }
+          >
             <TextInputField
               aria-labelledby="equity"
               defaultValue={ 100 }
               endAdornment={
                 <InputAdornment
                   position="start"
-                  sx={ { color: theme.colors.white, marginRight: 1 } }>
+                  sx={ { color: theme.colors.white, marginRight: 1 } }
+                >
                   <Typography>%</Typography>
                 </InputAdornment>
               }
@@ -59,22 +89,36 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
       </Stack>
 
-
       <HorizontalLine sx={ { marginTop: 4 } } />
 
       <Stack sx={ { display: "flex", marginTop: 4 } }>
         <Typography color="grey100">CREDITS TO SHOW ON SONG DETAILS</Typography>
 
         { /* Change the following block to render dynamically when data is avaialble */ }
-        <Stack sx={ {
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between"
-        } }>
-          <Stack sx={ { alignItems: "center", display: "flex", flexDirection: "row", gap: 2.5, marginTop: 1.5 } }>
-            <ProfileImage alt="Creditor" src="http://placecorgi.com/42" height={ 42 } width={ 42 } />
-            <Stack sx={ { direction: "row", gap: .5 } }>
+        <Stack
+          sx={ {
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          } }
+        >
+          <Stack
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "row",
+              gap: 2.5,
+              marginTop: 1.5,
+            } }
+          >
+            <ProfileImage
+              alt="Creditor"
+              src="http://placecorgi.com/42"
+              height={ 42 }
+              width={ 42 }
+            />
+            <Stack sx={ { direction: "row", gap: 0.5 } }>
               <Typography>Miah May</Typography>
               <Typography variant="subtitle1">email@email@gmail.com</Typography>
             </Stack>
@@ -89,10 +133,15 @@ const AddOwner: FunctionComponent = () => {
       <HorizontalLine sx={ { marginTop: 4 } } />
 
       <TransparentButton
-        sx={ { border: `2px dashed ${theme.colors.grey400}`, marginTop: 4, width: "100%" } }
+        sx={ {
+          border: `2px dashed ${theme.colors.grey400}`,
+          marginTop: 4,
+          width: "100%",
+        } }
         onClick={ () => {
           setIsModalOpen(true);
-        } }>
+        } }
+      >
         Add new
       </TransparentButton>
 
@@ -100,7 +149,8 @@ const AddOwner: FunctionComponent = () => {
         open={ isModalOpen }
         onClose={ () => {
           setIsModalOpen(false);
-        } } />
+        } }
+      />
     </>
   );
 };

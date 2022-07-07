@@ -58,17 +58,19 @@ const MintSong: FunctionComponent = () => {
 
   return (
     <>
-      <Box sx={ {
-        backgroundColor: theme.colors.grey600,
-        padding: theme.spacing(3)
-      } }>
+      <Box
+        sx={ {
+          backgroundColor: theme.colors.grey600,
+          padding: theme.spacing(3),
+        } }
+      >
         <Stack
           spacing={ 1 }
           sx={ {
             alignItems: "center",
             display: "flex",
             flexDirection: [null, null, "row"],
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           } }
         >
           <Stack spacing={ 1 } sx={ { maxWidth: theme.spacing(45) } }>
@@ -77,7 +79,9 @@ const MintSong: FunctionComponent = () => {
               Minting a song will make it an NFT, becoming a uniquely publishing
               token on the blockchain to make it purchasable.
             </Typography>
-            { errors.isMinting && <ErrorMessage>{ errors.isMinting }</ErrorMessage> }
+            { errors.isMinting && (
+              <ErrorMessage>{ errors.isMinting }</ErrorMessage>
+            ) }
           </Stack>
 
           <Switch
