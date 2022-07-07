@@ -38,7 +38,15 @@ export const fetchBaseQueryWithReauth = (
 
       if (refreshResult.data) {
         api.dispatch(receiveRefreshToken(refreshResult.data));
-        result = await baseQuery(args, api, extraOptions);
+
+        // re-attempt request with refreshed access token
+        const accessToken = Cookies.get("accessToken");
+        const argsWithHeader =
+          typeof args === "string"
+            ? { url: args, headers: { Authorization: `Bearer ${accessToken}` } }
+            : { ...args, headers: { Authorization: `Bearer ${accessToken}` } };
+
+        result = await baseQuery(argsWithHeader, api, extraOptions);
       } else {
         api.dispatch(logOut());
       }
