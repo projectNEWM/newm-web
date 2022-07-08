@@ -140,10 +140,18 @@ const UploadSong: FunctionComponent = () => {
                 />
 
                 <Box mt={ 5 }>
+                  <HorizontalLine />
+                </Box>
+
+                <Box mt={ 5 }>
                   <MintSong />
                 </Box>
 
-                <Box mt={ 6 }>
+                <Box mt={ 5 }>
+                  <HorizontalLine />
+                </Box>
+
+                <Box mt={ 5 }>
                   <FilledButton
                     type="submit"
                     sx={ {

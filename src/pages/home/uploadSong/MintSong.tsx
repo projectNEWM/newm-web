@@ -10,6 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import { ErrorMessage } from "components";
+import AddOwner from "./AddOwner";
 import MintSongModal from "./MintSongModal";
 
 const MintSong: FunctionComponent = () => {
@@ -59,44 +60,47 @@ const MintSong: FunctionComponent = () => {
     <>
       <Box
         sx={ {
-          display: "flex",
-          flexDirection: ["column", "column", "row"],
-          justifyContent: "space-between",
-          alignItems: ["center", "center", "flex-start"],
-          flexWrap: "nowrap",
           backgroundColor: theme.colors.grey600,
           padding: theme.spacing(3),
         } }
       >
         <Stack
-          direction="column"
           spacing={ 1 }
-          sx={ { width: "85%", maxWidth: theme.spacing(45) } }
+          sx={ {
+            alignItems: "center",
+            display: "flex",
+            flexDirection: [null, null, "row"],
+            justifyContent: "space-between",
+          } }
         >
-          <Typography>MINT SONG</Typography>
-          <Typography variant="subtitle1" fontSize={ 12 }>
-            Minting a song will make it an NFT, becoming a uniquely publishing
-            token on the blockchain to make it purchasable.
-          </Typography>
+          <Stack spacing={ 1 } sx={ { maxWidth: theme.spacing(45) } }>
+            <Typography>MINT SONG</Typography>
+            <Typography fontSize={ 12 } variant="subtitle1">
+              Minting a song will make it an NFT, becoming a uniquely publishing
+              token on the blockchain to make it purchasable.
+            </Typography>
+            { errors.isMinting && (
+              <ErrorMessage>{ errors.isMinting }</ErrorMessage>
+            ) }
+          </Stack>
 
-          { errors.isMinting && <ErrorMessage>{ errors.isMinting }</ErrorMessage> }
+          <Switch
+            checked={ values.isMinting }
+            onChange={ (event) => {
+              setIsModalOpen(event.target.value === "off");
+            } }
+            sx={ {
+              marginTop: [theme.spacing(2), theme.spacing(2), 0],
+            } }
+            value={ isModalOpen ? "on" : "off" }
+          />
         </Stack>
 
-        <Switch
-          sx={ {
-            marginTop: [theme.spacing(2), theme.spacing(2), 0],
-          } }
-          value={ isModalOpen ? "on" : "off" }
-          checked={ values.isMinting }
-          onChange={ (event) => {
-            setIsModalOpen(event.target.value === "off");
-          } }
-        />
+        { values.isMinting && <AddOwner /> }
       </Box>
 
       <MintSongModal
         open={ isModalOpen }
-        onConfirm={ handleSelectWallet }
         onCancel={ () => {
           setIsModalOpen(false);
           setValue(false);
@@ -104,6 +108,7 @@ const MintSong: FunctionComponent = () => {
         onClose={ () => {
           setIsModalOpen(false);
         } }
+        onConfirm={ handleSelectWallet }
       />
     </>
   );
