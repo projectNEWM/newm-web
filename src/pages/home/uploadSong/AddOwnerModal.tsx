@@ -7,7 +7,10 @@ interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
 }
 
-const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose }) => {
+const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
+  open,
+  onClose,
+}) => {
   const theme = useTheme();
 
   return (
@@ -30,7 +33,9 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose })
           rowGap: 2,
         } }
       >
-        <Typography variant="body2" id="modal-title">Add new</Typography>
+        <Typography variant="body2" id="modal-title">
+          Add new
+        </Typography>
         <TextInputField label="Name" name="Name" placeholder="John Smith" />
         <TextInputField
           label="Email"
@@ -49,7 +54,9 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose })
             marginTop: theme.spacing(2),
           } }
         >
-          <Typography>Does this person owns ip rights to this song?</Typography>
+          <Typography paddingRight={ theme.spacing(1) }>
+            Does this person owns ip rights to this song?
+          </Typography>
           <SwitchField name="isRightsOwner" />
         </Stack>
 
@@ -63,8 +70,14 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose })
           } }
         >
           <Stack>
-            <Typography>Is this person a creator?</Typography>
-            <Typography fontSize={ 12 } variant="subtitle1">
+            <Typography paddingRight={ theme.spacing(1) }>
+              Is this person a creator?
+            </Typography>
+            <Typography
+              fontSize={ 12 }
+              paddingRight={ theme.spacing(1) }
+              variant="subtitle1"
+            >
               Enable to show this person in the credits.
             </Typography>
           </Stack>
@@ -73,7 +86,15 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose })
 
         <HorizontalLine marginTop={ theme.spacing(2) } />
 
-        <Stack sx={ { alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "space-between" } }>
+        <Stack
+          sx={ {
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            columnGap: 4,
+          } }
+        >
           <OutlinedButton onClick={ onClose }>Cancel</OutlinedButton>
           <FilledButton>Add</FilledButton>
         </Stack>

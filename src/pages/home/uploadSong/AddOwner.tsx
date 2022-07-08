@@ -12,14 +12,14 @@ const AddOwner: FunctionComponent = () => {
 
   return (
     <>
-      <HorizontalLine sx={ { marginTop: 4 } } />
+      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
 
       <Stack
         sx={ {
           display: "flex",
           flexDirection: ["column", "column", "row"],
           justifyContent: "space-between",
-          marginTop: 4,
+          marginTop: theme.spacing(4),
         } }
       >
         <Stack>
@@ -31,7 +31,7 @@ const AddOwner: FunctionComponent = () => {
               display: "flex",
               flexDirection: "row",
               gap: 2.5,
-              marginTop: 1.5,
+              marginTop: theme.spacing(1.5),
             } }
           >
             <ProfileImage
@@ -63,7 +63,7 @@ const AddOwner: FunctionComponent = () => {
               display: "flex",
               flexDirection: "row",
               gap: 2.5,
-              marginTop: 1.5,
+              marginTop: theme.spacing(1.5),
             } }
           >
             <TextInputField
@@ -72,7 +72,10 @@ const AddOwner: FunctionComponent = () => {
               endAdornment={
                 <InputAdornment
                   position="start"
-                  sx={ { color: theme.colors.white, marginRight: 1 } }
+                  sx={ {
+                    color: theme.colors.white,
+                    marginRight: theme.spacing(1),
+                  } }
                 >
                   <Typography>%</Typography>
                 </InputAdornment>
@@ -89,9 +92,9 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
       </Stack>
 
-      <HorizontalLine sx={ { marginTop: 4 } } />
+      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
 
-      <Stack sx={ { display: "flex", marginTop: 4 } }>
+      <Stack sx={ { display: "flex", marginTop: theme.spacing(4) } }>
         <Typography color="grey100">CREDITS TO SHOW ON SONG DETAILS</Typography>
 
         { /* Change the following block to render dynamically when data is avaialble */ }
@@ -101,6 +104,7 @@ const AddOwner: FunctionComponent = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
+            marginTop: theme.spacing(1.5),
           } }
         >
           <Stack
@@ -109,7 +113,6 @@ const AddOwner: FunctionComponent = () => {
               display: "flex",
               flexDirection: "row",
               gap: 2.5,
-              marginTop: 1.5,
             } }
           >
             <ProfileImage
@@ -130,12 +133,12 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
       </Stack>
 
-      <HorizontalLine sx={ { marginTop: 4 } } />
+      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
 
       <TransparentButton
         sx={ {
           border: `2px dashed ${theme.colors.grey400}`,
-          marginTop: 4,
+          marginTop: theme.spacing(4),
           width: "100%",
         } }
         onClick={ () => {
