@@ -96,7 +96,7 @@ const MintSong: FunctionComponent = () => {
           />
         </Stack>
 
-        <AddOwner />
+        { values.isMinting && <AddOwner /> }
       </Box>
 
       <MintSongModal

@@ -1,15 +1,18 @@
 import { FunctionComponent } from "react";
 import { Box, DialogProps, Stack, Typography, useTheme } from "@mui/material";
-import { Dialog, FilledButton, HorizontalLine } from "elements";
+import { Dialog, FilledButton, HorizontalLine, OutlinedButton } from "elements";
 import { SwitchField, TextInputField } from "components";
 
-const AddOwnerModal: FunctionComponent<DialogProps> = ({ open, onClose }) => {
+interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
+  readonly onClose: VoidFunction;
+}
+
+const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose }) => {
   const theme = useTheme();
 
   return (
     <Dialog
-      aria-describedby="modal-modal-description"
-      aria-labelledby="modal-modal-title"
+      aria-labelledby="modal-title"
       fullWidth
       onClose={ onClose }
       open={ open }
@@ -27,7 +30,7 @@ const AddOwnerModal: FunctionComponent<DialogProps> = ({ open, onClose }) => {
           rowGap: 2,
         } }
       >
-        <Typography variant="body2">Add new</Typography>
+        <Typography variant="body2" id="modal-title">Add new</Typography>
         <TextInputField label="Name" name="Name" placeholder="John Smith" />
         <TextInputField
           label="Email"
@@ -70,16 +73,10 @@ const AddOwnerModal: FunctionComponent<DialogProps> = ({ open, onClose }) => {
 
         <HorizontalLine marginTop={ theme.spacing(2) } />
 
-        <FilledButton
-          type="button"
-          sx={ {
-            alignSelf: ["center", "center", "end"],
-            maxWidth: ["340px", "340px", null],
-            width: "100%",
-          } }
-        >
-          Add
-        </FilledButton>
+        <Stack sx={ { alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "space-between" } }>
+          <OutlinedButton onClick={ onClose }>Cancel</OutlinedButton>
+          <FilledButton>Add</FilledButton>
+        </Stack>
       </Box>
     </Dialog>
   );
