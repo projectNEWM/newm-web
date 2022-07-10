@@ -14,15 +14,16 @@ const Library: FunctionComponent = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const requestSearch = (searched: string) => {
+  const handleSearch = (searched: string) => {
     setQuery(searched);
     setPage(1);
     if (searched == "") {
       setFilteredData(songData);
     } else {
       setFilteredData(
-        songData.filter((owner) =>
-          owner.title.toLowerCase().includes(searched.toLowerCase())
+        songData.filter((song) =>
+          song.title.toLowerCase().includes(searched.toLowerCase()) || 
+          song.genre.toLowerCase().includes(searched.toLowerCase())
         )
       );
     }
@@ -38,7 +39,7 @@ const Library: FunctionComponent = () => {
           <SearchBox
             placeholder="Search songs"
             query={ query }
-            requestSearch={ requestSearch }
+            onSearch={ handleSearch }
           />
           <Box
             sx={ {
@@ -63,7 +64,7 @@ const Library: FunctionComponent = () => {
           <SearchBox
             placeholder="Search songs"
             query={ query }
-            requestSearch={ requestSearch }
+            onSearch={ handleSearch }
           />
           <SongList
             songData={ query == "" ? songData : filteredData }
