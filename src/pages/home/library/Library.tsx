@@ -1,9 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { Box, CircularProgress, Container } from "@mui/material";
-import { TextInput, Typography } from "elements";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import theme from "theme";
+import { Typography } from "elements";
 import { Song, useGetSongsQuery } from "modules/song";
+import { SearchBox } from "components";
 import SongList from "./SongList";
 import NoSongsYet from "./NoSongsYet";
 
@@ -15,15 +14,16 @@ const Library: FunctionComponent = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const requestSearch = (searched: string) => {
+  const handleSearch = (searched: string) => {
     setQuery(searched);
     setPage(1);
     if (searched == "") {
       setFilteredData(songData);
     } else {
       setFilteredData(
-        songData.filter((owner) =>
-          owner.title.toLowerCase().includes(searched.toLowerCase())
+        songData.filter((song) =>
+          song.title.toLowerCase().includes(searched.toLowerCase()) || 
+          song.genre.toLowerCase().includes(searched.toLowerCase())
         )
       );
     }
@@ -36,23 +36,11 @@ const Library: FunctionComponent = () => {
     if (isLoading) {
       return (
         <>
-          <Box sx={ { pb: 3, width: "340px" } }>
-            <TextInput
-              value={ query }
-              onChange={ (e) => requestSearch(e.target.value) }
-              startAdornment={
-                <SearchRoundedIcon
-                  fontSize="large"
-                  sx={ {
-                    color: theme.palette.text.secondary,
-                    paddingLeft: "8px",
-                  } }
-                />
-              }
-              placeholder="Search songs"
-            />
-          </Box>
-
+          <SearchBox
+            placeholder="Search songs"
+            query={ query }
+            onSearch={ handleSearch }
+          />
           <Box
             sx={ {
               display: "flex",
@@ -73,22 +61,11 @@ const Library: FunctionComponent = () => {
     } else if (isSuccess && songData.length > 0) {
       return (
         <>
-          <Box sx={ { pb: 3, width: "340px" } }>
-            <TextInput
-              value={ query }
-              onChange={ (e) => requestSearch(e.target.value) }
-              startAdornment={
-                <SearchRoundedIcon
-                  fontSize="large"
-                  sx={ {
-                    color: theme.palette.text.secondary,
-                    paddingLeft: "8px",
-                  } }
-                />
-              }
-              placeholder="Search songs"
-            ></TextInput>
-          </Box>
+          <SearchBox
+            placeholder="Search songs"
+            query={ query }
+            onSearch={ handleSearch }
+          />
           <SongList
             songData={ query == "" ? songData : filteredData }
             page={ page }
