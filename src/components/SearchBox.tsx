@@ -5,19 +5,19 @@ import theme from "theme";
 
 interface SearchBoxProps {
   query: string;
-  requestSearch: (searched: string) => void;
+  onSearch: (searched: string) => void;
   placeholder?: string;
 }
 export const SearchBox = ({
   query,
-  requestSearch,
+  onSearch,
   placeholder = "",
 }: SearchBoxProps) => {
   return (
     <Box sx={ { pb: 3, maxWidth: "340px" } }>
       <TextInput
         value={ query }
-        onChange={ (e) => requestSearch(e.target.value) }
+        onChange={ (e) => onSearch(e.target.value) }
         startAdornment={
           <SearchRoundedIcon
             fontSize="large"

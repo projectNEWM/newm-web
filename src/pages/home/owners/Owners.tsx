@@ -14,7 +14,7 @@ const Owners: FunctionComponent = () => {
   const [filteredData, setFilteredData] = useState(ownersData);
   const [query, setQuery] = useState("");
 
-  const requestSearch = (searched: string) => {
+  const handleSearch = (searched: string) => {
     setQuery(searched);
     setPage(1);
     if (searched == "") {
@@ -40,7 +40,7 @@ const Owners: FunctionComponent = () => {
           <SearchBox
             placeholder="Search by owner or song"
             query={ query }
-            requestSearch={ requestSearch }
+            onSearch={ handleSearch }
           />
 
           <Box
@@ -66,7 +66,7 @@ const Owners: FunctionComponent = () => {
           <SearchBox
             placeholder="Search by owner or song"
             query={ query }
-            requestSearch={ requestSearch }
+            onSearch={ handleSearch }
           />
 
           <OwnersTable
