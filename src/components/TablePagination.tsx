@@ -1,5 +1,6 @@
 import {
   Box,
+  SxProps,
   TableCell,
   TableCellProps,
   TableFooter,
@@ -24,8 +25,8 @@ interface TablePaginationProps {
   handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
   colSpan: number;
   color?: string;
-  rowItemName?: string;
-  paddingTop?: string | number;
+  rows?: string;
+  cellStyles?: SxProps;
 }
 
 const TablePagination = ({
@@ -36,13 +37,13 @@ const TablePagination = ({
   handlePageChange,
   colSpan,
   color = theme.colors.black100,
-  rowItemName = "row",
-  paddingTop = 0,
+  rows = "rows",
+  cellStyles,
 }: TablePaginationProps) => {
   return (
     <TableFooter sx={ { backgroundColor: color } }>
       <TableRow>
-        <StyledTableCell style={ { paddingTop: paddingTop } } colSpan={ colSpan }>
+        <StyledTableCell sx={ cellStyles } colSpan={ colSpan }>
           <Box
             sx={ {
               display: "flex",
@@ -59,7 +60,7 @@ const TablePagination = ({
             >
               Showing { (page - 1) * rowsPerPage + 1 } to{ " " }
               { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
-              { numberOfRows } { rowItemName }s
+              { numberOfRows } { rows }
             </Typography>
             <StyledPagination
               variant="outlined"

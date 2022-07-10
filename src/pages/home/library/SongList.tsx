@@ -177,8 +177,8 @@ export default function SongList({
               lastRowOnPage={ lastRowOnPage }
               handlePageChange={ handlePageChange }
               colSpan={ 3 }
-              rowItemName="song"
-              paddingTop={ "12px" }
+              rows="songs"
+              cellStyles={ { paddingTop: "12px" } }
             />
           ) : (
             ""

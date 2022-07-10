@@ -46,7 +46,7 @@ export default function OwnersTable({
   const StyledTableCellHeader = styled(TableCell)<TableCellProps>`
     border-color: ${theme.colors.grey500};
     color: ${theme.colors.grey100};
-    font-weight: 700;
+    font-weight: ${theme.typography.fontWeightBold};
   `;
 
   // determines how many rows to display per page
@@ -112,7 +112,7 @@ export default function OwnersTable({
                       { row.registered ? (
                         <Box
                           sx={ {
-                            marginLeft: "15px",
+                            marginLeft: "16px",
                             display: { xs: "none", sm: "flex" },
                           } }
                         >
@@ -154,16 +154,14 @@ export default function OwnersTable({
               lastRowOnPage={ lastRowOnPage }
               handlePageChange={ handlePageChange }
               colSpan={ 3 }
-              rowItemName="owner"
-              paddingTop={ "12px" }
+              rows="owners"
+              cellStyles={ { paddingTop: "12px" } }
             />
-          ) : (
-            ""
-          ) }
+          ) : null }
         </Table>
       </TableContainer>
     );
   } else {
-    return <div></div>;
+    return null;
   }
 }
