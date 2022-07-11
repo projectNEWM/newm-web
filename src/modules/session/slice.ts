@@ -30,6 +30,7 @@ const sessionSlice = createSlice({
     setSessionErrorMessage(state, action: PayloadAction<string>) {
       state.errorMessage = action.payload;
     },
+    receiveRefreshToken: handleSuccessfulAuthentication,
     logOut: handleLogout,
   },
   extraReducers: (builder) => {
@@ -64,14 +65,13 @@ const sessionSlice = createSlice({
       }
     );
 
-    builder.addMatcher(api.endpoints.refreshToken.matchRejected, handleLogout);
-
     builder.addMatcher(api.endpoints.updateProfile.matchRejected, (state) => {
       state.errorMessage = "An error occurred while updating your profile";
     });
   },
 });
 
-export const { logOut, setSessionErrorMessage } = sessionSlice.actions;
+export const { logOut, receiveRefreshToken, setSessionErrorMessage } =
+  sessionSlice.actions;
 
 export default sessionSlice.reducer;
