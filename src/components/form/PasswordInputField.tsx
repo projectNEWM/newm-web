@@ -45,7 +45,7 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
           </IconButton>
         ) : undefined
       }
-      placeholder= { placeholder }
+      placeholder={ placeholder }
       type={ isMasked ? "password" : "text" }
       { ...rest }
     />

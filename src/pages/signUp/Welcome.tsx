@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
@@ -11,9 +11,9 @@ import {
   ResponsiveNEWMLogo,
   TextInputField,
 } from "components";
-import theme from "theme";
 
 const SignUp: FunctionComponent = () => {
+  const theme = useTheme();
   const { isValid, values } = useFormikContext();
   const { newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
@@ -27,14 +27,19 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
-      <Box mb={ 4 }>
+      <Box mb={ theme.spacing(4) }>
         <ResponsiveNEWMLogo />
       </Box>
 
-      <Typography variant="h1" mb={ 5 }>
+      <Typography variant="h1" mb={ theme.spacing(5) }>
         Welcome
       </Typography>
-      <Stack maxWidth={ theme.inputField.maxWidth } mb={ 5 } spacing={ 1.5 } width="100%">
+      <Stack
+        maxWidth={ theme.inputField.maxWidth }
+        mb={ theme.spacing(5) }
+        spacing={ 1.5 }
+        width="100%"
+      >
         <TextInputField
           aria-label="Email input field"
           name="email"
@@ -61,7 +66,7 @@ const SignUp: FunctionComponent = () => {
         </FilledButton>
       </Stack>
 
-      <Typography align="center" marginBottom="16px">
+      <Typography align="center" marginBottom={ theme.spacing(2) }>
         or sign up via
       </Typography>
 

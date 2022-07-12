@@ -35,14 +35,16 @@ export const commonYupValidation = {
   nickname: Yup.string()
     .required("Stage name is required")
     .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
-  newPassword: Yup.string().test(
-    "is-trimmed",
-    "Password must not start or end with a space character",
-    (password) => password ? password === password?.trim() : false
-  ).matches(
-    passwordRequirementRegex,
-    "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
-  ),
+  newPassword: Yup.string()
+    .test(
+      "is-trimmed",
+      "Password must not start or end with a space character",
+      (password) => (password ? password === password?.trim() : false)
+    )
+    .matches(
+      passwordRequirementRegex,
+      "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
+    ),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("newPassword")],
     "Passwords must match"

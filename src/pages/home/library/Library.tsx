@@ -21,9 +21,10 @@ const Library: FunctionComponent = () => {
       setFilteredData(songData);
     } else {
       setFilteredData(
-        songData.filter((song) =>
-          song.title.toLowerCase().includes(searched.toLowerCase()) || 
-          song.genre.toLowerCase().includes(searched.toLowerCase())
+        songData.filter(
+          (song) =>
+            song.title.toLowerCase().includes(searched.toLowerCase()) ||
+            song.genre.toLowerCase().includes(searched.toLowerCase())
         )
       );
     }

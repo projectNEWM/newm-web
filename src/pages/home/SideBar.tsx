@@ -1,10 +1,14 @@
 import { FunctionComponent } from "react";
-import { Box, Drawer, IconButton, Stack } from "@mui/material";
+import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
-import { ProfileImage, SideBarButton, SideBarHeader, TempAuthButton } from "components";
+import {
+  ProfileImage,
+  SideBarButton,
+  SideBarHeader,
+  TempAuthButton,
+} from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
-import { useTheme } from "@mui/material/styles";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
@@ -51,7 +55,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </IconButton>
       ) }
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Stack mt={ 3.5 } spacing={ 2 }>
+        <Stack mt={ theme.spacing(3.5) } spacing={ 2 }>
           { !!profile.pictureUrl && (
             <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
           ) }
@@ -61,7 +65,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Typography>
         </Stack>
 
-        <Box mt={ 4 } mb={ 3 } width="100%">
+        <Box mt={ theme.spacing(4) } mb={ theme.spacing(3) } width="100%">
           <SideBarButton
             closeMenu={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
@@ -69,11 +73,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             to="/home/upload-song"
           />
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ theme.spacing(2) } ml={ theme.spacing(2.5) }>
             <SideBarHeader>YOUR CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ theme.spacing(1.75) } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
@@ -89,11 +93,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ theme.spacing(2) } ml={ theme.spacing(2.5) }>
             <SideBarHeader>YOUR PERFORMANCE</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ theme.spacing(1.75) } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarButton
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
@@ -109,11 +113,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ theme.spacing(2) } ml={ theme.spacing(2.5) }>
             <SideBarHeader>GENERAL</SideBarHeader>
           </Box>
 
-          <Box mt={ 1.75 } sx={ { width: "100%" } }>
+          <Box mt={ theme.spacing(1.75) } sx={ { width: "100%" } }>
             <SideBarButton
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
@@ -124,9 +128,16 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Box>
       </Box>
 
-      <Box px={ 2.5 } pb={ 2.5 } width="100%" display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="space-between"
+        pb={ theme.spacing(2.5) }
+        px={ theme.spacing(2.5) }
+        width="100%"
+      >
         <NewmLogoSmInverse />
-            <TempAuthButton />
+        <TempAuthButton />
       </Box>
     </Box>
   );
