@@ -23,10 +23,10 @@ const Wallet: FunctionComponent = () => {
           padding: 2.5,
           maxWidth: "400px",
           height: "100px",
-          borderRadius:"8px"
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between"
         } }
-        display="flex"
-        justifyContent="space-between"
       >
         <Box
           display="flex"
