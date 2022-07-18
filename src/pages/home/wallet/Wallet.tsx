@@ -1,7 +1,10 @@
 import { FunctionComponent } from "react";
-import { Box, Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { Typography } from "elements";
-import theme from "theme";
+import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
+import TabbedContainer from "./TabbedContainer";
+import Portfolio from "./Portfolio";
+import Transactions from "./Transactions";
 
 const Wallet: FunctionComponent = () => {
   return (
@@ -17,43 +20,14 @@ const Wallet: FunctionComponent = () => {
       <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
         WALLET
       </Typography>
-      <Box
-        sx={ {
-          backgroundColor: theme.colors.grey600,
-          padding: 2.5,
-          maxWidth: "400px",
-          height: "100px",
-          borderRadius: "8px",
-          display: "flex",
-          justifyContent: "space-between"
-        } }
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-        
-        >
-          <Typography color="grey100" fontSize={ 12 }>
-            UNCLAIMED ROYALTIES
-          </Typography>
-          <Typography fontSize= "28px" fontWeight={ 700 }>
-            $5.35
-          </Typography>
-        </Box>
-        <Button
-          sx={ {
-            borderRadius: "4px",
-            border: "2px solid #FFFFFF",
-            height: "35px",
-            alignSelf: "center",
-          } }
-          variant="outlined"
-          color="inherit"
-        >
-          CLAIM ROYALTIES
-        </Button>
-      </Box>
+      <UnclaimedRoyalties unclaimedRoyalties={ 5.35 } />
+      <TabbedContainer
+        sx={ { pt: 5 } }
+        label1="PORTFOLIO"
+        label2="TRANSACTIONS"
+        Component1={ Portfolio }
+        Component2={ Transactions }
+      />
     </Container>
   );
 };
