@@ -2,8 +2,8 @@ import { FunctionComponent, useState } from "react";
 import { Box, CircularProgress, Container } from "@mui/material";
 import { Typography } from "elements";
 import { SearchBox } from "components";
+import { Owner, mockOwnersData } from "common";
 import OwnersTable from "./OwnersTable";
-import mockOwnersData, { Owner } from "./mockOwnersData";
 import NoOwnersYet from "./NoOwnersYet";
 
 const Owners: FunctionComponent = () => {

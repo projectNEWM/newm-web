@@ -23,7 +23,7 @@ export interface OwnersData {
   isSuccess: boolean;
 }
 
-const mockOwnersData: OwnersData = {
+export const mockOwnersData: OwnersData = {
   data: [
     createData("Jane Cooper", "Once upon a time", 1, true),
     createData("Cody Fisher", "Life's away", 4, false),

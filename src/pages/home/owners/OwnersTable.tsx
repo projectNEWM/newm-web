@@ -14,10 +14,9 @@ import {
 import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Typography } from "elements";
-import { useWindowDimensions } from "common";
+import { Owner, useWindowDimensions } from "common";
 import PendingBadge from "assets/images/PendingBadge";
 import { TablePagination } from "components";
-import { Owner } from "./mockOwnersData";
 interface OwnersTableProps {
   ownersData: Owner[];
   page: number;
