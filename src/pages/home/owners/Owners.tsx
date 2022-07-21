@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
-import { Box, CircularProgress, Container } from "@mui/material";
-import { Typography } from "elements";
+import { Box, Container } from "@mui/material";
+import { SkeletonTable, Typography } from "elements";
 import { SearchBox } from "components";
 import OwnersTable from "./OwnersTable";
 import mockOwnersData, { Owner } from "./mockOwnersData";
@@ -42,16 +42,7 @@ const Owners: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-
-          <Box
-            sx={ {
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            } }
-          >
-            <CircularProgress color="secondary" />
-          </Box>
+          <SkeletonTable />
         </>
       );
     } else if (isSuccess && ownersData.length == 0) {
@@ -83,9 +74,8 @@ const Owners: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
-        marginLeft: [null, null, 4.5],
+        marginX: [null, null, 3],
         paddingRight: [null, null, 7.5],
-        paddingTop: "60px",
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,

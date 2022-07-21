@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
-import { Box, CircularProgress, Container } from "@mui/material";
-import { Typography } from "elements";
+import { Box, Container } from "@mui/material";
+import { SkeletonTable, Typography } from "elements";
 import { Song, useGetSongsQuery } from "modules/song";
 import { SearchBox } from "components";
 import SongList from "./SongList";
@@ -22,7 +22,7 @@ const Library: FunctionComponent = () => {
     } else {
       setFilteredData(
         songData.filter((song) =>
-          song.title.toLowerCase().includes(searched.toLowerCase()) || 
+          song.title.toLowerCase().includes(searched.toLowerCase()) ||
           song.genre.toLowerCase().includes(searched.toLowerCase())
         )
       );
@@ -41,15 +41,7 @@ const Library: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-          <Box
-            sx={ {
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            } }
-          >
-            <CircularProgress color="secondary" />
-          </Box>
+          <SkeletonTable />
         </>
       );
     } else if (isSuccess && songData.length == 0) {
@@ -79,8 +71,7 @@ const Library: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
-        marginLeft: [null, null, 4.5],
-        paddingTop: "60px",
+        marginX: [null, null, 3],
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,
