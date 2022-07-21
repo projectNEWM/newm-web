@@ -27,19 +27,14 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
-      <Box mb={ theme.spacing(4) }>
+      <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
 
-      <Typography variant="h1" mb={ theme.spacing(5) }>
+      <Typography variant="h1" mb={ 5 }>
         Welcome
       </Typography>
-      <Stack
-        maxWidth={ theme.inputField.maxWidth }
-        mb={ theme.spacing(5) }
-        spacing={ 1.5 }
-        width="100%"
-      >
+      <Stack maxWidth={ theme.inputField.maxWidth } mb={ 5 } spacing={ 1.5 } width="100%">
         <TextInputField
           aria-label="Email input field"
           name="email"
@@ -66,7 +61,7 @@ const SignUp: FunctionComponent = () => {
         </FilledButton>
       </Stack>
 
-      <Typography align="center" marginBottom={ theme.spacing(2) }>
+      <Typography align="center" mb={ 2 }>
         or sign up via
       </Typography>
 
