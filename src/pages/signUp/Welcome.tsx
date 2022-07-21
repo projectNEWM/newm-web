@@ -34,7 +34,12 @@ const SignUp: FunctionComponent = () => {
       <Typography variant="h1" mb={ 5 }>
         Welcome
       </Typography>
-      <Stack maxWidth={ theme.inputField.maxWidth } mb={ 5 } spacing={ 1.5 } width="100%">
+      <Stack
+        maxWidth={ theme.inputField.maxWidth }
+        mb={ 5 }
+        spacing={ 1.5 }
+        width="100%"
+      >
         <TextInputField
           aria-label="Email input field"
           name="email"

@@ -128,7 +128,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Box>
       </Box>
 
-      <Box px={ 2.5 } pb={ 2.5 } width="100%" display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="space-between"
+        pb={ 2.5 }
+        px={ 2.5 }
+        width="100%"
+      >
         <NewmLogoSmInverse />
         <TempAuthButton />
       </Box>
