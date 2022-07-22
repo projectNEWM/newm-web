@@ -48,11 +48,7 @@ const Toast = () => {
         sx={ {
           "&.MuiAlert-root": {
             ".MuiAlert-message": {
-              paddingRight: [
-                theme.spacing(1),
-                theme.spacing(2),
-                theme.spacing(6),
-              ],
+              paddingRight: [1, 2, 6],
             },
             "&.MuiAlert-outlined": {
               color: theme.palette.text.primary,
@@ -73,12 +69,7 @@ const Toast = () => {
         variant="outlined"
       >
         <Typography variant="h6">{ heading }</Typography>
-        <Typography
-          sx={ { fontWeight: "400", margin: `${theme.spacing(1)} 0 0` } }
-          variant="h6"
-        >
-          { message }
-        </Typography>
+        <Typography sx={ { fontWeight: "400", marginTop: 1 } } variant="h6">{ message }</Typography>
       </Alert>
     </Snackbar>
   ) : null;
