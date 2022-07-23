@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import theme from "theme";
-import { SxProps } from "@mui/material";
+import { SxProps, styled } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface TabPanelProps {
@@ -33,13 +33,19 @@ function TabPanel(props: TabPanelProps) {
       { ...other }
     >
       { value === index && (
-        <Box sx={ { p: 3 } }>
+        <Box>
           <Typography>{ children }</Typography>
         </Box>
       ) }
     </div>
   );
 }
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+  background: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
+  "-webkit-background-clip": "text;",
+  "-webkit-text-fill-color": "transparent",
+}));
 
 function a11yProps(index: number) {
   return {
@@ -65,6 +71,8 @@ export function TabbedContainer({
     <Box sx={ sx }>
       <Box
         sx={ {
+          maxWidth: "656px",
+          borderBottom: `1px solid ${theme.colors.grey600}`,
           color: theme.colors.blue,
         } }
       >
@@ -76,8 +84,8 @@ export function TabbedContainer({
           value={ value }
           onChange={ handleChange }
         >
-          <Tab label={ label1 } { ...a11yProps(0) } />
-          <Tab label={ label2 } { ...a11yProps(1) } />
+          <StyledTab label={ label1 } { ...a11yProps(0) } />
+          <StyledTab label={ label2 } { ...a11yProps(1) } />
         </Tabs>
       </Box>
       <TabPanel value={ value } index={ 0 }>
