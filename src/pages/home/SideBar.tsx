@@ -1,10 +1,14 @@
 import { FunctionComponent } from "react";
-import { Box, Drawer, IconButton, Stack } from "@mui/material";
+import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
-import { ProfileImage, SideBarButton, SideBarHeader, TempAuthButton } from "components";
+import {
+  ProfileImage,
+  SideBarButton,
+  SideBarHeader,
+  TempAuthButton,
+} from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
-import { useTheme } from "@mui/material/styles";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
@@ -124,9 +128,16 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Box>
       </Box>
 
-      <Box px={ 2.5 } pb={ 2.5 } width="100%" display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="space-between"
+        pb={ 2.5 }
+        px={ 2.5 }
+        width="100%"
+      >
         <NewmLogoSmInverse />
-            <TempAuthButton />
+        <TempAuthButton />
       </Box>
     </Box>
   );

@@ -1,18 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SyntheticEvent,
-  useEffect,
-  useState
-} from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { clearToastMessage, selectUi } from "modules/ui";
-import { Alert, Snackbar, Typography } from "@mui/material";
+import { Alert, Snackbar, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "assets/images/CheckCircle";
 import CloseCircleFill from "assets/images/CloseCircleFill";
-import theme from "theme";
 
 const Toast = () => {
   const dispatch = useDispatch();
-  const { toast: { heading, message, severity } } = useSelector(selectUi);
+  const theme = useTheme();
+  const {
+    toast: { heading, message, severity },
+  } = useSelector(selectUi);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -37,20 +35,20 @@ const Toast = () => {
           left: [null, null, "32px"],
           right: [null, null, "32px"],
           top: "32px",
-        }
+        },
       } }
     >
       <Alert
         iconMapping={ {
           error: <CloseCircleFill />,
-          success: <CheckCircleIcon />
+          success: <CheckCircleIcon />,
         } }
         onClose={ handleClose }
         severity={ severity }
         sx={ {
           "&.MuiAlert-root": {
             ".MuiAlert-message": {
-              paddingRight: ["8px", "16px", "48px"]
+              paddingRight: [1, 2, 6],
             },
             "&.MuiAlert-outlined": {
               color: theme.palette.text.primary,
@@ -71,7 +69,7 @@ const Toast = () => {
         variant="outlined"
       >
         <Typography variant="h6">{ heading }</Typography>
-        <Typography sx={ { fontWeight: "400", margin: "8px 0 0" } } variant="h6">{ message }</Typography>
+        <Typography sx={ { fontWeight: "400", marginTop: 1 } } variant="h6">{ message }</Typography>
       </Alert>
     </Snackbar>
   ) : null;

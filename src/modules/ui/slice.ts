@@ -23,7 +23,7 @@ const uiSlice = createSlice({
       state.toast.message = payload.message;
       state.toast.severity = payload.severity;
     },
-  }
+  },
 });
 
 export const { clearToastMessage, setToastMessage } = uiSlice.actions;

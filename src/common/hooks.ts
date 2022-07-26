@@ -76,7 +76,7 @@ export const useUserDevice = () => {
         )
       )
         isMobileOrTabletUser = true;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     })(navigator.userAgent || navigator.vendor || (window as any).opera);
 
     setIsMobileOrTablet(isMobileOrTabletUser);
