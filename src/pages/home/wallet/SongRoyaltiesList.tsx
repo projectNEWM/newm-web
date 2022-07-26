@@ -52,9 +52,9 @@ export default function SongRoyaltiesList({
   page,
   setPage,
 }: SongRoyaltiesListProps) {
-  const headerHeight = 400;
-  const footerHeight = 48.5;
-  const bottomPadding = 40;
+  const headerHeight = 430;
+  const footerHeight = 70;
+  const bottomPadding = 0;
   const tableWidth = "700px";
   const [rowsPerPage, setRowsPerPage] = useState(0);
   // Used to avoid a layout jump when reaching the last page with empty rows.
@@ -102,7 +102,7 @@ export default function SongRoyaltiesList({
 
   if (songRoyalties) {
     return (
-      <Box>
+      <Box sx={ { maxWidth: tableWidth } }>
         <TableContainer
           sx={ {
             maxWidth: tableWidth,

@@ -21,22 +21,17 @@ const Wallet: FunctionComponent = () => {
       <Box
         sx={ {
           display: "flex",
-          justifyContent: ["center", "space-between"],
+          justifyContent: "space-between",
           alignItems: "center",
         } }
       >
-        <Typography
-          sx={ { display: ["none", "block"] } }
-          variant="h3"
-          fontWeight={ 800 }
-          mb={ 5 }
-        >
+        <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
           WALLET
         </Typography>
         <FilledButton
           sx={ { mr: [0,4.75], mb: 5 } }
           backgroundColor={ theme.gradients.crypto }
-        >
+        >  
           Connect Wallet
         </FilledButton>
       </Box>
