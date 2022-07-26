@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
-import { Container } from "@mui/material";
-import { Typography } from "elements";
+import { Box, Button, Container } from "@mui/material";
+import { FilledButton, Typography } from "elements";
+import theme from "theme";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
@@ -17,9 +18,28 @@ const Wallet: FunctionComponent = () => {
         textAlign: ["center", "initial"],
       } }
     >
-      <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
-        WALLET
-      </Typography>
+      <Box
+        sx={ {
+          display: "flex",
+          justifyContent: ["center", "space-between"],
+          alignItems: "center",
+        } }
+      >
+        <Typography
+          sx={ { display: ["none", "block"] } }
+          variant="h3"
+          fontWeight={ 800 }
+          mb={ 5 }
+        >
+          WALLET
+        </Typography>
+        <FilledButton
+          sx={ { mr: [0,4.75], mb: 5 } }
+          backgroundColor={ theme.gradients.crypto }
+        >
+          Connect Wallet
+        </FilledButton>
+      </Box>
       <UnclaimedRoyalties unclaimedRoyalties={ 5.35 } />
       <TabbedContainer
         sx={ { pt: 5 } }
