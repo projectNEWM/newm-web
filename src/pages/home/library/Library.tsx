@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { Box, Container } from "@mui/material";
-import { SkeletonTable, Typography } from "elements";
+import { TableSkeleton, Typography } from "elements";
 import { Song, useGetSongsQuery } from "modules/song";
 import { SearchBox } from "components";
 import SongList from "./SongList";
@@ -41,7 +41,7 @@ const Library: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-          <SkeletonTable />
+          <TableSkeleton />
         </>
       );
     } else if (isSuccess && songData.length == 0) {

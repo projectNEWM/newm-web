@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { Box, Container } from "@mui/material";
-import { SkeletonTable, Typography } from "elements";
+import { TableSkeleton, Typography } from "elements";
 import { SearchBox } from "components";
 import OwnersTable from "./OwnersTable";
 import mockOwnersData, { Owner } from "./mockOwnersData";
@@ -42,7 +42,7 @@ const Owners: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-          <SkeletonTable />
+          <TableSkeleton />
         </>
       );
     } else if (isSuccess && ownersData.length == 0) {

@@ -2,7 +2,7 @@ import theme from "theme";
 import { Box, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
-const SkeletonTable: FunctionComponent = () => (
+const TableSkeleton: FunctionComponent = () => (
   <Box
     mt={ 2 }
     pt={ 4 }
@@ -72,4 +72,4 @@ const SkeletonTable: FunctionComponent = () => (
   </Box>
 );
 
-export default SkeletonTable;
+export default TableSkeleton;
