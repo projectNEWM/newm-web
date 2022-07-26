@@ -2,14 +2,17 @@ import { FunctionComponent, useState } from "react";
 import { Box, Container } from "@mui/material";
 import { TableSkeleton, Typography } from "elements";
 import { SearchBox } from "components";
+import { useWindowDimensions } from "common";
 import OwnersTable from "./OwnersTable";
 import mockOwnersData, { Owner } from "./mockOwnersData";
 import NoOwnersYet from "./NoOwnersYet";
 
 const Owners: FunctionComponent = () => {
   const { data = [], isLoading, isSuccess } = mockOwnersData; // temporary until API is ready
+
   const ownersData: Owner[] = data;
   const [page, setPage] = useState(1);
+  const viewportWidth = useWindowDimensions()?.width;
 
   const [filteredData, setFilteredData] = useState(ownersData);
   const [query, setQuery] = useState("");
@@ -42,7 +45,7 @@ const Owners: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-          <TableSkeleton />
+          <TableSkeleton cols={ viewportWidth && viewportWidth > 450 ? 3 : 2 } />
         </>
       );
     } else if (isSuccess && ownersData.length == 0) {
