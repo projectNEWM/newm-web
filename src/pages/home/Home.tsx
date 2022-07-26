@@ -27,7 +27,11 @@ const Home: FunctionComponent = () => {
   const [isMobileOpen, setMobileOpen] = useState(false);
   return (
     <Box
-      sx={ { backgroundColor: theme.colors.black100, display: "flex", flexGrow: 1 } }
+      sx={ {
+        backgroundColor: theme.colors.black100,
+        display: "flex",
+        flexGrow: 1,
+      } }
     >
       <SideBar
         isMobileOpen={ isMobileOpen }

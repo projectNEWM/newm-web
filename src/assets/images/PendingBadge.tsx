@@ -1,10 +1,10 @@
 const PendingBadge = (props: any) => (
   <svg
-    width={57}
-    height={20}
+    width={ 57 }
+    height={ 20 }
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
+    { ...props }
   >
     <path
       d="M0 2.5a2 2 0 0 1 2-2h53a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-15Z"
@@ -17,14 +17,14 @@ const PendingBadge = (props: any) => (
     <defs>
       <linearGradient
         id="a"
-        x1={0}
-        y1={19.5}
-        x2={16.718}
-        y2={-17.635}
+        x1={ 0 }
+        y1={ 19.5 }
+        x2={ 16.718 }
+        y2={ -17.635 }
         gradientUnits="userSpaceOnUse"
       >
         <stop stopColor="#09C" />
-        <stop offset={1} stopColor="#3ECD8E" />
+        <stop offset={ 1 } stopColor="#3ECD8E" />
       </linearGradient>
     </defs>
   </svg>
