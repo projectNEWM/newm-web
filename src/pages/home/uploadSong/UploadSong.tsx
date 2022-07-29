@@ -45,9 +45,8 @@ const UploadSong: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
-        marginLeft: [null, null, 4.5],
+        marginX: [null, null, 3],
         overflow: "auto",
-        paddingY: 7.5,
         textAlign: ["center", "center", "initial"],
       } }
     >

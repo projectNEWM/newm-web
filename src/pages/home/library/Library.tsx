@@ -1,8 +1,10 @@
 import { FunctionComponent, useState } from "react";
-import { Box, CircularProgress, Container } from "@mui/material";
-import { Typography } from "elements";
+import { Box, Container } from "@mui/material";
+import { TableSkeleton, Typography } from "elements";
 import { Song, useGetSongsQuery } from "modules/song";
 import { SearchBox } from "components";
+import { useWindowDimensions } from "common";
+import theme from "theme";
 import SongList from "./SongList";
 import NoSongsYet from "./NoSongsYet";
 
@@ -13,6 +15,7 @@ const Library: FunctionComponent = () => {
   const [filteredData, setFilteredData] = useState<Song[]>();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const viewportWidth = useWindowDimensions()?.width;
 
   const handleSearch = (searched: string) => {
     setQuery(searched);
@@ -42,15 +45,13 @@ const Library: FunctionComponent = () => {
             query={ query }
             onSearch={ handleSearch }
           />
-          <Box
-            sx={ {
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            } }
-          >
-            <CircularProgress color="secondary" />
-          </Box>
+          <TableSkeleton
+            cols={
+              viewportWidth && viewportWidth > theme.breakpoints.values.sm
+                ? 3
+                : 2
+            }
+          />
         </>
       );
     } else if (isSuccess && songData.length == 0) {
@@ -80,8 +81,7 @@ const Library: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
-        marginLeft: [null, null, 4.5],
-        paddingTop: "60px",
+        marginX: [null, null, 3],
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,
