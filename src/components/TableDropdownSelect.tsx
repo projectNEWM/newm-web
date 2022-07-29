@@ -7,7 +7,7 @@ const TableDropdownSelect = () => {
     "& .css-x2bp66-MuiSvgIcon-root-MuiSelect-icon": {
       color: theme.colors.white,
       transform: "scale(1.2)",
-      paddingBottom: "5px",
+      paddingBottom: "4px",
     },
     "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
       color: theme.colors.white,
