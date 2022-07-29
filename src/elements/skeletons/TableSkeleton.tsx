@@ -26,7 +26,9 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
         display="grid"
         gridTemplateColumns={ `repeat(${cols}, minmax(72px, 1fr))` }
       >
-        { Array(cols).fill(<Skeleton height="40px" width="72px" />) }
+        { Array.from({ length: cols }, (_, i) => (
+          <Skeleton key={ i } height="40px" width="72px" />
+        )) }
       </Stack>
 
       <Stack
@@ -38,7 +40,9 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
         justifyContent="space-around"
         gridTemplateColumns={ `repeat(${cols}, minmax(100px, 1fr))` }
       >
-        { Array(cols * rows).fill(<Skeleton height="24px" />) }
+        { Array.from({ length: cols * rows }, (_, i) => (
+          <Skeleton key={ i } height="24px" />
+        )) }
       </Stack>
       <Stack
         display="flex"
