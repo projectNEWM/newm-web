@@ -2,10 +2,8 @@
  * Logs the user into the app using the Google Auth API.
  */
 
-import {
-  extendedApi as sessionApi,
-  setSessionErrorMessage,
-} from "modules/session";
+import { extendedApi as sessionApi } from "modules/session";
+import { setToastMessage } from "modules/ui";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -28,7 +26,13 @@ const GoogleLogin: FunctionComponent = () => {
     const { accessToken } = loginResponse;
 
     if (!accessToken) {
-      dispatch(setSessionErrorMessage("Google authentication service offline"));
+      dispatch(
+        setToastMessage({
+          message: "Google authentication service offline.",
+          severity: "error",
+        })
+      );
+
       return;
     }
 
@@ -36,7 +40,12 @@ const GoogleLogin: FunctionComponent = () => {
   };
 
   const handleGoogleRespFailure = () => {
-    dispatch(setSessionErrorMessage("Google authentication failed"));
+    dispatch(
+      setToastMessage({
+        message: "Google authentication was not successful.",
+        severity: "error",
+      })
+    );
   };
 
   return (
