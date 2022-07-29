@@ -1,5 +1,10 @@
-import { Box, styled, MenuItem, SelectChangeEvent, Select } from "@mui/material";
-import NEWMLogoSVG from "assets/images/NEWMLogo";
+import {
+  Box,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  styled,
+} from "@mui/material";
 import { useState } from "react";
 
 const TableDropdownSelect = () => {
@@ -7,20 +12,12 @@ const TableDropdownSelect = () => {
     "& .css-x2bp66-MuiSvgIcon-root-MuiSelect-icon": {
       color: theme.colors.white,
       transform: "scale(1.2)",
-      paddingBottom: "5px",
-    },
-    "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
-      color: theme.colors.white,
-      transform: "scale(1.2)",
-      paddingBottom: "5px",
+      paddingBottom: 4,
     },
     "& .MuiSelect-iconOpen": {
       color: theme.colors.white,
       transform: "rotate(180deg)",
     },
-    "& .css-6t9ju4-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-6t9ju4-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-6t9ju4-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
-      {},
-    paddingRight: "5px",
   }));
   const StyledMenuItem = styled(MenuItem)({
     fontSize: 12,

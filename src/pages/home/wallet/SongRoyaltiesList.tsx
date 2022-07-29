@@ -11,17 +11,10 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { DropdownSelect, Typography } from "elements";
-import { SongRoyalties, mockSongRoyalties, useWindowDimensions } from "common";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Typography } from "elements";
+import { SongRoyalties, useWindowDimensions } from "common";
 import { TableDropdownSelect, TablePagination } from "components";
-import DropdownAdornment from "assets/images/DropdownAdornment";
 import AllCaughtUp from "./AllCaughtUp";
 
 interface SongRoyaltiesListProps {
