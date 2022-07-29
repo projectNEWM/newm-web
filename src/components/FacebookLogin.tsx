@@ -2,10 +2,15 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import { extendedApi as sessionApi, setSessionErrorMessage } from "modules/session";
+import {
+  extendedApi as sessionApi,
+  setSessionErrorMessage,
+} from "modules/session";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
-import FacebookLoginHelper, { LoginResponse } from "@greatsumini/react-facebook-login";
+import FacebookLoginHelper, {
+  LoginResponse,
+} from "@greatsumini/react-facebook-login";
 import FacebookIcon from "assets/images/FacebookIcon";
 import { IconButton } from "@mui/material";
 
@@ -23,7 +28,9 @@ const FacebookLogin: FunctionComponent = () => {
   };
 
   const handleFacebookLoginFail = () => {
-    dispatch(setSessionErrorMessage("Facebook authentication was not successful"));
+    dispatch(
+      setSessionErrorMessage("Facebook authentication was not successful")
+    );
   };
 
   return (

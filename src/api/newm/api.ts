@@ -9,8 +9,9 @@ const baseQuery = fetchBaseQuery({
     const state = getState() as RootState;
     const { isLoggedIn } = state.session;
     const accessToken = Cookies.get("accessToken");
+    const hasAuthHeader = !!headers.get("Authorization");
 
-    if (isLoggedIn && accessToken) {
+    if (isLoggedIn && accessToken && !hasAuthHeader) {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
 
