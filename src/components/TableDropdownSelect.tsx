@@ -14,6 +14,11 @@ const TableDropdownSelect = () => {
       transform: "scale(1.2)",
       paddingBottom: 4,
     },
+    "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
+      color: theme.colors.white,
+      transform: "scale(1.2)",
+      paddingBottom: "5px",
+    },
     "& .MuiSelect-iconOpen": {
       color: theme.colors.white,
       transform: "rotate(180deg)",

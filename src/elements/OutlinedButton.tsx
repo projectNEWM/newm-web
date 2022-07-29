@@ -18,7 +18,7 @@ const OutlinedButtonGradient = styled("div")(
 );
 
 const OutlinedButtonMain = styled(Button)`
-  background-color: "transparent";
+  background-color: 'transparent';
   padding: 12px 16px;
 `;
 
