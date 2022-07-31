@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { Typography } from "elements";
+import { Typography, OutlinedButtonNoGradient } from "elements";
 import theme from "theme";
 
 interface UnclaimedRoyaltiesProps {
@@ -44,7 +44,8 @@ export const UnclaimedRoyalties = ({
           ${ unclaimedRoyalties }
         </Typography>
       </Box>
-      <Button
+      <OutlinedButtonNoGradient>CLAIM ROYALTIES</OutlinedButtonNoGradient>
+      { /* <Button
         sx={ {
           borderRadius: "4px",
           border: "2px solid #FFFFFF",
@@ -55,7 +56,7 @@ export const UnclaimedRoyalties = ({
         color="inherit"
       >
         CLAIM ROYALTIES
-      </Button>
+      </Button> */ }
     </Box>
   );
 };

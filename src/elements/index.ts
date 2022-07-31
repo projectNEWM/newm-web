@@ -19,3 +19,4 @@ export * from "./TextArea";
 export { default as TextInput } from "./TextInput";
 export * from "./TextInput";
 export { default as TransparentButton } from "./styled/TransparentButton";
+export { default as OutlinedButtonNoGradient } from "./OutlinedButtonNoGradient";

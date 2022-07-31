@@ -14,7 +14,6 @@ const Wallet: FunctionComponent = () => {
       sx={ {
         marginLeft: [null, null, 4.5],
         overflow: "auto",
-        paddingY: 7.5,
         textAlign: ["center", "initial"],
       } }
     >
