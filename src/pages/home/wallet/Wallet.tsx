@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import theme from "theme";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";

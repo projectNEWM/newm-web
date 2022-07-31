@@ -15,7 +15,7 @@ export const UnclaimedRoyalties = ({
         backgroundColor: theme.colors.grey600,
         padding: 2.5,
         maxWidth: "400px",
-        height: "100px",
+        minHeight: "100px",
         borderRadius: "8px",
         display: "flex",
         justifyContent: "space-between",
