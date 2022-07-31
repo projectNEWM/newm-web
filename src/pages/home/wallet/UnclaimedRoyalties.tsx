@@ -1,5 +1,5 @@
-import { Box, Button } from "@mui/material";
-import { Typography, OutlinedButtonNoGradient } from "elements";
+import { Box } from "@mui/material";
+import { OutlinedButtonNoGradient, Typography } from "elements";
 import theme from "theme";
 
 interface UnclaimedRoyaltiesProps {
