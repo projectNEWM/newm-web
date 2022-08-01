@@ -2,10 +2,9 @@ import { FunctionComponent, useState } from "react";
 import { Box, Container } from "@mui/material";
 import { TableSkeleton, Typography } from "elements";
 import { SearchBox } from "components";
-import { useWindowDimensions } from "common";
+import { Owner, mockOwnersData, useWindowDimensions } from "common";
 import theme from "theme";
 import OwnersTable from "./OwnersTable";
-import mockOwnersData, { Owner } from "./mockOwnersData";
 import NoOwnersYet from "./NoOwnersYet";
 
 const Owners: FunctionComponent = () => {

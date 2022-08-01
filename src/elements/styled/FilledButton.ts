@@ -2,17 +2,30 @@ import { Button, ButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "theme";
 
-const FilledButton = styled(Button)<ButtonProps>`
-  background: ${theme.gradients.artist};
-  border-radius: 7px;
-  font-size: ${theme.button.fontSize};
-  font-weight: ${theme.button.fontWeight};
-  line-height: ${theme.button.lineHeight};
-  color: white;
-  font: ${theme.typography.button.font};
-  text-transform: none;
-  padding: 12px 16px;
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-`;
+interface FilledButtonProps extends ButtonProps {
+  backgroundColor?: string;
+  fontSize?: string;
+  fontWeight?: number;
+}
+
+const FilledButton = styled(Button)<FilledButtonProps>(
+  ({
+    backgroundColor = theme.gradients.artist,
+    fontSize = theme.button.fontSize,
+    fontWeight = theme.button.fontWeight,
+    disabled,
+  }) => ({
+    background: backgroundColor,
+    borderRadius: "7px",
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    lineHeight: theme.button.lineHeight,
+    color: "white",
+    font: theme.typography.button.font,
+    textTransform: "none",
+    padding: "12px 16px",
+    opacity: disabled ? 0.5 : 1,
+  })
+);
 
 export default FilledButton;
