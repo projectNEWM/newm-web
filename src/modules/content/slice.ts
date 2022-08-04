@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ContentState } from "./types";
-import api from "./api";
+import { isSuccessfulGetContentCall } from "./matchers";
 
 const initialState: ContentState = {
   // TEMP: Data is mocked until API data is available
@@ -50,7 +50,6 @@ const initialState: ContentState = {
     "Producer",
     "Recording Engineer",
   ],
-  errorMessage: "",
 };
 
 const contentSlice = createSlice({
@@ -59,16 +58,12 @@ const contentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      api.endpoints.getContent.matchFulfilled,
+      isSuccessfulGetContentCall,
       (state, { payload }) => {
         state.genres = payload.genres;
         state.roles = payload.roles;
       }
     );
-
-    builder.addMatcher(api.endpoints.getContent.matchRejected, (state) => {
-      state.errorMessage = "An error occured fetching content";
-    });
   },
 });
 

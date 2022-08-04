@@ -13,3 +13,11 @@ export const isFailedOAuthCall = isAnyOf(
   extendedApi.endpoints.facebookLogin.matchRejected,
   extendedApi.endpoints.linkedInLogin.matchRejected
 );
+
+export const isFailedLoginCall = isAnyOf(
+  extendedApi.endpoints.login.matchRejected
+);
+
+export const isFailedUpdateProfileCall = isAnyOf(
+  extendedApi.endpoints.updateProfile.matchRejected
+);

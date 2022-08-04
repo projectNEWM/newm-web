@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UIState } from "./types";
+import { isFailedGetContentCall } from "../content";
+import { isFailedLoginCall, isFailedOAuthCall, isFailedUpdateProfileCall } from "../session";
 
 const initialState: UIState = {
   toast: {
@@ -23,6 +25,38 @@ const uiSlice = createSlice({
       state.toast.message = payload.message;
       state.toast.severity = payload.severity;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(isFailedOAuthCall, (state, { payload }) => {
+      const errorMessage = payload?.status === 409 
+      ? "The email for this account is already in use"
+      : "An error occurred while logging in";
+      
+      state.toast.message = errorMessage;
+      state.toast.severity = "error";
+    });
+
+    builder.addMatcher(
+      isFailedLoginCall,
+      (state, { payload }) => {
+        const errorMessage = (payload?.status === 404 || payload?.status === 401)
+        ? "Incorrect login credentials"
+        : "An error occurred while logging in";
+
+        state.toast.message = errorMessage;
+        state.toast.severity = "error";
+      }
+    );
+
+    builder.addMatcher(isFailedUpdateProfileCall, (state) => {
+      state.toast.message = "An error occurred while updating your profile";
+      state.toast.severity = "error";
+    });
+
+    builder.addMatcher(isFailedGetContentCall, (state) => {
+      state.toast.message = "An error occured fetching content";
+      state.toast.severity = "error";
+    });
   },
 });
 
