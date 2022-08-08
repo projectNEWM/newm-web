@@ -16,8 +16,7 @@ import { Box } from "@mui/system";
 import SkeletonTable from "elements/skeletons/TableSkeleton";
 
 const TransactionsList: FunctionComponent = () => {
-  const { data = [], isSuccess } = mockTransactions;
-  const isLoading = false; 
+  const { data = [], isLoading, isSuccess } = mockTransactions;
   const transactionData: Transaction[] = data;
 
   const windowHeight = useWindowDimensions()?.height;
@@ -63,7 +62,7 @@ const TransactionsList: FunctionComponent = () => {
     >
       { transactionsByDate.map((transactions, idx) => (
         <Box key={ idx }>
-          <Typography fontWeight={ 600 } fontSize={ 12 } sx={ { pb: 1, pt: 4 } }>
+          <Typography fontWeight={ 600 } fontSize={ 12 } sx={ { pb: 1, pt: 4 } } align="left">
             { transactions[0].date.slice(4, 10).toUpperCase() }
           </Typography>
           <TransactionGroup transactions={ transactions } />
