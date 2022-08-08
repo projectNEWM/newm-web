@@ -5,7 +5,7 @@ import theme from "theme";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
-import Transactions from "./Transactions";
+import Transactions from "./TransactionsList";
 
 const Wallet: FunctionComponent = () => {
   return (
@@ -28,9 +28,9 @@ const Wallet: FunctionComponent = () => {
           WALLET
         </Typography>
         <FilledButton
-          sx={ { mr: [0,4.75], mb: 5 } }
+          sx={ { mr: [0, 4.75], mb: 5 } }
           backgroundColor={ theme.gradients.crypto }
-        >  
+        >
           Connect Wallet
         </FilledButton>
       </Box>
