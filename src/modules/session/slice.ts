@@ -31,6 +31,7 @@ const sessionSlice = createSlice({
       state.errorMessage = action.payload;
     },
     receiveRefreshToken: handleSuccessfulAuthentication,
+    receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
     logOut: handleLogout,
   },
   extraReducers: (builder) => {
@@ -71,7 +72,11 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { logOut, receiveRefreshToken, setSessionErrorMessage } =
-  sessionSlice.actions;
+export const {
+  logOut,
+  receiveRefreshToken,
+  receiveSuccessfullAuthentication,
+  setSessionErrorMessage,
+} = sessionSlice.actions;
 
 export default sessionSlice.reducer;

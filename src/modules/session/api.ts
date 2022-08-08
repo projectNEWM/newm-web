@@ -9,6 +9,8 @@ import {
   Request2FACode,
   UpdateProfileRequest,
 } from "./types";
+import { handleSocialLoginError } from "./utils";
+import { receiveSuccessfullAuthentication } from "./slice";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -26,6 +28,15 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch ({ error }) {
+          handleSocialLoginError(error, dispatch);
+        }
+      },
     }),
 
     facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
@@ -34,6 +45,15 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch ({ error }) {
+          handleSocialLoginError(error, dispatch);
+        }
+      },
     }),
 
     linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
@@ -42,6 +62,15 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch ({ error }) {
+          handleSocialLoginError(error, dispatch);
+        }
+      },
     }),
 
     getProfile: build.query<GetProfileResponse, void>({
