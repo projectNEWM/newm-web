@@ -57,7 +57,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
           { !!profile.pictureUrl && (
-            <ProfileImage src={ profile.pictureUrl } aria-label="profile image" />
+            <ProfileImage
+              src={ profile.pictureUrl }
+              aria-label="profile image"
+              referrerPolicy="no-referrer"
+            />
           ) }
 
           <Typography variant="h4" fontWeight={ 700 } align="center">
