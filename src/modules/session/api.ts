@@ -9,7 +9,7 @@ import {
   Request2FACode,
   UpdateProfileRequest,
 } from "./types";
-import { handleSocialLoginError } from "./utils";
+import { handleSocialLoginError } from "./thunks";
 import { receiveSuccessfullAuthentication } from "./slice";
 
 export const extendedApi = api.injectEndpoints({
@@ -34,7 +34,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          handleSocialLoginError(error, dispatch);
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),
@@ -51,7 +51,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          handleSocialLoginError(error, dispatch);
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),
@@ -68,7 +68,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          handleSocialLoginError(error, dispatch);
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),

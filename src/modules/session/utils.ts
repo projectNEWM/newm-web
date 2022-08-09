@@ -1,7 +1,6 @@
-import { AnyAction, PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import { setToastMessage } from "modules/ui";
 import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
@@ -31,21 +30,4 @@ export const handleLogout = (state: SessionState) => {
 
   state.isLoggedIn = false;
   state.errorMessage = "";
-};
-
-export const handleSocialLoginError = (
-  error: any, // eslint-disable-line
-  dispatch: ThunkDispatch<any, any, AnyAction> // eslint-disable-line
-) => {
-  const errorMessage =
-    error?.status === 409
-      ? "The email for this account is already in use"
-      : "An error occurred while logging in";
-
-  dispatch(
-    setToastMessage({
-      message: errorMessage,
-      severity: "error",
-    })
-  );
 };

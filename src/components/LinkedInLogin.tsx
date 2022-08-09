@@ -21,13 +21,15 @@ const LinkedInLogin: FunctionComponent = () => {
     clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
     redirectUri,
     scope: "r_liteprofile r_emailaddress",
-    onError: () => {
-      dispatch(
-        setToastMessage({
-          message: "Linkedin authentication was not successful.",
-          severity: "error",
-        })
-      );
+    onError: ({ error }) => {
+      if (error !== "user_closed_popup") {
+        dispatch(
+          setToastMessage({
+            message: "Linkedin authentication was not successful.",
+            severity: "error",
+          })
+        );
+      }
     },
     onSuccess: (code) => {
       dispatch(
