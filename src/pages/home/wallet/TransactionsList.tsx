@@ -22,14 +22,13 @@ const TransactionsList: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
   const windowWidth = useWindowDimensions()?.width;
   const [listHeight, setListHeight] = useState<number>();
+  const maxListWidth = 700;
 
   const listRef = useRef<HTMLDivElement>();
   const skeletonRef = useRef<HTMLDivElement>();
   const listYPos = listRef && listRef.current?.offsetTop;
   const skeletonYPos = listRef && skeletonRef.current?.offsetTop;
   const [skeletonRows, setSkeletonRows] = useState<number>(10);
-
-  const maxListWidth = 700;
 
 
   useEffect(() => {
@@ -42,15 +41,22 @@ const TransactionsList: FunctionComponent = () => {
   }, [windowHeight, listYPos, skeletonYPos]);
 
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const groupTransactionsBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
-    arr.reduce((transactionsByDate, item) => {
-      (transactionsByDate[key(item)] ||= []).push(item);
-      return transactionsByDate;
-    }, {} as Record<K, T[]>);
-
+  const groupTransactionsBy = (
+    transactions: Array<Transaction>,
+    key: keyof Transaction
+  ): Record<string, Array<Transaction>> => {
+    return transactions.reduce((result, item) => {
+      const group = item[key] as string;
+  
+      result[group] ||= [];
+      result[group].push(item);
+  
+      return result;
+    }, {} as Record<string, Array<Transaction>>);
+  };
+  
   const transactionsByDate = Object.values(
-    groupTransactionsBy(transactionData, (i) => i.date)
+    groupTransactionsBy(transactionData, "date")
   );
 
   return isSuccess && !isLoading ? (
