@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import api from "./api";
-import { isFailedOAuthCall, isSuccessfulAuthCall } from "./matchers";
 import { SessionState } from "./types";
 import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 
@@ -31,20 +30,14 @@ const sessionSlice = createSlice({
       state.errorMessage = action.payload;
     },
     receiveRefreshToken: handleSuccessfulAuthentication,
+    receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
     logOut: handleLogout,
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isSuccessfulAuthCall, handleSuccessfulAuthentication);
-
-    builder.addMatcher(isFailedOAuthCall, (state, { payload }) => {
-      if (payload?.status === 409) {
-        state.errorMessage =
-          "Please use the social account you originally signed in with";
-        return;
-      }
-
-      state.errorMessage = "An error occurred while logging in";
-    });
+    builder.addMatcher(
+      api.endpoints.login.matchFulfilled,
+      handleSuccessfulAuthentication
+    );
 
     builder.addMatcher(
       api.endpoints.login.matchRejected,
@@ -71,7 +64,11 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { logOut, receiveRefreshToken, setSessionErrorMessage } =
-  sessionSlice.actions;
+export const {
+  logOut,
+  receiveRefreshToken,
+  receiveSuccessfullAuthentication,
+  setSessionErrorMessage,
+} = sessionSlice.actions;
 
 export default sessionSlice.reducer;

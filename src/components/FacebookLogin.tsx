@@ -2,10 +2,8 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import {
-  extendedApi as sessionApi,
-  setSessionErrorMessage,
-} from "modules/session";
+import { extendedApi as sessionApi } from "modules/session";
+import { setToastMessage } from "modules/ui";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import FacebookLoginHelper, {
@@ -21,6 +19,13 @@ const FacebookLogin: FunctionComponent = () => {
     const accessToken = resp?.accessToken;
 
     if (!accessToken) {
+      dispatch(
+        setToastMessage({
+          message: "Facebook authentication service offline.",
+          severity: "error",
+        })
+      );
+
       return;
     }
 
@@ -29,7 +34,10 @@ const FacebookLogin: FunctionComponent = () => {
 
   const handleFacebookLoginFail = () => {
     dispatch(
-      setSessionErrorMessage("Facebook authentication was not successful")
+      setToastMessage({
+        message: "Facebook authentication was not successful.",
+        severity: "error",
+      })
     );
   };
 

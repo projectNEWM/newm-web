@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { extendedApi as sessionApi } from "./api";
 import { CreateAccountRequest, UpdateProfileRequest } from "./types";
@@ -64,5 +65,23 @@ export const createAccount = createAsyncThunk(
     }
 
     window.location.pathname = "create-profile";
+  }
+);
+
+export const handleSocialLoginError = createAsyncThunk(
+  "session/handleSocialLoginError",
+  // eslint-disable-next-line
+  async (error: any, thunkApi) => {
+    const errorMessage =
+      error?.status === 409
+        ? "The email for this account is already in use"
+        : "An error occurred while logging in";
+
+    thunkApi.dispatch(
+      setToastMessage({
+        message: errorMessage,
+        severity: "error",
+      })
+    );
   }
 );
