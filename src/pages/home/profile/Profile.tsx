@@ -102,6 +102,7 @@ const Profile: FunctionComponent = () => {
           alt="Profile picture"
           src={ pictureUrl }
           sx={ { marginBottom: 5 } }
+          referrerPolicy="no-referrer"
         />
       ) }
       <Formik
