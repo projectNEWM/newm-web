@@ -9,7 +9,7 @@ import {
   Request2FACode,
   UpdateProfileRequest,
 } from "./types";
-import { handleSocialLoginError } from "./thunks";
+import { handlelLoginError } from "./thunks";
 import { receiveSuccessfullAuthentication } from "./slice";
 
 export const extendedApi = api.injectEndpoints({
@@ -20,6 +20,15 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch ({ error }) {
+          dispatch(handlelLoginError(error));
+        }
+      },
     }),
 
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
@@ -34,7 +43,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handleSocialLoginError(error));
+          dispatch(handlelLoginError(error));
         }
       },
     }),
@@ -51,7 +60,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handleSocialLoginError(error));
+          dispatch(handlelLoginError(error));
         }
       },
     }),
@@ -68,7 +77,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handleSocialLoginError(error));
+          dispatch(handlelLoginError(error));
         }
       },
     }),

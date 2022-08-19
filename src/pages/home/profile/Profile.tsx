@@ -150,7 +150,7 @@ const Profile: FunctionComponent = () => {
                 <TextInputField
                   label="EMAIL"
                   name="email"
-                  placeholder="E-mail"
+                  placeholder="Email"
                   type="email"
                 />
                 <TextInputField

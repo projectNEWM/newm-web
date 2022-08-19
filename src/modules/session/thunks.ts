@@ -68,17 +68,29 @@ export const createAccount = createAsyncThunk(
   }
 );
 
-export const handleSocialLoginError = createAsyncThunk(
-  "session/handleSocialLoginError",
+export const handlelLoginError = createAsyncThunk(
+  "session/handlelLoginError",
   // eslint-disable-next-line
   async (error: any, thunkApi) => {
-    const errorMessage =
-      error?.status === 409
-        ? "The email for this account is already in use"
-        : "An error occurred while logging in";
+    let errorMessage;
+
+    switch (error?.status) {
+      case 401:
+        errorMessage = "The password is invalid";
+        break;
+      case 404:
+        errorMessage = "No account was found with the email provided";
+        break;
+      case 409:
+        errorMessage = "The email for this account is already in use";
+        break;
+      default:
+        errorMessage = "An error occurred while logging in";
+    }
 
     thunkApi.dispatch(
       setToastMessage({
+        heading: "Login",
         message: errorMessage,
         severity: "error",
       })

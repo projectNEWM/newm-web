@@ -11,6 +11,7 @@ import { setToastMessage } from "modules/ui";
 import { useDispatch } from "react-redux";
 import LinkedInIcon from "assets/images/LinkedInIcon";
 import { IconButton } from "@mui/material";
+import theme from "theme";
 
 const LinkedInLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const LinkedInLogin: FunctionComponent = () => {
       if (error !== "user_closed_popup") {
         dispatch(
           setToastMessage({
+            heading: "Linkedin",
             message: "Linkedin authentication was not successful.",
             severity: "error",
           })
@@ -42,7 +44,16 @@ const LinkedInLogin: FunctionComponent = () => {
   });
 
   return (
-    <IconButton onClick={ linkedInLogin } aria-label="linkedin authorization">
+    <IconButton
+      aria-label="linkedin authorization"
+      onClick={ linkedInLogin }
+      sx={ {
+        border: `2px solid ${theme.colors.white}`,
+        borderRadius: "4px",
+        height: "44px",
+        px: 4.5,
+      } }
+    >
       <LinkedInIcon />
     </IconButton>
   );

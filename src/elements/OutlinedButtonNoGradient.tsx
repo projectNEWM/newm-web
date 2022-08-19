@@ -14,6 +14,7 @@ export const OutlinedButtonNoGradient = ({
       sx={ {
         borderRadius: "4px",
         border: "2px solid #FFFFFF",
+        textTransform: "none",
         ...sx,
       } }
       variant="outlined"

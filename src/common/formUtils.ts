@@ -9,7 +9,7 @@ const passwordRequirementRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 export const commonYupValidation = {
   email: Yup.string()
     .email("Please enter a vaild email")
-    .required("E-mail is required"),
+    .required("Email is required"),
   firstName: Yup.string()
     .max(15, "Must be 15 characters or less")
     .required("First name is required"),
@@ -35,6 +35,7 @@ export const commonYupValidation = {
   nickname: Yup.string()
     .required("Stage name is required")
     .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
+  password: Yup.string().required("Password is required"),
   newPassword: Yup.string()
     .test(
       "is-trimmed",
