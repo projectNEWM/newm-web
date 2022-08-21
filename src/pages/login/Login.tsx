@@ -35,8 +35,8 @@ const Login: FunctionComponent = () => {
     setMaskPassword(!maskPassword);
   };
 
-  const handleLogin = ({ email, password }: FormikValues) => {
-    dispatch(sessionApi.endpoints.login.initiate({ email, password }));
+  const handleLogin = async ({ email, password }: FormikValues) => {
+    await dispatch(sessionApi.endpoints.login.initiate({ email, password }));
   };
 
   const handleForgotPassword = () => {
@@ -68,7 +68,7 @@ const Login: FunctionComponent = () => {
         onSubmit={ handleLogin }
         validationSchema={ validationSchema }
       >
-        { ({ isValid, values: { password } }) => (
+        { ({ isValid, values: { password }, isSubmitting }) => (
           <Form style={ { textAlign: "center", width: "100%" } }>
             <Stack
               display="inline-flex"
@@ -92,7 +92,7 @@ const Login: FunctionComponent = () => {
               />
 
               <FilledButton
-                disabled={ !isValid }
+                disabled={ !isValid || isSubmitting }
                 style={ { marginBottom: "20px" } }
                 type="submit"
               >

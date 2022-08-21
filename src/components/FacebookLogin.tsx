@@ -34,21 +34,10 @@ const FacebookLogin: FunctionComponent = () => {
     dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
   };
 
-  const handleFacebookLoginFail = () => {
-    dispatch(
-      setToastMessage({
-        heading: "Facebook",
-        message: "Facebook authentication was not successful.",
-        severity: "error",
-      })
-    );
-  };
-
   return (
     <FacebookLoginHelper
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       onSuccess={ handleFacebookLoginSuccess }
-      onFail={ handleFacebookLoginFail }
       render={ ({ onClick }) => (
         <IconButton
           aria-label="facebook authorization"

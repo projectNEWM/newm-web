@@ -39,16 +39,6 @@ const GoogleLogin: FunctionComponent = () => {
     dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
   };
 
-  const handleGoogleRespFailure = () => {
-    dispatch(
-      setToastMessage({
-        heading: "Google",
-        message: "Google authentication was not successful.",
-        severity: "error",
-      })
-    );
-  };
-
   return (
     <GoogleLoginHelper
       clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID || "" }
@@ -68,7 +58,6 @@ const GoogleLogin: FunctionComponent = () => {
         </IconButton>
       ) }
       onSuccess={ handleGoogleRespSuccess }
-      onFailure={ handleGoogleRespFailure }
       redirectUri={ `${window.location.origin}${pathname}` }
       cookiePolicy={ "single_host_origin" }
     />
