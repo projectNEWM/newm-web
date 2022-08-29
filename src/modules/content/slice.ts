@@ -50,26 +50,19 @@ const initialState: ContentState = {
     "Producer",
     "Recording Engineer",
   ],
-  errorMessage: "",
 };
 
 const contentSlice = createSlice({
   initialState,
   name: "content",
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      api.endpoints.getContent.matchFulfilled,
-      (state, { payload }) => {
-        state.genres = payload.genres;
-        state.roles = payload.roles;
-      }
-    );
-
-    builder.addMatcher(api.endpoints.getContent.matchRejected, (state) => {
-      state.errorMessage = "An error occured fetching content";
-    });
+  reducers: {
+    receiveContent(state, { payload }) {
+      state.genres = payload.genres;
+      state.roles = payload.roles;
+    },
   },
 });
+
+export const { receiveContent } = contentSlice.actions;
 
 export default contentSlice.reducer;

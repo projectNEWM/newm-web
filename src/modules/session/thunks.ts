@@ -42,6 +42,10 @@ export const getInitialData = createAsyncThunk(
   }
 );
 
+/**
+ * Create a user account. Navigate to the create profile flow
+ * so the user can enter their profile information.
+ */
 export const createAccount = createAsyncThunk(
   "session/createAccount",
   async (body: CreateAccountRequest, { dispatch }) => {
