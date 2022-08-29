@@ -8,10 +8,10 @@ import { CreateAccountRequest, UpdateProfileRequest } from "./types";
  * Update the user's profile and navigate to
  * the home page if successful.
  */
-export const updateProfile = createAsyncThunk(
-  "session/updateProfile",
-  async (body: UpdateProfileRequest, thunkApi) => {
-    const response = await thunkApi.dispatch(
+export const updateInitialProfile = createAsyncThunk(
+  "session/updateInitialProfile",
+  async (body: UpdateProfileRequest, { dispatch }) => {
+    const response = await dispatch(
       sessionApi.endpoints.updateProfile.initiate(body)
     );
 
@@ -29,10 +29,10 @@ export const updateProfile = createAsyncThunk(
  */
 export const getInitialData = createAsyncThunk(
   "session/getInitialData",
-  async (_, thunkApi) => {
-    thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+  async (_, { dispatch }) => {
+    dispatch(songApi.endpoints.getSongs.initiate());
 
-    const profileResponse = await thunkApi.dispatch(
+    const profileResponse = await dispatch(
       sessionApi.endpoints.getProfile.initiate()
     );
 
@@ -44,8 +44,8 @@ export const getInitialData = createAsyncThunk(
 
 export const createAccount = createAsyncThunk(
   "session/createAccount",
-  async (body: CreateAccountRequest, thunkApi) => {
-    const createAccountResponse = await thunkApi.dispatch(
+  async (body: CreateAccountRequest, { dispatch }) => {
+    const createAccountResponse = await dispatch(
       sessionApi.endpoints.createAccount.initiate(body)
     );
 
@@ -53,7 +53,7 @@ export const createAccount = createAsyncThunk(
       return;
     }
 
-    const loginResponse = await thunkApi.dispatch(
+    const loginResponse = await dispatch(
       sessionApi.endpoints.login.initiate({
         email: body.email,
         password: body.newPassword,
@@ -71,13 +71,13 @@ export const createAccount = createAsyncThunk(
 export const handleSocialLoginError = createAsyncThunk(
   "session/handleSocialLoginError",
   // eslint-disable-next-line
-  async (error: any, thunkApi) => {
+  async (error: any, { dispatch }) => {
     const errorMessage =
       error?.status === 409
         ? "The email for this account is already in use"
         : "An error occurred while logging in";
 
-    thunkApi.dispatch(
+    dispatch(
       setToastMessage({
         message: errorMessage,
         severity: "error",
