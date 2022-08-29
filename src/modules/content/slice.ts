@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ContentState } from "./types";
-import api from "./api";
 
 const initialState: ContentState = {
   // TEMP: Data is mocked until API data is available
