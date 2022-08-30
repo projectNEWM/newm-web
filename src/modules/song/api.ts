@@ -1,4 +1,5 @@
 import api, { CloudinaryUploadParams } from "api";
+import { setToastMessage } from "modules/ui";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
@@ -12,6 +13,19 @@ export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSongs: build.query<GetSongsResponse, void>({
       query: () => "v1/songs",
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching songs",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     uploadSong: build.mutation<UploadSongResponse, UploadSongRequest>({
       query: (body) => ({
@@ -19,6 +33,19 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     getCloudinarySignature: build.mutation<
       CloudinarySignatureResponse,
@@ -29,6 +56,19 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error while uploading your image",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
     getAudioUploadUrl: build.mutation<
       AudioUploadUrlResponse,
@@ -39,6 +79,19 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
   }),
 });
