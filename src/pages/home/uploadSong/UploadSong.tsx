@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilledButton, HorizontalLine, Typography } from "elements";
+import { HorizontalLine, LoadingButton, Typography } from "elements";
 import { Box, Container, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
+import { selectIsLoading } from "modules/song";
 import { UploadSongFormValues, uploadSong } from "modules/song";
 import {
   DropdownSelectField,
@@ -19,6 +20,7 @@ const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
+  const isLoading = useSelector(selectIsLoading);
 
   const initialValues: UploadSongFormValues = {
     image: undefined,
@@ -151,15 +153,7 @@ const UploadSong: FunctionComponent = () => {
                 </Box>
 
                 <Box mt={ 5 }>
-                  <FilledButton
-                    type="submit"
-                    sx={ {
-                      maxWidth: ["340px", "340px", null],
-                      width: "100%",
-                    } }
-                  >
-                    Upload
-                  </FilledButton>
+                  <LoadingButton label="Upload" isLoading={ isLoading } />
                 </Box>
               </Stack>
             </Form>

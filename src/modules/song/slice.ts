@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uploadSong } from "./thunks";
 import { SongState } from "./types";
 
 const initialState: SongState = {
   songs: [],
+  isLoading: false,
 };
 
 const songSlice = createSlice({
@@ -12,6 +14,18 @@ const songSlice = createSlice({
     receiveSongs(state, { payload }) {
       state.songs = payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadSong.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadSong.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(uploadSong.rejected, (state) => {
+        state.isLoading = false;
+      });
   },
 });
 
