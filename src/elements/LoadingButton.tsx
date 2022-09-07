@@ -1,5 +1,5 @@
-import LoadingSpinner from "assets/images/LoadingSpinner";
-import { SxProps } from "@mui/material";
+import { CircularProgress } from "@mui/material";
+import theme from "theme";
 import FilledButton from "./styled/FilledButton";
 
 interface LoadingButtonProps {
@@ -14,9 +14,18 @@ const LoadingButton = ({ label, isLoading = false }: LoadingButtonProps) => {
       sx={ {
         maxWidth: ["340px", "340px", null],
         minWidth: "100px",
+        minHeight: "44px",
       } }
     >
-      { isLoading ? <LoadingSpinner /> : label }
+      { isLoading ? (
+        <CircularProgress
+          disableShrink
+          sx={ { color: theme.colors.white } }
+          size={ 20 }
+        />
+      ) : (
+        label
+      ) }
     </FilledButton>
   );
 };
