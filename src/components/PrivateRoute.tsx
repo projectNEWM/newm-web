@@ -14,7 +14,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({ children }) => {
   return isLoggedIn ? (
     children
   ) : (
-    <Navigate to={ "/sign-up" } state={ { from: location } } replace />
+    <Navigate replace state={ { from: location } } to={ "/login" } />
   );
 };
 

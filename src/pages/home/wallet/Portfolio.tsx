@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { SongRoyalties, mockSongRoyalties } from "common";
-import { Box, CircularProgress  } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import AllCaughtUp from "./AllCaughtUp";
 import SongRoyaltiesList from "./SongRoyaltiesList";
 
@@ -48,7 +48,9 @@ const Portfolio: FunctionComponent = () => {
     }
   };
   return (
-    <Box paddingTop={ 2 }>{ renderContent(isLoading, isSuccess, songRoyalties) }</Box>
+    <Box paddingTop={ 2 }>
+      { renderContent(isLoading, isSuccess, songRoyalties) }
+    </Box>
   );
 };
 

@@ -7,10 +7,10 @@
 import { FunctionComponent } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";
-import { setToastMessage } from "modules/ui";
 import { useDispatch } from "react-redux";
 import LinkedInIcon from "assets/images/LinkedInIcon";
 import { IconButton } from "@mui/material";
+import theme from "theme";
 
 const LinkedInLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -21,16 +21,6 @@ const LinkedInLogin: FunctionComponent = () => {
     clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
     redirectUri,
     scope: "r_liteprofile r_emailaddress",
-    onError: ({ error }) => {
-      if (error !== "user_closed_popup") {
-        dispatch(
-          setToastMessage({
-            message: "Linkedin authentication was not successful.",
-            severity: "error",
-          })
-        );
-      }
-    },
     onSuccess: (code) => {
       dispatch(
         sessionApi.endpoints.linkedInLogin.initiate({
@@ -42,7 +32,16 @@ const LinkedInLogin: FunctionComponent = () => {
   });
 
   return (
-    <IconButton onClick={ linkedInLogin } aria-label="linkedin authorization">
+    <IconButton
+      aria-label="linkedin authorization"
+      onClick={ linkedInLogin }
+      sx={ {
+        border: `2px solid ${theme.colors.white}`,
+        borderRadius: "4px",
+        height: "44px",
+        px: 4.5,
+      } }
+    >
       <LinkedInIcon />
     </IconButton>
   );

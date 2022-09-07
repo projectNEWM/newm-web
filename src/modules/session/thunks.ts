@@ -79,10 +79,11 @@ export const handleSocialLoginError = createAsyncThunk(
     const errorMessage =
       error?.status === 409
         ? "The email for this account is already in use"
-        : "An error occurred while logging in";
+        : "Email or password is incorrect";
 
     dispatch(
       setToastMessage({
+        heading: "Login",
         message: errorMessage,
         severity: "error",
       })
