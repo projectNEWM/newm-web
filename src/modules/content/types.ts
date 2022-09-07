@@ -1,7 +1,6 @@
 export interface ContentState {
   genres: Array<string>;
   roles: Array<string>;
-  errorMessage: string;
 }
 
 export interface ContentResponse {

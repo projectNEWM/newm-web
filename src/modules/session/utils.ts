@@ -21,7 +21,6 @@ export const handleSuccessfulAuthentication = (
   Cookies.set("refreshToken", refreshToken, { expires: refreshTokenExpDate });
 
   state.isLoggedIn = true;
-  state.errorMessage = "";
 };
 
 export const handleLogout = (state: SessionState) => {
@@ -29,5 +28,4 @@ export const handleLogout = (state: SessionState) => {
   Cookies.remove("refreshToken");
 
   state.isLoggedIn = false;
-  state.errorMessage = "";
 };

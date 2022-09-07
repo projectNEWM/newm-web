@@ -3,6 +3,5 @@ import { mockProfile } from "./mockProfile";
 
 export const mockSession: SessionState = {
   isLoggedIn: true,
-  errorMessage: "",
   profile: mockProfile,
 };

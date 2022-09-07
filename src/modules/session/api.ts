@@ -1,5 +1,6 @@
 import api from "api";
 import { EmptyResponse } from "common";
+import { setToastMessage } from "modules/ui";
 import {
   CreateAccountRequest,
   GetProfileResponse,
@@ -9,8 +10,8 @@ import {
   Request2FACode,
   UpdateProfileRequest,
 } from "./types";
-import { handlelLoginError } from "./thunks";
-import { receiveSuccessfullAuthentication } from "./slice";
+import { handleSocialLoginError } from "./thunks";
+import { receiveProfile, receiveSuccessfullAuthentication } from "./slice";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -25,8 +26,19 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
-        } catch ({ error }) {
-          dispatch(handlelLoginError(error));
+          // eslint-disable-next-line
+        } catch (resp: any) {
+          const errorMessage =
+            "error" in resp && resp.error?.status === 403
+              ? "Invalid username or password"
+              : "An error occurred while logging in";
+
+          dispatch(
+            setToastMessage({
+              message: errorMessage,
+              severity: "error",
+            })
+          );
         }
       },
     }),
@@ -43,7 +55,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handlelLoginError(error));
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),
@@ -60,7 +72,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handlelLoginError(error));
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),
@@ -77,7 +89,7 @@ export const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
         } catch ({ error }) {
-          dispatch(handlelLoginError(error));
+          dispatch(handleSocialLoginError(error));
         }
       },
     }),
@@ -87,6 +99,20 @@ export const extendedApi = api.injectEndpoints({
         url: "v1/users/me",
         method: "GET",
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveProfile(data));
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error fetching your profile data",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
 
     updateProfile: build.mutation<EmptyResponse, UpdateProfileRequest>({
@@ -95,6 +121,20 @@ export const extendedApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveProfile(data));
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error updating your profile",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
 
     sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
@@ -103,6 +143,19 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params: { email },
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while sending the verification email",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
 
     createAccount: build.mutation<EmptyResponse, CreateAccountRequest>({
@@ -111,6 +164,19 @@ export const extendedApi = api.injectEndpoints({
         method: "PUT",
         body,
       }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while creating your account",
+              severity: "error",
+            })
+          );
+        }
+      },
     }),
   }),
 });
