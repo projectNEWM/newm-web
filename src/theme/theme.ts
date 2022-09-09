@@ -21,11 +21,11 @@ declare module "@mui/material/styles" {
     };
     gradients: {
       company: string;
-      artist: string;
-      magazine: string;
-      product: string;
-      partners: string;
       crypto: string;
+      magazine: string;
+      music: string;
+      newm: string;
+      partners: string;
     };
     inputField: {
       borderWidth: string;
@@ -65,11 +65,11 @@ declare module "@mui/material/styles" {
     };
     gradients?: {
       company?: string;
-      artist?: string;
-      magazine?: string;
-      product?: string;
-      partners?: string;
       crypto?: string;
+      magazine?: string;
+      music?: string;
+      newm?: string;
+      partners?: string;
     };
     inputField?: {
       fontFamily?: string;
@@ -124,22 +124,49 @@ declare module "@mui/material/Typography" {
   }
 }
 
+/* TODO:
+- Get clarification on old palette color maps to new
+- Replace the usages of the removed colors
+- Search for custom colors in our app and replace (icon svg too)
+- Get thoughts on the following name changes:
+    Green -> Success
+    Red -> Error
+    Yellow -> Warning
+    Blue -> info
+- Look for colors to replace to ask design
+- Talk to design about what color replaces what?
+- Modify old Theme types to fit new design palette
+*/
+
+// REMOVED THE FOLLOWING FROM COLORS
+  // black100: "#0A0A0A",
+  // orange: "#FF9900",
+  // purple: "#CC33CC",
 const colors = {
-  blue: "#0099CC",
-  purple: "#CC33CC",
-  red: "#FF3366",
-  orange: "#FF9900",
-  yellow: "#FFFF66",
-  green: "#66FF66",
-  white: "#FFFFFF",
+  black: "#000000",
+  blue: "#3985F7",
+  green: "#68CD67",
   grey100: "#8E8E93",
   grey200: "#636366",
   grey300: "#48484A",
   grey400: "#2C2C2E",
   grey500: "#1C1C1E",
   grey600: "#121214",
-  black: "#000000",
-  black100: "#0A0A0A",
+  grey700: "#0A0A0A",
+  red: "",
+  white: "#FFFFFF",
+  yellow: "#F9D74A",
+  baseYellow: "#FFC33C",
+  baseOrange: "#FF6E32",
+  basePink: "#F53C69",
+  basePurple: "#C341F0",
+  baseBlue: "#5091EB",
+  baseGreen: "#41BE91",
+  midPartners: "#FF9637",
+  midMagazine: "#FA554B",
+  midMusic: "#DC3CAA",
+  midCompany: "#8C69F0",
+  midCrypto: "#46AABE",
 };
 
 /**
@@ -148,12 +175,13 @@ const colors = {
 const theme = createTheme({
   colors,
   gradients: {
-    company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",
-    artist: "linear-gradient(53.48deg, #CC33CC 0%, #FF3366 100%);",
-    magazine: "linear-gradient(53.48deg, #FF3366 0%, #FFFF66 100%);",
-    product: "linear-gradient(53.48deg, #FF9900 0%, #FF3366 100%);",
-    partners: "linear-gradient(53.48deg, #FFFF66 0%, #FF9900 100%);",
-    crypto: "linear-gradient(53.48deg, #66FF66 0%, #0099CC 100%);",
+    company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%);",
+    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
+    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
+    music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%);",
+    // eslint-disable-next-line max-len
+    newm: "linear-gradient(45.38deg, #FFC33C 14.22%, #FF6E32 28.39%, #F53C69 42.57%, #C341F0 56.74%, #5091EB 70.91%, #41BE91 85.83%);",
+    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
   },
   breakpoints: {
     values: {
