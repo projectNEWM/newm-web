@@ -18,13 +18,13 @@ const TransactionsList: FunctionComponent = () => {
   const listRef = useRef<HTMLDivElement>();
   const skeletonRef = useRef<HTMLDivElement>();
   const listYPos = listRef && listRef.current?.offsetTop;
-  const skeletonYPos = listRef && skeletonRef.current?.offsetTop;
+  const skeletonYPos = skeletonRef && skeletonRef.current?.offsetTop;
   const [skeletonRows, setSkeletonRows] = useState<number>(10);
 
   useEffect(() => {
     setListHeight(windowHeight && listYPos ? windowHeight - listYPos : 550);
     setSkeletonRows(
-      windowHeight && !isNaN(windowHeight) && skeletonYPos
+      windowHeight && skeletonYPos
         ? Math.floor((windowHeight - skeletonYPos - 200) / 50)
         : 10
     );
