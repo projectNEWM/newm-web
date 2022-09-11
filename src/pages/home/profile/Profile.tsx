@@ -11,7 +11,7 @@ import { Container, Stack } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation } from "common";
 import { selectContent } from "modules/content";
-import { selectSession, updateProfile } from "modules/session";
+import { selectSession, extendedApi as sessionApi } from "modules/session";
 import * as Yup from "yup";
 
 const Profile: FunctionComponent = () => {
@@ -82,7 +82,7 @@ const Profile: FunctionComponent = () => {
       }),
     };
 
-    dispatch(updateProfile({ ...updatedValues }));
+    dispatch(sessionApi.endpoints.updateProfile.initiate({ ...updatedValues }));
   };
 
   return (
@@ -150,7 +150,7 @@ const Profile: FunctionComponent = () => {
                 <TextInputField
                   label="EMAIL"
                   name="email"
-                  placeholder="E-mail"
+                  placeholder="Email"
                   type="email"
                 />
                 <TextInputField

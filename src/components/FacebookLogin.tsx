@@ -11,6 +11,7 @@ import FacebookLoginHelper, {
 } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "assets/images/FacebookIcon";
 import { IconButton } from "@mui/material";
+import theme from "theme";
 
 const FacebookLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const FacebookLogin: FunctionComponent = () => {
     if (!accessToken) {
       dispatch(
         setToastMessage({
+          heading: "Facebook",
           message: "Facebook authentication service offline.",
           severity: "error",
         })
@@ -32,22 +34,21 @@ const FacebookLogin: FunctionComponent = () => {
     dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
   };
 
-  const handleFacebookLoginFail = () => {
-    dispatch(
-      setToastMessage({
-        message: "Facebook authentication was not successful.",
-        severity: "error",
-      })
-    );
-  };
-
   return (
     <FacebookLoginHelper
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       onSuccess={ handleFacebookLoginSuccess }
-      onFail={ handleFacebookLoginFail }
       render={ ({ onClick }) => (
-        <IconButton onClick={ onClick } aria-label="facebook authorization">
+        <IconButton
+          aria-label="facebook authorization"
+          onClick={ onClick }
+          sx={ {
+            border: `2px solid ${theme.colors.white}`,
+            borderRadius: "4px",
+            height: "44px",
+            px: 5,
+          } }
+        >
           <FacebookIcon />
         </IconButton>
       ) }

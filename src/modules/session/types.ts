@@ -1,7 +1,6 @@
 export interface SessionState {
   isLoggedIn: boolean;
   profile: Profile;
-  errorMessage: string;
 }
 
 export interface Profile {

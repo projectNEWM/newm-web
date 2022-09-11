@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { FormikValues } from "formik";
 import { Box, Container, useTheme } from "@mui/material";
-import { updateProfile } from "modules/session";
+import { updateInitialProfile } from "modules/session";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +46,7 @@ const CreateProfile: FunctionComponent = () => {
    * Submits the form when on the last route of the form.
    */
   const handleSubmit = (values: FormikValues) => {
-    dispatch(updateProfile({ ...values }));
+    dispatch(updateInitialProfile({ ...values }));
   };
 
   return (

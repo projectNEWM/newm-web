@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import api from "./api";
 import { SongState } from "./types";
 
 const initialState: SongState = {
@@ -9,15 +8,13 @@ const initialState: SongState = {
 const songSlice = createSlice({
   initialState,
   name: "song",
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      api.endpoints.getSongs.matchFulfilled,
-      (state, { payload }) => {
-        state.songs = payload;
-      }
-    );
+  reducers: {
+    receiveSongs(state, { payload }) {
+      state.songs = payload;
+    },
   },
 });
+
+export const { receiveSongs } = songSlice.actions;
 
 export default songSlice.reducer;
