@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { SongRoyalties, mockSongRoyalties, useWindowDimensions } from "common";
 import { Box } from "@mui/material";
@@ -13,6 +12,7 @@ const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
   const windowWidth = useWindowDimensions()?.width;
   const maxListWidth = 700;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const skeletonRef = useRef<any>();
   const skeletonYPos = skeletonRef && skeletonRef.current?.offsetTop;
   const [skeletonRows, setSkeletonRows] = useState<number>(10);
