@@ -12,6 +12,7 @@ import theme from "theme";
 import "./App.css";
 import { useEffect } from "react";
 import { ensureWallets } from "modules/wallet";
+import TokenDrop from "pages/tokenDrop/TokenDrop";
 import store from "./store";
 
 const App = () => {
@@ -28,31 +29,13 @@ const App = () => {
         <Background>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={ <Navigate to="home" replace /> } />
-
               <Route path="linkedin" element={ <LinkedInCallback /> } />
-
-              <Route path="login" element={ <Login /> } />
 
               <Route path="sign-up/*" element={ <SignUp /> } />
 
-              <Route
-                path="home/*"
-                element={
-                  <PrivateRoute>
-                    <Home />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="token-drop" element={ <TokenDrop /> } />
 
-              <Route
-                path="create-profile/*"
-                element={
-                  <PrivateRoute>
-                    <CreateProfile />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="*" element={ <Navigate to="token-drop" replace /> } />
             </Routes>
           </BrowserRouter>
         </Background>

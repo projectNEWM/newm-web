@@ -1,7 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { FilledButton, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
-import { useAuthenticatedRedirect } from "common";
 import { FormikValues, useFormikContext } from "formik";
 import {
   FacebookLogin,
@@ -22,8 +21,6 @@ const SignUp: FunctionComponent = () => {
   const togglePasswordMask = () => {
     setMaskPassword(!maskPassword);
   };
-
-  useAuthenticatedRedirect();
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
