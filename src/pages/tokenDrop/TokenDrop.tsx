@@ -1,13 +1,49 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, IconButton, Stack } from "@mui/material";
 import { FilledButton, Typography } from "elements";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
 import mursProfileImageLg from "assets/images/murs-profile-cut-tinified.png";
 import mursProfileImageSm from "assets/images/murs-profile-cropped.png";
+import mursProfileImageXs from "assets/images/murs-profile-small.png";
+import PlayIcon from "assets/images/PlayIcon";
+import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useWindowDimensions } from "common";
 
+const audio = new Audio(
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+);
+
 const TokenDrop: FunctionComponent = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const { width = 0 } = useWindowDimensions() || {};
+
+  const handlePlaySong = () => {
+    audio.play();
+  };
+
+  const handleStopSong = () => {
+    audio.pause();
+    audio.currentTime = 0;
+  };
+
+  useEffect(() => {
+    audio.addEventListener(
+      "play",
+      () => {
+        setIsPlaying(true);
+      },
+      false
+    );
+
+    audio.addEventListener(
+      "pause",
+      () => {
+        setIsPlaying(false);
+      },
+      false
+    );
+  }, []);
 
   return (
     <Box
@@ -80,7 +116,59 @@ const TokenDrop: FunctionComponent = () => {
             </Typography>
           </Stack>
 
-          <FilledButton>Buy</FilledButton>
+          <Stack spacing={ 2 } alignItems="flex-start">
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+              maxWidth={ 450 }
+            >
+              <Stack spacing={ 2 } direction="row" alignItems="center">
+                { isPlaying ? (
+                  <IconButton
+                    sx={ { padding: 3 } }
+                    aria-label="pause MURS song"
+                    onClick={ handleStopSong }
+                  >
+                    <PlayIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    sx={ { padding: 3 } }
+                    aria-label="play MURS song"
+                    onClick={ handlePlaySong }
+                  >
+                    <PlayIcon />
+                  </IconButton>
+                ) }
+
+                <img
+                  src={ mursProfileImageXs }
+                  style={ { width: 40, height: 40, borderRadius: "50%" } }
+                  alt="murs profile"
+                />
+
+                <Box>
+                  <Typography variant="h4" fontWeight={ 700 }>
+                    Break up
+                  </Typography>
+                  <Typography variant="subtitle2">Murs</Typography>
+                </Box>
+              </Stack>
+
+              <a
+                href="https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <SpotifyIcon />
+              </a>
+            </Box>
+
+            <FilledButton>Buy</FilledButton>
+          </Stack>
         </Box>
       </Container>
     </Box>

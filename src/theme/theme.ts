@@ -290,6 +290,14 @@ const theme = createTheme({
       lineHeight: "20px",
       color: colors.grey100,
     },
+    subtitle2: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "12px",
+      lineHeight: "16px",
+      color: colors.grey100,
+    },
 
     // custom font theme styles
     emphasized: {
