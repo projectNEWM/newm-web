@@ -82,4 +82,5 @@ export interface CreateAccountRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly role?: string;
+  readonly walletAddress?: string;
 }

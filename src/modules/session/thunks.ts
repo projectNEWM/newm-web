@@ -72,6 +72,26 @@ export const createAccount = createAsyncThunk(
   }
 );
 
+/**
+ * Create account for sample sale.
+ * Difference in this and `createAccount` is that it redirects user to congrats page and does not log them in.
+ * For sample sale, the wallet address is required for now, it is not a requirement `createAccount` yet.
+ */
+export const sampleSaleCreateAccount = createAsyncThunk(
+  "session/createAccount",
+  async (body: CreateAccountRequest, { dispatch }) => {
+    const createAccountResponse = await dispatch(
+      sessionApi.endpoints.createAccount.initiate(body)
+    );
+
+    if ("error" in createAccountResponse) {
+      return;
+    }
+
+    window.location.pathname = "sample-sale/congratulations";
+  }
+);
+
 export const handleSocialLoginError = createAsyncThunk(
   "session/handleSocialLoginError",
   // eslint-disable-next-line

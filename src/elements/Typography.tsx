@@ -7,6 +7,7 @@ import { FunctionComponent } from "react";
 
 export interface TypographyProps extends MuiTypogaphyProps {
   color?: keyof Theme["colors"];
+  component?: string;
 }
 
 /**

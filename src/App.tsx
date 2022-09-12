@@ -5,6 +5,8 @@ import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
 import CreateProfile from "pages/createProfile";
+import Congratulations from "pages/sampleSale/Congratulations";
+import SampleSale from "pages/sampleSale";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -35,6 +37,13 @@ const App = () => {
               <Route path="login" element={ <Login /> } />
 
               <Route path="sign-up/*" element={ <SignUp /> } />
+
+              <Route path="sample-sale/*" element={ <SampleSale /> } />
+
+              <Route
+                path="sample-sale/congratulations"
+                element={ <Congratulations /> }
+              />
 
               <Route
                 path="home/*"
