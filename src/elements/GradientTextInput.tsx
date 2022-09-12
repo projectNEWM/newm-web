@@ -73,11 +73,6 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   &:focus {
     outline: none;
   }
-
-  ${mdBreakpoint} {
-    font-size: ${mdBreakpointStyles.fontSize};
-    line-height: ${mdBreakpointStyles.lineHeight};
-  }
 `;
 
 const GradientTextInput: ForwardRefRenderFunction<

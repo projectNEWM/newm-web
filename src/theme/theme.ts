@@ -5,6 +5,7 @@ declare module "@mui/material/styles" {
     colors: {
       blue: string;
       purple: string;
+      pink: string;
       red: string;
       orange: string;
       yellow: string;
@@ -49,6 +50,7 @@ declare module "@mui/material/styles" {
     colors?: {
       blue?: string;
       purple?: string;
+      pink?: string;
       red?: string;
       orange?: string;
       yellow?: string;
@@ -127,6 +129,7 @@ declare module "@mui/material/Typography" {
 const colors = {
   blue: "#0099CC",
   purple: "#CC33CC",
+  pink: "#DC3CAA",
   red: "#FF3366",
   orange: "#FF9900",
   yellow: "#FFFF66",
@@ -158,7 +161,7 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 600,
+      sm: 680,
       md: 900,
       lg: 1060,
       xl: 1536,
@@ -297,23 +300,4 @@ const theme = createTheme({
   },
 });
 
-const { breakpoints } = theme;
-
-/**
- * Theme with responsive values using defined breakpoints
- */
-const responsiveTheme: Theme = {
-  ...theme,
-  typography: {
-    ...theme.typography,
-    h1: {
-      ...theme.typography.h1,
-      [breakpoints.down("md")]: {
-        fontSize: "32px",
-        lineHeight: "48px",
-      },
-    },
-  },
-};
-
-export default responsiveTheme;
+export default theme;
