@@ -33,7 +33,7 @@ const App = () => {
 
               <Route path="sign-up/*" element={ <SignUp /> } />
 
-              <Route path="token-drop" element={ <TokenDrop /> } />
+              <Route path="token-drop/*" element={ <TokenDrop /> } />
 
               <Route path="*" element={ <Navigate to="token-drop" replace /> } />
             </Routes>

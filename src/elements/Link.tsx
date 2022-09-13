@@ -5,20 +5,27 @@ import {
 } from "react-router-dom";
 import Typography, { TypographyProps } from "./Typography";
 
-type LinkProps = RouterLinkProps & TypographyProps;
+type DefaultProps = RouterLinkProps & TypographyProps;
+interface LinkProps extends DefaultProps {
+  readonly underline?: boolean;
+}
 
 const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
-  { to, replace, color = "white", sx, ...typographyProps },
+  { to, replace, color = "white", sx, underline = true, ...typographyProps },
   ref
 ) => {
   return (
-    <RouterLink to={ to } replace={ replace }>
+    <RouterLink
+      to={ to }
+      replace={ replace }
+      style={ { textDecoration: underline ? "underline" : "none" } }
+    >
       <Typography
         { ...typographyProps }
         ref={ ref }
         color={ color }
         sx={ {
-          textDecoration: "underline",
+          textDecoration: underline ? "underline" : "none",
           ...sx,
         } }
       />
