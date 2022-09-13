@@ -12,13 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Typography } from "elements";
 import { SongRoyalties, useWindowDimensions } from "common";
 import { TableDropdownSelect, TablePagination } from "components";
@@ -70,7 +64,7 @@ export default function SongRoyaltiesList({
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? Math.floor((windowHeight - tableYPos - footerHeight) / 48) // 48 = height of each row 
+        ? Math.floor((windowHeight - tableYPos - footerHeight) / 48) // 48 = height of each row
         : 8
     );
   }, [windowHeight, tableYPos]);
