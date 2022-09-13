@@ -10,8 +10,8 @@ import {
 import { useDispatch } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import { ErrorMessage } from "components";
-import AddOwner from "./AddOwner";
 import MintSongModal from "./MintSongModal";
+import AddOwner from "./AddOwner";
 
 const MintSong: FunctionComponent = () => {
   const theme = useTheme();

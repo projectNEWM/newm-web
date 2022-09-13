@@ -6,6 +6,7 @@ import mursProfileImageLg from "assets/images/murs-profile-cut-tinified.png";
 import mursProfileImageSm from "assets/images/murs-profile-cropped.png";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
+import NEWMLogo from "assets/images/NEWMLogo";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -16,11 +17,24 @@ const TokenDrop: FunctionComponent = () => {
   return (
     <Box
       sx={ {
+        display: "flex",
         backgroundColor: theme.colors.black100,
         flexDirection: "column",
         flexGrow: 1,
+        justifyContent: "space-between",
       } }
     >
+      <Box
+        sx={ {
+          display: ["none", "none", "flex"],
+          position: "absolute",
+          top: 32,
+          right: [0, 0, 32, 160],
+        } }
+      >
+        <NEWMLogo width={ 110 } height={ 110 } />
+      </Box>
+
       <Box
         sx={ {
           display: ["none", "none", "flex"],
@@ -80,7 +94,7 @@ const TokenDrop: FunctionComponent = () => {
         </Box>
       </Container>
 
-      <Box sx={ { position: "fixed", left: 0, bottom: 0, right: 0 } }>
+      <Box sx={ { mt: 8, position: "relative", zIndex: 999 } }>
         <Footer />
       </Box>
     </Box>

@@ -41,38 +41,45 @@ const Footer: FunctionComponent = () => {
 
   return (
     <Box
-      sx={ {
-        py: 2.25,
-        display: "flex",
-        backgroundColor: theme.colors.black100,
-        justifyContent: "space-around",
-        alignItems: "center",
-      } }
+      display={ ["flex", "flex", "block"] }
+      justifyContent={ ["center", "center", "space-between"] }
     >
-      { links.map(({ to, label, type }) =>
-        type === "router" ? (
-          <Link
-            key={ label }
-            to={ to }
-            sx={ { p: 0.5, fontWeight: 400 } }
-            underline={ false }
-          >
-            { label }
-          </Link>
-        ) : (
-          <a
-            href={ to }
-            style={ {
-              padding: "8px",
-              textDecoration: "none",
-              color: theme.colors.white,
-              fontWeight: 400,
-            } }
-          >
-            { label }
-          </a>
-        )
-      ) }
+      <Box
+        sx={ {
+          py: 2.25,
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
+          backgroundColor: theme.colors.black100,
+          justifyContent: "space-around",
+          alignItems: ["flex-start", "flex-start", "center"],
+        } }
+      >
+        { links.map(({ to, label, type }) =>
+          type === "router" ? (
+            <Link
+              key={ label }
+              to={ to }
+              sx={ { p: 0.5, fontWeight: 400 } }
+              underline={ false }
+            >
+              { label }
+            </Link>
+          ) : (
+            <a
+              key={ label }
+              href={ to }
+              style={ {
+                padding: "4px",
+                textDecoration: "none",
+                color: theme.colors.white,
+                fontWeight: 400,
+              } }
+            >
+              { label }
+            </a>
+          )
+        ) }
+      </Box>
     </Box>
   );
 };

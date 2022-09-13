@@ -15,16 +15,21 @@ const Landing: FunctionComponent = () => {
 
   const navigate = useNavigate();
 
+  const stopSong = () => {
+    audio.pause();
+    audio.currentTime = 0;
+  };
+
   const handlePlaySong = () => {
     audio.play();
   };
 
   const handleStopSong = () => {
-    audio.pause();
-    audio.currentTime = 0;
+    stopSong();
   };
 
   const handleNavigate = () => {
+    stopSong();
     navigate("payment");
   };
 
