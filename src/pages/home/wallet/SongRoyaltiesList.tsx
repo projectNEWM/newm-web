@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 
@@ -11,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Typography } from "elements";
 import { SongRoyalties, useWindowDimensions } from "common";
 import { TableDropdownSelect, TablePagination } from "components";
@@ -45,11 +46,12 @@ export default function SongRoyaltiesList({
   page,
   setPage,
 }: SongRoyaltiesListProps) {
-  const headerHeight = 430;
-  const footerHeight = 70;
-  const bottomPadding = 0;
-  const tableWidth = "700px";
+  const windowHeight = useWindowDimensions()?.height;
+  const tableRef = useRef<any>();
   const [rowsPerPage, setRowsPerPage] = useState(0);
+  const tableYPos = tableRef && tableRef.current?.getBoundingClientRect().y;
+  const footerHeight = 70;
+  const tableWidth = "700px";
   // Used to avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = songRoyalties
     ? page > 1
@@ -58,20 +60,14 @@ export default function SongRoyaltiesList({
     : 0;
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
 
-  // determines how many rows to display per page
-  const windowHeight = useWindowDimensions()?.height;
-
   // sets the # of rows per page depending on viewport height
   useEffect(() => {
     setRowsPerPage(
       windowHeight
-        ? Math.floor(
-            (windowHeight - headerHeight - footerHeight - bottomPadding) /
-              rowHeight
-          )
-        : 5
+        ? Math.floor((windowHeight - tableYPos - footerHeight) / 48) // 48 = height of each row
+        : 8
     );
-  }, [windowHeight, rowHeight]);
+  }, [windowHeight, tableYPos]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -115,7 +111,7 @@ export default function SongRoyaltiesList({
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody ref={ tableRef }>
               { songRoyalties
                 .slice(
                   (page - 1) * rowsPerPage,
