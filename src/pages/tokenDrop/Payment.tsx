@@ -192,8 +192,6 @@ const Payment: FunctionComponent = () => {
             </FilledButton>
           </Stack>
         </Box>
-
-        <HorizontalLine />
       </Stack>
     </Box>
   );

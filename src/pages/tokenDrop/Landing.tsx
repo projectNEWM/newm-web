@@ -7,16 +7,18 @@ import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
 import StopIcon from "assets/images/StopIcon";
 import { DisplayText, SectionHeading } from "components";
-import secretSong from "assets/audio/secret_song.mp3";
+
+const songUrl =
+  "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=" +
+  "Never+Gonna+Give+You+Up-+Original&filename=" +
+  "mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3";
 
 const Landing: FunctionComponent = () => {
-  const audio = useMemo(() => new Audio(secretSong), []);
-
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const navigate = useNavigate();
+  const audio = useMemo(() => new Audio(songUrl), []);
 
   const handlePlaySong = () => {
     audio.play();
