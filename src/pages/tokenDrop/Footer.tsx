@@ -49,7 +49,6 @@ const Footer: FunctionComponent = () => {
           py: 2.25,
           display: "flex",
           flexDirection: ["column", "column", "row"],
-          backgroundColor: theme.colors.black100,
           justifyContent: "space-around",
           alignItems: ["flex-start", "flex-start", "center"],
         } }

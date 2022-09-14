@@ -58,7 +58,7 @@ const Congratulations: FunctionComponent = () => {
               Congra-
             </Typography>
             <GradientTypography sx={ textStyles } variant="h1">
-              Wait for it-
+              wait for it-
             </GradientTypography>
             <Typography sx={ textStyles } variant="h1">
               lations!

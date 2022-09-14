@@ -103,7 +103,13 @@ const TokenDrop: FunctionComponent = () => {
           />
         </Box>
 
-        <Box sx={ { position: "relative", zIndex: 9999 } }>
+        <Box
+          sx={ {
+            position: "relative",
+            zIndex: 9999,
+            backgroundColor: theme.colors.black100,
+          } }
+        >
           <Footer />
         </Box>
       </Box>

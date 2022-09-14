@@ -9,9 +9,9 @@ import theme from "theme";
 import { useEffect } from "react";
 import { ensureWallets } from "modules/wallet";
 import TokenDrop from "pages/tokenDrop/TokenDrop";
+import ScrollToTopOnNavigation from "components/ScrollToTopOnNavigation";
 import store from "./store";
 import "./App.css";
-import ScrollToTopOnNavigation from "components/ScrollToTopOnNavigation";
 
 const App = () => {
   useEffect(() => {
