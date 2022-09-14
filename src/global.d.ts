@@ -3,6 +3,11 @@ declare module "*.png" {
   export = value;
 }
 
+declare module "*.mp3" {
+  const value: never;
+  export = value;
+}
+
 declare module "*.svg" {
   const value: never;
   export = value;

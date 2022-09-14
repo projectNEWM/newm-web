@@ -1,11 +1,15 @@
 import { useTheme } from "@mui/material";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, HTMLProps, ReactNode } from "react";
 
-interface DisplayTextProps {
+interface DisplayTextProps extends HTMLProps<HTMLDivElement> {
   readonly children: ReactNode;
 }
 
-const DisplayText: FunctionComponent<DisplayTextProps> = ({ children }) => {
+const DisplayText: FunctionComponent<DisplayTextProps> = ({
+  children,
+  style = {},
+  ...rest
+}) => {
   const theme = useTheme();
 
   return (
@@ -14,7 +18,9 @@ const DisplayText: FunctionComponent<DisplayTextProps> = ({ children }) => {
         fontSize: "30px",
         color: theme.colors.white,
         fontWeight: 700,
+        ...style,
       } }
+      { ...rest }
     >
       { children }
     </span>

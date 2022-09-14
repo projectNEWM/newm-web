@@ -1,14 +1,10 @@
-import { Button, SxProps } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 
-interface OutlinedButtonNoGradientProps {
-  sx?: SxProps;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any;
-}
 export const OutlinedButtonNoGradient = ({
-  sx = { minHeight: "35px", alignSelf: "center" },
+  sx,
   children,
-}: OutlinedButtonNoGradientProps) => {
+  ...rest
+}: ButtonProps) => {
   return (
     <Button
       sx={ {
@@ -19,6 +15,7 @@ export const OutlinedButtonNoGradient = ({
       } }
       variant="outlined"
       color="inherit"
+      { ...rest }
     >
       { children }
     </Button>

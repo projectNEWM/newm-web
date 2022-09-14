@@ -40,5 +40,6 @@ export { default as UploadSongField } from "./form/UploadSongField";
 export { default as TableDropdownSelect } from "./TableDropdownSelect";
 export { default as WizardForm } from "./form/WizardForm";
 export { default as TablePagination } from "./TablePagination";
-export { SearchBox } from "./SearchBox";
+export { default as SearchBox } from "./SearchBox";
 export { default as DisplayText } from "./tokenDrop/DisplayText";
+export { default as SectionHeading } from "./tokenDrop/SectionHeading";

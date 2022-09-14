@@ -14,12 +14,7 @@ const Footer: FunctionComponent = () => {
   const links: ReadonlyArray<Links> = [
     {
       to: "#",
-      label: "Terms of service",
-      type: "router",
-    },
-    {
-      to: "#",
-      label: "Disclaimer",
+      label: "Artist socials",
       type: "router",
     },
     {
@@ -29,12 +24,17 @@ const Footer: FunctionComponent = () => {
     },
     {
       to: "#",
-      label: "Website",
+      label: "NEWM.io",
       type: "web",
     },
     {
       to: "#",
-      label: "Artist socials",
+      label: "Disclaimer",
+      type: "router",
+    },
+    {
+      to: "#",
+      label: "Terms of service",
       type: "router",
     },
   ];

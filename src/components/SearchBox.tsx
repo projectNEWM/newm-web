@@ -8,6 +8,7 @@ interface SearchBoxProps {
   onSearch: (searched: string) => void;
   placeholder?: string;
 }
+
 export const SearchBox = ({
   query,
   onSearch,

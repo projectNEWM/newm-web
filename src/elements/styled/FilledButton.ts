@@ -25,6 +25,9 @@ const FilledButton = styled(Button)<FilledButtonProps>(
     textTransform: "none",
     padding: "12px 16px",
     opacity: disabled ? 0.5 : 1,
+    "&:hover": {
+      background: backgroundColor,
+    },
   })
 );
 

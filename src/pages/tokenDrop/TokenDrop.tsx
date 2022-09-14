@@ -10,13 +10,15 @@ import NEWMLogo from "assets/images/NEWMLogo";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
+import Congratulations from "./Congratulations";
 
 const TokenDrop: FunctionComponent = () => {
-  const { width = 0 } = useWindowDimensions() || {};
+  const window = useWindowDimensions();
 
   return (
     <Box
       sx={ {
+        position: "relative",
         display: "flex",
         backgroundColor: theme.colors.black100,
         flexDirection: "column",
@@ -37,22 +39,6 @@ const TokenDrop: FunctionComponent = () => {
 
       <Box
         sx={ {
-          display: ["none", "none", "flex"],
-          position: "fixed",
-          bottom: 0,
-          right: 0,
-          height: ["100%", "100%", width * 0.5, "100%"],
-        } }
-      >
-        <img
-          alt="murs profile"
-          src={ mursProfileImageLg }
-          style={ { height: "100%" } }
-        />
-      </Box>
-
-      <Box
-        sx={ {
           display: ["flex", "flex", "none"],
         } }
       >
@@ -66,12 +52,12 @@ const TokenDrop: FunctionComponent = () => {
       <Container maxWidth={ false }>
         <Box
           width={ ["100%", "100%", "60%"] }
-          maxWidth="680px"
-          paddingTop={ [4, 4, 12] }
+          maxWidth={ [9999, 9999, 680] }
+          paddingTop={ [4, 4, 6] }
           paddingLeft={ [1, 1, 10] }
           paddingRight={ [1, 1, 0] }
         >
-          <Stack spacing={ 1 } sx={ { marginBottom: 4 } }>
+          <Stack spacing={ 1 } sx={ { marginBottom: 1 } }>
             <Typography variant="h1" fontSize={ 100 } lineHeight="80px">
               MURS
             </Typography>
@@ -88,14 +74,38 @@ const TokenDrop: FunctionComponent = () => {
           <Routes>
             <Route path="" element={ <Landing /> } />
             <Route path="payment" element={ <Purchase /> } />
+            <Route path="congratulations" element={ <Congratulations /> } />
 
             <Route path="*" element={ <Navigate to="" replace /> } />
           </Routes>
         </Box>
       </Container>
 
-      <Box sx={ { mt: 8, position: "relative", zIndex: 999 } }>
-        <Footer />
+      <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
+        <Box
+          sx={ {
+            display: ["none", "none", "block"],
+            position: "fixed",
+            bottom: 0,
+            right: 0,
+            height: [
+              window.height,
+              window.height,
+              window.width * 0.5,
+              window.height,
+            ],
+          } }
+        >
+          <img
+            alt="murs profile"
+            src={ mursProfileImageLg }
+            style={ { height: "100%" } }
+          />
+        </Box>
+
+        <Box sx={ { position: "relative", zIndex: 9999 } }>
+          <Footer />
+        </Box>
       </Box>
     </Box>
   );

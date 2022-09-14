@@ -8,13 +8,13 @@ import { WindowDimensions } from "./types";
 const hasWindow = typeof window !== "undefined";
 
 const getWindowDimensions = () => {
-  const width = hasWindow ? window.innerWidth : null;
-  const height = hasWindow ? window.innerHeight : null;
+  const width = hasWindow ? window.innerWidth : 0;
+  const height = hasWindow ? window.innerHeight : 0;
 
   return { height, width } as WindowDimensions;
 };
 
-export const useWindowDimensions = (): WindowDimensions | undefined => {
+export const useWindowDimensions = (): WindowDimensions => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );

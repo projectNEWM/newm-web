@@ -85,7 +85,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
   return (
     <Dialog { ...dialogProps }>
       <Stack spacing={ 2 } padding={ 3 } paddingBottom={ 2 }>
-        <Stack spacing={ 0.5 }>
+        <Stack spacing={ 1 }>
           <Typography variant="body2">{ modalContent.title }</Typography>
           <Typography variant="subtitle1">{ modalContent.subtitle }</Typography>
         </Stack>
