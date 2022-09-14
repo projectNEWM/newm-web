@@ -34,8 +34,9 @@ const Congratulations: FunctionComponent = () => {
         <Confetti
           width={ window.width }
           height={ window.height }
-          tweenDuration={ 10000 }
+          tweenDuration={ 1 }
           gravity={ 0.05 }
+          initialVelocityY={ 600 }
         />
       </Box>
 
