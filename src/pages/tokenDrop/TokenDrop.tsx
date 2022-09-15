@@ -108,6 +108,7 @@ const TokenDrop: FunctionComponent = () => {
             position: "relative",
             zIndex: 9999,
             backgroundColor: theme.colors.black100,
+            borderTop: `1px solid ${theme.colors.grey600}`,
           } }
         >
           <Footer />

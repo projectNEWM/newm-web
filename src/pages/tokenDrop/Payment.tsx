@@ -1,8 +1,9 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { DisplayText, SectionHeading } from "components";
+import { DisplayText, SectionHeading, TextInputField } from "components";
 import {
   AccentButton,
   FilledButton,
+  GradientCircularProgress,
   HorizontalLine,
   Typography,
 } from "elements";
@@ -17,9 +18,14 @@ import {
 } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastMessage } from "modules/ui";
-import { capitalize } from "common";
 import { useNavigate } from "react-router-dom";
+import { Form, Formik, FormikProps, FormikValues } from "formik";
+import CopyIcon from "assets/images/CopyIcon";
 import MintSongModal from "./MintSongModal";
+
+interface InitialFormValues {
+  readonly walletAddress: string;
+}
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();
@@ -27,16 +33,31 @@ const Payment: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  // placeholder for Redux state after submitting wallet address
+  const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
   const { walletName: selectedWallet } = useSelector(selectWallet);
+
+  const initialFormValues: InitialFormValues = {
+    walletAddress: "",
+  };
 
   const handleViewAlbumArt = () => {
     navigate("");
   };
 
-  const handlePurchase = () => {
+  const handleWalletPurchase = () => {
     navigate("../congratulations");
+  };
+
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert("Copied to clipboard: " + text);
+  };
+
+  const handleSubmitForm = (values: InitialFormValues) => {
+    // TEMP: placeholder functionality for submitting address to API
+    setIsAddressSubmitted(true);
   };
 
   /**
@@ -78,7 +99,7 @@ const Payment: FunctionComponent = () => {
         onConfirm={ handleSelectWallet }
       />
 
-      <Stack spacing={ 3 } direction="column" maxWidth={ [9999, 9999, 450] }>
+      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 450] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
             <SectionHeading>SONG</SectionHeading>
@@ -166,31 +187,78 @@ const Payment: FunctionComponent = () => {
             <SectionHeading>HOW TO PURCHASE</SectionHeading>
           </Box>
 
-          <Stack direction="column" spacing={ 3 }>
-            <AccentButton
-              onClick={ () => setIsModalOpen(true) }
-              onMouseEnter={ () => setIsButtonHovered(true) }
-              onMouseLeave={ () => setIsButtonHovered(false) }
-              fullWidth={ true }
-            >
-              { isButtonHovered && selectedWallet ? (
-                "Connect new wallet"
-              ) : selectedWallet ? (
-                <span>{ capitalize(selectedWallet) } wallet is connected</span>
-              ) : (
-                "Connect wallet"
-              ) }
-            </AccentButton>
+          <Stack direction="column" spacing={ 1 }>
+            { selectedWallet ? (
+              <FilledButton
+                backgroundColor={ theme.colors.pink }
+                onClick={ handleWalletPurchase }
+                fullWidth={ true }
+                disabled={ !selectedWallet }
+              >
+                Purchase with connected wallet
+              </FilledButton>
+            ) : (
+              <AccentButton
+                onClick={ () => setIsModalOpen(true) }
+                fullWidth={ true }
+              >
+                Connect wallet
+              </AccentButton>
+            ) }
 
-            <FilledButton
-              backgroundColor={ theme.colors.pink }
-              onClick={ handlePurchase }
-              fullWidth={ true }
-              disabled={ !selectedWallet }
+            <Typography variant="subtitle1" fontSize={ 16 }>
+              or
+            </Typography>
+
+            <Formik
+              initialValues={ initialFormValues }
+              onSubmit={ handleSubmitForm }
             >
-              Complete purchase
-            </FilledButton>
+              { ({ values }: FormikProps<FormikValues>) => (
+                <Form>
+                  <Stack direction="row" spacing={ 1.5 }>
+                    <TextInputField
+                      name="walletAddress"
+                      widthType="full"
+                      placeholder="Enter your wallet address"
+                      disabled={ isAddressSubmitted }
+                      value={ isAddressSubmitted ? "EXAMPLE_ADDRESS" : undefined }
+                    />
+
+                    { isAddressSubmitted ? (
+                      <AccentButton
+                        onClick={ () => handleCopyToClipboard("EXAMPLE_ADDRESS") }
+                      >
+                        <CopyIcon />
+                      </AccentButton>
+                    ) : (
+                      <AccentButton
+                        disabled={ !values.walletAddress }
+                        type="submit"
+                      >
+                        Submit
+                      </AccentButton>
+                    ) }
+                  </Stack>
+                </Form>
+              ) }
+            </Formik>
           </Stack>
+
+          { isAddressSubmitted && (
+            <Stack mt={ 3 } direction="row" spacing={ 2 } alignItems="center">
+              <GradientCircularProgress startColor="pink" endColor="purple" />
+
+              <Stack direction="column" spacing={ 1 }>
+                <Typography>Waiting to receive payment...</Typography>
+                <Typography variant="subtitle2">
+                  You have { "{TIME_REMAINING}" } to complete your purchase, using
+                  the payment address above. Processing may take several minutes
+                  once purchase is complete.
+                </Typography>
+              </Stack>
+            </Stack>
+          ) }
         </Box>
       </Stack>
     </Box>

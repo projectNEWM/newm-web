@@ -21,3 +21,4 @@ export * from "./TextInput";
 export { default as TransparentButton } from "./styled/TransparentButton";
 export { default as OutlinedButtonNoGradient } from "./OutlinedButtonNoGradient";
 export { default as AccentButton } from "./styled/AccentButton";
+export { default as GradientCircularProgress } from "./GradientCircularProgress";

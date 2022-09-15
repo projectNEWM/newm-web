@@ -78,7 +78,7 @@ const Landing: FunctionComponent = () => {
       </Box>
 
       <Stack
-        spacing={ 3 }
+        spacing={ 2.5 }
         alignItems="flex-start"
         width="100%"
         maxWidth={ [9999, 9999, 450] }

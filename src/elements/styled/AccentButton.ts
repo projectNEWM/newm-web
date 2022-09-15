@@ -19,6 +19,9 @@ const AccentButton = styled(Button)<AccentButtonProps>`
   text-transform: none;
   padding: 12px 20px;
   transition: background-color 0ms;
+  &.Mui-disabled {
+    color: ${theme.colors.grey100};
+  }
   &:hover {
     background: ${theme.colors.grey500};
   }
