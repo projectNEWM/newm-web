@@ -14,7 +14,7 @@ const Footer: FunctionComponent = () => {
   const links: ReadonlyArray<Links> = [
     {
       to: "#",
-      label: "Artist socials",
+      label: "Artist Socials",
       type: "router",
     },
     {
@@ -34,7 +34,7 @@ const Footer: FunctionComponent = () => {
     },
     {
       to: "#",
-      label: "Terms of service",
+      label: "Terms of Service",
       type: "router",
     },
   ];
