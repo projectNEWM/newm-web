@@ -13,9 +13,7 @@ const Congratulations: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const window = useWindowDimensions();
-  const isMdScreen = useMediaQuery(
-    `(min-width:${theme.breakpoints.values.md}px)`
-  );
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const textStyles = {
     ...theme.typography.emphasized,
@@ -41,7 +39,7 @@ const Congratulations: FunctionComponent = () => {
       </Box>
 
       <Stack mt={ 8 } mb={ 6 } spacing={ 2 }>
-        { isMdScreen ? (
+        { isLargeScreen ? (
           <Typography
             variant="h1"
             color="orange"
@@ -74,7 +72,7 @@ const Congratulations: FunctionComponent = () => {
 
       <OutlinedButtonNoGradient
         onClick={ handleGoHome }
-        sx={ { width: isMdScreen ? "auto" : "100%" } }
+        sx={ { width: isLargeScreen ? "auto" : "100%" } }
       >
         Back to home
       </OutlinedButtonNoGradient>

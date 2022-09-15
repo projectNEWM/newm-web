@@ -219,6 +219,7 @@ const Payment: FunctionComponent = () => {
                   <Stack direction="row" spacing={ 1.5 }>
                     <TextInputField
                       name="walletAddress"
+                      autoComplete="off"
                       widthType="full"
                       placeholder="Enter your wallet address"
                       disabled={ isAddressSubmitted }

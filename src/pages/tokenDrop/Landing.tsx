@@ -127,7 +127,7 @@ const Landing: FunctionComponent = () => {
               <img
                 src={ mursProfileImageXs }
                 style={ { width: 40, height: 40, borderRadius: "50%" } }
-                alt="murs profile"
+                alt="MURS profile"
               />
 
               <Box>
@@ -141,7 +141,7 @@ const Landing: FunctionComponent = () => {
             <a
               href="https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <SpotifyIcon />
             </a>

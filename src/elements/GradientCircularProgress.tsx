@@ -33,7 +33,7 @@ const GradientCircularProgress: FunctionComponent<
       <CircularProgress
         thickness={ 4 }
         classes={ { circle: classes.circle } }
-        // { ...props }
+        { ...props }
       />
     </Box>
   );
