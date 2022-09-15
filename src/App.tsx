@@ -1,8 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Background, Toast } from "components";
-import SignUp from "pages/signUp";
-import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
@@ -28,10 +26,6 @@ const App = () => {
           <BrowserRouter>
             <ScrollToTopOnNavigation>
               <Routes>
-                <Route path="linkedin" element={ <LinkedInCallback /> } />
-
-                <Route path="sign-up/*" element={ <SignUp /> } />
-
                 <Route path="token-drop/*" element={ <TokenDrop /> } />
 
                 <Route
