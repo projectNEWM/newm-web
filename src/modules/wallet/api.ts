@@ -8,7 +8,7 @@ import { receiveAdaUsdRate } from "./slice";
 
 const apiKey = process.env.ALPHA_ADVANTAGE_API_KEY;
 
-export const extendedApi = api.injectEndpoints({
+const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAdaUsdRate: build.query<AdaUsdRateResponse, void>({
       query: () => ({
@@ -20,8 +20,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveAdaUsdRate(data));
-          // eslint-disable-next-line
-        } catch (resp) {
+        } catch (err) {
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching ADA price data",
@@ -32,7 +31,7 @@ export const extendedApi = api.injectEndpoints({
       },
 
       // eslint-disable-next-line
-      transformResponse: (response: any, meta, arg) => {
+      transformResponse: (response: any) => {
         // transform response to have camel case keys without leading number
         const transform = (val: string) => {
           return camelCase(removeFirstCharIfNumber(val));

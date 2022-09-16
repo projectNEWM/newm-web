@@ -10,6 +10,9 @@ const deepMap = (obj: object, mapper: (val: any) => any): any => {
   );
 };
 
+/**
+ * Maps all keys of an object using a given transform function.
+ */
 export const transformKeys = (
   record: object,
   // eslint-disable-next-line

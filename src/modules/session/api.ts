@@ -13,7 +13,7 @@ import {
 import { handleSocialLoginError } from "./thunks";
 import { receiveProfile, receiveSuccessfullAuthentication } from "./slice";
 
-export const extendedApi = api.injectEndpoints({
+const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation<NewmAuthResponse, LoginRequest>({
       query: (body) => ({

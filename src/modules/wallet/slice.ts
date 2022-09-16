@@ -20,9 +20,8 @@ const walletSlice = createSlice({
       const recentData = last(
         Object.values(action.payload.timeSeriesCrypto5Min)
       );
-      state.adaUsdRate = recentData
-        ? parseFloat(recentData["close"])
-        : undefined;
+
+      state.adaUsdRate = recentData ? parseFloat(recentData.close) : undefined;
     },
   },
 });

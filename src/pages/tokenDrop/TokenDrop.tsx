@@ -8,6 +8,7 @@ import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
+import { useGetSaleBundlesQuery } from "modules/sale";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -17,6 +18,7 @@ const TokenDrop: FunctionComponent = () => {
   const window = useWindowDimensions();
 
   useGetAdaUsdRateQuery();
+  useGetSaleBundlesQuery("6");
 
   return (
     <Box
