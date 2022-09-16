@@ -15,7 +15,6 @@ const walletSlice = createSlice({
       localStorage.setItem("walletName", action.payload);
       state.walletName = action.payload;
     },
-    // eslint-disable-next-line
     receiveAdaUsdRate(state, action: PayloadAction<AdaUsdRateResponse>) {
       const recentData = last(
         Object.values(action.payload.timeSeriesCrypto5Min)
