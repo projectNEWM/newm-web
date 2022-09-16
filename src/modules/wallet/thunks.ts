@@ -1,7 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setToastMessage } from "modules/ui";
+import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { RootState } from "store";
-import { setWalletIsLoading, setWalletName } from "./slice";
+import {
+  setWalletIsConnected,
+  setWalletIsLoading,
+  setWalletName,
+} from "./slice";
 import { ensureWallets } from "./utils";
 
 /**
@@ -18,6 +22,7 @@ export const enableConnectedWallet = createAsyncThunk(
 
     if (!walletName) {
       // wallet has not been connected before
+      dispatch(setWalletIsConnected(false));
       return;
     }
 
@@ -26,6 +31,7 @@ export const enableConnectedWallet = createAsyncThunk(
     if (!wallet) {
       // wallet was connected before but extension has been removed
       dispatch(setWalletName(""));
+      dispatch(setWalletIsConnected(false));
       return;
     }
 
@@ -40,6 +46,7 @@ export const enableConnectedWallet = createAsyncThunk(
       window.Wallets[walletName] = enabledWallet;
     }
 
+    dispatch(setWalletIsConnected(isConnected));
     dispatch(setWalletIsLoading(false));
   }
 );
@@ -59,6 +66,9 @@ export const enableWallet = createAsyncThunk(
 
       const enabledWallet = await wallet.enable();
       window.Wallets[walletName] = enabledWallet;
+
+      dispatch(setWalletIsConnected(true));
+      dispatch(setIsSelectWalletModalOpen(false));
     } catch (err) {
       if (err instanceof Error && err.message !== "user canceled connection") {
         dispatch(setToastMessage("Error occurred while enabling the wallet."));

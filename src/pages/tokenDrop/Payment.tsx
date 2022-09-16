@@ -13,13 +13,13 @@ import {
 } from "elements";
 import { FunctionComponent, useState } from "react";
 import mursProfileImageSm from "assets/images/murs-profile@60px.png";
-import { enableWallet, selectWallet, setWalletName } from "modules/wallet";
+import { selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
 import { useGetMursPrice } from "modules/sale";
-import MintSongModal from "./MintSongModal";
+import { setIsSelectWalletModalOpen } from "modules/ui";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -27,19 +27,16 @@ interface InitialFormValues {
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   // placeholder for Redux state after submitting transaction
   const [isTransactionSubmitted, setIsTransactionSubmitted] = useState(false);
   // placeholder for Redux state after submitting wallet address
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
   const bundlePrice = useGetMursPrice();
-  const { walletName, isLoading } = useSelector(selectWallet);
-
-  const enabledWallet = window.Wallets && window.Wallets[walletName];
+  const { isConnected, isLoading } = useSelector(selectWallet);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -47,6 +44,10 @@ const Payment: FunctionComponent = () => {
 
   const handleViewAlbumArt = () => {
     navigate("");
+  };
+
+  const handleOpenModal = () => {
+    dispatch(setIsSelectWalletModalOpen(true));
   };
 
   const handleWalletPurchase = () => {
@@ -64,23 +65,8 @@ const Payment: FunctionComponent = () => {
     setIsAddressSubmitted(true);
   };
 
-  /**
-   * Select a wallet and enable it.
-   */
-  const handleSelectWallet = async (walletName: string) => {
-    dispatch(setWalletName(walletName));
-    dispatch(enableWallet());
-    setIsModalOpen(false);
-  };
-
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
-      <MintSongModal
-        open={ isModalOpen }
-        onClose={ () => setIsModalOpen(false) }
-        onConfirm={ handleSelectWallet }
-      />
-
       <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 450] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
@@ -177,9 +163,9 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              { !enabledWallet ? (
+              { !isConnected ? (
                 <AccentButton
-                  onClick={ () => setIsModalOpen(true) }
+                  onClick={ handleOpenModal }
                   fullWidth={ true }
                   disabled={ isLoading }
                 >
@@ -190,7 +176,7 @@ const Payment: FunctionComponent = () => {
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !enabledWallet || isTransactionSubmitted }
+                  disabled={ !isConnected || isTransactionSubmitted }
                 >
                   Purchase
                 </FilledButton>

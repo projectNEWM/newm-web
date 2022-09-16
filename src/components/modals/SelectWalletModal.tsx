@@ -1,16 +1,16 @@
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { supportedWallets, walletInfo } from "modules/wallet";
-import { ButtonProps, DialogProps, Stack, useTheme } from "@mui/material";
+import {
+  enableWallet,
+  setWalletName,
+  supportedWallets,
+  walletInfo,
+} from "modules/wallet";
+import { ButtonProps, Stack, useTheme } from "@mui/material";
 import { SelectWalletItem } from "components";
 import { browserName } from "react-device-detect";
 import { Dialog, FilledButton, OutlinedButton, Typography } from "elements";
-
-interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
-  /** Called when the modal is closed */
-  readonly onClose: VoidFunction;
-  /** Called when selecting a wallet to mint the NFT */
-  readonly onConfirm: (walletName: string) => void;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { selectUi, setIsSelectWalletModalOpen } from "modules/ui";
 
 export interface Button extends ButtonProps {
   readonly buttonType: "outlined" | "filled";
@@ -23,15 +23,26 @@ interface DialogContent {
   readonly buttons: ReadonlyArray<Button>;
 }
 
-const MintSongModal: FunctionComponent<MintSongModalProps> = ({
-  onConfirm,
-  ...dialogProps
-}) => {
+const SelectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { isSelectWalletModalOpen } = useSelector(selectUi);
 
   const availableWallets = supportedWallets.filter((walletName: string) => {
     return !!window.cardano && !!window.cardano[walletName];
   });
+
+  const handleClose = useCallback(() => {
+    dispatch(setIsSelectWalletModalOpen(false));
+  }, [dispatch]);
+
+  /**
+   * Select a wallet and enable it.
+   */
+  const handleSelectWallet = (walletName: string) => {
+    dispatch(setWalletName(walletName));
+    dispatch(enableWallet());
+  };
 
   /**
    * @returns content to display based on the
@@ -47,7 +58,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
           {
             children: "Cancel",
             buttonType: "outlined",
-            onClick: dialogProps.onClose,
+            onClick: handleClose,
           },
         ],
       };
@@ -64,11 +75,11 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         {
           children: "Cancel",
           buttonType: "outlined",
-          onClick: dialogProps.onClose,
+          onClick: handleClose,
         },
       ],
     };
-  }, [availableWallets, dialogProps]);
+  }, [availableWallets, handleClose]);
 
   const [modalContent, setModalContent] = useState(getModalContent());
 
@@ -83,7 +94,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
   }, [getModalContent]);
 
   return (
-    <Dialog { ...dialogProps }>
+    <Dialog open={ isSelectWalletModalOpen }>
       <Stack spacing={ 2 } padding={ 3 } paddingBottom={ 2 }>
         <Stack spacing={ 1 }>
           <Typography variant="body2">{ modalContent.title }</Typography>
@@ -104,7 +115,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
                   logo={ info.logo }
                   onClick={ () => {
                     availableWallets.length > 0
-                      ? onConfirm(id)
+                      ? handleSelectWallet(id)
                       : window.open(targetUrl, "_blank");
                   } }
                 />
@@ -140,4 +151,4 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
   );
 };
 
-export default MintSongModal;
+export default SelectWalletModal;

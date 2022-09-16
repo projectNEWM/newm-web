@@ -1,6 +1,11 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, InitializeWallet, Toast } from "components";
+import {
+  Background,
+  InitializeWallet,
+  SelectWalletModal,
+  Toast,
+} from "components";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
@@ -16,6 +21,8 @@ const App = () => {
         <Toast />
         <CssBaseline />
         <InitializeWallet />
+
+        <SelectWalletModal />
 
         <Background>
           <BrowserRouter>

@@ -1,6 +1,7 @@
 export interface WalletState {
   readonly isLoading: boolean;
   readonly walletName: string;
+  readonly isConnected: boolean;
   readonly adaUsdRate?: number;
 }
 

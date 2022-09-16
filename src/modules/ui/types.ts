@@ -1,7 +1,8 @@
 export interface UIState {
-  toast: {
-    heading: string;
-    message: string;
-    severity?: "error" | "success";
+  readonly toast: {
+    readonly heading: string;
+    readonly message: string;
+    readonly severity?: "error" | "success";
   };
+  readonly isSelectWalletModalOpen: boolean;
 }

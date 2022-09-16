@@ -45,3 +45,4 @@ export { default as DisplayText } from "./tokenDrop/DisplayText";
 export { default as SectionHeading } from "./tokenDrop/SectionHeading";
 export { default as TransactionPending } from "./tokenDrop/TransactionPending";
 export { default as InitializeWallet } from "./InitializeWallet";
+export { default as SelectWalletModal } from "./modals/SelectWalletModal";

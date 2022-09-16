@@ -6,7 +6,6 @@ import { getInitialData } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideBar from "./SideBar";
-import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
 import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
@@ -56,7 +55,6 @@ const Home: FunctionComponent = () => {
         <Routes>
           <Route path="" element={ <Navigate to="upload-song" replace /> } />
 
-          <Route path="upload-song" element={ <UploadSong /> } />
           <Route path="library" element={ <Library /> } />
           <Route path="owners" element={ <Owners /> } />
           <Route path="wallet" element={ <Wallet /> } />

@@ -5,6 +5,7 @@ import { AdaUsdRateResponse, WalletState } from "./types";
 const initialState: WalletState = {
   isLoading: false,
   walletName: localStorage.getItem("walletName") || "",
+  isConnected: false,
   adaUsdRate: undefined,
 };
 
@@ -14,6 +15,9 @@ const walletSlice = createSlice({
   reducers: {
     setWalletIsLoading(state, { payload }: PayloadAction<boolean>) {
       state.isLoading = payload;
+    },
+    setWalletIsConnected(state, { payload }: PayloadAction<boolean>) {
+      state.isConnected = payload;
     },
     setWalletName(state, { payload }: PayloadAction<string>) {
       if (payload) {
@@ -34,7 +38,11 @@ const walletSlice = createSlice({
   },
 });
 
-export const { setWalletName, setWalletIsLoading, receiveAdaUsdRate } =
-  walletSlice.actions;
+export const {
+  setWalletName,
+  setWalletIsConnected,
+  setWalletIsLoading,
+  receiveAdaUsdRate,
+} = walletSlice.actions;
 
 export default walletSlice.reducer;
