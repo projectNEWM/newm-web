@@ -61,7 +61,7 @@ const Payment: FunctionComponent = () => {
 
   const handleCopyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    alert("Copied to clipboard: " + text);
+    alert("Payment address copied to clipboard");
   };
 
   const handleSubmitForm = (values: InitialFormValues) => {
@@ -239,7 +239,9 @@ const Payment: FunctionComponent = () => {
           { !isTransactionSubmitted && (
             <Box>
               <Box mb={ 1 }>
-                <SectionHeading>OR PURCHASE MANUALLY</SectionHeading>
+                <SectionHeading>
+                  { isAddressSubmitted ? "" : "OR " }PURCHASE MANUALLY
+                </SectionHeading>
               </Box>
 
               <Formik
@@ -277,11 +279,19 @@ const Payment: FunctionComponent = () => {
                         </AccentButton>
                       ) }
                     </Stack>
+
+                    <Box mt={ 1 }>
+                      <Typography variant="subtitle1">
+                        { isAddressSubmitted
+                          ? "Send 42 ADA to the payment address above."
+                          : "Submit a wallet address to generate a payment address." }
+                      </Typography>
+                    </Box>
                   </Form>
                 ) }
               </Formik>
 
-              { isAddressSubmitted ? (
+              { isAddressSubmitted && (
                 <Box mt={ 3 }>
                   <TransactionPending
                     title="Waiting to receive payment..."
@@ -291,12 +301,6 @@ const Payment: FunctionComponent = () => {
                       "several minutes once purchase is complete."
                     }
                   />
-                </Box>
-              ) : (
-                <Box mt={ 1 }>
-                  <Typography variant="subtitle1">
-                    Submit a wallet address to generate a payment address.
-                  </Typography>
                 </Box>
               ) }
             </Box>
