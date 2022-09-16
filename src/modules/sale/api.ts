@@ -3,7 +3,7 @@ import { setToastMessage } from "modules/ui";
 import { receiveBundleSales } from "./slice";
 import { SaleBundlesResp } from "./types";
 
-export const extendedApi = api.injectEndpoints({
+const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSaleBundles: build.query<SaleBundlesResp, string>({
       query: (projectId) => ({
