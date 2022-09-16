@@ -1,5 +1,6 @@
 export interface WalletState {
   readonly walletName: string;
+  readonly adaUsdRate?: number;
 }
 
 // in the future, this can be replaced with actual return values
@@ -65,4 +66,16 @@ export interface WalletInfo {
 
 export interface Wallets {
   readonly [key: string]: WalletInfo;
+}
+
+interface CryptoData {
+  readonly open: string;
+  readonly high: string;
+  readonly low: string;
+  readonly close: string;
+  readonly volume: number;
+}
+
+export interface AdaUsdRateResponse {
+  readonly timeSeriesCrypto5Min: Record<string, CryptoData>;
 }

@@ -7,6 +7,7 @@ import mursProfileImageSm from "assets/images/murs-profile-cropped.png";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
+import { useGetAdaUsdRateQuery } from "modules/wallet";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -14,6 +15,8 @@ import Congratulations from "./Congratulations";
 
 const TokenDrop: FunctionComponent = () => {
   const window = useWindowDimensions();
+
+  useGetAdaUsdRateQuery();
 
   return (
     <Box

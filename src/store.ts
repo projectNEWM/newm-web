@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import newmApi, { cloudinaryApi } from "api";
+import newmApi, { alphaAdvantageApi, cloudinaryApi, phyrhoseApi } from "api";
 import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
@@ -19,12 +19,19 @@ export const reducer = {
   wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
+  [alphaAdvantageApi.reducerPath]: alphaAdvantageApi.reducer,
+  [phyrhoseApi.reducerPath]: phyrhoseApi.reducer,
 };
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
-    const baseMiddleware = [...getDefaultMiddleware(), newmApi.middleware];
+    const baseMiddleware = [
+      ...getDefaultMiddleware(),
+      newmApi.middleware,
+      alphaAdvantageApi.middleware,
+      phyrhoseApi.middleware,
+    ];
 
     if (isProduction) {
       return baseMiddleware;

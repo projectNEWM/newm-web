@@ -36,7 +36,9 @@ const Payment: FunctionComponent = () => {
   // placeholder for Redux state after submitting wallet address
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
-  const { walletName: selectedWallet } = useSelector(selectWallet);
+  const { walletName: selectedWallet, adaUsdRate } = useSelector(selectWallet);
+
+  const bundleUsdPrice = adaUsdRate && Math.round(adaUsdRate * 42 * 100) / 100;
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -176,7 +178,9 @@ const Payment: FunctionComponent = () => {
               <DisplayText>42 ADA</DisplayText>
             </Box>
 
-            <Typography variant="subtitle1">~37.54 USD</Typography>
+            { !!bundleUsdPrice && (
+              <Typography variant="subtitle1">~{ bundleUsdPrice } USD</Typography>
+            ) }
           </Box>
         </Box>
 
