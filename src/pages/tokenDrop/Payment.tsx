@@ -211,7 +211,7 @@ const Payment: FunctionComponent = () => {
                   fullWidth={ true }
                   disabled={ !selectedWallet || isTransactionSubmitted }
                 >
-                  Purchase with connected wallet
+                  Purchase
                 </FilledButton>
               ) : (
                 <AccentButton
