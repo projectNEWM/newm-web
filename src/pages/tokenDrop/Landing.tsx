@@ -35,29 +35,18 @@ const Landing: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    audio.addEventListener(
-      "play",
-      () => {
-        setIsPlaying(true);
-      },
-      false
-    );
+    const handleIsPlaying = () => setIsPlaying(true);
+    const handleIsStopped = () => setIsPlaying(false);
 
-    audio.addEventListener(
-      "pause",
-      () => {
-        setIsPlaying(false);
-      },
-      false
-    );
+    audio.addEventListener("play", handleIsPlaying, false);
+    audio.addEventListener("pause", handleIsStopped, false);
+    audio.addEventListener("ended", handleIsStopped, false);
 
-    audio.addEventListener(
-      "ended",
-      () => {
-        setIsPlaying(false);
-      },
-      false
-    );
+    return () => {
+      audio.removeEventListener("play", handleIsPlaying, false);
+      audio.removeEventListener("pause", handleIsStopped, false);
+      audio.removeEventListener("ended", handleIsStopped, false);
+    };
   }, [audio]);
 
   return (

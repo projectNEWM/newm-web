@@ -1,9 +1,13 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { DisplayText, SectionHeading, TextInputField } from "components";
+import {
+  DisplayText,
+  SectionHeading,
+  TextInputField,
+  TransactionPending,
+} from "components";
 import {
   AccentButton,
   FilledButton,
-  GradientCircularProgress,
   HorizontalLine,
   Typography,
 } from "elements";
@@ -15,13 +19,13 @@ import {
   protocolParameters,
   selectWallet,
   setWalletName,
-  useGetAdaUsdRateQuery,
 } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastMessage } from "modules/ui";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
+import { useGetMursPrice } from "modules/sale";
 import MintSongModal from "./MintSongModal";
 
 interface InitialFormValues {
@@ -29,19 +33,18 @@ interface InitialFormValues {
 }
 
 const Payment: FunctionComponent = () => {
-  useGetAdaUsdRateQuery();
-
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // placeholder for Redux state after submitting transaction
+  const [isTransactionSubmitted, setIsTransactionSubmitted] = useState(false);
   // placeholder for Redux state after submitting wallet address
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
-  const { walletName: selectedWallet, adaUsdRate } = useSelector(selectWallet);
-
-  const bundleUsdPrice = adaUsdRate && Math.round(adaUsdRate * 42 * 100) / 100;
+  const bundlePrice = useGetMursPrice();
+  const { walletName: selectedWallet } = useSelector(selectWallet);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -52,7 +55,8 @@ const Payment: FunctionComponent = () => {
   };
 
   const handleWalletPurchase = () => {
-    navigate("../congratulations");
+    // TEMP: placeholder functionality for submitting transaction to API
+    setIsTransactionSubmitted(true);
   };
 
   const handleCopyToClipboard = (text: string) => {
@@ -177,97 +181,127 @@ const Payment: FunctionComponent = () => {
               <SectionHeading>WHAT YOU PAY</SectionHeading>
             </Box>
 
-            <Box mb={ 0.25 }>
-              <DisplayText>42 ADA</DisplayText>
-            </Box>
+            { !!bundlePrice.ada && (
+              <Box mb={ 0.25 }>
+                <DisplayText>{ bundlePrice.ada } ADA</DisplayText>
+              </Box>
+            ) }
 
-            { !!bundleUsdPrice && (
-              <Typography variant="subtitle1">~{ bundleUsdPrice } USD</Typography>
+            { !!bundlePrice.usd && (
+              <Typography variant="subtitle1">
+                ~{ bundlePrice.usd } USD
+              </Typography>
             ) }
           </Box>
         </Box>
 
         <HorizontalLine />
 
-        <Box flexDirection="column">
-          <Box mb={ 1 }>
-            <SectionHeading>HOW TO PURCHASE</SectionHeading>
-          </Box>
+        <Stack direction="column" spacing={ 3 }>
+          { !isAddressSubmitted && (
+            <Box>
+              <Box mb={ 1 }>
+                <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
+              </Box>
 
-          <Stack direction="column" spacing={ 1 }>
-            { selectedWallet ? (
-              <FilledButton
-                backgroundColor={ theme.colors.pink }
-                onClick={ handleWalletPurchase }
-                fullWidth={ true }
-                disabled={ !selectedWallet }
-              >
-                Purchase with connected wallet
-              </FilledButton>
-            ) : (
-              <AccentButton
-                onClick={ () => setIsModalOpen(true) }
-                fullWidth={ true }
-              >
-                Connect wallet
-              </AccentButton>
-            ) }
-
-            <Typography variant="subtitle1" fontSize={ 16 }>
-              or
-            </Typography>
-
-            <Formik
-              initialValues={ initialFormValues }
-              onSubmit={ handleSubmitForm }
-            >
-              { ({ values }: FormikProps<FormikValues>) => (
-                <Form>
-                  <Stack direction="row" spacing={ 1.5 }>
-                    <TextInputField
-                      name="walletAddress"
-                      autoComplete="off"
-                      widthType="full"
-                      placeholder="Enter your wallet address"
-                      disabled={ isAddressSubmitted }
-                      value={ isAddressSubmitted ? "EXAMPLE_ADDRESS" : undefined }
-                    />
-
-                    { isAddressSubmitted ? (
-                      <AccentButton
-                        onClick={ () => handleCopyToClipboard("EXAMPLE_ADDRESS") }
-                      >
-                        <CopyIcon />
-                      </AccentButton>
-                    ) : (
-                      <AccentButton
-                        disabled={ !values.walletAddress }
-                        type="submit"
-                      >
-                        Submit
-                      </AccentButton>
-                    ) }
-                  </Stack>
-                </Form>
+              { selectedWallet ? (
+                <FilledButton
+                  backgroundColor={ theme.colors.pink }
+                  onClick={ handleWalletPurchase }
+                  fullWidth={ true }
+                  disabled={ !selectedWallet || isTransactionSubmitted }
+                >
+                  Purchase with connected wallet
+                </FilledButton>
+              ) : (
+                <AccentButton
+                  onClick={ () => setIsModalOpen(true) }
+                  fullWidth={ true }
+                >
+                  Connect wallet
+                </AccentButton>
               ) }
-            </Formik>
-          </Stack>
 
-          { isAddressSubmitted && (
-            <Stack mt={ 3 } direction="row" spacing={ 2 } alignItems="center">
-              <GradientCircularProgress startColor="pink" endColor="purple" />
-
-              <Stack direction="column" spacing={ 1 }>
-                <Typography>Waiting to receive payment...</Typography>
-                <Typography variant="subtitle2">
-                  You have { "{TIME_REMAINING}" } to complete your purchase, using
-                  the payment address above. Processing may take several minutes
-                  once purchase is complete.
-                </Typography>
-              </Stack>
-            </Stack>
+              { isTransactionSubmitted && (
+                <Box mt={ 3 }>
+                  <TransactionPending
+                    title="Transaction processing"
+                    message={
+                      "Your transaction is currently processing. This can " +
+                      "take several minutes to complete."
+                    }
+                  />
+                </Box>
+              ) }
+            </Box>
           ) }
-        </Box>
+
+          { !isTransactionSubmitted && (
+            <Box>
+              <Box mb={ 1 }>
+                <SectionHeading>OR PURCHASE MANUALLY</SectionHeading>
+              </Box>
+
+              <Formik
+                initialValues={ initialFormValues }
+                onSubmit={ handleSubmitForm }
+              >
+                { ({ values }: FormikProps<FormikValues>) => (
+                  <Form>
+                    <Stack direction="row" spacing={ 1.5 }>
+                      <TextInputField
+                        name="walletAddress"
+                        autoComplete="off"
+                        widthType="full"
+                        placeholder="Enter your wallet address"
+                        disabled={ isAddressSubmitted }
+                        value={
+                          isAddressSubmitted ? "EXAMPLE_ADDRESS" : undefined
+                        }
+                      />
+
+                      { isAddressSubmitted ? (
+                        <AccentButton
+                          onClick={ () =>
+                            handleCopyToClipboard("EXAMPLE_ADDRESS")
+                          }
+                        >
+                          <CopyIcon />
+                        </AccentButton>
+                      ) : (
+                        <AccentButton
+                          disabled={ !values.walletAddress }
+                          type="submit"
+                        >
+                          Submit
+                        </AccentButton>
+                      ) }
+                    </Stack>
+                  </Form>
+                ) }
+              </Formik>
+
+              { isAddressSubmitted ? (
+                <Box mt={ 3 }>
+                  <TransactionPending
+                    title="Waiting to receive payment..."
+                    message={
+                      "You have {TIME_REMAINING} to complete your purchase, " +
+                      "using the payment address above. Processing may take " +
+                      "several minutes once purchase is complete."
+                    }
+                  />
+                </Box>
+              ) : (
+                <Box mt={ 1 }>
+                  <Typography variant="subtitle1">
+                    Submit a wallet address to generate a payment address.
+                  </Typography>
+                </Box>
+              ) }
+            </Box>
+          ) }
+        </Stack>
       </Stack>
     </Box>
   );

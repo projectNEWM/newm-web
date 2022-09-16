@@ -1,13 +1,14 @@
 import { phyrhoseApi as api } from "api";
 import { setToastMessage } from "modules/ui";
+import { mursProjectId } from "buildParams";
 import { receiveBundleSales } from "./slice";
 import { SaleBundlesResp } from "./types";
 
 const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getSaleBundles: build.query<SaleBundlesResp, string>({
-      query: (projectId) => ({
-        url: `firehose/ftSaleBundles?projectId=${projectId}`,
+    getSaleBundles: build.query<SaleBundlesResp, void>({
+      query: () => ({
+        url: `firehose/ftSaleBundles?projectId=${mursProjectId}`,
         method: "GET",
       }),
 

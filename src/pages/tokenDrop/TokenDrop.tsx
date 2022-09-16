@@ -15,10 +15,10 @@ import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
 
 const TokenDrop: FunctionComponent = () => {
-  const window = useWindowDimensions();
-
   useGetAdaUsdRateQuery();
-  useGetSaleBundlesQuery("6");
+  useGetSaleBundlesQuery();
+
+  const window = useWindowDimensions();
 
   return (
     <Box
@@ -89,6 +89,7 @@ const TokenDrop: FunctionComponent = () => {
       <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
         <Box
           sx={ {
+            pointerEvents: "none",
             display: ["none", "none", "block"],
             position: "fixed",
             bottom: 0,

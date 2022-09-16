@@ -6,9 +6,9 @@ import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
 import { uiReducer } from "modules/ui";
 import { walletReducer } from "modules/wallet";
+import { saleReducer } from "modules/sale";
 import logger from "redux-logger";
-
-const isProduction = process.env.NODE_ENV === "production";
+import { enableReduxLogging, isProd } from "buildParams";
 
 export const reducer = {
   content: contentReducer,
@@ -17,6 +17,7 @@ export const reducer = {
   song: songReducer,
   ui: uiReducer,
   wallet: walletReducer,
+  sale: saleReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
   [alphaAdvantageApi.reducerPath]: alphaAdvantageApi.reducer,
@@ -33,11 +34,11 @@ const store = configureStore({
       phyrhoseApi.middleware,
     ];
 
-    if (isProduction) {
+    if (isProd) {
       return baseMiddleware;
     }
 
-    return baseMiddleware.concat(logger);
+    return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
   reducer,
 });

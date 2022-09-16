@@ -39,7 +39,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts start",
+    "start": "PORT=8082 cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts start",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts build",
     "test": "react-scripts test",
     "test:ci": "npm run test -- --coverage --watchAll=false",
