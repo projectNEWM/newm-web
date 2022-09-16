@@ -1,12 +1,7 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Switch, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
-import {
-  enableWallet,
-  getUtxos,
-  protocolParameters,
-  setWalletName,
-} from "modules/wallet";
+import { enableWallet, setWalletName } from "modules/wallet";
 import { useDispatch } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
 import { ErrorMessage } from "components";
@@ -19,10 +14,8 @@ const MintSong: FunctionComponent = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { values, errors, setFieldValue, setFieldError } =
-    useFormikContext<FormikValues>();
+  const { values, errors, setFieldValue } = useFormikContext<FormikValues>();
 
-  const setError = (message: string) => setFieldError("isMinting", message);
   const setValue = (value: boolean) => setFieldValue("isMinting", value);
 
   /**
@@ -30,30 +23,9 @@ const MintSong: FunctionComponent = () => {
    * window Wallet object with the wallet API.
    */
   const handleSelectWallet = async (walletName: string) => {
-    try {
-      const wallet = await enableWallet(walletName);
-
-      // if no error thrown and no wallet, user manually exited before enabling
-      if (!wallet) return;
-
-      if (wallet) {
-        setValue(true);
-      }
-
-      dispatch(setWalletName(walletName));
-      setIsModalOpen(false);
-
-      const utxos = await getUtxos(walletName);
-      const largestUtxo = Math.max(...utxos);
-
-      if (largestUtxo < Number(protocolParameters.minUtxo)) {
-        setError("Please add more ADA to your wallet to mint your song.");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-    }
+    dispatch(setWalletName(walletName));
+    dispatch(enableWallet());
+    setIsModalOpen(false);
   };
 
   return (

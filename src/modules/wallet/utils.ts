@@ -62,49 +62,10 @@ export const walletInfo: Wallets = {
   },
 };
 
-/**
- * Ensures the Wallets object is accessible on the window
- * so that it can be used to store the wallet API.
- */
 export const ensureWallets = () => {
   if (!window.Wallets) {
     window.Wallets = {};
   }
-};
-
-/**
- * Attempts to an enable a wallet. If successful, updates
- * the window.Wallets object with the enabled wallet API.
- *
- * @returns the enabled wallet object
- */
-export const enableWallet = async (
-  walletName: string
-): Promise<EnabledWallet> => {
-  const { cardano } = window;
-
-  if (!cardano) {
-    throw new Error("No cardano object found on the window.");
-  }
-
-  const unitializedWallet = cardano[walletName];
-
-  ensureWallets();
-
-  try {
-    if (!window.Wallets[walletName]) {
-      window.Wallets[walletName] = await unitializedWallet.enable();
-    }
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message !== "user canceled connection"
-    ) {
-      throw new Error("Could not connect to the wallet.");
-    }
-  }
-
-  return window.Wallets[walletName];
 };
 
 /**
@@ -114,7 +75,7 @@ export const getBalance = async (walletName: string): Promise<number> => {
   // eslint-disable-next-line
   const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
 
-  const wallet = selectEnabledWallet(walletName);
+  const wallet = selectConnectedWallet(walletName);
 
   return await new Promise((resolve) => {
     return wallet.getBalance().then((hex: string) => {
@@ -136,7 +97,7 @@ export const getUtxos = async (
   // eslint-disable-next-line
   const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
 
-  const wallet = selectEnabledWallet(walletName);
+  const wallet = selectConnectedWallet(walletName);
   const utxos = await wallet.getUtxos();
 
   return utxos.map((hex: string) => {
@@ -148,16 +109,8 @@ export const getUtxos = async (
   });
 };
 
-export const selectEnabledWallet = (walletName: string): EnabledWallet => {
-  if (!window.Wallets) {
-    throw new Error("Wallets has not been initialized");
-  }
-
-  if (!window.Wallets[walletName]) {
-    throw new Error("Wallet has not been initialized");
-  }
-
-  return window.Wallets[walletName];
+export const selectConnectedWallet = (walletName: string): EnabledWallet => {
+  return window.cardano[walletName];
 };
 
 // 1 = Mainnet, 0 = Testnet

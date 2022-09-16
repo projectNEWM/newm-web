@@ -13,15 +13,8 @@ import {
 } from "elements";
 import { FunctionComponent, useState } from "react";
 import mursProfileImageSm from "assets/images/murs-profile@60px.png";
-import {
-  enableWallet,
-  getUtxos,
-  protocolParameters,
-  selectWallet,
-  setWalletName,
-} from "modules/wallet";
+import { enableWallet, selectWallet, setWalletName } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
-import { setToastMessage } from "modules/ui";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
@@ -44,7 +37,9 @@ const Payment: FunctionComponent = () => {
   const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
 
   const bundlePrice = useGetMursPrice();
-  const { walletName: selectedWallet } = useSelector(selectWallet);
+  const { walletName, isLoading } = useSelector(selectWallet);
+
+  const enabledWallet = window.Wallets && window.Wallets[walletName];
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -70,34 +65,12 @@ const Payment: FunctionComponent = () => {
   };
 
   /**
-   * Select a wallet, enable it, and update the
-   * window Wallet object with the wallet API.
+   * Select a wallet and enable it.
    */
   const handleSelectWallet = async (walletName: string) => {
-    try {
-      const wallet = await enableWallet(walletName);
-
-      // if no error thrown and no wallet, user manually exited before enabling
-      if (!wallet) return;
-
-      dispatch(setWalletName(walletName));
-      setIsModalOpen(false);
-
-      const utxos = await getUtxos(walletName);
-      const largestUtxo = Math.max(...utxos);
-
-      if (largestUtxo < Number(protocolParameters.minUtxo)) {
-        dispatch(
-          setToastMessage(
-            "Please add more ADA to your wallet to mint your song."
-          )
-        );
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        dispatch(setToastMessage(error.message));
-      }
-    }
+    dispatch(setWalletName(walletName));
+    dispatch(enableWallet());
+    setIsModalOpen(false);
   };
 
   return (
@@ -204,22 +177,23 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              { selectedWallet ? (
+              { !enabledWallet ? (
+                <AccentButton
+                  onClick={ () => setIsModalOpen(true) }
+                  fullWidth={ true }
+                  disabled={ isLoading }
+                >
+                  Connect wallet
+                </AccentButton>
+              ) : (
                 <FilledButton
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !selectedWallet || isTransactionSubmitted }
+                  disabled={ !enabledWallet || isTransactionSubmitted }
                 >
                   Purchase
                 </FilledButton>
-              ) : (
-                <AccentButton
-                  onClick={ () => setIsModalOpen(true) }
-                  fullWidth={ true }
-                >
-                  Connect wallet
-                </AccentButton>
               ) }
 
               { isTransactionSubmitted && (

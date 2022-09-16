@@ -3,6 +3,7 @@ import { last } from "lodash";
 import { AdaUsdRateResponse, WalletState } from "./types";
 
 const initialState: WalletState = {
+  isLoading: false,
   walletName: localStorage.getItem("walletName") || "",
   adaUsdRate: undefined,
 };
@@ -11,9 +12,17 @@ const walletSlice = createSlice({
   initialState,
   name: "wallet",
   reducers: {
-    setWalletName(state, action: PayloadAction<string>) {
-      localStorage.setItem("walletName", action.payload);
-      state.walletName = action.payload;
+    setWalletIsLoading(state, { payload }: PayloadAction<boolean>) {
+      state.isLoading = payload;
+    },
+    setWalletName(state, { payload }: PayloadAction<string>) {
+      if (payload) {
+        localStorage.setItem("walletName", payload);
+      } else {
+        localStorage.removeItem("walletName");
+      }
+
+      state.walletName = payload;
     },
     receiveAdaUsdRate(state, action: PayloadAction<AdaUsdRateResponse>) {
       const recentData = last(
@@ -25,6 +34,7 @@ const walletSlice = createSlice({
   },
 });
 
-export const { setWalletName, receiveAdaUsdRate } = walletSlice.actions;
+export const { setWalletName, setWalletIsLoading, receiveAdaUsdRate } =
+  walletSlice.actions;
 
 export default walletSlice.reducer;
