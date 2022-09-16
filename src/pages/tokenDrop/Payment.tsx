@@ -15,6 +15,7 @@ import {
   protocolParameters,
   selectWallet,
   setWalletName,
+  useGetAdaUsdRateQuery,
 } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setToastMessage } from "modules/ui";
@@ -28,6 +29,8 @@ interface InitialFormValues {
 }
 
 const Payment: FunctionComponent = () => {
+  useGetAdaUsdRateQuery();
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();

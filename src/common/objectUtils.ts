@@ -1,11 +1,11 @@
-import _, { isPlainObject, mapKeys, mapValues } from "lodash";
+import { isPlainObject, mapKeys, mapValues } from "lodash";
 
 // eslint-disable-next-line
 const deepMap = (obj: object, mapper: (val: any) => any): any => {
   return mapper(
     // eslint-disable-next-line
-    mapValues(obj, (v: any) => {
-      return isPlainObject(v) ? deepMap(v, mapper) : v;
+    mapValues(obj, (val: any) => {
+      return isPlainObject(val) ? deepMap(val, mapper) : val;
     })
   );
 };
@@ -19,9 +19,7 @@ export const transformKeys = (
   transform: (key: string) => any
   // eslint-disable-next-line
 ): Record<string, any> => {
-  return deepMap(record, (x) => {
-    return mapKeys(x, function (val, key) {
-      return transform(key);
-    });
+  return deepMap(record, (obj) => {
+    return mapKeys(obj, (val, key) => transform(key));
   });
 };
