@@ -3,7 +3,7 @@ import {
   DisplayText,
   SectionHeading,
   TextInputField,
-  TransactionPending,
+  TransactionStatus,
 } from "components";
 import {
   AccentButton,
@@ -11,15 +11,24 @@ import {
   HorizontalLine,
   Typography,
 } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import mursProfileImageSm from "assets/images/murs-profile@60px.png";
-import { selectWallet } from "modules/wallet";
+import { addressFromHex, selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
-import { useGetMursPrice } from "modules/sale";
-import { setIsSelectWalletModalOpen } from "modules/ui";
+import {
+  PaymentStatus,
+  PaymentType,
+  clearPurchase,
+  extendedApi as saleApi,
+  selectSale,
+  useGetMursPrice,
+} from "modules/sale";
+import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
+import { mursProjectId } from "buildParams";
+import { displayCountdown } from "common";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -30,13 +39,17 @@ const Payment: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // placeholder for Redux state after submitting transaction
-  const [isTransactionSubmitted, setIsTransactionSubmitted] = useState(false);
-  // placeholder for Redux state after submitting wallet address
-  const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
-
   const bundlePrice = useGetMursPrice();
-  const { isConnected, isLoading } = useSelector(selectWallet);
+  const { isConnected, isLoading, walletName } = useSelector(selectWallet);
+  const { sales, purchaseOrder, paymentType, paymentStatus } =
+    useSelector(selectSale);
+
+  const [timeRemaining, setTimeRemaining] = useState("--:--");
+
+  const paymentAddress = purchaseOrder?.paymentAddress;
+  const activePurchase =
+    !!paymentStatus &&
+    [PaymentStatus.Pending, PaymentStatus.Processing].includes(paymentStatus);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -50,20 +63,96 @@ const Payment: FunctionComponent = () => {
     dispatch(setIsSelectWalletModalOpen(true));
   };
 
-  const handleWalletPurchase = () => {
-    // TEMP: placeholder functionality for submitting transaction to API
-    setIsTransactionSubmitted(true);
+  const handleWalletPurchase = async () => {
+    if (!window.Wallets[walletName] || !sales[0]) {
+      dispatch(
+        setToastMessage({
+          message: "Error creating purchase order",
+          severity: "error",
+        })
+      );
+      return;
+    }
+
+    const addresses = await window.Wallets[walletName].getUnusedAddresses();
+    const encoded = addressFromHex(addresses[0]);
+
+    dispatch(
+      saleApi.endpoints.createPurchaseOrder.initiate({
+        projectId: mursProjectId,
+        bundleId: sales[0].id,
+        receiveAddress: encoded,
+        paymentType: PaymentType.Wallet,
+      })
+    );
   };
 
-  const handleCopyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const handleCopyToClipboard = async (text: string) => {
+    await navigator.clipboard.writeText(text);
     alert("Payment address copied to clipboard");
   };
 
   const handleSubmitForm = (values: InitialFormValues) => {
-    // TEMP: placeholder functionality for submitting address to API
-    setIsAddressSubmitted(true);
+    dispatch(
+      saleApi.endpoints.createPurchaseOrder.initiate({
+        projectId: mursProjectId,
+        bundleId: sales[0].id,
+        receiveAddress: values.walletAddress,
+        paymentType: PaymentType.Manual,
+      })
+    );
   };
+
+  /**
+   * Update purchase time remaining every second if there
+   * is an incomplete order present.
+   */
+  useEffect(() => {
+    if (!purchaseOrder?.timeout) {
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      const currentDate = new Date();
+      const endDate = new Date(purchaseOrder.timeout);
+      setTimeRemaining(displayCountdown(endDate, currentDate));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [purchaseOrder]);
+
+  /**
+   * Ping service to get purchase status every 30 seconds.
+   */
+  useEffect(() => {
+    if (!purchaseOrder) {
+      return;
+    }
+
+    const checkPurchaseStatus = (purchaseId: number) => {
+      dispatch(saleApi.endpoints.getPurchaseStatus.initiate(purchaseId));
+    };
+
+    checkPurchaseStatus(purchaseOrder.purchaseId);
+    const intervalId = setInterval(
+      checkPurchaseStatus,
+      30000,
+      purchaseOrder.purchaseId
+    );
+
+    return () => clearInterval(intervalId);
+  }, [purchaseOrder, dispatch]);
+
+  /**
+   * When order is complete, navigate to congratulations
+   * page and clear purchase data.
+   */
+  useEffect(() => {
+    if (paymentStatus === PaymentStatus.Completed) {
+      navigate("../congratulations");
+      dispatch(clearPurchase());
+    }
+  }, [paymentStatus, navigate, dispatch]);
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
@@ -157,7 +246,7 @@ const Payment: FunctionComponent = () => {
         <HorizontalLine />
 
         <Stack direction="column" spacing={ 3 }>
-          { !isAddressSubmitted && (
+          { paymentType !== PaymentType.Manual && (
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
@@ -176,15 +265,15 @@ const Payment: FunctionComponent = () => {
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !isConnected || isTransactionSubmitted }
+                  disabled={ !isConnected || !!paymentAddress }
                 >
                   Purchase
                 </FilledButton>
               ) }
 
-              { isTransactionSubmitted && (
+              { activePurchase && (
                 <Box mt={ 3 }>
-                  <TransactionPending
+                  <TransactionStatus
                     title="Transaction processing"
                     message={
                       "Your transaction is currently processing. This can " +
@@ -196,11 +285,11 @@ const Payment: FunctionComponent = () => {
             </Box>
           ) }
 
-          { !isTransactionSubmitted && (
+          { paymentType !== PaymentType.Wallet && (
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>
-                  { isAddressSubmitted ? "" : "OR " }PURCHASE MANUALLY
+                  { paymentAddress ? "" : "OR " }PURCHASE MANUALLY
                 </SectionHeading>
               </Box>
 
@@ -216,17 +305,13 @@ const Payment: FunctionComponent = () => {
                         autoComplete="off"
                         widthType="full"
                         placeholder="Enter your wallet address"
-                        disabled={ isAddressSubmitted }
-                        value={
-                          isAddressSubmitted ? "EXAMPLE_ADDRESS" : undefined
-                        }
+                        disabled={ !!paymentAddress }
+                        value={ paymentAddress }
                       />
 
-                      { isAddressSubmitted ? (
+                      { paymentAddress ? (
                         <AccentButton
-                          onClick={ () =>
-                            handleCopyToClipboard("EXAMPLE_ADDRESS")
-                          }
+                          onClick={ () => handleCopyToClipboard(paymentAddress) }
                         >
                           <CopyIcon />
                         </AccentButton>
@@ -242,8 +327,8 @@ const Payment: FunctionComponent = () => {
 
                     <Box mt={ 1 }>
                       <Typography variant="subtitle1">
-                        { isAddressSubmitted
-                          ? "Send 42 ADA to the payment address above."
+                        { paymentAddress
+                          ? `Send ${bundlePrice.ada} ADA to the payment address above.`
                           : "Submit a wallet address to generate a payment address." }
                       </Typography>
                     </Box>
@@ -251,14 +336,22 @@ const Payment: FunctionComponent = () => {
                 ) }
               </Formik>
 
-              { isAddressSubmitted && (
+              { activePurchase && (
                 <Box mt={ 3 }>
-                  <TransactionPending
-                    title="Waiting to receive payment..."
+                  <TransactionStatus
+                    title={
+                      paymentStatus === PaymentStatus.Pending
+                        ? "Waiting to receive payment..."
+                        : "Transaction processing"
+                    }
                     message={
-                      "You have {TIME_REMAINING} to complete your purchase, " +
-                      "using the payment address above. Processing may take " +
-                      "several minutes once purchase is complete."
+                      paymentStatus === PaymentStatus.Pending
+                        ? `You have ${timeRemaining} to complete your ` +
+                          "purchase, using the payment address above. " +
+                          "Processing may take several minutes once " +
+                          "purchase is complete."
+                        : "Your transaction is currently processing. This " +
+                          "can take several minutes to complete."
                     }
                   />
                 </Box>

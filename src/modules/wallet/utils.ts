@@ -4,12 +4,12 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
+import {
+  Address,
+  TransactionUnspentOutput,
+  Value,
+} from "@dcspark/cardano-multiplatform-lib-asmjs";
 import { EnabledWallet, Wallets } from "./types";
-// importing this package breaks tests, required in each function instead
-// import {
-//   TransactionUnspentOutput,
-//   Value,
-// } from "@dcspark/cardano-multiplatform-lib-asmjs";
 
 export const supportedWallets = [
   "nami",
@@ -72,14 +72,11 @@ export const ensureWallets = () => {
  * @returns the current wallet balance as an integer.
  */
 export const getBalance = async (walletName: string): Promise<number> => {
-  // eslint-disable-next-line
-  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
-
   const wallet = selectConnectedWallet(walletName);
 
   return await new Promise((resolve) => {
     return wallet.getBalance().then((hex: string) => {
-      const balance = CSL.Value.from_bytes(fromHex(hex));
+      const balance = Value.from_bytes(fromHex(hex));
       const lovelaces = balance.coin().to_str();
       const amount = Number(lovelaces);
 
@@ -94,14 +91,11 @@ export const getBalance = async (walletName: string): Promise<number> => {
 export const getUtxos = async (
   walletName: string
 ): Promise<ReadonlyArray<number>> => {
-  // eslint-disable-next-line
-  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
-
   const wallet = selectConnectedWallet(walletName);
   const utxos = await wallet.getUtxos();
 
   return utxos.map((hex: string) => {
-    const utxo = CSL.TransactionUnspentOutput.from_bytes(fromHex(hex));
+    const utxo = TransactionUnspentOutput.from_bytes(fromHex(hex));
     const lovelaces = utxo.output().amount().coin().to_str();
     const amount = Number(lovelaces);
 
@@ -129,7 +123,11 @@ export const protocolParameters = {
   costPerWord: "34482",
 };
 
-const fromHex = (hex: string) => {
+export const addressFromHex = (hex: string) => {
+  return Address.from_bytes(Buffer.from(hex, "hex")).to_bech32();
+};
+
+export const fromHex = (hex: string) => {
   return Buffer.from(hex, "hex");
 };
 

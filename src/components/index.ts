@@ -43,6 +43,6 @@ export { default as TablePagination } from "./TablePagination";
 export { default as SearchBox } from "./SearchBox";
 export { default as DisplayText } from "./tokenDrop/DisplayText";
 export { default as SectionHeading } from "./tokenDrop/SectionHeading";
-export { default as TransactionPending } from "./tokenDrop/TransactionPending";
+export { default as TransactionStatus } from "./tokenDrop/TransactionStatus";
 export { default as InitializeWallet } from "./InitializeWallet";
 export { default as SelectWalletModal } from "./modals/SelectWalletModal";

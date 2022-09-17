@@ -1,12 +1,23 @@
 import { phyrhoseApi as api } from "api";
 import { setToastMessage } from "modules/ui";
 import { mursProjectId } from "buildParams";
-import { receiveBundleSales } from "./slice";
-import { SaleBundlesResp } from "./types";
+import {
+  receiveBundleSales,
+  receivePaymentStatus,
+  receivePaymentType,
+  receivePurchaseOrder,
+} from "./slice";
+import {
+  PaymentStatus,
+  PurchaseOrderRequest,
+  PurchaseOrderResponse,
+  PurchaseStatusResponse,
+  SaleBundlesResponse,
+} from "./types";
 
 const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getSaleBundles: build.query<SaleBundlesResp, void>({
+    getSaleBundles: build.query<SaleBundlesResponse, void>({
       query: () => ({
         url: `firehose/ftSaleBundles?projectId=${mursProjectId}`,
         method: "GET",
@@ -20,6 +31,66 @@ const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching sale information",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    createPurchaseOrder: build.mutation<
+      PurchaseOrderResponse,
+      PurchaseOrderRequest
+    >({
+      query: (body) => ({
+        url: "firehose/createFtSalePurchaseOrder",
+        method: "POST",
+        body: {
+          projectId: body.projectId,
+          bundleId: body.bundleId,
+          receiveAddress: body.receiveAddress,
+        },
+      }),
+
+      async onQueryStarted({ paymentType }, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receivePurchaseOrder(data));
+          dispatch(receivePaymentType(paymentType));
+          dispatch(receivePaymentStatus(PaymentStatus.Pending));
+          // eslint-disable-next-line
+        } catch (err: any) {
+          const { error } = err;
+
+          if (error?.status === 402) {
+            dispatch(receivePurchaseOrder(error.data));
+            dispatch(receivePaymentType(paymentType));
+            dispatch(receivePaymentStatus(PaymentStatus.Pending));
+            return;
+          }
+
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while creating purchase order",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getPurchaseStatus: build.query<PurchaseStatusResponse, number>({
+      query: (purchaseId) => ({
+        url: `firehose/purchaseStatus?purchaseId=${purchaseId}`,
+        method: "GET",
+      }),
+
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receivePaymentStatus(data.data[1].status));
+        } catch (err) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while creating purchase order",
               severity: "error",
             })
           );

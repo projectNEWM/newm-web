@@ -1,8 +1,24 @@
+export enum PaymentType {
+  Wallet = "wallet",
+  Manual = "manual",
+}
+
+export enum PaymentStatus {
+  Pending = "pending",
+  Processing = "processing",
+  Completed = "completed",
+  Timeout = "timeout",
+}
+
 export interface SaleState {
   sales: Array<SaleBundle>;
+  purchaseOrder?: PurchaseOrder;
+  paymentType?: PaymentType;
+  paymentStatus?: PaymentStatus;
 }
 
 export interface SaleBundle {
+  readonly id: number;
   readonly cost: number;
   readonly tokenCostType: string | null;
   readonly tokenCost: number | null;
@@ -15,8 +31,40 @@ export interface FeaturedSaleBundles {
   ftSaleBundles: Array<SaleBundle>;
 }
 
-export interface SaleBundlesResp {
+export interface SaleBundlesResponse {
   readonly status: string;
   readonly message: string | null;
   readonly data: [string, FeaturedSaleBundles];
+}
+
+export interface PurchaseOrder {
+  readonly purchaseId: number;
+  readonly paymentAddress: string;
+  readonly cost: string;
+  readonly timeout: number;
+  readonly tokenAmount: number | null;
+  readonly tokenCosts: Array<number> | null;
+}
+
+export interface PurchaseOrderResponse {
+  readonly status: string;
+  readonly message: string | null;
+  readonly data: [string, PurchaseOrder];
+}
+
+export interface PurchaseOrderRequest {
+  readonly projectId: number;
+  readonly bundleId: number;
+  readonly receiveAddress: string;
+  readonly paymentType: PaymentType;
+}
+
+export interface PurchaseStatus {
+  readonly status: PaymentStatus;
+}
+
+export interface PurchaseStatusResponse {
+  readonly status: string;
+  readonly message: string | null;
+  readonly data: [string, PurchaseStatus];
 }

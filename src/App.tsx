@@ -21,7 +21,6 @@ const App = () => {
         <Toast />
         <CssBaseline />
         <InitializeWallet />
-
         <SelectWalletModal />
 
         <Background>

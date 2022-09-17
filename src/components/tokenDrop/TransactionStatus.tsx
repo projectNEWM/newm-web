@@ -2,12 +2,12 @@ import { Stack } from "@mui/material";
 import { GradientCircularProgress, Typography } from "elements";
 import { FunctionComponent } from "react";
 
-interface TransactionPendingProps {
+interface TransactionStatusProps {
   readonly title: string;
   readonly message: string;
 }
 
-const TransactionPending: FunctionComponent<TransactionPendingProps> = ({
+const TransactionStatus: FunctionComponent<TransactionStatusProps> = ({
   title,
   message,
 }) => {
@@ -23,4 +23,4 @@ const TransactionPending: FunctionComponent<TransactionPendingProps> = ({
   );
 };
 
-export default TransactionPending;
+export default TransactionStatus;
