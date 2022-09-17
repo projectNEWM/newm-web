@@ -112,10 +112,15 @@ const Payment: FunctionComponent = () => {
       return;
     }
 
-    const intervalId = setInterval(() => {
+    const handleSetTimeRemaining = () => {
       const currentDate = new Date();
       const endDate = new Date(purchaseOrder.timeout);
       setTimeRemaining(displayCountdown(endDate, currentDate));
+    };
+
+    handleSetTimeRemaining();
+    const intervalId = setInterval(() => {
+      handleSetTimeRemaining();
     }, 1000);
 
     return () => clearInterval(intervalId);

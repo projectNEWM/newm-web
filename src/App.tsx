@@ -11,32 +11,35 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import TokenDrop from "pages/tokenDrop/TokenDrop";
 import ScrollToTopOnNavigation from "components/ScrollToTopOnNavigation";
-import store from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "./store";
 import "./App.css";
 
 const App = () => {
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>
-        <Toast />
-        <CssBaseline />
-        <InitializeWallet />
-        <SelectWalletModal />
+        <PersistGate loading={ null } persistor={ persistor }>
+          <Toast />
+          <CssBaseline />
+          <InitializeWallet />
+          <SelectWalletModal />
 
-        <Background>
-          <BrowserRouter>
-            <ScrollToTopOnNavigation>
-              <Routes>
-                <Route path="token-drop/*" element={ <TokenDrop /> } />
+          <Background>
+            <BrowserRouter>
+              <ScrollToTopOnNavigation>
+                <Routes>
+                  <Route path="token-drop/*" element={ <TokenDrop /> } />
 
-                <Route
-                  path="*"
-                  element={ <Navigate to="token-drop" replace /> }
-                />
-              </Routes>
-            </ScrollToTopOnNavigation>
-          </BrowserRouter>
-        </Background>
+                  <Route
+                    path="*"
+                    element={ <Navigate to="token-drop" replace /> }
+                  />
+                </Routes>
+              </ScrollToTopOnNavigation>
+            </BrowserRouter>
+          </Background>
+        </PersistGate>
       </Provider>
     </ThemeProvider>
   );
