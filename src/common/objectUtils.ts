@@ -15,8 +15,7 @@ const deepMap = (obj: object, mapper: (val: any) => any): any => {
  */
 export const transformKeys = (
   record: object,
-  // eslint-disable-next-line
-  transform: (key: string) => any
+  transform: (key: string) => string
   // eslint-disable-next-line
 ): Record<string, any> => {
   return deepMap(record, (obj) => {
