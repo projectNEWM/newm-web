@@ -185,13 +185,12 @@ export const createTransaction = async (body: CreateTransactionParams) => {
     const signedTx = Transaction.new(tx.body(), transactionWitnessSet);
 
     try {
-      const txData = await wallet.submitTx(toHex(signedTx.to_bytes()));
-      console.log("Transaction submitted!", txData);
+      await wallet.submitTx(toHex(signedTx.to_bytes()));
     } catch (err) {
       throw new Error("Error during submission?");
     }
   } catch (err) {
-    console.error("The user cancelled the transaction?", err);
+    // user cancelled transaction, do nothing
   }
 };
 

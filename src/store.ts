@@ -29,6 +29,12 @@ export const reducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: [
+    newmApi.reducerPath,
+    cloudinaryApi.reducerPath,
+    alphaAdvantageApi.reducerPath,
+    phyrhoseApi.reducerPath,
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
