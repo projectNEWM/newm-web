@@ -15,6 +15,8 @@ export interface SaleState {
   purchaseOrder?: PurchaseOrder;
   paymentType?: PaymentType;
   purchaseStatus?: PurchaseStatus;
+  isTransactionCreated: boolean;
+  isLoading: boolean;
 }
 
 export interface SaleBundle {

@@ -1,11 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { RootState } from "store";
-import {
-  setWalletIsConnected,
-  setWalletIsLoading,
-  setWalletName,
-} from "./slice";
+import { setWalletIsConnected, setWalletName } from "./slice";
 import { ensureWallets } from "./utils";
 
 /**
@@ -35,8 +31,6 @@ export const enableConnectedWallet = createAsyncThunk(
       return;
     }
 
-    dispatch(setWalletIsLoading(true));
-
     // check wallect enabled status
     const isConnected = await wallet.isEnabled();
 
@@ -47,7 +41,6 @@ export const enableConnectedWallet = createAsyncThunk(
     }
 
     dispatch(setWalletIsConnected(isConnected));
-    dispatch(setWalletIsLoading(false));
   }
 );
 

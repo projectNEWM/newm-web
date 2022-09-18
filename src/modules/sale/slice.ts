@@ -12,6 +12,8 @@ const initialState: SaleState = {
   purchaseOrder: undefined,
   paymentType: undefined,
   purchaseStatus: undefined,
+  isTransactionCreated: false,
+  isLoading: false,
 };
 
 const saleSlice = createSlice({
@@ -30,10 +32,17 @@ const saleSlice = createSlice({
     receivePurchaseStatus(state, action: PayloadAction<PurchaseStatus>) {
       state.purchaseStatus = action.payload;
     },
+    setIsTransactionCreated(state, action: PayloadAction<boolean>) {
+      state.isTransactionCreated = action.payload;
+    },
+    setSaleIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
     clearPurchase(state) {
       state.purchaseOrder = undefined;
       state.paymentType = undefined;
       state.purchaseStatus = undefined;
+      state.isTransactionCreated = false;
     },
   },
 });
@@ -43,6 +52,8 @@ export const {
   receivePurchaseOrder,
   receivePaymentType,
   receivePurchaseStatus,
+  setIsTransactionCreated,
+  setSaleIsLoading,
   clearPurchase,
 } = saleSlice.actions;
 

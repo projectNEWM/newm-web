@@ -6,6 +6,7 @@ import {
   receivePaymentType,
   receivePurchaseOrder,
   receivePurchaseStatus,
+  setSaleIsLoading,
 } from "./slice";
 import {
   PurchaseOrderRequest,
@@ -37,6 +38,7 @@ const extendedApi = api.injectEndpoints({
         }
       },
     }),
+
     createPurchaseOrder: build.mutation<
       PurchaseOrderResponse,
       PurchaseOrderRequest
@@ -53,7 +55,10 @@ const extendedApi = api.injectEndpoints({
 
       async onQueryStarted({ paymentType }, { dispatch, queryFulfilled }) {
         try {
+          dispatch(setSaleIsLoading(true));
+
           const { data } = await queryFulfilled;
+
           dispatch(receivePurchaseOrder(data));
           dispatch(receivePaymentType(paymentType));
           dispatch(receivePurchaseStatus(PurchaseStatus.Pending));
@@ -62,6 +67,7 @@ const extendedApi = api.injectEndpoints({
           const { error } = err;
 
           if (error?.status === 402) {
+            // purchase is in progress, update Redux state purchase data
             dispatch(receivePurchaseOrder(error.data));
             dispatch(receivePaymentType(paymentType));
             dispatch(receivePurchaseStatus(PurchaseStatus.Pending));
@@ -74,9 +80,12 @@ const extendedApi = api.injectEndpoints({
               severity: "error",
             })
           );
+        } finally {
+          dispatch(setSaleIsLoading(false));
         }
       },
     }),
+
     getPurchaseStatus: build.query<PurchaseStatusResponse, number>({
       query: (purchaseId) => ({
         url: `firehose/purchaseStatus?purchaseId=${purchaseId}`,
