@@ -49,12 +49,9 @@ const Payment: FunctionComponent = () => {
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
   const paymentAddress = purchaseOrder?.paymentAddress;
-  const activePurchase =
-    !!purchaseStatus &&
-    [PurchaseStatus.Pending, PurchaseStatus.Processing].includes(
-      purchaseStatus
-    );
-
+  const isPending = purchaseStatus === PurchaseStatus.Pending;
+  const isProcessing = purchaseStatus === PurchaseStatus.Processing;
+  const activePurchase = !!purchaseStatus && (isPending || isProcessing);
   const isSupportedBrowser = ["Chrome", "Brave"].includes(browserName);
 
   const initialFormValues: InitialFormValues = {
@@ -280,7 +277,7 @@ const Payment: FunctionComponent = () => {
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !isConnected || !!paymentAddress }
+                  disabled={ !isConnected || activePurchase }
                 >
                   Purchase
                 </FilledButton>
@@ -324,7 +321,7 @@ const Payment: FunctionComponent = () => {
                         autoComplete="off"
                         widthType="full"
                         placeholder="Enter your wallet address"
-                        disabled={ !!paymentAddress }
+                        disabled={ activePurchase }
                         value={ paymentAddress }
                       />
 
