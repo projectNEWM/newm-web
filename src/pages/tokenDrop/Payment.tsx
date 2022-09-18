@@ -22,6 +22,7 @@ import {
   PaymentStatus,
   PaymentType,
   clearPurchase,
+  createPurchase,
   extendedApi as saleApi,
   selectSale,
   useGetMursPrice,
@@ -78,7 +79,7 @@ const Payment: FunctionComponent = () => {
     const encoded = addressFromHex(addresses[0]);
 
     dispatch(
-      saleApi.endpoints.createPurchaseOrder.initiate({
+      createPurchase({
         projectId: mursProjectId,
         bundleId: sales[0].id,
         receiveAddress: encoded,
@@ -155,6 +156,10 @@ const Payment: FunctionComponent = () => {
   useEffect(() => {
     if (paymentStatus === PaymentStatus.Completed) {
       navigate("../congratulations");
+      dispatch(clearPurchase());
+    }
+
+    if (paymentStatus === PaymentStatus.Timeout) {
       dispatch(clearPurchase());
     }
   }, [paymentStatus, navigate, dispatch]);

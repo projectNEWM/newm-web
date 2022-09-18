@@ -4,7 +4,10 @@ export const isProd = process.env.node_env === "production";
 export const enableReduxLogging = true;
 
 // TODO: Update this with murs project production ID
-export const mursProjectId: number = isProd ? 12 : 6;
+export const mursProjectId = isProd ? 12 : 6;
+
+// 1 = Mainnet, 0 = Testnet
+export const networkMode = isProd ? 1 : 0;
 
 // TODO: Update these with production url hosts
 export const baseUrls: Record<string, string> = {

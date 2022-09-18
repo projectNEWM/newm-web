@@ -81,3 +81,10 @@ interface CryptoData {
 export interface AdaUsdRateResponse {
   readonly timeSeriesCrypto5Min: Record<string, CryptoData>;
 }
+
+export interface CreateTransactionParams {
+  readonly receiveAddress: string;
+  readonly paymentAddress: string;
+  readonly cost: number;
+  readonly walletName: string;
+}
