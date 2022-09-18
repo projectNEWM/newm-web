@@ -35,29 +35,18 @@ const Landing: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    audio.addEventListener(
-      "play",
-      () => {
-        setIsPlaying(true);
-      },
-      false
-    );
+    const handleIsPlaying = () => setIsPlaying(true);
+    const handleIsStopped = () => setIsPlaying(false);
 
-    audio.addEventListener(
-      "pause",
-      () => {
-        setIsPlaying(false);
-      },
-      false
-    );
+    audio.addEventListener("play", handleIsPlaying, false);
+    audio.addEventListener("pause", handleIsStopped, false);
+    audio.addEventListener("ended", handleIsStopped, false);
 
-    audio.addEventListener(
-      "ended",
-      () => {
-        setIsPlaying(false);
-      },
-      false
-    );
+    return () => {
+      audio.removeEventListener("play", handleIsPlaying, false);
+      audio.removeEventListener("pause", handleIsStopped, false);
+      audio.removeEventListener("ended", handleIsStopped, false);
+    };
   }, [audio]);
 
   return (
@@ -190,9 +179,9 @@ const Landing: FunctionComponent = () => {
           </FilledButton>
 
           <Typography variant="subtitle2">
-            There is a limited amount of bundles being sold. You can only buy
-            one per hour in order to give a chance for other users to buy it as
-            well.
+            In the spirit of fairness, you can only purchase one bundle per
+            session. This gives everyone an equal opportunity to participate in
+            this limited offering.
           </Typography>
         </Stack>
       </Stack>

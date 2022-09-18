@@ -4,12 +4,22 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
-import { EnabledWallet, Wallets } from "./types";
-// importing this package breaks tests, required in each function instead
-// import {
-//   TransactionUnspentOutput,
-//   Value,
-// } from "@dcspark/cardano-multiplatform-lib-asmjs";
+import { networkMode } from "buildParams";
+import {
+  Address,
+  BigNum,
+  CoinSelectionStrategyCIP2,
+  LinearFee,
+  Transaction,
+  TransactionBuilder,
+  TransactionBuilderConfigBuilder,
+  TransactionOutputBuilder,
+  TransactionUnspentOutput,
+  TransactionUnspentOutputs,
+  TransactionWitnessSet,
+  Value,
+} from "@dcspark/cardano-multiplatform-lib-asmjs";
+import { CreateTransactionParams, EnabledWallet, Wallets } from "./types";
 
 export const supportedWallets = [
   "nami",
@@ -62,63 +72,138 @@ export const walletInfo: Wallets = {
   },
 };
 
-/**
- * Ensures the Wallets object is accessible on the window
- * so that it can be used to store the wallet API.
- */
 export const ensureWallets = () => {
   if (!window.Wallets) {
     window.Wallets = {};
   }
 };
 
-/**
- * Attempts to an enable a wallet. If successful, updates
- * the window.Wallets object with the enabled wallet API.
- *
- * @returns the enabled wallet object
- */
-export const enableWallet = async (
-  walletName: string
-): Promise<EnabledWallet> => {
-  const { cardano } = window;
+export const createTransaction = async (body: CreateTransactionParams) => {
+  const wallet = window.Wallets[body.walletName];
 
-  if (!cardano) {
-    throw new Error("No cardano object found on the window.");
+  if (!wallet) {
+    throw new Error("wallet not enabled");
   }
 
-  const unitializedWallet = cardano[walletName];
+  const networkId = await wallet.getNetworkId();
+  if (networkId !== networkMode) {
+    throw new Error("wallet Network Mode does not match the page network mode");
+  }
 
-  ensureWallets();
+  const changeAddressCbor = await wallet.getChangeAddress();
+  const changeAddress = Address.from_bytes(
+    Uint8Array.from(fromHex(changeAddressCbor))
+  );
+
+  const txBuilder = TransactionBuilder.new(
+    TransactionBuilderConfigBuilder.new()
+      .fee_algo(
+        LinearFee.new(
+          BigNum.from_str(protocolParameters.linearFee.minFeeA),
+          BigNum.from_str(protocolParameters.linearFee.minFeeB)
+        )
+      )
+      .pool_deposit(BigNum.from_str(protocolParameters.poolDeposit))
+      .key_deposit(BigNum.from_str(protocolParameters.keyDeposit))
+      .coins_per_utxo_word(BigNum.from_str(protocolParameters.costPerWord))
+      .max_value_size(protocolParameters.maxValSize)
+      .max_tx_size(protocolParameters.maxTxSize)
+      .build()
+  );
+
+  const paymentAddress = Address.from_bech32(body.paymentAddress);
+  const cost = body.cost * 1000000;
+
+  txBuilder.add_output(
+    TransactionOutputBuilder.new()
+      .with_address(paymentAddress)
+      .next()
+      .with_coin(BigNum.from_str(cost.toString()))
+      .build()
+  );
+
+  const inputs = TransactionUnspentOutputs.new();
+  const utxos = await wallet.getUtxos();
+  utxos.map((utxo: string) =>
+    inputs.add(TransactionUnspentOutput.from_bytes(fromHex(utxo)))
+  );
 
   try {
-    if (!window.Wallets[walletName]) {
-      window.Wallets[walletName] = await unitializedWallet.enable();
-    }
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message !== "user canceled connection"
-    ) {
-      throw new Error("Could not connect to the wallet.");
+    txBuilder.add_inputs_from(
+      inputs,
+      CoinSelectionStrategyCIP2.LargestFirstMultiAsset
+    );
+  } catch (err) {
+    throw new Error(
+      `Sorry, we were not able to build a successful transaction at this time. 
+      This may be due to your wallet lacking the necessary asset(s) or token 
+      fragmentation.`
+    );
+  }
+
+  try {
+    txBuilder.add_change_if_needed(changeAddress);
+  } catch (err) {
+    txBuilder.add_output(
+      TransactionOutputBuilder.new()
+        .with_address(changeAddress)
+        .next()
+        .with_coin(BigNum.from_str("1000000"))
+        .build()
+    );
+    txBuilder.add_inputs_from(
+      inputs,
+      CoinSelectionStrategyCIP2.LargestFirstMultiAsset
+    );
+
+    try {
+      txBuilder.add_change_if_needed(changeAddress);
+    } catch (err) {
+      throw new Error(
+        "Sorry, we were not able to build a successful transaction at this time."
+      );
     }
   }
 
-  return window.Wallets[walletName];
+  const transactionWitnessSet = TransactionWitnessSet.new();
+  const txBody = txBuilder.build();
+  const tx = Transaction.new(
+    txBody,
+    TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes())
+  );
+
+  try {
+    const txVkeyWitnesses = await wallet.signTx(toHex(tx.to_bytes()), true);
+    const witnesses = TransactionWitnessSet.from_bytes(
+      fromHex(txVkeyWitnesses)
+    );
+
+    const witnessesKeys = witnesses.vkeys();
+    if (witnessesKeys) {
+      transactionWitnessSet.set_vkeys(witnessesKeys);
+    }
+
+    const signedTx = Transaction.new(tx.body(), transactionWitnessSet);
+
+    try {
+      await wallet.submitTx(toHex(signedTx.to_bytes()));
+    } catch (err) {
+      throw new Error("Error during submission?");
+    }
+  } catch (err) {
+    // user cancelled transaction, do nothing
+  }
 };
 
 /**
  * @returns the current wallet balance as an integer.
  */
 export const getBalance = async (walletName: string): Promise<number> => {
-  // eslint-disable-next-line
-  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
-
-  const wallet = selectEnabledWallet(walletName);
+  const wallet = selectConnectedWallet(walletName);
 
   return await new Promise((resolve) => {
     return wallet.getBalance().then((hex: string) => {
-      const balance = CSL.Value.from_bytes(fromHex(hex));
+      const balance = Value.from_bytes(fromHex(hex));
       const lovelaces = balance.coin().to_str();
       const amount = Number(lovelaces);
 
@@ -133,14 +218,11 @@ export const getBalance = async (walletName: string): Promise<number> => {
 export const getUtxos = async (
   walletName: string
 ): Promise<ReadonlyArray<number>> => {
-  // eslint-disable-next-line
-  const CSL = require('@dcspark/cardano-multiplatform-lib-asmjs');
-
-  const wallet = selectEnabledWallet(walletName);
+  const wallet = selectConnectedWallet(walletName);
   const utxos = await wallet.getUtxos();
 
   return utxos.map((hex: string) => {
-    const utxo = CSL.TransactionUnspentOutput.from_bytes(fromHex(hex));
+    const utxo = TransactionUnspentOutput.from_bytes(fromHex(hex));
     const lovelaces = utxo.output().amount().coin().to_str();
     const amount = Number(lovelaces);
 
@@ -148,20 +230,9 @@ export const getUtxos = async (
   });
 };
 
-export const selectEnabledWallet = (walletName: string): EnabledWallet => {
-  if (!window.Wallets) {
-    throw new Error("Wallets has not been initialized");
-  }
-
-  if (!window.Wallets[walletName]) {
-    throw new Error("Wallet has not been initialized");
-  }
-
-  return window.Wallets[walletName];
+export const selectConnectedWallet = (walletName: string): EnabledWallet => {
+  return window.cardano[walletName];
 };
-
-// 1 = Mainnet, 0 = Testnet
-// const network_mode = 0;
 
 export const protocolParameters = {
   linearFee: {
@@ -171,18 +242,22 @@ export const protocolParameters = {
   minUtxo: "1000000",
   poolDeposit: "500000000",
   keyDeposit: "2000000",
-  maxValSize: "5000",
+  maxValSize: 5000,
   maxTxSize: 16384,
   costPerWord: "34482",
 };
 
-const fromHex = (hex: string) => {
+export const addressFromHex = (hex: string) => {
+  return Address.from_bytes(Buffer.from(hex, "hex")).to_bech32();
+};
+
+export const fromHex = (hex: string) => {
   return Buffer.from(hex, "hex");
 };
 
-// const toHex = (bytes: string) => {
-//   return Buffer.from(bytes).toString("hex");
-// };
+const toHex = (bytes: Uint8Array) => {
+  return Buffer.from(bytes).toString("hex");
+};
 
 // const fromAscii = (hex: string) => {
 //   return Buffer.from(hex).toString("hex");

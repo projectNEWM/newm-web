@@ -7,12 +7,17 @@ import mursProfileImageSm from "assets/images/murs-profile-cropped.png";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
+import { useGetAdaUsdRateQuery } from "modules/wallet";
+import { useGetSaleBundlesQuery } from "modules/sale";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
 
 const TokenDrop: FunctionComponent = () => {
+  useGetAdaUsdRateQuery();
+  useGetSaleBundlesQuery();
+
   const window = useWindowDimensions();
 
   return (
@@ -84,6 +89,7 @@ const TokenDrop: FunctionComponent = () => {
       <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
         <Box
           sx={ {
+            pointerEvents: "none",
             display: ["none", "none", "block"],
             position: "fixed",
             bottom: 0,

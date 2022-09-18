@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
-import { extendedApi as sessionApi } from "./api";
+import sessionApi from "./api";
 import { CreateAccountRequest, UpdateProfileRequest } from "./types";
 
 /**

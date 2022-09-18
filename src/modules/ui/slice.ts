@@ -7,6 +7,7 @@ const initialState: UIState = {
     message: "",
     severity: "error",
   },
+  isSelectWalletModalOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -23,9 +24,16 @@ const uiSlice = createSlice({
       state.toast.message = payload.message;
       state.toast.severity = payload.severity;
     },
+    setIsSelectWalletModalOpen: (state, { payload }) => {
+      state.isSelectWalletModalOpen = payload;
+    },
   },
 });
 
-export const { clearToastMessage, setToastMessage } = uiSlice.actions;
+export const {
+  clearToastMessage,
+  setToastMessage,
+  setIsSelectWalletModalOpen,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

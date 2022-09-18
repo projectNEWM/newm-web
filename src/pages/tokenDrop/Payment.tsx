@@ -1,27 +1,36 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { DisplayText, SectionHeading, TextInputField } from "components";
+import {
+  DisplayText,
+  SectionHeading,
+  TextInputField,
+  TransactionStatus,
+} from "components";
 import {
   AccentButton,
   FilledButton,
-  GradientCircularProgress,
   HorizontalLine,
   Typography,
 } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import mursProfileImageSm from "assets/images/murs-profile@60px.png";
-import {
-  enableWallet,
-  getUtxos,
-  protocolParameters,
-  selectWallet,
-  setWalletName,
-} from "modules/wallet";
+import { addressFromHex, selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
-import { setToastMessage } from "modules/ui";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
-import MintSongModal from "./MintSongModal";
+import {
+  PaymentType,
+  PurchaseStatus,
+  clearPurchase,
+  createPurchase,
+  extendedApi as saleApi,
+  selectSale,
+  useGetMursPrice,
+} from "modules/sale";
+import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
+import { mursProjectId } from "buildParams";
+import { displayCountdown } from "common";
+import { browserName } from "react-device-detect";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -29,14 +38,21 @@ interface InitialFormValues {
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // placeholder for Redux state after submitting wallet address
-  const [isAddressSubmitted, setIsAddressSubmitted] = useState(false);
+  const bundlePrice = useGetMursPrice();
+  const { isConnected, isLoading, walletName } = useSelector(selectWallet);
+  const { sales, purchaseOrder, paymentType, purchaseStatus } =
+    useSelector(selectSale);
 
-  const { walletName: selectedWallet } = useSelector(selectWallet);
+  const [timeRemaining, setTimeRemaining] = useState("--:--");
+
+  const paymentAddress = purchaseOrder?.paymentAddress;
+  const isPending = purchaseStatus === PurchaseStatus.Pending;
+  const isProcessing = purchaseStatus === PurchaseStatus.Processing;
+  const activePurchase = isPending || isProcessing;
+  const isWalletExtensionAvailable = ["Chrome", "Brave"].includes(browserName);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -46,59 +62,112 @@ const Payment: FunctionComponent = () => {
     navigate("");
   };
 
-  const handleWalletPurchase = () => {
-    navigate("../congratulations");
+  const handleOpenModal = () => {
+    dispatch(setIsSelectWalletModalOpen(true));
   };
 
-  const handleCopyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    alert("Copied to clipboard: " + text);
+  const handleWalletPurchase = async () => {
+    if (!window.Wallets[walletName] || !sales[0]) {
+      dispatch(
+        setToastMessage({
+          message: "Error creating purchase order",
+          severity: "error",
+        })
+      );
+      return;
+    }
+
+    const addresses = await window.Wallets[walletName].getUnusedAddresses();
+    const encoded = addressFromHex(addresses[0]);
+
+    dispatch(
+      createPurchase({
+        projectId: mursProjectId,
+        bundleId: sales[0].id,
+        receiveAddress: encoded,
+        paymentType: PaymentType.Wallet,
+      })
+    );
+  };
+
+  const handleCopyToClipboard = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    alert("Payment address copied to clipboard");
   };
 
   const handleSubmitForm = (values: InitialFormValues) => {
-    // TEMP: placeholder functionality for submitting address to API
-    setIsAddressSubmitted(true);
+    dispatch(
+      saleApi.endpoints.createPurchaseOrder.initiate({
+        projectId: mursProjectId,
+        bundleId: sales[0].id,
+        receiveAddress: values.walletAddress,
+        paymentType: PaymentType.Manual,
+      })
+    );
   };
 
   /**
-   * Select a wallet, enable it, and update the
-   * window Wallet object with the wallet API.
+   * Update purchase time remaining every second if there
+   * is an incomplete order present.
    */
-  const handleSelectWallet = async (walletName: string) => {
-    try {
-      const wallet = await enableWallet(walletName);
-
-      // if no error thrown and no wallet, user manually exited before enabling
-      if (!wallet) return;
-
-      dispatch(setWalletName(walletName));
-      setIsModalOpen(false);
-
-      const utxos = await getUtxos(walletName);
-      const largestUtxo = Math.max(...utxos);
-
-      if (largestUtxo < Number(protocolParameters.minUtxo)) {
-        dispatch(
-          setToastMessage(
-            "Please add more ADA to your wallet to mint your song."
-          )
-        );
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        dispatch(setToastMessage(error.message));
-      }
+  useEffect(() => {
+    if (!purchaseOrder?.timeout) {
+      return;
     }
-  };
+
+    const handleSetTimeRemaining = () => {
+      const currentDate = new Date();
+      const endDate = new Date(purchaseOrder.timeout);
+      setTimeRemaining(displayCountdown(endDate, currentDate));
+    };
+
+    handleSetTimeRemaining();
+    const intervalId = setInterval(() => {
+      handleSetTimeRemaining();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [purchaseOrder]);
+
+  /**
+   * Ping service to get purchase status every 30 seconds.
+   */
+  useEffect(() => {
+    if (!purchaseOrder) {
+      return;
+    }
+
+    const checkPurchaseStatus = (purchaseId: number) => {
+      dispatch(saleApi.endpoints.getPurchaseStatus.initiate(purchaseId));
+    };
+
+    checkPurchaseStatus(purchaseOrder.purchaseId);
+    const intervalId = setInterval(
+      checkPurchaseStatus,
+      30000,
+      purchaseOrder.purchaseId
+    );
+
+    return () => clearInterval(intervalId);
+  }, [purchaseOrder, dispatch]);
+
+  /**
+   * When order is complete, navigate to congratulations
+   * page and clear purchase data.
+   */
+  useEffect(() => {
+    if (purchaseStatus === PurchaseStatus.Completed) {
+      navigate("../congratulations");
+      dispatch(clearPurchase());
+    }
+
+    if (purchaseStatus === PurchaseStatus.Timeout) {
+      dispatch(clearPurchase());
+    }
+  }, [purchaseStatus, navigate, dispatch]);
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
-      <MintSongModal
-        open={ isModalOpen }
-        onClose={ () => setIsModalOpen(false) }
-        onConfirm={ handleSelectWallet }
-      />
-
       <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 450] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
@@ -127,7 +196,7 @@ const Payment: FunctionComponent = () => {
                 <Typography variant="h4" fontWeight={ 700 }>
                   Break up
                 </Typography>
-                <Typography variant="subtitle2">Murs</Typography>
+                <Typography variant="subtitle2">MURS</Typography>
               </Box>
             </Stack>
 
@@ -172,95 +241,140 @@ const Payment: FunctionComponent = () => {
               <SectionHeading>WHAT YOU PAY</SectionHeading>
             </Box>
 
-            <Box mb={ 0.25 }>
-              <DisplayText>42 ADA</DisplayText>
-            </Box>
+            { !!bundlePrice.ada && (
+              <Box mb={ 0.25 }>
+                <DisplayText>{ bundlePrice.ada } ADA</DisplayText>
+              </Box>
+            ) }
 
-            <Typography variant="subtitle1">~37.54 USD</Typography>
+            { !!bundlePrice.usd && (
+              <Typography variant="subtitle1">
+                ~{ bundlePrice.usd } USD
+              </Typography>
+            ) }
           </Box>
         </Box>
 
         <HorizontalLine />
 
-        <Box flexDirection="column">
-          <Box mb={ 1 }>
-            <SectionHeading>HOW TO PURCHASE</SectionHeading>
-          </Box>
+        <Stack direction="column" spacing={ 3 }>
+          { isWalletExtensionAvailable && paymentType !== PaymentType.Manual && (
+            <Box>
+              <Box mb={ 1 }>
+                <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
+              </Box>
 
-          <Stack direction="column" spacing={ 1 }>
-            { selectedWallet ? (
-              <FilledButton
-                backgroundColor={ theme.colors.pink }
-                onClick={ handleWalletPurchase }
-                fullWidth={ true }
-                disabled={ !selectedWallet }
-              >
-                Purchase with connected wallet
-              </FilledButton>
-            ) : (
-              <AccentButton
-                onClick={ () => setIsModalOpen(true) }
-                fullWidth={ true }
-              >
-                Connect wallet
-              </AccentButton>
-            ) }
-
-            <Typography variant="subtitle1" fontSize={ 16 }>
-              or
-            </Typography>
-
-            <Formik
-              initialValues={ initialFormValues }
-              onSubmit={ handleSubmitForm }
-            >
-              { ({ values }: FormikProps<FormikValues>) => (
-                <Form>
-                  <Stack direction="row" spacing={ 1.5 }>
-                    <TextInputField
-                      name="walletAddress"
-                      autoComplete="off"
-                      widthType="full"
-                      placeholder="Enter your wallet address"
-                      disabled={ isAddressSubmitted }
-                      value={ isAddressSubmitted ? "EXAMPLE_ADDRESS" : undefined }
-                    />
-
-                    { isAddressSubmitted ? (
-                      <AccentButton
-                        onClick={ () => handleCopyToClipboard("EXAMPLE_ADDRESS") }
-                      >
-                        <CopyIcon />
-                      </AccentButton>
-                    ) : (
-                      <AccentButton
-                        disabled={ !values.walletAddress }
-                        type="submit"
-                      >
-                        Submit
-                      </AccentButton>
-                    ) }
-                  </Stack>
-                </Form>
+              { !isConnected ? (
+                <AccentButton
+                  onClick={ handleOpenModal }
+                  fullWidth={ true }
+                  disabled={ isLoading }
+                >
+                  Connect wallet
+                </AccentButton>
+              ) : (
+                <FilledButton
+                  backgroundColor={ theme.colors.pink }
+                  onClick={ handleWalletPurchase }
+                  fullWidth={ true }
+                  disabled={ !isConnected || activePurchase }
+                >
+                  Purchase
+                </FilledButton>
               ) }
-            </Formik>
-          </Stack>
 
-          { isAddressSubmitted && (
-            <Stack mt={ 3 } direction="row" spacing={ 2 } alignItems="center">
-              <GradientCircularProgress startColor="pink" endColor="purple" />
-
-              <Stack direction="column" spacing={ 1 }>
-                <Typography>Waiting to receive payment...</Typography>
-                <Typography variant="subtitle2">
-                  You have { "{TIME_REMAINING}" } to complete your purchase, using
-                  the payment address above. Processing may take several minutes
-                  once purchase is complete.
-                </Typography>
-              </Stack>
-            </Stack>
+              { activePurchase && (
+                <Box mt={ 3 }>
+                  <TransactionStatus
+                    title="Transaction processing"
+                    message={
+                      "Your transaction is currently processing. This can " +
+                      "take several minutes to complete."
+                    }
+                  />
+                </Box>
+              ) }
+            </Box>
           ) }
-        </Box>
+
+          { paymentType !== PaymentType.Wallet && (
+            <Box>
+              <Box mb={ 1 }>
+                <SectionHeading>
+                  { !isWalletExtensionAvailable
+                    ? "PURCHASE"
+                    : paymentAddress
+                    ? "PURCHASE MANUALLY"
+                    : "OR PURCHASE MANUALLY" }
+                </SectionHeading>
+              </Box>
+
+              <Formik
+                initialValues={ initialFormValues }
+                onSubmit={ handleSubmitForm }
+              >
+                { ({ values }: FormikProps<FormikValues>) => (
+                  <Form>
+                    <Stack direction="row" spacing={ 1.5 }>
+                      <TextInputField
+                        name="walletAddress"
+                        autoComplete="off"
+                        widthType="full"
+                        placeholder="Enter your wallet address"
+                        disabled={ activePurchase }
+                        value={ paymentAddress }
+                      />
+
+                      { paymentAddress ? (
+                        <AccentButton
+                          onClick={ () => handleCopyToClipboard(paymentAddress) }
+                        >
+                          <CopyIcon />
+                        </AccentButton>
+                      ) : (
+                        <AccentButton
+                          disabled={ !values.walletAddress }
+                          type="submit"
+                        >
+                          Submit
+                        </AccentButton>
+                      ) }
+                    </Stack>
+
+                    <Box mt={ 1 }>
+                      <Typography variant="subtitle1">
+                        { paymentAddress
+                          ? `Send ${bundlePrice.ada} ADA to the payment address above.`
+                          : "Submit a wallet address to generate a payment address." }
+                      </Typography>
+                    </Box>
+                  </Form>
+                ) }
+              </Formik>
+
+              { activePurchase && (
+                <Box mt={ 3 }>
+                  <TransactionStatus
+                    title={
+                      purchaseStatus === PurchaseStatus.Pending
+                        ? "Waiting to receive payment..."
+                        : "Transaction processing"
+                    }
+                    message={
+                      purchaseStatus === PurchaseStatus.Pending
+                        ? `You have ${timeRemaining} to complete your ` +
+                          "purchase, using the payment address above. " +
+                          "Processing may take several minutes once " +
+                          "purchase is complete."
+                        : "Your transaction is currently processing. This " +
+                          "can take several minutes to complete."
+                    }
+                  />
+                </Box>
+              ) }
+            </Box>
+          ) }
+        </Stack>
       </Stack>
     </Box>
   );

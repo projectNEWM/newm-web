@@ -22,11 +22,6 @@ interface StyledInputElementProps
   readonly textAlign: "left" | "center" | "right";
 }
 
-const mdBreakpoint = theme.breakpoints.down("md");
-const mdBreakpointStyles = theme.typography.h1[
-  mdBreakpoint
-] as typeof theme.typography.h1;
-
 const StyledRootElement = styled("div")`
   display: flex;
   justify-content: space-between;
