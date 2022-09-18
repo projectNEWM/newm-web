@@ -1,7 +1,7 @@
 import { padStart } from "lodash";
 
-export const displayCountdown = (start: Date, end: Date): string => {
-  const diff = (start.getTime() - end.getTime()) / 1000;
+export const displayCountdown = (end: Date, start: Date): string => {
+  const diff = (end.getTime() - start.getTime()) / 1000;
 
   if (diff < 0) {
     return "00:00";

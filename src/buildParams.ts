@@ -9,7 +9,7 @@ export const mursProjectId = isProd ? 12 : 6;
 // 1 = Mainnet, 0 = Testnet
 export const networkMode = isProd ? 1 : 0;
 
-// TODO: Update these with production url hosts
+// TODO: Update with production url hosts
 export const baseUrls: Record<string, string> = {
   newm: isProd
     ? "https://staging-newm-server.herokuapp.com/"
@@ -17,10 +17,6 @@ export const baseUrls: Record<string, string> = {
   phyrhose: isProd
     ? "https://testnet.phyrhose.io/"
     : "https://testnet.phyrhose.io/",
-  alphaAdvantage: isProd
-    ? "https://www.alphavantage.co/"
-    : "https://www.alphavantage.co/",
-  cloudinary: isProd
-    ? "https://api.cloudinary.com/"
-    : "https://api.cloudinary.com/",
+  alphaAdvantage: "https://www.alphavantage.co/",
+  cloudinary: "https://api.cloudinary.com/",
 };
