@@ -6,7 +6,6 @@ import {
   receivePaymentType,
   receivePurchaseOrder,
   receivePurchaseStatus,
-  setIsTransactionCreated,
   setSaleIsLoading,
 } from "./slice";
 import {
@@ -96,11 +95,6 @@ const extendedApi = api.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          const purchaseStatus = data.data[1].status;
-
-          if (purchaseStatus === PurchaseStatus.Processing) {
-            dispatch(setIsTransactionCreated(true));
-          }
 
           dispatch(receivePurchaseStatus(data.data[1].status));
         } catch (err) {
