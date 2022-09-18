@@ -13,6 +13,7 @@ export { default as GradientTextInputField } from "./form/GradientTextInputField
 export { default as IconMessage } from "./IconMessage";
 export { default as ImageUpload } from "./ImageUpload";
 export { default as LinkedInLogin } from "./LinkedInLogin";
+export { default as Modal } from "./Modal";
 export { default as NEWMLogo } from "./NEWMLogo";
 export { default as PaperInput } from "./styled/PaperInput";
 export { default as SelectWalletItem } from "./uploadSong/SelectWalletItem";
