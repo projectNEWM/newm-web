@@ -4,7 +4,7 @@ export const removeFirstCharIfNumber = (val: string) => {
   return val.replace(/^[0-9]/, "");
 };
 
-export const displayUsd = (value: number) => {
+export const displayUsd = (value: number): string => {
   const parts = String(value).split(".");
 
   const dollars = parts[0];
