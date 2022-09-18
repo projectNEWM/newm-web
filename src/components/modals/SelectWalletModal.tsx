@@ -7,7 +7,6 @@ import {
 } from "modules/wallet";
 import { ButtonProps, Stack, useTheme } from "@mui/material";
 import { SelectWalletItem } from "components";
-import { browserName } from "react-device-detect";
 import { Dialog, FilledButton, OutlinedButton, Typography } from "elements";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUi, setIsSelectWalletModalOpen } from "modules/ui";
