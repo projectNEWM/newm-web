@@ -199,7 +199,7 @@ const Payment: FunctionComponent = () => {
                 <Typography variant="h4" fontWeight={ 700 }>
                   Break up
                 </Typography>
-                <Typography variant="subtitle2">Murs</Typography>
+                <Typography variant="subtitle2">MURS</Typography>
               </Box>
             </Stack>
 

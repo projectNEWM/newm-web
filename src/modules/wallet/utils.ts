@@ -155,6 +155,7 @@ export const createTransaction = async (body: CreateTransactionParams) => {
       inputs,
       CoinSelectionStrategyCIP2.LargestFirstMultiAsset
     );
+
     try {
       txBuilder.add_change_if_needed(changeAddress);
     } catch (err) {

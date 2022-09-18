@@ -14,7 +14,7 @@ const initialState: SaleState = {
   purchaseStatus: undefined,
 };
 
-const walletSlice = createSlice({
+const saleSlice = createSlice({
   initialState,
   name: "sale",
   reducers: {
@@ -44,6 +44,6 @@ export const {
   receivePaymentType,
   receivePurchaseStatus,
   clearPurchase,
-} = walletSlice.actions;
+} = saleSlice.actions;
 
-export default walletSlice.reducer;
+export default saleSlice.reducer;
