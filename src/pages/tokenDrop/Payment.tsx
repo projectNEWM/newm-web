@@ -31,7 +31,6 @@ import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { mursProjectId } from "buildParams";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
-import { padEnd } from "lodash";
 import { displayUsd } from "common/stringUtils";
 
 interface InitialFormValues {
