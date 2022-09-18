@@ -1,8 +1,8 @@
-const StopIcon = ({ width = 14, height = 14 }) => (
+const StopIcon = ({ height = 14, width = 14 }) => (
   <svg
-    width={width}
-    height={height}
     fill="none"
+    height={ height }
+    width={ width }
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

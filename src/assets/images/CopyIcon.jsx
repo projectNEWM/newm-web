@@ -1,7 +1,7 @@
 const CopyIcon = ({ width = 15, height = 17 }) => (
   <svg
-    width={width}
-    height={height}
+    width={ width }
+    height={ height }
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -10,6 +10,6 @@ const CopyIcon = ({ width = 15, height = 17 }) => (
       fill="#DC3CAA"
     />
   </svg>
-)
+);
 
-export default CopyIcon
+export default CopyIcon;
