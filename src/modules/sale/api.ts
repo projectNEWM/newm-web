@@ -81,7 +81,7 @@ const extendedApi = api.injectEndpoints({
             })
           );
         } finally {
-          setSaleIsLoading(false);
+          dispatch(setSaleIsLoading(false));
         }
       },
     }),
