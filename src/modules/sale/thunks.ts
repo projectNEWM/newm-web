@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createTransaction } from "modules/wallet";
+import { createTransaction, setWalletIsLoading } from "modules/wallet";
 import { RootState } from "store";
 import { PurchaseOrderRequest } from "./types";
 import saleApi from "./api";
-import { setIsTransactionCreated } from "./slice";
+import { setIsTransactionCreated, setSaleIsLoading } from "./slice";
 
 /**
  * Sends an receive address to the back-end, and uses that address
@@ -37,6 +37,8 @@ export const createPurchase = createAsyncThunk(
     const cost = Number(purchaseOrder.cost.slice(1));
 
     try {
+      dispatch(setWalletIsLoading(true));
+
       await createTransaction({
         receiveAddress,
         paymentAddress,
@@ -46,7 +48,10 @@ export const createPurchase = createAsyncThunk(
 
       dispatch(setIsTransactionCreated(true));
     } catch (e) {
-      // transaction not created, do nothing
+      // transaction not created
+    } finally {
+      dispatch(setWalletIsLoading(false));
+      dispatch(setSaleIsLoading(false));
     }
   }
 );

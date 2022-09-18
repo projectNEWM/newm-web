@@ -31,6 +31,7 @@ import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { mursProjectId } from "buildParams";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
+import { padEnd } from "lodash";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -42,17 +43,23 @@ const Payment: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const bundlePrice = useGetMursPrice();
-  const { isConnected, isLoading, walletName } = useSelector(selectWallet);
+  const {
+    isConnected,
+    isLoading: isWalletLoading,
+    walletName,
+  } = useSelector(selectWallet);
   const {
     sales,
     purchaseOrder,
     paymentType,
     purchaseStatus,
     isTransactionCreated,
+    isLoading: isSaleLoading,
   } = useSelector(selectSale);
 
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
+  const isLoading = isWalletLoading || isSaleLoading;
   const paymentAddress = purchaseOrder?.paymentAddress;
   const isPending = purchaseStatus === PurchaseStatus.Pending;
   const isProcessing = purchaseStatus === PurchaseStatus.Processing;
@@ -254,7 +261,7 @@ const Payment: FunctionComponent = () => {
 
             { !!bundlePrice.usd && (
               <Typography variant="subtitle1">
-                ~{ bundlePrice.usd } USD
+                ~{ padEnd(String(bundlePrice.usd), 5, "0") } USD
               </Typography>
             ) }
           </Box>
@@ -282,7 +289,7 @@ const Payment: FunctionComponent = () => {
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !isConnected || isTransactionCreated }
+                  disabled={ isLoading || isTransactionCreated }
                 >
                   Purchase
                 </FilledButton>
@@ -291,10 +298,18 @@ const Payment: FunctionComponent = () => {
               { activePurchase && (
                 <Box mt={ 3 }>
                   <TransactionStatus
-                    title="Transaction processing"
+                    title={
+                      isTransactionCreated
+                        ? "Transaction processing"
+                        : "Waiting to receive payment..."
+                    }
                     message={
-                      "Your transaction is currently processing. This can " +
-                      "take several minutes to complete."
+                      isTransactionCreated
+                        ? "Your transaction is currently processing. This " +
+                          "can take several minutes to complete."
+                        : `You have ${timeRemaining} to complete your ` +
+                          "purchase. Processing may take several minutes " +
+                          "once purchase is complete."
                     }
                   />
                 </Box>
