@@ -105,8 +105,6 @@ const SelectWalletModal: FunctionComponent = () => {
           <Stack spacing={ 1 }>
             { modalContent.wallets.map((id) => {
               const info = walletInfo[id];
-              const targetUrl =
-                browserName === "Chrome" ? info.extensionUrl : info.primaryUrl;
 
               return (
                 <SelectWalletItem
@@ -116,7 +114,7 @@ const SelectWalletModal: FunctionComponent = () => {
                   onClick={ () => {
                     availableWallets.length > 0
                       ? handleSelectWallet(id)
-                      : window.open(targetUrl, "_blank");
+                      : window.open(info.extensionUrl, "_blank");
                   } }
                 />
               );

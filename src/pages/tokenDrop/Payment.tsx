@@ -30,6 +30,7 @@ import {
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { mursProjectId } from "buildParams";
 import { displayCountdown } from "common";
+import { browserName } from "react-device-detect";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -51,6 +52,8 @@ const Payment: FunctionComponent = () => {
   const activePurchase =
     !!paymentStatus &&
     [PaymentStatus.Pending, PaymentStatus.Processing].includes(paymentStatus);
+
+  const isSupportedBrowser = ["Chrome", "Brave"].includes(browserName);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -256,7 +259,7 @@ const Payment: FunctionComponent = () => {
         <HorizontalLine />
 
         <Stack direction="column" spacing={ 3 }>
-          { paymentType !== PaymentType.Manual && (
+          { isSupportedBrowser && paymentType !== PaymentType.Manual && (
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
@@ -299,7 +302,11 @@ const Payment: FunctionComponent = () => {
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>
-                  { paymentAddress ? "" : "OR " }PURCHASE MANUALLY
+                  { !isSupportedBrowser
+                    ? "PURCHASE"
+                    : paymentAddress
+                    ? "PURCHASE MANUALLY"
+                    : "OR PURCHASE MANUALLY" }
                 </SectionHeading>
               </Box>
 
