@@ -179,9 +179,9 @@ const Landing: FunctionComponent = () => {
           </FilledButton>
 
           <Typography variant="subtitle2">
-            There is a limited amount of bundles being sold. You can only buy
-            one per hour in order to give a chance for other users to buy it as
-            well.
+            In the spirit of fairness, you can only purchase one bundle per
+            session. This gives everyone an equal opportunity to participate in
+            this limited offering.
           </Typography>
         </Stack>
       </Stack>

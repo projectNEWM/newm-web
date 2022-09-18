@@ -4,7 +4,7 @@ import { AdaUsdRateResponse, WalletState } from "./types";
 
 const initialState: WalletState = {
   isLoading: false,
-  walletName: localStorage.getItem("walletName") || "",
+  walletName: "",
   isConnected: false,
   adaUsdRate: undefined,
 };
@@ -20,12 +20,6 @@ const walletSlice = createSlice({
       state.isConnected = payload;
     },
     setWalletName(state, { payload }: PayloadAction<string>) {
-      if (payload) {
-        localStorage.setItem("walletName", payload);
-      } else {
-        localStorage.removeItem("walletName");
-      }
-
       state.walletName = payload;
     },
     receiveAdaUsdRate(state, action: PayloadAction<AdaUsdRateResponse>) {
