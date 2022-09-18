@@ -51,7 +51,7 @@ const Payment: FunctionComponent = () => {
   const paymentAddress = purchaseOrder?.paymentAddress;
   const isPending = purchaseStatus === PurchaseStatus.Pending;
   const isProcessing = purchaseStatus === PurchaseStatus.Processing;
-  const activePurchase = !!purchaseStatus && (isPending || isProcessing);
+  const activePurchase = isPending || isProcessing;
   const isSupportedBrowser = ["Chrome", "Brave"].includes(browserName);
 
   const initialFormValues: InitialFormValues = {
