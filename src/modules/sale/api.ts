@@ -3,14 +3,14 @@ import { setToastMessage } from "modules/ui";
 import { mursProjectId } from "buildParams";
 import {
   receiveBundleSales,
-  receivePaymentStatus,
   receivePaymentType,
   receivePurchaseOrder,
+  receivePurchaseStatus,
 } from "./slice";
 import {
-  PaymentStatus,
   PurchaseOrderRequest,
   PurchaseOrderResponse,
+  PurchaseStatus,
   PurchaseStatusResponse,
   SaleBundlesResponse,
 } from "./types";
@@ -56,7 +56,7 @@ const extendedApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(receivePurchaseOrder(data));
           dispatch(receivePaymentType(paymentType));
-          dispatch(receivePaymentStatus(PaymentStatus.Pending));
+          dispatch(receivePurchaseStatus(PurchaseStatus.Pending));
           // eslint-disable-next-line
         } catch (err: any) {
           const { error } = err;
@@ -64,7 +64,7 @@ const extendedApi = api.injectEndpoints({
           if (error?.status === 402) {
             dispatch(receivePurchaseOrder(error.data));
             dispatch(receivePaymentType(paymentType));
-            dispatch(receivePaymentStatus(PaymentStatus.Pending));
+            dispatch(receivePurchaseStatus(PurchaseStatus.Pending));
             return;
           }
 
@@ -86,7 +86,7 @@ const extendedApi = api.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(receivePaymentStatus(data.data[1].status));
+          dispatch(receivePurchaseStatus(data.data[1].status));
         } catch (err) {
           dispatch(
             setToastMessage({

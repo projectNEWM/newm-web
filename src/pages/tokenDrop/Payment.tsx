@@ -19,8 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import CopyIcon from "assets/images/CopyIcon";
 import {
-  PaymentStatus,
   PaymentType,
+  PurchaseStatus,
   clearPurchase,
   createPurchase,
   extendedApi as saleApi,
@@ -43,15 +43,17 @@ const Payment: FunctionComponent = () => {
 
   const bundlePrice = useGetMursPrice();
   const { isConnected, isLoading, walletName } = useSelector(selectWallet);
-  const { sales, purchaseOrder, paymentType, paymentStatus } =
+  const { sales, purchaseOrder, paymentType, purchaseStatus } =
     useSelector(selectSale);
 
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
   const paymentAddress = purchaseOrder?.paymentAddress;
   const activePurchase =
-    !!paymentStatus &&
-    [PaymentStatus.Pending, PaymentStatus.Processing].includes(paymentStatus);
+    !!purchaseStatus &&
+    [PurchaseStatus.Pending, PurchaseStatus.Processing].includes(
+      purchaseStatus
+    );
 
   const isSupportedBrowser = ["Chrome", "Brave"].includes(browserName);
 
@@ -157,15 +159,15 @@ const Payment: FunctionComponent = () => {
    * page and clear purchase data.
    */
   useEffect(() => {
-    if (paymentStatus === PaymentStatus.Completed) {
+    if (purchaseStatus === PurchaseStatus.Completed) {
       navigate("../congratulations");
       dispatch(clearPurchase());
     }
 
-    if (paymentStatus === PaymentStatus.Timeout) {
+    if (purchaseStatus === PurchaseStatus.Timeout) {
       dispatch(clearPurchase());
     }
-  }, [paymentStatus, navigate, dispatch]);
+  }, [purchaseStatus, navigate, dispatch]);
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
@@ -357,12 +359,12 @@ const Payment: FunctionComponent = () => {
                 <Box mt={ 3 }>
                   <TransactionStatus
                     title={
-                      paymentStatus === PaymentStatus.Pending
+                      purchaseStatus === PurchaseStatus.Pending
                         ? "Waiting to receive payment..."
                         : "Transaction processing"
                     }
                     message={
-                      paymentStatus === PaymentStatus.Pending
+                      purchaseStatus === PurchaseStatus.Pending
                         ? `You have ${timeRemaining} to complete your ` +
                           "purchase, using the payment address above. " +
                           "Processing may take several minutes once " +

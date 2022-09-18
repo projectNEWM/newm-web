@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
-  PaymentStatus,
   PaymentType,
   PurchaseOrderResponse,
+  PurchaseStatus,
   SaleBundlesResponse,
   SaleState,
 } from "./types";
@@ -11,7 +11,7 @@ const initialState: SaleState = {
   sales: [],
   purchaseOrder: undefined,
   paymentType: undefined,
-  paymentStatus: undefined,
+  purchaseStatus: undefined,
 };
 
 const walletSlice = createSlice({
@@ -27,13 +27,13 @@ const walletSlice = createSlice({
     receivePaymentType(state, action: PayloadAction<PaymentType>) {
       state.paymentType = action.payload;
     },
-    receivePaymentStatus(state, action: PayloadAction<PaymentStatus>) {
-      state.paymentStatus = action.payload;
+    receivePurchaseStatus(state, action: PayloadAction<PurchaseStatus>) {
+      state.purchaseStatus = action.payload;
     },
     clearPurchase(state) {
       state.purchaseOrder = undefined;
       state.paymentType = undefined;
-      state.paymentStatus = undefined;
+      state.purchaseStatus = undefined;
     },
   },
 });
@@ -42,7 +42,7 @@ export const {
   receiveBundleSales,
   receivePurchaseOrder,
   receivePaymentType,
-  receivePaymentStatus,
+  receivePurchaseStatus,
   clearPurchase,
 } = walletSlice.actions;
 

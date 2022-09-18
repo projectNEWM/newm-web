@@ -3,7 +3,7 @@ export enum PaymentType {
   Manual = "manual",
 }
 
-export enum PaymentStatus {
+export enum PurchaseStatus {
   Pending = "pending",
   Processing = "processing",
   Completed = "completed",
@@ -14,7 +14,7 @@ export interface SaleState {
   sales: Array<SaleBundle>;
   purchaseOrder?: PurchaseOrder;
   paymentType?: PaymentType;
-  paymentStatus?: PaymentStatus;
+  purchaseStatus?: PurchaseStatus;
 }
 
 export interface SaleBundle {
@@ -59,12 +59,12 @@ export interface PurchaseOrderRequest {
   readonly paymentType: PaymentType;
 }
 
-export interface PurchaseStatus {
-  readonly status: PaymentStatus;
+export interface PurchaseStatusBody {
+  readonly status: PurchaseStatus;
 }
 
 export interface PurchaseStatusResponse {
   readonly status: string;
   readonly message: string | null;
-  readonly data: [string, PurchaseStatus];
+  readonly data: [string, PurchaseStatusBody];
 }
