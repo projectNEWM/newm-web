@@ -52,7 +52,7 @@ const Payment: FunctionComponent = () => {
   const isPending = purchaseStatus === PurchaseStatus.Pending;
   const isProcessing = purchaseStatus === PurchaseStatus.Processing;
   const activePurchase = isPending || isProcessing;
-  const isSupportedBrowser = ["Chrome", "Brave"].includes(browserName);
+  const isWalletExtensionAvailable = ["Chrome", "Brave"].includes(browserName);
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -258,7 +258,7 @@ const Payment: FunctionComponent = () => {
         <HorizontalLine />
 
         <Stack direction="column" spacing={ 3 }>
-          { isSupportedBrowser && paymentType !== PaymentType.Manual && (
+          { isWalletExtensionAvailable && paymentType !== PaymentType.Manual && (
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
@@ -301,7 +301,7 @@ const Payment: FunctionComponent = () => {
             <Box>
               <Box mb={ 1 }>
                 <SectionHeading>
-                  { !isSupportedBrowser
+                  { !isWalletExtensionAvailable
                     ? "PURCHASE"
                     : paymentAddress
                     ? "PURCHASE MANUALLY"
