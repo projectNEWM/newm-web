@@ -3,6 +3,7 @@ import { createTransaction } from "modules/wallet";
 import { RootState } from "store";
 import { PurchaseOrderRequest } from "./types";
 import saleApi from "./api";
+import { setIsTransactionCreated } from "./slice";
 
 /**
  * Sends an receive address to the back-end, and uses that address
@@ -14,7 +15,7 @@ export const createPurchase = createAsyncThunk(
     { projectId, bundleId, receiveAddress, paymentType }: PurchaseOrderRequest,
     { dispatch, getState }
   ) => {
-    const requestOrderResp = await dispatch(
+    await dispatch(
       saleApi.endpoints.createPurchaseOrder.initiate({
         projectId,
         bundleId,
@@ -23,18 +24,29 @@ export const createPurchase = createAsyncThunk(
       })
     );
 
-    if ("error" in requestOrderResp) return;
-
-    const { paymentAddress, ...data } = requestOrderResp.data.data[1];
-    const cost = Number(data.cost.slice(1));
+    // get payment variables from updated state
     const appState = getState() as RootState;
-    const { walletName } = appState.wallet;
+    const {
+      sale: { purchaseOrder },
+      wallet: { walletName },
+    } = appState;
 
-    await createTransaction({
-      receiveAddress,
-      paymentAddress,
-      cost,
-      walletName,
-    });
+    if (!purchaseOrder) return;
+
+    const { paymentAddress } = purchaseOrder;
+    const cost = Number(purchaseOrder.cost.slice(1));
+
+    try {
+      await createTransaction({
+        receiveAddress,
+        paymentAddress,
+        cost,
+        walletName,
+      });
+
+      dispatch(setIsTransactionCreated(true));
+    } catch (e) {
+      // transaction not created, do nothing
+    }
   }
 );

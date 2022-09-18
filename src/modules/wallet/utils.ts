@@ -191,7 +191,7 @@ export const createTransaction = async (body: CreateTransactionParams) => {
       throw new Error("Error during submission?");
     }
   } catch (err) {
-    // user cancelled transaction, do nothing
+    throw new Error("user cancelled transaction");
   }
 };
 

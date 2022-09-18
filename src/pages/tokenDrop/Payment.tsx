@@ -43,8 +43,13 @@ const Payment: FunctionComponent = () => {
 
   const bundlePrice = useGetMursPrice();
   const { isConnected, isLoading, walletName } = useSelector(selectWallet);
-  const { sales, purchaseOrder, paymentType, purchaseStatus } =
-    useSelector(selectSale);
+  const {
+    sales,
+    purchaseOrder,
+    paymentType,
+    purchaseStatus,
+    isTransactionCreated,
+  } = useSelector(selectSale);
 
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
@@ -277,7 +282,7 @@ const Payment: FunctionComponent = () => {
                   backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
-                  disabled={ !isConnected || activePurchase }
+                  disabled={ !isConnected || isTransactionCreated }
                 >
                   Purchase
                 </FilledButton>
