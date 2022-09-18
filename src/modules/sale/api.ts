@@ -95,7 +95,6 @@ const extendedApi = api.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-
           dispatch(receivePurchaseStatus(data.data[1].status));
         } catch (err) {
           dispatch(

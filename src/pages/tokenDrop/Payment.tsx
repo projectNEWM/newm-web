@@ -32,6 +32,7 @@ import { mursProjectId } from "buildParams";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
 import { padEnd } from "lodash";
+import { displayUsd } from "common/stringUtils";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -261,7 +262,7 @@ const Payment: FunctionComponent = () => {
 
             { !!bundlePrice.usd && (
               <Typography variant="subtitle1">
-                ~{ padEnd(String(bundlePrice.usd), 5, "0") } USD
+                ~{ displayUsd(bundlePrice.usd) } USD
               </Typography>
             ) }
           </Box>
