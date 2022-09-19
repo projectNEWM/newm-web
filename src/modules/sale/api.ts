@@ -1,6 +1,5 @@
 import { phyrhoseApi as api } from "api";
 import { setToastMessage } from "modules/ui";
-import { mursProjectId } from "buildParams";
 import {
   receiveBundleSales,
   receivePaymentType,
@@ -15,6 +14,8 @@ import {
   PurchaseStatusResponse,
   SaleBundlesResponse,
 } from "./types";
+
+const mursProjectId = Number(process.env.REACT_APP_MURS_PROJECT_ID) || 6;
 
 const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({

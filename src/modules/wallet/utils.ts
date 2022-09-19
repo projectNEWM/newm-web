@@ -4,7 +4,6 @@ import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
 import cardwalletLogo from "assets/images/cardwallet-logo.svg";
 import gerowalletLogo from "assets/images/gerowallet-logo.png";
-import { networkMode } from "buildParams";
 import {
   Address,
   BigNum,
@@ -20,6 +19,9 @@ import {
   Value,
 } from "@dcspark/cardano-multiplatform-lib-asmjs";
 import { CreateTransactionParams, EnabledWallet, Wallets } from "./types";
+
+// 1 = Mainnet, 0 = Testnet
+const networkMode = Number(process.env.REACT_APP_NETWORK_MODE) || 0;
 
 export const supportedWallets = [
   "nami",

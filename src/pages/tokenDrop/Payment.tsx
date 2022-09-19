@@ -28,10 +28,11 @@ import {
   useGetMursPrice,
 } from "modules/sale";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
-import { mursProjectId } from "buildParams";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
+
+const mursProjectId = Number(process.env.REACT_APP_MURS_PROJECT_ID) || 6;
 
 interface InitialFormValues {
   readonly walletAddress: string;
