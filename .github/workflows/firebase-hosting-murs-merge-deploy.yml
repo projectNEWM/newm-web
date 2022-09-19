@@ -1,0 +1,35 @@
+name: Deploy Murs project to Firebase Hosting on merge
+'on':
+  push:
+    branches:
+      - project/murs-token-drop
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run build
+        env:
+          REACT_APP_ALPHA_ADVANTAGE_API_KEY: ${{ secrets.ALPHA_ADVANTAGE_API_KEY }}
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}'
+          channelId: live
+          target: projectmurs
+          projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "Murs Project updated. View at https://projectmurs.web.app"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
