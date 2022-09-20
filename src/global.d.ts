@@ -7,6 +7,10 @@ declare module "*.svg" {
   const value: never;
   export = value;
 }
+declare module "*.mp3" {
+  const value: never;
+  export = value;
+}
 
 declare module "cloudinary-react";
 declare module "react-transition-group";

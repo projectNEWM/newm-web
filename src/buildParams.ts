@@ -3,12 +3,6 @@ export const isProd = process.env.node_env === "production";
 // Change this value to disable Redux logging in development
 export const enableReduxLogging = true;
 
-// TODO: Update this with murs project production ID
-export const mursProjectId = isProd ? 12 : 6;
-
-// 1 = Mainnet, 0 = Testnet
-export const networkMode = isProd ? 1 : 0;
-
 // TODO: Update with production url hosts
 export const baseUrls: Record<string, string> = {
   newm: isProd

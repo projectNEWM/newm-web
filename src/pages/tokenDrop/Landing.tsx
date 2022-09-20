@@ -1,53 +1,36 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import { FilledButton, HorizontalLine, Typography } from "elements";
-import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, useMemo, useState } from "react";
 import mursProfileImageXs from "assets/images/murs-profile-small.png";
 import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
 import StopIcon from "assets/images/StopIcon";
 import { DisplayText, SectionHeading } from "components";
-
-const songUrl =
-  "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=" +
-  "Never+Gonna+Give+You+Up-+Original&filename=" +
-  "mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3";
+import { Howl } from "howler";
+import song from "assets/audio/song.mp3";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const audio = useMemo(() => new Audio(songUrl), []);
 
-  const handlePlaySong = () => {
-    audio.play();
-  };
-
-  const handleStopSong = () => {
-    audio.pause();
-    audio.currentTime = 0;
-  };
+  const audio = useMemo(
+    () =>
+      new Howl({
+        src: song,
+        onplay: () => setIsPlaying(true),
+        onstop: () => setIsPlaying(false),
+        onend: () => setIsPlaying(false),
+      }),
+    []
+  );
 
   const handleNavigate = () => {
-    handleStopSong();
+    audio.stop();
     navigate("payment");
   };
-
-  useEffect(() => {
-    const handleIsPlaying = () => setIsPlaying(true);
-    const handleIsStopped = () => setIsPlaying(false);
-
-    audio.addEventListener("play", handleIsPlaying, false);
-    audio.addEventListener("pause", handleIsStopped, false);
-    audio.addEventListener("ended", handleIsStopped, false);
-
-    return () => {
-      audio.removeEventListener("play", handleIsPlaying, false);
-      audio.removeEventListener("pause", handleIsStopped, false);
-      audio.removeEventListener("ended", handleIsStopped, false);
-    };
-  }, [audio]);
 
   return (
     <Box display="flex" flexDirection="column">
@@ -99,14 +82,14 @@ const Landing: FunctionComponent = () => {
                 { isPlaying ? (
                   <IconButton
                     aria-label="pause MURS song"
-                    onClick={ handleStopSong }
+                    onClick={ () => audio.stop() }
                   >
                     <StopIcon />
                   </IconButton>
                 ) : (
                   <IconButton
                     aria-label="play MURS song"
-                    onClick={ handlePlaySong }
+                    onClick={ () => audio.play() }
                   >
                     <PlayIcon />
                   </IconButton>
