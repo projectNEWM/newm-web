@@ -1,5 +1,5 @@
 export const isProd = process.env.node_env === "production";
-export const isMainNet = process.env.REACT_APP_NETWORK_MODE !== "0";
+export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 
 // Change this value to disable Redux logging in development
 export const enableReduxLogging = true;
