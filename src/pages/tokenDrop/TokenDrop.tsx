@@ -2,13 +2,14 @@ import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { FunctionComponent } from "react";
 import theme from "theme";
-import mursProfileImageLg from "assets/images/murs-profile-cut-tinified.png";
-import mursProfileImageSm from "assets/images/murs-profile-cropped.png";
+import profileImageLg from "assets/images/profile-cut-tinified.png";
+import profileImageSm from "assets/images/profile-cropped.png";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
+import { projectDetails } from "buildParams";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -47,11 +48,7 @@ const TokenDrop: FunctionComponent = () => {
           display: ["flex", "flex", "none"],
         } }
       >
-        <img
-          alt="murs profile"
-          src={ mursProfileImageSm }
-          style={ { width: "100%" } }
-        />
+        <img alt="profile" src={ profileImageSm } style={ { width: "100%" } } />
       </Box>
 
       <Container maxWidth={ false }>
@@ -64,7 +61,7 @@ const TokenDrop: FunctionComponent = () => {
         >
           <Stack spacing={ 1 } sx={ { marginBottom: 1 } }>
             <Typography variant="h1" fontSize={ 100 } lineHeight="80px">
-              MURS
+              { projectDetails.artistName }
             </Typography>
 
             <Typography
@@ -72,7 +69,7 @@ const TokenDrop: FunctionComponent = () => {
               color="pink"
               sx={ theme.typography.emphasized }
             >
-              Moodswingz Cryptomedia Group
+              { projectDetails.subtitle }
             </Typography>
           </Stack>
 
@@ -102,11 +99,7 @@ const TokenDrop: FunctionComponent = () => {
             ],
           } }
         >
-          <img
-            alt="murs profile"
-            src={ mursProfileImageLg }
-            style={ { height: "100%" } }
-          />
+          <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
         </Box>
 
         <Box

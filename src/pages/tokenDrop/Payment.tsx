@@ -12,7 +12,7 @@ import {
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import mursProfileImageSm from "assets/images/murs-profile@60px.png";
+import profileImageSm from "assets/images/profile@60px.png";
 import { addressFromHex, selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,25 +25,26 @@ import {
   createPurchase,
   extendedApi as saleApi,
   selectSale,
-  useGetMursPrice,
+  useGetSalePrice,
 } from "modules/sale";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
-
-const mursProjectId = Number(process.env.REACT_APP_MURS_PROJECT_ID) || 6;
+import { projectDetails } from "buildParams";
 
 interface InitialFormValues {
   readonly walletAddress: string;
 }
+
+const { projectId } = projectDetails;
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const bundlePrice = useGetMursPrice();
+  const bundlePrice = useGetSalePrice(projectId);
   const {
     isConnected,
     isLoading: isWalletLoading,
@@ -95,7 +96,7 @@ const Payment: FunctionComponent = () => {
 
     dispatch(
       createPurchase({
-        projectId: mursProjectId,
+        projectId,
         bundleId: sales[0].id,
         receiveAddress: encoded,
         paymentType: PaymentType.Wallet,
@@ -111,7 +112,7 @@ const Payment: FunctionComponent = () => {
   const handleSubmitForm = (values: InitialFormValues) => {
     dispatch(
       saleApi.endpoints.createPurchaseOrder.initiate({
-        projectId: mursProjectId,
+        projectId,
         bundleId: sales[0].id,
         receiveAddress: values.walletAddress,
         paymentType: PaymentType.Manual,
@@ -200,16 +201,18 @@ const Payment: FunctionComponent = () => {
           >
             <Stack spacing={ 2 } direction="row" alignItems="center">
               <img
-                src={ mursProfileImageSm }
+                src={ profileImageSm }
                 style={ { width: 60, height: 60, borderRadius: "50%" } }
-                alt="murs profile"
+                alt="profile"
               />
 
               <Box flexDirection="column">
                 <Typography variant="h4" fontWeight={ 700 }>
-                  Break up
+                  { projectDetails.songName }
                 </Typography>
-                <Typography variant="subtitle2">MURS</Typography>
+                <Typography variant="subtitle2">
+                  { projectDetails.artistName }
+                </Typography>
               </Box>
             </Stack>
 
