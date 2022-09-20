@@ -12,7 +12,7 @@ import {
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import mursProfileImageSm from "assets/images/murs-profile@60px.png";
+import mursProfileImageSm from "assets/images/profile@60px.png";
 import { addressFromHex, selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

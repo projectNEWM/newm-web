@@ -1,7 +1,7 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
-import mursProfileImageXs from "assets/images/murs-profile-small.png";
+import mursProfileImageXs from "assets/images/profile-small.png";
 import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
