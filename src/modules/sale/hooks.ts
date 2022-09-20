@@ -7,7 +7,7 @@ export const useGetSalePrice = (): BundlePrice => {
   const projectId = process.env.REACT_APP_PROJECT_ID;
 
   if (!projectId) {
-    throw new Error("No project ID environment variable set");
+    throw new Error("REACT_APP_PROJECT_ID environment variable not set");
   }
 
   const { adaUsdRate } = useSelector(selectWallet);

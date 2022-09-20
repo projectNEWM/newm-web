@@ -9,6 +9,7 @@ import StopIcon from "assets/images/StopIcon";
 import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import song from "assets/audio/song.mp3";
+import { projectDetails } from "buildParams";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
@@ -36,16 +37,7 @@ const Landing: FunctionComponent = () => {
     <Box display="flex" flexDirection="column">
       <Box mb={ 4 }>
         <Typography variant="subtitle1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed nibh
-          sit amet mi euismod pulvinar. Maecenas pulvinar lorem vel erat
-          efficitur, interdum ultrices magna ullamcorper. Nam imperdiet nibh
-          semper eros iaculis dictum. Donec non sapien sit amet tortor tincidunt
-          varius. Etiam hendrerit, felis eleifend maximus ultricies, ligula eros
-          maximus enim, non congue quam nisl id turpis. Ut eget fermentum massa.
-          Proin fermentum porttitor ipsum sit amet interdum. Vestibulum lacinia
-          sagittis malesuada. Fusce eget feugiat sapien. Proin eu sem vitae
-          tortor sagittis ornare. Quisque tempus libero id accumsan sodales.
-          Vivamus quam mi, molestie a lobortis maximus, bibendum nec nunc.
+          { projectDetails.description }
         </Typography>
       </Box>
 
@@ -81,14 +73,14 @@ const Landing: FunctionComponent = () => {
               >
                 { isPlaying ? (
                   <IconButton
-                    aria-label="pause MURS song"
+                    aria-label="pause song"
                     onClick={ () => audio.stop() }
                   >
                     <StopIcon />
                   </IconButton>
                 ) : (
                   <IconButton
-                    aria-label="play MURS song"
+                    aria-label="play song"
                     onClick={ () => audio.play() }
                   >
                     <PlayIcon />
@@ -99,14 +91,16 @@ const Landing: FunctionComponent = () => {
               <img
                 src={ mursProfileImageXs }
                 style={ { width: 40, height: 40, borderRadius: "50%" } }
-                alt="MURS profile"
+                alt="artist profile"
               />
 
               <Box>
                 <Typography variant="h4" fontWeight={ 700 }>
                   Break up
                 </Typography>
-                <Typography variant="subtitle2">MURS</Typography>
+                <Typography variant="subtitle2">
+                  { projectDetails.artistName }
+                </Typography>
               </Box>
             </Stack>
 

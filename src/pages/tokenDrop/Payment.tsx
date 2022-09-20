@@ -31,8 +31,13 @@ import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
+import { projectDetails } from "buildParams";
 
-const mursProjectId = Number(process.env.REACT_APP_MURS_PROJECT_ID) || 6;
+const projectId = Number(process.env.REACT_APP_PROJECT_ID);
+
+if (!projectId) {
+  throw new Error("REACT_APP_PROJECT_ID environment variable not set");
+}
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -95,7 +100,7 @@ const Payment: FunctionComponent = () => {
 
     dispatch(
       createPurchase({
-        projectId: mursProjectId,
+        projectId: projectId,
         bundleId: sales[0].id,
         receiveAddress: encoded,
         paymentType: PaymentType.Wallet,
@@ -111,7 +116,7 @@ const Payment: FunctionComponent = () => {
   const handleSubmitForm = (values: InitialFormValues) => {
     dispatch(
       saleApi.endpoints.createPurchaseOrder.initiate({
-        projectId: mursProjectId,
+        projectId,
         bundleId: sales[0].id,
         receiveAddress: values.walletAddress,
         paymentType: PaymentType.Manual,
@@ -209,7 +214,9 @@ const Payment: FunctionComponent = () => {
                 <Typography variant="h4" fontWeight={ 700 }>
                   Break up
                 </Typography>
-                <Typography variant="subtitle2">MURS</Typography>
+                <Typography variant="subtitle2">
+                  { projectDetails.artistName }
+                </Typography>
               </Box>
             </Stack>
 

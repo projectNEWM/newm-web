@@ -15,3 +15,19 @@ export const baseUrls: Record<string, string> = {
   alphaAdvantage: "https://www.alphavantage.co/",
   cloudinary: "https://api.cloudinary.com/",
 };
+
+// Update values here for the artist being featured
+export const projectDetails = {
+  artistName: "MURS",
+  subtitle: "Moodswingz Cryptomedia Group",
+  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis 
+    sed nibh sit amet mi euismod pulvinar. Maecenas pulvinar lorem vel erat
+    efficitur, interdum ultrices magna ullamcorper. Nam imperdiet nibh
+    semper eros iaculis dictum. Donec non sapien sit amet tortor tincidunt
+    varius. Etiam hendrerit, felis eleifend maximus ultricies, ligula eros
+    maximus enim, non congue quam nisl id turpis. Ut eget fermentum massa.
+    Proin fermentum porttitor ipsum sit amet interdum. Vestibulum lacinia
+    sagittis malesuada. Fusce eget feugiat sapien. Proin eu sem vitae
+    tortor sagittis ornare. Quisque tempus libero id accumsan sodales.
+    Vivamus quam mi, molestie a lobortis maximus, bibendum nec nunc.`,
+};

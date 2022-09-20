@@ -9,6 +9,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
+import { projectDetails } from "buildParams";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -64,7 +65,7 @@ const TokenDrop: FunctionComponent = () => {
         >
           <Stack spacing={ 1 } sx={ { marginBottom: 1 } }>
             <Typography variant="h1" fontSize={ 100 } lineHeight="80px">
-              MURS
+              { projectDetails.artistName }
             </Typography>
 
             <Typography
@@ -72,7 +73,7 @@ const TokenDrop: FunctionComponent = () => {
               color="pink"
               sx={ theme.typography.emphasized }
             >
-              Moodswingz Cryptomedia Group
+              { projectDetails.subtitle }
             </Typography>
           </Stack>
 
