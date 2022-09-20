@@ -19,6 +19,7 @@ export const baseUrls: Record<string, string> = {
 // Update values here for the artist being featured
 export const projectDetails = {
   artistName: "MURS",
+  songName: "Break up",
   subtitle: "Moodswingz Cryptomedia Group",
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis 
     sed nibh sit amet mi euismod pulvinar. Maecenas pulvinar lorem vel erat
