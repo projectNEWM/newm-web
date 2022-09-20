@@ -1,22 +1,28 @@
 import { selectWallet } from "modules/wallet";
 import { useSelector } from "react-redux";
 import { selectSale } from "./selectors";
+import { BundlePrice, SaleBundle } from "./types";
 
-interface MursPrice {
-  readonly ada?: number;
-  readonly usd?: number;
-}
+export const useGetSalePrice = (): BundlePrice => {
+  const projectId = process.env.REACT_APP_PROJECT_ID;
 
-export const useGetMursPrice = (): MursPrice => {
+  if (!projectId) {
+    throw new Error("No project ID environment variable set");
+  }
+
   const { adaUsdRate } = useSelector(selectWallet);
-  const { sales } = useSelector(selectSale);
+  const { sales = [] } = useSelector(selectSale);
 
-  const mursSale = sales.length ? sales[0] : undefined;
-  const bundleAdaPrice = mursSale ? mursSale.cost / 1000000 : undefined;
+  const sale = sales.find(hasProjectId(projectId));
+  const bundleAdaPrice = sale ? sale.cost / 1000000 : undefined;
   const bundleUsdPrice =
     bundleAdaPrice &&
     adaUsdRate &&
     Math.round(adaUsdRate * bundleAdaPrice * 100) / 100;
 
   return { ada: bundleAdaPrice, usd: bundleUsdPrice };
+};
+
+const hasProjectId = (projectId: string) => (el: SaleBundle) => {
+  return el.projectId === Number(projectId);
 };

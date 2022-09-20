@@ -21,6 +21,7 @@ export interface SaleState {
 
 export interface SaleBundle {
   readonly id: number;
+  readonly projectId: number;
   readonly cost: number;
   readonly tokenCostType: string | null;
   readonly tokenCost: number | null;
@@ -69,4 +70,9 @@ export interface PurchaseStatusResponse {
   readonly status: string;
   readonly message: string | null;
   readonly data: [string, PurchaseStatusBody];
+}
+
+export interface BundlePrice {
+  readonly ada?: number;
+  readonly usd?: number;
 }

@@ -15,13 +15,13 @@ import {
   SaleBundlesResponse,
 } from "./types";
 
-const mursProjectId = Number(process.env.REACT_APP_MURS_PROJECT_ID) || 6;
+const projectId = Number(process.env.REACT_APP_PROJECT_ID) || 6;
 
 const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSaleBundles: build.query<SaleBundlesResponse, void>({
       query: () => ({
-        url: `firehose/ftSaleBundles?projectId=${mursProjectId}`,
+        url: `firehose/ftSaleBundles?projectId=${projectId}`,
         method: "GET",
       }),
 

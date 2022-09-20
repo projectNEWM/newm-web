@@ -25,7 +25,7 @@ import {
   createPurchase,
   extendedApi as saleApi,
   selectSale,
-  useGetMursPrice,
+  useGetSalePrice,
 } from "modules/sale";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
@@ -43,7 +43,7 @@ const Payment: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const bundlePrice = useGetMursPrice();
+  const bundlePrice = useGetSalePrice();
   const {
     isConnected,
     isLoading: isWalletLoading,
