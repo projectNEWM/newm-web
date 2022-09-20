@@ -10,6 +10,7 @@ import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import song from "assets/audio/song.mp3";
 import { projectDetails } from "buildParams";
+import { executeRecaptcha } from "common";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
@@ -28,7 +29,19 @@ const Landing: FunctionComponent = () => {
     []
   );
 
+  const handlePlaySong = () => {
+    executeRecaptcha("playSong");
+    audio.play();
+  };
+
+  const handleStopSong = () => {
+    executeRecaptcha("stopSong");
+    audio.stop();
+  };
+
   const handleNavigate = () => {
+    executeRecaptcha("navigateToPayment");
+
     audio.stop();
     navigate("payment");
   };
@@ -72,17 +85,11 @@ const Landing: FunctionComponent = () => {
                 alignItems="center"
               >
                 { isPlaying ? (
-                  <IconButton
-                    aria-label="pause song"
-                    onClick={ () => audio.stop() }
-                  >
+                  <IconButton aria-label="stop song" onClick={ handleStopSong }>
                     <StopIcon />
                   </IconButton>
                 ) : (
-                  <IconButton
-                    aria-label="play song"
-                    onClick={ () => audio.play() }
-                  >
+                  <IconButton aria-label="play song" onClick={ handlePlaySong }>
                     <PlayIcon />
                   </IconButton>
                 ) }

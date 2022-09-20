@@ -10,3 +10,4 @@ export * from "./urlUtils";
 export * from "./objectUtils";
 export * from "./mockConstants";
 export * from "./dateUtils";
+export * from "./securityUtils";
