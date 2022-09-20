@@ -212,7 +212,7 @@ const Payment: FunctionComponent = () => {
 
               <Box flexDirection="column">
                 <Typography variant="h4" fontWeight={ 700 }>
-                  Break up
+                  { projectDetails.songName }
                 </Typography>
                 <Typography variant="subtitle2">
                   { projectDetails.artistName }
