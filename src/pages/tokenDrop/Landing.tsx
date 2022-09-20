@@ -105,7 +105,7 @@ const Landing: FunctionComponent = () => {
             </Stack>
 
             <a
-              href="https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90"
+              href={ projectDetails.spotifyLink }
               target="_blank"
               rel="noopener noreferrer"
             >

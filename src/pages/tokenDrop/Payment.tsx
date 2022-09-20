@@ -33,15 +33,11 @@ import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
 import { projectDetails } from "buildParams";
 
-const projectId = Number(process.env.REACT_APP_PROJECT_ID);
-
-if (!projectId) {
-  throw new Error("REACT_APP_PROJECT_ID environment variable not set");
-}
-
 interface InitialFormValues {
   readonly walletAddress: string;
 }
+
+const projectId = projectDetails.projectId;
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();

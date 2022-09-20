@@ -1,4 +1,5 @@
 import { phyrhoseApi as api } from "api";
+import { projectDetails } from "buildParams";
 import { setToastMessage } from "modules/ui";
 import {
   receiveBundleSales,
@@ -15,13 +16,11 @@ import {
   SaleBundlesResponse,
 } from "./types";
 
-const projectId = Number(process.env.REACT_APP_PROJECT_ID) || 6;
-
 const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSaleBundles: build.query<SaleBundlesResponse, void>({
       query: () => ({
-        url: `firehose/ftSaleBundles?projectId=${projectId}`,
+        url: `firehose/ftSaleBundles?projectId=${projectDetails.projectId}`,
         method: "GET",
       }),
 

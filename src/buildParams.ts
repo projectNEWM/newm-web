@@ -21,6 +21,9 @@ export const projectDetails = {
   artistName: "MURS",
   songName: "Break up",
   subtitle: "Moodswingz Cryptomedia Group",
+  projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
+  spotifyLink:
+    "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis 
     sed nibh sit amet mi euismod pulvinar. Maecenas pulvinar lorem vel erat
     efficitur, interdum ultrices magna ullamcorper. Nam imperdiet nibh
