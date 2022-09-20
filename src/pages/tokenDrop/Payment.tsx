@@ -44,7 +44,7 @@ const Payment: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const bundlePrice = useGetSalePrice();
+  const bundlePrice = useGetSalePrice(projectId);
   const {
     isConnected,
     isLoading: isWalletLoading,
