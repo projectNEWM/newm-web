@@ -37,7 +37,7 @@ interface InitialFormValues {
   readonly walletAddress: string;
 }
 
-const projectId = projectDetails.projectId;
+const { projectId } = projectDetails;
 
 const Payment: FunctionComponent = () => {
   const theme = useTheme();
@@ -96,7 +96,7 @@ const Payment: FunctionComponent = () => {
 
     dispatch(
       createPurchase({
-        projectId: projectId,
+        projectId,
         bundleId: sales[0].id,
         receiveAddress: encoded,
         paymentType: PaymentType.Wallet,
