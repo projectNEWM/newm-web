@@ -50,12 +50,10 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
-  walletAddress: Yup.string()
-    .test(
-      "is-trimmed",
-      "Wallet address must not start or end with a space character",
-      (walletAddress) =>
-        walletAddress ? walletAddress === walletAddress?.trim() : false
-    )
-    .required("Wallet address is required"),
+  walletAddress: Yup.string().test(
+    "is-trimmed",
+    "Wallet address must not start or end with a space character",
+    (walletAddress) =>
+      walletAddress ? walletAddress === walletAddress?.trim() : true
+  ),
 };

@@ -150,10 +150,10 @@ const theme = createTheme({
   gradients: {
     company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",
     artist: "linear-gradient(53.48deg, #CC33CC 0%, #FF3366 100%);",
-    magazine: "linear-gradient(53.48deg, #FF3366 0%, #FFFF66 100%);",
+    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
     product: "linear-gradient(53.48deg, #FF9900 0%, #FF3366 100%);",
-    partners: "linear-gradient(53.48deg, #FFFF66 0%, #FF9900 100%);",
-    crypto: "linear-gradient(53.48deg, #66FF66 0%, #0099CC 100%);",
+    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
+    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
   },
   breakpoints: {
     values: {
