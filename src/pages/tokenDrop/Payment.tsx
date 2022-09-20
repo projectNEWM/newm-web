@@ -12,7 +12,7 @@ import {
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import mursProfileImageSm from "assets/images/profile@60px.png";
+import profileImageSm from "assets/images/profile@60px.png";
 import { addressFromHex, selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -201,9 +201,9 @@ const Payment: FunctionComponent = () => {
           >
             <Stack spacing={ 2 } direction="row" alignItems="center">
               <img
-                src={ mursProfileImageSm }
+                src={ profileImageSm }
                 style={ { width: 60, height: 60, borderRadius: "50%" } }
-                alt="murs profile"
+                alt="profile"
               />
 
               <Box flexDirection="column">

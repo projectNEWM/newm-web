@@ -10,7 +10,7 @@ export const baseUrls: Record<string, string> = {
     ? "https://staging-newm-server.herokuapp.com/"
     : "https://staging-newm-server.herokuapp.com/",
   phyrhose: isMainNet
-    ? "https://testnet.phyrhose.io/"
+    ? "https://api.phyrhose.io/"
     : "https://testnet.phyrhose.io/",
   alphaAdvantage: "https://www.alphavantage.co/",
   cloudinary: "https://api.cloudinary.com/",
