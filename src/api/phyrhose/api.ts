@@ -8,12 +8,11 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrls.phyrhose,
     prepareHeaders: async (headers, { endpoint }) => {
-      const recaptchaToken = await executeRecaptcha(endpoint);
-
       const isLocalHost = location.hostname === "localhost";
       const isPurchaseOrder = endpoint === "createPurchaseOrder";
 
       if (!isLocalHost && isPurchaseOrder) {
+        const recaptchaToken = await executeRecaptcha(endpoint);
         headers.set("g-recaptcha-response", recaptchaToken);
       }
 

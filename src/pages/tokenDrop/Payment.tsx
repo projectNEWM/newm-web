@@ -28,7 +28,7 @@ import {
   useGetSalePrice,
 } from "modules/sale";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
-import { displayCountdown, executeRecaptcha } from "common";
+import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
 import { projectDetails } from "buildParams";
@@ -81,8 +81,6 @@ const Payment: FunctionComponent = () => {
   };
 
   const handleWalletPurchase = async () => {
-    executeRecaptcha("walletPurchase");
-
     if (!window.Wallets[walletName] || !sales[0]) {
       dispatch(
         setToastMessage({
@@ -107,8 +105,6 @@ const Payment: FunctionComponent = () => {
   };
 
   const handleCopyToClipboard = async (text: string) => {
-    executeRecaptcha("copyAddress");
-
     await navigator.clipboard.writeText(text);
     alert("Payment address copied to clipboard");
   };
