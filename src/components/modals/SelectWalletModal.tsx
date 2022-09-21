@@ -51,7 +51,8 @@ const SelectWalletModal: FunctionComponent = () => {
     if (availableWallets.length > 0) {
       return {
         title: "Select an installed wallet",
-        subtitle: "Please select an installed wallet to mint your song with.",
+        subtitle:
+          "Please select the wallet you would like to make the payment with.",
         wallets: availableWallets,
         buttons: [
           {
