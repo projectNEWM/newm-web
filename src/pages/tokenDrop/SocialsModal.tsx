@@ -34,13 +34,36 @@ const SocialsModal = () => (
           flexWrap: "wrap",
         } }
       >
-        <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
-        <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
-        <AccentButton
-          startIcon={ <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" /> }
+        <a
+          href="https://twitter.com/MURS"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
         >
-          Spotify
-        </AccentButton>
+          <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
+        </a>
+        <a
+          href="https://www.instagram.com/murs316/"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
+        </a>
+        <a
+          href="https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton
+            startIcon={
+              <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" />
+            }
+          >
+            Spotify
+          </AccentButton>
+        </a>
       </Stack>
     </Stack>
     <Stack sx={ { alignItems: "start", mt: [3, 3, 4] } }>
@@ -63,13 +86,36 @@ const SocialsModal = () => (
           flexWrap: "wrap",
         } }
       >
-        <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
-        <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
-        <AccentButton
-          startIcon={ <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" /> }
+        <a
+          href="https://twitter.com/MURS"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
         >
-          Spotify
-        </AccentButton>
+          <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
+        </a>
+        <a
+          href="https://www.instagram.com/murs316/"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
+        </a>
+        <a
+          href="https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton
+            startIcon={
+              <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" />
+            }
+          >
+            Spotify
+          </AccentButton>
+        </a>
       </Stack>
     </Stack>
     <Stack sx={ { alignItems: "start", mt: [3, 3, 4] } }>
@@ -92,9 +138,30 @@ const SocialsModal = () => (
           flexWrap: "wrap",
         } }
       >
-        <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
-        <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
-        <AccentButton startIcon={ <GoogleChromeIcon /> }>Website</AccentButton>
+        <a
+          href="https://twitter.com/projectNEWM"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton startIcon={ <TwitterIcon /> }>Twitter</AccentButton>
+        </a>
+        <a
+          href="https://www.instagram.com/projectnewm.io/"
+          rel="noopener noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton startIcon={ <InstagramIcon /> }>Instagram</AccentButton>
+        </a>
+        <a
+          href="https://newm.io/"
+          rel="noreferrer"
+          style={ { textDecoration: "none" } }
+          target="_blank"
+        >
+          <AccentButton startIcon={ <GoogleChromeIcon /> }>Website</AccentButton>
+        </a>
       </Stack>
     </Stack>
   </>

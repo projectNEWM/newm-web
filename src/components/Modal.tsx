@@ -37,7 +37,7 @@ const Modal: FunctionComponent<ModalProps> = ({
   return open ? (
     <Box
       sx={ {
-        backgroundColor: theme.colors.black,
+        backgroundColor: "rgba(0,0,0,.9)",
         bottom: 0,
         display: "flex",
         justifyContent: "center",
