@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "staging": "newm-artist-portal"
+  },
+  "targets": {
+    "newm-artist-portal": {
+      "hosting": {
+        "projectmurs": [
+          "projectmurs"
+        ]
+      }
+    }
+  }
+}
