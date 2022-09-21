@@ -11,11 +11,11 @@ let recaptcha: ReCaptchaInstance | undefined;
 
 export const useInitializeRecaptcha = () => {
   useEffect(() => {
-    const initiateRecaptcha = async () => {
+    const initializeRecaptcha = async () => {
       recaptcha = await load(siteKey);
     };
 
-    initiateRecaptcha();
+    initializeRecaptcha();
   }, []);
 };
 
