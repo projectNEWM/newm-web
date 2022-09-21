@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "projectmurs",
     "public": "build",
     "ignore": [
       "firebase.json",
