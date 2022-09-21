@@ -73,7 +73,7 @@ const Landing: FunctionComponent = () => {
               >
                 { isPlaying ? (
                   <IconButton
-                    aria-label="pause song"
+                    aria-label="stop song"
                     onClick={ () => audio.stop() }
                   >
                     <StopIcon />

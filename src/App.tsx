@@ -12,17 +12,21 @@ import theme from "theme";
 import TokenDrop from "pages/tokenDrop/TokenDrop";
 import ScrollToTopOnNavigation from "components/ScrollToTopOnNavigation";
 import { PersistGate } from "redux-persist/integration/react";
+import { useInitializeRecaptcha } from "common";
 import store, { persistor } from "./store";
 import "./App.css";
 
 const App = () => {
+  useInitializeRecaptcha();
+
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>
         <PersistGate loading={ null } persistor={ persistor }>
-          <Toast />
           <CssBaseline />
           <InitializeWallet />
+
+          <Toast />
           <SelectWalletModal />
 
           <Background>
