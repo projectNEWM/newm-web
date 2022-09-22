@@ -13,12 +13,12 @@ const songSlice = createSlice({
     receiveSongs(state, { payload }) {
       state.songs = payload;
     },
-    setIsLoading(state, { payload }) {
+    setSongIsLoading(state, { payload }) {
       state.isLoading = payload;
     },
   },
 });
 
-export const { receiveSongs, setIsLoading } = songSlice.actions;
+export const { receiveSongs, setSongIsLoading } = songSlice.actions;
 
 export default songSlice.reducer;

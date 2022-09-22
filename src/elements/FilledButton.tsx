@@ -10,17 +10,15 @@ interface FilledButtonProps extends ButtonProps {
   fontWeight?: number;
 }
 
-const FilledButtonMain = styled(Button)(
-  ({ theme }) => `
-    border-radius: 7px;
-    line-height: ${theme.button.lineHeight};
-    color: white;
-    font: ${theme.typography.button.font};
-    text-transform: none;
-    padding: 12px 16px;
-    background-color: transparent;
-  `
-);
+const FilledButtonMain = styled(Button)`
+  border-radius: 7px;
+  line-height: ${theme.button.lineHeight};
+  color: white;
+  font: ${theme.typography.button.font};
+  text-transform: none;
+  padding: 12px 16px;
+  background-color: transparent;
+`;
 
 const FilledButton: FunctionComponent<FilledButtonProps> = ({
   children,
