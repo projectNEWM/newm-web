@@ -43,9 +43,7 @@ const SignUp: FunctionComponent = () => {
     confirmPassword: commonYupValidation.confirmPassword.required(
       "Confirm password is required"
     ),
-    walletAddress: commonYupValidation.walletAddress.required(
-      "Wallet address is required"
-    ),
+    walletAddress: commonYupValidation.walletAddress,
   };
 
   const handleVerificationEmail = (values: FormikValues): void => {
