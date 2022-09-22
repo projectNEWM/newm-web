@@ -34,4 +34,41 @@ export const projectDetails = {
     sagittis malesuada. Fusce eget feugiat sapien. Proin eu sem vitae
     tortor sagittis ornare. Quisque tempus libero id accumsan sodales.
     Vivamus quam mi, molestie a lobortis maximus, bibendum nec nunc.`,
+  socials: [
+    {
+      heading: "MURS",
+      twitter: "https://twitter.com/MURS",
+      instagram: "https://www.instagram.com/murs316/",
+      spotify:
+        "https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg",
+    },
+    {
+      heading: "Moodswingz",
+      twitter: "https://twitter.com/MURS",
+      instagram: "https://www.instagram.com/murs316/",
+      spotify:
+        "https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg",
+    },
+    {
+      heading: "NEWM",
+      twitter: "https://twitter.com/projectNEWM",
+      instagram: "https://www.instagram.com/projectnewm.io/",
+      website: "https://newm.io/",
+    },
+  ],
+  faq: [
+    {
+      question: "What is your motto?",
+      answer: "Nothing matters. Nothing exists on purpose.",
+    },
+    {
+      question: "That is a bit dark is it not?",
+      answer: "Everything matters everything exists on purpose.",
+    },
+    {
+      question:
+        "What is the longest question you have ever asked somebody that takes up to two lines",
+      answer: "Answer",
+    },
+  ],
 };
