@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { HorizontalLine, LoadingButton, Typography } from "elements";
+import { FilledButton, HorizontalLine, Typography } from "elements";
 import { Box, Container, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
@@ -156,7 +156,17 @@ const UploadSong: FunctionComponent = () => {
                 </Box>
 
                 <Box mt={ 5 }>
-                  <LoadingButton label="Upload" isLoading={ isLoading } />
+                  <FilledButton
+                    type="submit"
+                    isLoading={ isLoading }
+                    sx={ {
+                      maxWidth: ["340px", "340px", null],
+                      minWidth: "100px",
+                      minHeight: "44px",
+                    } }
+                  >
+                    Upload
+                  </FilledButton>
                 </Box>
               </Stack>
             </Form>

@@ -3,6 +3,7 @@ import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
+import { setIsLoading } from "./slice";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -13,6 +14,9 @@ import { extendedApi as songApi } from "./api";
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongFormValues, thunkApi) => {
+    // set loading state to show loading indicator
+    thunkApi.dispatch(setIsLoading(true));
+
     // optional upload params to format or crop image could go here
     const uploadParams = {};
 
@@ -75,5 +79,8 @@ export const uploadSong = createAsyncThunk(
 
     // fetch user's songs
     thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+
+    // done fetching songs
+    thunkApi.dispatch(setIsLoading(false));
   }
 );
