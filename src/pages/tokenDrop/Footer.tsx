@@ -6,7 +6,7 @@ import SocialsModal from "./SocialsModal";
 import FAQModal from "./FAQModal";
 
 interface Links {
-  readonly key: string;
+  readonly handleOpen?: VoidFunction;
   readonly label: string;
   readonly to: string;
   readonly type: "router" | "web";
@@ -18,9 +18,14 @@ const Footer: FunctionComponent = () => {
   const [modalId, setModalId] = useState("");
 
   const handleClose = () => setIsOpen(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOpen = (event: any) => {
-    setModalId(event?.target?.getAttribute("id"));
+
+  const handleSocialsOpen = () => {
+    setModalId("socials");
+    setIsOpen(true);
+  };
+
+  const handleFaqOpen = () => {
+    setModalId("faq");
     setIsOpen(true);
   };
 
@@ -37,34 +42,31 @@ const Footer: FunctionComponent = () => {
 
   const links: ReadonlyArray<Links> = [
     {
-      to: "#",
+      handleOpen: handleSocialsOpen,
       label: "Artist Socials",
+      to: "#",
       type: "router",
-      key: "socials",
     },
     {
-      to: "#",
+      handleOpen: handleFaqOpen,
       label: "FAQ",
+      to: "#",
       type: "router",
-      key: "faq",
     },
     {
-      to: "#",
       label: "NEWM.io",
+      to: "#",
       type: "web",
-      key: "newm",
     },
     {
-      to: "#",
       label: "Disclaimer",
+      to: "#",
       type: "web",
-      key: "disclaimer",
     },
     {
-      to: "#",
       label: "Terms of Service",
+      to: "#",
       type: "web",
-      key: "terms",
     },
   ];
 
@@ -85,11 +87,10 @@ const Footer: FunctionComponent = () => {
           py: 2.25,
         } }
       >
-        { links.map(({ to, label, type, key }) =>
+        { links.map(({ handleOpen, label, to, type }, idx) =>
           type === "router" ? (
             <Link
-              id={ key }
-              key={ key }
+              key={ `footer-link-${idx}` }
               onClick={ handleOpen }
               sx={ { p: 0.5, fontWeight: 400 } }
               to={ to }
