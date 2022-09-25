@@ -182,7 +182,7 @@ const Payment: FunctionComponent = () => {
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
-      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 450] }>
+      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 475] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
             <SectionHeading>SONG</SectionHeading>
@@ -231,7 +231,6 @@ const Payment: FunctionComponent = () => {
           justifyContent="space-between"
         >
           <Box
-            flex={ 1 }
             display="flex"
             flexDirection="column"
             alignItems="flex-start"
@@ -243,16 +242,14 @@ const Payment: FunctionComponent = () => {
 
             <Box mb={ 0.25 }>
               <Typography variant="subtitle1">
-                <DisplayText>0.008%</DisplayText> of
+                <DisplayText>8000 stream tokens</DisplayText>
               </Typography>
             </Box>
 
-            <Typography variant="subtitle1">
-              future streaming royalties
-            </Typography>
+            <Typography variant="subtitle1">of the song NFT</Typography>
           </Box>
 
-          <Box flexDirection="column" flex={ 1 }>
+          <Box flexDirection="column">
             <Box mb={ 1 }>
               <SectionHeading>WHAT YOU PAY</SectionHeading>
             </Box>
@@ -290,12 +287,11 @@ const Payment: FunctionComponent = () => {
                 </AccentButton>
               ) : (
                 <FilledButton
-                  backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
                   disabled={ isLoading || isTransactionCreated }
                 >
-                  Purchase
+                  Complete purchase
                 </FilledButton>
               ) }
 

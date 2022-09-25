@@ -55,14 +55,16 @@ const TokenDrop: FunctionComponent = () => {
 
       <Container maxWidth="xl">
         <Box
-          width={ ["100%", "100%", "60%"] }
-          maxWidth={ [9999, 9999, 680] }
           paddingTop={ [4, 4, isXLargeScreen ? 12 : 6] }
           paddingLeft={ [1, 1, 10] }
           paddingRight={ [1, 1, 0] }
         >
           <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
-            <Typography variant="h1" fontSize={ 100 } lineHeight="80px">
+            <Typography
+              variant="h1"
+              fontSize={ ["60px", "100px"] }
+              lineHeight="80px"
+            >
               { projectDetails.artistName }
             </Typography>
 
@@ -71,8 +73,8 @@ const TokenDrop: FunctionComponent = () => {
               color="pink"
               sx={ {
                 ...theme.typography.emphasized,
-                fontSize: "60px",
-                lineHeight: "60px",
+                fontSize: ["30px", "60px"],
+                lineHeight: ["30px", "60px"],
               } }
             >
               { projectDetails.subtitle }
@@ -100,7 +102,7 @@ const TokenDrop: FunctionComponent = () => {
             height: [
               window.height,
               window.height,
-              window.width * (window.height > 1200 ? 0.75 : 0.5),
+              window.width * (window.height > 1200 ? 0.75 : 0.475),
               window.height,
             ],
           } }

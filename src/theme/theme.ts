@@ -152,10 +152,10 @@ const theme = createTheme({
   colors,
   gradients: {
     company: "linear-gradient(53.48deg, #0099CC 0%, #CC33CC 100%);",
-    artist: "linear-gradient(53.48deg, #CC33CC 0%, #FF3366 100%);",
+    artist: "linear-gradient(5deg, #C341F0 0%, #F53C69 100%);",
     magazine: "linear-gradient(53.48deg, #FF3366 0%, #FFFF66 100%);",
     product: "linear-gradient(53.48deg, #FF9900 0%, #FF3366 100%);",
-    partners: "linear-gradient(53.48deg, #FFFF66 0%, #FF9900 100%);",
+    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
     crypto: "linear-gradient(53.48deg, #66FF66 0%, #0099CC 100%);",
   },
   breakpoints: {

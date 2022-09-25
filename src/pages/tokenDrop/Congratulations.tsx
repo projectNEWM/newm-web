@@ -15,13 +15,6 @@ const Congratulations: FunctionComponent = () => {
   const window = useWindowDimensions();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
-  const textStyles = {
-    ...theme.typography.emphasized,
-    fontSize: 80,
-    fontWeight: 400,
-    color: theme.palette.success.main,
-  };
-
   const handleGoHome = () => {
     navigate("../");
   };
@@ -38,36 +31,30 @@ const Congratulations: FunctionComponent = () => {
         />
       </Box>
 
-      <Stack mt={ 8 } mb={ 6 } spacing={ 2 }>
-        { isLargeScreen ? (
-          <Typography
-            variant="h1"
-            color="orange"
-            sx={ {
-              ...theme.typography.emphasized,
-              fontSize: 100,
-              fontWeight: 400,
-            } }
-          >
-            Congratulations!
-          </Typography>
-        ) : (
-          <Box>
-            <Typography sx={ textStyles } variant="h1">
-              Congra-
-            </Typography>
-            <GradientTypography sx={ textStyles } variant="h1">
-              wait for it-
-            </GradientTypography>
-            <Typography sx={ textStyles } variant="h1">
-              tulations!
-            </Typography>
-          </Box>
-        ) }
+      <Stack mt={ 8 } mb={ 6 } spacing={ 2 } pr={ [0, 0, 4] }>
+        <GradientTypography
+          sx={ {
+            ...theme.typography.emphasized,
+            fontSize: 100,
+            lineHeight: "100px",
+            fontWeight: 400,
+            paddingBottom: "10px", // padding to prevent "y" from being clipped
+          } }
+          backupColor="orange"
+          gradient="partners"
+          variant="h1"
+        >
+          Break out the bubbly!
+        </GradientTypography>
 
-        <Typography fontFamily="Raleway" fontSize={ 20 } fontWeight={ 800 }>
-          Purchase completed
-        </Typography>
+        <Box maxWidth={ [9999, 9999, 320] }>
+          <Typography variant="subtitle1" color="white">
+            How does it feel to own a piece of music?
+            { isLargeScreen ? <br /> : " " }
+            To learn more about your purchase and join our community of music
+            owners, signup below.
+          </Typography>
+        </Box>
       </Stack>
 
       <OutlinedButtonNoGradient

@@ -35,7 +35,7 @@ const Landing: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box mb={ 3.5 }>
+      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 600] } }>
         <Typography variant="subtitle1">
           { projectDetails.description }
         </Typography>
@@ -45,7 +45,7 @@ const Landing: FunctionComponent = () => {
         spacing={ 2.5 }
         alignItems="flex-start"
         width="100%"
-        maxWidth={ [9999, 9999, 450] }
+        maxWidth={ [9999, 9999, 475] }
       >
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
@@ -135,11 +135,11 @@ const Landing: FunctionComponent = () => {
             <Box flexDirection="column">
               <Box mb={ 0.25 }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
-                  0.008%
+                  8000 stream tokens
                 </DisplayText>
               </Box>
 
-              <Typography variant="subtitle1">of future royalties</Typography>
+              <Typography variant="subtitle1">of the song NFT</Typography>
             </Box>
           </Stack>
         </Box>
@@ -147,12 +147,8 @@ const Landing: FunctionComponent = () => {
         <HorizontalLine />
 
         <Stack mt={ 4 } spacing={ 1.5 } sx={ { width: "100%" } }>
-          <FilledButton
-            backgroundColor={ theme.colors.pink }
-            onClick={ handleNavigate }
-            fullWidth={ true }
-          >
-            Buy
+          <FilledButton onClick={ handleNavigate } fullWidth={ true }>
+            Purchase
           </FilledButton>
 
           <Typography variant="subtitle2">
