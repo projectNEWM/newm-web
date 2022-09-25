@@ -1,6 +1,7 @@
 import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
   DisplayText,
+  Modal,
   SectionHeading,
   TextInputField,
   TransactionStatus,
@@ -27,6 +28,7 @@ import {
   selectSale,
   useGetSalePrice,
 } from "modules/sale";
+import albumArt from "assets/images/album-art.jpg";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
@@ -61,6 +63,7 @@ const Payment: FunctionComponent = () => {
     isLoading: isSaleLoading,
   } = useSelector(selectSale);
 
+  const [isAlbumArtModalOpen, setIsAlbumArtModalOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
   const isLoading = isWalletLoading || isSaleLoading;
@@ -74,11 +77,7 @@ const Payment: FunctionComponent = () => {
     walletAddress: "",
   };
 
-  const handleViewAlbumArt = () => {
-    navigate("");
-  };
-
-  const handleOpenModal = () => {
+  const handleOpenWalletModal = () => {
     dispatch(setIsSelectWalletModalOpen(true));
   };
 
@@ -184,6 +183,22 @@ const Payment: FunctionComponent = () => {
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
+      <Modal
+        open={ isAlbumArtModalOpen }
+        handleClose={ () => setIsAlbumArtModalOpen(false) }
+        variant="full"
+      >
+        <img
+          src={ albumArt }
+          alt="album art"
+          style={ {
+            padding: "1rem 0 1rem 0",
+            maxWidth: "100vw",
+            maxHeight: "100vh",
+          } }
+        />
+      </Modal>
+
       <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 475] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
@@ -219,7 +234,7 @@ const Payment: FunctionComponent = () => {
             </Stack>
 
             { !isSmallScreen && (
-              <AccentButton onClick={ handleViewAlbumArt }>
+              <AccentButton onClick={ () => setIsAlbumArtModalOpen(true) }>
                 See album art
               </AccentButton>
             ) }
@@ -283,7 +298,7 @@ const Payment: FunctionComponent = () => {
 
               { !isConnected ? (
                 <AccentButton
-                  onClick={ handleOpenModal }
+                  onClick={ handleOpenWalletModal }
                   fullWidth={ true }
                   disabled={ isLoading }
                 >

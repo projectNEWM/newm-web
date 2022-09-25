@@ -3,18 +3,36 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { FunctionComponent, ReactElement, useEffect } from "react";
 
 interface ModalProps {
-  readonly children?: ReactElement;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly handleClose: (event: React.SyntheticEvent<any> | Event) => void;
+  readonly variant?: "framed" | "full";
+  readonly children?: ReactElement;
   readonly open?: boolean;
 }
 
 const Modal: FunctionComponent<ModalProps> = ({
-  children,
   handleClose,
+  variant,
+  children,
   open = false,
 }) => {
   const theme = useTheme();
+
+  const fullStyles = {
+    maxHeight: "95vh",
+  };
+
+  const framedStyles = {
+    maxHeight: "650px",
+    maxWidth: "540px",
+    backgroundColor: theme.colors.black100,
+    mx: 1,
+    my: 5,
+    pb: 7.5,
+    pl: [3, 3, 7.5],
+    pr: [3, 3, 4],
+    pt: 4,
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -46,6 +64,7 @@ const Modal: FunctionComponent<ModalProps> = ({
         right: 0,
         textAlign: "center",
         top: 0,
+        zIndex: 999999,
       } }
     >
       <Box
@@ -53,17 +72,9 @@ const Modal: FunctionComponent<ModalProps> = ({
         sx={ {
           alignItems: "start",
           alignSelf: "center",
-          backgroundColor: theme.colors.black100,
           display: "flex",
           flexDirection: "column",
-          maxHeight: "650px",
-          maxWidth: "540px",
-          mx: 1,
-          my: 5,
-          pb: 7.5,
-          pl: [3, 3, 7.5],
-          pr: [3, 3, 4],
-          pt: 4,
+          ...(variant === "full" ? fullStyles : framedStyles),
         } }
       >
         <CloseIcon
@@ -74,7 +85,8 @@ const Modal: FunctionComponent<ModalProps> = ({
           } }
           onClick={ handleClose }
         />
-        <Stack sx={ { maxHeight: "100vh", overflow: "auto" } }>{ children }</Stack>
+
+        { children }
       </Box>
     </Box>
   ) : null;
