@@ -1,4 +1,4 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
   DisplayText,
   SectionHeading,
@@ -43,6 +43,8 @@ const Payment: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const bundlePrice = useGetSalePrice(projectId);
   const {
@@ -216,9 +218,11 @@ const Payment: FunctionComponent = () => {
               </Box>
             </Stack>
 
-            <AccentButton onClick={ handleViewAlbumArt }>
-              See album art
-            </AccentButton>
+            { !isSmallScreen && (
+              <AccentButton onClick={ handleViewAlbumArt }>
+                See album art
+              </AccentButton>
+            ) }
           </Box>
         </Box>
 

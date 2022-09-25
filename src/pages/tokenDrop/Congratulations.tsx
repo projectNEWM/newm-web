@@ -8,6 +8,8 @@ import {
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
+import SignUpForm from "components/tokenDrop/SignUpForm";
+import { SectionHeading } from "components";
 
 const Congratulations: FunctionComponent = () => {
   const theme = useTheme();
@@ -21,7 +23,16 @@ const Congratulations: FunctionComponent = () => {
 
   return (
     <Box>
-      <Box sx={ { position: "fixed", top: 0, right: 0, bottom: 0, left: 0 } }>
+      <Box
+        sx={ {
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          pointerEvents: "none",
+        } }
+      >
         <Confetti
           width={ window.width }
           height={ window.height }
@@ -31,7 +42,7 @@ const Congratulations: FunctionComponent = () => {
         />
       </Box>
 
-      <Stack mt={ 8 } mb={ 6 } spacing={ 2 } pr={ [0, 0, 4] }>
+      <Stack mt={ 8 } mb={ 6 } spacing={ [1, 1, 0] } pr={ [0, 0, 2] }>
         <GradientTypography
           sx={ {
             ...theme.typography.emphasized,
@@ -55,6 +66,11 @@ const Congratulations: FunctionComponent = () => {
             owners, signup below.
           </Typography>
         </Box>
+      </Stack>
+
+      <Stack mb={ 8 } spacing={ 1 }>
+        <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
+        <SignUpForm />
       </Stack>
 
       <OutlinedButtonNoGradient
