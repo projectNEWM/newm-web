@@ -8,8 +8,7 @@ import {
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import Confetti from "react-confetti";
-import SignUpForm from "components/tokenDrop/SignUpForm";
-import { SectionHeading } from "components";
+import { MailchimpSubscribeForm, SectionHeading } from "components";
 
 const Congratulations: FunctionComponent = () => {
   const theme = useTheme();
@@ -41,8 +40,7 @@ const Congratulations: FunctionComponent = () => {
           initialVelocityY={ 600 }
         />
       </Box>
-
-      <Stack mt={ 8 } mb={ 6 } spacing={ [1, 1, 0] } pr={ [0, 0, 2] }>
+      <Stack mt={ 8 } mb={ 3 } spacing={ [1, 1, 0] } pr={ [0, 0, 2] }>
         <GradientTypography
           sx={ {
             ...theme.typography.emphasized,
@@ -68,9 +66,15 @@ const Congratulations: FunctionComponent = () => {
         </Box>
       </Stack>
 
-      <Stack mb={ 8 } spacing={ 1 }>
+      <Stack mb={ 7 } spacing={ 1 }>
         <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
-        <SignUpForm />
+        <MailchimpSubscribeForm
+          u="3bf911620d8791d21fb973749"
+          id="52df6705d1"
+          fId="006275e2f0"
+          hiddenInputName="b_3bf911620d8791d21fb973749_52df6705d1"
+          groupName="group[383765][2]"
+        />
       </Stack>
 
       <OutlinedButtonNoGradient

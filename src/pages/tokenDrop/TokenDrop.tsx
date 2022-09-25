@@ -42,7 +42,9 @@ const TokenDrop: FunctionComponent = () => {
           right: [0, 0, 32, 160],
         } }
       >
-        <NEWMLogo width={ 110 } height={ 110 } />
+        <a href="https://www.newm.io" target="_blank" rel="noopener noreferrer">
+          <NEWMLogo width={ 110 } height={ 110 } />
+        </a>
       </Box>
 
       <Box

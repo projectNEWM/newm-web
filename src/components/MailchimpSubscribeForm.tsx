@@ -1,16 +1,22 @@
-import { Box, Stack, useMediaQuery } from "@mui/material";
+import { Stack, useMediaQuery } from "@mui/material";
 import { FilledButton, TextInput } from "elements";
 import { FunctionComponent, useState } from "react";
 import theme from "theme";
 
-const u = "3bf911620d8791d21fb973749";
-const id = "52df6705d1";
-const fId = "006275e2f0";
+interface MailchimpSubscribeFormProps {
+  readonly u: string;
+  readonly id: string;
+  readonly fId: string;
+  readonly hiddenInputName: string;
+  readonly groupName?: string;
+}
 
 /**
  * Email subscription form based on generated Mailchimp template
  */
-const SignUpForm: FunctionComponent = () => {
+const MailchimpSubscribeForm: FunctionComponent<
+  MailchimpSubscribeFormProps
+> = ({ u, id, fId, hiddenInputName, groupName }) => {
   const [email, setEmail] = useState("");
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -21,22 +27,18 @@ const SignUpForm: FunctionComponent = () => {
       method="post"
       target="_self"
     >
-      <input
-        style={ { display: "none" } }
-        type="checkbox"
-        value="4"
-        name="group[383765][4]"
-        id="mce-group[383765]-383765-1"
-        checked={ true }
-      />
+      { !!groupName && (
+        <input
+          style={ { display: "none" } }
+          type="checkbox"
+          value="4"
+          name={ groupName }
+          checked={ true }
+        />
+      ) }
 
       <div style={ { position: "absolute", left: "-5000px" } } aria-hidden="true">
-        <input
-          type="text"
-          name="b_3bf911620d8791d21fb973749_52df6705d1"
-          tabIndex={ -1 }
-          value=""
-        />
+        <input type="text" name={ hiddenInputName } tabIndex={ -1 } value="" />
       </div>
 
       <Stack direction={ isLargeScreen ? "row" : "column" } spacing={ 1.5 }>
@@ -58,4 +60,4 @@ const SignUpForm: FunctionComponent = () => {
   );
 };
 
-export default SignUpForm;
+export default MailchimpSubscribeForm;
