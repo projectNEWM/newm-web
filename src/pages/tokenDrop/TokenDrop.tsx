@@ -21,6 +21,8 @@ const TokenDrop: FunctionComponent = () => {
 
   const window = useWindowDimensions();
 
+  const isXLargeScreen = window.height > 1000 && window.width > 1000;
+
   return (
     <Box
       sx={ {
@@ -35,7 +37,7 @@ const TokenDrop: FunctionComponent = () => {
       <Box
         sx={ {
           display: ["none", "none", "flex"],
-          position: "absolute",
+          position: "fixed",
           top: 32,
           right: [0, 0, 32, 160],
         } }
@@ -51,15 +53,15 @@ const TokenDrop: FunctionComponent = () => {
         <img alt="profile" src={ profileImageSm } style={ { width: "100%" } } />
       </Box>
 
-      <Container maxWidth={ false }>
+      <Container maxWidth="xl">
         <Box
           width={ ["100%", "100%", "60%"] }
           maxWidth={ [9999, 9999, 680] }
-          paddingTop={ [4, 4, 6] }
+          paddingTop={ [4, 4, isXLargeScreen ? 12 : 6] }
           paddingLeft={ [1, 1, 10] }
           paddingRight={ [1, 1, 0] }
         >
-          <Stack spacing={ 1 } sx={ { marginBottom: 1 } }>
+          <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
             <Typography variant="h1" fontSize={ 100 } lineHeight="80px">
               { projectDetails.artistName }
             </Typography>
@@ -67,7 +69,11 @@ const TokenDrop: FunctionComponent = () => {
             <Typography
               variant="h3"
               color="pink"
-              sx={ theme.typography.emphasized }
+              sx={ {
+                ...theme.typography.emphasized,
+                fontSize: "60px",
+                lineHeight: "60px",
+              } }
             >
               { projectDetails.subtitle }
             </Typography>
@@ -94,7 +100,7 @@ const TokenDrop: FunctionComponent = () => {
             height: [
               window.height,
               window.height,
-              window.width * 0.5,
+              window.width * (window.height > 1200 ? 0.75 : 0.5),
               window.height,
             ],
           } }

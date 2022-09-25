@@ -35,7 +35,7 @@ const Landing: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box mb={ 4 }>
+      <Box mb={ 3.5 }>
         <Typography variant="subtitle1">
           { projectDetails.description }
         </Typography>
@@ -58,7 +58,7 @@ const Landing: FunctionComponent = () => {
               justifyContent: "space-between",
               width: "100%",
               backgroundColor: theme.colors.grey600,
-              mt: 1,
+              p: 1.25,
               pr: 2,
             } }
           >
@@ -67,7 +67,7 @@ const Landing: FunctionComponent = () => {
                 display="flex"
                 height={ 2 }
                 width={ 2 }
-                margin={ 3 }
+                margin={ 2 }
                 justifyContent="center"
                 alignItems="center"
               >

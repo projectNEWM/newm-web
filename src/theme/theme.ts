@@ -295,7 +295,7 @@ const theme = createTheme({
       fontStyle: "normal",
       fontWeight: 400,
       fontSize: "12px",
-      lineHeight: "16px",
+      lineHeight: "18px",
       color: colors.grey100,
     },
 
