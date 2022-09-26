@@ -30,9 +30,11 @@ const extendedApi = api.injectEndpoints({
           dispatch(receiveBundleSales(data));
           // eslint-disable-next-line
         } catch (err: any) {
+          const { error } = err;
+
           dispatch(
             setToastMessage({
-              message: err.message,
+              message: error?.data?.message,
               severity: "error",
             })
           );
@@ -106,9 +108,11 @@ const extendedApi = api.injectEndpoints({
           dispatch(receivePurchaseStatus(data.data[1].status));
           // eslint-disable-next-line
         } catch (err: any) {
+          const { error } = err;
+
           dispatch(
             setToastMessage({
-              message: err.message,
+              message: error?.data?.message,
               severity: "error",
             })
           );
