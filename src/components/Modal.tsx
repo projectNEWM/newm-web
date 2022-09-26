@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { FunctionComponent, ReactElement, useEffect } from "react";
 
 interface ModalProps {

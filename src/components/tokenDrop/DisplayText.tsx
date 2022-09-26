@@ -1,5 +1,4 @@
 import { useMediaQuery, useTheme } from "@mui/material";
-import { useWindowDimensions } from "common";
 import { FunctionComponent, HTMLProps, ReactNode } from "react";
 
 interface DisplayTextProps extends HTMLProps<HTMLDivElement> {
