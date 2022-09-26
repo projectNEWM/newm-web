@@ -121,11 +121,12 @@ const getFormattedErrorMessage = (error: any) => {
   const message: string = error?.data?.message;
 
   if (!message) {
-    return "An error occurred while creating the purchase order.";
+    return "An error occurred while creating the purchase order";
   }
 
   if (status === 406) {
-    return "Not a valid staking address";
+    return `Not a valid staking address, please check that your wallet has the 
+    necessary assets`;
   }
 
   if (message === "Illegal Network Detected!") {

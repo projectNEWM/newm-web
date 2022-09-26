@@ -130,10 +130,18 @@ export const createTransaction = async (body: CreateTransactionParams) => {
     inputs.add(TransactionUnspentOutput.from_bytes(fromHex(utxo)))
   );
 
-  txBuilder.add_inputs_from(
-    inputs,
-    CoinSelectionStrategyCIP2.LargestFirstMultiAsset
-  );
+  try {
+    txBuilder.add_inputs_from(
+      inputs,
+      CoinSelectionStrategyCIP2.LargestFirstMultiAsset
+    );
+  } catch (err) {
+    throw new Error(
+      `Sorry, we were not able to build a successful transaction at this time. 
+      This may be due to your wallet lacking the necessary asset(s) or token 
+      fragmentation.`
+    );
+  }
 
   try {
     txBuilder.add_change_if_needed(changeAddress);
