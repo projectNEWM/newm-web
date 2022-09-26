@@ -28,10 +28,11 @@ const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveBundleSales(data));
-        } catch (err) {
+          // eslint-disable-next-line
+        } catch (err: any) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching sale information",
+              message: err.message,
               severity: "error",
             })
           );
@@ -74,9 +75,14 @@ const extendedApi = api.injectEndpoints({
             return;
           }
 
+          const errorMessage =
+            error.status === 406
+              ? "Not a valid staking address"
+              : err.data.message;
+
           dispatch(
             setToastMessage({
-              message: "An error occurred while creating purchase order",
+              message: errorMessage,
               severity: "error",
             })
           );
@@ -96,10 +102,11 @@ const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receivePurchaseStatus(data.data[1].status));
-        } catch (err) {
+          // eslint-disable-next-line
+        } catch (err: any) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while creating purchase order",
+              message: err.message,
               severity: "error",
             })
           );

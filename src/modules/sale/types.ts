@@ -55,6 +55,13 @@ export interface PurchaseOrderResponse {
   readonly data: [string, PurchaseOrder];
 }
 
+export interface PurchaseOrderParams {
+  readonly projectId: number;
+  readonly bundleId: number;
+  readonly paymentType: PaymentType;
+  readonly receiveAddress?: string;
+}
+
 export interface PurchaseOrderRequest {
   readonly projectId: number;
   readonly bundleId: number;

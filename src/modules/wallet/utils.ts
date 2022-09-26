@@ -89,7 +89,7 @@ export const createTransaction = async (body: CreateTransactionParams) => {
 
   const networkId = await wallet.getNetworkId();
   if (networkId !== networkMode) {
-    throw new Error("wallet Network Mode does not match the page network mode");
+    throw new Error("Wallet network mode does not match the page network mode");
   }
 
   const changeAddressCbor = await wallet.getChangeAddress();
@@ -130,18 +130,10 @@ export const createTransaction = async (body: CreateTransactionParams) => {
     inputs.add(TransactionUnspentOutput.from_bytes(fromHex(utxo)))
   );
 
-  try {
-    txBuilder.add_inputs_from(
-      inputs,
-      CoinSelectionStrategyCIP2.LargestFirstMultiAsset
-    );
-  } catch (err) {
-    throw new Error(
-      `Sorry, we were not able to build a successful transaction at this time. 
-      This may be due to your wallet lacking the necessary asset(s) or token 
-      fragmentation.`
-    );
-  }
+  txBuilder.add_inputs_from(
+    inputs,
+    CoinSelectionStrategyCIP2.LargestFirstMultiAsset
+  );
 
   try {
     txBuilder.add_change_if_needed(changeAddress);
@@ -195,6 +187,16 @@ export const createTransaction = async (body: CreateTransactionParams) => {
   } catch (err) {
     throw new Error("user cancelled transaction");
   }
+};
+
+/**
+ * @returns the first unused address for a wallet.
+ */
+export const getUnusedAddress = async (walletName: string): Promise<string> => {
+  const addresses = await window.Wallets[walletName].getUnusedAddresses();
+  const encodedAddress = addressFromHex(addresses[0]);
+
+  return encodedAddress;
 };
 
 /**

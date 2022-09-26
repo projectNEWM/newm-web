@@ -13,7 +13,7 @@ import {
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
 import profileImageSm from "assets/images/profile@60px.png";
-import { addressFromHex, selectWallet } from "modules/wallet";
+import { selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
@@ -91,14 +91,10 @@ const Payment: FunctionComponent = () => {
       return;
     }
 
-    const addresses = await window.Wallets[walletName].getUnusedAddresses();
-    const encoded = addressFromHex(addresses[0]);
-
     dispatch(
       createPurchase({
         projectId,
         bundleId: sales[0].id,
-        receiveAddress: encoded,
         paymentType: PaymentType.Wallet,
       })
     );

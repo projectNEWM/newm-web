@@ -1,7 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createTransaction, setWalletIsLoading } from "modules/wallet";
+import {
+  addressFromHex,
+  createTransaction,
+  getUnusedAddress,
+  setWalletIsLoading,
+} from "modules/wallet";
 import { RootState } from "store";
-import { PurchaseOrderRequest } from "./types";
+import { setToastMessage } from "modules/ui";
+import {
+  PaymentType,
+  PurchaseOrderParams,
+  PurchaseOrderRequest,
+} from "./types";
 import saleApi from "./api";
 import { setIsTransactionCreated, setSaleIsLoading } from "./slice";
 
@@ -11,32 +21,43 @@ import { setIsTransactionCreated, setSaleIsLoading } from "./slice";
  */
 export const createPurchase = createAsyncThunk(
   "sale/createPurchase",
-  async (
-    { projectId, bundleId, receiveAddress, paymentType }: PurchaseOrderRequest,
-    { dispatch, getState }
-  ) => {
-    await dispatch(
-      saleApi.endpoints.createPurchaseOrder.initiate({
-        projectId,
-        bundleId,
-        receiveAddress,
-        paymentType,
-      })
-    );
-
-    // get payment variables from updated state
-    const appState = getState() as RootState;
-    const {
-      sale: { purchaseOrder },
-      wallet: { walletName },
-    } = appState;
-
-    if (!purchaseOrder) return;
-
-    const { paymentAddress } = purchaseOrder;
-    const cost = Number(purchaseOrder.cost.slice(1));
-
+  async (params: PurchaseOrderParams, { dispatch, getState }) => {
     try {
+      dispatch(setWalletIsLoading(true));
+
+      const { projectId, bundleId, paymentType } = params;
+      const appState = getState() as RootState;
+      const { walletName } = appState.wallet;
+
+      // get receive address from params if manual, and from wallet if not
+      const receiveAddress =
+        paymentType === PaymentType.Manual
+          ? params.receiveAddress
+          : await getUnusedAddress(walletName);
+
+      if (!receiveAddress) {
+        throw new Error("An error occurred while creating the transaction");
+      }
+
+      await dispatch(
+        saleApi.endpoints.createPurchaseOrder.initiate({
+          projectId,
+          bundleId,
+          receiveAddress,
+          paymentType,
+        })
+      );
+
+      // get payment variables from updated state
+      const updatedAppState = getState() as RootState;
+      const { purchaseOrder } = updatedAppState.sale;
+
+      // a API error occurred and no new or existing order was present
+      if (!purchaseOrder) return;
+
+      const { paymentAddress } = purchaseOrder;
+      const cost = Number(purchaseOrder.cost.slice(1));
+
       dispatch(setWalletIsLoading(true));
 
       await createTransaction({
@@ -47,7 +68,24 @@ export const createPurchase = createAsyncThunk(
       });
 
       dispatch(setIsTransactionCreated(true));
-    } catch (e) {
+    } catch (err) {
+      // display an error message unless the user cancelled the transaction
+      if (
+        err instanceof Error &&
+        err.message !== "user cancelled transaction"
+      ) {
+        const errorMessage =
+          err.message === "account changed"
+            ? "Account was changed, please refresh the page"
+            : err.message;
+
+        dispatch(
+          setToastMessage({
+            message: errorMessage,
+            severity: "error",
+          })
+        );
+      }
       // transaction not created
     } finally {
       dispatch(setWalletIsLoading(false));
