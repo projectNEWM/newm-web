@@ -62,10 +62,12 @@ export const createPurchase = createAsyncThunk(
 
       dispatch(setIsTransactionCreated(true));
     } catch (err) {
-      // display an error message unless the user cancelled the transaction
+      // display an error message unless the user cancelled the transaction or
+      // the network is incorrect (this is already handled by the API call)
       if (
         err instanceof Error &&
-        err.message !== "user cancelled transaction"
+        err.message !== "user cancelled transaction" &&
+        err.message !== "Wallet network mode does not match page network mode"
       ) {
         const errorMessage =
           err.message === "account changed"
@@ -79,7 +81,6 @@ export const createPurchase = createAsyncThunk(
           })
         );
       }
-      // transaction not created
     } finally {
       dispatch(setWalletIsLoading(false));
       dispatch(setSaleIsLoading(false));

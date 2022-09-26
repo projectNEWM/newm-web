@@ -89,7 +89,7 @@ export const createTransaction = async (body: CreateTransactionParams) => {
 
   const networkId = await wallet.getNetworkId();
   if (networkId !== networkMode) {
-    throw new Error("Wallet network mode does not match the page network mode");
+    throw new Error("Wallet network mode does not match page network mode");
   }
 
   const changeAddressCbor = await wallet.getChangeAddress();

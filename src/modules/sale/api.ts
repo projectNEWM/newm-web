@@ -76,9 +76,11 @@ const extendedApi = api.injectEndpoints({
           }
 
           const errorMessage =
-            error.status === 406
+            error?.status === 406
               ? "Not a valid staking address"
-              : err.data?.message;
+              : error?.data?.message === "Illegal Network Detected!"
+              ? "The wallet network is incorrect"
+              : error?.data?.message;
 
           dispatch(
             setToastMessage({
