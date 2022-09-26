@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const isProd = process.env.node_env === "production";
 export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 
@@ -44,8 +45,8 @@ export const projectDetails = {
     },
     {
       heading: "Moodswingz",
-      twitter: "https://twitter.com/MURS",
-      instagram: "https://www.instagram.com/murs316/",
+      twitter: "https://twitter.com/moodswingzmuzik",
+      instagram: "https://www.instagram.com/moodswingzmuzik/",
       spotify:
         "https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg",
     },
@@ -58,17 +59,29 @@ export const projectDetails = {
   ],
   faq: [
     {
-      question: "What is your motto?",
-      answer: "Nothing matters. Nothing exists on purpose.",
+      question: "1. How does it work?",
+      answer:
+        "When you purchase a bundle (i.e., 8000 Stream Tokens) of a song on NEWM, you're buying the rights to claim a percentage of future streaming royalties next to your favourite artist(s).",
     },
     {
-      question: "That is a bit dark is it not?",
-      answer: "Everything matters everything exists on purpose.",
+      question: "2. How many bundles can I purchase?",
+      answer:
+        "Whatever amount your sweet heart desires! However, you can only purchase one bundle per session to give a fair chance to other prospective buyers.",
     },
     {
-      question:
-        "What is the longest question you have ever asked somebody that takes up to two lines",
-      answer: "Answer",
+      question: "3. Where can I listen or stream the song(s)?",
+      answer:
+        "You can listen to the song(s) on most of the major streaming platforms, including Soundcloud, Youtube Music, Spotify, Tidal, Amazon Music, Apple Music (if it has lyrics), etc. Eventually, NEWM will have a music streaming platform in-app that will offer higher and faster royalty payouts than the traditional platforms.",
+    },
+    {
+      question: "4. How and when can I claim royalties?",
+      answer:
+        "Royalty payout times can vary widely, depending on the streaming platform. Normally, payouts can take 6 months or more, so please be patient and join our communities where we'll notify you when claiming becomes available.",
+    },
+    {
+      question: "5. How do I get important info about my purchase?",
+      answer:
+        "Sign up to our 'NEWMusic Owner' email list and join our support channels on Discord and Telegram!",
     },
   ],
 };

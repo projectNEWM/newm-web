@@ -57,7 +57,7 @@ const Modal: FunctionComponent<ModalProps> = ({
           display: "flex",
           flexDirection: "column",
           maxHeight: "650px",
-          maxWidth: "540px",
+          maxWidth: "720px",
           mx: 1,
           my: 5,
           pb: 7.5,

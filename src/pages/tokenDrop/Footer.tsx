@@ -55,7 +55,7 @@ const Footer: FunctionComponent = () => {
     },
     {
       label: "NEWM.io",
-      to: "#",
+      to: "https://newm.io/",
       type: "web",
     },
     {
@@ -102,6 +102,8 @@ const Footer: FunctionComponent = () => {
             <a
               key={ label }
               href={ to }
+              target="_blank"
+              rel="noreferrer"
               style={ {
                 color: theme.colors.white,
                 fontWeight: 400,

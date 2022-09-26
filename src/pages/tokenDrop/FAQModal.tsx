@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import theme from "theme";
 import { projectDetails } from "buildParams";
+import SubscribeForm from "components/tokenDrop/SubscribeForm";
 
 const FAQModal = () => {
   const { faq } = projectDetails;
@@ -11,7 +12,7 @@ const FAQModal = () => {
         F.A.Q
       </Typography>
       { faq.map(({ answer, question }, idx) => (
-        <Stack key={ `question-${idx}` } sx={ { gap: 1, mt: [4, 4, 5] } }>
+        <Stack key={ `question-${idx}` } sx={ { gap: 1, mt: 4 } }>
           <Typography
             sx={ {
               color: theme.colors.grey100,
@@ -30,6 +31,7 @@ const FAQModal = () => {
           </Typography>
         </Stack>
       )) }
+      <SubscribeForm/>
     </Box>
   );
 };
