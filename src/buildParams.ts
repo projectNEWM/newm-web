@@ -47,8 +47,7 @@ export const projectDetails = {
       heading: "Moodswingz",
       twitter: "https://twitter.com/moodswingzmuzik",
       instagram: "https://www.instagram.com/moodswingzmuzik/",
-      spotify:
-        "https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg",
+      website: "http://moodswingzmuzik.com/",
     },
     {
       heading: "NEWM",

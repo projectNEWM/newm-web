@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import theme from "theme";
 import { projectDetails } from "buildParams";
-import SubscribeForm from "components/tokenDrop/SubscribeForm";
+import { MailchimpSubscribeForm } from "components";
 
 const FAQModal = () => {
   const { faq } = projectDetails;
@@ -31,7 +31,15 @@ const FAQModal = () => {
           </Typography>
         </Stack>
       )) }
-      <SubscribeForm/>
+      <Stack mt={ 1.5 }>
+        <MailchimpSubscribeForm
+          u="3bf911620d8791d21fb973749"
+          id="52df6705d1"
+          fId="006275e2f0"
+          hiddenInputName="b_3bf911620d8791d21fb973749_52df6705d1"
+          groupName="group[383765][2]"
+        />
+      </Stack>
     </Box>
   );
 };
