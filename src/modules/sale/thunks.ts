@@ -1,17 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  addressFromHex,
   createTransaction,
   getUnusedAddress,
   setWalletIsLoading,
 } from "modules/wallet";
 import { RootState } from "store";
 import { setToastMessage } from "modules/ui";
-import {
-  PaymentType,
-  PurchaseOrderParams,
-  PurchaseOrderRequest,
-} from "./types";
+import { PaymentType, PurchaseOrderParams } from "./types";
 import saleApi from "./api";
 import { setIsTransactionCreated, setSaleIsLoading } from "./slice";
 
@@ -57,8 +52,6 @@ export const createPurchase = createAsyncThunk(
 
       const { paymentAddress } = purchaseOrder;
       const cost = Number(purchaseOrder.cost.slice(1));
-
-      dispatch(setWalletIsLoading(true));
 
       await createTransaction({
         receiveAddress,

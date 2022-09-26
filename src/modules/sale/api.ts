@@ -78,7 +78,7 @@ const extendedApi = api.injectEndpoints({
           const errorMessage =
             error.status === 406
               ? "Not a valid staking address"
-              : err.data.message;
+              : err.data?.message;
 
           dispatch(
             setToastMessage({
