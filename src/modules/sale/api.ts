@@ -117,23 +117,22 @@ const extendedApi = api.injectEndpoints({
 
 // eslint-disable-next-line
 const getFormattedErrorMessage = (error: any) => {
-  const status: number = error.status;
+  const status: number = error?.status;
   const message: string = error?.data?.message;
 
   if (!message) {
-    return "An error occurred while creating your purchase order.";
+    return "An error occurred while creating the purchase order.";
   }
 
   if (status === 406) {
     return "Not a valid staking address";
   }
 
-  const formattedMessageMap: Record<string, string> = {
-    "Illegal Network Detected!": "The wallet network is incorrect",
-    "account changed": "Account was changed, please refresh the page",
-  };
+  if (message === "Illegal Network Detected!") {
+    return "The wallet network is incorrect";
+  }
 
-  return formattedMessageMap[message] || message;
+  return message;
 };
 
 export const { useGetSaleBundlesQuery } = extendedApi;

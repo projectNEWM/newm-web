@@ -8,7 +8,7 @@ import { RootState } from "store";
 import { setToastMessage } from "modules/ui";
 import { PaymentType, PurchaseOrderParams } from "./types";
 import saleApi from "./api";
-import { setIsTransactionCreated, setSaleIsLoading } from "./slice";
+import { setIsTransactionCreated } from "./slice";
 
 /**
  * Sends an receive address to the back-end, and uses that address
@@ -25,16 +25,18 @@ export const createPurchase = createAsyncThunk(
       const { walletName } = appState.wallet;
 
       // get receive address from params if manual, and from wallet if not
-      const receiveAddress =
-        paymentType === PaymentType.Manual
-          ? params.receiveAddress
-          : await getUnusedAddress(walletName);
-
-      if (!receiveAddress) {
-        throw new Error("An error occurred while creating the transaction");
+      let receiveAddress;
+      if (paymentType === PaymentType.Manual) {
+        receiveAddress = params.receiveAddress;
+      } else {
+        receiveAddress = await getUnusedAddress(walletName);
       }
 
-      await dispatch(
+      if (!receiveAddress) {
+        throw new Error("An error occurred while creating the purchase order");
+      }
+
+      const resp = await dispatch(
         saleApi.endpoints.createPurchaseOrder.initiate({
           projectId,
           bundleId,
@@ -43,11 +45,19 @@ export const createPurchase = createAsyncThunk(
         })
       );
 
-      // get payment variables from updated state
+      // 402 error status is ok, otherwise return early if there's an error
+      if (
+        "error" in resp &&
+        "status" in resp.error &&
+        resp.error.status !== 402
+      ) {
+        return;
+      }
+
+      // get purchase order from updated state
       const updatedAppState = getState() as RootState;
       const { purchaseOrder } = updatedAppState.sale;
 
-      // a API error occurred and no new or existing order was present
       if (!purchaseOrder) return;
 
       const { paymentAddress } = purchaseOrder;
@@ -62,16 +72,14 @@ export const createPurchase = createAsyncThunk(
 
       dispatch(setIsTransactionCreated(true));
     } catch (err) {
-      // display an error message unless the user cancelled the transaction or
-      // the network is incorrect (this is already handled by the API call)
+      // display an error message unless the user cancelled the transaction
       if (
         err instanceof Error &&
-        err.message !== "user cancelled transaction" &&
-        err.message !== "Wallet network mode does not match page network mode"
+        err.message !== "user cancelled transaction"
       ) {
         const errorMessage =
           err.message === "account changed"
-            ? "Account was changed, please refresh the page"
+            ? "Account changed, please refresh the page"
             : err.message;
 
         dispatch(
@@ -83,7 +91,6 @@ export const createPurchase = createAsyncThunk(
       }
     } finally {
       dispatch(setWalletIsLoading(false));
-      dispatch(setSaleIsLoading(false));
     }
   }
 );
