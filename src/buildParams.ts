@@ -20,8 +20,8 @@ export const baseUrls: Record<string, string> = {
 // Update values here for the artist being featured
 export const projectDetails = {
   artistName: "MURS",
-  songName: "Break up",
-  subtitle: "Moodswingz Cryptomedia Group",
+  songName: "Bigger Dreams",
+  subtitle: "x Moodswingz Muzik",
   projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
   spotifyLink:
     "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",

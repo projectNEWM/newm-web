@@ -34,6 +34,7 @@ const persistConfig = {
     cloudinaryApi.reducerPath,
     alphaAdvantageApi.reducerPath,
     phyrhoseApi.reducerPath,
+    "ui",
   ],
 };
 

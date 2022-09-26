@@ -28,10 +28,13 @@ const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveBundleSales(data));
-        } catch (err) {
+          // eslint-disable-next-line
+        } catch (err: any) {
+          const { error } = err;
+
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching sale information",
+              message: error?.data?.message,
               severity: "error",
             })
           );
@@ -76,7 +79,7 @@ const extendedApi = api.injectEndpoints({
 
           dispatch(
             setToastMessage({
-              message: "An error occurred while creating purchase order",
+              message: getFormattedErrorMessage(error),
               severity: "error",
             })
           );
@@ -96,10 +99,13 @@ const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receivePurchaseStatus(data.data[1].status));
-        } catch (err) {
+          // eslint-disable-next-line
+        } catch (err: any) {
+          const { error } = err;
+
           dispatch(
             setToastMessage({
-              message: "An error occurred while creating purchase order",
+              message: error?.data?.message,
               severity: "error",
             })
           );
@@ -108,6 +114,27 @@ const extendedApi = api.injectEndpoints({
     }),
   }),
 });
+
+// eslint-disable-next-line
+const getFormattedErrorMessage = (error: any) => {
+  const status: number = error?.status;
+  const message: string = error?.data?.message;
+
+  if (!message) {
+    return "An error occurred while creating the purchase order";
+  }
+
+  if (status === 406) {
+    return `Not a valid staking address, please check that your wallet has the 
+    necessary assets`;
+  }
+
+  if (message === "Illegal Network Detected!") {
+    return "The wallet network is incorrect";
+  }
+
+  return message;
+};
 
 export const { useGetSaleBundlesQuery } = extendedApi;
 

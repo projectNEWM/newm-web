@@ -89,7 +89,7 @@ export const createTransaction = async (body: CreateTransactionParams) => {
 
   const networkId = await wallet.getNetworkId();
   if (networkId !== networkMode) {
-    throw new Error("wallet Network Mode does not match the page network mode");
+    throw new Error("Wallet network mode does not match page network mode");
   }
 
   const changeAddressCbor = await wallet.getChangeAddress();
@@ -195,6 +195,16 @@ export const createTransaction = async (body: CreateTransactionParams) => {
   } catch (err) {
     throw new Error("user cancelled transaction");
   }
+};
+
+/**
+ * @returns the first unused address for a wallet.
+ */
+export const getUnusedAddress = async (walletName: string): Promise<string> => {
+  const addresses = await window.Wallets[walletName].getUnusedAddresses();
+  const encodedAddress = addressFromHex(addresses[0]);
+
+  return encodedAddress;
 };
 
 /**
