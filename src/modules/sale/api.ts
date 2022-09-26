@@ -77,16 +77,9 @@ const extendedApi = api.injectEndpoints({
             return;
           }
 
-          const errorMessage =
-            error?.status === 406
-              ? "Not a valid staking address"
-              : error?.data?.message === "Illegal Network Detected!"
-              ? "The wallet network is incorrect"
-              : error?.data?.message;
-
           dispatch(
             setToastMessage({
-              message: errorMessage,
+              message: getFormattedErrorMessage(error),
               severity: "error",
             })
           );
@@ -121,6 +114,27 @@ const extendedApi = api.injectEndpoints({
     }),
   }),
 });
+
+// eslint-disable-next-line
+const getFormattedErrorMessage = (error: any) => {
+  const status: number = error.status;
+  const message: string = error?.data?.message;
+
+  if (!message) {
+    return "An error occurred while creating your purchase order.";
+  }
+
+  if (status === 406) {
+    return "Not a valid staking address";
+  }
+
+  const formattedMessageMap: Record<string, string> = {
+    "Illegal Network Detected!": "The wallet network is incorrect",
+    "account changed": "Account was changed, please refresh the page",
+  };
+
+  return formattedMessageMap[message] || message;
+};
 
 export const { useGetSaleBundlesQuery } = extendedApi;
 
