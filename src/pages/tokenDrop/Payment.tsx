@@ -1,6 +1,7 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
   DisplayText,
+  Modal,
   SectionHeading,
   TextInputField,
   TransactionStatus,
@@ -27,6 +28,7 @@ import {
   selectSale,
   useGetSalePrice,
 } from "modules/sale";
+import albumArt from "assets/images/album-art.jpg";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
@@ -44,6 +46,8 @@ const Payment: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const bundlePrice = useGetSalePrice(projectId);
   const {
     isConnected,
@@ -59,6 +63,7 @@ const Payment: FunctionComponent = () => {
     isLoading: isSaleLoading,
   } = useSelector(selectSale);
 
+  const [isAlbumArtModalOpen, setIsAlbumArtModalOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
   const isLoading = isWalletLoading || isSaleLoading;
@@ -72,11 +77,7 @@ const Payment: FunctionComponent = () => {
     walletAddress: "",
   };
 
-  const handleViewAlbumArt = () => {
-    navigate("");
-  };
-
-  const handleOpenModal = () => {
+  const handleOpenWalletModal = () => {
     dispatch(setIsSelectWalletModalOpen(true));
   };
 
@@ -182,7 +183,23 @@ const Payment: FunctionComponent = () => {
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
-      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 450] }>
+      <Modal
+        open={ isAlbumArtModalOpen }
+        handleClose={ () => setIsAlbumArtModalOpen(false) }
+        variant="full"
+      >
+        <img
+          src={ albumArt }
+          alt="album art"
+          style={ {
+            padding: "1rem 0 1rem 0",
+            maxWidth: "100vw",
+            maxHeight: "100vh",
+          } }
+        />
+      </Modal>
+
+      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 475] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
             <SectionHeading>SONG</SectionHeading>
@@ -216,9 +233,11 @@ const Payment: FunctionComponent = () => {
               </Box>
             </Stack>
 
-            <AccentButton onClick={ handleViewAlbumArt }>
-              See album art
-            </AccentButton>
+            { !isSmallScreen && (
+              <AccentButton onClick={ () => setIsAlbumArtModalOpen(true) }>
+                See album art
+              </AccentButton>
+            ) }
           </Box>
         </Box>
 
@@ -231,7 +250,6 @@ const Payment: FunctionComponent = () => {
           justifyContent="space-between"
         >
           <Box
-            flex={ 1 }
             display="flex"
             flexDirection="column"
             alignItems="flex-start"
@@ -243,16 +261,14 @@ const Payment: FunctionComponent = () => {
 
             <Box mb={ 0.25 }>
               <Typography variant="subtitle1">
-                <DisplayText>0.008%</DisplayText> of
+                <DisplayText>8000 stream tokens</DisplayText>
               </Typography>
             </Box>
 
-            <Typography variant="subtitle1">
-              future streaming royalties
-            </Typography>
+            <Typography variant="subtitle1">of the song NFT</Typography>
           </Box>
 
-          <Box flexDirection="column" flex={ 1 }>
+          <Box flexDirection="column">
             <Box mb={ 1 }>
               <SectionHeading>WHAT YOU PAY</SectionHeading>
             </Box>
@@ -282,7 +298,7 @@ const Payment: FunctionComponent = () => {
 
               { !isConnected ? (
                 <AccentButton
-                  onClick={ handleOpenModal }
+                  onClick={ handleOpenWalletModal }
                   fullWidth={ true }
                   disabled={ isLoading }
                 >
@@ -290,12 +306,11 @@ const Payment: FunctionComponent = () => {
                 </AccentButton>
               ) : (
                 <FilledButton
-                  backgroundColor={ theme.colors.pink }
                   onClick={ handleWalletPurchase }
                   fullWidth={ true }
                   disabled={ isLoading || isTransactionCreated }
                 >
-                  Purchase
+                  Complete purchase
                 </FilledButton>
               ) }
 

@@ -47,3 +47,4 @@ export { default as SectionHeading } from "./tokenDrop/SectionHeading";
 export { default as TransactionStatus } from "./tokenDrop/TransactionStatus";
 export { default as InitializeWallet } from "./InitializeWallet";
 export { default as SelectWalletModal } from "./modals/SelectWalletModal";
+export { default as MailchimpSubscribeForm } from "./MailchimpSubscribeForm";

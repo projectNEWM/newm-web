@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { FunctionComponent, HTMLProps, ReactNode } from "react";
 
 interface DisplayTextProps extends HTMLProps<HTMLDivElement> {
@@ -12,10 +12,12 @@ const DisplayText: FunctionComponent<DisplayTextProps> = ({
 }) => {
   const theme = useTheme();
 
+  const fontSize = useMediaQuery(theme.breakpoints.down("sm")) ? 20 : 30;
+
   return (
     <span
       style={ {
-        fontSize: "30px",
+        fontSize,
         color: theme.colors.white,
         fontWeight: 700,
         ...style,
