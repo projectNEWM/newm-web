@@ -9,14 +9,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
-import { projectDetails } from "buildParams";
+import { enableCountdown, projectDetails } from "buildParams";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
 import Countdown from "./Countdown";
-
-const { enableCountdown } = projectDetails;
 
 const TokenDrop: FunctionComponent = () => {
   useGetAdaUsdRateQuery();
