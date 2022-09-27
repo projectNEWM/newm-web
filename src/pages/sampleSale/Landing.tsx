@@ -14,8 +14,8 @@ const Landing: FunctionComponent = () => {
   const getContentCard = (
     Icon = MagicStar,
     iconBackground = theme.gradients.magazine,
-    heading = "Create",
-    content = "Your music on your terms. Transition to an artist-focused music platform."
+    heading = "Pioneer",
+    content = "Get exclusive pre-launch access to our Artist Portal (beta)."
   ) => (
     <Stack
       sx={ {
@@ -71,8 +71,7 @@ const Landing: FunctionComponent = () => {
         maxWidth="580px"
         sx={ { color: theme.colors.grey100, mt: 0.5 } }
       >
-        Make a living making music and connect with music lovers in a whole new
-        way.
+        Make a living making music and build a community around your art!
       </Typography>
       <Stack
         columnGap={ 10 }
@@ -86,14 +85,14 @@ const Landing: FunctionComponent = () => {
         { getContentCard(
           Compass,
           theme.gradients.partners,
-          "Pioneer",
-          "Join the revolution and be the first to access our Artist Portal."
+          "Distribution",
+          "Share your music on your terms with an artist-focused platform."
         ) }
         { getContentCard(
           HandCoin,
           theme.gradients.crypto,
-          "Benefits",
-          "Share your wallet with us and get rewarded for being a pioneer."
+          "Rewards",
+          "Connect a wallet for rewards that will unlock more features."
         ) }
       </Stack>
       <FilledButton

@@ -70,7 +70,7 @@ const Verification: FunctionComponent = () => {
               style={ { display: "inline-flex", color: theme.colors.grey200 } }
               target="_blank"
             >
-              Privacy Policy &amp; Terms of Service
+              Privacy Policy
             </a>
             .
           </Typography>

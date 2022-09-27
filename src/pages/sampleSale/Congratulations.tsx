@@ -27,7 +27,7 @@ const Congratulations: FunctionComponent = () => {
         <ResponsiveNEWMLogo />
 
         <Typography variant="h1" mt={ 4 }>
-          Congratulations!
+          One small step for Artists;
         </Typography>
         <GradientTypography
           id="verificationLabel"
@@ -35,15 +35,16 @@ const Congratulations: FunctionComponent = () => {
           style={ { ...theme.typography.emphasized } }
           variant="h1"
         >
-          You&apos;re now a NEWM pioneer.
+          One giant leap for music!
         </GradientTypography>
         <Stack maxWidth="580px" mt={ 7.5 } px={ 2.5 } spacing={ 1.5 }>
           <Typography variant="h3">What now?</Typography>
           <Typography fontWeight={ 400 }>
-            We are working hard on our Artist Portal. By being a pioneer you
-            will be the first to get notified when we launch our Portal and will
-            be able to test all of our amazing features. For now, feel free to
-            visit our social media.
+            Time to kick back, relax and keep an eye on your inbox. When the
+            Artist Portal is ready, we’ll send you an email with your all-access
+            pass for pre-launch. From there, you can finish setting up your
+            artist profile, upload & mint music and get ready to watch the
+            royalties roll in.
           </Typography>
         </Stack>
       </Box>
