@@ -14,6 +14,9 @@ import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
+import Countdown from "./Countdown";
+
+const { enableCountdown } = projectDetails;
 
 const TokenDrop: FunctionComponent = () => {
   useGetAdaUsdRateQuery();
@@ -22,6 +25,10 @@ const TokenDrop: FunctionComponent = () => {
   const window = useWindowDimensions();
 
   const isXLargeScreen = window.height > 1000 && window.width > 1000;
+
+  const currentDate = new Date();
+  const launchDate = new Date("October 8, 2022 00:00:00");
+  const displayCountdown = enableCountdown && launchDate > currentDate;
 
   return (
     <Box
@@ -84,34 +91,25 @@ const TokenDrop: FunctionComponent = () => {
           </Stack>
 
           <Routes>
-            <Route path="" element={ <Landing /> } />
-            <Route path="payment" element={ <Purchase /> } />
-            <Route path="congratulations" element={ <Congratulations /> } />
+            { displayCountdown ? (
+              <>
+                <Route path="" element={ <Countdown /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) : (
+              <>
+                <Route path="" element={ <Landing /> } />
+                <Route path="payment" element={ <Purchase /> } />
+                <Route path="congratulations" element={ <Congratulations /> } />
 
-            <Route path="*" element={ <Navigate to="" replace /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) }
           </Routes>
         </Box>
       </Container>
 
-      <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
-        <Box
-          sx={ {
-            pointerEvents: "none",
-            display: ["none", "none", "block"],
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            height: [
-              window.height,
-              window.height,
-              window.width * (window.height > 1200 ? 0.75 : 0.475),
-              window.height,
-            ],
-          } }
-        >
-          <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
-        </Box>
-
+      <Box sx={ { mt: 4, position: "relative", zIndex: 999 } }>
         <Box
           sx={ {
             position: "relative",
@@ -122,6 +120,24 @@ const TokenDrop: FunctionComponent = () => {
         >
           <Footer />
         </Box>
+      </Box>
+
+      <Box
+        sx={ {
+          pointerEvents: "none",
+          display: ["none", "none", "block"],
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          height: [
+            window.height,
+            window.height,
+            window.width * (window.height > 1200 ? 0.75 : 0.475),
+            window.height,
+          ],
+        } }
+      >
+        <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
       </Box>
     </Box>
   );
