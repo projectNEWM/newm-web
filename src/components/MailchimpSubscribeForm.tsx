@@ -1,6 +1,6 @@
 import { Stack, useMediaQuery } from "@mui/material";
 import { FilledButton, TextInput } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import theme from "theme";
 
 interface MailchimpSubscribeFormProps {
@@ -17,9 +17,25 @@ interface MailchimpSubscribeFormProps {
 const MailchimpSubscribeForm: FunctionComponent<
   MailchimpSubscribeFormProps
 > = ({ u, id, fId, hiddenInputName, groupName }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [email, setEmail] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    const currentInputRef = inputRef.current;
+    const preventDefault = (event: Event) => event.preventDefault();
+
+    currentInputRef?.addEventListener("invalid", preventDefault);
+
+    return () =>
+      currentInputRef?.removeEventListener("invalid", preventDefault);
+  });
+
+  const handleBlur = () => {
+    setIsValid(!!inputRef.current?.validity.valid);
+  };
 
   return (
     <form
@@ -50,9 +66,18 @@ const MailchimpSubscribeForm: FunctionComponent<
           onChange={ (e) => setEmail(e.target.value) }
           widthType={ isLargeScreen ? "default" : "full" }
           required={ true }
+          onBlur={ handleBlur }
+          ref={ inputRef }
+          errorMessage={ isValid ? "" : "Please enter a valid email address" }
         />
 
-        <FilledButton type="submit" value="Subscribe" name="subscribe">
+        <FilledButton
+          disabled={ !isValid }
+          name="subscribe"
+          sx={ { maxHeight: "46px" } }
+          type="submit"
+          value="Subscribe"
+        >
           Subscribe
         </FilledButton>
       </Stack>
