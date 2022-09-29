@@ -35,6 +35,10 @@ export const projectDetails = {
     sagittis malesuada. Fusce eget feugiat sapien. Proin eu sem vitae
     tortor sagittis ornare. Quisque tempus libero id accumsan sodales.
     Vivamus quam mi, molestie a lobortis maximus, bibendum nec nunc.`,
+  soldout: {
+    description:
+      "There's more where that came from! This Sample Sale was a successful first step towards our bigger vision of building a fair music ecosystem for artists and music lovers. To get the latest updates on our project and future drops (like this one), sign up to our newsletter.",
+  },
   socials: [
     {
       heading: "MURS",
