@@ -5,7 +5,7 @@ export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 export const enableReduxLogging = true;
 
 // set this to false to disable countdown page
-export const enableCountdown = true;
+export const enableCountdown = false;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
