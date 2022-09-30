@@ -19,7 +19,8 @@ const MailchimpSubscribeForm: FunctionComponent<
 > = ({ u, id, fId, hiddenInputName, groupName }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [email, setEmail] = useState("");
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
+  const [hasBlurred, setHasBlurred] = useState(false);
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -33,8 +34,13 @@ const MailchimpSubscribeForm: FunctionComponent<
       currentInputRef?.removeEventListener("invalid", preventDefault);
   });
 
-  const handleBlur = () => {
+  const handleChange = () => {
+    setEmail(inputRef?.current?.value || "");
     setIsValid(!!inputRef.current?.validity.valid);
+  };
+
+  const handleBlur = () => {
+    !hasBlurred && setHasBlurred(true);
   };
 
   return (
@@ -65,12 +71,12 @@ const MailchimpSubscribeForm: FunctionComponent<
           name="EMAIL"
           value={ email }
           placeholder="Email address"
-          onChange={ (e) => setEmail(e.target.value) }
+          onChange={ handleChange }
           widthType={ isLargeScreen ? "default" : "full" }
           required={ true }
           onBlur={ handleBlur }
           ref={ inputRef }
-          errorMessage={ isValid ? "" : "Please enter a valid email address" }
+          errorMessage={ !isValid && hasBlurred ? "Please enter a valid email address" : "" }
         />
         <FilledButton
           disabled={ !isValid }
