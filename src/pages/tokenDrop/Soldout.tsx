@@ -38,10 +38,10 @@ const Soldout: FunctionComponent = () => (
     <Stack spacing={ 1 } mb={ 4 } mt={ [4, 4, 10] }>
       <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
       <MailchimpSubscribeForm
-        fId="006275e2f0"
-        groupName="group[383765][2]"
-        hiddenInputName="b_3bf911620d8791d21fb973749_52df6705d1"
-        id="52df6705d1"
+        fId="000e7ae2f0"
+        groupName="group[380982][4]"
+        hiddenInputName="b_3bf911620d8791d21fb973749_460ff42d47"
+        id="460ff42d47"
         u="3bf911620d8791d21fb973749"
       />
     </Stack>
