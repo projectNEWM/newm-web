@@ -4,6 +4,9 @@ export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 // Change this value to disable Redux logging in development
 export const enableReduxLogging = true;
 
+// set this to false to disable countdown page
+export const enableCountdown = false;
+
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
   newm: isProd
@@ -19,21 +22,25 @@ export const baseUrls: Record<string, string> = {
 // Update values here for the artist being featured
 export const projectDetails = {
   artistName: "MURS",
+  launchDate: "October 8, 2022 00:00:00",
   songName: "Bigger Dreams",
   subtitle: "x Moodswingz Muzik",
   projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
   spotifyLink:
     "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
-  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis 
-    sed nibh sit amet mi euismod pulvinar. Maecenas pulvinar lorem vel erat
-    efficitur, interdum ultrices magna ullamcorper. Nam imperdiet nibh
-    semper eros iaculis dictum. Donec non sapien sit amet tortor tincidunt
-    varius. Etiam hendrerit, felis eleifend maximus ultricies, ligula eros
-    maximus enim, non congue quam nisl id turpis. Ut eget fermentum massa.
-    Proin fermentum porttitor ipsum sit amet interdum. Vestibulum lacinia
-    sagittis malesuada. Fusce eget feugiat sapien. Proin eu sem vitae
-    tortor sagittis ornare. Quisque tempus libero id accumsan sodales.
-    Vivamus quam mi, molestie a lobortis maximus, bibendum nec nunc.`,
+  description:
+    "This one's for all the movers and shakers and music tastemakers.\n\n" +
+    "MURS has been an innovator in Hip Hop for decades, from being a member of " +
+    "the Living Legends crew, to founding the music festival \"Paid Dues\" with " +
+    "performers like Wu-Tang Clan, Kendrick Lamar and Mac Miller, to other " +
+    "groundbreaking pursuits like setting the Guinness World Record for a " +
+    "24-hour livestreamed rap session on Twitch. Before he got his start, he " +
+    "crossed paths with a burgeoning young producer named Abyss " +
+    "(Moodswingz Muzik) in a Bay Area studio session. Their musical styles " +
+    "were so complementary that they discussed doing a project together, but " +
+    "life took them separate ways and it never happened - until now...\n\n" +
+    "Don't miss being a part of Hip-Hop history! A collab, decades in the " +
+    "making, is LIVE now as one of NEWM's first Stream Token Sales.",
   socials: [
     {
       heading: "MURS",

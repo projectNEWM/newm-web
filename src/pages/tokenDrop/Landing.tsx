@@ -35,8 +35,8 @@ const Landing: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 600] } }>
-        <Typography variant="subtitle1">
+      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 620] } }>
+        <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
           { projectDetails.description }
         </Typography>
       </Box>

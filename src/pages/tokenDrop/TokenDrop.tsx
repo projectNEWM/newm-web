@@ -1,6 +1,6 @@
 import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import theme from "theme";
 import profileImageLg from "assets/images/profile-cut-tinified.png";
 import profileImageSm from "assets/images/profile-cropped.png";
@@ -10,18 +10,39 @@ import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
 import { projectDetails } from "buildParams";
+import { getShouldDisplayCountdown } from "modules/ui";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
+import Countdown from "./Countdown";
 
 const TokenDrop: FunctionComponent = () => {
   useGetAdaUsdRateQuery();
   useGetSaleBundlesQuery();
 
   const window = useWindowDimensions();
-
   const isXLargeScreen = window.height > 1000 && window.width > 1000;
+
+  const [displayCountdown, setDisplayCountdown] = useState(
+    getShouldDisplayCountdown()
+  );
+
+  /**
+   * If there is time remaining before the sale launch, sets a timeout
+   * to check again in a second, otherwise, hides the countdown.
+   */
+  const handleSetDisplayCountdown = useCallback(() => {
+    if (getShouldDisplayCountdown()) {
+      setTimeout(handleSetDisplayCountdown, 1000);
+    } else {
+      setDisplayCountdown(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleSetDisplayCountdown();
+  }, [handleSetDisplayCountdown]);
 
   return (
     <Box
@@ -84,34 +105,25 @@ const TokenDrop: FunctionComponent = () => {
           </Stack>
 
           <Routes>
-            <Route path="" element={ <Landing /> } />
-            <Route path="payment" element={ <Purchase /> } />
-            <Route path="congratulations" element={ <Congratulations /> } />
+            { displayCountdown ? (
+              <>
+                <Route path="" element={ <Countdown /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) : (
+              <>
+                <Route path="" element={ <Landing /> } />
+                <Route path="payment" element={ <Purchase /> } />
+                <Route path="congratulations" element={ <Congratulations /> } />
 
-            <Route path="*" element={ <Navigate to="" replace /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) }
           </Routes>
         </Box>
       </Container>
 
-      <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
-        <Box
-          sx={ {
-            pointerEvents: "none",
-            display: ["none", "none", "block"],
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            height: [
-              window.height,
-              window.height,
-              window.width * (window.height > 1200 ? 0.75 : 0.475),
-              window.height,
-            ],
-          } }
-        >
-          <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
-        </Box>
-
+      <Box sx={ { mt: 4, position: "relative", zIndex: 999 } }>
         <Box
           sx={ {
             position: "relative",
@@ -122,6 +134,24 @@ const TokenDrop: FunctionComponent = () => {
         >
           <Footer />
         </Box>
+      </Box>
+
+      <Box
+        sx={ {
+          pointerEvents: "none",
+          display: ["none", "none", "block"],
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          height: [
+            window.height,
+            window.height,
+            window.width * (window.height > 1200 ? 0.75 : 0.475),
+            window.height,
+          ],
+        } }
+      >
+        <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
       </Box>
     </Box>
   );
