@@ -1,6 +1,6 @@
 import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import theme from "theme";
 import profileImageLg from "assets/images/profile-cut-tinified.png";
 import profileImageSm from "assets/images/profile-cropped.png";
@@ -9,7 +9,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
 import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
-import { enableCountdown, projectDetails } from "buildParams";
+import { projectDetails } from "buildParams";
+import { getShouldDisplayCountdown } from "modules/ui";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
@@ -21,12 +22,27 @@ const TokenDrop: FunctionComponent = () => {
   useGetSaleBundlesQuery();
 
   const window = useWindowDimensions();
-
   const isXLargeScreen = window.height > 1000 && window.width > 1000;
 
-  const currentDate = new Date();
-  const launchDate = new Date("October 8, 2022 00:00:00");
-  const displayCountdown = enableCountdown && launchDate > currentDate;
+  const [displayCountdown, setDisplayCountdown] = useState(
+    getShouldDisplayCountdown()
+  );
+
+  /**
+   * If there is time remaining before the sale launch, sets a timeout
+   * to check again in a second, otherwise, hides the countdown.
+   */
+  const handleSetDisplayCountdown = useCallback(() => {
+    if (getShouldDisplayCountdown()) {
+      setTimeout(handleSetDisplayCountdown, 1000);
+    } else {
+      setDisplayCountdown(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleSetDisplayCountdown();
+  }, [handleSetDisplayCountdown]);
 
   return (
     <Box

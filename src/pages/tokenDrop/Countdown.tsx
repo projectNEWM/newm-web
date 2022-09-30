@@ -2,6 +2,7 @@ import { Stack, useMediaQuery, useTheme } from "@mui/material";
 import { displayCountdown } from "common";
 import { GradientTypography, Typography } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
+import { projectDetails } from "buildParams";
 
 const Countdown: FunctionComponent = () => {
   const theme = useTheme();
@@ -16,7 +17,7 @@ const Countdown: FunctionComponent = () => {
   useEffect(() => {
     const getTimeLeft = () => {
       const currentDate = new Date();
-      const launchDate = new Date("October 8, 2022 00:00:00");
+      const launchDate = new Date(projectDetails.launchDate);
 
       return displayCountdown(launchDate, currentDate);
     };

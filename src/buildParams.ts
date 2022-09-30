@@ -5,7 +5,7 @@ export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 export const enableReduxLogging = true;
 
 // set this to false to disable countdown page
-export const enableCountdown = false;
+export const enableCountdown = true;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
@@ -22,6 +22,7 @@ export const baseUrls: Record<string, string> = {
 // Update values here for the artist being featured
 export const projectDetails = {
   artistName: "MURS",
+  launchDate: "October 8, 2022 00:00:00",
   songName: "Bigger Dreams",
   subtitle: "x Moodswingz Muzik",
   projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
