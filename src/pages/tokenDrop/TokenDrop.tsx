@@ -14,6 +14,7 @@ import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
+import Soldout from "./Soldout";
 
 const TokenDrop: FunctionComponent = () => {
   useGetAdaUsdRateQuery();
@@ -87,6 +88,7 @@ const TokenDrop: FunctionComponent = () => {
             <Route path="" element={ <Landing /> } />
             <Route path="payment" element={ <Purchase /> } />
             <Route path="congratulations" element={ <Congratulations /> } />
+            <Route path="soldout" element={ <Soldout /> } />
 
             <Route path="*" element={ <Navigate to="" replace /> } />
           </Routes>
