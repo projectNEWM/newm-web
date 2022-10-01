@@ -41,7 +41,6 @@ export const baseUrls: Record<string, string> = {
   cloudinary: "https://api.cloudinary.com/",
 };
 
-// Update values here for the artist being featured
 const projectDetailsMap: Record<string, ProjectDetails> = {
   murs: {
     artistName: "MURS",

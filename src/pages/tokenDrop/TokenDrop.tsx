@@ -94,7 +94,7 @@ const TokenDrop: FunctionComponent = () => {
               { projectDetails.artistName }
             </Typography>
 
-            { projectDetails.subtitle && (
+            { !!projectDetails.subtitle && (
               <Typography
                 variant="h3"
                 color="pink"
