@@ -58,6 +58,8 @@ const Landing: FunctionComponent = () => {
               justifyContent: "space-between",
               width: "100%",
               backgroundColor: theme.colors.grey600,
+              borderRadius: "6px",
+              overflow: "hidden",
               p: 1.25,
               pr: 2,
             } }
@@ -89,7 +91,7 @@ const Landing: FunctionComponent = () => {
               </Box>
 
               <img
-                src={ artistAssets.profileXs }
+                src={ artistAssets.albumArtXs }
                 style={ { width: 40, height: 40, borderRadius: "50%" } }
                 alt="artist profile"
               />

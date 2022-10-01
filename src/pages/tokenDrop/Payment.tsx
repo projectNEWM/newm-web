@@ -189,7 +189,7 @@ const Payment: FunctionComponent = () => {
           style={ {
             padding: "1rem 0 1rem 0",
             maxWidth: "100vw",
-            maxHeight: "100vh",
+            maxHeight: "88vh",
           } }
         />
       </Modal>
@@ -213,7 +213,7 @@ const Payment: FunctionComponent = () => {
           >
             <Stack spacing={ 2 } direction="row" alignItems="center">
               <img
-                src={ artistAssets.profileSm }
+                src={ artistAssets.albumArtXs }
                 style={ { width: 60, height: 60, borderRadius: "50%" } }
                 alt="profile"
               />

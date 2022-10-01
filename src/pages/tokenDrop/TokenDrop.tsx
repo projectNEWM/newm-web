@@ -94,17 +94,19 @@ const TokenDrop: FunctionComponent = () => {
               { projectDetails.artistName }
             </Typography>
 
-            <Typography
-              variant="h3"
-              color="pink"
-              sx={ {
-                ...theme.typography.emphasized,
-                fontSize: ["30px", "60px"],
-                lineHeight: ["30px", "60px"],
-              } }
-            >
-              { projectDetails.subtitle }
-            </Typography>
+            { projectDetails.subtitle && (
+              <Typography
+                variant="h3"
+                color="pink"
+                sx={ {
+                  ...theme.typography.emphasized,
+                  fontSize: ["30px", "60px"],
+                  lineHeight: ["30px", "60px"],
+                } }
+              >
+                { projectDetails.subtitle }
+              </Typography>
+            ) }
           </Stack>
 
           <Routes>
