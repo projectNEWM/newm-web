@@ -2,8 +2,7 @@ import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import theme from "theme";
-import profileImageLg from "assets/images/profile-cut-tinified.png";
-import profileImageSm from "assets/images/profile-cropped.png";
+import artistAssets from "assets/images/artist-assets";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
@@ -73,7 +72,11 @@ const TokenDrop: FunctionComponent = () => {
           display: ["flex", "flex", "none"],
         } }
       >
-        <img alt="profile" src={ profileImageSm } style={ { width: "100%" } } />
+        <img
+          alt="profile"
+          src={ artistAssets.profileSecondary }
+          style={ { width: "100%" } }
+        />
       </Box>
 
       <Container maxWidth="xl">
@@ -151,7 +154,11 @@ const TokenDrop: FunctionComponent = () => {
           ],
         } }
       >
-        <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
+        <img
+          alt="profile"
+          src={ artistAssets.profilePrimary }
+          style={ { height: "100%" } }
+        />
       </Box>
     </Box>
   );

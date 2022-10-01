@@ -13,7 +13,6 @@ import {
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import profileImageSm from "assets/images/profile@60px.png";
 import { selectWallet } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +27,7 @@ import {
   selectSale,
   useGetSalePrice,
 } from "modules/sale";
-import albumArt from "assets/images/album-art.jpg";
+import artistAssets from "assets/images/artist-assets";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
@@ -185,7 +184,7 @@ const Payment: FunctionComponent = () => {
         variant="full"
       >
         <img
-          src={ albumArt }
+          src={ artistAssets.albumArt }
           alt="album art"
           style={ {
             padding: "1rem 0 1rem 0",
@@ -214,7 +213,7 @@ const Payment: FunctionComponent = () => {
           >
             <Stack spacing={ 2 } direction="row" alignItems="center">
               <img
-                src={ profileImageSm }
+                src={ artistAssets.profileSm }
                 style={ { width: 60, height: 60, borderRadius: "50%" } }
                 alt="profile"
               />
