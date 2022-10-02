@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
-import { setToastMessage } from "modules/ui";
 import { camelCase, last } from "lodash";
 import { transformKeys } from "common";
 import { removeFirstCharIfNumber } from "common/stringUtils";
@@ -24,12 +23,7 @@ const api = createApi({
           const { data } = await queryFulfilled;
           dispatch(receiveAdaUsdRate(data));
         } catch (err) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching ADA price data",
-              severity: "error",
-            })
-          );
+          // do nothing
         }
       },
 

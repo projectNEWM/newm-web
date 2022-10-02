@@ -75,19 +75,38 @@ export const enableWallet = createAsyncThunk(
  * Attempts to fetch Cardano/USD rate from multiple APIs. Will stop as soon as
  * a response is successful. This is because the CoinGecko and AlphaAdvantage
  * APIs are more accurate but have request rate limits, while the Binance API
- * is less accurate, but doesn't have an request rate limit.
+ * is less accurate, but doesn't have a request rate limit.
  */
 export const getAdaUsdRate = createAsyncThunk(
   "wallet/getAdaUsdRate",
-  async () => {
-    const respA = await coinGeckoApi.endpoints.getAdaUsdRate.initiate();
+  async (_, { dispatch }) => {
+    const alphaAdvantageResp = await dispatch(
+      alphaAdvantageApi.endpoints.getAdaUsdRate.initiate()
+    );
 
-    if ("data" in respA) return;
+    if ("data" in alphaAdvantageResp) {
+      return;
+    }
 
-    const respB = await alphaAdvantageApi.endpoints.getAdaUsdRate.initiate();
+    const coinGeckoResp = await dispatch(
+      coinGeckoApi.endpoints.getAdaUsdRate.initiate()
+    );
 
-    if ("data" in respB) return;
+    if ("data" in coinGeckoResp) {
+      return;
+    }
 
-    await binanceApi.endpoints.getAdaUsdRate.initiate();
+    const binanceResp = await dispatch(
+      binanceApi.endpoints.getAdaUsdRate.initiate()
+    );
+
+    if ("error" in binanceResp) {
+      dispatch(
+        setToastMessage({
+          message: "An error occurred while fetching ADA price data",
+          severity: "error",
+        })
+      );
+    }
   }
 );
