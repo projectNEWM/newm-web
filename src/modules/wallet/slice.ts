@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { last } from "lodash";
-import { AdaUsdRateResponse, WalletState } from "./types";
+import { WalletState } from "./types";
 
 const initialState: WalletState = {
   isLoading: false,
@@ -22,12 +21,9 @@ const walletSlice = createSlice({
     setWalletName(state, { payload }: PayloadAction<string>) {
       state.walletName = payload;
     },
-    receiveAdaUsdRate(state, action: PayloadAction<AdaUsdRateResponse>) {
-      const recentData = last(
-        Object.values(action.payload.timeSeriesCrypto5Min)
-      );
-
-      state.adaUsdRate = recentData ? parseFloat(recentData.close) : undefined;
+    receiveAdaUsdRate(state, { payload }: PayloadAction<string | number>) {
+      const rate = typeof payload === "string" ? parseFloat(payload) : payload;
+      state.adaUsdRate = rate;
     },
   },
 });

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { RootState } from "store";
+import { alphaAdvantageApi, binanceApi, coinGeckoApi } from "api";
 import { setWalletIsConnected, setWalletName } from "./slice";
 import { ensureWallets } from "./utils";
 
@@ -67,5 +68,26 @@ export const enableWallet = createAsyncThunk(
         dispatch(setToastMessage("Error occurred while enabling the wallet."));
       }
     }
+  }
+);
+
+/**
+ * Attempts to fetch Cardano/USD rate from multiple APIs. Will stop as soon as
+ * a response is successful. This is because the CoinGecko and AlphaAdvantage
+ * APIs are more accurate but have request rate limits, while the Binance API
+ * is less accurate, but doesn't have an request rate limit.
+ */
+export const getAdaUsdRate = createAsyncThunk(
+  "wallet/getAdaUsdRate",
+  async () => {
+    const respA = await coinGeckoApi.endpoints.getAdaUsdRate.initiate();
+
+    if ("data" in respA) return;
+
+    const respB = await alphaAdvantageApi.endpoints.getAdaUsdRate.initiate();
+
+    if ("data" in respB) return;
+
+    await binanceApi.endpoints.getAdaUsdRate.initiate();
   }
 );
