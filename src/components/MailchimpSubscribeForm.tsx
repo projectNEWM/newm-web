@@ -1,6 +1,12 @@
 import { Stack, useMediaQuery } from "@mui/material";
 import { FilledButton, TextInput } from "elements";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  FunctionComponent,
+  useRef,
+  useState,
+} from "react";
 import theme from "theme";
 
 interface MailchimpSubscribeFormProps {
@@ -20,27 +26,24 @@ const MailchimpSubscribeForm: FunctionComponent<
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [hasBlurred, setHasBlurred] = useState(false);
+  const [isBlurred, setIsBlurred] = useState(false);
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
-  useEffect(() => {
-    const currentInputRef = inputRef.current;
-    const preventDefault = (event: Event) => event.preventDefault();
+  const handleBlur = () => {
+    if (!isBlurred) setIsBlurred(true);
+  };
 
-    currentInputRef?.addEventListener("invalid", preventDefault);
-
-    return () =>
-      currentInputRef?.removeEventListener("invalid", preventDefault);
-  });
-
-  const handleChange = () => {
-    setEmail(inputRef?.current?.value || "");
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
     setIsValid(!!inputRef.current?.validity.valid);
   };
 
-  const handleBlur = () => {
-    !hasBlurred && setHasBlurred(true);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!isValid) {
+      event.preventDefault();
+      setIsValid(false);
+    }
   };
 
   return (
@@ -48,6 +51,8 @@ const MailchimpSubscribeForm: FunctionComponent<
       action={ `https://projectnewm.us1.list-manage.com/subscribe/post?u=${u}&amp;id=${id}&amp;f_id=${fId}` }
       method="post"
       target="_self"
+      onSubmit={ handleSubmit }
+      noValidate={ true }
     >
       { !!groupName && (
         <input
@@ -74,11 +79,12 @@ const MailchimpSubscribeForm: FunctionComponent<
           required={ true }
           onBlur={ handleBlur }
           ref={ inputRef }
-          errorMessage={ !isValid && hasBlurred ? "Please enter a valid email address" : "" }
+          errorMessage={
+            !isValid && isBlurred ? "Please enter a valid email address" : ""
+          }
         />
 
         <FilledButton
-          disabled={ !isValid }
           name="subscribe"
           sx={ { maxHeight: "46px" } }
           type="submit"
