@@ -14,73 +14,77 @@ import { setSongIsLoading } from "./slice";
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongFormValues, thunkApi) => {
-    // set loading state to show loading indicator
-    thunkApi.dispatch(setSongIsLoading(true));
+    try {
+      // set loading state to show loading indicator
+      thunkApi.dispatch(setSongIsLoading(true));
 
-    // optional upload params to format or crop image could go here
-    const uploadParams = {};
+      // optional upload params to format or crop image could go here
+      const uploadParams = {};
 
-    const signatureResp = await thunkApi.dispatch(
-      songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
-    );
+      const signatureResp = await thunkApi.dispatch(
+        songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+      );
 
-    if ("error" in signatureResp || !("data" in signatureResp)) return;
+      if ("error" in signatureResp || !("data" in signatureResp)) return;
 
-    const { apiKey, signature, timestamp } = signatureResp.data;
+      const { apiKey, signature, timestamp } = signatureResp.data;
 
-    const imageBinaryStr = await getFileBinary(body.image);
+      const imageBinaryStr = await getFileBinary(body.image);
 
-    // upload image to cloudinary
-    const cloudinaryResp = await thunkApi.dispatch(
-      cloudinaryApi.endpoints.uploadImage.initiate({
-        api_key: apiKey,
-        file: imageBinaryStr,
-        signature,
-        timestamp,
-        ...uploadParams,
-      })
-    );
+      // upload image to cloudinary
+      const cloudinaryResp = await thunkApi.dispatch(
+        cloudinaryApi.endpoints.uploadImage.initiate({
+          api_key: apiKey,
+          file: imageBinaryStr,
+          signature,
+          timestamp,
+          ...uploadParams,
+        })
+      );
 
-    if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
+      if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
-    // create the song in the NEWM API
-    const songResp = await thunkApi.dispatch(
-      songApi.endpoints.uploadSong.initiate({
-        title: body.title,
-        genre: body.genre,
-        description: body.description,
-        coverArtUrl: cloudinaryResp.data.secure_url,
-      })
-    );
+      // create the song in the NEWM API
+      const songResp = await thunkApi.dispatch(
+        songApi.endpoints.uploadSong.initiate({
+          title: body.title,
+          genre: body.genre,
+          description: body.description,
+          coverArtUrl: cloudinaryResp.data.secure_url,
+        })
+      );
 
-    if ("error" in songResp) return;
+      if ("error" in songResp) return;
 
-    const { songId } = songResp.data;
+      const { songId } = songResp.data;
 
-    // get signed upload url for AWS
-    const audioUploadUrlResp = await thunkApi.dispatch(
-      songApi.endpoints.getAudioUploadUrl.initiate({
-        songId,
-        fileName: body.audio.name,
-      })
-    );
+      // get signed upload url for AWS
+      const audioUploadUrlResp = await thunkApi.dispatch(
+        songApi.endpoints.getAudioUploadUrl.initiate({
+          songId,
+          fileName: body.audio.name,
+        })
+      );
 
-    if ("error" in audioUploadUrlResp) return;
+      if ("error" in audioUploadUrlResp) return;
 
-    const { uploadUrl } = audioUploadUrlResp.data;
-    const audioBinaryStr = await getFileBinary(body.audio);
+      const { uploadUrl } = audioUploadUrlResp.data;
+      const audioBinaryStr = await getFileBinary(body.audio);
 
-    // upload audio to AWS, song audioUrl will be updated after it's transcoded
-    await fetch(uploadUrl, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ file: audioBinaryStr }),
-    });
+      // upload audio to AWS, song audioUrl will be updated after it's transcoded
+      await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ file: audioBinaryStr }),
+      });
 
-    // fetch user's songs
-    thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
-
-    // done fetching songs
-    thunkApi.dispatch(setSongIsLoading(false));
+      // fetch user's songs
+      thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    } finally {
+      // done fetching songs
+      thunkApi.dispatch(setSongIsLoading(false));
+    }
   }
 );
