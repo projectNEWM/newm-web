@@ -14,6 +14,7 @@ interface MailchimpSubscribeFormProps {
   readonly id: string;
   readonly fId: string;
   readonly hiddenInputName: string;
+  readonly groupValue: string;
   readonly groupName?: string;
 }
 
@@ -22,7 +23,7 @@ interface MailchimpSubscribeFormProps {
  */
 const MailchimpSubscribeForm: FunctionComponent<
   MailchimpSubscribeFormProps
-> = ({ u, id, fId, hiddenInputName, groupName }) => {
+> = ({ u, id, fId, hiddenInputName, groupValue, groupName }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -58,7 +59,7 @@ const MailchimpSubscribeForm: FunctionComponent<
         <input
           style={ { display: "none" } }
           type="checkbox"
-          value="4"
+          value={ groupValue }
           name={ groupName }
           checked={ true }
         />

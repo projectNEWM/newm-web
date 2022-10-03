@@ -17,6 +17,13 @@ export const useGetSalePrice = (projectId: number): BundlePrice => {
   return { ada: bundleAdaPrice, usd: bundleUsdPrice };
 };
 
+export const useGetSaleAmount = (projectId: number): number | undefined => {
+  const { sales = [] } = useSelector(selectSale);
+  const sale = sales.find(hasProjectId(projectId));
+
+  return sale?.amount;
+};
+
 const hasProjectId = (projectId: number) => (el: SaleBundle) => {
   return el.projectId === projectId;
 };

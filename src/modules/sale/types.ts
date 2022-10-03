@@ -23,6 +23,7 @@ export interface SaleBundle {
   readonly id: number;
   readonly projectId: number;
   readonly cost: number;
+  readonly amount: number;
   readonly tokenCostType: string | null;
   readonly tokenCost: number | null;
   readonly startDate: string;

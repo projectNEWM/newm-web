@@ -12,7 +12,7 @@ const DisplayText: FunctionComponent<DisplayTextProps> = ({
 }) => {
   const theme = useTheme();
 
-  const fontSize = useMediaQuery(theme.breakpoints.down("sm")) ? 20 : 30;
+  const fontSize = useMediaQuery(theme.breakpoints.down("sm")) ? 18 : 30;
 
   return (
     <span
