@@ -10,10 +10,14 @@ import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import song from "assets/audio/song.mp3";
 import { projectDetails } from "buildParams";
+import { useGetSaleAmount } from "modules/sale";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const bundleSize = (
+    useGetSaleAmount(projectDetails.projectId) || projectDetails.bundleAmount
+  ).toLocaleString();
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -137,7 +141,7 @@ const Landing: FunctionComponent = () => {
             <Box flexDirection="column">
               <Box mb={ 0.25 }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
-                  8000 stream tokens
+                  { bundleSize } stream tokens
                 </DisplayText>
               </Box>
 

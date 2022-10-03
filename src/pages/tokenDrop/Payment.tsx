@@ -25,6 +25,7 @@ import {
   createPurchase,
   extendedApi as saleApi,
   selectSale,
+  useGetSaleAmount,
   useGetSalePrice,
 } from "modules/sale";
 import artistAssets from "assets/images/artist-assets";
@@ -48,6 +49,9 @@ const Payment: FunctionComponent = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const bundlePrice = useGetSalePrice(projectId);
+  const bundleSize = (
+    useGetSaleAmount(projectDetails.projectId) || projectDetails.bundleAmount
+  ).toLocaleString();
   const {
     isConnected,
     isLoading: isWalletLoading,
@@ -256,7 +260,7 @@ const Payment: FunctionComponent = () => {
 
             <Box mb={ 0.25 }>
               <Typography variant="subtitle1">
-                <DisplayText>8000 stream tokens</DisplayText>
+                <DisplayText>{ bundleSize } stream tokens</DisplayText>
               </Typography>
             </Box>
 

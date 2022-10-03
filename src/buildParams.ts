@@ -2,6 +2,7 @@ interface ProjectDetails {
   readonly artistName: string;
   readonly launchDate: string;
   readonly projectId: number;
+  readonly bundleAmount: number;
   readonly songName: string;
   readonly subtitle?: string;
   readonly spotifyLink: string;
@@ -50,6 +51,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     subtitle: "x Moodswingz Muzik",
     launchDate: "October 8, 2022 00:00:00",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
+    bundleAmount: 8000,
     spotifyLink:
       "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
     description:
@@ -107,6 +109,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     launchDate: "October 8, 2022 00:00:00",
     songName: "Love in the water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
+    bundleAmount: 100000,
     spotifyLink:
       "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=VKwvFLHFTIejygODGHhoIQ&utm_source=native-share-menu",
     description:

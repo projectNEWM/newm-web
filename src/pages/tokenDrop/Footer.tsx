@@ -60,12 +60,12 @@ const Footer: FunctionComponent = () => {
     },
     {
       label: "Disclaimer",
-      to: "#",
+      to: "https://newm.io/disclaimer",
       type: "web",
     },
     {
       label: "Terms of Service",
-      to: "#",
+      to: "https://newm.io/terms-of-service",
       type: "web",
     },
   ];
