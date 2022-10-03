@@ -74,7 +74,7 @@ const MailchimpSubscribeForm: FunctionComponent<
           name="EMAIL"
           value={ email }
           placeholder="Email address"
-          onChange={ (e) => handleChange(e) }
+          onChange={ handleChange }
           widthType={ isLargeScreen ? "default" : "full" }
           required={ true }
           onBlur={ handleBlur }
