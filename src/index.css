@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+body {
+  overscroll-behavior-y: none;
+}
+
 body,
 html,
 #root {

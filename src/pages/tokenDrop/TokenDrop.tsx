@@ -1,28 +1,54 @@
 import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import theme from "theme";
-import profileImageLg from "assets/images/profile-cut-tinified.png";
-import profileImageSm from "assets/images/profile-cropped.png";
+import artistAssets from "assets/images/artist-assets";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
-import { useGetAdaUsdRateQuery } from "modules/wallet";
 import { useGetSaleBundlesQuery } from "modules/sale";
 import { projectDetails } from "buildParams";
+import { getShouldDisplayCountdown } from "modules/ui";
+import { useDispatch } from "react-redux";
+import { getAdaUsdRate } from "modules/wallet";
 import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
 import Soldout from "./Soldout";
+import Countdown from "./Countdown";
 
 const TokenDrop: FunctionComponent = () => {
-  useGetAdaUsdRateQuery();
   useGetSaleBundlesQuery();
 
-  const window = useWindowDimensions();
+  const dispatch = useDispatch();
 
+  const window = useWindowDimensions();
   const isXLargeScreen = window.height > 1000 && window.width > 1000;
+
+  const [displayCountdown, setDisplayCountdown] = useState(
+    getShouldDisplayCountdown()
+  );
+
+  /**
+   * If there is time remaining before the sale launch, sets a timeout
+   * to check again in a second, otherwise, hides the countdown.
+   */
+  const handleSetDisplayCountdown = useCallback(() => {
+    if (getShouldDisplayCountdown()) {
+      setTimeout(handleSetDisplayCountdown, 1000);
+    } else {
+      setDisplayCountdown(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleSetDisplayCountdown();
+  }, [handleSetDisplayCountdown]);
+
+  useEffect(() => {
+    dispatch(getAdaUsdRate());
+  }, [dispatch]);
 
   return (
     <Box
@@ -53,7 +79,11 @@ const TokenDrop: FunctionComponent = () => {
           display: ["flex", "flex", "none"],
         } }
       >
-        <img alt="profile" src={ profileImageSm } style={ { width: "100%" } } />
+        <img
+          alt="profile"
+          src={ artistAssets.profileSecondary }
+          style={ { width: "100%" } }
+        />
       </Box>
 
       <Container maxWidth="xl">
@@ -71,49 +101,42 @@ const TokenDrop: FunctionComponent = () => {
               { projectDetails.artistName }
             </Typography>
 
-            <Typography
-              variant="h3"
-              color="pink"
-              sx={ {
-                ...theme.typography.emphasized,
-                fontSize: ["30px", "60px"],
-                lineHeight: ["30px", "60px"],
-              } }
-            >
-              { projectDetails.subtitle }
-            </Typography>
+            { !!projectDetails.subtitle && (
+              <Typography
+                variant="h3"
+                color="pink"
+                sx={ {
+                  ...theme.typography.emphasized,
+                  fontSize: ["30px", "60px"],
+                  lineHeight: ["30px", "60px"],
+                } }
+              >
+                { projectDetails.subtitle }
+              </Typography>
+            ) }
           </Stack>
 
           <Routes>
-            <Route path="" element={ <Landing /> } />
-            <Route path="payment" element={ <Purchase /> } />
-            <Route path="congratulations" element={ <Congratulations /> } />
-            <Route path="soldout" element={ <Soldout /> } />
+            { displayCountdown ? (
+              <>
+                <Route path="" element={ <Countdown /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) : (
+              <>
+                <Route path="" element={ <Landing /> } />
+                <Route path="payment" element={ <Purchase /> } />
+                <Route path="congratulations" element={ <Congratulations /> } />
+                <Route path="sold-out" element={ <Soldout /> } />
 
-            <Route path="*" element={ <Navigate to="" replace /> } />
+                <Route path="*" element={ <Navigate to="" replace /> } />
+              </>
+            ) }
           </Routes>
         </Box>
       </Container>
 
-      <Box sx={ { mt: 3, position: "relative", zIndex: 999 } }>
-        <Box
-          sx={ {
-            pointerEvents: "none",
-            display: ["none", "none", "block"],
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            height: [
-              window.height,
-              window.height,
-              window.width * (window.height > 1200 ? 0.75 : 0.475),
-              window.height,
-            ],
-          } }
-        >
-          <img alt="profile" src={ profileImageLg } style={ { height: "100%" } } />
-        </Box>
-
+      <Box sx={ { mt: 4, position: "relative", zIndex: 999 } }>
         <Box
           sx={ {
             position: "relative",
@@ -124,6 +147,28 @@ const TokenDrop: FunctionComponent = () => {
         >
           <Footer />
         </Box>
+      </Box>
+
+      <Box
+        sx={ {
+          pointerEvents: "none",
+          display: ["none", "none", "block"],
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          height: [
+            window.height,
+            window.height,
+            window.width * (window.height > 1200 ? 0.75 : 0.475),
+            window.height,
+          ],
+        } }
+      >
+        <img
+          alt="profile"
+          src={ artistAssets.profilePrimary }
+          style={ { height: "100%" } }
+        />
       </Box>
     </Box>
   );

@@ -1,7 +1,7 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
-import profileImageXs from "assets/images/profile-small.png";
+import artistAssets from "assets/images/artist-assets";
 import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +35,8 @@ const Landing: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 600] } }>
-        <Typography variant="subtitle1">
+      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 620] } }>
+        <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
           { projectDetails.description }
         </Typography>
       </Box>
@@ -58,6 +58,8 @@ const Landing: FunctionComponent = () => {
               justifyContent: "space-between",
               width: "100%",
               backgroundColor: theme.colors.grey600,
+              borderRadius: "6px",
+              overflow: "hidden",
               p: 1.25,
               pr: 2,
             } }
@@ -89,7 +91,7 @@ const Landing: FunctionComponent = () => {
               </Box>
 
               <img
-                src={ profileImageXs }
+                src={ artistAssets.albumArtXs }
                 style={ { width: 40, height: 40, borderRadius: "50%" } }
                 alt="artist profile"
               />

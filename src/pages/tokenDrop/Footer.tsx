@@ -72,12 +72,14 @@ const Footer: FunctionComponent = () => {
 
   return (
     <Box
+      position="relative"
       display={ ["flex", "flex", "block"] }
       justifyContent={ ["center", "center", "space-between"] }
     >
       <Modal open={ isOpen } handleClose={ handleClose }>
         <ModalContent />
       </Modal>
+
       <Box
         sx={ {
           alignItems: ["flex-start", "flex-start", "center"],

@@ -70,18 +70,6 @@ export interface Wallets {
   readonly [key: string]: WalletInfo;
 }
 
-interface CryptoData {
-  readonly open: string;
-  readonly high: string;
-  readonly low: string;
-  readonly close: string;
-  readonly volume: number;
-}
-
-export interface AdaUsdRateResponse {
-  readonly timeSeriesCrypto5Min: Record<string, CryptoData>;
-}
-
 export interface CreateTransactionParams {
   readonly receiveAddress: string;
   readonly paymentAddress: string;

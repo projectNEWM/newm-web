@@ -1,7 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 import { GradientTypography, Typography } from "elements";
-import { projectDetails } from "buildParams";
 import { MailchimpSubscribeForm } from "components";
 import SectionHeading from "components/tokenDrop/SectionHeading";
 import theme from "theme";
@@ -32,10 +31,14 @@ const Soldout: FunctionComponent = () => (
     </GradientTypography>
     <Box mb={ 3.5 } mt={ 1.5 } sx={ { maxWidth: [9999, 9999, 450] } }>
       <Typography variant="subtitle1" color="white">
-        { projectDetails.soldout.description }
+        There&apos;s more where that came from! This Sample Sale was a
+        successful first step towards our bigger vision of building a fair music
+        ecosystem for artists and music lovers. To get the latest updates on our
+        project and future drops (like this one), sign up to our newsletter.
       </Typography>
     </Box>
-    <Stack spacing={ 1 } mb={ 4 } mt={ [4, 4, 10] }>
+
+    <Stack spacing={ 1 } mb={ 4 } mt={ 4 }>
       <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
       <MailchimpSubscribeForm
         fId="000e7ae2f0"
