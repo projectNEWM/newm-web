@@ -42,6 +42,7 @@ const Soldout: FunctionComponent = () => (
       <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
       <MailchimpSubscribeForm
         fId="000e7ae2f0"
+        groupValue="4"
         groupName="group[380982][4]"
         hiddenInputName="b_3bf911620d8791d21fb973749_460ff42d47"
         id="460ff42d47"
