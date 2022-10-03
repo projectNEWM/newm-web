@@ -1,6 +1,6 @@
 import { Stack, useMediaQuery } from "@mui/material";
 import { FilledButton, TextInput } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import theme from "theme";
 
 interface MailchimpSubscribeFormProps {
@@ -17,9 +17,31 @@ interface MailchimpSubscribeFormProps {
 const MailchimpSubscribeForm: FunctionComponent<
   MailchimpSubscribeFormProps
 > = ({ u, id, fId, hiddenInputName, groupName }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [email, setEmail] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [hasBlurred, setHasBlurred] = useState(false);
 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    const currentInputRef = inputRef.current;
+    const preventDefault = (event: Event) => event.preventDefault();
+
+    currentInputRef?.addEventListener("invalid", preventDefault);
+
+    return () =>
+      currentInputRef?.removeEventListener("invalid", preventDefault);
+  });
+
+  const handleChange = () => {
+    setEmail(inputRef?.current?.value || "");
+    setIsValid(!!inputRef.current?.validity.valid);
+  };
+
+  const handleBlur = () => {
+    !hasBlurred && setHasBlurred(true);
+  };
 
   return (
     <form
@@ -47,12 +69,21 @@ const MailchimpSubscribeForm: FunctionComponent<
           name="EMAIL"
           value={ email }
           placeholder="Email address"
-          onChange={ (e) => setEmail(e.target.value) }
+          onChange={ handleChange }
           widthType={ isLargeScreen ? "default" : "full" }
           required={ true }
+          onBlur={ handleBlur }
+          ref={ inputRef }
+          errorMessage={ !isValid && hasBlurred ? "Please enter a valid email address" : "" }
         />
 
-        <FilledButton type="submit" value="Subscribe" name="subscribe">
+        <FilledButton
+          disabled={ !isValid }
+          name="subscribe"
+          sx={ { maxHeight: "46px" } }
+          type="submit"
+          value="Subscribe"
+        >
           Subscribe
         </FilledButton>
       </Stack>

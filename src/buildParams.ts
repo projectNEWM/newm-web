@@ -75,10 +75,9 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       },
       {
         heading: "Moodswingz",
-        twitter: "https://twitter.com/MURS",
-        instagram: "https://www.instagram.com/murs316/",
-        spotify:
-          "https://open.spotify.com/artist/2dWF6m2ksP9GN75fufFp16?si=9NSEpqu7QR-FslN7xFe8sg",
+        twitter: "https://twitter.com/moodswingzmuzik",
+        instagram: "https://www.instagram.com/moodswingzmuzik/",
+        website: "http://moodswingzmuzik.com/",
       },
       {
         heading: "NEWM",

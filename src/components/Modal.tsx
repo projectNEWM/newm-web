@@ -74,6 +74,8 @@ const Modal: FunctionComponent<ModalProps> = ({
           alignSelf: "center",
           display: "flex",
           flexDirection: "column",
+          overflow: "auto",
+          mb: 1.5,
           ...(variant === "full" ? fullStyles : framedStyles),
         } }
       >

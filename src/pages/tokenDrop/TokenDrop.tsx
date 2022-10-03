@@ -15,6 +15,7 @@ import Footer from "./Footer";
 import Landing from "./Landing";
 import Purchase from "./Payment";
 import Congratulations from "./Congratulations";
+import Soldout from "./Soldout";
 import Countdown from "./Countdown";
 
 const TokenDrop: FunctionComponent = () => {
@@ -126,6 +127,7 @@ const TokenDrop: FunctionComponent = () => {
                 <Route path="" element={ <Landing /> } />
                 <Route path="payment" element={ <Purchase /> } />
                 <Route path="congratulations" element={ <Congratulations /> } />
+                <Route path="sold-out" element={ <Soldout /> } />
 
                 <Route path="*" element={ <Navigate to="" replace /> } />
               </>
