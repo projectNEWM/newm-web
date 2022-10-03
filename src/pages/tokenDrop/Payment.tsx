@@ -198,7 +198,7 @@ const Payment: FunctionComponent = () => {
         />
       </Modal>
 
-      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 475] }>
+      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 478] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
             <SectionHeading>SONG</SectionHeading>

@@ -49,7 +49,7 @@ const Landing: FunctionComponent = () => {
         spacing={ 2.5 }
         alignItems="flex-start"
         width="100%"
-        maxWidth={ [9999, 9999, 475] }
+        maxWidth={ [9999, 9999, 478] }
       >
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
