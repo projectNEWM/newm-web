@@ -31,7 +31,7 @@ const MailchimpSubscribeForm: FunctionComponent<
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleBlur = () => {
-    !isBlurred && setIsBlurred(true);
+    if (!isBlurred) setIsBlurred(true);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const MailchimpSubscribeForm: FunctionComponent<
 
   return (
     <form
-      action={ `https://projectnewm.us1.list-manage.com/subscribe/post?u=${u}&id=${id}&f_id=${fId}` }
+      action={ `https://projectnewm.us1.list-manage.com/subscribe/post?u=${u}&amp;id=${id}&amp;f_id=${fId}` }
       method="post"
       target="_self"
       onSubmit={ handleSubmit }
