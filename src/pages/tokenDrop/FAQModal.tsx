@@ -44,7 +44,7 @@ const faqItems = [
 
 const FAQModal = () => {
   return (
-    <Box sx={ { textAlign: "left" } }>
+    <Box sx={ { textAlign: "left", overflow: "auto" } }>
       <Typography component="h3" sx={ { marginTop: 0.5 } } variant="h3">
         F.A.Q
       </Typography>
