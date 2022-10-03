@@ -319,7 +319,7 @@ const Payment: FunctionComponent = () => {
                     }
                     message={
                       isWalletLoading
-                        ? "Your transaction is being created. Please input" +
+                        ? "Your transaction is being created. Please input " +
                           "your spending password when prompted."
                         : isTransactionCreated
                         ? "Your transaction is currently processing. This " +
