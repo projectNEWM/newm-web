@@ -58,7 +58,7 @@ const Welcome: FunctionComponent = () => {
         <TextInputField
           aria-label="Wallet address"
           name="walletAddress"
-          placeholder="Wallet address"
+          placeholder="Wallet address (optional)"
         />
         <FilledButton disabled={ !isValid } type="submit">
           Sign Up
