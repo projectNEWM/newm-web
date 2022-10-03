@@ -15,8 +15,10 @@ export const baseUrls: Record<string, string> = {
   phyrhose: isMainNet
     ? "https://api.phyrhose.io/"
     : "https://testnet.phyrhose.io/",
-  alphaAdvantage: "https://www.alphavantage.co/",
   cloudinary: "https://api.cloudinary.com/",
+  alphaAdvantage: "https://www.alphavantage.co/",
+  coinGecko: "https://api.coingecko.com/api/",
+  binance: "https://api.binance.com/api/",
 };
 
 // Update values here for the artist being featured

@@ -1,5 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import newmApi, { alphaAdvantageApi, cloudinaryApi, phyrhoseApi } from "api";
+import newmApi, {
+  alphaAdvantageApi,
+  binanceApi,
+  cloudinaryApi,
+  coinGeckoApi,
+  phyrhoseApi,
+} from "api";
 import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
@@ -22,8 +28,10 @@ export const reducer = combineReducers({
   sale: saleReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
-  [alphaAdvantageApi.reducerPath]: alphaAdvantageApi.reducer,
   [phyrhoseApi.reducerPath]: phyrhoseApi.reducer,
+  [alphaAdvantageApi.reducerPath]: alphaAdvantageApi.reducer,
+  [coinGeckoApi.reducerPath]: coinGeckoApi.reducer,
+  [binanceApi.reducerPath]: binanceApi.reducer,
 });
 
 const persistConfig = {
@@ -32,8 +40,10 @@ const persistConfig = {
   blacklist: [
     newmApi.reducerPath,
     cloudinaryApi.reducerPath,
-    alphaAdvantageApi.reducerPath,
     phyrhoseApi.reducerPath,
+    alphaAdvantageApi.reducerPath,
+    coinGeckoApi.reducerPath,
+    binanceApi.reducerPath,
     "ui",
   ],
 };
@@ -46,8 +56,10 @@ const store = configureStore({
     const baseMiddleware = [
       ...getDefaultMiddleware(),
       newmApi.middleware,
-      alphaAdvantageApi.middleware,
       phyrhoseApi.middleware,
+      alphaAdvantageApi.middleware,
+      coinGeckoApi.middleware,
+      binanceApi.middleware,
     ];
 
     if (isProd) {
