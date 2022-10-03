@@ -31,10 +31,20 @@ const extendedApi = api.injectEndpoints({
           // eslint-disable-next-line
         } catch (err: any) {
           const { error } = err;
+          const errorMessage = await error?.data?.message;
+          const isSoldout =
+            error?.status === 404 &&
+            errorMessage.toLowerCase().includes("sold out");
+          const isSoldoutCurrentPage =
+            window?.location?.pathname.includes("sold-out");
+
+          if (isSoldout && !isSoldoutCurrentPage) {
+            window.location.pathname = "token-drop/sold-out";
+          }
 
           dispatch(
             setToastMessage({
-              message: error?.data?.message,
+              message: errorMessage,
               severity: "error",
             })
           );

@@ -1,4 +1,12 @@
-import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Stack,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import QuestionIcon from "assets/images/QuestionIcon";
 import {
   DisplayText,
   Modal,
@@ -295,23 +303,40 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              { !isConnected ? (
-                <AccentButton
-                  onClick={ handleOpenWalletModal }
-                  fullWidth={ true }
-                  disabled={ isLoading }
+              <Stack
+                position="relative"
+                direction="row"
+                alignItems="center"
+                spacing={ 1 }
+              >
+                { !isConnected ? (
+                  <AccentButton
+                    onClick={ handleOpenWalletModal }
+                    fullWidth={ true }
+                    disabled={ isLoading }
+                  >
+                    Connect wallet
+                  </AccentButton>
+                ) : (
+                  <FilledButton
+                    onClick={ handleWalletPurchase }
+                    fullWidth={ true }
+                    disabled={ isLoading || isTransactionCreated }
+                  >
+                    Complete purchase
+                  </FilledButton>
+                ) }
+                <Tooltip
+                  arrow={ true }
+                  leaveDelay={ 200 }
+                  placement="top"
+                  title="A description to explain the user connecting their wallet"
                 >
-                  Connect wallet
-                </AccentButton>
-              ) : (
-                <FilledButton
-                  onClick={ handleWalletPurchase }
-                  fullWidth={ true }
-                  disabled={ isLoading || isTransactionCreated }
-                >
-                  Complete purchase
-                </FilledButton>
-              ) }
+                  <IconButton sx={ { py: 0 } }>
+                    <QuestionIcon />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
 
               { activePurchase && (
                 <Box mt={ 3 }>

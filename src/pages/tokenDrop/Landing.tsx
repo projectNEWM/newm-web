@@ -1,4 +1,5 @@
-import { Box, IconButton, Stack, useTheme } from "@mui/material";
+import { Box, IconButton, Stack, Tooltip, useTheme } from "@mui/material";
+import QuestionIcon from "assets/images/QuestionIcon";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/images/artist-assets";
@@ -49,7 +50,7 @@ const Landing: FunctionComponent = () => {
         spacing={ 2.5 }
         alignItems="flex-start"
         width="100%"
-        maxWidth={ [9999, 9999, 475] }
+        maxWidth={ [9999, 9999, 504] }
       >
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
@@ -142,6 +143,16 @@ const Landing: FunctionComponent = () => {
               <Box mb={ 0.25 }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
                   { bundleSize } stream tokens
+                  <Tooltip
+                    arrow={ true }
+                    leaveDelay={ 200 }
+                    placement="top"
+                    title="A description to explain the price breakdown"
+                  >
+                    <IconButton sx={ { py: 0 } }>
+                      <QuestionIcon />
+                    </IconButton>
+                  </Tooltip>
                 </DisplayText>
               </Box>
 
