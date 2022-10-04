@@ -271,6 +271,10 @@ const toHex = (bytes: Uint8Array) => {
   return Buffer.from(bytes).toString("hex");
 };
 
+export const adaToUsd = (ada: number, conversionRate: number) => {
+  return Math.round(ada * conversionRate * 100) / 100;
+};
+
 // const fromAscii = (hex: string) => {
 //   return Buffer.from(hex).toString("hex");
 // };
