@@ -1,14 +1,13 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import { FilledButton, HorizontalLine, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
-import artistAssets from "assets/images/artist-assets";
+import artistAssets from "assets/artist-assets";
 import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
 import StopIcon from "assets/images/StopIcon";
 import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
-import song from "assets/audio/song.mp3";
 import { projectDetails } from "buildParams";
 import { useGetSaleAmount } from "modules/sale";
 
@@ -24,7 +23,7 @@ const Landing: FunctionComponent = () => {
   const audio = useMemo(
     () =>
       new Howl({
-        src: song,
+        src: artistAssets.preview,
         onplay: () => setIsPlaying(true),
         onstop: () => setIsPlaying(false),
         onend: () => setIsPlaying(false),
