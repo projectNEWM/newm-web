@@ -17,7 +17,7 @@ const Countdown: FunctionComponent = () => {
   useEffect(() => {
     const getTimeLeft = () => {
       const currentDate = new Date();
-      const launchDate = new Date(projectDetails.launchDate);
+      const launchDate = new Date(projectDetails.launchTimestamp);
 
       return displayCountdown(launchDate, currentDate);
     };

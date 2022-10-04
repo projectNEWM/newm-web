@@ -1,6 +1,6 @@
 interface ProjectDetails {
   readonly artistName: string;
-  readonly launchDate: string;
+  readonly launchTimestamp: number;
   readonly projectId: number;
   readonly bundleAmount: number;
   readonly bundlePrice: number;
@@ -16,10 +16,6 @@ interface ProjectDetails {
     readonly spotify?: string;
     readonly website?: string;
   }>;
-  readonly faq: ReadonlyArray<{
-    readonly question: string;
-    readonly answer: string;
-  }>;
 }
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";
@@ -30,7 +26,7 @@ export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 export const enableReduxLogging = true;
 
 // set this to false to disable countdown page
-export const enableCountdown = false;
+export const enableCountdown = true;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
@@ -51,7 +47,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     artistName: "MURS",
     songName: "Bigger Dreams",
     subtitle: "x Moodswingz Muzik",
-    launchDate: "October 8, 2022 00:00:00",
+    launchTimestamp: 1665212400000,
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 8000,
     bundlePrice: 42,
@@ -92,25 +88,10 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         website: "https://newm.io/",
       },
     ],
-    faq: [
-      {
-        question: "What is your motto?",
-        answer: "Nothing matters. Nothing exists on purpose.",
-      },
-      {
-        question: "That is a bit dark is it not?",
-        answer: "Everything matters everything exists on purpose.",
-      },
-      {
-        question:
-          "What is the longest question you have ever asked somebody that takes up to two lines",
-        answer: "Answer",
-      },
-    ],
   },
   nido: {
     artistName: "NIDO",
-    launchDate: "October 8, 2022 00:00:00",
+    launchTimestamp: 1665241200000,
     songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
@@ -139,21 +120,6 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         spotify:
           "https://open.spotify.com/artist/7vIuaRUTygrIF7PbcalDpK?si=g7_ruNbRR52zJzgz3eN2_g",
         website: "https://www.officialnido.com",
-      },
-    ],
-    faq: [
-      {
-        question: "What is your motto?",
-        answer: "Nothing matters. Nothing exists on purpose.",
-      },
-      {
-        question: "That is a bit dark is it not?",
-        answer: "Everything matters everything exists on purpose.",
-      },
-      {
-        question:
-          "What is the longest question you have ever asked somebody that takes up to two lines",
-        answer: "Answer",
       },
     ],
   },
