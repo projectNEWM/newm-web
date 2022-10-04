@@ -53,7 +53,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     bundlePrice: 42,
     poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
-      "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
+      "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1",
     description:
       "This one's for all the movers and shakers and music tastemakers.\n\n" +
       "MURS has been an innovator in Hip Hop for decades, from being a member of " +
