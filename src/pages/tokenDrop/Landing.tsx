@@ -1,6 +1,11 @@
-import { Box, IconButton, Stack, Tooltip, useTheme } from "@mui/material";
+import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import QuestionIcon from "assets/images/QuestionIcon";
-import { FilledButton, HorizontalLine, Typography } from "elements";
+import {
+  FilledButton,
+  HorizontalLine,
+  Tooltip,
+  Typography,
+} from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/images/artist-assets";
 import PlayIcon from "assets/images/PlayIcon";
@@ -50,7 +55,7 @@ const Landing: FunctionComponent = () => {
         spacing={ 2.5 }
         alignItems="flex-start"
         width="100%"
-        maxWidth={ [9999, 9999, 504] }
+        maxWidth={ [9999, 9999, 475] }
       >
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
@@ -140,16 +145,19 @@ const Landing: FunctionComponent = () => {
             <DisplayText style={ { color: theme.colors.grey100 } }>=</DisplayText>
 
             <Box flexDirection="column">
-              <Box mb={ 0.25 }>
+              <Box mb={ 0.25 } sx={ { position: "relative" } }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
                   { bundleSize } stream tokens
-                  <Tooltip
-                    arrow={ true }
-                    leaveDelay={ 200 }
-                    placement="top"
-                    title="A description to explain the price breakdown"
-                  >
-                    <IconButton sx={ { py: 0 } }>
+                  <Tooltip title="A description to explain the price breakdown">
+                    <IconButton
+                      sx={ {
+                        py: 0,
+                        position: "absolute",
+                        right: "-2.5rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      } }
+                    >
                       <QuestionIcon />
                     </IconButton>
                   </Tooltip>

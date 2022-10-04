@@ -40,6 +40,7 @@ const extendedApi = api.injectEndpoints({
 
           if (isSoldout && !isSoldoutCurrentPage) {
             window.location.pathname = "token-drop/sold-out";
+            return;
           }
 
           dispatch(

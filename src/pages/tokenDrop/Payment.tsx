@@ -1,11 +1,4 @@
-import {
-  Box,
-  IconButton,
-  Stack,
-  Tooltip,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, IconButton, Stack, useMediaQuery, useTheme } from "@mui/material";
 import QuestionIcon from "assets/images/QuestionIcon";
 import {
   DisplayText,
@@ -18,6 +11,7 @@ import {
   AccentButton,
   FilledButton,
   HorizontalLine,
+  Tooltip,
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -303,12 +297,7 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              <Stack
-                position="relative"
-                direction="row"
-                alignItems="center"
-                spacing={ 1 }
-              >
+              <Stack position="relative" pr={ 4.5 }>
                 { !isConnected ? (
                   <AccentButton
                     onClick={ handleOpenWalletModal }
@@ -326,13 +315,16 @@ const Payment: FunctionComponent = () => {
                     Complete purchase
                   </FilledButton>
                 ) }
-                <Tooltip
-                  arrow={ true }
-                  leaveDelay={ 200 }
-                  placement="top"
-                  title="A description to explain the user connecting their wallet"
-                >
-                  <IconButton sx={ { py: 0 } }>
+                <Tooltip title="A description to explain the user connecting their wallet">
+                  <IconButton
+                    sx={ {
+                      position: "absolute",
+                      p: 0,
+                      right: "0",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                    } }
+                  >
                     <QuestionIcon />
                   </IconButton>
                 </Tooltip>
