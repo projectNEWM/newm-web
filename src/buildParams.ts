@@ -5,6 +5,7 @@ interface ProjectDetails {
   readonly bundleAmount: number;
   readonly songName: string;
   readonly subtitle?: string;
+  readonly poolLink: string;
   readonly spotifyLink: string;
   readonly description: string;
   readonly socials: ReadonlyArray<{
@@ -52,6 +53,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     launchDate: "October 8, 2022 00:00:00",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 8000,
+    poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
       "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
     description:
@@ -107,9 +109,10 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
   nido: {
     artistName: "NIDO",
     launchDate: "October 8, 2022 00:00:00",
-    songName: "Love in the water",
+    songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
+    poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:
       "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=VKwvFLHFTIejygODGHhoIQ&utm_source=native-share-menu",
     description:

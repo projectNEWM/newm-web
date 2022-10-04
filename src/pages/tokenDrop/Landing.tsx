@@ -10,6 +10,7 @@ import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import { projectDetails } from "buildParams";
 import { useGetSaleAmount } from "modules/sale";
+import cardanoIcon from "assets/images/cardano-logo.png";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
@@ -109,13 +110,28 @@ const Landing: FunctionComponent = () => {
               </Box>
             </Stack>
 
-            <a
-              href={ projectDetails.spotifyLink }
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <SpotifyIcon />
-            </a>
+            <Stack spacing={ 2 } direction="row">
+              <a
+                href={ projectDetails.poolLink }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  alt="Cardano logo"
+                  src={ cardanoIcon }
+                  width={ 27 }
+                  height={ 27 }
+                />
+              </a>
+
+              <a
+                href={ projectDetails.spotifyLink }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SpotifyIcon />
+              </a>
+            </Stack>
           </Box>
         </Box>
 
@@ -153,7 +169,7 @@ const Landing: FunctionComponent = () => {
 
         <Stack mt={ 4 } spacing={ 1.5 } sx={ { width: "100%" } }>
           <FilledButton onClick={ handleNavigate } fullWidth={ true }>
-            Purchase
+            Begin purchase
           </FilledButton>
 
           <Typography variant="subtitle2">
