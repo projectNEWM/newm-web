@@ -28,7 +28,7 @@ import {
   useGetSaleAmount,
   useGetSalePrice,
 } from "modules/sale";
-import artistAssets from "assets/artist-assets";
+import artistAssets from "assets/artist";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
