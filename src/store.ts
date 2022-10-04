@@ -51,7 +51,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
     const baseMiddleware = [
       ...getDefaultMiddleware(),

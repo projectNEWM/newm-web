@@ -19,7 +19,7 @@ interface ProjectDetails {
 }
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";
-export const isProd = process.env.node_env === "production";
+export const isProd = process.env.NODE_ENV === "production";
 export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
 
 // Change this value to disable Redux logging in development
