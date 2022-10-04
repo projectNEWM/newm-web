@@ -9,15 +9,18 @@ import StopIcon from "assets/images/StopIcon";
 import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import { projectDetails } from "buildParams";
-import { useGetSaleAmount } from "modules/sale";
-import cardanoIcon from "assets/images/cardano-logo.png";
+import poolPmIcon from "assets/images/pool-pm-icon.png";
+import { useSelector } from "react-redux";
+import { parseBundleAmounts, selectSalesFor } from "modules/sale";
+import { selectWallet } from "modules/wallet";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const bundleSize = (
-    useGetSaleAmount(projectDetails.projectId) || projectDetails.bundleAmount
-  ).toLocaleString();
+
+  const { adaUsdRate } = useSelector(selectWallet);
+  const sales = useSelector(selectSalesFor(projectDetails.projectId));
+  const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -118,7 +121,7 @@ const Landing: FunctionComponent = () => {
               >
                 <img
                   alt="Cardano logo"
-                  src={ cardanoIcon }
+                  src={ poolPmIcon }
                   width={ 27 }
                   height={ 27 }
                 />
@@ -148,7 +151,9 @@ const Landing: FunctionComponent = () => {
                 <DisplayText>1 Bundle</DisplayText>
               </Box>
 
-              <Typography variant="subtitle1">42 ADA</Typography>
+              <Typography variant="subtitle1">
+                { bundleAmounts.adaPrice.toLocaleString() } ADA
+              </Typography>
             </Box>
 
             <DisplayText style={ { color: theme.colors.grey100 } }>=</DisplayText>
@@ -156,7 +161,7 @@ const Landing: FunctionComponent = () => {
             <Box flexDirection="column">
               <Box mb={ 0.25 }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
-                  { bundleSize } stream tokens
+                  { bundleAmounts.size.toLocaleString() } stream tokens
                 </DisplayText>
               </Box>
 

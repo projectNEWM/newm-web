@@ -3,6 +3,7 @@ interface ProjectDetails {
   readonly launchDate: string;
   readonly projectId: number;
   readonly bundleAmount: number;
+  readonly bundlePrice: number;
   readonly songName: string;
   readonly subtitle?: string;
   readonly poolLink: string;
@@ -53,6 +54,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     launchDate: "October 8, 2022 00:00:00",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 8000,
+    bundlePrice: 42,
     poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
       "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
@@ -112,6 +114,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
+    bundlePrice: 22,
     poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:
       "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=VKwvFLHFTIejygODGHhoIQ&utm_source=native-share-menu",
@@ -120,7 +123,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "ago in the Metal/Rock scene, but more recently transitioned to " +
       "Synthwave/EDM-style music. Electronic music has given me a deeper " +
       "connection with my fans, which is my top priority as an artist.\n\n" +
-      "\"Love in The Water\" is dedicated to all of you. It's about two " +
+      "\"Love in the Water\" is dedicated to all of you. It's about two " +
       "strangers forming a deeper bond and deciding to test the waters of " +
       "their connection. A nod to how love and music connect us all as human " +
       "beings, and it's important to try new things and support one another " +
