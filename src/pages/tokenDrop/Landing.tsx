@@ -1,11 +1,6 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import QuestionIcon from "assets/images/QuestionIcon";
-import {
-  FilledButton,
-  HorizontalLine,
-  Tooltip,
-  Typography,
-} from "elements";
+import { FilledButton, HorizontalLine, Tooltip, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/images/artist-assets";
 import PlayIcon from "assets/images/PlayIcon";

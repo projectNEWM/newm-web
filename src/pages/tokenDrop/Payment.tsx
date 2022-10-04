@@ -297,7 +297,7 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              <Stack position="relative" pr={ 4.5 }>
+              <Stack position="relative" direction="row">
                 { !isConnected ? (
                   <AccentButton
                     onClick={ handleOpenWalletModal }
@@ -315,14 +315,16 @@ const Payment: FunctionComponent = () => {
                     Complete purchase
                   </FilledButton>
                 ) }
+
                 <Tooltip title="A description to explain the user connecting their wallet">
                   <IconButton
                     sx={ {
-                      position: "absolute",
+                      position: ["relative", "relative", "absolute"],
                       p: 0,
-                      right: "0",
-                      top: "50%",
-                      transform: "translateY(-50%)",
+                      pl: [2, 2, 0],
+                      right: [0, 0, "-2.5rem"],
+                      top: [0, 0, "50%"],
+                      transform: [undefined, undefined, "translateY(-50%)"],
                     } }
                   >
                     <QuestionIcon />
