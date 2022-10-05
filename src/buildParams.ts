@@ -25,7 +25,7 @@ export const isProd = process.env.NODE_ENV === "production";
 export const enableReduxLogging = !isProd && true;
 
 // set this to false to disable countdown page in development
-export const enableCountdown = !isProd && false;
+export const enableCountdown = isProd || false;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
