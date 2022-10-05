@@ -314,7 +314,7 @@ const Payment: FunctionComponent = () => {
                   </FilledButton>
                 ) }
 
-                <Tooltip title="A description to explain the user connecting their wallet">
+                <Tooltip title="Don't have a wallet yet? Create and connect one with eternl.io.">
                   <IconButton
                     sx={ {
                       position: ["relative", "relative", "absolute"],
