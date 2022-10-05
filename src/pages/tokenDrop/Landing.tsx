@@ -1,5 +1,6 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
-import { FilledButton, HorizontalLine, Typography } from "elements";
+import QuestionIcon from "assets/images/QuestionIcon";
+import { FilledButton, HorizontalLine, Tooltip, Typography } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/artists";
 import PlayIcon from "assets/images/PlayIcon";
@@ -21,6 +22,11 @@ const Landing: FunctionComponent = () => {
   const { adaUsdRate } = useSelector(selectWallet);
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
   const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
+  const royaltyPercentage =
+    (projectDetails.bundleAmount /
+      (projectDetails.totalBundles * projectDetails.bundleAmount)) *
+    projectDetails.bundlePercentage *
+    100;
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -159,9 +165,27 @@ const Landing: FunctionComponent = () => {
             <DisplayText style={ { color: theme.colors.grey100 } }>=</DisplayText>
 
             <Box flexDirection="column">
-              <Box mb={ 0.25 }>
+              <Box mb={ 0.25 } sx={ { position: "relative" } }>
                 <DisplayText style={ { color: theme.colors.grey100 } }>
                   { bundleAmounts.size.toLocaleString() } stream tokens
+                  <Tooltip
+                    title={
+                      `${projectDetails.bundleAmount.toLocaleString()} stream tokens are ` +
+                      `equal to ${royaltyPercentage}% of future streaming royalties. See FAQ for more.`
+                    }
+                  >
+                    <IconButton
+                      sx={ {
+                        py: 0,
+                        position: "absolute",
+                        right: "-2.5rem",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      } }
+                    >
+                      <QuestionIcon />
+                    </IconButton>
+                  </Tooltip>
                 </DisplayText>
               </Box>
 

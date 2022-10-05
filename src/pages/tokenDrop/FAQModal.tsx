@@ -6,8 +6,8 @@ const faqItems = [
   {
     question: "1. How does it work?",
     answer:
-      "When you purchase a bundle (i.e., 8000 Stream Tokens) of a song on " +
-      "NEWM, you're buying the rights to claim a percentage of future " +
+      "When you purchase a bundle of a Stream Tokens on NEWM, " +
+      "you're buying the rights to claim a percentage of future " +
       "streaming royalties next to your favourite artist(s).",
   },
   {

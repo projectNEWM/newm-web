@@ -293,23 +293,23 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              { !isConnected ? (
-                <AccentButton
-                  onClick={ handleOpenWalletModal }
-                  fullWidth={ true }
-                  disabled={ isLoading }
-                >
-                  Connect wallet
-                </AccentButton>
-              ) : (
-                <FilledButton
-                  onClick={ handleWalletPurchase }
-                  fullWidth={ true }
-                  disabled={ isLoading || isTransactionCreated }
-                >
-                  Complete purchase
-                </FilledButton>
-              ) }
+                { !isConnected ? (
+                  <AccentButton
+                    onClick={ handleOpenWalletModal }
+                    fullWidth={ true }
+                    disabled={ isLoading }
+                  >
+                    Connect wallet
+                  </AccentButton>
+                ) : (
+                  <FilledButton
+                    onClick={ handleWalletPurchase }
+                    fullWidth={ true }
+                    disabled={ isLoading || isTransactionCreated }
+                  >
+                    Complete purchase
+                  </FilledButton>
+                ) }
 
               { activePurchase && (
                 <Box mt={ 3 }>
