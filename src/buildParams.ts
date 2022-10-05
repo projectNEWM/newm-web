@@ -22,10 +22,10 @@ const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";
 export const isProd = process.env.NODE_ENV === "production";
 
 // Change this value to disable Redux logging in development
-export const enableReduxLogging = true;
+export const enableReduxLogging = !isProd && true;
 
-// set this to false to disable countdown page
-export const enableCountdown = false;
+// set this to false to disable countdown page in development
+export const enableCountdown = !isProd && false;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {

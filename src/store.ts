@@ -62,10 +62,6 @@ const store = configureStore({
       binanceApi.middleware,
     ];
 
-    if (isProd) {
-      return baseMiddleware;
-    }
-
     return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
   reducer: persistedReducer,
