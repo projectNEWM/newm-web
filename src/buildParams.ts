@@ -98,7 +98,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
-    totalBundles: 100,
+    totalBundles: 1000,
     bundlePercentage: 1,
     bundlePrice: 22,
     poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
