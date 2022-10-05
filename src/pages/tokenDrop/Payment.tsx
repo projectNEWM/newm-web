@@ -1,5 +1,4 @@
-import { Box, IconButton, Stack, useMediaQuery, useTheme } from "@mui/material";
-import QuestionIcon from "assets/images/QuestionIcon";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
   DisplayText,
   Modal,
@@ -11,7 +10,6 @@ import {
   AccentButton,
   FilledButton,
   HorizontalLine,
-  Tooltip,
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -295,7 +293,6 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-              <Stack position="relative" direction="row">
                 { !isConnected ? (
                   <AccentButton
                     onClick={ handleOpenWalletModal }
@@ -313,22 +310,6 @@ const Payment: FunctionComponent = () => {
                     Complete purchase
                   </FilledButton>
                 ) }
-
-                <Tooltip title="Don't have a wallet yet? Create and connect one with eternl.io.">
-                  <IconButton
-                    sx={ {
-                      position: ["relative", "relative", "absolute"],
-                      p: 0,
-                      pl: [2, 2, 0],
-                      right: [0, 0, "-2.5rem"],
-                      top: [0, 0, "50%"],
-                      transform: [undefined, undefined, "translateY(-50%)"],
-                    } }
-                  >
-                    <QuestionIcon />
-                  </IconButton>
-                </Tooltip>
-              </Stack>
 
               { activePurchase && (
                 <Box mt={ 3 }>
