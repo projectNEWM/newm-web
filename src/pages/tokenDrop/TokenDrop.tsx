@@ -2,7 +2,7 @@ import { Box, Container, Stack } from "@mui/material";
 import { Typography } from "elements";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import theme from "theme";
-import artistAssets from "assets/images/artist-assets";
+import artistAssets from "assets/artists";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";

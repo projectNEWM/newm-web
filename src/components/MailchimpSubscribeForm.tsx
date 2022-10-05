@@ -43,6 +43,7 @@ const MailchimpSubscribeForm: FunctionComponent<
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!isValid) {
       event.preventDefault();
+      setIsBlurred(true);
       setIsValid(false);
     }
   };

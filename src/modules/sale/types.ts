@@ -19,6 +19,12 @@ export interface SaleState {
   isLoading: boolean;
 }
 
+export interface SaleBundleAmounts {
+  readonly size: number;
+  readonly adaPrice: number;
+  readonly usdPrice?: number;
+}
+
 export interface SaleBundle {
   readonly id: number;
   readonly projectId: number;

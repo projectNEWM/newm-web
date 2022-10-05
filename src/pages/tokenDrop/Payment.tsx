@@ -25,12 +25,12 @@ import {
   PurchaseStatus,
   clearPurchase,
   createPurchase,
+  parseBundleAmounts,
   extendedApi as saleApi,
   selectSale,
-  useGetSaleAmount,
-  useGetSalePrice,
+  selectSalesFor,
 } from "modules/sale";
-import artistAssets from "assets/images/artist-assets";
+import artistAssets from "assets/artists";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
 import { displayCountdown } from "common";
 import { browserName } from "react-device-detect";
@@ -50,27 +50,25 @@ const Payment: FunctionComponent = () => {
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const bundlePrice = useGetSalePrice(projectId);
-  const bundleSize = (
-    useGetSaleAmount(projectDetails.projectId) || projectDetails.bundleAmount
-  ).toLocaleString();
   const {
     isConnected,
+    adaUsdRate,
     isLoading: isWalletLoading,
     walletName,
   } = useSelector(selectWallet);
   const {
-    sales,
     purchaseOrder,
     paymentType,
     purchaseStatus,
     isTransactionCreated,
     isLoading: isSaleLoading,
   } = useSelector(selectSale);
+  const sales = useSelector(selectSalesFor(projectDetails.projectId));
 
   const [isAlbumArtModalOpen, setIsAlbumArtModalOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("--:--");
 
+  const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
   const isLoading = isWalletLoading || isSaleLoading;
   const paymentAddress = purchaseOrder?.paymentAddress;
   const isPending = purchaseStatus === PurchaseStatus.Pending;
@@ -200,7 +198,7 @@ const Payment: FunctionComponent = () => {
         />
       </Modal>
 
-      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 475] }>
+      <Stack spacing={ 2.5 } direction="column" maxWidth={ [9999, 9999, 478] }>
         <Box flexDirection="column">
           <Box mb={ 1 }>
             <SectionHeading>SONG</SectionHeading>
@@ -262,7 +260,9 @@ const Payment: FunctionComponent = () => {
 
             <Box mb={ 0.25 }>
               <Typography variant="subtitle1">
-                <DisplayText>{ bundleSize } stream tokens</DisplayText>
+                <DisplayText>
+                  { bundleAmounts.size.toLocaleString() } stream tokens
+                </DisplayText>
               </Typography>
             </Box>
 
@@ -274,15 +274,13 @@ const Payment: FunctionComponent = () => {
               <SectionHeading>WHAT YOU PAY</SectionHeading>
             </Box>
 
-            { !!bundlePrice.ada && (
-              <Box mb={ 0.25 }>
-                <DisplayText>{ bundlePrice.ada } ADA</DisplayText>
-              </Box>
-            ) }
+            <Box mb={ 0.25 }>
+              <DisplayText>{ bundleAmounts.adaPrice } ADA</DisplayText>
+            </Box>
 
-            { !!bundlePrice.usd && (
+            { !!bundleAmounts.usdPrice && (
               <Typography variant="subtitle1">
-                ~{ displayUsd(bundlePrice.usd) } USD
+                ~{ displayUsd(bundleAmounts.usdPrice) } USD
               </Typography>
             ) }
           </Box>
@@ -342,7 +340,7 @@ const Payment: FunctionComponent = () => {
                     }
                     message={
                       isWalletLoading
-                        ? "Your transaction is being created. Please input " +
+                        ? "Your transaction is being generated. Please input " +
                           "your spending password when prompted."
                         : isTransactionCreated
                         ? "Your transaction is currently processing. This " +
@@ -404,7 +402,8 @@ const Payment: FunctionComponent = () => {
                     <Box mt={ 1 }>
                       <Typography variant="subtitle1">
                         { paymentAddress
-                          ? `Send ${bundlePrice.ada} ADA to the payment address above.`
+                          ? `Send ${bundleAmounts.adaPrice} ADA to the ` +
+                            "payment address above."
                           : "Submit a wallet address to generate a payment address." }
                       </Typography>
                     </Box>

@@ -1,4 +1,5 @@
 import { Buffer } from "buffer";
+import { isProd } from "buildParams";
 import namiLogo from "assets/images/nami-logo.svg";
 import eternalLogo from "assets/images/eternl-logo.png";
 import flintLogo from "assets/images/flint-logo.svg";
@@ -21,7 +22,7 @@ import {
 import { CreateTransactionParams, EnabledWallet, Wallets } from "./types";
 
 // 1 = Mainnet, 0 = Testnet
-const networkMode = Number(process.env.REACT_APP_NETWORK_MODE) || 0;
+const networkMode = isProd ? 1 : 0;
 
 export const supportedWallets = [
   "nami",
@@ -269,6 +270,10 @@ export const fromHex = (hex: string) => {
 
 const toHex = (bytes: Uint8Array) => {
   return Buffer.from(bytes).toString("hex");
+};
+
+export const adaToUsd = (ada: number, conversionRate: number) => {
+  return Math.round(ada * conversionRate * 100) / 100;
 };
 
 // const fromAscii = (hex: string) => {

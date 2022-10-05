@@ -1,10 +1,12 @@
 interface ProjectDetails {
   readonly artistName: string;
-  readonly launchDate: string;
+  readonly launchTimestamp: number;
   readonly projectId: number;
   readonly bundleAmount: number;
+  readonly bundlePrice: number;
   readonly songName: string;
   readonly subtitle?: string;
+  readonly poolLink: string;
   readonly spotifyLink: string;
   readonly description: string;
   readonly socials: ReadonlyArray<{
@@ -14,28 +16,23 @@ interface ProjectDetails {
     readonly spotify?: string;
     readonly website?: string;
   }>;
-  readonly faq: ReadonlyArray<{
-    readonly question: string;
-    readonly answer: string;
-  }>;
 }
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";
-export const isProd = process.env.node_env === "production";
-export const isMainNet = process.env.REACT_APP_NETWORK_MODE === "1";
+export const isProd = process.env.NODE_ENV === "production";
 
 // Change this value to disable Redux logging in development
-export const enableReduxLogging = true;
+export const enableReduxLogging = !isProd && true;
 
-// set this to false to disable countdown page
-export const enableCountdown = false;
+// set this to false to disable countdown page in development
+export const enableCountdown = isProd || false;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
   newm: isProd
     ? "https://staging-newm-server.herokuapp.com/"
     : "https://staging-newm-server.herokuapp.com/",
-  phyrhose: isMainNet
+  phyrhose: isProd
     ? "https://api.phyrhose.io/"
     : "https://testnet.phyrhose.io/",
   cloudinary: "https://api.cloudinary.com/",
@@ -49,11 +46,13 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     artistName: "MURS",
     songName: "Bigger Dreams",
     subtitle: "x Moodswingz Muzik",
-    launchDate: "October 8, 2022 00:00:00",
+    launchTimestamp: 1665212400000,
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 8000,
+    bundlePrice: 42,
+    poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
-      "https://open.spotify.com/track/1ZSwTbIdB0p7pNLDck5RQb?si=b1c674b4020d4e90&nd=1",
+      "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1",
     description:
       "This one's for all the movers and shakers and music tastemakers.\n\n" +
       "MURS has been an innovator in Hip Hop for decades, from being a member of " +
@@ -88,28 +87,15 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         website: "https://newm.io/",
       },
     ],
-    faq: [
-      {
-        question: "What is your motto?",
-        answer: "Nothing matters. Nothing exists on purpose.",
-      },
-      {
-        question: "That is a bit dark is it not?",
-        answer: "Everything matters everything exists on purpose.",
-      },
-      {
-        question:
-          "What is the longest question you have ever asked somebody that takes up to two lines",
-        answer: "Answer",
-      },
-    ],
   },
   nido: {
     artistName: "NIDO",
-    launchDate: "October 8, 2022 00:00:00",
-    songName: "Love in the water",
+    launchTimestamp: 1665241200000,
+    songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
+    bundlePrice: 22,
+    poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:
       "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=VKwvFLHFTIejygODGHhoIQ&utm_source=native-share-menu",
     description:
@@ -117,7 +103,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "ago in the Metal/Rock scene, but more recently transitioned to " +
       "Synthwave/EDM-style music. Electronic music has given me a deeper " +
       "connection with my fans, which is my top priority as an artist.\n\n" +
-      "\"Love in The Water\" is dedicated to all of you. It's about two " +
+      "\"Love in the Water\" is dedicated to all of you. It's about two " +
       "strangers forming a deeper bond and deciding to test the waters of " +
       "their connection. A nod to how love and music connect us all as human " +
       "beings, and it's important to try new things and support one another " +
@@ -133,21 +119,6 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         spotify:
           "https://open.spotify.com/artist/7vIuaRUTygrIF7PbcalDpK?si=g7_ruNbRR52zJzgz3eN2_g",
         website: "https://www.officialnido.com",
-      },
-    ],
-    faq: [
-      {
-        question: "What is your motto?",
-        answer: "Nothing matters. Nothing exists on purpose.",
-      },
-      {
-        question: "That is a bit dark is it not?",
-        answer: "Everything matters everything exists on purpose.",
-      },
-      {
-        question:
-          "What is the longest question you have ever asked somebody that takes up to two lines",
-        answer: "Answer",
       },
     ],
   },

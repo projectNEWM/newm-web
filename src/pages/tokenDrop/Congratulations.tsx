@@ -66,7 +66,7 @@ const Congratulations: FunctionComponent = () => {
         </Box>
       </Stack>
 
-      <Stack mb={ 7 } spacing={ 1 }>
+      <Stack mb={ 6 } spacing={ 1 }>
         <SectionHeading>TELL ME MORE ABOUT THIS DROP!</SectionHeading>
         <MailchimpSubscribeForm
           u="3bf911620d8791d21fb973749"
