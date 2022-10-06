@@ -55,6 +55,7 @@ const Verification: FunctionComponent = () => {
         >
           <TextInputField
             aria-labelledby="verificationLabel"
+            autoComplete="off"
             name="authCode"
             placeholder="Verification Code"
             type="text"
