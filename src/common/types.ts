@@ -24,3 +24,10 @@ export interface RenderProps extends RenderOptions {
 export interface WrapperProps {
   readonly children: ReactElement;
 }
+
+export interface TimeRemaining {
+  readonly days?: string;
+  readonly hours?: string;
+  readonly minutes?: string;
+  readonly seconds?: string;
+}

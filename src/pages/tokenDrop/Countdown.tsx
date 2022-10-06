@@ -1,17 +1,22 @@
 import { Stack, useMediaQuery, useTheme } from "@mui/material";
-import { displayCountdown } from "common";
-import { GradientTypography, Typography } from "elements";
+import { Typography } from "elements";
+import { CountdownTimer } from "components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { projectDetails } from "buildParams";
+import { TimeRemaining, getTimeRemaining } from "common";
 
 const Countdown: FunctionComponent = () => {
   const theme = useTheme();
   const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [timeLeft, setTimeLeft] = useState("");
+  const [timeLeft, setTimeLeft] = useState<TimeRemaining>({
+    hours: "00",
+    days: "00",
+    minutes: "00",
+    seconds: "00",
+  });
 
-  const timeFontSize = isSmScreen ? "68px" : isMdScreen ? "100px" : "160px";
   const captionFontSize = isSmScreen ? "18px" : isMdScreen ? "24px" : "30px";
 
   useEffect(() => {
@@ -19,7 +24,7 @@ const Countdown: FunctionComponent = () => {
       const currentDate = new Date();
       const launchDate = new Date(projectDetails.launchTimestamp);
 
-      return displayCountdown(launchDate, currentDate);
+      return getTimeRemaining(launchDate, currentDate);
     };
 
     setTimeLeft(getTimeLeft());
@@ -29,17 +34,8 @@ const Countdown: FunctionComponent = () => {
   }, []);
 
   return (
-    <Stack pt={ 4 } spacing={ 2 }>
-      <GradientTypography
-        variant="h1"
-        sx={ {
-          ...theme.typography.emphasized,
-          fontSize: timeFontSize,
-          lineHeight: timeFontSize,
-        } }
-      >
-        { timeLeft }
-      </GradientTypography>
+    <Stack pt={ 4 } spacing={ 2.5 }>
+      <CountdownTimer timeRemaining={ timeLeft } />
 
       <Typography
         variant="h4"

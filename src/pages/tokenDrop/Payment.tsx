@@ -30,7 +30,7 @@ import {
 } from "modules/sale";
 import artistAssets from "assets/artists";
 import { setIsSelectWalletModalOpen, setToastMessage } from "modules/ui";
-import { displayCountdown } from "common";
+import { TimeRemaining, getTimeRemaining } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
 import { projectDetails } from "buildParams";
@@ -64,7 +64,10 @@ const Payment: FunctionComponent = () => {
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
 
   const [isAlbumArtModalOpen, setIsAlbumArtModalOpen] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState("--:--");
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
+    minutes: "60",
+    seconds: "00",
+  });
 
   const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
   const isLoading = isWalletLoading || isSaleLoading;
@@ -130,7 +133,7 @@ const Payment: FunctionComponent = () => {
     const handleSetTimeRemaining = () => {
       const currentDate = new Date();
       const endDate = new Date(purchaseOrder.timeout);
-      setTimeRemaining(displayCountdown(endDate, currentDate));
+      setTimeRemaining(getTimeRemaining(endDate, currentDate));
     };
 
     handleSetTimeRemaining();
@@ -177,6 +180,12 @@ const Payment: FunctionComponent = () => {
       dispatch(clearPurchase());
     }
   }, [purchaseStatus, navigate, dispatch]);
+
+  const timeRemainingString = [
+    timeRemaining.minutes || "00",
+    ":",
+    timeRemaining.seconds,
+  ].join("");
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
@@ -293,23 +302,23 @@ const Payment: FunctionComponent = () => {
                 <SectionHeading>PURCHASE WITH YOUR WALLET</SectionHeading>
               </Box>
 
-                { !isConnected ? (
-                  <AccentButton
-                    onClick={ handleOpenWalletModal }
-                    fullWidth={ true }
-                    disabled={ isLoading }
-                  >
-                    Connect wallet
-                  </AccentButton>
-                ) : (
-                  <FilledButton
-                    onClick={ handleWalletPurchase }
-                    fullWidth={ true }
-                    disabled={ isLoading || isTransactionCreated }
-                  >
-                    Complete purchase
-                  </FilledButton>
-                ) }
+              { !isConnected ? (
+                <AccentButton
+                  onClick={ handleOpenWalletModal }
+                  fullWidth={ true }
+                  disabled={ isLoading }
+                >
+                  Connect wallet
+                </AccentButton>
+              ) : (
+                <FilledButton
+                  onClick={ handleWalletPurchase }
+                  fullWidth={ true }
+                  disabled={ isLoading || isTransactionCreated }
+                >
+                  Complete purchase
+                </FilledButton>
+              ) }
 
               { activePurchase && (
                 <Box mt={ 3 }>
@@ -326,7 +335,7 @@ const Payment: FunctionComponent = () => {
                         : isTransactionCreated
                         ? "Your transaction is currently processing. This " +
                           "can take several minutes to complete."
-                        : `You have ${timeRemaining} to complete your ` +
+                        : `You have ${timeRemainingString} to complete your ` +
                           "purchase. Processing may take several minutes " +
                           "once purchase is complete."
                     }
@@ -402,7 +411,7 @@ const Payment: FunctionComponent = () => {
                     }
                     message={
                       purchaseStatus === PurchaseStatus.Pending
-                        ? `You have ${timeRemaining} to complete your ` +
+                        ? `You have ${timeRemainingString} to complete your ` +
                           "purchase, using the payment address above. " +
                           "Processing may take several minutes once " +
                           "purchase is complete."
