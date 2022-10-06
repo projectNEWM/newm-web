@@ -32,12 +32,21 @@ const extendedApi = api.injectEndpoints({
         } catch (err: any) {
           const { error } = err;
           const errorMessage = await error?.data?.message;
+          const isClosed =
+            error?.status === 404 &&
+            errorMessage.toLowerCase().includes("is closed!");
           const isSoldout =
             error?.status === 404 &&
             errorMessage.toLowerCase().includes("sold out");
           const isSoldoutCurrentPage =
             window?.location?.pathname.includes("sold-out");
 
+          // sale is closed and countdown page is already displayed
+          if (isClosed) {
+            return;
+          }
+
+          // sale is sold out, redirect to sold out page
           if (isSoldout && !isSoldoutCurrentPage) {
             window.location.pathname = "token-drop/sold-out";
             return;
