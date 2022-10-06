@@ -66,6 +66,7 @@ const MailchimpSubscribeForm: FunctionComponent<
 
       <Stack direction={ isLargeScreen ? "row" : "column" } spacing={ 1.5 }>
         <TextInput
+          autoComplete="off"
           id={ id }
           type="email"
           name="EMAIL"

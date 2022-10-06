@@ -36,12 +36,14 @@ const Welcome: FunctionComponent = () => {
       >
         <TextInputField
           aria-label="Email input field"
+          autoComplete="off"
           name="email"
           placeholder="Email"
           type="email"
         />
         <PasswordInputField
           aria-label="Password input field"
+          autoComplete="off"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
@@ -49,6 +51,7 @@ const Welcome: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Confirm password input field"
+          autoComplete="off"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"
@@ -57,6 +60,7 @@ const Welcome: FunctionComponent = () => {
         />
         <TextInputField
           aria-label="Wallet address"
+          autoComplete="off"
           name="walletAddress"
           placeholder="Wallet address (optional)"
         />
