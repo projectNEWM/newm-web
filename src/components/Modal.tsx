@@ -23,7 +23,7 @@ const Modal: FunctionComponent<ModalProps> = ({
   };
 
   const framedStyles = {
-    maxHeight: "95vh",
+    maxHeight: ["80vh", "80vh", "95vh"],
     maxWidth: "720px",
     backgroundColor: theme.colors.black100,
     mx: 1,
@@ -31,7 +31,7 @@ const Modal: FunctionComponent<ModalProps> = ({
     pb: [5, 5, 7.5],
     pl: [3, 3, 7.5],
     pr: [3, 3, 4],
-    pt: [2, 2, 4],
+    pt: [3, 3, 4],
   };
 
   useEffect(() => {
