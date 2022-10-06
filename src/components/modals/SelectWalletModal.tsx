@@ -67,7 +67,7 @@ const SelectWalletModal: FunctionComponent = () => {
     return {
       title: "Install a Cardano wallet",
       subtitle:
-        "Connect and/or create a Cardano wallet using one of the official browser extensions below. " +
+        "Create and/or connect a Cardano wallet using one of the official browser extensions below. " +
         "Ensure your wallet is funded with the required amount of ADA for this purchase. " +
         "After you've connected your wallet, return to this screen, refresh the page " +
         "(if needed), and select your installed wallet.",
