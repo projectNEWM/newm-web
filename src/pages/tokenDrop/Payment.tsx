@@ -13,7 +13,7 @@ import {
   Typography,
 } from "elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import { selectWallet } from "modules/wallet";
+import { selectWallet, setWalletIsLoading } from "modules/wallet";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
@@ -21,6 +21,7 @@ import CopyIcon from "assets/images/CopyIcon";
 import {
   PaymentType,
   PurchaseStatus,
+  StorageKey,
   clearPurchase,
   createPurchase,
   parseBundleAmounts,
@@ -76,6 +77,12 @@ const Payment: FunctionComponent = () => {
   const isProcessing = purchaseStatus === PurchaseStatus.Processing;
   const activePurchase = isPending || isProcessing;
   const isWalletExtensionAvailable = ["Chrome", "Brave"].includes(browserName);
+
+  const timeRemainingString = [
+    timeRemaining.minutes || "00",
+    ":",
+    timeRemaining.seconds,
+  ].join("");
 
   const initialFormValues: InitialFormValues = {
     walletAddress: "",
@@ -181,11 +188,43 @@ const Payment: FunctionComponent = () => {
     }
   }, [purchaseStatus, navigate, dispatch]);
 
-  const timeRemainingString = [
-    timeRemaining.minutes || "00",
-    ":",
-    timeRemaining.seconds,
-  ].join("");
+  /**
+   * Reset wallet loading status after a minute. If the wallet has been
+   * loading for over a minute, there was likely a connectivity issue and
+   * the wallet UI never opened. This will re-enable the purchase button
+   * so the user can try again.
+   */
+  useEffect(() => {
+    const handleWalletTimeout = () => {
+      const storageKey = StorageKey.TransactionCreatedAt;
+      const transactionCreatedAtString = localStorage.getItem(storageKey);
+
+      if (!transactionCreatedAtString) return;
+
+      const transactionCreatedAt = Number(transactionCreatedAtString);
+      const transactionTimestamp = new Date(transactionCreatedAt).getTime();
+      const currentTimestamp = Date.now();
+      const oneMinute = 60 * 1000;
+
+      const isOverAMinute = currentTimestamp - transactionTimestamp > oneMinute;
+
+      if (isWalletLoading) {
+        if (isOverAMinute) {
+          // wallet has been loading over a minute, reset loading status
+          localStorage.removeItem(storageKey);
+          dispatch(setWalletIsLoading(false));
+        } else {
+          // hasn't been a minute yet, check again in a second
+          setTimeout(handleWalletTimeout, 1000);
+        }
+      } else {
+        // transaction was created, clear local storage value
+        localStorage.removeItem(storageKey);
+      }
+    };
+
+    handleWalletTimeout();
+  }, [dispatch, isWalletLoading]);
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
@@ -324,7 +363,9 @@ const Payment: FunctionComponent = () => {
                 <Box mt={ 3 }>
                   <TransactionStatus
                     title={
-                      isTransactionCreated
+                      isWalletLoading
+                        ? "Generating transaction"
+                        : isTransactionCreated
                         ? "Transaction processing"
                         : "Waiting to receive payment..."
                     }

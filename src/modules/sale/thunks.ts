@@ -6,7 +6,7 @@ import {
 } from "modules/wallet";
 import { RootState } from "store";
 import { setToastMessage } from "modules/ui";
-import { PaymentType, PurchaseOrderParams } from "./types";
+import { PaymentType, PurchaseOrderParams, StorageKey } from "./types";
 import saleApi from "./api";
 import { setIsTransactionCreated } from "./slice";
 
@@ -19,6 +19,11 @@ export const createPurchase = createAsyncThunk(
   async (params: PurchaseOrderParams, { dispatch, getState }) => {
     try {
       dispatch(setWalletIsLoading(true));
+
+      // save transaction time, this will be used to handle timeout
+      const storageKey = StorageKey.TransactionCreatedAt;
+      const transactionTime = Date.now();
+      localStorage.setItem(storageKey, String(transactionTime));
 
       const { projectId, bundleId, paymentType } = params;
       const appState = getState() as RootState;
