@@ -20,6 +20,10 @@ export const createPurchase = createAsyncThunk(
     try {
       dispatch(setWalletIsLoading(true));
 
+      // save transaction time, this will be used to handle timeout
+      const transactionTime = Date.now();
+      localStorage.setItem("transactionCreatedAt", String(transactionTime));
+
       const { projectId, bundleId, paymentType } = params;
       const appState = getState() as RootState;
       const { walletName } = appState.wallet;
