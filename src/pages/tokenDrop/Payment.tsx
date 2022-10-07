@@ -21,6 +21,7 @@ import CopyIcon from "assets/images/CopyIcon";
 import {
   PaymentType,
   PurchaseStatus,
+  StorageKey,
   clearPurchase,
   createPurchase,
   parseBundleAmounts,
@@ -195,7 +196,7 @@ const Payment: FunctionComponent = () => {
    */
   useEffect(() => {
     const handleWalletTimeout = () => {
-      const storageKey = "transactionCreatedAt";
+      const storageKey = StorageKey.TransactionCreatedAt;
       const transactionCreatedAt = Number(localStorage.getItem(storageKey));
       const transactionTimestamp = new Date(transactionCreatedAt).getTime();
       const currentTimestamp = Date.now();

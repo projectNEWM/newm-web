@@ -10,6 +10,10 @@ export enum PurchaseStatus {
   Timeout = "timeout",
 }
 
+export enum StorageKey {
+  TransactionCreatedAt = "transactionCreatedAt",
+}
+
 export interface SaleState {
   sales: Array<SaleBundle>;
   purchaseOrder?: PurchaseOrder;
