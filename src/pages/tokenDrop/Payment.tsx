@@ -197,16 +197,21 @@ const Payment: FunctionComponent = () => {
   useEffect(() => {
     const handleWalletTimeout = () => {
       const storageKey = StorageKey.TransactionCreatedAt;
-      const transactionCreatedAt = Number(localStorage.getItem(storageKey));
+      const transactionCreatedAtString = localStorage.getItem(storageKey);
+
+      if (!transactionCreatedAtString) return;
+
+      const transactionCreatedAt = Number(transactionCreatedAtString);
       const transactionTimestamp = new Date(transactionCreatedAt).getTime();
       const currentTimestamp = Date.now();
       const oneMinute = 60 * 1000;
+
       const isOverAMinute = currentTimestamp - transactionTimestamp > oneMinute;
 
       if (isWalletLoading) {
         if (isOverAMinute) {
           // wallet has been loading over a minute, reset loading status
-          localStorage.clearItem(storageKey);
+          localStorage.removeItem(storageKey);
           dispatch(setWalletIsLoading(false));
         } else {
           // hasn't been a minute yet, check again in a second
@@ -214,7 +219,7 @@ const Payment: FunctionComponent = () => {
         }
       } else {
         // transaction was created, clear local storage value
-        localStorage.clearItem(storageKey);
+        localStorage.removeItem(storageKey);
       }
     };
 
