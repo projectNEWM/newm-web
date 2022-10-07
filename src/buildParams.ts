@@ -103,7 +103,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     bundlePrice: 22,
     poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:
-      "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=VKwvFLHFTIejygODGHhoIQ&utm_source=native-share-menu",
+      "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=r6QOZ-tMSxq7LhDci6vHIg&utm_source=native-share-menu",
     description:
       "Hi! I'm NIDO, a producer from Norway. I got my start about 17 years " +
       "ago in the Metal/Rock scene, but more recently transitioned to " +
