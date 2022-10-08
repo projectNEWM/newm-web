@@ -211,7 +211,7 @@ const Payment: FunctionComponent = () => {
 
       if (isWalletLoading) {
         if (isOver5Minutes) {
-          // wallet has been loading over a minute, reset loading status
+          // wallet has been loading over 5 minutes, reset loading status
           localStorage.removeItem(storageKey);
           dispatch(setWalletIsLoading(false));
         } else {
