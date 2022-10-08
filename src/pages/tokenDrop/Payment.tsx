@@ -204,12 +204,13 @@ const Payment: FunctionComponent = () => {
       const transactionCreatedAt = Number(transactionCreatedAtString);
       const transactionTimestamp = new Date(transactionCreatedAt).getTime();
       const currentTimestamp = Date.now();
-      const oneMinute = 60 * 1000;
+      const fiveMinutes = 5 * 60 * 1000;
 
-      const isOverAMinute = currentTimestamp - transactionTimestamp > oneMinute;
+      const isOver5Minutes =
+        currentTimestamp - transactionTimestamp > fiveMinutes;
 
       if (isWalletLoading) {
-        if (isOverAMinute) {
+        if (isOver5Minutes) {
           // wallet has been loading over a minute, reset loading status
           localStorage.removeItem(storageKey);
           dispatch(setWalletIsLoading(false));
