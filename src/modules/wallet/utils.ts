@@ -162,9 +162,13 @@ export const createTransaction = async (body: CreateTransactionParams) => {
     try {
       txBuilder.add_change_if_needed(changeAddress);
     } catch (err) {
-      throw new Error(
-        "Sorry, we were not able to build a successful transaction at this time."
-      );
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      } else {
+        throw new Error(
+          "Sorry, we were not able to build a successful transaction at this time."
+        );
+      }
     }
   }
 
@@ -202,10 +206,18 @@ export const createTransaction = async (body: CreateTransactionParams) => {
  * @returns the first unused address for a wallet.
  */
 export const getUnusedAddress = async (walletName: string): Promise<string> => {
-  const addresses = await window.Wallets[walletName].getUnusedAddresses();
-  const encodedAddress = addressFromHex(addresses[0]);
+  const wallet = window.Wallets[walletName];
 
-  return encodedAddress;
+  const addresses = await wallet.getUnusedAddresses();
+  const address = addresses.length
+    ? addresses[0]
+    : await wallet.getChangeAddress();
+
+  if (!address) {
+    throw new Error("Error fetching address");
+  }
+
+  return addressFromHex(address);
 };
 
 /**
