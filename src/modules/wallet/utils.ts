@@ -24,13 +24,7 @@ import { CreateTransactionParams, EnabledWallet, Wallets } from "./types";
 // 1 = Mainnet, 0 = Testnet
 const networkMode = isProd ? 1 : 0;
 
-export const supportedWallets = [
-  "nami",
-  "eternl",
-  "flint",
-  "cardwallet",
-  "gerowallet",
-];
+export const supportedWallets = ["eternl", "flint", "cardwallet", "gerowallet"];
 
 export const walletInfo: Wallets = {
   nami: {
