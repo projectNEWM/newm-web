@@ -6,7 +6,7 @@ const faqItems = [
   {
     question: "1. How does it work?",
     answer:
-      "When you purchase a bundle of a Stream Tokens on NEWM, " +
+      "When you purchase a bundle of Stream Tokens on NEWM, " +
       "you're buying the rights to claim a percentage of future " +
       "streaming royalties next to your favourite artist(s).",
   },
@@ -14,7 +14,7 @@ const faqItems = [
     question: "2. How many bundles can I purchase?",
     answer:
       "Whatever amount your sweet heart desires! However, you can only " +
-      "purchase one bundle per session to give a fair chance to other " +
+      "purchase a limited amount of bundles per session to give a fair chance to other " +
       "prospective buyers.",
   },
   {
