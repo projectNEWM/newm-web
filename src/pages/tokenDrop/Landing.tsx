@@ -182,6 +182,7 @@ const Landing: FunctionComponent = () => {
                   label=""
                   name="bundles"
                   value={ selectedBundleId }
+                  placeholder="1 bundle"
                   handleChange={ (option) => {
                     dispatch(setSelectedBundleId(option.value));
                   } }

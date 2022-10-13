@@ -25,6 +25,7 @@ import {
   clearPurchase,
   createPurchase,
   parseBundleAmounts,
+  parsePurchasePrice,
   extendedApi as saleApi,
   selectSale,
   selectSalesFor,
@@ -56,13 +57,13 @@ const Payment: FunctionComponent = () => {
     walletName,
   } = useSelector(selectWallet);
   const {
+    selectedBundleId,
     purchaseOrder,
     paymentType,
     purchaseStatus,
     isTransactionCreated,
     isLoading: isSaleLoading,
   } = useSelector(selectSale);
-  const { selectedBundleId } = useSelector(selectSale);
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
   const selectedSale = sales.find((sale) => sale.id === selectedBundleId);
 
@@ -238,6 +239,8 @@ const Payment: FunctionComponent = () => {
 
     handleWalletTimeout();
   }, [dispatch, isWalletLoading]);
+
+  const purchasePrice = parsePurchasePrice(purchaseOrder?.cost);
 
   return (
     <Box mt={ 3 } display="flex" flexDirection="column">
@@ -446,7 +449,7 @@ const Payment: FunctionComponent = () => {
                     <Box mt={ 1 }>
                       <Typography variant="subtitle1">
                         { paymentAddress
-                          ? `Send ${bundleAmounts.adaPrice} ADA to the ` +
+                          ? `Send ${purchasePrice} ADA to the ` +
                             "payment address above."
                           : "Submit a wallet address to generate a payment address." }
                       </Typography>

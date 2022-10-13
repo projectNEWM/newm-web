@@ -15,3 +15,9 @@ export const parseBundleAmounts = (
 
   return { size, usdPrice, adaPrice, royaltyPercentage };
 };
+
+export const parsePurchasePrice = (value?: string) => {
+  if (!value) return "UNDEFINED";
+
+  return value.slice(1).split(".")[0];
+};
