@@ -11,17 +11,23 @@ import styled from "styled-components";
 import theme from "theme";
 import TextInput from "./TextInput";
 
+interface Option {
+  readonly label: string;
+  readonly value: number;
+}
+
 export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
-  readonly handleChange?: (newValue: string) => void;
+  readonly handleChange?: (option: Option) => void;
   readonly label: string;
   readonly name: string;
   readonly noResultsText?: string;
-  readonly options: string[];
+  readonly options: ReadonlyArray<Option>;
   readonly placeholder?: string;
 }
+
 const StyledDropdownSelectContainer = styled.div`
   position: relative;
 `;
@@ -86,16 +92,15 @@ const DropdownSelect: ForwardRefRenderFunction<
     groupedOptions,
     popupOpen,
     inputValue,
-  } = useAutocomplete({
-    getOptionLabel: (option) => option,
-    id: name,
+  } = useAutocomplete<Option>({
+    getOptionLabel: (option) => option.label,
     onChange: (event, newValue) => {
-      if (handleChange) {
-        handleChange(newValue as string);
+      if (handleChange && newValue) {
+        handleChange(newValue);
       }
     },
     options,
-    value: value as string,
+    value: options.find((option) => option.value === value),
   });
 
   const hasResults = groupedOptions.length > 0;
@@ -116,10 +121,12 @@ const DropdownSelect: ForwardRefRenderFunction<
           ref={ ref }
           { ...rest }
           { ...getInputProps() }
+          style={ { width: "125px", paddingRight: 0 } }
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
               sx={ {
+                pointerEvents: "none",
                 color: theme.colors.white,
                 transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                 transition: "transform 200ms ease-in",
@@ -138,7 +145,7 @@ const DropdownSelect: ForwardRefRenderFunction<
         <StyledResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
             <li { ...getOptionProps({ option, index }) } key={ index }>
-              { option }
+              { option.label }
             </li>
           )) }
         </StyledResultsList>

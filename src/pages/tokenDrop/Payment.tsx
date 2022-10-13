@@ -62,7 +62,9 @@ const Payment: FunctionComponent = () => {
     isTransactionCreated,
     isLoading: isSaleLoading,
   } = useSelector(selectSale);
+  const { selectedBundleId } = useSelector(selectSale);
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
+  const selectedSale = sales.find((sale) => sale.id === selectedBundleId);
 
   const [isAlbumArtModalOpen, setIsAlbumArtModalOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
@@ -70,7 +72,7 @@ const Payment: FunctionComponent = () => {
     seconds: "00",
   });
 
-  const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
+  const bundleAmounts = parseBundleAmounts(selectedSale, adaUsdRate);
   const isLoading = isWalletLoading || isSaleLoading;
   const paymentAddress = purchaseOrder?.paymentAddress;
   const isPending = purchaseStatus === PurchaseStatus.Pending;
@@ -118,10 +120,20 @@ const Payment: FunctionComponent = () => {
   };
 
   const handleSubmitForm = (values: InitialFormValues) => {
+    if (!selectedSale) {
+      dispatch(
+        setToastMessage({
+          severity: "error",
+          message: "No bundle selected",
+        })
+      );
+      return;
+    }
+
     dispatch(
       saleApi.endpoints.createPurchaseOrder.initiate({
         projectId,
-        bundleId: sales[0].id,
+        bundleId: selectedSale?.id,
         receiveAddress: values.walletAddress,
         paymentType: PaymentType.Manual,
       })

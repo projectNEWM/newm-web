@@ -9,6 +9,7 @@ import {
 
 const initialState: SaleState = {
   sales: [],
+  selectedBundleId: undefined,
   purchaseOrder: undefined,
   paymentType: undefined,
   purchaseStatus: undefined,
@@ -21,7 +22,9 @@ const saleSlice = createSlice({
   name: "sale",
   reducers: {
     receiveBundleSales(state, action: PayloadAction<SaleBundlesResponse>) {
-      state.sales = action.payload.data[1].ftSaleBundles;
+      const sales = action.payload.data[1].ftSaleBundles;
+      state.sales = sales;
+      state.selectedBundleId = state.selectedBundleId || sales[0]?.id;
     },
     receivePurchaseOrder(state, action: PayloadAction<PurchaseOrderResponse>) {
       state.purchaseOrder = action.payload.data[1];
@@ -31,6 +34,9 @@ const saleSlice = createSlice({
     },
     receivePurchaseStatus(state, action: PayloadAction<PurchaseStatus>) {
       state.purchaseStatus = action.payload;
+    },
+    setSelectedBundleId(state, action: PayloadAction<number>) {
+      state.selectedBundleId = action.payload;
     },
     setIsTransactionCreated(state, action: PayloadAction<boolean>) {
       state.isTransactionCreated = action.payload;
@@ -52,6 +58,7 @@ export const {
   receivePurchaseOrder,
   receivePaymentType,
   receivePurchaseStatus,
+  setSelectedBundleId,
   setIsTransactionCreated,
   setSaleIsLoading,
   clearPurchase,
