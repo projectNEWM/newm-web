@@ -45,18 +45,6 @@ export const UnclaimedRoyalties = ({
         </Typography>
       </Box>
       <OutlinedButtonNoGradient>CLAIM ROYALTIES</OutlinedButtonNoGradient>
-      { /* <Button
-        sx={ {
-          borderRadius: "4px",
-          border: "2px solid #FFFFFF",
-          minHeight: "35px",
-          alignSelf: "center",
-        } }
-        variant="outlined"
-        color="inherit"
-      >
-        CLAIM ROYALTIES
-      </Button> */ }
     </Box>
   );
 };

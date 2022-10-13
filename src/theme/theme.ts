@@ -3,21 +3,30 @@ import { Theme, createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Theme {
     colors: {
+      black: string;
       blue: string;
-      purple: string;
-      red: string;
-      orange: string;
-      yellow: string;
       green: string;
+      red: string;
       white: string;
+      yellow: string;
+      baseBlue: string;
+      baseGreen: string;
+      baseOrange: string;
+      basePink: string;
+      basePurple: string;
+      baseYellow: string;
       grey100: string;
       grey200: string;
       grey300: string;
       grey400: string;
       grey500: string;
       grey600: string;
-      black: string;
-      black100: string;
+      grey700: string;
+      midCompany: string;
+      midCrypto: string;
+      midMagazine: string;
+      midMusic: string;
+      midPartners: string;
     };
     gradients: {
       company: string;
@@ -47,21 +56,30 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   interface ThemeOptions {
     colors?: {
+      black?: string;
       blue?: string;
-      purple?: string;
-      red?: string;
-      orange?: string;
-      yellow?: string;
       green?: string;
+      red?: string;
       white?: string;
+      yellow?: string;
+      baseBlue?: string;
+      baseGreen?: string;
+      baseOrange?: string;
+      basePink?: string;
+      basePurple?: string;
+      baseYellow?: string;
       grey100?: string;
       grey200?: string;
       grey300?: string;
       grey400?: string;
       grey500?: string;
       grey600?: string;
-      black?: string;
-      black100?: string;
+      grey700?: string;
+      midCompany?: string;
+      midCrypto?: string;
+      midMagazine?: string;
+      midMusic?: string;
+      midPartners?: string;
     };
     gradients?: {
       company?: string;
@@ -124,28 +142,19 @@ declare module "@mui/material/Typography" {
   }
 }
 
-/* TODO:
-- Get clarification on old palette color maps to new
-- Replace the usages of the removed colors
-- Search for custom colors in our app and replace (icon svg too)
-- Get thoughts on the following name changes:
-    Green -> Success
-    Red -> Error
-    Yellow -> Warning
-    Blue -> info
-- Look for colors to replace to ask design
-- Talk to design about what color replaces what?
-- Modify old Theme types to fit new design palette
-*/
-
-// REMOVED THE FOLLOWING FROM COLORS
-  // black100: "#0A0A0A",
-  // orange: "#FF9900",
-  // purple: "#CC33CC",
 const colors = {
   black: "#000000",
   blue: "#3985F7",
   green: "#68CD67",
+  red: "#EB5545",
+  white: "#FFFFFF",
+  yellow: "#F9D74A",
+  baseBlue: "#5091EB",
+  baseGreen: "#41BE91",
+  baseOrange: "#FF6E32",
+  basePink: "#F53C69",
+  basePurple: "#C341F0",
+  baseYellow: "#FFC33C",
   grey100: "#8E8E93",
   grey200: "#636366",
   grey300: "#48484A",
@@ -153,20 +162,11 @@ const colors = {
   grey500: "#1C1C1E",
   grey600: "#121214",
   grey700: "#0A0A0A",
-  red: "",
-  white: "#FFFFFF",
-  yellow: "#F9D74A",
-  baseYellow: "#FFC33C",
-  baseOrange: "#FF6E32",
-  basePink: "#F53C69",
-  basePurple: "#C341F0",
-  baseBlue: "#5091EB",
-  baseGreen: "#41BE91",
-  midPartners: "#FF9637",
-  midMagazine: "#FA554B",
-  midMusic: "#DC3CAA",
   midCompany: "#8C69F0",
   midCrypto: "#46AABE",
+  midMagazine: "#FA554B",
+  midMusic: "#DC3CAA",
+  midPartners: "#FF9637",
 };
 
 /**
@@ -220,30 +220,30 @@ const theme = createTheme({
 
   palette: {
     background: {
-      default: "#000000",
-      paper: "#000000",
+      default: colors.black,
+      paper: colors.black,
     },
 
     primary: {
-      main: "#FF3366",
+      main: colors.basePink,
     },
     secondary: {
-      main: "#CC33CC",
+      main: colors.midMusic,
     },
     error: {
-      main: "#FF453A",
+      main: colors.red,
     },
     success: {
-      main: "#30D158",
+      main: colors.green,
     },
 
     action: {
-      disabled: "white",
+      disabled: colors.white,
     },
 
     text: {
-      primary: "#FFFFFF",
-      secondary: "#707070",
+      primary: colors.white,
+      secondary: colors.grey100,
     },
   },
 

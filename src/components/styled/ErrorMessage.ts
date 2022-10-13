@@ -4,7 +4,7 @@ import theme from "theme";
 
 const ErrorMessage = styled(Typography)({
   ...theme.typography.h5,
-  color: theme.palette.error.main,
+  color: theme.colors.red,
 });
 
 export default ErrorMessage;

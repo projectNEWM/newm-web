@@ -13,7 +13,7 @@ import theme from "theme";
 import StyledPagination from "./styled/StyledPagination";
 
 const StyledTableCell = styled(TableCell)<TableCellProps>`
-  border-color: ${theme.colors.black100};
+  border-color: ${theme.colors.grey700};
   padding: 4px 16px;
 `;
 
@@ -36,7 +36,7 @@ const TablePagination = ({
   lastRowOnPage,
   handlePageChange,
   colSpan,
-  color = theme.colors.black100,
+  color = theme.colors.grey700,
   rows = "rows",
   cellStyles,
 }: TablePaginationProps) => {

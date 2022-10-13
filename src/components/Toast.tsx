@@ -55,17 +55,17 @@ const Toast = () => {
               paddingTop: 0,
             },
             "&.MuiAlert-outlined": {
-              color: theme.palette.text.primary,
-              backgroundColor: theme.palette.background.default,
+              color: theme.colors.white,
+              backgroundColor: theme.colors.black,
               textAlign: "left",
               ".MuiSvgIcon-root": {
-                color: theme.palette.text.primary,
+                color: theme.colors.white,
               },
               "&.MuiAlert-outlinedSuccess": {
-                borderColor: theme.palette.success.main,
+                borderColor: theme.colors.green,
               },
               "&.MuiAlert-outlinedError": {
-                borderColor: theme.palette.error.main,
+                borderColor: theme.colors.red,
               },
             },
           },
