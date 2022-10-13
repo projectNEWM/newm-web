@@ -201,11 +201,23 @@ export const createTransaction = async (body: CreateTransactionParams) => {
 /**
  * @returns the first unused address for a wallet.
  */
-export const getUnusedAddress = async (walletName: string): Promise<string> => {
-  const addresses = await window.Wallets[walletName].getUnusedAddresses();
-  const encodedAddress = addressFromHex(addresses[0]);
+export const getWalletAddress = async (walletName: string): Promise<string> => {
+  let addresses = [];
+  const wallet = window.Wallets[walletName];
 
-  return encodedAddress;
+  // prefer unused address, but some wallets such as Nami require used address
+  addresses = await wallet.getUnusedAddresses();
+  if (addresses.length === 0) {
+    addresses = await wallet.getUsedAddresses();
+  }
+
+  const address = addresses[0];
+
+  if (!address) {
+    throw new Error("Unable to fetch wallet address");
+  }
+
+  return addressFromHex(address);
 };
 
 /**
