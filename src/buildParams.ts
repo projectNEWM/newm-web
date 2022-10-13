@@ -3,8 +3,7 @@ interface ProjectDetails {
   readonly launchTimestamp: number;
   readonly projectId: number;
   readonly bundleAmount: number;
-  readonly totalBundles: number;
-  readonly bundlePercentage: number;
+  readonly totalTokens: number;
   readonly bundlePrice: number;
   readonly songName: string;
   readonly subtitle?: string;
@@ -51,8 +50,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     launchTimestamp: 1665212400000,
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 8000,
-    totalBundles: 10000,
-    bundlePercentage: 0.8,
+    totalTokens: 100000000,
     bundlePrice: 42,
     poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
@@ -98,8 +96,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     songName: "Love in the Water",
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 6,
     bundleAmount: 100000,
-    totalBundles: 1000,
-    bundlePercentage: 1,
+    totalTokens: 100000000,
     bundlePrice: 22,
     poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:

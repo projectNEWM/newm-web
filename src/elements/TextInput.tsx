@@ -116,6 +116,7 @@ export const TextInput: ForwardRefRenderFunction<
         onMouseEnter={ () => setIsHovered(true) }
         onMouseLeave={ () => setIsHovered(false) }
         sx={ {
+          position: "relative",
           borderWidth: theme.inputField.borderWidth,
           borderStyle: "solid",
           borderColor: getBorderColor(
@@ -140,7 +141,17 @@ export const TextInput: ForwardRefRenderFunction<
             ref={ ref }
           />
 
-          { endAdornment }
+          <div
+            style={ {
+              position: "absolute",
+              top: "50%",
+              right: "4px",
+              pointerEvents: "none",
+              transform: "translateY(-50%)",
+            } }
+          >
+            { endAdornment }
+          </div>
         </StyledRootElement>
       </Box>
 

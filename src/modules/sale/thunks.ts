@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createTransaction,
-  getUnusedAddress,
+  getWalletAddress,
   setWalletIsLoading,
 } from "modules/wallet";
 import { RootState } from "store";
@@ -34,7 +34,7 @@ export const createPurchase = createAsyncThunk(
       if (paymentType === PaymentType.Manual) {
         receiveAddress = params.receiveAddress;
       } else {
-        receiveAddress = await getUnusedAddress(walletName);
+        receiveAddress = await getWalletAddress(walletName);
       }
 
       if (!receiveAddress) {

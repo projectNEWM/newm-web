@@ -1,6 +1,12 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import QuestionIcon from "assets/images/QuestionIcon";
-import { FilledButton, HorizontalLine, Tooltip, Typography } from "elements";
+import {
+  DropdownSelect,
+  FilledButton,
+  HorizontalLine,
+  Tooltip,
+  Typography,
+} from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/artists";
 import PlayIcon from "assets/images/PlayIcon";
@@ -11,22 +17,25 @@ import { DisplayText, SectionHeading } from "components";
 import { Howl } from "howler";
 import { projectDetails } from "buildParams";
 import poolPmIcon from "assets/images/pool-pm-icon.png";
-import { useSelector } from "react-redux";
-import { parseBundleAmounts, selectSalesFor } from "modules/sale";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  parseBundleAmounts,
+  selectSale,
+  selectSalesFor,
+  setSelectedBundleId,
+} from "modules/sale";
 import { selectWallet } from "modules/wallet";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { adaUsdRate } = useSelector(selectWallet);
+  const { selectedBundleId } = useSelector(selectSale);
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
-  const bundleAmounts = parseBundleAmounts(sales[0], adaUsdRate);
-  const royaltyPercentage =
-    (projectDetails.bundleAmount /
-      (projectDetails.totalBundles * projectDetails.bundleAmount)) *
-    projectDetails.bundlePercentage *
-    100;
+  const selectedSale = sales.find(({ id }) => id === selectedBundleId);
+  const bundleAmounts = parseBundleAmounts(selectedSale, adaUsdRate);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -44,6 +53,21 @@ const Landing: FunctionComponent = () => {
   const handleNavigate = () => {
     audio.stop();
     navigate("payment");
+  };
+
+  const getDropdownOptions = () => {
+    if (!sales.length) return [];
+
+    const single = Math.min(...sales.map((sale) => sale.amount));
+
+    return sales.map((sale) => {
+      const bundleSize = Math.floor(sale.amount / single);
+
+      return {
+        label: bundleSize + (bundleSize === 1 ? " bundle" : " bundles"),
+        value: sale.id,
+      };
+    });
   };
 
   return (
@@ -148,13 +172,22 @@ const Landing: FunctionComponent = () => {
 
         <Box width="100%">
           <Box mb={ 1 }>
-            <SectionHeading>WHAT YOU CAN BUY</SectionHeading>
+            <SectionHeading>WHAT YOU CAN OWN</SectionHeading>
           </Box>
 
           <Stack direction="row" spacing={ 1.5 } justifyContent="flex-start">
             <Box flexDirection="column">
               <Box mb={ 0.25 }>
-                <DisplayText>1 Bundle</DisplayText>
+                <DropdownSelect
+                  label=""
+                  name="bundles"
+                  value={ selectedBundleId }
+                  placeholder="1 bundle"
+                  handleChange={ (option) => {
+                    dispatch(setSelectedBundleId(option.value));
+                  } }
+                  options={ getDropdownOptions() }
+                />
               </Box>
 
               <Typography variant="subtitle1">
@@ -162,16 +195,36 @@ const Landing: FunctionComponent = () => {
               </Typography>
             </Box>
 
-            <DisplayText style={ { color: theme.colors.grey100 } }>=</DisplayText>
+            <DisplayText
+              style={ {
+                display: "flex",
+                height: "45px",
+                alignItems: "center",
+                color: theme.colors.grey100,
+              } }
+            >
+              =
+            </DisplayText>
 
             <Box flexDirection="column">
-              <Box mb={ 0.25 } sx={ { position: "relative" } }>
+              <Box
+                mb={ 0.25 }
+                sx={ {
+                  position: "relative",
+                  display: "flex",
+                  height: "45px",
+                  alignItems: "center",
+                } }
+              >
                 <DisplayText style={ { color: theme.colors.grey100 } }>
                   { bundleAmounts.size.toLocaleString() } stream tokens
                   <Tooltip
                     title={
-                      `${projectDetails.bundleAmount.toLocaleString()} stream tokens are ` +
-                      `equal to ${royaltyPercentage}% of future streaming royalties. See FAQ for more.`
+                      bundleAmounts.royaltyPercentage
+                        ? `${bundleAmounts.size.toLocaleString()} stream ` +
+                          `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
+                          "of future streaming royalties. See FAQ for more."
+                        : "Unable to fetch tooltip data"
                     }
                   >
                     <IconButton
@@ -202,9 +255,9 @@ const Landing: FunctionComponent = () => {
           </FilledButton>
 
           <Typography variant="subtitle2">
-            In the spirit of fairness, you can only purchase one bundle per
-            session. This gives everyone an equal opportunity to participate in
-            this limited offering.
+            In the spirit of fairness, you can only purchase a limited amount of
+            bundles per session. This gives everyone an equal opportunity to
+            participate in this sale.
           </Typography>
         </Stack>
       </Stack>

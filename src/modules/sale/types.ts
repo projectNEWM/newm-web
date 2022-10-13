@@ -16,6 +16,7 @@ export enum StorageKey {
 
 export interface SaleState {
   sales: Array<SaleBundle>;
+  selectedBundleId?: number;
   purchaseOrder?: PurchaseOrder;
   paymentType?: PaymentType;
   purchaseStatus?: PurchaseStatus;
@@ -27,6 +28,7 @@ export interface SaleBundleAmounts {
   readonly size: number;
   readonly adaPrice: number;
   readonly usdPrice?: number;
+  readonly royaltyPercentage?: number;
 }
 
 export interface SaleBundle {
