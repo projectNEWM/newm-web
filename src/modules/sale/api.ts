@@ -48,7 +48,7 @@ const extendedApi = api.injectEndpoints({
 
           // sale is sold out, redirect to sold out page
           if (isSoldout && !isSoldoutCurrentPage) {
-            window.location.pathname = "token-drop/sold-out";
+            window.location.pathname = "sold-out";
             return;
           }
 
