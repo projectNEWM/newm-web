@@ -17,7 +17,7 @@ export const parseBundleAmounts = (
 };
 
 export const parsePurchasePrice = (value?: string) => {
-  if (!value) return "UNDEFINED";
+  if (!value) return undefined;
 
   return value.slice(1).split(".")[0];
 };

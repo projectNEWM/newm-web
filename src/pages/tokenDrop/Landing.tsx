@@ -19,6 +19,7 @@ import { projectDetails } from "buildParams";
 import poolPmIcon from "assets/images/pool-pm-icon.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  PurchaseStatus,
   parseBundleAmounts,
   selectSale,
   selectSalesFor,
@@ -32,10 +33,14 @@ const Landing: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const { adaUsdRate } = useSelector(selectWallet);
-  const { selectedBundleId } = useSelector(selectSale);
+  const { selectedBundleId, purchaseStatus } = useSelector(selectSale);
   const sales = useSelector(selectSalesFor(projectDetails.projectId));
   const selectedSale = sales.find(({ id }) => id === selectedBundleId);
   const bundleAmounts = parseBundleAmounts(selectedSale, adaUsdRate);
+
+  const isPending = purchaseStatus === PurchaseStatus.Pending;
+  const isProcessing = purchaseStatus === PurchaseStatus.Processing;
+  const activePurchase = isPending || isProcessing;
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -181,6 +186,7 @@ const Landing: FunctionComponent = () => {
                 <DropdownSelect
                   label=""
                   name="bundles"
+                  disabled={ activePurchase }
                   value={ selectedBundleId }
                   placeholder="1 bundle"
                   handleChange={ (option) => {
@@ -190,7 +196,7 @@ const Landing: FunctionComponent = () => {
                 />
               </Box>
 
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" sx={ { paddingLeft: 1.5 } }>
                 { bundleAmounts.adaPrice.toLocaleString() } ADA
               </Typography>
             </Box>
@@ -230,10 +236,10 @@ const Landing: FunctionComponent = () => {
                     <IconButton
                       sx={ {
                         py: 0,
-                        position: "absolute",
-                        right: "-2.5rem",
-                        top: "50%",
-                        transform: "translateY(-50%)",
+                        position: ["relative", "relative", "absolute"],
+                        right: [0, 0, "-2.5rem"],
+                        top: [0, 0, "50%"],
+                        transform: ["none", "none", "translateY(-50%)"],
                       } }
                     >
                       <QuestionIcon />

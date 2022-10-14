@@ -7,7 +7,7 @@ import {
   Toast,
 } from "components";
 import { Provider } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import theme from "theme";
 import TokenDrop from "pages/tokenDrop/TokenDrop";
 import ScrollToTopOnNavigation from "components/ScrollToTopOnNavigation";
@@ -32,14 +32,7 @@ const App = () => {
           <Background>
             <BrowserRouter>
               <ScrollToTopOnNavigation>
-                <Routes>
-                  <Route path="token-drop/*" element={ <TokenDrop /> } />
-
-                  <Route
-                    path="*"
-                    element={ <Navigate to="token-drop" replace /> }
-                  />
-                </Routes>
+                <TokenDrop />
               </ScrollToTopOnNavigation>
             </BrowserRouter>
           </Background>
