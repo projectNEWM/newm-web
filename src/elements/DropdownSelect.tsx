@@ -158,4 +158,28 @@ const DropdownSelect: ForwardRefRenderFunction<
   );
 };
 
-export default forwardRef(DropdownSelect);
+const ForwardedRefDropdownSelect = forwardRef(DropdownSelect);
+
+/**
+ * There is an issue with the MUI `useAutocomplete` hook where it will not
+ * populate the initial value if the options are not present when the
+ * component first renders. Displaying a placeholder while options are fetched
+ * enables the component to render correctly with the initial value.
+ */
+const DropdownSelectWithPlaceholder: ForwardRefRenderFunction<
+  HTMLInputElement,
+  DropdownSelectProps
+> = (props, ref: ForwardedRef<HTMLInputElement>) => {
+  return props.options.length > 0 ? (
+    <ForwardedRefDropdownSelect ref={ ref } { ...props } />
+  ) : (
+    <DropdownSelect
+      name={ props.name }
+      placeholder={ props.placeholder }
+      label={ props.label }
+      options={ props.options }
+    />
+  );
+};
+
+export default forwardRef(DropdownSelectWithPlaceholder);
