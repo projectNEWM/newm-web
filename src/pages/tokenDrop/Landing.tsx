@@ -223,28 +223,31 @@ const Landing: FunctionComponent = () => {
                 } }
               >
                 <DisplayText style={ { color: theme.colors.grey100 } }>
-                  { bundleAmounts.size.toLocaleString() } stream tokens
-                  <Tooltip
-                    title={
-                      bundleAmounts.royaltyPercentage
-                        ? `${bundleAmounts.size.toLocaleString()} stream ` +
-                          `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
-                          "of future streaming royalties. See FAQ for more."
-                        : "Unable to fetch tooltip data"
-                    }
-                  >
-                    <IconButton
-                      sx={ {
-                        py: 0,
-                        position: ["relative", "relative", "absolute"],
-                        right: [0, 0, "-2.5rem"],
-                        top: [0, 0, "50%"],
-                        transform: ["none", "none", "translateY(-50%)"],
-                      } }
+                  { bundleAmounts.size.toLocaleString() } stream{ " " }
+                  <span style={ { whiteSpace: "nowrap" } }>
+                    tokens
+                    <Tooltip
+                      title={
+                        bundleAmounts.royaltyPercentage
+                          ? `${bundleAmounts.size.toLocaleString()} stream ` +
+                            `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
+                            "of future streaming royalties. See FAQ for more."
+                          : "Unable to fetch tooltip data"
+                      }
                     >
-                      <QuestionIcon />
-                    </IconButton>
-                  </Tooltip>
+                      <IconButton
+                        sx={ {
+                          py: 0,
+                          position: ["relative", "relative", "absolute"],
+                          right: [0, 0, "-2.5rem"],
+                          top: [0, 0, "50%"],
+                          transform: ["none", "none", "translateY(-50%)"],
+                        } }
+                      >
+                        <QuestionIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </span>
                 </DisplayText>
               </Box>
 

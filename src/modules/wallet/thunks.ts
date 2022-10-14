@@ -65,7 +65,14 @@ export const enableWallet = createAsyncThunk(
       dispatch(setIsSelectWalletModalOpen(false));
     } catch (err) {
       if (err instanceof Error && err.message !== "user canceled connection") {
-        dispatch(setToastMessage("Error occurred while enabling the wallet."));
+        dispatch(
+          setToastMessage({
+            severity: "error",
+            message:
+              "Error occurred while connecting the wallet. Please " +
+              "ensure that the wallet has been set up correctly.",
+          })
+        );
       }
     }
   }
