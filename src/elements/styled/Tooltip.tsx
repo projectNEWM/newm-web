@@ -8,7 +8,7 @@ const Tooltip = styled(({ className, ...props }: TooltipProps) => (
   <MuiTooltip
     arrow={ true }
     classes={ { popper: className } }
-    enterTouchDelay={ 100 }
+    enterTouchDelay={ 0 }
     leaveDelay={ 200 }
     placement="top"
     { ...props }

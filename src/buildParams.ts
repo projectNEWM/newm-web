@@ -5,6 +5,7 @@ interface ProjectDetails {
   readonly bundleAmount: number;
   readonly totalTokens: number;
   readonly bundlePrice: number;
+  readonly royaltyAgreement: string;
   readonly songName: string;
   readonly subtitle?: string;
   readonly poolLink: string;
@@ -52,6 +53,9 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     bundleAmount: 8000,
     totalTokens: 100000000,
     bundlePrice: 42,
+    royaltyAgreement:
+      "https://jvwilqyxryrrjc6ctsofeffbtyf7zbuytkka5ayrapcbzfo3b2na.arweave.net/" +
+      "TWyFwxeOIxSLwpycUhShngv8hpialA6DEQPEHJXbDpo",
     poolLink: "https://pool.pm/asset19dx98tjqckn26yk5hcse4zm6m0aj4gf7z0z378",
     spotifyLink:
       "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1",
@@ -98,6 +102,9 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     bundleAmount: 100000,
     totalTokens: 100000000,
     bundlePrice: 22,
+    royaltyAgreement:
+      "https://v7oqxvh6s6biul2cjn7rcx4vz6ujevzsmzi7f2ylucnxqlfrdb7q.arweave.net" +
+      "/r90L1P6XgoovQkt_EV-Vz6iSVzJmUfLrC6CbeCyxGH8",
     poolLink: "https://pool.pm/asset1dqngvnugq799j6cxxyqkf97r4q6rz8x46nknts",
     spotifyLink:
       "https://open.spotify.com/track/38xqzTW8mMLP876PBU3F9F?si=r6QOZ-tMSxq7LhDci6vHIg&utm_source=native-share-menu",

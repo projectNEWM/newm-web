@@ -81,6 +81,19 @@ const Landing: FunctionComponent = () => {
         <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
           { projectDetails.description }
         </Typography>
+        <Typography variant="subtitle1" sx={ { mt: 2, whiteSpace: "pre-wrap" } }>
+          Explore the legal side of how Stream Tokens and royalties work in this
+          sample sale prior to purchasing&nbsp;
+          <a
+            target="_blank"
+            href={ projectDetails.royaltyAgreement }
+            rel="noreferrer noopener"
+            style={ { color: theme.colors.grey100 } }
+          >
+            here
+          </a>
+          .
+        </Typography>
       </Box>
 
       <Stack
@@ -92,84 +105,96 @@ const Landing: FunctionComponent = () => {
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
 
-          <Box
-            sx={ {
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              backgroundColor: theme.colors.grey600,
-              borderRadius: "6px",
-              overflow: "hidden",
-              p: 1.25,
-              pr: 2,
-            } }
-          >
-            <Stack spacing={ 2 } direction="row" alignItems="center">
-              <Box
-                display="flex"
-                height={ 2 }
-                width={ 2 }
-                margin={ 2 }
-                justifyContent="center"
-                alignItems="center"
-              >
-                { isPlaying ? (
-                  <IconButton
-                    aria-label="stop song"
-                    onClick={ () => audio.stop() }
-                  >
-                    <StopIcon />
-                  </IconButton>
-                ) : (
-                  <IconButton
-                    aria-label="play song"
-                    onClick={ () => audio.play() }
-                  >
-                    <PlayIcon />
-                  </IconButton>
-                ) }
-              </Box>
+          <Box display="flex" alignItems="center">
+            <Box
+              sx={ {
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                backgroundColor: theme.colors.grey600,
+                borderRadius: "6px",
+                overflow: "hidden",
+                p: 1.25,
+                pr: 2,
+              } }
+            >
+              <Stack spacing={ 2 } direction="row" alignItems="center">
+                <Box
+                  display="flex"
+                  height={ 2 }
+                  width={ 2 }
+                  margin={ 2 }
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  { isPlaying ? (
+                    <IconButton
+                      aria-label="stop song"
+                      onClick={ () => audio.stop() }
+                    >
+                      <StopIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      aria-label="play song"
+                      onClick={ () => audio.play() }
+                    >
+                      <PlayIcon />
+                    </IconButton>
+                  ) }
+                </Box>
 
-              <img
-                src={ artistAssets.albumArtXs }
-                style={ { width: 40, height: 40, borderRadius: "50%" } }
-                alt="artist profile"
-              />
-
-              <Box>
-                <Typography variant="h4" fontWeight={ 700 }>
-                  { projectDetails.songName }
-                </Typography>
-                <Typography variant="subtitle2">
-                  { projectDetails.artistName }
-                </Typography>
-              </Box>
-            </Stack>
-
-            <Stack spacing={ 2 } direction="row">
-              <a
-                href={ projectDetails.poolLink }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
                 <img
-                  alt="Cardano logo"
-                  src={ poolPmIcon }
-                  width={ 27 }
-                  height={ 27 }
+                  src={ artistAssets.albumArtXs }
+                  style={ { width: 40, height: 40, borderRadius: "50%" } }
+                  alt="artist profile"
                 />
-              </a>
 
-              <a
-                href={ projectDetails.spotifyLink }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SpotifyIcon />
-              </a>
-            </Stack>
+                <Box>
+                  <Typography variant="h4" fontWeight={ 700 }>
+                    { projectDetails.songName }
+                  </Typography>
+                  <Typography variant="subtitle2">
+                    { projectDetails.artistName }
+                  </Typography>
+                </Box>
+              </Stack>
+
+              <Stack spacing={ 2 } direction="row">
+                <a
+                  href={ projectDetails.poolLink }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    alt="Cardano logo"
+                    src={ poolPmIcon }
+                    width={ 27 }
+                    height={ 27 }
+                  />
+                </a>
+
+                <a
+                  href={ projectDetails.spotifyLink }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SpotifyIcon />
+                </a>
+              </Stack>
+            </Box>
+            <Tooltip
+              title={
+                "Click the circular pink logo (next to Spotify icon) " +
+                "to view what Stream Tokens look like on the blockchain."
+              }
+            >
+              <IconButton sx={ { py: 0 } }>
+                <QuestionIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Box>
 
