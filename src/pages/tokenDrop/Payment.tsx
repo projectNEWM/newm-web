@@ -109,7 +109,7 @@ const Payment: FunctionComponent = () => {
     dispatch(
       createPurchase({
         projectId,
-        bundleId: sales[0].id,
+        bundleId: selectedSale?.id,
         paymentType: PaymentType.Wallet,
       })
     );
