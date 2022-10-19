@@ -70,7 +70,7 @@ export interface PurchaseOrderResponse {
 
 export interface PurchaseOrderParams {
   readonly projectId: number;
-  readonly bundleId: number;
+  readonly bundleId?: number;
   readonly paymentType: PaymentType;
   readonly receiveAddress?: string;
 }

@@ -18,6 +18,12 @@ export const createPurchase = createAsyncThunk(
   "sale/createPurchase",
   async (params: PurchaseOrderParams, { dispatch, getState }) => {
     try {
+      const { projectId, bundleId, paymentType } = params;
+
+      if (!bundleId) {
+        throw new Error("No bundle selected");
+      }
+
       dispatch(setWalletIsLoading(true));
 
       // save transaction time, this will be used to handle timeout
@@ -25,7 +31,6 @@ export const createPurchase = createAsyncThunk(
       const transactionTime = Date.now();
       localStorage.setItem(storageKey, String(transactionTime));
 
-      const { projectId, bundleId, paymentType } = params;
       const appState = getState() as RootState;
       const { walletName } = appState.wallet;
 
