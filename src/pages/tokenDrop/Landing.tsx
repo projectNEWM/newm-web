@@ -105,7 +105,7 @@ const Landing: FunctionComponent = () => {
         <Box width="100%">
           <SectionHeading>AVAILABLE SONG</SectionHeading>
 
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" position="relative">
             <Box
               sx={ {
                 display: "flex",
@@ -191,7 +191,14 @@ const Landing: FunctionComponent = () => {
                 "to view what Stream Tokens look like on the blockchain."
               }
             >
-              <IconButton sx={ { py: 0 } }>
+              <IconButton sx={ {
+                pr: [0, 0, ".5rem"],
+                py: 0,
+                position: ["relative", "relative", "absolute"],
+                right: [0, 0, "-2.5rem"],
+                top: [0, 0, "50%"],
+                transform: ["none", "none", "translateY(-50%)"],
+              } }>
                 <QuestionIcon />
               </IconButton>
             </Tooltip>
@@ -255,8 +262,8 @@ const Landing: FunctionComponent = () => {
                       title={
                         bundleAmounts.royaltyPercentage
                           ? `${bundleAmounts.size.toLocaleString()} stream ` +
-                            `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
-                            "of future streaming royalties. See FAQ for more."
+                          `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
+                          "of future streaming royalties. See FAQ for more."
                           : "Unable to fetch tooltip data"
                       }
                     >
