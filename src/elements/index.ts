@@ -2,6 +2,7 @@ export { default as Typography } from "./Typography";
 export * from "./Typography";
 export { default as Tooltip } from "./styled/Tooltip";
 export { default as Dialog } from "./styled/Dialog";
+export { default as Checkbox } from "./Checkbox";
 export { default as DropdownSelect } from "./DropdownSelect";
 export { default as FilledButton } from "./styled/FilledButton";
 export { default as MultiSelect } from "./MultiSelect";

@@ -1,11 +1,12 @@
 import { Box, IconButton, Stack, useTheme } from "@mui/material";
 import QuestionIcon from "assets/images/QuestionIcon";
 import {
+  Checkbox,
   DropdownSelect,
   FilledButton,
   HorizontalLine,
   Tooltip,
-  Typography,
+  Typography
 } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/artists";
@@ -43,6 +44,7 @@ const Landing: FunctionComponent = () => {
   const activePurchase = isPending || isProcessing;
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const audio = useMemo(
     () =>
@@ -54,6 +56,10 @@ const Landing: FunctionComponent = () => {
       }),
     []
   );
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const handleNavigate = () => {
     audio.stop();
@@ -290,16 +296,25 @@ const Landing: FunctionComponent = () => {
 
         <HorizontalLine />
 
-        <Stack mt={ 4 } spacing={ 1.5 } sx={ { width: "100%" } }>
-          <FilledButton onClick={ handleNavigate } fullWidth={ true }>
-            Begin purchase
-          </FilledButton>
-
-          <Typography variant="subtitle2">
-            In the spirit of fairness, you can only purchase a limited amount of
-            bundles per session. This gives everyone an equal opportunity to
-            participate in this sale.
+        <Stack mt={ 4 } spacing={ 3 } sx={ { width: "100%" } }>
+          <Stack alignItems="center" columnGap={ 1.5 } flexDirection="row">
+            <Checkbox ariaDescribedBy="terms"  checked={ isChecked } onChange={ handleChange } />
+          <Typography variant="subtitle2" id="terms">
+          I agree that I have read and accepted NEWM&apos;s&nbsp;
+          <a
+            href="https://newm.io/terms-of-service"
+            rel="noreferrer noopener"
+            style={ { color: theme.colors.grey100 } }
+            target="_blank"
+          >
+            Terms of Service
+          </a>
+          .
           </Typography>
+          </Stack>
+          <FilledButton disabled={ !isChecked } fullWidth={ true } onClick={ handleNavigate }>
+            Start purchase
+          </FilledButton>
         </Stack>
       </Stack>
     </Box>
