@@ -6,7 +6,7 @@ import {
   FilledButton,
   HorizontalLine,
   Tooltip,
-  Typography
+  Typography,
 } from "elements";
 import { FunctionComponent, useMemo, useState } from "react";
 import artistAssets from "assets/artists";
@@ -197,14 +197,16 @@ const Landing: FunctionComponent = () => {
                 "to view what Stream Tokens look like on the blockchain."
               }
             >
-              <IconButton sx={ {
-                pr: [0, 0, ".5rem"],
-                py: 0,
-                position: ["relative", "relative", "absolute"],
-                right: [0, 0, "-2.5rem"],
-                top: [0, 0, "50%"],
-                transform: ["none", "none", "translateY(-50%)"],
-              } }>
+              <IconButton
+                sx={ {
+                  pr: [0, 0, ".5rem"],
+                  py: 0,
+                  position: ["relative", "relative", "absolute"],
+                  right: [0, 0, "-2.5rem"],
+                  top: [0, 0, "50%"],
+                  transform: ["none", "none", "translateY(-50%)"],
+                } }
+              >
                 <QuestionIcon />
               </IconButton>
             </Tooltip>
@@ -268,8 +270,8 @@ const Landing: FunctionComponent = () => {
                       title={
                         bundleAmounts.royaltyPercentage
                           ? `${bundleAmounts.size.toLocaleString()} stream ` +
-                          `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
-                          "of future streaming royalties. See FAQ for more."
+                            `tokens are equal to ${bundleAmounts.royaltyPercentage}% ` +
+                            "of future streaming royalties. See FAQ for more."
                           : "Unable to fetch tooltip data"
                       }
                     >
@@ -296,23 +298,37 @@ const Landing: FunctionComponent = () => {
 
         <HorizontalLine />
 
-        <Stack mt={ 4 } spacing={ 3 } sx={ { width: "100%" } }>
-          <Stack alignItems="center" columnGap={ 1.5 } flexDirection="row">
-            <Checkbox ariaDescribedBy="terms"  checked={ isChecked } onChange={ handleChange } />
-          <Typography variant="subtitle2" id="terms">
-          I agree that I have read and accepted NEWM&apos;s&nbsp;
-          <a
-            href="https://newm.io/terms-of-service"
-            rel="noreferrer noopener"
-            style={ { color: theme.colors.grey100 } }
-            target="_blank"
+        <Stack spacing={ 2.5 } sx={ { width: "100%" } }>
+          <Stack
+            alignItems="center"
+            columnGap={ 1.5 }
+            flexDirection="row"
+            mt={ 1.5 }
           >
-            Terms of Service
-          </a>
-          .
-          </Typography>
+            <Checkbox
+              ariaDescribedBy="terms"
+              checked={ isChecked }
+              onChange={ handleChange }
+            />
+            <Typography variant="subtitle2" id="terms">
+              I agree that I have read and accepted NEWM&apos;s&nbsp;
+              <a
+                href="https://newm.io/terms-of-service"
+                rel="noreferrer noopener"
+                style={ { color: theme.colors.grey100 } }
+                target="_blank"
+              >
+                Terms of Service
+              </a>
+              .
+            </Typography>
           </Stack>
-          <FilledButton disabled={ !isChecked } fullWidth={ true } onClick={ handleNavigate }>
+          <FilledButton
+            disabled={ !isChecked }
+            fullWidth={ true }
+            onClick={ handleNavigate }
+            sx={ { mt: 1 } }
+          >
             Start purchase
           </FilledButton>
         </Stack>
