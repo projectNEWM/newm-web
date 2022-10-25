@@ -35,6 +35,9 @@ const extendedApi = api.injectEndpoints({
           const isClosed =
             error?.status === 404 &&
             errorMessage.toLowerCase().includes("is closed!");
+          const isSaleEnded =
+            error?.status === 404 &&
+            errorMessage.toLowerCase().includes("sale has ended");
           const isSoldout =
             error?.status === 404 &&
             errorMessage.toLowerCase().includes("sold out");
@@ -43,6 +46,13 @@ const extendedApi = api.injectEndpoints({
 
           // sale is closed and countdown page is already displayed
           if (isClosed) {
+            return;
+          }
+
+          // TODO: Modify redirect and logic below once "sale has ended" page is created
+          // redirect to sold out page if the sale has ended
+          if (isSaleEnded && !isSoldoutCurrentPage) {
+            window.location.pathname = "sold-out";
             return;
           }
 
