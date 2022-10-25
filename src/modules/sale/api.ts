@@ -51,14 +51,14 @@ const extendedApi = api.injectEndpoints({
 
           // TODO: Modify redirect and logic below once "sale has ended" page is created
           // redirect to sold out page if the sale has ended
-          if (isSaleEnded && !isSoldoutCurrentPage) {
-            window.location.pathname = "sold-out";
+          if (isSaleEnded) {
+            if (!isSoldoutCurrentPage) window.location.pathname = "sold-out";
             return;
           }
 
           // sale is sold out, redirect to sold out page
-          if (isSoldout && !isSoldoutCurrentPage) {
-            window.location.pathname = "sold-out";
+          if (isSoldout) {
+            if (!isSoldoutCurrentPage) window.location.pathname = "sold-out";
             return;
           }
 
