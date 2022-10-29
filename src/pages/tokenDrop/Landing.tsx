@@ -45,6 +45,7 @@ const Landing: FunctionComponent = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const audio = useMemo(
     () =>
@@ -62,6 +63,11 @@ const Landing: FunctionComponent = () => {
   };
 
   const handleNavigate = () => {
+    if (isInitialRender) {
+      setIsInitialRender(false);
+      return;
+    }
+
     audio.stop();
     navigate("payment");
   };
@@ -323,8 +329,13 @@ const Landing: FunctionComponent = () => {
               .
             </Typography>
           </Stack>
+          { !isChecked && !isInitialRender && (
+            <Typography variant="subtitle2" sx={ { color: theme.colors.red } }>
+              Please confirm you have read the Terms of Service.
+            </Typography>
+          ) }
           <FilledButton
-            disabled={ !isChecked }
+            disabled={ !isChecked && !isInitialRender }
             fullWidth={ true }
             onClick={ handleNavigate }
             sx={ { mt: 1 } }

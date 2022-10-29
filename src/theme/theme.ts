@@ -130,7 +130,7 @@ const colors = {
   blue: "#0099CC",
   purple: "#CC33CC",
   pink: "#DC3CAA",
-  red: "#FF3366",
+  red: "#EB5545",
   orange: "#FF9900",
   yellow: "#FFFF66",
   green: "#66FF66",
