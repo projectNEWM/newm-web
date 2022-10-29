@@ -162,7 +162,7 @@ const getBorderColor = (
   }
 
   if (hasError) {
-    return theme.palette.error.main;
+    return theme.colors.red;
   }
 
   if (isHovered || isFocused) {

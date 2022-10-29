@@ -139,7 +139,7 @@ export default function OwnersTable({
             { emptyRows > 0 && (
               <TableRow style={ { height: rowHeight * emptyRows } }>
                 <StyledTableCell
-                  sx={ { backgroundColor: theme.colors.black100 } }
+                  sx={ { backgroundColor: theme.colors.grey700 } }
                   colSpan={ 3 }
                 />
               </TableRow>

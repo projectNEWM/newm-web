@@ -23,10 +23,10 @@ const StyledSwitch = styled((props: SwitchProps) => (
     margin: 2,
     transitionDuration: "300ms",
     "&.Mui-checked": {
-      color: "#fff",
+      color: theme.colors.white,
       transform: "translateX(20px)",
       "& + .MuiSwitch-track": {
-        background: theme.gradients.artist,
+        background: theme.gradients.music,
         opacity: 1,
         border: 0,
       },
@@ -35,8 +35,8 @@ const StyledSwitch = styled((props: SwitchProps) => (
       },
     },
     "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#33cf4d",
-      border: "6px solid #fff",
+      color: theme.colors.green,
+      border: `6px solid ${theme.colors.white}`,
     },
     "&.Mui-disabled .MuiSwitch-thumb": {
       color: theme.colors.grey100,

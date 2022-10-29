@@ -1,4 +1,5 @@
 import { Button, SxProps } from "@mui/material";
+import theme from "theme";
 
 interface OutlinedButtonNoGradientProps {
   sx?: SxProps;
@@ -13,7 +14,7 @@ export const OutlinedButtonNoGradient = ({
     <Button
       sx={ {
         borderRadius: "4px",
-        border: "2px solid #FFFFFF",
+        border: `2px solid ${theme.colors.white}`,
         textTransform: "none",
         ...sx,
       } }

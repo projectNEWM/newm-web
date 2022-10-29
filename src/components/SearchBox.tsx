@@ -22,7 +22,7 @@ export const SearchBox = ({
           <SearchRoundedIcon
             fontSize="large"
             sx={ {
-              color: theme.palette.text.secondary,
+              color: theme.colors.grey100,
               paddingLeft: "8px",
             } }
           />

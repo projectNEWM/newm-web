@@ -10,7 +10,7 @@ interface FilledButtonProps extends ButtonProps {
 
 const FilledButton = styled(Button)<FilledButtonProps>(
   ({
-    backgroundColor = theme.gradients.artist,
+    backgroundColor = theme.gradients.music,
     fontSize = theme.button.fontSize,
     fontWeight = theme.button.fontWeight,
     disabled,

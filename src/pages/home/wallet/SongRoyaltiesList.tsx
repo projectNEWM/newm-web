@@ -36,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const StyledTableCell = styled(TableCell)({
-  borderColor: theme.colors.black100,
+  borderColor: theme.colors.grey700,
   height: "48px",
 });
 

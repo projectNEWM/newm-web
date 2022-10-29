@@ -11,7 +11,7 @@ type OutlinedButtonProps = ButtonProps & BackgroundProps;
 
 const OutlinedButtonGradient = styled("div")(
   ({ theme }) => `
-  background: ${theme.gradients.artist};
+  background: ${theme.gradients.music};
   padding: 2px;
   border-radius: 7px;
 `
@@ -31,7 +31,7 @@ const GradientText = styled("span")`
   text-transform: none;
   color: transparent;
   background: ${theme.colors.red};
-  background: ${theme.gradients.artist};
+  background: ${theme.gradients.music};
   background-clip: text;
   text-fill-color: transparent;
   text-shadow: 0 0 transparent;

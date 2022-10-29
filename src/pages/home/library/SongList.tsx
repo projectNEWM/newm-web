@@ -27,7 +27,7 @@ interface SongListProps {
   setPage: Dispatch<SetStateAction<number>>;
 }
 const StyledTableCell = styled(TableCell)({
-  borderColor: theme.colors.black100,
+  borderColor: theme.colors.grey700,
   paddingTop: "4px",
   paddingBottom: "4px",
   paddingLeft: "0px",

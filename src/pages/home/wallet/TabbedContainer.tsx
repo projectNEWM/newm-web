@@ -42,7 +42,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const StyledTab = styled(Tab)(() => ({
-  background: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
+  background: theme.gradients.crypto,
   "-webkit-background-clip": "text;",
   "-webkit-text-fill-color": "transparent",
 }));

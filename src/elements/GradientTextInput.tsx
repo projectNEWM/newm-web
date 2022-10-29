@@ -44,15 +44,14 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   flex-grow: 1;
   max-width: 100%;
   border-width: 0;
-  color: ${(props) =>
-    props.hasError ? theme.palette.error.main : "transparent"};
+  color: ${(props) => (props.hasError ? theme.colors.red : "transparent")};
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
-  background: ${(props) => (props.hasError ? "none" : theme.gradients.artist)};
+  background: ${(props) => (props.hasError ? "none" : theme.gradients.music)};
   background-clip: text;
   text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
   caret-color: ${(props) =>
-    props.hasError ? theme.palette.error.main : theme.colors.purple};
+    props.hasError ? theme.colors.red : theme.colors.music};
   text-align: ${(props) => props.textAlign};
   font-size: ${theme.typography.h1.fontSize};
   line-height: ${theme.typography.h1.lineHeight};
@@ -105,7 +104,7 @@ const GradientTextInput: ForwardRefRenderFunction<
         <Typography
           variant="h5"
           textAlign={ textAlign }
-          sx={ { color: theme.palette.error.main } }
+          sx={ { color: theme.colors.red } }
         >
           { errorMessage }
         </Typography>
