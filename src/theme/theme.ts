@@ -3,18 +3,17 @@ import { Theme, createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Theme {
     colors: {
-      black: string;
-      blue: string;
-      green: string;
-      red: string;
-      white: string;
-      yellow: string;
       baseBlue: string;
       baseGreen: string;
       baseOrange: string;
       basePink: string;
       basePurple: string;
       baseYellow: string;
+      black: string;
+      blue: string;
+      company: string;
+      crypto: string;
+      green: string;
       grey100: string;
       grey200: string;
       grey300: string;
@@ -22,11 +21,12 @@ declare module "@mui/material/styles" {
       grey500: string;
       grey600: string;
       grey700: string;
-      midCompany: string;
-      midCrypto: string;
-      midMagazine: string;
-      midMusic: string;
-      midPartners: string;
+      magazine: string;
+      music: string;
+      partners: string;
+      red: string;
+      white: string;
+      yellow: string;
     };
     gradients: {
       company: string;
@@ -56,18 +56,17 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   interface ThemeOptions {
     colors?: {
-      black?: string;
-      blue?: string;
-      green?: string;
-      red?: string;
-      white?: string;
-      yellow?: string;
       baseBlue?: string;
       baseGreen?: string;
       baseOrange?: string;
       basePink?: string;
       basePurple?: string;
       baseYellow?: string;
+      black?: string;
+      blue?: string;
+      company?: string;
+      crypto?: string;
+      green?: string;
       grey100?: string;
       grey200?: string;
       grey300?: string;
@@ -75,11 +74,12 @@ declare module "@mui/material/styles" {
       grey500?: string;
       grey600?: string;
       grey700?: string;
-      midCompany?: string;
-      midCrypto?: string;
-      midMagazine?: string;
-      midMusic?: string;
-      midPartners?: string;
+      magazine?: string;
+      music?: string;
+      partners?: string;
+      red?: string;
+      white?: string;
+      yellow?: string;
     };
     gradients?: {
       company?: string;
@@ -143,18 +143,17 @@ declare module "@mui/material/Typography" {
 }
 
 const colors = {
-  black: "#000000",
-  blue: "#3985F7",
-  green: "#68CD67",
-  red: "#EB5545",
-  white: "#FFFFFF",
-  yellow: "#F9D74A",
   baseBlue: "#5091EB",
   baseGreen: "#41BE91",
   baseOrange: "#FF6E32",
   basePink: "#F53C69",
   basePurple: "#C341F0",
   baseYellow: "#FFC33C",
+  black: "#000000",
+  blue: "#3985F7",
+  company: "#8C69F0",
+  crypto: "#46AABE",
+  green: "#68CD67",
   grey100: "#8E8E93",
   grey200: "#636366",
   grey300: "#48484A",
@@ -162,11 +161,12 @@ const colors = {
   grey500: "#1C1C1E",
   grey600: "#121214",
   grey700: "#0A0A0A",
-  midCompany: "#8C69F0",
-  midCrypto: "#46AABE",
-  midMagazine: "#FA554B",
-  midMusic: "#DC3CAA",
-  midPartners: "#FF9637",
+  magazine: "#FA554B",
+  music: "#DC3CAA",
+  partners: "#FF9637",
+  red: "#EB5545",
+  white: "#FFFFFF",
+  yellow: "#F9D74A",
 };
 
 /**
@@ -228,7 +228,7 @@ const theme = createTheme({
       main: colors.basePink,
     },
     secondary: {
-      main: colors.midMusic,
+      main: colors.music,
     },
     error: {
       main: colors.red,

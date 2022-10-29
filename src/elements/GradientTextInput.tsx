@@ -44,15 +44,14 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   flex-grow: 1;
   max-width: 100%;
   border-width: 0;
-  color: ${(props) =>
-    props.hasError ? theme.colors.red : "transparent"};
+  color: ${(props) => (props.hasError ? theme.colors.red : "transparent")};
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
   background: ${(props) => (props.hasError ? "none" : theme.gradients.music)};
   background-clip: text;
   text-fill-color: ${(props) =>
     props.hasError ? "currentcolor" : "transparent"};
   caret-color: ${(props) =>
-    props.hasError ? theme.colors.red : theme.colors.midMusic};
+    props.hasError ? theme.colors.red : theme.colors.music};
   text-align: ${(props) => props.textAlign};
   font-size: ${theme.typography.h1.fontSize};
   line-height: ${theme.typography.h1.lineHeight};
