@@ -118,27 +118,3 @@ const Button: FunctionComponent<ButtonProps> = ({
 };
 
 export default Button;
-
-/*
-- DONE - Width
-    - default (determined by content inside)
-    - Full width
-    - N/A - Max width 340px (Should be handled by implementer, they can pass in sx max-width: 340px)
-- DONE - Icon. Will be handled with MUI button as it supports it out of the box
-    - Before content
-    - After content
-    - In the center (button icon like, loading state for example)
-- DONE - Anchor type. Will be handled with MUI button as it supports it out of the box
-    - href and other properties checkout mdn
-- DONE - Variant
-    - Primary (default)
-    - Secondary
-    - Outlined
-- DONE - Color
-    - Copy from theme
-    - Potentially add config to add a gradient button ?
-
-TODO:
-- Delete transparent button
-- push changes to this pr and then create a new PR
-*/
