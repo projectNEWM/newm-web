@@ -7,6 +7,9 @@ interface ReadMoreProps {
   readonly expandedContent: ReactNode;
 }
 
+/**
+ * Displays abbreviated content with an option to expand and "read more".
+ */
 const ReadMore: FunctionComponent<ReadMoreProps> = ({
   abbreviatedContent,
   expandedContent,

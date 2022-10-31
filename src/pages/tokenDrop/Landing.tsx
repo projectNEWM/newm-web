@@ -14,7 +14,7 @@ import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
 import StopIcon from "assets/images/StopIcon";
-import { DisplayText, SectionHeading } from "components";
+import { DisplayText, ReadMore, SectionHeading } from "components";
 import { Howl } from "howler";
 import { projectDetails } from "buildParams";
 import poolPmIcon from "assets/images/pool-pm-icon.png";
@@ -27,7 +27,6 @@ import {
   setSelectedBundleId,
 } from "modules/sale";
 import { selectWallet } from "modules/wallet";
-import ReadMore from "components/ReadMore";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();

@@ -48,3 +48,4 @@ export { default as InitializeWallet } from "./InitializeWallet";
 export { default as SelectWalletModal } from "./modals/SelectWalletModal";
 export { default as MailchimpSubscribeForm } from "./MailchimpSubscribeForm";
 export { default as CountdownTimer } from "./CountdownTimer";
+export { default as ReadMore } from "./ReadMore";
