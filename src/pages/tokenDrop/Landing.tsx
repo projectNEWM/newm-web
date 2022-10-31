@@ -68,6 +68,8 @@ const Landing: FunctionComponent = () => {
       return;
     }
 
+    if (!isChecked) return;
+
     audio.stop();
     navigate("payment");
   };
@@ -335,7 +337,6 @@ const Landing: FunctionComponent = () => {
             </Typography>
           ) }
           <FilledButton
-            disabled={ !isChecked && !isInitialRender }
             fullWidth={ true }
             onClick={ handleNavigate }
             sx={ { mt: 1 } }
