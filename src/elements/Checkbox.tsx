@@ -23,7 +23,7 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (
       icon={
         <Stack
           sx={ {
-            border: `2px solid ${theme.colors.grey500}`,
+            border: `2px solid ${theme.colors.grey400}`,
             borderRadius: "2px",
             height: "20px",
             width: "20px",
