@@ -27,6 +27,7 @@ import {
   setSelectedBundleId,
 } from "modules/sale";
 import { selectWallet } from "modules/wallet";
+import ReadMore from "components/ReadMore";
 
 const Landing: FunctionComponent = () => {
   const theme = useTheme();
@@ -84,22 +85,33 @@ const Landing: FunctionComponent = () => {
   return (
     <Box display="flex" flexDirection="column">
       <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 620] } }>
-        <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
-          { projectDetails.description }
-        </Typography>
-        <Typography variant="subtitle1" sx={ { mt: 2, whiteSpace: "pre-wrap" } }>
-          Explore the legal side of how Stream Tokens and royalties work in this
-          sample sale prior to purchasing&nbsp;
-          <a
-            target="_blank"
-            href={ projectDetails.royaltyAgreement }
-            rel="noreferrer noopener"
-            style={ { color: theme.colors.grey100 } }
-          >
-            here
-          </a>
-          .
-        </Typography>
+        <ReadMore
+          abbreviatedContent={
+            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+              { projectDetails.description
+                .split("\n\n")
+                .slice(0, 2)
+                .join("\n\n") }
+            </Typography>
+          }
+          expandedContent={
+            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+              { projectDetails.description }
+              { "\n\n" }
+              Explore the legal side of how Stream Tokens and royalties work in
+              this sample sale prior to purchasing{ " " }
+              <a
+                target="_blank"
+                href={ projectDetails.royaltyAgreement }
+                rel="noreferrer noopener"
+                style={ { color: theme.colors.grey100 } }
+              >
+                here
+              </a>
+              .
+            </Typography>
+          }
+        />
       </Box>
 
       <Stack
