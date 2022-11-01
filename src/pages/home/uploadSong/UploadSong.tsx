@@ -6,7 +6,7 @@ import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
 import {
   UploadSongFormValues,
-  selectIsLoading,
+  selectSongIsLoading,
   uploadSong,
 } from "modules/song";
 import {
@@ -23,7 +23,7 @@ const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
-  const isLoading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectSongIsLoading);
 
   const initialValues: UploadSongFormValues = {
     image: undefined,

@@ -4,6 +4,6 @@ export const selectSongs = (state: RootState): RootState["song"]["songs"] => {
   return state.song.songs;
 };
 
-export const selectIsLoading = (state: RootState): boolean => {
+export const selectSongIsLoading = (state: RootState): boolean => {
   return state.song.isLoading;
 };

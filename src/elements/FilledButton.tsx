@@ -24,7 +24,7 @@ const FilledButton: FunctionComponent<FilledButtonProps> = ({
   children,
   type,
   isLoading = false,
-  backgroundColor = theme.gradients.artist,
+  backgroundColor = theme.gradients.music,
   fontSize = theme.button.fontSize,
   fontWeight = theme.button.fontWeight,
   disabled,
