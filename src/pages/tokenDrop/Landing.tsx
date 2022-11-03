@@ -14,7 +14,7 @@ import PlayIcon from "assets/images/PlayIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import { useNavigate } from "react-router-dom";
 import StopIcon from "assets/images/StopIcon";
-import { DisplayText, SectionHeading } from "components";
+import { DisplayText, ReadMore, SectionHeading } from "components";
 import { Howl } from "howler";
 import { projectDetails } from "buildParams";
 import poolPmIcon from "assets/images/pool-pm-icon.png";
@@ -92,22 +92,33 @@ const Landing: FunctionComponent = () => {
   return (
     <Box display="flex" flexDirection="column">
       <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 620] } }>
-        <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
-          { projectDetails.description }
-        </Typography>
-        <Typography variant="subtitle1" sx={ { mt: 2, whiteSpace: "pre-wrap" } }>
-          Explore the legal side of how Stream Tokens and royalties work in this
-          sample sale prior to purchasing&nbsp;
-          <a
-            target="_blank"
-            href={ projectDetails.royaltyAgreement }
-            rel="noreferrer noopener"
-            style={ { color: theme.colors.grey100 } }
-          >
-            here
-          </a>
-          .
-        </Typography>
+        <ReadMore
+          abbreviatedContent={
+            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+              { projectDetails.description
+                .split("\n\n")
+                .slice(0, 2)
+                .join("\n\n") }
+            </Typography>
+          }
+          expandedContent={
+            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+              { projectDetails.description }
+              { "\n\n" }
+              Explore the legal side of how Stream Tokens and royalties work in
+              this sample sale prior to purchasing{ " " }
+              <a
+                target="_blank"
+                href={ projectDetails.royaltyAgreement }
+                rel="noreferrer noopener"
+                style={ { color: theme.colors.grey100 } }
+              >
+                here
+              </a>
+              .
+            </Typography>
+          }
+        />
       </Box>
 
       <Stack
