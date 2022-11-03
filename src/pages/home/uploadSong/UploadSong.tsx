@@ -4,7 +4,11 @@ import { FilledButton, HorizontalLine, Typography } from "elements";
 import { Box, Container, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
-import { UploadSongFormValues, uploadSong } from "modules/song";
+import {
+  UploadSongFormValues,
+  selectSongIsLoading,
+  uploadSong,
+} from "modules/song";
 import {
   DropdownSelectField,
   TextAreaField,
@@ -19,6 +23,7 @@ const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
+  const isLoading = useSelector(selectSongIsLoading);
 
   const initialValues: UploadSongFormValues = {
     image: undefined,
@@ -153,9 +158,11 @@ const UploadSong: FunctionComponent = () => {
                 <Box mt={ 5 }>
                   <FilledButton
                     type="submit"
+                    isLoading={ isLoading }
                     sx={ {
                       maxWidth: ["340px", "340px", null],
-                      width: "100%",
+                      minWidth: "100px",
+                      minHeight: "44px",
                     } }
                   >
                     Upload

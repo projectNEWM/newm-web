@@ -3,6 +3,7 @@ import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
+import { setSongIsLoading } from "./slice";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -13,67 +14,77 @@ import { extendedApi as songApi } from "./api";
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongFormValues, thunkApi) => {
-    // optional upload params to format or crop image could go here
-    const uploadParams = {};
+    try {
+      // set loading state to show loading indicator
+      thunkApi.dispatch(setSongIsLoading(true));
 
-    const signatureResp = await thunkApi.dispatch(
-      songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
-    );
+      // optional upload params to format or crop image could go here
+      const uploadParams = {};
 
-    if ("error" in signatureResp || !("data" in signatureResp)) return;
+      const signatureResp = await thunkApi.dispatch(
+        songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+      );
 
-    const { apiKey, signature, timestamp } = signatureResp.data;
+      if ("error" in signatureResp || !("data" in signatureResp)) return;
 
-    const imageBinaryStr = await getFileBinary(body.image);
+      const { apiKey, signature, timestamp } = signatureResp.data;
 
-    // upload image to cloudinary
-    const cloudinaryResp = await thunkApi.dispatch(
-      cloudinaryApi.endpoints.uploadImage.initiate({
-        api_key: apiKey,
-        file: imageBinaryStr,
-        signature,
-        timestamp,
-        ...uploadParams,
-      })
-    );
+      const imageBinaryStr = await getFileBinary(body.image);
 
-    if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
+      // upload image to cloudinary
+      const cloudinaryResp = await thunkApi.dispatch(
+        cloudinaryApi.endpoints.uploadImage.initiate({
+          api_key: apiKey,
+          file: imageBinaryStr,
+          signature,
+          timestamp,
+          ...uploadParams,
+        })
+      );
 
-    // create the song in the NEWM API
-    const songResp = await thunkApi.dispatch(
-      songApi.endpoints.uploadSong.initiate({
-        title: body.title,
-        genre: body.genre,
-        description: body.description,
-        coverArtUrl: cloudinaryResp.data.secure_url,
-      })
-    );
+      if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
-    if ("error" in songResp) return;
+      // create the song in the NEWM API
+      const songResp = await thunkApi.dispatch(
+        songApi.endpoints.uploadSong.initiate({
+          title: body.title,
+          genre: body.genre,
+          description: body.description,
+          coverArtUrl: cloudinaryResp.data.secure_url,
+        })
+      );
 
-    const { songId } = songResp.data;
+      if ("error" in songResp) return;
 
-    // get signed upload url for AWS
-    const audioUploadUrlResp = await thunkApi.dispatch(
-      songApi.endpoints.getAudioUploadUrl.initiate({
-        songId,
-        fileName: body.audio.name,
-      })
-    );
+      const { songId } = songResp.data;
 
-    if ("error" in audioUploadUrlResp) return;
+      // get signed upload url for AWS
+      const audioUploadUrlResp = await thunkApi.dispatch(
+        songApi.endpoints.getAudioUploadUrl.initiate({
+          songId,
+          fileName: body.audio.name,
+        })
+      );
 
-    const { uploadUrl } = audioUploadUrlResp.data;
-    const audioBinaryStr = await getFileBinary(body.audio);
+      if ("error" in audioUploadUrlResp) return;
 
-    // upload audio to AWS, song audioUrl will be updated after it's transcoded
-    await fetch(uploadUrl, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ file: audioBinaryStr }),
-    });
+      const { uploadUrl } = audioUploadUrlResp.data;
+      const audioBinaryStr = await getFileBinary(body.audio);
 
-    // fetch user's songs
-    thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+      // upload audio to AWS, song audioUrl will be updated after it's transcoded
+      await fetch(uploadUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ file: audioBinaryStr }),
+      });
+
+      // fetch user's songs
+      thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    } finally {
+      // done fetching songs
+      thunkApi.dispatch(setSongIsLoading(false));
+    }
   }
 );
