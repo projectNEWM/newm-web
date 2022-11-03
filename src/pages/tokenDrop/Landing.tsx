@@ -45,7 +45,7 @@ const Landing: FunctionComponent = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [wasSubmitButtonClicked, setWasSubmitButtonClicked] = useState(false);
 
   const audio = useMemo(
     () =>
@@ -63,10 +63,7 @@ const Landing: FunctionComponent = () => {
   };
 
   const handleNavigate = () => {
-    if (isInitialRender) {
-      setIsInitialRender(false);
-      return;
-    }
+    setWasSubmitButtonClicked(true);
 
     if (!isChecked) return;
 
@@ -342,7 +339,7 @@ const Landing: FunctionComponent = () => {
               .
             </Typography>
           </Stack>
-          { !isChecked && !isInitialRender && (
+          { !isChecked && wasSubmitButtonClicked && (
             <Typography variant="subtitle2" sx={ { color: theme.colors.red } }>
               Please confirm you have read the Terms of Service.
             </Typography>
