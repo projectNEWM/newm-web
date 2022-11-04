@@ -88,18 +88,15 @@ const Landing: FunctionComponent = () => {
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 620] } }>
+      <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 640] } }>
         <ReadMore
-          abbreviatedContent={
-            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
-              { projectDetails.description
-                .split("\n\n")
-                .slice(0, 2)
-                .join("\n\n") }
-            </Typography>
-          }
+          typographyVariant="subtitle1"
+          abbreviatedContent={ projectDetails.description
+            .split("\n\n")
+            .slice(0, 2)
+            .join("\n\n") }
           expandedContent={
-            <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+            <>
               { projectDetails.description }
               { "\n\n" }
               Explore the legal side of how Stream Tokens and royalties work in
@@ -113,7 +110,7 @@ const Landing: FunctionComponent = () => {
                 here
               </a>
               .
-            </Typography>
+            </>
           }
         />
       </Box>

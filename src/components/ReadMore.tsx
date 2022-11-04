@@ -1,10 +1,21 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { Typography } from "elements";
 import { FunctionComponent, ReactNode, useState } from "react";
 
 interface ReadMoreProps {
-  readonly abbreviatedContent: ReactNode;
-  readonly expandedContent: ReactNode;
+  readonly abbreviatedContent: string | ReactNode;
+  readonly expandedContent: string | ReactNode;
+  readonly typographyVariant?:
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "body1"
+    | "body2"
+    | "subtitle1"
+    | "subtitle2";
 }
 
 /**
@@ -13,9 +24,8 @@ interface ReadMoreProps {
 const ReadMore: FunctionComponent<ReadMoreProps> = ({
   abbreviatedContent,
   expandedContent,
+  typographyVariant = "body1",
 }) => {
-  const theme = useTheme();
-
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -25,29 +35,25 @@ const ReadMore: FunctionComponent<ReadMoreProps> = ({
         flexDirection: "column",
       } }
     >
-      { isExpanded ? expandedContent : abbreviatedContent }
-
-      { !isExpanded && (
-        <Box
-          sx={ {
-            display: "flex",
-            flexShrink: 1,
-            marginTop: 1,
-            paddingX: 1,
-            alignSelf: "flex-start",
-            backgroundColor: theme.colors.grey400,
-            cursor: "pointer",
-          } }
-        >
-          <Typography
-            variant="subtitle2"
-            color="white"
+      <Typography variant={ typographyVariant } sx={ { whiteSpace: "pre-wrap" } }>
+        { isExpanded ? expandedContent : abbreviatedContent }{ " " }
+        { !isExpanded && (
+          <button
             onClick={ () => setIsExpanded(true) }
+            style={ {
+              color: "white",
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+              background: "none",
+              borderWidth: 0,
+              cursor: "pointer",
+              textDecoration: "underline",
+            } }
           >
             Read more
-          </Typography>
-        </Box>
-      ) }
+          </button>
+        ) }
+      </Typography>
     </Box>
   );
 };
