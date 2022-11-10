@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
-import { FilledButton, Typography } from "elements";
+import { Button, Typography } from "elements";
 import * as Yup from "yup";
 import theme from "theme";
 import TextInputField from "../form/TextInputField";
@@ -72,7 +72,9 @@ export const Example = () => {
               <TextInputField name="email" placeholder="Email" />
             </Box>
 
-            <FilledButton type="submit">Submit</FilledButton>
+            <Button width="compact" type="submit">
+              Submit
+            </Button>
           </Form>
         ) }
       </Formik>

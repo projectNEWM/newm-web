@@ -3,7 +3,6 @@ export * from "./Typography";
 export { default as Button } from "./Button";
 export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelect } from "./DropdownSelect";
-export { default as FilledButton } from "./FilledButton";
 export { default as MultiSelect } from "./MultiSelect";
 export { default as OutlinedButton } from "./OutlinedButton";
 export * from "./DropdownSelect";

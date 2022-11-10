@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilledButton, HorizontalLine, Typography } from "elements";
+import { Button, HorizontalLine, Typography } from "elements";
 import {
   DropdownSelectField,
   PasswordInputField,
@@ -9,13 +9,15 @@ import {
 } from "components";
 import { Container, Stack } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
-import { commonYupValidation } from "common";
+import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
 import { selectSession, extendedApi as sessionApi } from "modules/session";
 import * as Yup from "yup";
+import theme from "theme";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const windowWidth = useWindowDimensions()?.width;
   const { roles, genres } = useSelector(selectContent);
   const {
     profile: {
@@ -218,13 +220,17 @@ const Profile: FunctionComponent = () => {
                   showEndAdornment={ showEndAdornment }
                 />
               </Stack>
-              <FilledButton
+              <Button
                 disabled={ !isValid }
-                sx={ { maxWidth: ["340px", "340px", null], width: "100%" } }
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
                 type="submit"
               >
                 Save
-              </FilledButton>
+              </Button>
             </Form>
           );
         } }

@@ -3,7 +3,7 @@ import { supportedWallets, walletInfo } from "modules/wallet";
 import { ButtonProps, DialogProps, Stack, useTheme } from "@mui/material";
 import { SelectWalletItem } from "components";
 import { browserName } from "react-device-detect";
-import { Dialog, FilledButton, OutlinedButton, Typography } from "elements";
+import { Button, Dialog, OutlinedButton, Typography } from "elements";
 import { FormikValues, useFormikContext } from "formik";
 
 interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
@@ -159,7 +159,13 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
               { ...buttonProps }
             />
           ) : (
-            <FilledButton key={ `modal-button-${idx}` } { ...buttonProps } />
+            <Button
+              width="compact"
+              key={ `modal-button-${idx}` }
+              onClick={ buttonProps.onClick }
+            >
+              { buttonProps.children }
+            </Button>
           );
         }) }
       </Stack>

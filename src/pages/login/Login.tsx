@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import {
-  FilledButton,
+  Button,
   HorizontalLine,
   Link,
   OutlinedButton,
@@ -91,13 +91,13 @@ const Login: FunctionComponent = () => {
                 showEndAdornment={ !!password }
               />
 
-              <FilledButton
+              <Button
                 disabled={ !isValid || isSubmitting }
                 style={ { marginBottom: "20px" } }
                 type="submit"
               >
                 Log In
-              </FilledButton>
+              </Button>
               <OutlinedButton onClick={ handleForgotPassword }>
                 Forgot password?
               </OutlinedButton>

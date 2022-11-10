@@ -1,13 +1,14 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Box } from "@mui/material";
-import { FilledButton, Typography } from "elements";
+import { Button, Typography } from "elements";
 import { useFormikContext } from "formik";
 import {
   FilteredTagsField,
   GradientTextInputField,
   ResponsiveNEWMLogo,
 } from "components";
-import { useUserDevice } from "common";
+import { useUserDevice, useWindowDimensions } from "common";
+import theme from "theme";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
@@ -27,6 +28,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
   const { isMobileOrTablet } = useUserDevice();
+  const windowWidth = useWindowDimensions()?.width;
 
   /**
    * Validate the field on mount (setting the blur status to false validates
@@ -89,13 +91,17 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
             } }
           >
             <Box mb={ 1 } width="100%">
-              <FilledButton
+              <Button
                 disabled={ !isValid }
-                sx={ { maxWidth: ["352px", "352px", null], width: "100%" } }
                 type="submit"
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
               >
                 Next
-              </FilledButton>
+              </Button>
             </Box>
 
             <Typography

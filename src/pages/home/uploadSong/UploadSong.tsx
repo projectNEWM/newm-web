@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FilledButton, HorizontalLine, Typography } from "elements";
+import { Button, HorizontalLine, Typography } from "elements";
 import { Box, Container, Stack } from "@mui/material";
 import { Form, Formik } from "formik";
 import { selectContent } from "modules/content";
@@ -17,6 +17,8 @@ import {
   UploadSongField,
 } from "components";
 import * as Yup from "yup";
+import { useWindowDimensions } from "common";
+import theme from "theme";
 import MintSong from "./MintSong";
 
 const UploadSong: FunctionComponent = () => {
@@ -24,6 +26,7 @@ const UploadSong: FunctionComponent = () => {
 
   const { genres } = useSelector(selectContent);
   const isLoading = useSelector(selectSongIsLoading);
+  const windowWidth = useWindowDimensions()?.width;
 
   const initialValues: UploadSongFormValues = {
     image: undefined,
@@ -156,17 +159,17 @@ const UploadSong: FunctionComponent = () => {
                 </Box>
 
                 <Box mt={ 5 }>
-                  <FilledButton
+                  <Button
                     type="submit"
                     isLoading={ isLoading }
-                    sx={ {
-                      maxWidth: ["340px", "340px", null],
-                      minWidth: "100px",
-                      minHeight: "44px",
-                    } }
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.md
+                        ? "compact"
+                        : "default"
+                    }
                   >
                     Upload
-                  </FilledButton>
+                  </Button>
                 </Box>
               </Stack>
             </Form>
