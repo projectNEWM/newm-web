@@ -31,6 +31,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   isLoading = false,
   variant = "primary",
   width = "default",
+  sx,
   ...rest
 }) => {
   const widthStyles = {
@@ -98,6 +99,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         },
         ...widthStyles[width],
         ...variantStyles[variant],
+        ...sx,
       } }
       { ...rest }
     >
