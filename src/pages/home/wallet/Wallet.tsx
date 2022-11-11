@@ -26,11 +26,10 @@ const Wallet: FunctionComponent = () => {
         <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
           WALLET
         </Typography>
-        <Box sx={ { mr: [0, 4.75], mb: 5 } }>
-          <Button width="compact" color="crypto">
-            Connect Wallet
-          </Button>
-        </Box>
+
+        <Button sx={ { mr: [0, 4.75], mb: 5 } } width="compact" color="crypto">
+          Connect Wallet
+        </Button>
       </Box>
       <UnclaimedRoyalties unclaimedRoyalties={ 5.35 } />
       <TabbedContainer

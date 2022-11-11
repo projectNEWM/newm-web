@@ -35,14 +35,12 @@ const Complete: FunctionComponent = () => {
         </Box>
       </div>
       <Box alignItems="center" display="flex" flexDirection="column" mb={ 4 }>
-        <Box
-          mb={ [null, null, 2] }
-          mt={ [2, 2, null] }
-          order={ ["2", "2", "0"] }
-          width="100%"
+        <Button
+          sx={ { mb: [null, null, 2], mt: [2, 2, null], order: ["2", "2", "0"] } }
+          type="submit"
         >
-          <Button type="submit">Enter NEWM</Button>
-        </Box>
+          Enter NEWM
+        </Button>
 
         <Typography color="grey200" fontWeight={ 500 }>
           By proceeding forward you agree to&nbsp;

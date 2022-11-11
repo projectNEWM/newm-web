@@ -158,19 +158,18 @@ const UploadSong: FunctionComponent = () => {
                   <HorizontalLine />
                 </Box>
 
-                <Box mt={ 5 }>
-                  <Button
-                    type="submit"
-                    isLoading={ isLoading }
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.md
-                        ? "compact"
-                        : "default"
-                    }
-                  >
-                    Upload
-                  </Button>
-                </Box>
+                <Button
+                  sx={ { mt: 5 } }
+                  type="submit"
+                  isLoading={ isLoading }
+                  width={
+                    windowWidth && windowWidth > theme.breakpoints.values.md
+                      ? "compact"
+                      : "default"
+                  }
+                >
+                  Upload
+                </Button>
               </Stack>
             </Form>
           ) }

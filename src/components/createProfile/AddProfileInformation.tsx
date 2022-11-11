@@ -90,19 +90,18 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
               mt: 2,
             } }
           >
-            <Box mb={ 1 } width="100%">
-              <Button
-                disabled={ !isValid }
-                type="submit"
-                width={
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "compact"
-                    : "default"
-                }
-              >
-                Next
-              </Button>
-            </Box>
+            <Button
+              disabled={ !isValid }
+              sx={ { mb: 1 } }
+              type="submit"
+              width={
+                windowWidth && windowWidth > theme.breakpoints.values.md
+                  ? "compact"
+                  : "default"
+              }
+            >
+              Next
+            </Button>
 
             <Typography
               variant="h5"
