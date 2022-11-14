@@ -1,9 +1,9 @@
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { supportedWallets, walletInfo } from "modules/wallet";
-import { ButtonProps, DialogProps, Stack, useTheme } from "@mui/material";
+import { DialogProps, Stack, useTheme } from "@mui/material";
 import { SelectWalletItem } from "components";
 import { browserName } from "react-device-detect";
-import { Button, Dialog, OutlinedButton, Typography } from "elements";
+import { Button, ButtonProps, Dialog, Typography } from "elements";
 import { FormikValues, useFormikContext } from "formik";
 
 interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
@@ -15,15 +15,11 @@ interface MintSongModalProps extends Omit<DialogProps, "onClose"> {
   readonly onConfirm: (walletName: string) => void;
 }
 
-export interface Button extends ButtonProps {
-  readonly buttonType: "outlined" | "filled";
-}
-
 interface DialogContent {
   readonly title: string;
   readonly subtitle: string;
   readonly wallets: ReadonlyArray<string>;
-  readonly buttons: ReadonlyArray<Button>;
+  readonly buttons: ReadonlyArray<ButtonProps>;
 }
 
 const MintSongModal: FunctionComponent<MintSongModalProps> = ({
@@ -53,12 +49,12 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         buttons: [
           {
             children: "Never mind",
-            buttonType: "outlined",
+            variant: "outlined",
             onClick: dialogProps.onClose,
           },
           {
             children: "Confirm",
-            buttonType: "filled",
+            variant: "primary",
             onClick: onCancel,
           },
         ],
@@ -73,7 +69,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         buttons: [
           {
             children: "Cancel",
-            buttonType: "outlined",
+            variant: "outlined",
             onClick: dialogProps.onClose,
           },
         ],
@@ -90,7 +86,7 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
       buttons: [
         {
           children: "Cancel",
-          buttonType: "outlined",
+          variant: "outlined",
           onClick: dialogProps.onClose,
         },
       ],
@@ -151,21 +147,13 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
           backgroundColor: theme.colors.grey600,
         } }
       >
-        { modalContent.buttons.map(({ buttonType, ...buttonProps }, idx) => {
-          return buttonType === "outlined" ? (
-            <OutlinedButton
-              key={ `modal-button-${idx}` }
-              backgroundColor={ theme.colors.grey600 }
-              { ...buttonProps }
-            />
-          ) : (
+        { modalContent.buttons.map(({ ...buttonProps }, idx) => {
+          return (
             <Button
               width="compact"
               key={ `modal-button-${idx}` }
-              onClick={ buttonProps.onClick }
-            >
-              { buttonProps.children }
-            </Button>
+              { ...buttonProps }
+            />
           );
         }) }
       </Stack>

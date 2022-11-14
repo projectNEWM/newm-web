@@ -1,6 +1,7 @@
 export { default as Typography } from "./Typography";
 export * from "./Typography";
 export { default as Button } from "./Button";
+export * from "./Button";
 export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelect } from "./DropdownSelect";
 export { default as MultiSelect } from "./MultiSelect";

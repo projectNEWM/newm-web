@@ -1,11 +1,5 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import {
-  Button,
-  HorizontalLine,
-  Link,
-  OutlinedButton,
-  Typography,
-} from "elements";
+import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
@@ -98,9 +92,9 @@ const Login: FunctionComponent = () => {
               >
                 Log In
               </Button>
-              <OutlinedButton onClick={ handleForgotPassword }>
+              <Button variant="outlined" onClick={ handleForgotPassword }>
                 Forgot password?
-              </OutlinedButton>
+              </Button>
               <Link to="/sign-up" style={ { marginBottom: "8px" } }>
                 Create new account
               </Link>

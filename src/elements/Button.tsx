@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import theme from "theme";
 
-interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
+export interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly color?:
     | "company"
     | "crypto"

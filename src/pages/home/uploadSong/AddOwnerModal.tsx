@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box, DialogProps, Stack, Typography, useTheme } from "@mui/material";
-import { Button, Dialog, HorizontalLine, OutlinedButton } from "elements";
+import { Button, Dialog, HorizontalLine } from "elements";
 import { SwitchField, TextInputField } from "components";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
@@ -95,7 +95,9 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
             columnGap: 4,
           } }
         >
-          <OutlinedButton onClick={ onClose }>Cancel</OutlinedButton>
+          <Button variant="outlined" width="compact" onClick={ onClose }>
+            Cancel
+          </Button>
           <Button width="compact">Add</Button>
         </Stack>
       </Box>
