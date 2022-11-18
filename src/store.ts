@@ -4,11 +4,10 @@ import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
+import { enableReduxLogging, isProd } from "buildParams";
 import { uiReducer } from "modules/ui";
 import { walletReducer } from "modules/wallet";
 import logger from "redux-logger";
-
-const isProduction = process.env.NODE_ENV === "production";
 
 export const reducer = {
   content: contentReducer,
@@ -22,15 +21,10 @@ export const reducer = {
 };
 
 const store = configureStore({
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
     const baseMiddleware = [...getDefaultMiddleware(), newmApi.middleware];
-
-    if (isProduction) {
-      return baseMiddleware;
-    }
-
-    return baseMiddleware.concat(logger);
+    return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
   reducer,
 });
