@@ -41,7 +41,7 @@ const Owners: FunctionComponent = () => {
       return (
         <>
           <SearchBox
-            placeholder="Search by owner or song"
+            placeholder="Search by collaborator or song"
             query={ query }
             onSearch={ handleSearch }
           />
@@ -64,7 +64,7 @@ const Owners: FunctionComponent = () => {
       return (
         <>
           <SearchBox
-            placeholder="Search by owner or song"
+            placeholder="Search by collaborator or song"
             query={ query }
             onSearch={ handleSearch }
           />
@@ -92,7 +92,7 @@ const Owners: FunctionComponent = () => {
       } }
     >
       <Typography sx={ { pb: 4 } } variant="h3">
-        OWNERS
+        COLLABORATORS
       </Typography>
       { renderContent(isLoading, isSuccess, ownersData) }
     </Container>

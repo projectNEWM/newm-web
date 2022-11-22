@@ -73,7 +73,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <SideBarNavLink
             closeMenu={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
-            label="UPLOAD SONG"
+            label="UPLOAD A SONG"
             to="/home/upload-song"
           />
 
@@ -92,7 +92,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
-              label="OWNERS"
+              label="COLLABORATORS"
               to="/home/owners"
             />
           </Stack>
@@ -125,7 +125,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
-              label="YOUR PROFILE"
+              label="PROFILE"
               to="/home/profile"
             />
           </Box>

@@ -16,10 +16,11 @@ const NoOwnersYet: FunctionComponent = () => {
       <Owner />
 
       <Typography fontWeight="bold" fontSize="16px">
-        There are no owners yet.
+        There are no collaborators yet.
       </Typography>
       <Typography fontWeight="regular" fontSize="14x">
-        As soon as someone owns part of your songs, they’ll be listed here.
+        After minting, the co-creators and co-owners of your songs will appear
+        here.
       </Typography>
     </Box>
   );

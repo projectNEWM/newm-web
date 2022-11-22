@@ -97,7 +97,7 @@ const Profile: FunctionComponent = () => {
       } }
     >
       <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
-        YOUR PROFILE
+        PROFILE
       </Typography>
       { pictureUrl && (
         <ProfileImage
