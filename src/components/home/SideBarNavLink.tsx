@@ -3,7 +3,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Stack } from "@mui/material";
 import theme from "theme";
 
-interface SideBarButtonProps {
+interface SideBarNavLinkProps {
   readonly label: string;
   readonly icon: JSX.Element;
   readonly to: string;
@@ -12,7 +12,7 @@ interface SideBarButtonProps {
 
 const activeBackground = "rgba(255, 255, 255, 0.1)";
 
-const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
+const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   label,
   icon,
   to,
@@ -35,12 +35,12 @@ const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
         direction="row"
         spacing={ 2.5 }
         sx={ {
-          fontSize: theme.button.fontSize,
-          lineHeight: theme.button.lineHeight,
-          fontWeight: theme.button.fontWeight,
+          fontSize: "12px",
+          lineHeight: "15px",
+          fontWeight: 600,
           font: theme.typography.button.font,
           alignItems: "center",
-          borderRadius: "7px",
+          borderRadius: "6px",
           padding: "12px 20px",
           color: "white",
           background: match ? activeBackground : "transparent",
@@ -62,4 +62,4 @@ const SideBarButton: FunctionComponent<SideBarButtonProps> = ({
   );
 };
 
-export default SideBarButton;
+export default SideBarNavLink;
