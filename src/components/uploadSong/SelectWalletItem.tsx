@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { TransparentButton } from "elements";
+import { Button } from "elements";
 import { FunctionComponent } from "react";
 
 interface SelectWalletItemProps {
@@ -14,9 +14,12 @@ const SelectWalletItem: FunctionComponent<SelectWalletItemProps> = ({
   onClick,
 }) => {
   return (
-    <TransparentButton
+    <Button
       key={ name }
       onClick={ onClick }
+      variant="outlined"
+      width="full"
+      color="white"
       sx={ { opacity: 1, justifyContent: "flex-start" } }
     >
       <Stack
@@ -28,7 +31,7 @@ const SelectWalletItem: FunctionComponent<SelectWalletItemProps> = ({
         <img alt={ `${name} logo` } src={ logo } width={ 30 } height={ 30 } />
         <span>{ name }</span>
       </Stack>
-    </TransparentButton>
+    </Button>
   );
 };
 

@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { HorizontalLine, TransparentButton, Typography } from "elements";
+import { Button, HorizontalLine, Typography } from "elements";
 import { IconButton, Stack, useTheme } from "@mui/material";
 import { ProfileImage, TextInputField } from "components";
 import CloseIcon from "@mui/icons-material/Close";
@@ -135,18 +135,19 @@ const AddOwner: FunctionComponent = () => {
 
       <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
 
-      <TransparentButton
+      <Button
+        variant="outlined"
+        width="full"
+        color="white"
         sx={ {
-          border: `2px dashed ${theme.colors.grey400}`,
           marginTop: theme.spacing(4),
-          width: "100%",
         } }
         onClick={ () => {
           setIsModalOpen(true);
         } }
       >
         Add new
-      </TransparentButton>
+      </Button>
 
       <AddOwnerModal
         open={ isModalOpen }

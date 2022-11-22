@@ -114,7 +114,14 @@ const MintSongModal: FunctionComponent<MintSongModalProps> = ({
         </Stack>
 
         { modalContent.wallets.length > 0 && (
-          <Stack spacing={ 1 }>
+          <Stack
+            sx={ {
+              display: "grid",
+              gridTemplateColumns: [null, "repeat(2, 1fr)"],
+              columnGap: 2,
+              rowGap: 2,
+            } }
+          >
             { modalContent.wallets.map((id) => {
               const info = walletInfo[id];
               const targetUrl =
