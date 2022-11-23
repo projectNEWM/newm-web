@@ -10,8 +10,7 @@ import FacebookLoginHelper, {
   LoginResponse,
 } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "assets/images/FacebookIcon";
-import { IconButton } from "@mui/material";
-import theme from "theme";
+import { Button } from "elements";
 
 const FacebookLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -39,18 +38,17 @@ const FacebookLogin: FunctionComponent = () => {
       appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
       onSuccess={ handleFacebookLoginSuccess }
       render={ ({ onClick }) => (
-        <IconButton
+        <Button
           aria-label="facebook authorization"
           onClick={ onClick }
+          variant="outlined"
+          color="white"
           sx={ {
-            border: `2px solid ${theme.colors.white}`,
-            borderRadius: "4px",
-            height: "44px",
-            px: 5,
+            height: "42px",
           } }
         >
           <FacebookIcon />
-        </IconButton>
+        </Button>
       ) }
     />
   );

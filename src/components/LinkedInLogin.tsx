@@ -9,8 +9,7 @@ import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";
 import { useDispatch } from "react-redux";
 import LinkedInIcon from "assets/images/LinkedInIcon";
-import { IconButton } from "@mui/material";
-import theme from "theme";
+import { Button } from "elements";
 
 const LinkedInLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -32,18 +31,17 @@ const LinkedInLogin: FunctionComponent = () => {
   });
 
   return (
-    <IconButton
+    <Button
       aria-label="linkedin authorization"
       onClick={ linkedInLogin }
+      variant="outlined"
+      color="white"
       sx={ {
-        border: `2px solid ${theme.colors.white}`,
-        borderRadius: "4px",
-        height: "44px",
-        px: 4.5,
+        height: "42px",
       } }
     >
       <LinkedInIcon />
-    </IconButton>
+    </Button>
   );
 };
 

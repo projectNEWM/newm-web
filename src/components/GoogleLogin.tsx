@@ -12,8 +12,7 @@ import GoogleLoginHelper, {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 import GoogleIcon from "@mui/icons-material/Google";
-import { IconButton } from "@mui/material";
-import theme from "theme";
+import { Button } from "elements";
 
 const GoogleLogin: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -43,19 +42,18 @@ const GoogleLogin: FunctionComponent = () => {
     <GoogleLoginHelper
       clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID || "" }
       render={ (renderProps) => (
-        <IconButton
+        <Button
           aria-label="google authorization"
           disabled={ renderProps.disabled }
           onClick={ renderProps.onClick }
+          variant="outlined"
+          color="white"
           sx={ {
-            border: `2px solid ${theme.colors.white}`,
-            borderRadius: "4px",
-            height: "44px",
-            px: 4.25,
+            height: "42px",
           } }
         >
           <GoogleIcon style={ { fill: "white" } } />
-        </IconButton>
+        </Button>
       ) }
       onSuccess={ handleGoogleRespSuccess }
       redirectUri={ `${window.location.origin}${pathname}` }
