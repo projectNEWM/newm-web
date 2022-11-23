@@ -54,6 +54,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
             background: `${activeBackground}`,
           },
         } }
+        data-testid="navStyled"
       >
         { icon }
         <span>{ label }</span>
