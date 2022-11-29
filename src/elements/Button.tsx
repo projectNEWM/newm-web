@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import theme from "theme";
 
-interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
+export interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly color?:
     | "company"
     | "crypto"
@@ -31,6 +31,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   isLoading = false,
   variant = "primary",
   width = "default",
+  sx,
   ...rest
 }) => {
   const widthStyles = {
@@ -98,6 +99,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         },
         ...widthStyles[width],
         ...variantStyles[variant],
+        ...sx,
       } }
       { ...rest }
     >

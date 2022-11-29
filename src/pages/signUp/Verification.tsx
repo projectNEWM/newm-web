@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { FilledButton, GradientTypography, Link, Typography } from "elements";
+import { Button, GradientTypography, Link, Typography } from "elements";
 import { ResponsiveNEWMLogo, TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
@@ -59,9 +59,9 @@ const Verification: FunctionComponent = () => {
             placeholder="Verification Code"
             type="text"
           />
-          <FilledButton type="submit" disabled={ !isValid }>
+          <Button type="submit" disabled={ !isValid }>
             Enter
-          </FilledButton>
+          </Button>
         </Stack>
       </Box>
 

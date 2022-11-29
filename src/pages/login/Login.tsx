@@ -1,11 +1,5 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import {
-  FilledButton,
-  HorizontalLine,
-  Link,
-  OutlinedButton,
-  Typography,
-} from "elements";
+import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
@@ -91,16 +85,16 @@ const Login: FunctionComponent = () => {
                 showEndAdornment={ !!password }
               />
 
-              <FilledButton
+              <Button
                 disabled={ !isValid || isSubmitting }
                 style={ { marginBottom: "20px" } }
                 type="submit"
               >
                 Log In
-              </FilledButton>
-              <OutlinedButton onClick={ handleForgotPassword }>
+              </Button>
+              <Button variant="outlined" onClick={ handleForgotPassword }>
                 Forgot password?
-              </OutlinedButton>
+              </Button>
               <Link to="/sign-up" style={ { marginBottom: "8px" } }>
                 Create new account
               </Link>

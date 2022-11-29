@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box, useTheme } from "@mui/material";
-import { FilledButton, GradientTypography, Link, Typography } from "elements";
+import { Button, GradientTypography, Link, Typography } from "elements";
 import { ResponsiveNEWMLogo } from "components";
 
 const Complete: FunctionComponent = () => {
@@ -35,18 +35,12 @@ const Complete: FunctionComponent = () => {
         </Box>
       </div>
       <Box alignItems="center" display="flex" flexDirection="column" mb={ 4 }>
-        <FilledButton
-          sx={ {
-            marginBottom: [null, null, 2],
-            marginTop: [2, 2, null],
-            maxWidth: ["352px", "352px", "220px"],
-            order: ["2", "2", "0"],
-            width: "100%",
-          } }
+        <Button
+          sx={ { mb: [null, null, 2], mt: [2, 2, null], order: ["2", "2", "0"] } }
           type="submit"
         >
           Enter NEWM
-        </FilledButton>
+        </Button>
 
         <Typography color="grey200" fontWeight={ 500 }>
           By proceeding forward you agree to&nbsp;

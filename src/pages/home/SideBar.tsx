@@ -3,8 +3,8 @@ import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import {
   ProfileImage,
-  SideBarButton,
   SideBarHeader,
+  SideBarNavLink,
   TempAuthButton,
 } from "components";
 import { useSelector } from "react-redux";
@@ -70,7 +70,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Stack>
 
         <Box mt={ 4 } mb={ 3 } width="100%">
-          <SideBarButton
+          <SideBarNavLink
             closeMenu={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
             label="UPLOAD SONG"
@@ -82,14 +82,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
-            <SideBarButton
+            <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
               label="LIBRARY"
               to="/home/library"
             />
 
-            <SideBarButton
+            <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
               label="OWNERS"
@@ -102,14 +102,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
-            <SideBarButton
+            <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
 
-            <SideBarButton
+            <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <AnalyticsIcon /> }
               label="ANALYTICS"
@@ -122,7 +122,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Box>
 
           <Box mt={ 1.75 } sx={ { width: "100%" } }>
-            <SideBarButton
+            <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
               label="YOUR PROFILE"

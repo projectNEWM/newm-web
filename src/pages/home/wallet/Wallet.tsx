@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box, Container } from "@mui/material";
-import { FilledButton, Typography } from "elements";
-import theme from "theme";
+import { Button, Typography } from "elements";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
@@ -27,12 +26,10 @@ const Wallet: FunctionComponent = () => {
         <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
           WALLET
         </Typography>
-        <FilledButton
-          sx={ { mr: [0, 4.75], mb: 5 } }
-          backgroundColor={ theme.gradients.crypto }
-        >
+
+        <Button sx={ { mr: [0, 4.75], mb: 5 } } width="compact" color="crypto">
           Connect Wallet
-        </FilledButton>
+        </Button>
       </Box>
       <UnclaimedRoyalties unclaimedRoyalties={ 5.35 } />
       <TabbedContainer

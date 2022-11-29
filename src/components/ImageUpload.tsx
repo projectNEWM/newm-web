@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Image } from "cloudinary-react";
 import { PaperInput } from "components";
-import { FilledButton } from "elements";
+import { Button } from "elements";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -116,7 +116,7 @@ export const ImageUpload = ({
               >
                 OR
               </Typography>
-              <FilledButton sx={ { width: "164px" } }>{ buttonLabel }</FilledButton>
+              <Button width="compact">{ buttonLabel }</Button>
             </Box>
           ) : (
             ""

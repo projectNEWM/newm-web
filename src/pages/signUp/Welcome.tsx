@@ -1,5 +1,5 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { FilledButton, Typography } from "elements";
+import { Button, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
 import { FormikValues, useFormikContext } from "formik";
@@ -61,9 +61,9 @@ const SignUp: FunctionComponent = () => {
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }
         />
-        <FilledButton disabled={ !isValid } type="submit">
+        <Button disabled={ !isValid } type="submit">
           Enter
-        </FilledButton>
+        </Button>
       </Stack>
 
       <Typography align="center" mb={ 2 }>

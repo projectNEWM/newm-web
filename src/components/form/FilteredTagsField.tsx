@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import { Field, FieldProps } from "formik";
-import { OutlinedButton } from "elements";
+import { Button } from "elements";
 
 interface FilteredTagsFieldProps {
   readonly name: string;
@@ -23,11 +23,15 @@ const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
       return (
         <Box display="flex" flexWrap="wrap" justifyContent="center">
           { filteredTags.map((tag) => (
-            <Box key={ tag } m={ 1 }>
-              <OutlinedButton onClick={ () => form.handleChange(name)(tag) }>
-                { tag }
-              </OutlinedButton>
-            </Box>
+            <Button
+              key={ tag }
+              sx={ { m: 1 } }
+              variant="outlined"
+              width="compact"
+              onClick={ () => form.handleChange(name)(tag) }
+            >
+              { tag }
+            </Button>
           )) }
         </Box>
       );
