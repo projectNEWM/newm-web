@@ -2,10 +2,10 @@ import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import {
+  LogoutButton,
   ProfileImage,
   SideBarHeader,
   SideBarNavLink,
-  TempAuthButton,
 } from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
@@ -78,7 +78,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           />
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>YOUR CAREER</SideBarHeader>
+            <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
@@ -98,7 +98,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Stack>
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>YOUR PERFORMANCE</SideBarHeader>
+            <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
@@ -118,17 +118,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Stack>
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>GENERAL</SideBarHeader>
+            <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Box mt={ 1.75 } sx={ { width: "100%" } }>
+          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               closeMenu={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
               label="PROFILE"
               to="/home/profile"
             />
-          </Box>
+
+            <LogoutButton />
+          </Stack>
         </Box>
       </Box>
 
@@ -141,7 +143,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         width="100%"
       >
         <NewmLogoSmInverse />
-        <TempAuthButton />
       </Box>
     </Box>
   );
