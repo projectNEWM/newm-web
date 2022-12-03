@@ -59,7 +59,7 @@ const UploadSong: FunctionComponent = () => {
       } }
     >
       <Typography variant="h3" fontWeight={ 800 }>
-        UPLOAD SONG
+        UPLOAD A SONG
       </Typography>
 
       <Box pt={ 5 }>

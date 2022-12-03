@@ -74,10 +74,10 @@ export default function OwnersTable({
           <TableHead>
             <TableRow>
               <StyledTableCellHeader>
-                <Typography>OWNER</Typography>
+                <Typography>COLLABORATORS</Typography>
               </StyledTableCellHeader>
               <StyledTableCellHeader>
-                <Typography>SONG</Typography>
+                <Typography>COLLABORATIONS</Typography>
               </StyledTableCellHeader>
               <StyledTableCellHeader
                 sx={ {
@@ -153,7 +153,7 @@ export default function OwnersTable({
               lastRowOnPage={ lastRowOnPage }
               handlePageChange={ handlePageChange }
               colSpan={ 3 }
-              rows="owners"
+              rows="collaborators"
               cellStyles={ { paddingTop: "12px" } }
             />
           ) : null }

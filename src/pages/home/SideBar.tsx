@@ -2,10 +2,10 @@ import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import {
+  LogoutButton,
   ProfileImage,
   SideBarHeader,
   SideBarNavLink,
-  TempAuthButton,
 } from "components";
 import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
@@ -54,6 +54,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <MenuOpenIcon sx={ { color: "white" } } />
         </IconButton>
       ) }
+
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
           { !!profile.pictureUrl && (
@@ -71,46 +72,46 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarNavLink
-            closeMenu={ () => props.setMobileOpen(false) }
+            onClick={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
-            label="UPLOAD SONG"
+            label="UPLOAD A SONG"
             to="/home/upload-song"
           />
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>YOUR CAREER</SideBarHeader>
+            <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
-              label="OWNERS"
+              label="COLLABORATORS"
               to="/home/owners"
             />
           </Stack>
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>YOUR PERFORMANCE</SideBarHeader>
+            <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
 
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <AnalyticsIcon /> }
               label="ANALYTICS"
               to="/home/analytics"
@@ -118,17 +119,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Stack>
 
           <Box mt={ 2 } ml={ 2.5 }>
-            <SideBarHeader>GENERAL</SideBarHeader>
+            <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Box mt={ 1.75 } sx={ { width: "100%" } }>
+          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
-              label="YOUR PROFILE"
+              label="PROFILE"
               to="/home/profile"
             />
-          </Box>
+
+            <LogoutButton />
+          </Stack>
         </Box>
       </Box>
 
@@ -141,7 +144,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         width="100%"
       >
         <NewmLogoSmInverse />
-        <TempAuthButton />
       </Box>
     </Box>
   );
@@ -152,11 +154,13 @@ interface ResponsiveSideBarProps {
   drawerWidth: number;
   setMobileOpen: (field: boolean) => void;
 }
+
 const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
   props: ResponsiveSideBarProps
 ) => {
   const container =
     window !== undefined ? () => window.document.body : undefined;
+
   return (
     <>
       <Drawer
