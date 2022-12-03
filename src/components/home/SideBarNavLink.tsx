@@ -1,34 +1,56 @@
-import { FunctionComponent } from "react";
+import { CSSProperties, FunctionComponent } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import theme from "theme";
+
+const activeBackground = "rgba(255, 255, 255, 0.1)";
+
+interface ButtonProps {
+  readonly onClick?: VoidFunction;
+  readonly style: CSSProperties;
+}
+
+interface LinkProps {
+  readonly onClick?: VoidFunction;
+  readonly style: CSSProperties;
+  readonly to: string;
+}
+
+type WrapperProps = LinkProps | ButtonProps;
 
 interface SideBarNavLinkProps {
   readonly label: string;
   readonly icon: JSX.Element;
-  readonly to: string;
-  readonly closeMenu?: VoidFunction;
+  readonly to?: string;
+  readonly onClick?: VoidFunction;
 }
 
-const activeBackground = "rgba(255, 255, 255, 0.1)";
+const Wrapper: FunctionComponent<WrapperProps> = (props) => {
+  if ("to" in props && props.to) {
+    return <Link { ...props } />;
+  } else {
+    return <Box { ...props } />;
+  }
+};
 
 const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   label,
   icon,
   to,
-  closeMenu,
+  onClick,
 }) => {
-  const resolved = useResolvedPath(to);
+  const resolved = useResolvedPath(to || "");
   const match = useMatch(resolved.pathname);
+  const isActiveLink = to && match;
 
   return (
-    <Link
-      key={ label }
-      onClick={ closeMenu }
+    <Wrapper
+      onClick={ onClick }
       to={ to }
       style={ {
         textDecoration: "none",
         minWidth: "100%",
+        cursor: "pointer",
       } }
     >
       <Stack
@@ -43,8 +65,8 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
           borderRadius: "6px",
           padding: "12px 20px",
           color: "white",
-          background: match ? activeBackground : "transparent",
-          opacity: `${!match ? 0.5 : 1}`,
+          background: isActiveLink ? activeBackground : "transparent",
+          opacity: isActiveLink ? 1 : 0.5,
           transition: "background-color 0ms",
           display: "flex",
           textTransform: "none",
@@ -59,7 +81,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
         { icon }
         <span>{ label }</span>
       </Stack>
-    </Link>
+    </Wrapper>
   );
 };
 

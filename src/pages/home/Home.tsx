@@ -25,6 +25,7 @@ const Home: FunctionComponent = () => {
   }, [dispatch]);
 
   const [isMobileOpen, setMobileOpen] = useState(false);
+
   return (
     <Box
       sx={ {
@@ -38,6 +39,7 @@ const Home: FunctionComponent = () => {
         setMobileOpen={ setMobileOpen }
         drawerWidth={ drawerWidth }
       />
+
       <Box
         component="main"
         sx={ {
