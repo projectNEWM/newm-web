@@ -54,6 +54,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <MenuOpenIcon sx={ { color: "white" } } />
         </IconButton>
       ) }
+
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
           { !!profile.pictureUrl && (
@@ -71,7 +72,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarNavLink
-            closeMenu={ () => props.setMobileOpen(false) }
+            onClick={ () => props.setMobileOpen(false) }
             icon={ <UploadIcon /> }
             label="UPLOAD A SONG"
             to="/home/upload-song"
@@ -83,14 +84,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
               label="COLLABORATORS"
               to="/home/owners"
@@ -103,14 +104,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
 
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <AnalyticsIcon /> }
               label="ANALYTICS"
               to="/home/analytics"
@@ -123,7 +124,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              closeMenu={ () => props.setMobileOpen(false) }
+              onClick={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
               label="PROFILE"
               to="/home/profile"
@@ -153,11 +154,13 @@ interface ResponsiveSideBarProps {
   drawerWidth: number;
   setMobileOpen: (field: boolean) => void;
 }
+
 const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
   props: ResponsiveSideBarProps
 ) => {
   const container =
     window !== undefined ? () => window.document.body : undefined;
+
   return (
     <>
       <Drawer
