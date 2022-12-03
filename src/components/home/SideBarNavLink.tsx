@@ -10,9 +10,7 @@ interface ButtonProps {
   readonly style: CSSProperties;
 }
 
-interface LinkProps {
-  readonly onClick?: VoidFunction;
-  readonly style: CSSProperties;
+interface LinkProps extends ButtonProps {
   readonly to: string;
 }
 
