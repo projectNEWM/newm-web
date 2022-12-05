@@ -47,7 +47,7 @@ const Button: FunctionComponent<ButtonProps> = ({
     },
     icon: {
       height: "40px",
-      minWidth: "unset",
+      minWidth: "40px",
       p: 0,
       width: "40px",
     },

@@ -15,10 +15,10 @@ import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Typography } from "elements";
 import { useWindowDimensions } from "common";
-import VerticalEllipsis from "assets/images/VerticalEllipsis";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
+import { Link } from "react-router-dom";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
@@ -85,11 +85,7 @@ export default function SongList({
 
   if (songData) {
     return (
-      <TableContainer
-        sx={ {
-          paddingRight: { xs: 0, md: 5.5 },
-        } }
-      >
+      <TableContainer>
         <Table size="small" aria-label="Song List">
           <TableHead>
             <TableRow>
@@ -120,8 +116,8 @@ export default function SongList({
                 (page - 1) * rowsPerPage,
                 (page - 1) * rowsPerPage + rowsPerPage
               )
-              .map((row) => (
-                <TableRow key={ row.id }>
+              .map((song) => (
+                <TableRow key={ song.id }>
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton sx={ { paddingRight: 4, paddingLeft: 0 } }>
@@ -133,7 +129,7 @@ export default function SongList({
                           width: "56px",
                           height: "56px",
                         } }
-                        src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
+                        src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
                         alt="Album cover"
                       />
                       <Box
@@ -144,22 +140,22 @@ export default function SongList({
                           maxWidth: { xs: "148px", sm: "auto" },
                         } }
                       >
-                        { row.title }
+                        { song.title }
                       </Box>
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ { display: { xs: "none", sm: "table-cell" } } }
                   >
-                    { row.genre }
+                    { song.genre }
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Box sx={ { display: { xs: "none", sm: "inline" } } }>
-                      { row.createdAt.slice(0, 10) }{ " " }
+                      { song.createdAt.slice(0, 10) }{ " " }
                     </Box>
-                    <IconButton>
-                      <VerticalEllipsis />
-                    </IconButton>
+                    <Link to="edit-song" state={ { ...song } }>
+                      Edit
+                    </Link>
                   </StyledTableCell>
                 </TableRow>
               )) }

@@ -19,7 +19,7 @@ const StyledPagination = styled(Pagination)<PaginationProps>({
   "& .MuiPaginationItem-previousNext": {
     borderRadius: "0px 6px 6px 0px",
   },
-  "& li:first-child > button": {
+  "& li:first-of-type > button": {
     borderRadius: "6px 0px 0px 6px",
   },
 

@@ -59,7 +59,7 @@ const Home: FunctionComponent = () => {
           <Route path="" element={ <Navigate to="upload-song" replace /> } />
 
           <Route path="upload-song" element={ <UploadSong /> } />
-          <Route path="library" element={ <Library /> } />
+          <Route path="library/*" element={ <Library /> } />
           <Route path="owners" element={ <Owners /> } />
           <Route path="wallet" element={ <Wallet /> } />
           <Route path="analytics" element={ <Analytics /> } />
