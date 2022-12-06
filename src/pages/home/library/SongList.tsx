@@ -15,10 +15,10 @@ import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Typography } from "elements";
 import { useWindowDimensions } from "common";
-import VerticalEllipsis from "assets/images/VerticalEllipsis";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
+import CloseCircleLine from "assets/images/CloseCircleLine";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
@@ -26,11 +26,13 @@ interface SongListProps {
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
 }
+
 const StyledTableCell = styled(TableCell)({
-  borderColor: theme.colors.grey700,
-  paddingTop: "4px",
-  paddingBottom: "4px",
+  paddingTop: "20px",
+  paddingBottom: "20px",
   paddingLeft: "0px",
+  borderTop: `1px solid ${theme.colors.grey600}`,
+  borderBottom: `1px solid ${theme.colors.grey600}`,
 });
 
 export default function SongList({
@@ -94,22 +96,54 @@ export default function SongList({
           <TableHead>
             <TableRow>
               <StyledTableCell>
-                <Typography fontWeight={ 700 } color="grey100">
+                <Typography
+                  variant="body2"
+                  fontWeight={ theme.typography.fontWeightSemiBold }
+                  color="grey100"
+                >
                   SONG
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell sx={ { display: { xs: "none", sm: "block" } } }>
-                <Typography fontWeight={ 700 } color="grey100">
+              <StyledTableCell
+                sx={ { display: { xs: "none", md: "table-cell" } } }
+              >
+                <Typography
+                  variant="body2"
+                  fontWeight={ theme.typography.fontWeightSemiBold }
+                  color="grey100"
+                >
+                  MINTING
+                </Typography>
+              </StyledTableCell>
+              <StyledTableCell
+                sx={ { display: { xs: "none", md: "table-cell" } } }
+              >
+                <Typography
+                  variant="body2"
+                  fontWeight={ theme.typography.fontWeightSemiBold }
+                  color="grey100"
+                >
+                  MARKETPLACE
+                </Typography>
+              </StyledTableCell>
+              <StyledTableCell
+                sx={ { display: { xs: "none", md: "table-cell" } } }
+              >
+                <Typography
+                  variant="body2"
+                  fontWeight={ theme.typography.fontWeightSemiBold }
+                  color="grey100"
+                >
                   GENRE
                 </Typography>
               </StyledTableCell>
-              <StyledTableCell sx={ { paddingRight: 8 } } align="right">
+              <StyledTableCell>
                 <Typography
-                  fontWeight={ 700 }
+                  variant="body2"
+                  fontWeight={ theme.typography.fontWeightSemiBold }
                   color="grey100"
-                  sx={ { display: { xs: "none", sm: "block" } } }
                 >
-                  CREATED ON
+                  TIME
                 </Typography>
               </StyledTableCell>
             </TableRow>
@@ -121,7 +155,14 @@ export default function SongList({
                 (page - 1) * rowsPerPage + rowsPerPage
               )
               .map((row) => (
-                <TableRow key={ row.id }>
+                <TableRow
+                  key={ row.id }
+                  sx={ {
+                    "&:hover": {
+                      background: "rgba(255, 255, 255, 0.1)",
+                    },
+                  } }
+                >
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton sx={ { paddingRight: 4, paddingLeft: 0 } }>
@@ -139,9 +180,9 @@ export default function SongList({
                       <Box
                         sx={ {
                           paddingLeft: "12px",
-                          overflow: "scroll",
+                          overflow: "auto",
                           whiteSpace: "nowrap",
-                          maxWidth: { xs: "148px", sm: "auto" },
+                          maxWidth: { xs: "148px", md: "auto" },
                         } }
                       >
                         { row.title }
@@ -149,17 +190,56 @@ export default function SongList({
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
-                    sx={ { display: { xs: "none", sm: "table-cell" } } }
+                    sx={ { display: { xs: "none", md: "table-cell" } } }
                   >
-                    { row.genre }
+                    { row.mintingStatus ? (
+                      row.mintingStatus
+                    ) : (
+                      <Box sx={ { display: "flex", alignItems: "center" } }>
+                        <CloseCircleLine />
+                        <Typography
+                          sx={ { paddingLeft: 1 } }
+                          color="grey100"
+                          variant="body2"
+                        >
+                          Not Earning
+                        </Typography>
+                      </Box>
+                    ) }
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <Box sx={ { display: { xs: "none", sm: "inline" } } }>
-                      { row.createdAt.slice(0, 10) }{ " " }
-                    </Box>
-                    <IconButton>
-                      <VerticalEllipsis />
-                    </IconButton>
+                  <StyledTableCell
+                    sx={ { display: { xs: "none", md: "table-cell" } } }
+                  >
+                    { row.marketplaceStatus ? (
+                      row.marketplaceStatus
+                    ) : (
+                      <Box sx={ { display: "flex", alignItems: "center" } }>
+                        <CloseCircleLine />
+                        <Typography
+                          sx={ { paddingLeft: 1 } }
+                          color="grey100"
+                          variant="body2"
+                        >
+                          Not Selling
+                        </Typography>
+                      </Box>
+                    ) }
+                  </StyledTableCell>
+                  <StyledTableCell
+                    sx={ { display: { xs: "none", md: "table-cell" } } }
+                  >
+                    <Typography color="grey100" variant="body2">
+                      { row.genre }
+                    </Typography>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    { row.duration ? (
+                      row.duration
+                    ) : (
+                      <Typography variant="body2" color="grey100">
+                        { new Date().getMinutes() }:{ new Date().getSeconds() }
+                      </Typography>
+                    ) }
                   </StyledTableCell>
                 </TableRow>
               )) }
