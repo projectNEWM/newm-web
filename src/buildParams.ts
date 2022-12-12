@@ -16,6 +16,7 @@ interface ProjectDetails {
     readonly twitter: string;
     readonly instagram?: string;
     readonly spotify?: string;
+    readonly soundcloud?: string;
     readonly website?: string;
   }>;
 }
@@ -129,6 +130,35 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         spotify:
           "https://open.spotify.com/artist/7vIuaRUTygrIF7PbcalDpK?si=g7_ruNbRR52zJzgz3eN2_g",
         website: "https://www.officialnido.com",
+      },
+    ],
+  },
+  juse: {
+    artistName: "JUSE",
+    songName: "Space Cowboy",
+    launchTimestamp: 1671660000000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 8,
+    bundleAmount: 10000,
+    totalTokens: 100000000,
+    bundlePrice: 17,
+    royaltyAgreement:
+      "https://pbj4ejxvnvokfyzp67jzx6kiitiupesu5fqtcuiwps64dqfbzqua.arweave" +
+      ".net/eFPCJvVtXKLjL_fTm_lIRNFHklTpYTFRFny9wcChzCg",
+    poolLink: "https://pool.pm/asset1svv53m94k3c7ne30mcq7vq5yzyvajmtv54rss6",
+    spotifyLink:
+      "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1", // TODO: get actual
+    description:
+      "Co-Founder of The Listening Room & SND Education, JUSE is a " +
+      "multi-faceted Percussionist, Sound Designer and Music Producer. With " +
+      "afore thought to preserve intellectual property with blockchain " +
+      "technology, JUSE has found himself pioneering the way music is " +
+      "distributed via fungible and non-fungible tokens!",
+    socials: [
+      {
+        heading: "JUSE",
+        twitter: "https://twitter.com/KydJuse",
+        soundcloud: "https://soundcloud.com/KydJuse",
+        instagram: "https://Instagram.com/KydJuse",
       },
     ],
   },

@@ -27,6 +27,15 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileXs: require("./nido/profile-small.jpeg"),
     preview: require("./nido/preview.mp3"),
   },
+  juse: {
+    albumArt: require("./juse/album-art.jpg"),
+    albumArtXs: require("./juse/album-art@80.png"),
+    profilePrimary: require("./juse/profile-cut-tinified.png"),
+    profileSecondary: require("./juse/profile-cropped.png"),
+    profileSm: require("./juse/profile-small.png"),
+    profileXs: require("./juse/profile-small.png"),
+    preview: require("./juse/preview.mp3"),
+  },
 };
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";

@@ -86,33 +86,52 @@ const Landing: FunctionComponent = () => {
     });
   };
 
+  const artistDescriptionParagraphs = projectDetails.description.split("\n\n");
+
   return (
     <Box display="flex" flexDirection="column">
       <Box mb={ 3.5 } sx={ { maxWidth: [9999, 9999, 640] } }>
-        <ReadMore
-          typographyVariant="subtitle1"
-          abbreviatedContent={ projectDetails.description
-            .split("\n\n")
-            .slice(0, 2)
-            .join("\n\n") }
-          expandedContent={
-            <>
-              { projectDetails.description }
-              { "\n\n" }
-              Explore the legal side of how Stream Tokens and royalties work in
-              this sample sale prior to purchasing{ " " }
-              <a
-                target="_blank"
-                href={ projectDetails.royaltyAgreement }
-                rel="noreferrer noopener"
-                style={ { color: theme.colors.grey100 } }
-              >
-                here
-              </a>
-              .
-            </>
-          }
-        />
+        { artistDescriptionParagraphs.length > 2 ? (
+          <ReadMore
+            typographyVariant="subtitle1"
+            abbreviatedContent={ artistDescriptionParagraphs
+              .slice(0, 2)
+              .join("\n\n") }
+            expandedContent={
+              <>
+                { projectDetails.description }
+                { "\n\n" }
+                Explore the legal side of how Stream Tokens and royalties work
+                in this sample sale prior to purchasing{ " " }
+                <a
+                  target="_blank"
+                  href={ projectDetails.royaltyAgreement }
+                  rel="noreferrer noopener"
+                  style={ { color: theme.colors.grey100 } }
+                >
+                  here
+                </a>
+                .
+              </>
+            }
+          />
+        ) : (
+          <Typography variant="subtitle1" sx={ { whiteSpace: "pre-wrap" } }>
+            { projectDetails.description }
+            { "\n\n" }
+            Explore the legal side of how Stream Tokens and royalties work in
+            this sample sale prior to purchasing{ " " }
+            <a
+              target="_blank"
+              href={ projectDetails.royaltyAgreement }
+              rel="noreferrer noopener"
+              style={ { color: theme.colors.grey100 } }
+            >
+              here
+            </a>
+            .
+          </Typography>
+        ) }
       </Box>
 
       <Stack

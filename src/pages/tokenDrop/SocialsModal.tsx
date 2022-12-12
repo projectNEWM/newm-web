@@ -4,6 +4,7 @@ import GoogleChromeIcon from "assets/images/GoogleChromeIcon";
 import InstagramIcon from "assets/images/InstagramIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import TwitterIcon from "assets/images/TwitterIcon";
+import SoundcloudIcon from "assets/images/SoundcloudIcon";
 import { AccentButton } from "elements";
 import { projectDetails } from "buildParams";
 
@@ -37,63 +38,75 @@ const SocialsModal = () => {
         Let&apos;s Connect
       </Typography>
 
-      { socials.map(({ heading, twitter, instagram, spotify, website }, idx) => (
-        <Stack
-          key={ `social-row-${idx}` }
-          sx={ { alignItems: "start", mt: [3, 3, 5] } }
-        >
-          <Typography
-            sx={ {
-              fontSize: "16px",
-              fontFamily: "Raleway",
-              fontWeight: "700",
-              lineHeight: "20px",
-            } }
-          >
-            { heading }
-          </Typography>
+      { socials.map(
+        (
+          { heading, twitter, instagram, soundcloud, spotify, website },
+          idx
+        ) => (
           <Stack
-            sx={ {
-              display: "flex",
-              mt: 1,
-              flexDirection: "row",
-              gap: 1.5,
-              flexWrap: "wrap",
-            } }
+            key={ `social-row-${idx}` }
+            sx={ { alignItems: "start", mt: [3, 3, 5] } }
           >
-            { twitter && (
-              <SocialButton
-                href={ twitter }
-                icon={ <TwitterIcon /> }
-                text="Twitter"
-              />
-            ) }
-            { instagram && (
-              <SocialButton
-                href={ instagram }
-                icon={ <InstagramIcon /> }
-                text="Instagram"
-              />
-            ) }
-            { spotify && (
-              <SocialButton
-                href={ spotify }
-                icon={
-                  <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" />
-                }
-                text="Spotify"
-              />
-            ) }
-            { website && (
-              <SocialButton
-                href={ website }
-                icon={ <GoogleChromeIcon /> }
-                text="Website"
-              />
-            ) }
+            <Typography
+              sx={ {
+                fontSize: "16px",
+                fontFamily: "Raleway",
+                fontWeight: "700",
+                lineHeight: "20px",
+              } }
+            >
+              { heading }
+            </Typography>
+            <Stack
+              sx={ {
+                display: "flex",
+                mt: 1,
+                flexDirection: "row",
+                gap: 1.5,
+                flexWrap: "wrap",
+              } }
+            >
+              { twitter && (
+                <SocialButton
+                  href={ twitter }
+                  icon={ <TwitterIcon /> }
+                  text="Twitter"
+                />
+              ) }
+              { instagram && (
+                <SocialButton
+                  href={ instagram }
+                  icon={ <InstagramIcon /> }
+                  text="Instagram"
+                />
+              ) }
+              { soundcloud && (
+                <SocialButton
+                  href={ soundcloud }
+                  icon={ <SoundcloudIcon /> }
+                  text="Soundcloud"
+                />
+              ) }
+              { spotify && (
+                <SocialButton
+                  href={ spotify }
+                  icon={
+                    <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" />
+                  }
+                  text="Spotify"
+                />
+              ) }
+              { website && (
+                <SocialButton
+                  href={ website }
+                  icon={ <GoogleChromeIcon /> }
+                  text="Website"
+                />
+              ) }
+            </Stack>
           </Stack>
-        </Stack>
-      )) }
+        )
+      ) }
     </>
   );
 };

@@ -206,10 +206,7 @@ export const getWalletAddress = async (walletName: string): Promise<string> => {
   const wallet = window.Wallets[walletName];
 
   // prefer unused address, but some wallets such as Nami require used address
-  addresses = await wallet.getUnusedAddresses();
-  if (addresses.length === 0) {
-    addresses = await wallet.getUsedAddresses();
-  }
+  addresses = await wallet.getUsedAddresses();
 
   const address = addresses[0];
 
