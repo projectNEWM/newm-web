@@ -18,6 +18,7 @@ import { useWindowDimensions } from "common";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
+import { Link } from "react-router-dom";
 import CloseCircleLine from "assets/images/CloseCircleLine";
 
 interface SongListProps {
@@ -87,11 +88,7 @@ export default function SongList({
 
   if (songData) {
     return (
-      <TableContainer
-        sx={ {
-          paddingRight: { xs: 0, md: 5.5 },
-        } }
-      >
+      <TableContainer>
         <Table size="small" aria-label="Song List">
           <TableHead>
             <TableRow>
@@ -154,9 +151,9 @@ export default function SongList({
                 (page - 1) * rowsPerPage,
                 (page - 1) * rowsPerPage + rowsPerPage
               )
-              .map((row) => (
+              .map((song) => (
                 <TableRow
-                  key={ row.id }
+                  key={ song.id }
                   sx={ {
                     "&:hover": {
                       background: "rgba(255, 255, 255, 0.1)",
@@ -174,7 +171,7 @@ export default function SongList({
                           width: "56px",
                           height: "56px",
                         } }
-                        src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
+                        src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
                         alt="Album cover"
                       />
                       <Box
@@ -185,15 +182,15 @@ export default function SongList({
                           maxWidth: { xs: "148px", md: "auto" },
                         } }
                       >
-                        { row.title }
+                        { song.title }
                       </Box>
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ { display: { xs: "none", md: "table-cell" } } }
                   >
-                    { row.mintingStatus ? (
-                      row.mintingStatus
+                    { song.mintingStatus ? (
+                      song.mintingStatus
                     ) : (
                       <Box sx={ { display: "flex", alignItems: "center" } }>
                         <CloseCircleLine />
@@ -210,8 +207,8 @@ export default function SongList({
                   <StyledTableCell
                     sx={ { display: { xs: "none", md: "table-cell" } } }
                   >
-                    { row.marketplaceStatus ? (
-                      row.marketplaceStatus
+                    { song.marketplaceStatus ? (
+                      song.marketplaceStatus
                     ) : (
                       <Box sx={ { display: "flex", alignItems: "center" } }>
                         <CloseCircleLine />
@@ -229,17 +226,22 @@ export default function SongList({
                     sx={ { display: { xs: "none", md: "table-cell" } } }
                   >
                     <Typography color="grey100" variant="body2">
-                      { row.genre }
+                      { song.genre }
                     </Typography>
                   </StyledTableCell>
                   <StyledTableCell>
-                    { row.duration ? (
-                      row.duration
+                    { song.duration ? (
+                      song.duration
                     ) : (
                       <Typography variant="body2" color="grey100">
                         { new Date().getMinutes() }:{ new Date().getSeconds() }
                       </Typography>
                     ) }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Link to="edit-song" state={ { ...song } }>
+                      Edit
+                    </Link>
                   </StyledTableCell>
                 </TableRow>
               )) }
