@@ -24,7 +24,3 @@ export interface RenderProps extends RenderOptions {
 export interface WrapperProps {
   readonly children: ReactElement;
 }
-
-export interface IconProps {
-  readonly currentColor?: string;
-}
