@@ -42,7 +42,7 @@ const Countdown: FunctionComponent = () => {
         fontSize={ captionFontSize }
         lineHeight={ captionFontSize }
       >
-        It&apos;s happening - first Stream Token sale ever!
+        Get ready to get more from music.
       </Typography>
     </Stack>
   );
