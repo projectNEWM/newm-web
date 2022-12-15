@@ -148,10 +148,10 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     spotifyLink:
       "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1", // TODO: get actual
     description:
-      "Co-Founder of The Listening Room & SND Education, JUSE is a " +
+      "Co-Founder of The Listening Room and SND Education, JUSE is a " +
       "multi-faceted Percussionist, Sound Designer and Music Producer. With " +
-      "afore thought to preserve intellectual property with blockchain " +
-      "technology, JUSE has found himself pioneering the way music is " +
+      "the aforethought to preserve Intellectual Property (IP) with " +
+      "blockchain technology, JUSE is pioneering the way music is " +
       "distributed via fungible and non-fungible tokens!",
     socials: [
       {
