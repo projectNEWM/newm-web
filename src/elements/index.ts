@@ -4,7 +4,6 @@ export { default as Button } from "./Button";
 export * from "./Button";
 export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelect } from "./DropdownSelect";
-export { default as MultiSelect } from "./MultiSelect";
 export * from "./DropdownSelect";
 export { default as DatePickerInput } from "./DatePickerInput";
 export { default as GradientTextInput } from "./GradientTextInput";
