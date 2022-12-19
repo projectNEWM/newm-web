@@ -13,13 +13,14 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Typography } from "elements";
+import { Button, Typography } from "elements";
 import { useWindowDimensions } from "common";
 import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CloseCircleLine from "assets/images/CloseCircleLine";
+import EditPencilIcon from "assets/images/EditPencilIcon";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
@@ -56,6 +57,9 @@ export default function SongList({
 
   // determines how many rows to display per page
   const windowHeight = useWindowDimensions()?.height;
+
+  // navigation for song edit page
+  const navigate = useNavigate();
 
   // sets the # of rows per page depending on viewport height
   useEffect(() => {
@@ -239,9 +243,15 @@ export default function SongList({
                     ) }
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <Link to="edit-song" state={ { ...song } }>
-                      Edit
-                    </Link>
+                    <Button
+                      variant="secondary"
+                      width="icon"
+                      onClick={ () =>
+                        navigate("edit-song", { state: { ...song } })
+                      }
+                    >
+                      <EditPencilIcon />
+                    </Button>
                   </StyledTableCell>
                 </TableRow>
               )) }
