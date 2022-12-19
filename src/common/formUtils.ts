@@ -25,13 +25,11 @@ export const commonYupValidation = {
         (role) => (role ? roles.includes(role) : false)
       ),
   genre: (genres: string[]) =>
-    Yup.string()
-      .required("Genre is required")
-      .test(
-        "is-genre",
-        "You need to type or select one of the ones below",
-        (genre) => (genre ? genres.includes(genre) : false)
-      ),
+    Yup.string().test(
+      "is-genre",
+      "You need to type or select one of the ones below",
+      (genre) => (genre ? genres.includes(genre) : false)
+    ),
   nickname: Yup.string()
     .required("Stage name is required")
     .matches(/^[aA-zZ\s]+$/, "Please only use letters"),

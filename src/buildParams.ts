@@ -7,6 +7,6 @@ export const enableReduxLogging = !isProd && true;
 export const baseUrls: Record<string, string> = {
   newm: isProd
     ? "https://staging-newm-server.herokuapp.com/"
-    : "https://staging-newm-server.herokuapp.com/",
+    : "https://garage.newm.io/",
   cloudinary: "https://api.cloudinary.com/",
 };
