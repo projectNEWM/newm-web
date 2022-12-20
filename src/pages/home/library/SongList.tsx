@@ -90,6 +90,21 @@ export default function SongList({
     }
   };
 
+  /**
+   * Song duration (milliseconds) provided from the getSong API,
+   * formatted into a song time string of minutes and seconds.
+   */
+  const formatSongDurationToSongTime = (songDuration: number): string => {
+    const date = new Date(songDuration);
+
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    const formattedSongTime = minutes + ":" + seconds;
+
+    return formattedSongTime;
+  };
+
   if (songData) {
     return (
       <TableContainer>
@@ -143,6 +158,7 @@ export default function SongList({
                   variant="body2"
                   fontWeight={ theme.typography.fontWeightSemiBold }
                   color="grey100"
+                  textAlign="center"
                 >
                   TIME
                 </Typography>
@@ -234,13 +250,15 @@ export default function SongList({
                     </Typography>
                   </StyledTableCell>
                   <StyledTableCell>
-                    { song.duration ? (
-                      song.duration
-                    ) : (
-                      <Typography variant="body2" color="grey100">
-                        { new Date().getMinutes() }:{ new Date().getSeconds() }
-                      </Typography>
-                    ) }
+                    <Typography
+                      textAlign="center"
+                      variant="body2"
+                      color="grey100"
+                    >
+                      { song.duration
+                        ? formatSongDurationToSongTime(song.duration)
+                        : "-" }
+                    </Typography>
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Button
