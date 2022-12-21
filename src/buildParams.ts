@@ -146,7 +146,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       ".net/eFPCJvVtXKLjL_fTm_lIRNFHklTpYTFRFny9wcChzCg",
     poolLink: "https://pool.pm/asset1svv53m94k3c7ne30mcq7vq5yzyvajmtv54rss6",
     spotifyLink:
-      "https://open.spotify.com/album/2mFn9T6ZIjPxCT5n1ULrvl?si=MdSrbDyrQKyABq5dnHVQ7w&nd=1", // TODO: get actual
+      "https://open.spotify.com/track/116yVjooI7lrE6V9zSWQFe?si=vDhsDv31QeuWXS1_-H7FeA",
     description:
       "Co-Founder of The Listening Room and SND Education, JUSE is a " +
       "multi-faceted Percussionist, Sound Designer and Music Producer. With " +
