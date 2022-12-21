@@ -1,10 +1,12 @@
 import { FunctionComponent } from "react";
-import { Stack } from "@mui/material";
+import { Stack, Theme } from "@mui/material";
 import { Typography } from "elements";
+import theme from "theme";
 
-interface IconStatusProps {
+export interface IconStatusProps {
   readonly icon: JSX.Element;
-  readonly iconColor: string;
+  readonly iconColor: keyof Theme["colors"];
+  readonly fontColor?: keyof Theme["colors"];
   readonly status: string | undefined;
 }
 
@@ -14,18 +16,19 @@ interface IconStatusProps {
 const IconStatus: FunctionComponent<IconStatusProps> = ({
   icon,
   iconColor,
+  fontColor = "white",
   status,
 }) => (
   <Stack
     spacing={ 1 }
     direction="row"
-    color={ iconColor }
+    color={ theme.colors[iconColor] }
     sx={ { justifyContent: "center", alignItems: "center" } }
   >
     { icon }
 
     <Typography
-      color="grey100"
+      color={ fontColor }
       variant="body2"
       sx={ { display: { xs: "block" } } }
     >

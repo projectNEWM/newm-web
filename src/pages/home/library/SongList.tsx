@@ -19,8 +19,8 @@ import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
-import CloseCircleLine from "assets/images/CloseCircleLine";
 import EditPencilIcon from "assets/images/EditPencilIcon";
+import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
@@ -139,17 +139,6 @@ export default function SongList({
                   fontWeight={ theme.typography.fontWeightSemiBold }
                   color="grey100"
                 >
-                  MARKETPLACE
-                </Typography>
-              </StyledTableCell>
-              <StyledTableCell
-                sx={ { display: { xs: "none", md: "table-cell" } } }
-              >
-                <Typography
-                  variant="body2"
-                  fontWeight={ theme.typography.fontWeightSemiBold }
-                  color="grey100"
-                >
                   GENRE
                 </Typography>
               </StyledTableCell>
@@ -209,38 +198,9 @@ export default function SongList({
                   <StyledTableCell
                     sx={ { display: { xs: "none", md: "table-cell" } } }
                   >
-                    { song.mintingStatus ? (
-                      song.mintingStatus
-                    ) : (
-                      <Box sx={ { display: "flex", alignItems: "center" } }>
-                        <CloseCircleLine />
-                        <Typography
-                          sx={ { paddingLeft: 1 } }
-                          color="grey100"
-                          variant="body2"
-                        >
-                          Not Earning
-                        </Typography>
-                      </Box>
-                    ) }
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ { display: { xs: "none", md: "table-cell" } } }
-                  >
-                    { song.marketplaceStatus ? (
-                      song.marketplaceStatus
-                    ) : (
-                      <Box sx={ { display: "flex", alignItems: "center" } }>
-                        <CloseCircleLine />
-                        <Typography
-                          sx={ { paddingLeft: 1 } }
-                          color="grey100"
-                          variant="body2"
-                        >
-                          Not Selling
-                        </Typography>
-                      </Box>
-                    ) }
+                    <Box sx={ { display: "flex", alignItems: "center" } }>
+                      <MintingStatus mintingStatus={ song.mintingStatus } />
+                    </Box>
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ { display: { xs: "none", md: "table-cell" } } }
