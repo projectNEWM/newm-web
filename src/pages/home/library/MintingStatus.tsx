@@ -1,10 +1,9 @@
-import { Box } from "@mui/material";
-import CheckCircleLine from "assets/images/CheckCircleLine";
-import CloseCircleLine from "assets/images/CloseCircleLine";
+import { Check, Close } from "@mui/icons-material";
 import InfoCircleLine from "assets/images/InfoCircleLine";
 import TimeCircleLine from "assets/images/TimeCircleLine";
 import { IconStatus } from "components";
 import { FunctionComponent } from "react";
+import theme from "theme";
 
 interface MintingStatusProps {
   readonly mintingStatus: string | undefined;
@@ -15,44 +14,30 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
 }) => {
   if (mintingStatus === "Earning") {
     return (
-      <Box sx={ { display: "flex", alignItems: "center" } }>
-        <IconStatus
-          icon={ <CheckCircleLine /> }
-          iconColor="green"
-          status="Distributed"
-        />
-      </Box>
+      <IconStatus
+        icon={ <Check fontSize="large" sx={ { color: theme.colors.green } } /> }
+        status="Distributed"
+      />
     );
   } else if (mintingStatus === "Pending") {
     return (
-      <Box sx={ { display: "flex", alignItems: "center" } }>
-        <IconStatus
-          icon={ <TimeCircleLine /> }
-          iconColor="yellow"
-          status="Pending"
-        />
-      </Box>
+      <IconStatus
+        icon={ <TimeCircleLine /> }
+        iconColor="yellow"
+        status="Pending"
+      />
     );
   } else if (mintingStatus === "Rejected") {
     return (
-      <Box sx={ { display: "flex", alignItems: "center" } }>
-        <IconStatus
-          icon={ <InfoCircleLine /> }
-          iconColor="red"
-          status="Rejected"
-        />
-      </Box>
+      <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Rejected" />
     );
   } else {
     return (
-      <Box sx={ { display: "flex", alignItems: "center" } }>
-        <IconStatus
-          icon={ <CloseCircleLine /> }
-          iconColor="grey200"
-          fontColor="grey200"
-          status="Undistributed"
-        />
-      </Box>
+      <IconStatus
+        icon={ <Close fontSize="large" sx={ { color: theme.colors.grey200 } } /> }
+        fontColor="grey200"
+        status="Undistributed"
+      />
     );
   }
 };

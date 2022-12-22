@@ -5,7 +5,7 @@ import theme from "theme";
 
 export interface IconStatusProps {
   readonly icon: JSX.Element;
-  readonly iconColor: keyof Theme["colors"];
+  readonly iconColor?: keyof Theme["colors"];
   readonly fontColor?: keyof Theme["colors"];
   readonly status: string | undefined;
 }
@@ -15,7 +15,7 @@ export interface IconStatusProps {
  */
 const IconStatus: FunctionComponent<IconStatusProps> = ({
   icon,
-  iconColor,
+  iconColor = "music",
   fontColor = "white",
   status,
 }) => (
