@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
@@ -15,6 +15,9 @@ const Discography: FunctionComponent = () => {
   const [filteredData, setFilteredData] = useState<Song[]>();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [currentPlayingSong, setCurrentPlayingSong] = useState<Song | null>(
+    null
+  );
   const viewportWidth = useWindowDimensions()?.width;
 
   const handleSearch = (searched: string) => {
@@ -32,6 +35,23 @@ const Discography: FunctionComponent = () => {
       );
     }
   };
+
+  // Keep song in a playing state till the song has been filtered out
+  useEffect(() => {
+    let isSongFound = false;
+    if (currentPlayingSong !== null && filteredData !== undefined)
+      filteredData.forEach((filteredSong) => {
+        if (isSongFound !== true && filteredSong.id === currentPlayingSong.id) {
+          isSongFound = true;
+        }
+      });
+    else {
+      isSongFound = true;
+    }
+
+    isSongFound ? null : setCurrentPlayingSong(null);
+  }, [currentPlayingSong, filteredData]);
+
   const renderContent = (
     isLoading: boolean,
     isSuccess: boolean,
@@ -70,6 +90,8 @@ const Discography: FunctionComponent = () => {
           />
           <SongList
             songData={ query == "" ? songData : filteredData }
+            currentPlayingSong={ currentPlayingSong }
+            setCurrentPlayingSong={ setCurrentPlayingSong }
             page={ page }
             setPage={ setPage }
           />

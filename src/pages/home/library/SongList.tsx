@@ -15,16 +15,18 @@ import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import PlayButton from "assets/images/PlayButton";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
+import { Pause, PlayArrow } from "@mui/icons-material";
 import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
+  currentPlayingSong: Song | null;
+  setCurrentPlayingSong: Dispatch<SetStateAction<Song | null>>;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
 }
@@ -40,6 +42,8 @@ const StyledTableCell = styled(TableCell)({
 export default function SongList({
   songData,
   rowHeight = 65,
+  currentPlayingSong,
+  setCurrentPlayingSong,
   page,
   setPage,
 }: SongListProps) {
@@ -77,6 +81,7 @@ export default function SongList({
     event: React.ChangeEvent<unknown>,
     page: number
   ) => {
+    setCurrentPlayingSong(null);
     setPage(page);
   };
 
@@ -103,6 +108,12 @@ export default function SongList({
     const formattedSongTime = minutes + ":" + seconds;
 
     return formattedSongTime;
+  };
+
+  const handleSongPlayPause = (song: Song) => {
+    song.id === currentPlayingSong?.id
+      ? setCurrentPlayingSong(null)
+      : setCurrentPlayingSong({ ...song });
   };
 
   if (songData) {
@@ -162,8 +173,11 @@ export default function SongList({
               )
               .map((song) => (
                 <TableRow
+                  onClick={ () => handleSongPlayPause(song) }
                   key={ song.id }
                   sx={ {
+                    cursor: "pointer",
+                    WebkitTapHighlightColor: "transparent",
                     "&:hover": {
                       background: "rgba(255, 255, 255, 0.1)",
                     },
@@ -171,8 +185,21 @@ export default function SongList({
                 >
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
-                      <IconButton sx={ { paddingRight: 4, paddingLeft: 0 } }>
-                        <PlayButton />
+                      <IconButton
+                        onClick={ () => handleSongPlayPause(song) }
+                        sx={ { paddingRight: 4, paddingLeft: 0 } }
+                      >
+                        { song.id === currentPlayingSong?.id ? (
+                          <Pause
+                            fontSize="large"
+                            sx={ { color: theme.colors.white } }
+                          />
+                        ) : (
+                          <PlayArrow
+                            fontSize="large"
+                            sx={ { color: theme.colors.white } }
+                          />
+                        ) }
                       </IconButton>
                       <img
                         style={ {
@@ -224,9 +251,10 @@ export default function SongList({
                     <Button
                       variant="secondary"
                       width="icon"
-                      onClick={ () =>
-                        navigate("edit-song", { state: { ...song } })
-                      }
+                      onClick={ (e) => {
+                        e.stopPropagation();
+                        return navigate("edit-song", { state: { ...song } });
+                      } }
                     >
                       <EditPencilIcon />
                     </Button>
