@@ -2,8 +2,13 @@ import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import { selectContent } from "modules/content";
-import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
+import {
+  Creditor,
+  Owner,
+  UploadSongRequest,
+  selectSong,
+  useGetSongGenresQuery,
+} from "modules/song";
 import {
   DropdownMultiSelectField,
   ErrorMessage,
@@ -20,7 +25,8 @@ import { useFormikContext } from "formik";
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
 
-  const { genres } = useSelector(selectContent);
+  const { data = [] } = useGetSongGenresQuery();
+  const genres = data.filter((genre: string) => genre.length > 0);
   const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
 

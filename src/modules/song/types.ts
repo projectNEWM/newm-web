@@ -6,6 +6,8 @@ export interface SongState {
 
 export type GetSongsResponse = Array<Song>;
 
+export type GetSongGenresResponse = Array<string>;
+
 export interface Owner {
   email: string;
   firstName: string;

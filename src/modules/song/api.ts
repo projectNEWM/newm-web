@@ -8,6 +8,7 @@ import {
   CloudinarySignatureResponse,
   GenerateArtistAgreementBody,
   GenerateArtistAgreementResponse,
+  GetSongGenresResponse,
   GetSongsResponse,
   PatchSongRequest,
   Song,
@@ -46,6 +47,26 @@ const extendedNewmApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getSongGenres: build.query<GetSongGenresResponse, void>({
+      query: (body) => ({
+        url: "/v1/songs/genres",
+        method: "GET",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song genres",
               severity: "error",
             })
           );
@@ -179,4 +200,5 @@ const extendedLambdaApi = lambdaApi.injectEndpoints({
 
 export const extendedApi = mergeApis(extendedNewmApi, extendedLambdaApi);
 
-export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
+export const { useGetSongsQuery, useGetSongQuery, useGetSongGenresQuery } =
+  extendedApi;
