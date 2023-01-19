@@ -36,6 +36,15 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileXs: require("./juse/profile-small.png"),
     preview: require("./juse/preview.mp3"),
   },
+  abyss: {
+    albumArt: require("./abyss/album-art.jpg"),
+    albumArtXs: require("./abyss/album-art@80.png"),
+    profilePrimary: require("./abyss/profile-cut-tinified.png"),
+    profileSecondary: require("./abyss/profile-cropped.png"),
+    profileSm: require("./abyss/profile-small.png"),
+    profileXs: require("./abyss/profile-small.png"),
+    preview: require("./abyss/preview.mp3"),
+  },
 };
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";

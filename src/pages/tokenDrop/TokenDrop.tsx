@@ -95,8 +95,11 @@ const TokenDrop: FunctionComponent = () => {
           <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
             <Typography
               variant="h1"
-              fontSize={ ["60px", "100px"] }
-              lineHeight="80px"
+              // changed from fontSize={ ["60px", "100px"] } for longer text
+              fontSize={ ["60px", "72px"] }
+              // changed from lineHeight="80px" for longer text
+              lineHeight="78px"
+              paddingRight={ [0, 0, 18] }
             >
               { projectDetails.artistName }
             </Typography>

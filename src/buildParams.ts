@@ -13,10 +13,12 @@ interface ProjectDetails {
   readonly description: string;
   readonly socials: ReadonlyArray<{
     readonly heading: string;
-    readonly twitter: string;
+    readonly twitter?: string;
     readonly instagram?: string;
     readonly spotify?: string;
     readonly soundcloud?: string;
+    readonly facebook?: string;
+    readonly tiktok?: string;
     readonly website?: string;
   }>;
 }
@@ -28,7 +30,7 @@ export const isProd = process.env.NODE_ENV === "production";
 export const enableReduxLogging = !isProd && true;
 
 // set this to false to disable countdown page in development
-export const enableCountdown = isProd || false;
+export const enableCountdown = isProd || true;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
@@ -159,6 +161,47 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         twitter: "https://twitter.com/KydJuse",
         soundcloud: "https://soundcloud.com/KydJuse",
         instagram: "https://Instagram.com/KydJuse",
+      },
+    ],
+  },
+  abyss: {
+    artistName: "Abyss & Mikey Mo the MC",
+    songName: "Lost In My Own Zone",
+    launchTimestamp: 1674234000000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 9,
+    bundleAmount: 1000000,
+    totalTokens: 100000000,
+    bundlePrice: 100,
+    royaltyAgreement:
+      "https://pw7hecf2owuyxc6ddy3pnmarvv5k4446fnyckpzsr7m26vudp7va.arweave." +
+      "net/fb5yCLp1qYuLwx429rARrXquc54rcCU_Mo_Zr1aDf-o",
+    poolLink: "https://pool.pm/asset1a4es49gslew40jgewfe457697s70u24tpxmmsc",
+    spotifyLink:
+      "https://open.spotify.com/album/5HNfh8xo85KZSh9MdIzgyy?si=FBJrqdD5TzC3eGJy3BOikQ",
+    description: "Lorem ipsum dolor sit amet.",
+    socials: [
+      {
+        heading: "Abyss",
+        twitter: "http://www.twitter.com/abyssbeats",
+        instagram: "http://www.instagram.com/officialabyssbeats",
+        tiktok: "http://www.tiktok.com/@abyssbeats",
+      },
+      {
+        heading: "Mikey Mo the MC",
+        twitter: "http://twitter.com/MikeyMoTheMC",
+        facebook: "http://www.facebook.com/MikeyMoTheMC",
+        instagram: "http://www.instagram.com/MikeyMoTheMC",
+      },
+      {
+        heading: "The GR8",
+        twitter: "http://twitter.com/thegr8vibe",
+        tiktok: "http://www.tiktok.com/@thegr8vibe",
+        instagram: "http://www.instagram.com/thegr8vibe",
+      },
+      {
+        heading: "Moodswingz Muzik",
+        instagram: "http://www.instagram.com/MoodswingzMuzik",
+        website: "http://moodswingzmuzik.com",
       },
     ],
   },

@@ -294,7 +294,12 @@ const Landing: FunctionComponent = () => {
                   alignItems: "center",
                 } }
               >
-                <DisplayText style={ { color: theme.colors.grey100 } }>
+                <DisplayText
+                  style={ {
+                    color: theme.colors.grey100,
+                    lineHeight: "1.45rem",
+                  } }
+                >
                   { bundleAmounts.size.toLocaleString() } stream{ " " }
                   <span style={ { whiteSpace: "nowrap" } }>
                     tokens
