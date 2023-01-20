@@ -5,6 +5,7 @@ import InstagramIcon from "assets/images/InstagramIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import TwitterIcon from "assets/images/TwitterIcon";
 import SoundcloudIcon from "assets/images/SoundcloudIcon";
+import TiktokIcon from "assets/images/TiktokIcon";
 import { AccentButton } from "elements";
 import { projectDetails } from "buildParams";
 
@@ -40,7 +41,7 @@ const SocialsModal = () => {
 
       { socials.map(
         (
-          { heading, twitter, instagram, soundcloud, spotify, website },
+          { heading, twitter, instagram, soundcloud, spotify, tikTok, website },
           idx
         ) => (
           <Stack
@@ -94,6 +95,13 @@ const SocialsModal = () => {
                     <SpotifyIcon height={ 16 } width={ 16 } fillColor="#DC3CAA" />
                   }
                   text="Spotify"
+                />
+              ) }
+              { tikTok && (
+                <SocialButton
+                  href={ tikTok }
+                  icon={ <TiktokIcon /> }
+                  text="TikTok"
                 />
               ) }
               { website && (

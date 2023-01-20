@@ -18,7 +18,7 @@ interface ProjectDetails {
     readonly spotify?: string;
     readonly soundcloud?: string;
     readonly facebook?: string;
-    readonly tiktok?: string;
+    readonly tikTok?: string;
     readonly website?: string;
   }>;
 }
@@ -30,7 +30,7 @@ export const isProd = process.env.NODE_ENV === "production";
 export const enableReduxLogging = !isProd && true;
 
 // set this to false to disable countdown page in development
-export const enableCountdown = isProd || true;
+export const enableCountdown = isProd || false;
 
 // TODO: Update with NEWM server production url host
 export const baseUrls: Record<string, string> = {
@@ -178,13 +178,21 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     poolLink: "https://pool.pm/asset1a4es49gslew40jgewfe457697s70u24tpxmmsc",
     spotifyLink:
       "https://open.spotify.com/album/5HNfh8xo85KZSh9MdIzgyy?si=FBJrqdD5TzC3eGJy3BOikQ",
-    description: "Lorem ipsum dolor sit amet.",
+    description:
+      "The Moodswingz Muzik team linked up with Hip Hop artist & Sacramento " +
+      "dance legend TheGr8 to bring you this gem! 'Lost In My Own Zone' " +
+      "celebrates the importance of finding your 'Zone' - that place where " +
+      "you're engulfed in your craft or favorite pastime and nothing else in " +
+      "the world matters.\n\n" +
+      "To show love to their supporters, 100% of the streaming royalties " +
+      "for this record are up for grabs! Get lost in the sonic vibes, and " +
+      "lock in your bundles before they're gone!",
     socials: [
       {
         heading: "Abyss",
         twitter: "http://www.twitter.com/abyssbeats",
         instagram: "http://www.instagram.com/officialabyssbeats",
-        tiktok: "http://www.tiktok.com/@abyssbeats",
+        tikTok: "http://www.tiktok.com/@abyssbeats",
       },
       {
         heading: "Mikey Mo the MC",
@@ -193,9 +201,9 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         instagram: "http://www.instagram.com/MikeyMoTheMC",
       },
       {
-        heading: "The GR8",
+        heading: "The Gr8",
         twitter: "http://twitter.com/thegr8vibe",
-        tiktok: "http://www.tiktok.com/@thegr8vibe",
+        tikTok: "http://www.tiktok.com/@thegr8vibe",
         instagram: "http://www.instagram.com/thegr8vibe",
       },
       {
