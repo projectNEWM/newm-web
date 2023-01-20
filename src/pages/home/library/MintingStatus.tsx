@@ -15,7 +15,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   if (mintingStatus === "Earning") {
     return (
       <IconStatus
-        icon={ <Check fontSize="large" sx={ { color: theme.colors.green } } /> }
+        icon={ <Check fontSize="medium" sx={ { color: theme.colors.green } } /> }
         status="Distributed"
       />
     );
@@ -34,7 +34,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   } else {
     return (
       <IconStatus
-        icon={ <Close fontSize="large" sx={ { color: theme.colors.grey200 } } /> }
+        icon={ <Close fontSize="medium" sx={ { color: theme.colors.grey200 } } /> }
         fontColor="grey200"
         status="Undistributed"
       />

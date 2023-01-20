@@ -20,6 +20,7 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   status,
 }) => (
   <Stack
+    display="flex"
     spacing={ 1 }
     direction="row"
     color={ theme.colors[iconColor] }
@@ -27,11 +28,7 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   >
     { icon }
 
-    <Typography
-      color={ fontColor }
-      variant="body2"
-      sx={ { display: { xs: "block" } } }
-    >
+    <Typography lineHeight={ "0" } color={ fontColor }>
       { status }
     </Typography>
   </Stack>

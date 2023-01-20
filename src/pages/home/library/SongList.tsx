@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, Typography } from "elements";
+import { Button } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
@@ -31,12 +31,32 @@ interface SongListProps {
   setPage: Dispatch<SetStateAction<number>>;
 }
 
+const StyledHeaderCell = styled(TableCell)({
+  paddingTop: "16px",
+  paddingBottom: "16px",
+  paddingLeft: "24px",
+  borderBottom: `1px solid ${theme.colors.grey500}`,
+
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 600,
+  fontSize: "14px",
+  lineHeight: "17px",
+  color: theme.colors.grey100,
+});
+
 const StyledTableCell = styled(TableCell)({
-  paddingTop: "20px",
-  paddingBottom: "20px",
-  paddingLeft: "0px",
-  borderTop: `1px solid ${theme.colors.grey600}`,
-  borderBottom: `1px solid ${theme.colors.grey600}`,
+  paddingTop: "10px",
+  paddingBottom: "10px",
+  borderTop: `1px solid ${theme.colors.grey500}`,
+  borderBottom: `1px solid ${theme.colors.grey500}`,
+
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: "14px",
+  lineHeight: "20px",
+  color: theme.colors.white,
 });
 
 export default function SongList({
@@ -89,7 +109,7 @@ export default function SongList({
     if (!url) {
       return "";
     } else if (url.split("/")[2] == "res.cloudinary.com") {
-      return url.replace("upload/", "upload/w_56,h_56,c_fill,q_auto,f_auto/");
+      return url.replace("upload/", "upload/w_40,h_40,c_fill,q_auto,f_auto/");
     } else {
       return url;
     }
@@ -122,47 +142,25 @@ export default function SongList({
         <Table size="small" aria-label="Song List">
           <TableHead>
             <TableRow>
-              <StyledTableCell>
-                <Typography
-                  variant="body2"
-                  fontWeight={ theme.typography.fontWeightSemiBold }
-                  color="grey100"
-                >
-                  SONG
-                </Typography>
-              </StyledTableCell>
-              <StyledTableCell
-                sx={ { display: { xs: "none", md: "table-cell" } } }
+              <StyledHeaderCell>SONG NAME</StyledHeaderCell>
+              <StyledHeaderCell
+                sx={ { display: { xs: "none", sm: "table-cell" } } }
               >
-                <Typography
-                  variant="body2"
-                  fontWeight={ theme.typography.fontWeightSemiBold }
-                  color="grey100"
-                >
-                  MINTING
-                </Typography>
-              </StyledTableCell>
-              <StyledTableCell
-                sx={ { display: { xs: "none", md: "table-cell" } } }
+                MINTING
+              </StyledHeaderCell>
+              <StyledHeaderCell
+                sx={ { display: { xs: "none", lg: "table-cell" } } }
               >
-                <Typography
-                  variant="body2"
-                  fontWeight={ theme.typography.fontWeightSemiBold }
-                  color="grey100"
-                >
-                  GENRE
-                </Typography>
-              </StyledTableCell>
-              <StyledTableCell>
-                <Typography
-                  variant="body2"
-                  fontWeight={ theme.typography.fontWeightSemiBold }
-                  color="grey100"
-                  textAlign="center"
-                >
-                  TIME
-                </Typography>
-              </StyledTableCell>
+                GENRE
+              </StyledHeaderCell>
+              <StyledHeaderCell
+                sx={ {
+                  textAlign: "end",
+                  display: { xs: "none", md: "table-cell" },
+                } }
+              >
+                LENGTH
+              </StyledHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -187,16 +185,16 @@ export default function SongList({
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton
                         onClick={ () => handleSongPlayPause(song) }
-                        sx={ { paddingRight: 4, paddingLeft: 0 } }
+                        sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
                         { song.id === currentPlayingSong?.id ? (
                           <Pause
-                            fontSize="large"
+                            fontSize="medium"
                             sx={ { color: theme.colors.white } }
                           />
                         ) : (
                           <PlayArrow
-                            fontSize="large"
+                            fontSize="medium"
                             sx={ { color: theme.colors.white } }
                           />
                         ) }
@@ -204,18 +202,19 @@ export default function SongList({
                       <img
                         style={ {
                           borderRadius: "4px",
-                          width: "56px",
-                          height: "56px",
+                          width: "40px",
+                          height: "40px",
                         } }
                         src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
                         alt="Album cover"
                       />
                       <Box
                         sx={ {
+                          fontWeight: "500",
                           paddingLeft: "12px",
                           overflow: "auto",
                           whiteSpace: "nowrap",
-                          maxWidth: { xs: "148px", md: "auto" },
+                          maxWidth: { xs: "110px", sm: "none" },
                         } }
                       >
                         { song.title }
@@ -223,31 +222,39 @@ export default function SongList({
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
-                    sx={ { display: { xs: "none", md: "table-cell" } } }
+                    sx={ { display: { xs: "none", sm: "table-cell" } } }
                   >
-                    <Box sx={ { display: "flex", alignItems: "center" } }>
+                    <Box
+                      sx={ {
+                        display: "flex",
+                        alignItems: "center",
+                      } }
+                    >
                       <MintingStatus mintingStatus={ song.mintingStatus } />
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell
-                    sx={ { display: { xs: "none", md: "table-cell" } } }
+                    sx={ { display: { xs: "none", lg: "table-cell" } } }
                   >
-                    <Typography color="grey100" variant="body2">
-                      { song.genre }
-                    </Typography>
+                    { song.genre }
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Typography
-                      textAlign="center"
-                      variant="body2"
-                      color="grey100"
-                    >
-                      { song.duration
-                        ? formatSongDurationToSongTime(song.duration)
-                        : "-" }
-                    </Typography>
+                  <StyledTableCell
+                    sx={ {
+                      textAlign: "end",
+                      display: { xs: "none", md: "table-cell" },
+                    } }
+                  >
+                    { song.duration
+                      ? formatSongDurationToSongTime(song.duration)
+                      : "-" }
                   </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell
+                    sx={ {
+                      paddingLeft: [0, 1],
+                      paddingRight: [1, 3],
+                      width: "0",
+                    } }
+                  >
                     <Button
                       variant="secondary"
                       width="icon"
