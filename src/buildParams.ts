@@ -165,7 +165,8 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     ],
   },
   abyss: {
-    artistName: "Abyss & Mikey Mo the MC",
+    artistName: "Abyss",
+    subtitle: "feat. Mikey Mo the MC and The Gr8",
     songName: "Lost In My Own Zone",
     launchTimestamp: 1674234000000,
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 9,
@@ -180,7 +181,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "https://open.spotify.com/album/5HNfh8xo85KZSh9MdIzgyy?si=FBJrqdD5TzC3eGJy3BOikQ",
     description:
       "The Moodswingz Muzik team linked up with Hip Hop artist & Sacramento " +
-      "dance legend TheGr8 to bring you this gem! 'Lost In My Own Zone' " +
+      "dance legend The Gr8 to bring you this gem! 'Lost In My Own Zone' " +
       "celebrates the importance of finding your 'Zone' - that place where " +
       "you're engulfed in your craft or favorite pastime and nothing else in " +
       "the world matters.\n\n" +
