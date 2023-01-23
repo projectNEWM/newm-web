@@ -51,7 +51,7 @@ const Discography: FunctionComponent = () => {
 
     isSongFound ? null : setCurrentPlayingSong(null);
   }, [currentPlayingSong, filteredData]);
-
+  
   const renderContent = (
     isLoading: boolean,
     isSuccess: boolean,
