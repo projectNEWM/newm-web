@@ -28,9 +28,7 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   >
     { icon }
 
-    <Typography lineHeight={ "0" } color={ fontColor }>
-      { status }
-    </Typography>
+    <Typography color={ fontColor }>{ status }</Typography>
   </Stack>
 );
 
