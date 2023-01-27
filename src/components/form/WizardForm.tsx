@@ -15,7 +15,7 @@ interface FormRoute {
   readonly element: JSX.Element;
   readonly validationSchema?: Yup.AnySchema;
   readonly onSubmitStep?: (
-    values: FormikValues,
+    values: any, // eslint-disable-line
     helpers: FormikHelpers<FormikValues>
   ) => void;
 }
