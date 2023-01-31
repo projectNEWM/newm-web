@@ -101,8 +101,9 @@ export default function SongList({
     event: React.ChangeEvent<unknown>,
     page: number
   ) => {
-    setCurrentPlayingSong(null);
     setPage(page);
+    // Changing the page from a playing song will pause the song
+    setCurrentPlayingSong(null);
   };
 
   const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
@@ -131,9 +132,11 @@ export default function SongList({
   };
 
   const handleSongPlayPause = (song: Song) => {
-    song.id === currentPlayingSong?.id
-      ? setCurrentPlayingSong(null)
-      : setCurrentPlayingSong({ ...song });
+    if (song.id === currentPlayingSong?.id) {
+      setCurrentPlayingSong(null);
+    } else {
+      setCurrentPlayingSong({ ...song });
+    }
   };
 
   if (songData) {

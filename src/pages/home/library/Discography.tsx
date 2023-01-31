@@ -12,7 +12,7 @@ const Discography: FunctionComponent = () => {
   const { data = [], isLoading, isSuccess } = useGetSongsQuery();
   const songData: Song[] = data;
 
-  const [filteredData, setFilteredData] = useState<Song[]>();
+  const [filteredData, setFilteredData] = useState<Song[]>(songData);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [currentPlayingSong, setCurrentPlayingSong] = useState<Song | null>(
@@ -38,20 +38,15 @@ const Discography: FunctionComponent = () => {
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
-    let isSongFound = false;
-    if (currentPlayingSong !== null && filteredData !== undefined)
-      filteredData.forEach((filteredSong) => {
-        if (isSongFound !== true && filteredSong.id === currentPlayingSong.id) {
-          isSongFound = true;
-        }
-      });
-    else {
-      isSongFound = true;
-    }
+    const isSongFound = !!filteredData?.find((filteredSong) => {
+      return filteredSong.id === currentPlayingSong?.id;
+    });
 
-    isSongFound ? null : setCurrentPlayingSong(null);
+    if (!isSongFound) {
+      setCurrentPlayingSong(null);
+    }
   }, [currentPlayingSong, filteredData]);
-  
+
   const renderContent = (
     isLoading: boolean,
     isSuccess: boolean,
