@@ -11,9 +11,15 @@ import { removeTrailingSlash } from "common";
 import * as Yup from "yup";
 
 interface FormRoute {
+  /** route corresponding to the step */
   readonly path: string;
+  /** The component for the step */
   readonly element: JSX.Element;
+  /** The validation schema for the step */
   readonly validationSchema?: Yup.AnySchema;
+  /** True if form should navigate to next step, defaults to true */
+  readonly navigateOnSubmitStep?: boolean;
+  /** Called when the step is submitted */
   readonly onSubmitStep?: (
     values: any, // eslint-disable-line
     helpers: FormikHelpers<FormikValues>
@@ -77,6 +83,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   ) => {
     const currentRoute = routes[currentIndex];
     const isLastRoute = currentIndex === routes.length - 1;
+    const shouldNavigate = currentRoute.navigateOnSubmitStep ?? true;
 
     if (currentRoute.onSubmitStep) {
       currentRoute.onSubmitStep(values, helpers);
@@ -84,7 +91,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
 
     if (isLastRoute) {
       onSubmit(values, helpers);
-    } else {
+    } else if (shouldNavigate) {
       goForward();
     }
   };

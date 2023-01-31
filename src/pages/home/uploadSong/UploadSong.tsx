@@ -1,7 +1,12 @@
 import { Box, Container } from "@mui/material";
+import { GenerateArtistAgreementBody } from "api";
 import { WizardForm } from "components";
 import { Typography } from "elements";
-import { UploadSongFormValues, uploadSong } from "modules/song";
+import {
+  UploadSongFormValues,
+  generateArtistAgreement,
+  uploadSong,
+} from "modules/song";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -19,6 +24,17 @@ const UploadSong: FunctionComponent = () => {
     description: "",
     isMinting: false,
     largestUtxo: undefined,
+  };
+
+  const handleNavigateToConfirmationStep = ({
+    songName,
+    companyName,
+    artistName,
+    stageName,
+  }: GenerateArtistAgreementBody) => {
+    dispatch(
+      generateArtistAgreement({ songName, companyName, artistName, stageName })
+    );
   };
 
   // eslint-disable-next-line
@@ -51,12 +67,14 @@ const UploadSong: FunctionComponent = () => {
           validateOnBlur={ false }
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
-          rootPath="upload-song"
+          rootPath="home/upload-song"
           validateOnMount={ true }
           routes={ [
             {
               element: <SongDetails />,
               path: "",
+              navigateOnSubmitStep: false,
+              onSubmitStep: handleNavigateToConfirmationStep,
               validationSchema: Yup.object().shape({
                 image: validations.image,
                 audio: validations.audio,

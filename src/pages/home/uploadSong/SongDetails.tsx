@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack } from "@mui/material";
 import { selectContent } from "modules/content";
-import { selectSongIsLoading } from "modules/song";
+import { selectSong } from "modules/song";
 import {
   DropdownSelectField,
   TextAreaField,
@@ -17,7 +17,7 @@ import MintSong from "./MintSong";
 
 const SongDetails: FunctionComponent = () => {
   const { genres } = useSelector(selectContent);
-  const isLoading = useSelector(selectSongIsLoading);
+  const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
 
   return (

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "api";
+import { GenerateArtistAgreementBody, cloudinaryApi, lambdaApi } from "api";
 import { getFileBinary } from "common";
+import { history } from "common/history";
 import { UploadSongFormValues } from "./types";
 import { extendedApi as songApi } from "./api";
 import { setSongIsLoading } from "./slice";
@@ -85,6 +86,31 @@ export const uploadSong = createAsyncThunk(
     } finally {
       // done fetching songs
       thunkApi.dispatch(setSongIsLoading(false));
+    }
+  }
+);
+
+/**
+ * Generates an artist agreement and then navigates
+ * to the confirmation screen.
+ */
+export const generateArtistAgreement = createAsyncThunk(
+  "song/generateArtistAgreement",
+  async (body: GenerateArtistAgreementBody, { dispatch }) => {
+    try {
+      dispatch(setSongIsLoading(true));
+
+      const artistAgreementResp = await dispatch(
+        lambdaApi.endpoints.generateArtistAgreement.initiate(body)
+      );
+
+      if ("error" in artistAgreementResp) return;
+
+      history.push("confirm");
+    } catch (err) {
+      // do nothing
+    } finally {
+      dispatch(setSongIsLoading(false));
     }
   }
 );
