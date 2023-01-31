@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getInitialData } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
+import { history } from "common/history";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
@@ -50,6 +51,14 @@ const Home: FunctionComponent = () => {
           marginLeft: { md: 30 },
         } }
       >
+        <button
+          onClick={ () => {
+            console.log("PUSHED");
+            history.push("confirm");
+          } }
+        >
+          Test
+        </button>
         <Box position="absolute" left="2rem" top="2rem">
           <IconButton onClick={ () => setMobileOpen(true) }>
             <MenuIcon sx={ { color: "white" } } />
