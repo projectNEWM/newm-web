@@ -216,7 +216,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
   },
   danketsu: {
     artistName: "Danketsu",
-    subtitle: "Daisuke ft. NSTASIA and Mirai Music",
+    subtitle: "Daisuke ft. NSTASIA & Mirai Music",
     songName: "Daisuke",
     launchTimestamp: 1675454400000,
     projectId: Number(process.env.REACT_APP_PROJECT_ID) || 11,
@@ -228,7 +228,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "net/eK8gAPCvJ-9kbiP3PrSMwLGAk38aNyxPDudzzbGypxE",
     poolLink: "https://pool.pm/asset1nysnjw6ny434fzpczpnkfd68jqu437654me4pc",
     spotifyLink:
-      "https://open.spotify.com/artist/4EiSbT0iP4YARJ9MGClRgB?si=xYcKtSKAQI61xDHM51-MEA",
+      "https://open.spotify.com/album/2oPlBEr5fkRAbBsFrEkXVE?si=UDqDCTHBRbi3T69WkwpJxA&nd=1",
     description:
       "Danketsu pushes the boundaries of community-driven music in Web3. " +
       "Since 2021, we've onboarded 9 artists to Cardano, including Kyron El, " +
