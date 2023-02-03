@@ -14,7 +14,6 @@ import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import { Song, patchSong, useGetSongQuery } from "modules/song";
 import { selectContent } from "modules/content";
-import { useEffect, useState } from "react";
 
 const SongInfo = () => {
   const location = useLocation();
@@ -24,25 +23,12 @@ const SongInfo = () => {
   const { genres } = useSelector(selectContent);
   const { id = "" } = location.state as Song;
   const { data = {} } = useGetSongQuery(id);
-
-  const [coverArtUrl, setCoverArtUrl] = useState("");
-  const [description, setDescription] = useState("");
-  const [genre, setGenre] = useState("");
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    const {
-      coverArtUrl = "",
-      description = "",
-      genre = "",
-      title = "",
-    } = data as Song;
-
-    setCoverArtUrl(coverArtUrl);
-    setDescription(description);
-    setGenre(genre);
-    setTitle(title);
-  }, [data]);
+  const {
+    coverArtUrl = "",
+    description = "",
+    genre = "",
+    title = "",
+  } = data as Song;
 
   const initialValues = {
     image: coverArtUrl,
@@ -63,27 +49,18 @@ const SongInfo = () => {
    */
   const handleSubmit = (values: FormikValues) => {
     const updatedValues: FormikValues = {};
-
     if (values.image && coverArtUrl !== values.image) {
       updatedValues.image = values.image;
-      setCoverArtUrl(values.image);
     }
-
     if (description !== values.description) {
       updatedValues.description = values.description;
-      setDescription(values.description);
     }
-
     if (genre !== values.genre) {
       updatedValues.genre = values.genre;
-      setGenre(values.genre);
     }
-
     if (title !== values.title) {
       updatedValues.title = values.title;
-      setTitle(values.title);
     }
-
     dispatch(patchSong({ id, ...updatedValues }));
   };
 
