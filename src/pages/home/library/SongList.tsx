@@ -150,9 +150,11 @@ export default function SongList({
                     { song.genre }
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <Box sx={ { display: { xs: "none", sm: "inline" } } }>
-                      { song.createdAt.slice(0, 10) }{ " " }
-                    </Box>
+                    { song.createdAt && (
+                      <Box sx={ { display: { xs: "none", sm: "inline" } } }>
+                        { song.createdAt.slice(0, 10) }{ " " }
+                      </Box>
+                    ) }
                     <Link to="edit-song" state={ { ...song } }>
                       Edit
                     </Link>

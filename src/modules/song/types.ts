@@ -15,6 +15,10 @@ export interface UploadSongFormValues {
   readonly largestUtxo?: number;
 }
 
+export interface PatchSongRequest extends Partial<Song> {
+  readonly image?: any; // eslint-disable-line
+}
+
 export interface UploadSongRequest {
   readonly title: string;
   readonly genre: string;
