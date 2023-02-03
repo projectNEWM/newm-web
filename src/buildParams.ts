@@ -226,7 +226,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     royaltyAgreement:
       "https://pcxsaahqv4t66zdoep3t5nemycyybe37di3sytyo45z43mnsu4iq.arweave." +
       "net/eK8gAPCvJ-9kbiP3PrSMwLGAk38aNyxPDudzzbGypxE",
-    poolLink: "https://pool.pm/asset1nysnjw6ny434fzpczpnkfd68jqu437654me4pc",
+    poolLink: "https://pool.pm/asset1effvlkkw02m9ft3ymlkfld8mhlq05wc2hal5du",
     spotifyLink:
       "https://open.spotify.com/album/2oPlBEr5fkRAbBsFrEkXVE?si=UDqDCTHBRbi3T69WkwpJxA&nd=1",
     description:
