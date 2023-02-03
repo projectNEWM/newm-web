@@ -214,6 +214,55 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       },
     ],
   },
+  danketsu: {
+    artistName: "Danketsu",
+    subtitle: "Daisuke ft. NSTASIA and Mirai Music",
+    songName: "Daisuke",
+    launchTimestamp: 1675454400000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 11,
+    bundleAmount: 10000,
+    totalTokens: 100000000,
+    bundlePrice: 10,
+    royaltyAgreement:
+      "https://pcxsaahqv4t66zdoep3t5nemycyybe37di3sytyo45z43mnsu4iq.arweave." +
+      "net/eK8gAPCvJ-9kbiP3PrSMwLGAk38aNyxPDudzzbGypxE",
+    poolLink: "https://pool.pm/asset1nysnjw6ny434fzpczpnkfd68jqu437654me4pc",
+    spotifyLink:
+      "https://open.spotify.com/artist/4EiSbT0iP4YARJ9MGClRgB?si=xYcKtSKAQI61xDHM51-MEA",
+    description:
+      "Danketsu pushes the boundaries of community-driven music in Web3. " +
+      "Since 2021, we've onboarded 9 artists to Cardano, including Kyron El, " +
+      "Billy Martin, IAGO, Katie Belle, Lenii, EKKO, LeTreez, NSTASIA and " +
+      "more to come.\n\n" +
+      "Our music production differs from the traditional by putting our " +
+      "community first. They get a say in everything from genre, to beats, " +
+      "to lyrics, and even provide their own stems and vocals to final " +
+      "mixes. Being a part of high-quality music was never so easy.\n\n" +
+      "This release tells the story of Danketsu's Daisuke Clan – co-produced " +
+      "by Mirai Music and our Ninjaz Community with NSTASIA as lead vocals.\n\n" +
+      "You can now co-own a piece of this song, taking the concept of " +
+      "community-driven music to the next level. This is the power of " +
+      "decentralization!",
+    socials: [
+      {
+        heading: "Danketsu",
+        twitter: "https://twitter.com/DanketsuNFT",
+        website: "https://www.danketsu.io/",
+      },
+      {
+        heading: "Mirai Music",
+        twitter: "https://twitter.com/miraimusicprod",
+        instagram: "https://www.instagram.com/miraimusicprod",
+        website: "https://www.miraimusicproductions.com",
+      },
+      {
+        heading: "NSTASIA",
+        twitter: "https://twitter.com/NastasiaGriffin",
+        instagram: "https://www.instagram.com/nastasiagriffin",
+        website: "https://www.nstasia.com",
+      },
+    ],
+  },
 };
 
 export const projectDetails = projectDetailsMap[artistName];

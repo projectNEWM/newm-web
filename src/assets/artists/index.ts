@@ -1,10 +1,10 @@
 interface ArtistAssets {
   readonly albumArt: string;
   readonly albumArtXs: string;
-  readonly profileSecondary: string;
   readonly profilePrimary: string;
-  readonly profileSm: string;
-  readonly profileXs: string;
+  readonly profileSecondary: string;
+  readonly profileSm?: string;
+  readonly profileXs?: string;
   readonly preview: string;
 }
 
@@ -44,6 +44,13 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileSm: require("./abyss/profile@60.png"),
     profileXs: require("./abyss/profile-small.png"),
     preview: require("./abyss/preview.mp3"),
+  },
+  danketsu: {
+    albumArt: require("./danketsu/album-art.webp"),
+    albumArtXs: require("./danketsu/album-art@80.webp"),
+    profilePrimary: require("./danketsu/profile-cut.webp"),
+    profileSecondary: require("./danketsu/profile-cropped.webp"),
+    preview: require("./danketsu/preview.wav"),
   },
 };
 
