@@ -1,17 +1,49 @@
+import * as Yup from "yup";
 import { FunctionComponent } from "react";
-import { Box, DialogProps, Stack, Typography, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Form, Formik, FormikValues } from "formik";
+import { Box, DialogProps, Stack, Typography } from "@mui/material";
 import { Button, Dialog, HorizontalLine } from "elements";
-import { SwitchField, TextInputField } from "components";
+import { DropdownSelectField, SwitchField, TextInputField } from "components";
+import { commonYupValidation } from "common";
+import { selectContent } from "modules/content";
+import theme from "theme";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
+  readonly onSubmit: (values: FormikValues) => void;
 }
 
 const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   open,
   onClose,
+  onSubmit,
 }) => {
-  const theme = useTheme();
+  const { roles } = useSelector(selectContent);
+
+  const initialValues = {
+    email: "",
+    firstName: "",
+    isCreator: false,
+    isRightsOwner: false,
+    lastName: "",
+    role: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: commonYupValidation.email,
+    firstName: commonYupValidation.firstName,
+    isCreator: Yup.boolean()
+      .required()
+      .test(
+        "at-least-one-true",
+        "Rights or Credits must be true",
+        (item, testContext) => item || testContext.parent.isRightsOwner
+      ),
+    isRightsOwner: Yup.boolean(),
+    lastName: commonYupValidation.lastName,
+    role: commonYupValidation.role(roles),
+  });
 
   return (
     <Dialog
@@ -25,82 +57,127 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
         },
       } }
     >
-      <Box
-        sx={ {
-          display: "flex",
-          flexDirection: "column",
-          padding: theme.spacing(3),
-          rowGap: 2,
-        } }
+      <Formik
+        initialValues={ initialValues }
+        onSubmit={ onSubmit }
+        validationSchema={ validationSchema }
       >
-        <Typography variant="body2" id="modal-title">
-          Add new
-        </Typography>
-        <TextInputField label="Name" name="Name" placeholder="John Smith" />
-        <TextInputField
-          label="Email"
-          name="Email"
-          placeholder="john.smith@gmail.com"
-        />
-
-        <HorizontalLine marginTop={ theme.spacing(2) } />
-
-        <Stack
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: theme.spacing(2),
-          } }
-        >
-          <Typography paddingRight={ theme.spacing(1) }>
-            Does this person owns ip rights to this song?
-          </Typography>
-          <SwitchField name="isRightsOwner" />
-        </Stack>
-
-        <Stack
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: theme.spacing(2),
-          } }
-        >
-          <Stack>
-            <Typography paddingRight={ theme.spacing(1) }>
-              Is this person a creator?
-            </Typography>
-            <Typography
-              fontSize={ 12 }
-              paddingRight={ theme.spacing(1) }
-              variant="subtitle1"
+        { ({ errors }) => (
+          <Form>
+            <Box
+              sx={ {
+                display: "flex",
+                flexDirection: "column",
+                p: 2,
+                rowGap: 2,
+              } }
             >
-              Enable to show this person in the credits.
-            </Typography>
-          </Stack>
-          <SwitchField name="isCreator" />
-        </Stack>
+              <Typography variant="body2" id="modal-title">
+                Add new
+              </Typography>
 
-        <HorizontalLine marginTop={ theme.spacing(2) } />
+              <Stack direction="row" columnGap={ 1.5 }>
+                <TextInputField
+                  label="FIRST NAME"
+                  name="firstName"
+                  placeholder="John"
+                />
+                <TextInputField
+                  label="LAST NAME"
+                  name="lastName"
+                  placeholder="Smith"
+                />
+              </Stack>
+              <TextInputField
+                label="EMAIL"
+                name="email"
+                placeholder="john.smith@gmail.com"
+                widthType="full"
+              />
 
-        <Stack
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            columnGap: 4,
-          } }
-        >
-          <Button variant="outlined" width="compact" onClick={ onClose }>
-            Cancel
-          </Button>
-          <Button width="compact">Add</Button>
-        </Stack>
-      </Box>
+              <HorizontalLine mt={ 2 } />
+
+              <Stack
+                sx={ {
+                  alignItems: "center",
+                  backgroundColor: theme.colors.grey500,
+                  border: `2px solid ${theme.colors.grey400}`,
+                  borderRadius: "4px",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  mt: 2,
+                  p: 1.5,
+                } }
+              >
+                <Stack>
+                  <Typography pr={ 1 }>IP RIGHTS</Typography>
+                  <Typography fontSize={ 12 } pr={ 1 } variant="subtitle1">
+                    Does this person own IP rights to this song?
+                  </Typography>
+                </Stack>
+                <SwitchField name="isRightsOwner" />
+              </Stack>
+
+              <Stack
+                sx={ {
+                  alignItems: "center",
+                  backgroundColor: theme.colors.grey500,
+                  border: `2px solid ${theme.colors.grey400}`,
+                  borderRadius: "4px",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  mt: 2,
+                  p: 1.5,
+                } }
+              >
+                <Stack>
+                  <Typography pr={ 1 }>CREDITS</Typography>
+                  <Typography fontSize={ 12 } pr={ 1 } variant="subtitle1">
+                    Did they have a role in making the song? Enable to credit
+                    them as a contributor.
+                  </Typography>
+                </Stack>
+                <SwitchField name="isCreator" />
+              </Stack>
+
+              { errors.isCreator ? (
+                <Typography variant="h5" color="error">
+                  { errors.isCreator }
+                </Typography>
+              ) : null }
+
+              <DropdownSelectField
+                label="ROLE"
+                name="role"
+                options={ roles }
+                placeholder="Select role"
+                widthType="full"
+              />
+
+              <HorizontalLine mt={ 2 } />
+
+              <Stack
+                sx={ {
+                  alignItems: "center",
+                  columnGap: 4,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                } }
+              >
+                <Button variant="outlined" width="compact" onClick={ onClose }>
+                  Cancel
+                </Button>
+                <Button width="compact" type="submit">
+                  Add
+                </Button>
+              </Stack>
+            </Box>
+          </Form>
+        ) }
+      </Formik>
     </Dialog>
   );
 };

@@ -21,6 +21,7 @@ export interface DropdownSelectProps
   readonly noResultsText?: string;
   readonly options: string[];
   readonly placeholder?: string;
+  readonly widthType?: "default" | "full";
 }
 const StyledDropdownSelectContainer = styled.div`
   position: relative;
