@@ -1,4 +1,4 @@
-import { Box, BoxProps, Stack } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { useTheme } from "@mui/material/styles";
@@ -108,7 +108,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   }, [file]);
 
   return (
-    <Stack direction="column" spacing={ 1 } alignItems="center">
+    <>
       <Box
         { ...getRootProps() }
         sx={ {
@@ -119,6 +119,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           width: "100%",
           maxWidth: theme.inputField.maxWidth,
           cursor: "pointer",
+          borderRadius: "4px",
         } }
       >
         <input { ...getInputProps() } />
@@ -127,7 +128,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           <ImagePreview
             onMouseEnter={ () => setIsHovering(true) }
             onMouseLeave={ () => setIsHovering(false) }
-            imageUrl={ file.preview }
+            imageUrl={ (file.preview || file) as string }
           >
             { isHovering || isDragActive ? (
               <IconMessage
@@ -151,7 +152,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       { !!errorMessage && (
         <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
       ) }
-    </Stack>
+    </>
   );
 };
 

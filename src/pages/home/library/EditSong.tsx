@@ -1,12 +1,13 @@
-import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
+import { Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { ReactNode, SyntheticEvent, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import ArrowLeft from "assets/images/ArrowLeft";
-import VerticalEllipsis from "assets/images/VerticalEllipsis";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
 import { Song } from "modules/song";
+import SongInfo from "./SongInfo";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -20,14 +21,15 @@ interface ColorMap {
 
 const TabPanel = ({ children, value, index }: TabPanelProps) => {
   return (
-    <div
+    <Stack
       aria-labelledby={ `tab-${index}` }
       hidden={ value !== index }
       id={ `tabpanel-${index}` }
       role="tabpanel"
+      mb={ 2 }
     >
-      { value === index && <Box sx={ { p: 3 } }>{ children }</Box> }
-    </div>
+      { value === index && children }
+    </Stack>
   );
 };
 
@@ -37,7 +39,8 @@ const EditSong = () => {
 
   const [tab, setTab] = useState(0);
 
-  const { title, coverArtUrl } = location.state as Song;
+  const { coverArtUrl = "", title = "" } = location.state as Song;
+
   const colorMap: ColorMap = {
     0: "music",
     1: "crypto",
@@ -57,7 +60,7 @@ const EditSong = () => {
           variant="outlined"
           width="icon"
         >
-          <ArrowLeft />
+          <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
         <ProfileImage
           alt="Song cover art"
@@ -65,14 +68,14 @@ const EditSong = () => {
           src={ coverArtUrl }
           width="90px"
         />
-        <Typography variant="h3">{ title.toUpperCase() }</Typography>
+        { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
         <Button
           color="white"
           variant="outlined"
           width="icon"
           sx={ { marginLeft: "auto" } }
         >
-          <VerticalEllipsis />
+          <DeleteIcon fontSize="small" sx={ { color: "white" } } />
         </Button>
       </Stack>
       <Stack sx={ { borderBottom: 1, borderColor: theme.colors.grey300, mt: 4 } }>
@@ -105,7 +108,7 @@ const EditSong = () => {
         </Tabs>
       </Stack>
       <TabPanel value={ tab } index={ 0 }>
-        Song info content goes here
+        <SongInfo />
       </TabPanel>
       <TabPanel value={ tab } index={ 1 }>
         Mint content goes here

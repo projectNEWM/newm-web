@@ -5,12 +5,33 @@ import {
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
   GetSongsResponse,
+  PatchSongRequest,
+  Song,
   UploadSongRequest,
   UploadSongResponse,
 } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getSong: build.query<Song, string>({
+      query: (id) => ({
+        url: `v1/songs/${id}`,
+        method: "GET",
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song info",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     getSongs: build.query<GetSongsResponse, void>({
       query: () => "v1/songs",
 
@@ -37,6 +58,33 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    patchSong: build.mutation<void, PatchSongRequest>({
+      query: ({ id, ...body }) => ({
+        url: `v1/songs/${id}`,
+        method: "PATCH",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            setToastMessage({
+              message: "Updated song information",
+              severity: "success",
+            })
+          );
         } catch ({ error }) {
           dispatch(
             setToastMessage({
@@ -96,6 +144,6 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetSongsQuery } = extendedApi;
+export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
 
 export default extendedApi;
