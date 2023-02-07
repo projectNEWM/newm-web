@@ -11,7 +11,7 @@ export interface IconStatusProps {
 }
 
 /**
- * Displays a vertically stacked icon and message.
+ * Displays a horizontal icon and message.
  */
 const IconStatus: FunctionComponent<IconStatusProps> = ({
   icon,

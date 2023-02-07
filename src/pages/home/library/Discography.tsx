@@ -11,14 +11,17 @@ import SongList from "./SongList";
 const Discography: FunctionComponent = () => {
   const { data = [], isLoading, isSuccess } = useGetSongsQuery();
   const songData: Song[] = data;
-
-  const [filteredData, setFilteredData] = useState<Song[]>(songData);
+  const [filteredData, setFilteredData] = useState<Song[]>([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [currentPlayingSong, setCurrentPlayingSong] = useState<Song | null>(
-    null
-  );
+  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
+    string | null
+  >(null);
   const viewportWidth = useWindowDimensions()?.width;
+
+  useEffect(() => {
+    setFilteredData(songData);
+  }, [songData]);
 
   const handleSearch = (searched: string) => {
     setQuery(searched);
@@ -39,13 +42,30 @@ const Discography: FunctionComponent = () => {
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
     const isSongFound = !!filteredData?.find((filteredSong) => {
-      return filteredSong.id === currentPlayingSong?.id;
+      return filteredSong.id === currentPlayingSongId;
     });
 
     if (!isSongFound) {
-      setCurrentPlayingSong(null);
+      setCurrentPlayingSongId(null);
     }
-  }, [currentPlayingSong, filteredData]);
+  }, [currentPlayingSongId, filteredData]);
+
+  const handleSongPlayPause = (song: Song) => {
+    if (song.id === currentPlayingSongId) {
+      setCurrentPlayingSongId(null);
+    } else {
+      setCurrentPlayingSongId(song.id);
+    }
+  };
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setPage(page);
+    // Changing the page from a playing song will pause the song
+    setCurrentPlayingSongId(null);
+  };
 
   const renderContent = (
     isLoading: boolean,
@@ -85,10 +105,10 @@ const Discography: FunctionComponent = () => {
           />
           <SongList
             songData={ query == "" ? songData : filteredData }
-            currentPlayingSong={ currentPlayingSong }
-            setCurrentPlayingSong={ setCurrentPlayingSong }
+            currentPlayingSongId={ currentPlayingSongId }
+            onSongPlayPause={ handleSongPlayPause }
             page={ page }
-            setPage={ setPage }
+            onPageChange={ handlePageChange }
           />
         </>
       );

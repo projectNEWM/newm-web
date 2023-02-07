@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
@@ -25,10 +25,10 @@ import { MintingStatus } from "./MintingStatus";
 interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
-  currentPlayingSong: Song | null;
-  setCurrentPlayingSong: Dispatch<SetStateAction<Song | null>>;
+  currentPlayingSongId: string | null;
+  onSongPlayPause: (song: Song) => void;
   page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  onPageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 }
 
 const StyledHeaderCell = styled(TableCell)({
@@ -62,10 +62,10 @@ const StyledTableCell = styled(TableCell)({
 export default function SongList({
   songData,
   rowHeight = 65,
-  currentPlayingSong,
-  setCurrentPlayingSong,
+  currentPlayingSongId,
+  onSongPlayPause,
   page,
-  setPage,
+  onPageChange,
 }: SongListProps) {
   const headerHeight = 245;
   const footerHeight = 40;
@@ -97,15 +97,6 @@ export default function SongList({
     );
   }, [windowHeight, rowHeight]);
 
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page);
-    // Changing the page from a playing song will pause the song
-    setCurrentPlayingSong(null);
-  };
-
   const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
     if (!url) {
       return "";
@@ -129,14 +120,6 @@ export default function SongList({
     const formattedSongTime = minutes + ":" + seconds;
 
     return formattedSongTime;
-  };
-
-  const handleSongPlayPause = (song: Song) => {
-    if (song.id === currentPlayingSong?.id) {
-      setCurrentPlayingSong(null);
-    } else {
-      setCurrentPlayingSong({ ...song });
-    }
   };
 
   if (songData) {
@@ -174,7 +157,7 @@ export default function SongList({
               )
               .map((song) => (
                 <TableRow
-                  onClick={ () => handleSongPlayPause(song) }
+                  onClick={ () => onSongPlayPause(song) }
                   key={ song.id }
                   sx={ {
                     cursor: "pointer",
@@ -187,10 +170,10 @@ export default function SongList({
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton
-                        onClick={ () => handleSongPlayPause(song) }
+                        onClick={ () => onSongPlayPause(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
-                        { song.id === currentPlayingSong?.id ? (
+                        { song.id === currentPlayingSongId ? (
                           <Pause
                             fontSize="medium"
                             sx={ { color: theme.colors.white } }
@@ -283,7 +266,7 @@ export default function SongList({
               page={ page }
               rowsPerPage={ rowsPerPage }
               lastRowOnPage={ lastRowOnPage }
-              handlePageChange={ handlePageChange }
+              handlePageChange={ onPageChange }
               colSpan={ 3 }
               rows="songs"
               cellStyles={ { paddingTop: "12px" } }
