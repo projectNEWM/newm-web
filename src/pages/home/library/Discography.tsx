@@ -9,9 +9,8 @@ import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const { data = [], isLoading, isSuccess } = useGetSongsQuery();
-  const songData: Song[] = data;
-  const [filteredData, setFilteredData] = useState<Song[]>([]);
+  const { data: songData = [], isLoading, isSuccess } = useGetSongsQuery();
+  const [filteredData, setFilteredData] = useState(songData);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
@@ -104,7 +103,7 @@ const Discography: FunctionComponent = () => {
             onSearch={ handleSearch }
           />
           <SongList
-            songData={ query == "" ? songData : filteredData }
+            songData={ filteredData }
             currentPlayingSongId={ currentPlayingSongId }
             onSongPlayPause={ handleSongPlayPause }
             page={ page }
