@@ -20,11 +20,14 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   status,
 }) => (
   <Stack
-    display="flex"
-    spacing={ 1 }
-    direction="row"
-    color={ theme.colors[iconColor] }
-    sx={ { justifyContent: "center", alignItems: "center" } }
+    sx={ {
+      display: "flex",
+      gap: 1,
+      flexDirection: "row",
+      color: theme.colors[iconColor],
+      justifyContent: "center",
+      alignItems: "center",
+    } }
   >
     { icon }
 

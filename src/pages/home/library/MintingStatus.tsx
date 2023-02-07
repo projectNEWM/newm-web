@@ -12,7 +12,7 @@ interface MintingStatusProps {
 export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   mintingStatus,
 }) => {
-  if (mintingStatus === "Earning") {
+  if (mintingStatus === "Distributed") {
     return (
       <IconStatus
         icon={ <Check fontSize="medium" sx={ { color: theme.colors.green } } /> }
@@ -31,7 +31,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
     return (
       <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Rejected" />
     );
-  } else {
+  } else if (mintingStatus === "Undistributed") {
     return (
       <IconStatus
         icon={ <Close fontSize="medium" sx={ { color: theme.colors.grey200 } } /> }
@@ -39,5 +39,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
         status="Undistributed"
       />
     );
+  } else {
+    return null;
   }
 };
