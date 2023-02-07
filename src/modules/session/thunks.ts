@@ -2,7 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { extendedApi as sessionApi } from "./api";
-import { CreateAccountRequest, UpdateProfileRequest } from "./types";
+import {
+  CreateAccountRequest,
+  ResetPasswordRequest,
+  UpdateProfileRequest,
+} from "./types";
 
 /**
  * Update the user's profile and navigate to
@@ -69,6 +73,40 @@ export const createAccount = createAsyncThunk(
     }
 
     window.location.pathname = "create-profile";
+  }
+);
+
+/**
+ * Reset user password. Navigate to the login page to have user
+ * enter their new password.
+ */
+export const resetPassword = createAsyncThunk(
+  "session/resetPassword",
+  async (body: ResetPasswordRequest, { dispatch }) => {
+    const resetPasswordResponse = await dispatch(
+      sessionApi.endpoints.resetPassword.initiate(body)
+    );
+
+    if ("error" in resetPasswordResponse) {
+      dispatch(
+        setToastMessage({
+          message: "An error occured while resetting your password",
+          severity: "error",
+        })
+      );
+
+      return;
+    }
+
+    window.location.pathname = "login";
+
+    dispatch(
+      setToastMessage({
+        heading: "Password changed!",
+        message: "Login with the newly defined password.",
+        severity: "success",
+      })
+    );
   }
 );
 

@@ -83,3 +83,10 @@ export interface CreateAccountRequest {
   readonly pictureUrl?: string;
   readonly role?: string;
 }
+
+export interface ResetPasswordRequest {
+  readonly authCode: string;
+  readonly confirmPassword: string;
+  readonly email: string;
+  readonly newPassword: string;
+}

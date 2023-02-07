@@ -2,6 +2,7 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
 import { Form, Formik, FormikValues } from "formik";
 import {
@@ -17,6 +18,7 @@ import { extendedApi as sessionApi } from "modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [maskPassword, setMaskPassword] = useState(true);
 
@@ -31,11 +33,6 @@ const Login: FunctionComponent = () => {
 
   const handleLogin = async ({ email, password }: FormikValues) => {
     await dispatch(sessionApi.endpoints.login.initiate({ email, password }));
-  };
-
-  const handleForgotPassword = () => {
-    // eslint-disable-next-line no-console
-    console.log("Insert reset password logic");
   };
 
   useAuthenticatedRedirect();
@@ -92,7 +89,12 @@ const Login: FunctionComponent = () => {
               >
                 Log In
               </Button>
-              <Button variant="outlined" onClick={ handleForgotPassword }>
+              <Button
+                onClick={ () => {
+                  navigate("/forgot-password");
+                } }
+                variant="outlined"
+              >
                 Forgot password?
               </Button>
               <Link to="/sign-up" style={ { marginBottom: "8px" } }>
