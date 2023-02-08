@@ -10,7 +10,7 @@ import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
   const { data: songData = [], isLoading, isSuccess } = useGetSongsQuery();
-  const [filteredData, setFilteredData] = useState(songData);
+  const [filteredData, setFilteredData] = useState<Song[]>([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<

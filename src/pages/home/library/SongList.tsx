@@ -260,7 +260,7 @@ export default function SongList({
               </TableRow>
             ) }
           </TableBody>
-          { songData.length > rowsPerPage ? (
+          { songData.length > rowsPerPage && (
             <TablePagination
               numberOfRows={ songData.length }
               page={ page }
@@ -271,8 +271,6 @@ export default function SongList({
               rows="songs"
               cellStyles={ { paddingTop: "12px" } }
             />
-          ) : (
-            ""
           ) }
         </Table>
       </TableContainer>
