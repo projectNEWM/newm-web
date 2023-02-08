@@ -50,15 +50,18 @@ export interface AudioUploadUrlResponse {
 export interface Song {
   readonly id: string;
   readonly ownerId: string;
+  readonly createdAt: string;
   readonly title: string;
   readonly genre: string;
-  readonly description?: string;
   readonly coverArtUrl?: string;
-  readonly audioUrl?: string;
-  readonly createdAt: string;
+  readonly description?: string;
   readonly credits?: string;
+  readonly duration?: number;
+  readonly streamUrl?: string;
   readonly nftPolicyId?: string;
   readonly nftName?: string;
+  readonly mintingStatus?: string;
+  readonly marketplaceStatus?: string;
 }
 
 export interface Artist {
