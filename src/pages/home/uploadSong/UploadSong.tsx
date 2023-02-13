@@ -10,8 +10,8 @@ import {
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import ConfirmUpload from "./ConfirmUpload";
-import SongDetails from "./SongDetails";
+import ConfirmUpload from "./ConfirmAgreement";
+import SongDetails from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const UploadSong: FunctionComponent = () => {
       maxWidth={ false }
       sx={ {
         marginX: [null, null, 3],
-        marginBottom: 4,
+        marginBottom: 8,
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
       } }
@@ -81,7 +81,7 @@ const UploadSong: FunctionComponent = () => {
         UPLOAD A SONG
       </Typography>
 
-      <Box pt={ 5 }>
+      <Box pt={ 5 } pb={ 4 }>
         <WizardForm
           validateOnBlur={ false }
           initialValues={ initialValues }

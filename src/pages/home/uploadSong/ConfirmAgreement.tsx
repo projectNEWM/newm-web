@@ -9,7 +9,7 @@ import { ViewPDF } from "components";
 import agreementPreview from "assets/images/artist-agreement-preview.jpg";
 import CheckboxField from "components/form/CheckboxField";
 
-const ConfirmUpload: FunctionComponent = () => {
+const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
 
   const { isLoading, artistAgreement } = useSelector(selectSong);
@@ -103,4 +103,4 @@ const ConfirmUpload: FunctionComponent = () => {
   );
 };
 
-export default ConfirmUpload;
+export default ConfirmAgreement;

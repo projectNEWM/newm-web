@@ -15,7 +15,7 @@ import { useWindowDimensions } from "common";
 import theme from "theme";
 import MintSong from "./MintSong";
 
-const SongDetails: FunctionComponent = () => {
+const SongInfo: FunctionComponent = () => {
   const { genres } = useSelector(selectContent);
   const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
@@ -114,4 +114,4 @@ const SongDetails: FunctionComponent = () => {
   );
 };
 
-export default SongDetails;
+export default SongInfo;

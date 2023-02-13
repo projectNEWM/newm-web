@@ -9,7 +9,7 @@ import { FunctionComponent, useRef, useState } from "react";
 interface ViewPdfProps {
   /** True if the PDF has been viewed */
   readonly isViewed?: boolean;
-  /** Called when the agreement is either previewed or downloaded */
+  /** Called when the agreement is previewed or downloaded */
   readonly onViewPDF: VoidFunction;
   /** Encoded base64 string of PDF file */
   readonly data: string;
