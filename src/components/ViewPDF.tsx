@@ -37,6 +37,7 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
 
   const handlePreview = () => {
     setIsModalOpen(true);
+    onViewPDF();
   };
 
   const handleDownload = () => {
@@ -46,7 +47,6 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    onViewPDF();
   };
 
   return (
