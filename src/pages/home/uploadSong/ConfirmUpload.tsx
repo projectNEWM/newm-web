@@ -1,26 +1,27 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { useWindowDimensions } from "common";
-import { Button, Checkbox, Typography } from "elements";
+import { Button, Typography } from "elements";
 import { useFormikContext } from "formik";
 import { UploadSongFormValues, selectSong } from "modules/song";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { ViewPDF } from "components";
 import agreementPreview from "assets/images/artist-agreement-preview.jpg";
+import CheckboxField from "components/form/CheckboxField";
 
 const ConfirmUpload: FunctionComponent = () => {
   const theme = useTheme();
 
   const { isLoading, artistAgreement } = useSelector(selectSong);
 
-  const [hasViewedAgreement, setHasViewedAgreement] = useState(false);
-
-  const { values } = useFormikContext<UploadSongFormValues>();
+  const { values, setFieldValue } = useFormikContext<UploadSongFormValues>();
 
   const windowWidth = useWindowDimensions()?.width;
 
+  const hasMultipleOwners = values.owners.length > 1;
+
   const handleViewPDF = () => {
-    setHasViewedAgreement(true);
+    setFieldValue("hasViewedAgreement", true);
   };
 
   return (
@@ -40,7 +41,7 @@ const ConfirmUpload: FunctionComponent = () => {
         </Typography>
 
         <ViewPDF
-          isViewed={ hasViewedAgreement }
+          isViewed={ values.hasViewedAgreement }
           onViewPDF={ handleViewPDF }
           data={ artistAgreement }
           preview={ agreementPreview }
@@ -49,14 +50,31 @@ const ConfirmUpload: FunctionComponent = () => {
 
       <Stack direction="column" mt={ 3 } spacing={ 2 }>
         <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-          <Checkbox sx={ { marginRight: 1.5 } } disabled={ !hasViewedAgreement } />I
-          confirm that I am the exclusive creator of{ " " }
-          <strong>{ values.title }</strong>.
+          <CheckboxField name="isCreator" sx={ { marginRight: 1.5 } } />
+
+          { hasMultipleOwners ? (
+            <span>
+              I confirm that I am the primary creator of{ " " }
+              <strong>{ values.title }</strong> and all mentioned collaborators
+              are accurate.
+            </span>
+          ) : (
+            <span>
+              I confirm that I am the exclusive creator of{ " " }
+              <strong>{ values.title }.</strong>
+            </span>
+          ) }
         </Typography>
 
         <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-          <Checkbox sx={ { marginRight: 1.5 } } disabled={ !hasViewedAgreement } />
-          By &apos;Requesting Minting&apos; you agree to this contract.
+          <CheckboxField
+            name="agreesToContract"
+            sx={ { marginRight: 1.5 } }
+            disabled={ !values.hasViewedAgreement }
+          />
+          <span style={ { opacity: values.hasViewedAgreement ? 1 : 0.5 } }>
+            I have read and agree to this contract.
+          </span>
         </Typography>
       </Stack>
 
@@ -71,6 +89,7 @@ const ConfirmUpload: FunctionComponent = () => {
         <Button
           type="submit"
           isLoading={ isLoading }
+          disabled={ !values.isCreator || !values.agreesToContract }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"

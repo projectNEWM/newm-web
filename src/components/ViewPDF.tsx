@@ -11,7 +11,7 @@ interface ViewPdfProps {
   readonly isViewed?: boolean;
   /** Called when the agreement is either viewed or downloaded */
   readonly onViewPDF: VoidFunction;
-  /** Encoded base64 string of agreement PDF file */
+  /** Encoded base64 string of PDF file */
   readonly data: string;
   /** Preview image for PDF file */
   readonly preview: string;
@@ -124,9 +124,12 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
       </Box>
 
       <Modal isOpen={ isModalOpen } onClose={ handleCloseModal }>
-        <embed
+        <object
+          aria-label="Artist agreement"
+          name="Artist agreement"
           style={ { height: "100%", width: "100%" } }
-          src={ `data:application/pdf;base64,${data}` }
+          data={ `data:application/pdf;base64,${data}` }
+          type="application/pdf"
         />
       </Modal>
     </>

@@ -74,8 +74,8 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   };
 
   /**
-   * Navigates to the next route in the form or submits the
-   * form if it is the final route.
+   * Calls `onSubmitStep` if present. If this is the last route, it submits
+   * the form, otherwise, it navigates if `navigateOnSubmitStep` is not false.
    */
   const handleSubmit = (
     values: FormikValues,
@@ -91,7 +91,10 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
 
     if (isLastRoute) {
       onSubmit(values, helpers);
-    } else if (shouldNavigate) {
+      return;
+    }
+
+    if (shouldNavigate) {
       goForward();
     }
   };

@@ -1,20 +1,22 @@
 import { Box, Container } from "@mui/material";
 import { WizardForm } from "components";
 import { Typography } from "elements";
+import { selectSession } from "modules/session";
 import {
-  GenerateArtistAgreementBody,
   UploadSongFormValues,
   generateArtistAgreement,
   uploadSong,
 } from "modules/song";
 import { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import ConfirmUpload from "./ConfirmUpload";
 import SongDetails from "./SongDetails";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const { profile } = useSelector(selectSession);
 
   const initialValues: UploadSongFormValues = {
     image: undefined,
@@ -24,17 +26,31 @@ const UploadSong: FunctionComponent = () => {
     description: "",
     isMinting: false,
     largestUtxo: undefined,
+    owners: [],
+    hasViewedAgreement: false,
+    isCreator: false,
+    agreesToContract: false,
   };
 
-  const handleNavigateToConfirmationStep = ({
-    songName,
-    companyName,
-    artistName,
-    stageName,
-  }: GenerateArtistAgreementBody) => {
-    dispatch(
-      generateArtistAgreement({ songName, companyName, artistName, stageName })
-    );
+  const handleSongDetails = (values: UploadSongFormValues) => {
+    if (values.isMinting) {
+      const songName = values.title;
+      // TODO: reference company name when exists in profile
+      const companyName = "";
+      const artistName = `${profile.firstName} ${profile.lastName}`;
+      const stageName = profile.nickname;
+
+      dispatch(
+        generateArtistAgreement({
+          songName,
+          companyName,
+          artistName,
+          stageName,
+        })
+      );
+    } else {
+      handleSubmit(values);
+    }
   };
 
   // eslint-disable-next-line
@@ -47,6 +63,8 @@ const UploadSong: FunctionComponent = () => {
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
     genre: Yup.string().required("This field is required"),
+    isCreator: Yup.bool().required("This field is required"),
+    agreesToContract: Yup.bool().required("This field is required"),
   };
 
   return (
@@ -54,6 +72,7 @@ const UploadSong: FunctionComponent = () => {
       maxWidth={ false }
       sx={ {
         marginX: [null, null, 3],
+        marginBottom: 4,
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
       } }
@@ -74,7 +93,7 @@ const UploadSong: FunctionComponent = () => {
               element: <SongDetails />,
               path: "",
               navigateOnSubmitStep: false,
-              onSubmitStep: handleNavigateToConfirmationStep,
+              onSubmitStep: handleSongDetails,
               validationSchema: Yup.object().shape({
                 image: validations.image,
                 audio: validations.audio,
@@ -85,6 +104,10 @@ const UploadSong: FunctionComponent = () => {
             {
               element: <ConfirmUpload />,
               path: "confirm",
+              validationSchema: Yup.object().shape({
+                agreesToContract: validations.agreesToContract,
+                isCreator: validations.isCreator,
+              }),
             },
           ] }
         />

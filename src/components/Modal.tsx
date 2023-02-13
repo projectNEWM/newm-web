@@ -14,7 +14,7 @@ interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
 }
 
 /**
- * Displays a PDF base
+ * Full-screen modal component.
  */
 const Modal: FunctionComponent<ModalProps> = ({
   isOpen = false,

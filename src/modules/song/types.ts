@@ -6,6 +6,16 @@ export interface SongState {
 
 export type GetSongsResponse = Array<Song>;
 
+export interface Owner {
+  email: string;
+  firstName: string;
+  isCreator: boolean;
+  isRightsOwner: boolean;
+  lastName: string;
+  percentage: number;
+  role: string;
+}
+
 export interface UploadSongFormValues {
   readonly image?: any; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
@@ -14,6 +24,10 @@ export interface UploadSongFormValues {
   readonly description: string;
   readonly isMinting: boolean;
   readonly largestUtxo?: number;
+  readonly owners: Array<Owner>;
+  readonly hasViewedAgreement: boolean;
+  readonly isCreator: boolean;
+  readonly agreesToContract: boolean;
 }
 
 export interface PatchSongRequest extends Partial<Song> {

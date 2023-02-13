@@ -34,7 +34,7 @@ export const mergeApis = (
       ...merged,
       endpoints: {
         ...merged.endpoints,
-        ...api.endpints,
+        ...api.endpoints,
       },
     }),
     {}
