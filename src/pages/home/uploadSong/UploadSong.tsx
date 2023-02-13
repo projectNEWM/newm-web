@@ -32,7 +32,7 @@ const UploadSong: FunctionComponent = () => {
     agreesToContract: false,
   };
 
-  const handleSongDetails = (values: UploadSongFormValues) => {
+  const handleSongInfo = (values: UploadSongFormValues) => {
     if (values.isMinting) {
       const songName = values.title;
       // TODO: reference company name when exists in profile
@@ -93,7 +93,7 @@ const UploadSong: FunctionComponent = () => {
               element: <SongDetails />,
               path: "",
               navigateOnSubmitStep: false,
-              onSubmitStep: handleSongDetails,
+              onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
                 image: validations.image,
                 audio: validations.audio,

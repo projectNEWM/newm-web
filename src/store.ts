@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import newmApi, { cloudinaryApi } from "api";
+import newmApi, { cloudinaryApi, lambdaApi } from "api";
 import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
@@ -18,6 +18,7 @@ export const reducer = {
   wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
+  [lambdaApi.reducerPath]: lambdaApi.reducer,
 };
 
 const store = configureStore({

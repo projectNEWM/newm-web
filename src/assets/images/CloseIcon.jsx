@@ -1,4 +1,6 @@
-const CloseIcon = ({ width = 6, height = 6, color = "#000" }) => (
+import theme from "theme";
+
+const CloseIcon = ({ width = 6, height = 6, color = theme.colors.black }) => (
   <svg
     width={ width }
     height={ height }
