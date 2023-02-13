@@ -43,3 +43,5 @@ export { default as ViewPDF } from "./ViewPDF";
 export { default as WizardForm } from "./form/WizardForm";
 export { default as TablePagination } from "./TablePagination";
 export { SearchBox } from "./SearchBox";
+export { default as IconStatus } from "./library/IconStatus";
+export * from "./library/IconStatus";
