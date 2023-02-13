@@ -39,7 +39,7 @@ const SongDetails: FunctionComponent = () => {
           <UploadSongField name="audio" />
         </Stack>
 
-        <Stack spacing={ 0.5 }>
+        <Stack spacing={ 0.5 } alignItems="center">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>

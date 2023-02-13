@@ -39,7 +39,7 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.role(genres),
+    genre: commonYupValidation.role(genres).required("Genre is required"),
   };
 
   /**

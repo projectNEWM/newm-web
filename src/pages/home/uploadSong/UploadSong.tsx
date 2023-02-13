@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
-import { GenerateArtistAgreementBody } from "api";
 import { WizardForm } from "components";
 import { Typography } from "elements";
 import {
+  GenerateArtistAgreementBody,
   UploadSongFormValues,
   generateArtistAgreement,
   uploadSong,

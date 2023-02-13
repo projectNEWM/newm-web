@@ -1,8 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GenerateArtistAgreementBody, cloudinaryApi, lambdaApi } from "api";
+import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
 import { history } from "common/history";
-import { UploadSongFormValues } from "./types";
+import {
+  GenerateArtistAgreementBody,
+  PatchSongRequest,
+  UploadSongFormValues,
+} from "./types";
 import { extendedApi as songApi } from "./api";
 import { setSongIsLoading } from "./slice";
 
@@ -101,7 +105,7 @@ export const generateArtistAgreement = createAsyncThunk(
       dispatch(setSongIsLoading(true));
 
       const artistAgreementResp = await dispatch(
-        lambdaApi.endpoints.generateArtistAgreement.initiate(body)
+        songApi.endpoints.generateArtistAgreement.initiate(body)
       );
 
       if ("error" in artistAgreementResp) return;
@@ -111,6 +115,73 @@ export const generateArtistAgreement = createAsyncThunk(
       // do nothing
     } finally {
       dispatch(setSongIsLoading(false));
+    }
+  }
+);
+
+/**
+ * Retreive a Cloudinary signature, use the signature to modify
+ * the album cover art image to Cloudinary,
+ * modify the song in the NEWM back-end with the file url information.
+ */
+export const patchSong = createAsyncThunk(
+  "song/patchSong",
+  async (body: PatchSongRequest, thunkApi) => {
+    try {
+      // set loading state to show loading indicator
+      thunkApi.dispatch(setSongIsLoading(true));
+
+      let cloudinaryImage = {};
+
+      if (body.image) {
+        // TODO: Delete previously saved image from cloudinary after successfully updating it.
+
+        // optional upload params to format or crop image could go here
+        const uploadParams = {};
+
+        const signatureResp = await thunkApi.dispatch(
+          songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+        );
+
+        if ("error" in signatureResp || !("data" in signatureResp)) return;
+
+        const { apiKey, signature, timestamp } = signatureResp.data;
+
+        const imageBinaryStr = await getFileBinary(body.image);
+
+        // upload image to cloudinary
+        const cloudinaryResp = await thunkApi.dispatch(
+          cloudinaryApi.endpoints.uploadImage.initiate({
+            api_key: apiKey,
+            file: imageBinaryStr,
+            signature,
+            timestamp,
+            ...uploadParams,
+          })
+        );
+
+        if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
+
+        cloudinaryImage = { coverArtUrl: cloudinaryResp.data.secure_url };
+      }
+
+      // patch song information
+      const patchSong = await thunkApi.dispatch(
+        songApi.endpoints.patchSong.initiate({
+          id: body.id,
+          title: body.title,
+          description: body.description,
+          genre: body.genre,
+          ...cloudinaryImage,
+        })
+      );
+
+      if ("error" in patchSong || !("data" in patchSong)) return;
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    } finally {
+      // done fetching songs
+      thunkApi.dispatch(setSongIsLoading(false));
     }
   }
 );

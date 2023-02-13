@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
 import { prepareNewmAuthHeader } from "common/apiUtils";
-import {
-  GenerateArtistAgreementBody,
-  GenerateArtistAgreementResponse,
-} from "./types";
 
 const api = createApi({
   reducerPath: "lambdaApi",
@@ -12,18 +8,7 @@ const api = createApi({
     baseUrl: baseUrls.lambda,
     prepareHeaders: prepareNewmAuthHeader,
   }),
-  endpoints: (build) => ({
-    generateArtistAgreement: build.mutation<
-      GenerateArtistAgreementResponse,
-      GenerateArtistAgreementBody
-    >({
-      query: (body) => ({
-        url: "generate-artist-agreement",
-        method: "POST",
-        body,
-      }),
-    }),
-  }),
+  endpoints: () => ({}),
 });
 
 export default api;

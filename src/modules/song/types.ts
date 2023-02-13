@@ -1,5 +1,6 @@
 export interface SongState {
   songs: Array<Song>;
+  artistAgreement: string;
   isLoading: boolean;
 }
 
@@ -13,6 +14,10 @@ export interface UploadSongFormValues {
   readonly description: string;
   readonly isMinting: boolean;
   readonly largestUtxo?: number;
+}
+
+export interface PatchSongRequest extends Partial<Song> {
+  readonly image?: any; // eslint-disable-line
 }
 
 export interface UploadSongRequest {
@@ -67,4 +72,15 @@ export interface Contributor {
   readonly name: string;
   readonly role: string;
   readonly stake: number;
+}
+
+export interface GenerateArtistAgreementBody {
+  readonly songName: string;
+  readonly companyName: string;
+  readonly artistName: string;
+  readonly stageName: string;
+}
+
+export interface GenerateArtistAgreementResponse {
+  readonly message: string;
 }

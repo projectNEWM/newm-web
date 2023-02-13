@@ -1,16 +1,40 @@
-import api, { CloudinaryUploadParams } from "api";
+import api, { CloudinaryUploadParams, lambdaApi } from "api";
+import { mergeApis } from "common/apiUtils";
 import { setToastMessage } from "modules/ui";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
+  GenerateArtistAgreementBody,
+  GenerateArtistAgreementResponse,
   GetSongsResponse,
+  PatchSongRequest,
+  Song,
   UploadSongRequest,
   UploadSongResponse,
 } from "./types";
 
-export const extendedApi = api.injectEndpoints({
+const extendedNewmApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getSong: build.query<Song, string>({
+      query: (id) => ({
+        url: `v1/songs/${id}`,
+        method: "GET",
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song info",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     getSongs: build.query<GetSongsResponse, void>({
       query: () => "v1/songs",
 
@@ -37,6 +61,33 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    patchSong: build.mutation<void, PatchSongRequest>({
+      query: ({ id, ...body }) => ({
+        url: `v1/songs/${id}`,
+        method: "PATCH",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            setToastMessage({
+              message: "Updated song information",
+              severity: "success",
+            })
+          );
         } catch ({ error }) {
           dispatch(
             setToastMessage({
@@ -96,6 +147,34 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetSongsQuery } = extendedApi;
+const extendedLambdaApi = lambdaApi.injectEndpoints({
+  endpoints: (build) => ({
+    generateArtistAgreement: build.mutation<
+      GenerateArtistAgreementResponse,
+      GenerateArtistAgreementBody
+    >({
+      query: (body) => ({
+        url: "generate-artist-agreement/",
+        method: "POST",
+        body,
+      }),
 
-export default extendedApi;
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching your artist agreement",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+  }),
+});
+
+export const extendedApi = mergeApis(extendedNewmApi, extendedLambdaApi);
+
+export const { useGetSongsQuery, useGetSongQuery } = extendedApi;

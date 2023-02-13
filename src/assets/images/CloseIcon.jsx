@@ -1,4 +1,4 @@
-const CloseIcon = ({ width = 6, height = 6 }) => (
+const CloseIcon = ({ width = 6, height = 6, color = "#000" }) => (
   <svg
     width={ width }
     height={ height }
@@ -7,7 +7,7 @@ const CloseIcon = ({ width = 6, height = 6 }) => (
   >
     <path
       d="m3 3 2 2M1 5l2-2-2 2Zm2-2 2-2-2 2Zm0 0L1 1l2 2Z"
-      stroke="#000"
+      stroke={ color }
       strokeWidth={ 2 }
       strokeLinecap="round"
       strokeLinejoin="round"
