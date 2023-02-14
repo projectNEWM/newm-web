@@ -10,7 +10,7 @@ interface ViewPdfProps {
   /** True if the PDF has been viewed */
   readonly isViewed?: boolean;
   /** Called when the agreement is previewed or downloaded */
-  readonly onViewPDF: VoidFunction;
+  readonly onViewPDF?: VoidFunction;
   /** Encoded base64 string of PDF file */
   readonly data: string;
   /** Preview image for PDF file */
@@ -37,12 +37,12 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
 
   const handlePreview = () => {
     setIsModalOpen(true);
-    onViewPDF();
+    if (onViewPDF) onViewPDF();
   };
 
   const handleDownload = () => {
     linkRef.current?.click();
-    onViewPDF();
+    if (onViewPDF) onViewPDF();
   };
 
   const handleCloseModal = () => {

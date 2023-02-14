@@ -81,7 +81,7 @@ const UploadSong: FunctionComponent = () => {
         UPLOAD A SONG
       </Typography>
 
-      <Box pt={ 5 } pb={ 8 }>
+      <Box pt={ 5 } pb={ 7 }>
         <WizardForm
           validateOnBlur={ false }
           initialValues={ initialValues }
