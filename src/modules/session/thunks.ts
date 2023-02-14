@@ -20,7 +20,7 @@ export const updateInitialProfile = createAsyncThunk(
       return;
     }
 
-    history.push("home");
+    history.push(`${history.location.pathname}/home`);
   }
 );
 
@@ -38,7 +38,9 @@ export const getInitialData = createAsyncThunk(
     );
 
     if (!profileResponse?.data?.nickname) {
-      history.push("create-profile/what-should-we-call-you");
+      history.push(
+        `${history.location.pathname}/create-profile/what-should-we-call-you`
+      );
     }
   }
 );
@@ -69,7 +71,7 @@ export const createAccount = createAsyncThunk(
       return;
     }
 
-    history.push("create-profile");
+    history.push(`${history.location.pathname}/create-profile`);
   }
 );
 

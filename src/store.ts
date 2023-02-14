@@ -17,14 +17,19 @@ export const reducer = {
   ui: uiReducer,
   wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
-  [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
   [lambdaApi.reducerPath]: lambdaApi.reducer,
+  [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
 };
 
 const store = configureStore({
   devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
-    const baseMiddleware = [...getDefaultMiddleware(), newmApi.middleware];
+    const baseMiddleware = [
+      ...getDefaultMiddleware(),
+      newmApi.middleware,
+      lambdaApi.middleware,
+      cloudinaryApi.middleware,
+    ];
     return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
   reducer,

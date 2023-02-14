@@ -110,7 +110,7 @@ export const generateArtistAgreement = createAsyncThunk(
 
       if ("error" in artistAgreementResp) return;
 
-      history.push("confirm");
+      history.push(`${history.location.pathname}/confirm`);
     } catch (err) {
       // do nothing
     } finally {

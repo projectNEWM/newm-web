@@ -1,6 +1,7 @@
 import api, { CloudinaryUploadParams, lambdaApi } from "api";
 import { mergeApis } from "common/apiUtils";
 import { setToastMessage } from "modules/ui";
+import { receiveArtistAgreement } from "./slice";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
@@ -161,7 +162,8 @@ const extendedLambdaApi = lambdaApi.injectEndpoints({
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
+          const { data } = await queryFulfilled;
+          dispatch(receiveArtistAgreement(data.message));
         } catch ({ error }) {
           dispatch(
             setToastMessage({

@@ -36,7 +36,7 @@ const UploadSong: FunctionComponent = () => {
     if (values.isMinting) {
       const songName = values.title;
       // TODO: reference company name when exists in profile
-      const companyName = "";
+      const companyName = "ACME";
       const artistName = `${profile.firstName} ${profile.lastName}`;
       const stageName = profile.nickname;
 
@@ -81,7 +81,7 @@ const UploadSong: FunctionComponent = () => {
         UPLOAD A SONG
       </Typography>
 
-      <Box pt={ 5 } pb={ 4 }>
+      <Box pt={ 5 } pb={ 8 }>
         <WizardForm
           validateOnBlur={ false }
           initialValues={ initialValues }
