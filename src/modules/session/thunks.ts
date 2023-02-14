@@ -88,13 +88,6 @@ export const resetPassword = createAsyncThunk(
     );
 
     if ("error" in resetPasswordResponse) {
-      dispatch(
-        setToastMessage({
-          message: "An error occured while resetting your password",
-          severity: "error",
-        })
-      );
-
       return;
     }
 
