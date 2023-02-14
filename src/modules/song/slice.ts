@@ -15,7 +15,6 @@ const songSlice = createSlice({
       state.songs = payload;
     },
     receiveArtistAgreement(state, { payload }) {
-      console.log('PAYLOAD: ', payload); // eslint-disable-line
       state.artistAgreement = payload;
     },
     setSongIsLoading(state, { payload }) {
