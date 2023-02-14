@@ -1,4 +1,6 @@
-export const isProd = process.env.NODE_ENV === "production";
+export const isProd =
+  process.env.NODE_ENV === "production" &&
+  process.env.REACT_APP_ENV === "production";
 
 // Change this value to disable Redux logging in development
 export const enableReduxLogging = !isProd && true;
