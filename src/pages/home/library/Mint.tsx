@@ -1,6 +1,7 @@
 import {
   Box,
   FormControlLabel,
+  InputAdornment,
   Button as MUIButton,
   Stack,
 } from "@mui/material";
@@ -17,19 +18,9 @@ import {
   Typography,
 } from "elements";
 import theme from "theme";
-import { Song } from "modules/song";
+import { Owner, Song } from "modules/song";
 import { ChangeEvent, useEffect, useState } from "react";
 import AddOwnerModal from "../uploadSong/AddOwnerModal";
-
-interface FutureOwner {
-  email: string;
-  firstName: string;
-  isCreator: boolean;
-  isRightsOwner: boolean;
-  lastName: string;
-  percentage: number;
-  role: string;
-}
 
 const Mint = () => {
   const location = useLocation();
@@ -44,10 +35,8 @@ const Mint = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [isFullyOwned, setIsFullyOwned] = useState(false);
-  const [futureOwners, setFutureOwners] = useState<FutureOwner[]>([]);
-  const [futureCreditors, setFutureCreditors] = useState<
-    Partial<FutureOwner>[]
-  >([]);
+  const [futureOwners, setFutureOwners] = useState<Owner[]>([]);
+  const [futureCreditors, setFutureCreditors] = useState<Partial<Owner>[]>([]);
 
   const handleSubmit = () => {
     // Potentially filter out futureOwners who have 0% ownership
@@ -60,10 +49,8 @@ const Mint = () => {
     event: ChangeEvent<HTMLInputElement>,
     email: string
   ) => {
-    const newState: FutureOwner[] = [...futureOwners];
-    const index = newState.findIndex(
-      (owner: FutureOwner) => owner.email === email
-    );
+    const newState: Owner[] = [...futureOwners];
+    const index = newState.findIndex((owner: Owner) => owner.email === email);
 
     newState[index].percentage = event.target.valueAsNumber;
 
@@ -154,7 +141,7 @@ const Mint = () => {
                         SHARES
                       </Typography>
                     </Stack>
-                    { futureOwners.map((owner: FutureOwner) => (
+                    { futureOwners.map((owner: Owner) => (
                       <Stack
                         key={ owner.email }
                         sx={ {
@@ -171,13 +158,25 @@ const Mint = () => {
                         </Stack>
                         <Stack flexDirection="row" alignItems="center">
                           <TextInput
+                            aria-label="Ownership percentage"
+                            defaultValue={ 0 }
+                            endAdornment={
+                              <InputAdornment
+                                position="start"
+                                sx={ {
+                                  color: theme.colors.white,
+                                  mr: 1,
+                                } }
+                              >
+                                <Typography>%</Typography>
+                              </InputAdornment>
+                            }
                             max={ 100 }
                             min={ 0 }
                             onChange={ (event) =>
                               handlePercentageChange(event, owner.email)
                             }
-                            placeholder="0 %"
-                            style={ { maxWidth: "100px" } }
+                            placeholder="%"
                             type="number"
                           />
                           <Button

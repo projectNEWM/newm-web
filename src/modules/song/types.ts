@@ -72,3 +72,13 @@ export interface Contributor {
   readonly role: string;
   readonly stake: number;
 }
+
+export interface Owner {
+  email: string;
+  firstName: string;
+  isCreator: boolean;
+  isRightsOwner: boolean;
+  lastName: string;
+  percentage: number;
+  role: string;
+}
