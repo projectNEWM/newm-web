@@ -16,6 +16,7 @@ jobs:
           REACT_APP_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           REACT_APP_TEMP_LOGIN_EMAIL: ${{ secrets.TEMP_LOGIN_EMAIL }}
           REACT_APP_TEMP_LOGIN_PASSWORD: ${{ secrets.TEMP_LOGIN_PASSWORD }}
+          REACT_APP_ENV: ${{ secrets.REACT_APP_ENV }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
