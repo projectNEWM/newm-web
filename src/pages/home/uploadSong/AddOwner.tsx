@@ -12,14 +12,14 @@ const AddOwner: FunctionComponent = () => {
 
   return (
     <>
-      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
+      <HorizontalLine sx={ { mt: 4 } } />
 
       <Stack
         sx={ {
           display: "flex",
           flexDirection: ["column", "column", "row"],
           justifyContent: "space-between",
-          marginTop: theme.spacing(4),
+          mt: 4,
         } }
       >
         <Stack>
@@ -31,7 +31,7 @@ const AddOwner: FunctionComponent = () => {
               display: "flex",
               flexDirection: "row",
               gap: 2.5,
-              marginTop: theme.spacing(1.5),
+              mt: 1.5,
             } }
           >
             <ProfileImage
@@ -63,7 +63,7 @@ const AddOwner: FunctionComponent = () => {
               display: "flex",
               flexDirection: "row",
               gap: 2.5,
-              marginTop: theme.spacing(1.5),
+              mt: 1.5,
             } }
           >
             <TextInputField
@@ -74,7 +74,7 @@ const AddOwner: FunctionComponent = () => {
                   position="start"
                   sx={ {
                     color: theme.colors.white,
-                    marginRight: theme.spacing(1),
+                    mr: 1,
                   } }
                 >
                   <Typography>%</Typography>
@@ -92,9 +92,9 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
       </Stack>
 
-      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
+      <HorizontalLine sx={ { mt: 4 } } />
 
-      <Stack sx={ { display: "flex", marginTop: theme.spacing(4) } }>
+      <Stack sx={ { display: "flex", mt: 4 } }>
         <Typography color="grey100">CREDITS TO SHOW ON SONG DETAILS</Typography>
 
         { /* Change the following block to render dynamically when data is avaialble */ }
@@ -104,7 +104,7 @@ const AddOwner: FunctionComponent = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            marginTop: theme.spacing(1.5),
+            mt: 1.5,
           } }
         >
           <Stack
@@ -133,14 +133,14 @@ const AddOwner: FunctionComponent = () => {
         </Stack>
       </Stack>
 
-      <HorizontalLine sx={ { marginTop: theme.spacing(4) } } />
+      <HorizontalLine sx={ { mt: 4 } } />
 
       <Button
         variant="outlined"
         width="full"
         color="white"
         sx={ {
-          marginTop: theme.spacing(4),
+          mt: 4,
         } }
         onClick={ () => {
           setIsModalOpen(true);
@@ -153,6 +153,10 @@ const AddOwner: FunctionComponent = () => {
         open={ isModalOpen }
         onClose={ () => {
           setIsModalOpen(false);
+        } }
+        onSubmit={ (values) => {
+          // eslint-disable-next-line no-console
+          console.log("Do something with these values: ", values);
         } }
       />
     </>

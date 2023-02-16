@@ -236,6 +236,9 @@ const theme = createTheme({
     success: {
       main: colors.green,
     },
+    info: {
+      main: colors.baseBlue,
+    },
 
     action: {
       disabled: colors.white,
