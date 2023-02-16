@@ -8,6 +8,7 @@ import {
   NewmAuthResponse,
   NewmOAuthRequest,
   Request2FACode,
+  ResetPasswordRequest,
   UpdateProfileRequest,
 } from "./types";
 import { handleSocialLoginError } from "./thunks";
@@ -172,6 +173,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while creating your account",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    resetPassword: build.mutation<EmptyResponse, ResetPasswordRequest>({
+      query: (body) => ({
+        url: "v1/users/password",
+        method: "PUT",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while resetting your password",
               severity: "error",
             })
           );

@@ -3,7 +3,11 @@ import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
 import { extendedApi as sessionApi } from "./api";
-import { CreateAccountRequest, UpdateProfileRequest } from "./types";
+import {
+  CreateAccountRequest,
+  ResetPasswordRequest,
+  UpdateProfileRequest,
+} from "./types";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -88,6 +92,33 @@ export const createAccount = createAsyncThunk(
     }
 
     history.push("/create-profile");
+  }
+);
+
+/**
+ * Reset user password. Navigate to the login page to have user
+ * enter their new password.
+ */
+export const resetPassword = createAsyncThunk(
+  "session/resetPassword",
+  async (body: ResetPasswordRequest, { dispatch }) => {
+    const resetPasswordResponse = await dispatch(
+      sessionApi.endpoints.resetPassword.initiate(body)
+    );
+
+    if ("error" in resetPasswordResponse) {
+      return;
+    }
+
+    history.push("/login");
+
+    dispatch(
+      setToastMessage({
+        heading: "Password changed!",
+        message: "Login with the newly defined password.",
+        severity: "success",
+      })
+    );
   }
 );
 

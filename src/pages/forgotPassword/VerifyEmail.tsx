@@ -1,21 +1,23 @@
 import { FunctionComponent, useState } from "react";
-import { Button, GradientTypography, Typography } from "elements";
-import { ResponsiveNEWMLogo, TextInputField } from "components";
-import { FormikValues, useFormikContext } from "formik";
-import { Box, Stack, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { Box, useTheme } from "@mui/material";
+import { FormikValues, useFormikContext } from "formik";
+import { Button, GradientTypography, Typography } from "elements";
+import { TextInputField } from "components";
 import { sendVerificationEmail } from "modules/session";
 
-const Verification: FunctionComponent = () => {
+const VerifyEmail: FunctionComponent = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
-  const { isValid, values } = useFormikContext<FormikValues>();
+  const {
+    values: { email },
+  } = useFormikContext<FormikValues>();
 
   const handleEmailResend = () => {
     setShowResendLink(false);
 
-    dispatch(sendVerificationEmail(values.email));
+    dispatch(sendVerificationEmail(email));
 
     setTimeout(() => setShowResendLink(true), 10000);
   };
@@ -26,46 +28,44 @@ const Verification: FunctionComponent = () => {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
         height: "100%",
         justifyContent: "space-between",
       } }
     >
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Box mb={ 4 }>
-          <ResponsiveNEWMLogo />
-        </Box>
-        <Typography variant="h1" mb={ 1.5 }>
-          Check your email!
+      <Box
+        sx={ {
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+        } }
+      >
+        <Typography maxWidth={ 800 } mt={ 4 } variant="h1">
+          Check your inbox
         </Typography>
+
         <GradientTypography
           id="verificationLabel"
-          variant="h1"
-          mb={ 7.5 }
+          mb={ 4 }
           style={ { ...theme.typography.emphasized } }
+          variant="h1"
         >
           Paste your verification code here.
         </GradientTypography>
-        <Stack
-          spacing={ 1.5 }
-          mb={ 7.5 }
-          margin="0 auto"
-          maxWidth={ theme.inputField.maxWidth }
-          width="100%"
-        >
-          <TextInputField
-            aria-labelledby="verificationLabel"
-            name="authCode"
-            placeholder="Verification Code"
-            type="text"
-          />
-          <Button type="submit" disabled={ !isValid }>
-            Enter
-          </Button>
-        </Stack>
+
+        <TextInputField
+          aria-labelledby="verificationLabel"
+          name="authCode"
+          placeholder="Verification Code"
+          type="text"
+        />
+
+        <Button sx={ { mt: 2 } } type="submit">
+          Reset password
+        </Button>
       </Box>
 
-      <Box mb={ 4 } mt={ 2 }>
+      <Box my={ 4 } textAlign="center">
         { showResendLink ? (
           <Typography color="grey100" fontWeight={ 500 }>
             Didn&apos;t receive an email?
@@ -92,4 +92,4 @@ const Verification: FunctionComponent = () => {
   );
 };
 
-export default Verification;
+export default VerifyEmail;
