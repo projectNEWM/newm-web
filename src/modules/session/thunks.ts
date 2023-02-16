@@ -110,6 +110,8 @@ export const resetPassword = createAsyncThunk(
       return;
     }
 
+    history.push("/login");
+
     dispatch(
       setToastMessage({
         heading: "Password changed!",
@@ -117,10 +119,6 @@ export const resetPassword = createAsyncThunk(
         severity: "success",
       })
     );
-
-    setTimeout(() => {
-      window.location.pathname = "login";
-    }, 2000);
   }
 );
 
