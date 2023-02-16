@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { Button, GradientTypography, Link, Typography } from "elements";
+import { Button, GradientTypography, Typography } from "elements";
 import { ResponsiveNEWMLogo, TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
@@ -67,9 +67,21 @@ const Verification: FunctionComponent = () => {
 
       <Box mb={ 4 } mt={ 2 }>
         { showResendLink ? (
-          <Link to="#" onClick={ handleEmailResend }>
-            Didn&apos;t received the email? Resend email.
-          </Link>
+          <Typography color="grey100" fontWeight={ 500 }>
+            Didn&apos;t receive an email?
+            <button
+              onClick={ handleEmailResend }
+              style={ {
+                backgroundColor: "initial",
+                border: "none",
+                borderRadius: 0,
+                color: "white",
+                font: "inherit",
+              } }
+            >
+              Click here to resend
+            </button>
+          </Typography>
         ) : (
           <Typography>
             Email re-sent. Don&apos;t forget to check your spam folder.

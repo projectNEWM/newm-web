@@ -68,7 +68,7 @@ const VerifyEmail: FunctionComponent = () => {
       <Box my={ 4 } textAlign="center">
         { showResendLink ? (
           <Typography color="grey100" fontWeight={ 500 }>
-            Didn&apos;t received the email?
+            Didn&apos;t receive an email?
             <button
               onClick={ handleEmailResend }
               style={ {
