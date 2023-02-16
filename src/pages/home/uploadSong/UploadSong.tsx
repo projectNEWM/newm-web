@@ -11,7 +11,7 @@ import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import ConfirmUpload from "./ConfirmAgreement";
-import SongDetails from "./SongInfo";
+import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ const UploadSong: FunctionComponent = () => {
           validateOnMount={ true }
           routes={ [
             {
-              element: <SongDetails />,
+              element: <SongInfo />,
               path: "",
               navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,

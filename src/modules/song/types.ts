@@ -30,14 +30,6 @@ export interface UploadSongFormValues {
   readonly agreesToContract: boolean;
 }
 
-export interface PatchSongRequest extends Partial<Song> {
-  readonly image?: any; // eslint-disable-line
-}
-
-export interface PatchSongRequest extends Partial<Song> {
-  readonly image?: any; // eslint-disable-line
-}
-
 export interface UploadSongRequest {
   readonly title: string;
   readonly genre: string;
@@ -48,6 +40,11 @@ export interface UploadSongRequest {
 
 export interface UploadSongResponse {
   readonly songId: string;
+}
+
+export interface PatchSongRequest extends Partial<UploadSongRequest> {
+  readonly id: string;
+  readonly image?: any; // eslint-disable-line
 }
 
 export interface CloudinarySignatureResponse {

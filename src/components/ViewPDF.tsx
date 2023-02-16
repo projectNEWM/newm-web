@@ -126,7 +126,6 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
       <Modal isOpen={ isModalOpen } onClose={ handleCloseModal }>
         <object
           aria-label="Artist agreement"
-          name="Artist agreement"
           style={ { height: "100%", width: "100%" } }
           data={ `data:application/pdf;base64,${data}` }
           type="application/pdf"

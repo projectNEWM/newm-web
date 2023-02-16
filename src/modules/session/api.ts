@@ -125,8 +125,7 @@ export const extendedApi = api.injectEndpoints({
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveProfile(data));
+          await queryFulfilled;
         } catch ({ error }) {
           dispatch(
             setToastMessage({
