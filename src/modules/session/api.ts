@@ -30,7 +30,8 @@ export const extendedApi = api.injectEndpoints({
           // eslint-disable-next-line
         } catch (resp: any) {
           const errorMessage =
-            "error" in resp && resp.error?.status === 403
+            ("error" in resp && resp.error?.status === 403) ||
+            resp.error?.status === 404
               ? "Invalid username or password"
               : "An error occurred while logging in";
 
@@ -125,8 +126,7 @@ export const extendedApi = api.injectEndpoints({
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveProfile(data));
+          await queryFulfilled;
         } catch ({ error }) {
           dispatch(
             setToastMessage({

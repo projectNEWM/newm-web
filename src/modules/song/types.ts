@@ -1,9 +1,20 @@
 export interface SongState {
   songs: Array<Song>;
+  artistAgreement: string;
   isLoading: boolean;
 }
 
 export type GetSongsResponse = Array<Song>;
+
+export interface Owner {
+  email: string;
+  firstName: string;
+  isCreator: boolean;
+  isRightsOwner: boolean;
+  lastName: string;
+  percentage: number;
+  role: string;
+}
 
 export interface UploadSongFormValues {
   readonly image?: any; // eslint-disable-line
@@ -13,10 +24,10 @@ export interface UploadSongFormValues {
   readonly description: string;
   readonly isMinting: boolean;
   readonly largestUtxo?: number;
-}
-
-export interface PatchSongRequest extends Partial<Song> {
-  readonly image?: any; // eslint-disable-line
+  readonly owners: Array<Owner>;
+  readonly hasViewedAgreement: boolean;
+  readonly isCreator: boolean;
+  readonly agreesToContract: boolean;
 }
 
 export interface UploadSongRequest {
@@ -29,6 +40,11 @@ export interface UploadSongRequest {
 
 export interface UploadSongResponse {
   readonly songId: string;
+}
+
+export interface PatchSongRequest extends Partial<UploadSongRequest> {
+  readonly id: string;
+  readonly image?: any; // eslint-disable-line
 }
 
 export interface CloudinarySignatureResponse {
@@ -50,15 +66,18 @@ export interface AudioUploadUrlResponse {
 export interface Song {
   readonly id: string;
   readonly ownerId: string;
+  readonly createdAt: string;
   readonly title: string;
   readonly genre: string;
-  readonly description?: string;
   readonly coverArtUrl?: string;
-  readonly audioUrl?: string;
-  readonly createdAt: string;
+  readonly description?: string;
   readonly credits?: string;
+  readonly duration?: number;
+  readonly streamUrl?: string;
   readonly nftPolicyId?: string;
   readonly nftName?: string;
+  readonly mintingStatus?: string;
+  readonly marketplaceStatus?: string;
 }
 
 export interface Artist {
@@ -71,4 +90,15 @@ export interface Contributor {
   readonly name: string;
   readonly role: string;
   readonly stake: number;
+}
+
+export interface GenerateArtistAgreementBody {
+  readonly songName: string;
+  readonly companyName: string;
+  readonly artistName: string;
+  readonly stageName: string;
+}
+
+export interface GenerateArtistAgreementResponse {
+  readonly message: string;
 }

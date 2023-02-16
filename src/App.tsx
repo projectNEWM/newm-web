@@ -8,11 +8,13 @@ import ForgotPassword from "pages/forgotPassword";
 import CreateProfile from "pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
 import "./App.css";
 import { useEffect } from "react";
 import { ensureWallets } from "modules/wallet";
+import BrowserRouter from "common/BrowserRouter";
+import { history } from "common/history";
 import store from "./store";
 
 const App = () => {
@@ -27,7 +29,7 @@ const App = () => {
         <CssBaseline />
 
         <Background>
-          <BrowserRouter>
+          <BrowserRouter history={ history }>
             <Routes>
               <Route path="/" element={ <Navigate to="home" replace /> } />
 
