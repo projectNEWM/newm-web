@@ -52,6 +52,13 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileSecondary: require("./danketsu/profile-cropped.webp"),
     preview: require("./danketsu/preview.wav"),
   },
+  awesomeisjayell: {
+    albumArt: require("./awesomeisjayell/album-art.webp"),
+    albumArtXs: require("./awesomeisjayell/album-art@80.webp"),
+    profilePrimary: require("./awesomeisjayell/profile-cut.webp"),
+    profileSecondary: require("./awesomeisjayell/profile-cropped.webp"),
+    preview: require("./awesomeisjayell/preview.wav"),
+  },
 };
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";
