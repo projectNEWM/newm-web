@@ -62,7 +62,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
         onSubmit={ onSubmit }
         validationSchema={ validationSchema }
       >
-        { ({ errors }) => (
+        { ({ errors, touched }) => (
           <Form>
             <Box
               sx={ {
@@ -142,7 +142,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 <SwitchField name="isCreator" />
               </Stack>
 
-              { errors.isCreator ? (
+              { touched.isCreator && errors.isCreator ? (
                 <Typography variant="h5" color="error">
                   { errors.isCreator }
                 </Typography>
