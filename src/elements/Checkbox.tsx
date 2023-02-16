@@ -56,7 +56,7 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (
 
       { errorMessage && (
         <Box mt={ 0.5 }>
-          <ErrorMessage>{ ErrorMessage }</ErrorMessage>
+          <ErrorMessage>{ errorMessage }</ErrorMessage>
         </Box>
       ) }
     </>
