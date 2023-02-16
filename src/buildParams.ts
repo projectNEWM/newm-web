@@ -8,4 +8,5 @@ export const enableReduxLogging = !isProd && true;
 export const baseUrls: Record<string, string> = {
   newm: isProd ? "https://studio.newm.io/" : "https://garage.newm.io/",
   cloudinary: "https://api.cloudinary.com/",
+  lambda: "https://q2psv8lxb4.execute-api.us-west-2.amazonaws.com/Prod/",
 };

@@ -1,25 +1,44 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
+import { history } from "common/history";
 import { extendedApi as sessionApi } from "./api";
 import { CreateAccountRequest, UpdateProfileRequest } from "./types";
 
 /**
- * Update the user's profile and navigate to
- * the home page if successful.
+ * Updates the user's profile and fetches the updated data.
+ */
+export const updateProfile = createAsyncThunk(
+  "session/updateInitialProfile",
+  async (body: UpdateProfileRequest, { dispatch }) => {
+    const updateProfileResponse = await dispatch(
+      sessionApi.endpoints.updateProfile.initiate(body)
+    );
+
+    if ("error" in updateProfileResponse) {
+      return;
+    }
+
+    const getProfileResponse = await dispatch(
+      sessionApi.endpoints.getProfile.initiate()
+    );
+
+    if ("error" in getProfileResponse) {
+      return;
+    }
+  }
+);
+
+/**
+ * Updates the user's profile, fetches the updated data,
+ * and navigates to the home page if successful.
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: UpdateProfileRequest, { dispatch }) => {
-    const response = await dispatch(
-      sessionApi.endpoints.updateProfile.initiate(body)
-    );
+    await dispatch(updateProfile(body));
 
-    if ("error" in response) {
-      return;
-    }
-
-    window.location.pathname = "home";
+    history.push("/home");
   }
 );
 
@@ -37,7 +56,7 @@ export const getInitialData = createAsyncThunk(
     );
 
     if (!profileResponse?.data?.nickname) {
-      window.location.pathname = "create-profile/what-should-we-call-you";
+      history.push("/create-profile/what-should-we-call-you");
     }
   }
 );
@@ -68,7 +87,7 @@ export const createAccount = createAsyncThunk(
       return;
     }
 
-    window.location.pathname = "create-profile";
+    history.push("/create-profile");
   }
 );
 

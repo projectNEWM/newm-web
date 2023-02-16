@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
-import { PatchSongRequest, UploadSongFormValues } from "./types";
+import { history } from "common/history";
+import {
+  GenerateArtistAgreementBody,
+  PatchSongRequest,
+  UploadSongFormValues,
+} from "./types";
 import { extendedApi as songApi } from "./api";
 import { setSongIsLoading } from "./slice";
 
@@ -13,15 +18,15 @@ import { setSongIsLoading } from "./slice";
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
-  async (body: UploadSongFormValues, thunkApi) => {
+  async (body: UploadSongFormValues, { dispatch }) => {
     try {
       // set loading state to show loading indicator
-      thunkApi.dispatch(setSongIsLoading(true));
+      dispatch(setSongIsLoading(true));
 
       // optional upload params to format or crop image could go here
       const uploadParams = {};
 
-      const signatureResp = await thunkApi.dispatch(
+      const signatureResp = await dispatch(
         songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
       );
 
@@ -32,7 +37,7 @@ export const uploadSong = createAsyncThunk(
       const imageBinaryStr = await getFileBinary(body.image);
 
       // upload image to cloudinary
-      const cloudinaryResp = await thunkApi.dispatch(
+      const cloudinaryResp = await dispatch(
         cloudinaryApi.endpoints.uploadImage.initiate({
           api_key: apiKey,
           file: imageBinaryStr,
@@ -45,7 +50,7 @@ export const uploadSong = createAsyncThunk(
       if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
       // create the song in the NEWM API
-      const songResp = await thunkApi.dispatch(
+      const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           title: body.title,
           genre: body.genre,
@@ -59,7 +64,7 @@ export const uploadSong = createAsyncThunk(
       const { songId } = songResp.data;
 
       // get signed upload url for AWS
-      const audioUploadUrlResp = await thunkApi.dispatch(
+      const audioUploadUrlResp = await dispatch(
         songApi.endpoints.getAudioUploadUrl.initiate({
           songId,
           fileName: body.audio.name,
@@ -79,12 +84,37 @@ export const uploadSong = createAsyncThunk(
       });
 
       // fetch user's songs
-      thunkApi.dispatch(songApi.endpoints.getSongs.initiate());
+      dispatch(songApi.endpoints.getSongs.initiate());
     } catch (err) {
       // do nothing, errors handled by endpoints
     } finally {
       // done fetching songs
-      thunkApi.dispatch(setSongIsLoading(false));
+      dispatch(setSongIsLoading(false));
+    }
+  }
+);
+
+/**
+ * Generates an artist agreement and then navigates
+ * to the confirmation screen.
+ */
+export const generateArtistAgreement = createAsyncThunk(
+  "song/generateArtistAgreement",
+  async (body: GenerateArtistAgreementBody, { dispatch }) => {
+    try {
+      dispatch(setSongIsLoading(true));
+
+      const artistAgreementResp = await dispatch(
+        songApi.endpoints.generateArtistAgreement.initiate(body)
+      );
+
+      if ("error" in artistAgreementResp) return;
+
+      history.push(`${history.location.pathname}/confirm`);
+    } catch (err) {
+      // do nothing
+    } finally {
+      dispatch(setSongIsLoading(false));
     }
   }
 );
