@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import newmApi, { cloudinaryApi } from "api";
+import newmApi, { cloudinaryApi, lambdaApi } from "api";
 import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
@@ -17,13 +17,19 @@ export const reducer = {
   ui: uiReducer,
   wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
+  [lambdaApi.reducerPath]: lambdaApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
 };
 
 const store = configureStore({
   devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
-    const baseMiddleware = [...getDefaultMiddleware(), newmApi.middleware];
+    const baseMiddleware = [
+      ...getDefaultMiddleware(),
+      newmApi.middleware,
+      lambdaApi.middleware,
+      cloudinaryApi.middleware,
+    ];
     return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
   reducer,

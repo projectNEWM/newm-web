@@ -11,7 +11,7 @@ import { Container, Stack } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
-import { selectSession, extendedApi as sessionApi } from "modules/session";
+import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
 
@@ -84,7 +84,7 @@ const Profile: FunctionComponent = () => {
       }),
     };
 
-    dispatch(sessionApi.endpoints.updateProfile.initiate({ ...updatedValues }));
+    dispatch(updateProfile({ ...updatedValues }));
   };
 
   return (

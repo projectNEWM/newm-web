@@ -79,6 +79,7 @@ const MintSong: FunctionComponent = () => {
               Minting a song will make it an NFT, becoming a uniquely publishing
               token on the blockchain to make it purchasable.
             </Typography>
+
             { errors.isMinting && (
               <ErrorMessage>{ errors.isMinting }</ErrorMessage>
             ) }
