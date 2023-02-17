@@ -276,7 +276,8 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "https://qrovagqhgoibtcm54tpiwrx4zruip5lfzuqky5fsgvvdcimlchga.arweave " +
       ".net/hF1QGgczkBmJneTei0b8zGiH9WXNIKx0sjVqMSGLEcw",
     poolLink: "https://pool.pm/asset1ryvx5tzygazn5mw4y0an0l2vqxhjp0f6x9f8pq",
-    spotifyLink: "", // TBD
+    spotifyLink:
+      "https://open.spotify.com/track/3HrTQ4B4yA0lFTyjG2zEe9?si=mQjh3EqzT8WR35POSx-nEA",
     description:
       "Corderius 'awesomeisjayell' Climpson is a revolutionary 'DIY' pioneer " +
       "that has established himself as \"the biggest music artist in the " +
