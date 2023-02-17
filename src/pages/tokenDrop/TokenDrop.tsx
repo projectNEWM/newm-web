@@ -6,7 +6,7 @@ import artistAssets from "assets/artists";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
-import { extendedApi as saleApi, useGetSaleBundlesQuery } from "modules/sale";
+import { useGetSaleBundlesQuery } from "modules/sale";
 import { projectDetails } from "buildParams";
 import { getShouldDisplayCountdown } from "modules/ui";
 import { useDispatch } from "react-redux";

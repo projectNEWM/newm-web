@@ -350,7 +350,7 @@ const Payment: FunctionComponent = () => {
           </Box>
 
           <Typography variant="subtitle1">
-            The total amount includes a transaction fee of 2 ADA
+            The total amount includes a transaction fee of 2 ADA.
           </Typography>
         </Stack>
 
