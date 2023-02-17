@@ -57,7 +57,7 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     albumArtXs: require("./awesomeisjayell/album-art@80.webp"),
     profilePrimary: require("./awesomeisjayell/profile-cut.webp"),
     profileSecondary: require("./awesomeisjayell/profile-cropped.webp"),
-    preview: require("./awesomeisjayell/preview.wav"),
+    preview: require("./awesomeisjayell/preview.mp3"),
   },
 };
 

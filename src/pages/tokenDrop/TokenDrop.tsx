@@ -6,7 +6,7 @@ import artistAssets from "assets/artists";
 import { useWindowDimensions } from "common";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NEWMLogo from "assets/images/NEWMLogo";
-import { useGetSaleBundlesQuery } from "modules/sale";
+import { extendedApi as saleApi, useGetSaleBundlesQuery } from "modules/sale";
 import { projectDetails } from "buildParams";
 import { getShouldDisplayCountdown } from "modules/ui";
 import { useDispatch } from "react-redux";
@@ -39,8 +39,9 @@ const TokenDrop: FunctionComponent = () => {
       setTimeout(handleSetDisplayCountdown, 1000);
     } else {
       setDisplayCountdown(false);
+      dispatch(saleApi.endpoints.getSaleBundles.initiate());
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     handleSetDisplayCountdown();
