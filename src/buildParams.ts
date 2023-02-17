@@ -273,7 +273,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     totalTokens: 100000000,
     bundlePrice: 17,
     royaltyAgreement:
-      "https://qrovagqhgoibtcm54tpiwrx4zruip5lfzuqky5fsgvvdcimlchga.arweave " +
+      "https://qrovagqhgoibtcm54tpiwrx4zruip5lfzuqky5fsgvvdcimlchga.arweave" +
       ".net/hF1QGgczkBmJneTei0b8zGiH9WXNIKx0sjVqMSGLEcw",
     poolLink: "https://pool.pm/asset1ryvx5tzygazn5mw4y0an0l2vqxhjp0f6x9f8pq",
     spotifyLink:
