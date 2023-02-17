@@ -19,7 +19,7 @@ import Soldout from "./Soldout";
 import Countdown from "./Countdown";
 
 const TokenDrop: FunctionComponent = () => {
-  useGetSaleBundlesQuery();
+  const { refetch } = useGetSaleBundlesQuery();
 
   const dispatch = useDispatch();
 
@@ -38,10 +38,12 @@ const TokenDrop: FunctionComponent = () => {
     if (getShouldDisplayCountdown()) {
       setTimeout(handleSetDisplayCountdown, 1000);
     } else {
+      // refetch if countdown was being displayed
+      if (displayCountdown) refetch();
+
       setDisplayCountdown(false);
-      dispatch(saleApi.endpoints.getSaleBundles.initiate());
     }
-  }, [dispatch]);
+  }, [refetch, displayCountdown]);
 
   useEffect(() => {
     handleSetDisplayCountdown();
