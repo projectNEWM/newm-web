@@ -88,7 +88,6 @@ const CreateProfile: FunctionComponent = () => {
               validationSchema: Yup.object().shape({
                 nickname: validations.nickname,
                 role: validations.role,
-                // genre: validations.genre,
               }),
             },
           ] }
