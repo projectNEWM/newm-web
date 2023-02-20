@@ -10,19 +10,17 @@ import * as Yup from "yup";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
-import SelectGenre from "./SelectGenre";
 import Complete from "./Complete";
 
 interface ProfileFormValues {
   readonly nickname: string;
   readonly role: string;
-  readonly genre: string;
 }
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { roles, genres } = useSelector(selectContent);
+  const { roles } = useSelector(selectContent);
 
   /**
    * Initial form values.
@@ -30,7 +28,6 @@ const CreateProfile: FunctionComponent = () => {
   const initialValues: ProfileFormValues = {
     nickname: "",
     role: "",
-    genre: "",
   };
 
   /**
@@ -39,7 +36,6 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.role(genres).required("Genre is required"),
   };
 
   /**
@@ -87,19 +83,11 @@ const CreateProfile: FunctionComponent = () => {
               }),
             },
             {
-              path: "what-is-your-genre",
-              element: <SelectGenre />,
-              validationSchema: Yup.object().shape({
-                genre: validations.genre,
-              }),
-            },
-            {
               path: "complete",
               element: <Complete />,
               validationSchema: Yup.object().shape({
                 nickname: validations.nickname,
                 role: validations.role,
-                genre: validations.genre,
               }),
             },
           ] }
