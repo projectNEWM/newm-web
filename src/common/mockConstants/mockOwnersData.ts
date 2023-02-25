@@ -3,19 +3,21 @@
 let id = 0;
 export function createData(
   name: string,
-  song: string,
-  info_tbd: number,
-  registered: boolean
+  ownerPhoto: string,
+  num_songs: number,
+  email: string,
+  status: string
 ) {
   id = id + 1;
-  return { id, name, song, info_tbd, registered };
+  return { id, name, ownerPhoto, num_songs, email, status };
 }
 export interface Owner {
   id: number;
   name: string;
-  song: string;
-  info_tbd: number;
-  registered: boolean;
+  ownerPhoto: string;
+  num_songs: number;
+  email: string;
+  status: string;
 }
 export interface OwnersData {
   data: Owner[];
@@ -25,25 +27,217 @@ export interface OwnersData {
 
 export const mockOwnersData: OwnersData = {
   data: [
-    createData("Jane Cooper", "Once upon a time", 1, true),
-    createData("Cody Fisher", "Life's away", 4, false),
-    createData("Esther Howard", "Once upon a time", 0.5, false),
-    createData("Jenny Wilson", "When is it time?", 1, true),
-    createData("Kristin Watson", "Can you hold it?", 2, false),
-    createData("Cameron Williamson", "Call me", 1, false),
-    createData("J Cole", "Neighbors", 1, false),
-    createData("Jane Cooper", "Once upon a time", 1, true),
-    createData("Cody Fisher", "Life's away", 4, false),
-    createData("Esther Howard", "Once upon a time", 0.5, false),
-    createData("Jenny Wilson", "When is it time?", 1, true),
-    createData("Kristin Watson", "Can you hold it?", 2, false),
-    createData("Cameron Williamson", "Call me", 1, false),
-    createData("Jane Cooper", "Once upon a time", 1, true),
-    createData("Cody Fisher", "Life's away", 4, false),
-    createData("Esther Howard", "Once upon a time", 0.5, false),
-    createData("Jenny Wilson", "When is it time?", 1, true),
-    createData("Kristin Watson", "Can you hold it?", 2, false),
-    createData("Cameron Williamson", "Call me", 1, false),
+    createData(
+      "Jane Cooper",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jane.cooper@gmail.com",
+      "DECLINED"
+    ),
+    createData(
+      "Cody Fisher",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "cody.fisher@gmail.com",
+      "ERROR"
+    ),
+    createData(
+      "Esther Howard",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "esther.hw@gmail.com",
+      "PENDING"
+    ),
+    createData(
+      "Tom Haverford",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jennny.wilson@gmail.com",
+      ""
+    ),
+    createData(
+      "Kristin Watson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      7,
+      "kristin.watson@gmail.com",
+      ""
+    ),
+    createData(
+      "Cameron Williamson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      2,
+      "cameron.williamson@gmail.com",
+      ""
+    ),
+    createData(
+      "Krombopolus Michael",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      8,
+      "krombopolus.michael@gmail.com",
+      ""
+    ),
+    createData(
+      "Mary Jane",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      3,
+      "mary.jane@gmail.com",
+      ""
+    ),
+    createData(
+      "James May",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "james.may@gmail.com",
+      ""
+    ),
+    createData(
+      "Alma Lawson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      11,
+      "alma.lawson@gmail.com",
+      ""
+    ),
+
+    createData(
+      "Jane Cooper",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jane.cooper@gmail.com",
+      "DECLINED"
+    ),
+    createData(
+      "Cody Fisher",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "cody.fisher@gmail.com",
+      "ERROR"
+    ),
+    createData(
+      "Esther Howard",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "esther.hw@gmail.com",
+      "PENDING"
+    ),
+    createData(
+      "Tom Haverford",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jennny.wilson@gmail.com",
+      ""
+    ),
+    createData(
+      "Kristin Watson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      7,
+      "kristin.watson@gmail.com",
+      ""
+    ),
+    createData(
+      "Cameron Williamson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      2,
+      "cameron.williamson@gmail.com",
+      ""
+    ),
+    createData(
+      "Krombopolus Michael",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      8,
+      "krombopolus.michael@gmail.com",
+      ""
+    ),
+    createData(
+      "Mary Jane",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      3,
+      "mary.jane@gmail.com",
+      ""
+    ),
+    createData(
+      "James May",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "james.may@gmail.com",
+      ""
+    ),
+    createData(
+      "Alma Lawson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      11,
+      "alma.lawson@gmail.com",
+      ""
+    ),
+    createData(
+      "Jane Cooper",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jane.cooper@gmail.com",
+      "DECLINED"
+    ),
+    createData(
+      "Cody Fisher",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "cody.fisher@gmail.com",
+      "ERROR"
+    ),
+    createData(
+      "Esther Howard",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "esther.hw@gmail.com",
+      "PENDING"
+    ),
+    createData(
+      "Tom Haverford",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      4,
+      "jennny.wilson@gmail.com",
+      ""
+    ),
+    createData(
+      "Kristin Watson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      7,
+      "kristin.watson@gmail.com",
+      ""
+    ),
+    createData(
+      "Cameron Williamson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      2,
+      "cameron.williamson@gmail.com",
+      ""
+    ),
+    createData(
+      "Krombopolus Michael",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      8,
+      "krombopolus.michael@gmail.com",
+      ""
+    ),
+    createData(
+      "Mary Jane",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      3,
+      "mary.jane@gmail.com",
+      ""
+    ),
+    createData(
+      "James May",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      1,
+      "james.may@gmail.com",
+      ""
+    ),
+    createData(
+      "Alma Lawson",
+      "https://upload.wikimedia.org/wikipedia/en/7/70/Weezer_-_Blue_Album.png",
+      11,
+      "alma.lawson@gmail.com",
+      ""
+    ),
   ],
   isLoading: false,
   isSuccess: true,

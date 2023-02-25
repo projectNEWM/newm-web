@@ -27,7 +27,7 @@ const Owners: FunctionComponent = () => {
         ownersData.filter(
           (owner) =>
             owner.name.toLowerCase().includes(searched.toLowerCase()) ||
-            owner.song.toLowerCase().includes(searched.toLowerCase())
+            owner.email.toLowerCase().includes(searched.toLowerCase())
         )
       );
     }
