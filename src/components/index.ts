@@ -11,7 +11,6 @@ export { default as FilteredTagsField } from "./form/FilteredTagsField";
 export { default as GoogleLogin } from "./GoogleLogin";
 export { default as GradientTextInputField } from "./form/GradientTextInputField";
 export { default as IconMessage } from "./IconMessage";
-export { default as ImageUpload } from "./ImageUpload";
 export { default as LinkedInLogin } from "./LinkedInLogin";
 export { default as NEWMLogo } from "./NEWMLogo";
 export { default as PaperInput } from "./styled/PaperInput";

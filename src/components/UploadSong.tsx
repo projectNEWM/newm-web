@@ -40,11 +40,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       try {
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
-            if (error.message === "File type must be audio/*") {
-              throw new Error("Please select an audio file.");
-            } else {
-              throw new Error("There was an error selecting your file.");
-            }
+            throw new Error(error.message);
           });
         });
 
@@ -67,7 +63,9 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     onDrop: handleDrop,
     multiple: false,
     // TODO: only allow uncompressed file types
-    accept: "audio/*",
+    accept: {
+      audio: [".flac", ".fla", ".wav"],
+    },
   });
 
   return (
@@ -98,7 +96,11 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             } }
           >
             { isHovering || isDragActive ? (
-              <IconMessage icon={ <AddSongIcon /> } message="Upload a new song" />
+              <IconMessage
+                icon={ <AddSongIcon /> }
+                message="Upload a new song"
+                subtitle=".flac, .fla, or .wav"
+              />
             ) : (
               <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
             ) }
@@ -108,6 +110,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             <IconMessage
               icon={ <AddSongIcon /> }
               message="Drag and drop or browse your song"
+              subtitle=".flac, .fla, or .wav"
             />
           </DashedOutline>
         ) }
