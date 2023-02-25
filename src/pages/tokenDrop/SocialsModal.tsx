@@ -6,6 +6,7 @@ import SpotifyIcon from "assets/images/SpotifyIcon";
 import TwitterIcon from "assets/images/TwitterIcon";
 import SoundcloudIcon from "assets/images/SoundcloudIcon";
 import TiktokIcon from "assets/images/TiktokIcon";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import { AccentButton } from "elements";
 import { projectDetails } from "buildParams";
 
@@ -41,7 +42,16 @@ const SocialsModal = () => {
 
       { socials.map(
         (
-          { heading, twitter, instagram, soundcloud, spotify, tikTok, website },
+          {
+            heading,
+            twitter,
+            instagram,
+            soundcloud,
+            spotify,
+            tikTok,
+            youTube,
+            website,
+          },
           idx
         ) => (
           <Stack
@@ -102,6 +112,13 @@ const SocialsModal = () => {
                   href={ tikTok }
                   icon={ <TiktokIcon /> }
                   text="TikTok"
+                />
+              ) }
+              { youTube && (
+                <SocialButton
+                  href={ youTube }
+                  icon={ <YouTubeIcon /> }
+                  text="YouTube"
                 />
               ) }
               { website && (

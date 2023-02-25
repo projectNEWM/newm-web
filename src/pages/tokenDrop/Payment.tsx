@@ -304,49 +304,55 @@ const Payment: FunctionComponent = () => {
 
         <HorizontalLine />
 
-        <Box
-          display="flex"
-          flexGrow={ 1 }
-          flexDirection={ ["column", "column", "row"] }
-          justifyContent="space-between"
-        >
+        <Stack spacing={ 2 }>
           <Box
             display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            mb={ [4, 4, 0] }
+            flexGrow={ 1 }
+            flexDirection={ ["column", "column", "row"] }
+            justifyContent="space-between"
           >
-            <Box mb={ 1 }>
-              <SectionHeading>WHAT YOU GET</SectionHeading>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-start"
+              mb={ [4, 4, 0] }
+            >
+              <Box mb={ 1 }>
+                <SectionHeading>WHAT YOU GET</SectionHeading>
+              </Box>
+
+              <Box mb={ 0.25 }>
+                <Typography variant="subtitle1">
+                  <DisplayText>
+                    { bundleAmounts.size.toLocaleString() } stream tokens
+                  </DisplayText>
+                </Typography>
+              </Box>
+
+              <Typography variant="subtitle1">of the song NFT</Typography>
             </Box>
 
-            <Box mb={ 0.25 }>
-              <Typography variant="subtitle1">
-                <DisplayText>
-                  { bundleAmounts.size.toLocaleString() } stream tokens
-                </DisplayText>
-              </Typography>
-            </Box>
+            <Box flexDirection="column">
+              <Box mb={ 1 }>
+                <SectionHeading>WHAT YOU PAY</SectionHeading>
+              </Box>
 
-            <Typography variant="subtitle1">of the song NFT</Typography>
+              <Box mb={ 0.25 }>
+                <DisplayText>{ bundleAmounts.adaPrice } ADA</DisplayText>
+              </Box>
+
+              { !!bundleAmounts.usdPrice && (
+                <Typography variant="subtitle1">
+                  ~{ displayUsd(bundleAmounts.usdPrice) } USD
+                </Typography>
+              ) }
+            </Box>
           </Box>
 
-          <Box flexDirection="column">
-            <Box mb={ 1 }>
-              <SectionHeading>WHAT YOU PAY</SectionHeading>
-            </Box>
-
-            <Box mb={ 0.25 }>
-              <DisplayText>{ bundleAmounts.adaPrice } ADA</DisplayText>
-            </Box>
-
-            { !!bundleAmounts.usdPrice && (
-              <Typography variant="subtitle1">
-                ~{ displayUsd(bundleAmounts.usdPrice) } USD
-              </Typography>
-            ) }
-          </Box>
-        </Box>
+          <Typography variant="subtitle1">
+            The total amount includes a transaction fee of 2 ADA.
+          </Typography>
+        </Stack>
 
         <HorizontalLine />
 

@@ -19,6 +19,7 @@ interface ProjectDetails {
     readonly soundcloud?: string;
     readonly facebook?: string;
     readonly tikTok?: string;
+    readonly youTube?: string;
     readonly website?: string;
   }>;
 }
@@ -260,6 +261,40 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         twitter: "https://twitter.com/NastasiaGriffin",
         instagram: "https://www.instagram.com/nastasiagriffin",
         website: "https://www.nstasia.com",
+      },
+    ],
+  },
+  awesomeisjayell: {
+    artistName: "Awesomeisjayell",
+    songName: "Fright Flight",
+    launchTimestamp: 1676653200000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 12,
+    bundleAmount: 33333,
+    totalTokens: 100000000,
+    bundlePrice: 17,
+    royaltyAgreement:
+      "https://qrovagqhgoibtcm54tpiwrx4zruip5lfzuqky5fsgvvdcimlchga.arweave" +
+      ".net/hF1QGgczkBmJneTei0b8zGiH9WXNIKx0sjVqMSGLEcw",
+    poolLink: "https://pool.pm/asset1ryvx5tzygazn5mw4y0an0l2vqxhjp0f6x9f8pq",
+    spotifyLink:
+      "https://open.spotify.com/track/3HrTQ4B4yA0lFTyjG2zEe9?si=mQjh3EqzT8WR35POSx-nEA",
+    description:
+      "Corderius 'awesomeisjayell' Climpson is a revolutionary 'DIY' pioneer " +
+      "that has established himself as \"the biggest music artist in the " +
+      "metaverse.\"\n\n" +
+      "Focused on inspirational music, his tracks are timeless and take " +
+      "listeners from the light, to the dark, and truly reflect the " +
+      "soundtrack to his life. In his own words, \"Art is life. Art is life " +
+      "in general... Music, art and tech go hand-in-hand. They're all parts " +
+      "of life.\n\n" +
+      "You can now share in the future streaming royalties of this song by " +
+      "purchasing Stream Tokens!",
+    socials: [
+      {
+        heading: "Awesomeisjayell",
+        twitter: "https://twitter.com/awesomeisjayell",
+        youTube: "https://www.youtube.com/@awesomeisjayell",
+        website: "https://www.awesomeisjayell.com",
       },
     ],
   },

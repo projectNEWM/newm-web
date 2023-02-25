@@ -19,7 +19,7 @@ import Soldout from "./Soldout";
 import Countdown from "./Countdown";
 
 const TokenDrop: FunctionComponent = () => {
-  useGetSaleBundlesQuery();
+  const { refetch } = useGetSaleBundlesQuery();
 
   const dispatch = useDispatch();
 
@@ -38,9 +38,12 @@ const TokenDrop: FunctionComponent = () => {
     if (getShouldDisplayCountdown()) {
       setTimeout(handleSetDisplayCountdown, 1000);
     } else {
+      // refetch if countdown was being displayed
+      if (displayCountdown) refetch();
+
       setDisplayCountdown(false);
     }
-  }, []);
+  }, [refetch, displayCountdown]);
 
   useEffect(() => {
     handleSetDisplayCountdown();
@@ -92,33 +95,14 @@ const TokenDrop: FunctionComponent = () => {
           paddingLeft={ [1, 1, 10] }
           paddingRight={ [1, 1, 0] }
         >
-          <Stack
-            spacing={ [3, 1.75] }
-            sx={ {
-              marginTop: 1.75,
-              marginBottom: 2.75,
-              paddingRight: [0, 0, 14],
-            } }
-          >
+          <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
             <Typography
               variant="h1"
-              fontSize={ ["60px", "100px"] }
-              lineHeight={ ["48px", "48px"] }
-              paddingRight={ [0, 0, 4] }
-              marginBottom={ [0, 0, 1] }
+              fontSize={ ["42px", "70px", "78px", "100px"] }
+              lineHeight="86px"
+              paddingRight={ [0, 0, 18] }
             >
               { projectDetails.artistName }
-              <Box
-                sx={ {
-                  display: "inline",
-                  fontSize: ["30px", "50px"],
-                  lineHeight: ["24px", "32px"],
-                  fontWeight: 400,
-                } }
-              >
-                { " " }
-                presents
-              </Box>
             </Typography>
 
             { !!projectDetails.subtitle && (
@@ -127,8 +111,8 @@ const TokenDrop: FunctionComponent = () => {
                 color="pink"
                 sx={ {
                   ...theme.typography.emphasized,
-                  fontSize: ["30px", "58px"],
-                  lineHeight: ["30px", "58px"],
+                  fontSize: ["30px", "60px"],
+                  lineHeight: ["30px", "60px"],
                 } }
               >
                 { projectDetails.subtitle }
