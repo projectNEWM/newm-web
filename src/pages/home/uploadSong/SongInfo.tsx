@@ -67,9 +67,19 @@ const SongInfo: FunctionComponent = () => {
           maxWidth: [undefined, undefined, "700px"],
         } }
       >
-        <TextInputField name="title" label="SONG TITLE" />
+        <TextInputField
+          name="title"
+          label="SONG TITLE"
+          placeholder="Give your track a name..."
+        />
 
-        <DropdownSelectField name="genre" label="GENRE" options={ genres } />
+        { /* TODO: Allow selecting multiple genres - CU-8669m5gcq */ }
+        <DropdownSelectField
+          name="genre"
+          label="GENRE"
+          options={ genres }
+          placeholder="Select all that apply"
+        />
       </Stack>
 
       <Stack
@@ -82,7 +92,7 @@ const SongInfo: FunctionComponent = () => {
         <TextAreaField
           name="description"
           label="SONG DESCRIPTION"
-          placeholder="Optional"
+          placeholder="Tell us about your song"
         />
 
         <Box mt={ 5 }>

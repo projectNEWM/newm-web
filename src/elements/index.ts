@@ -15,6 +15,8 @@ export { default as HorizontalLine } from "./styled/HorizontalLine";
 export { default as Link } from "./Link";
 export { default as TableSkeleton } from "./skeletons/TableSkeleton";
 export { default as Switch } from "./Switch";
+export { default as SwitchInput } from "./SwitchInput";
+export * from "./SwitchInput";
 export { default as TextArea } from "./TextArea";
 export * from "./TextArea";
 export { default as TextInput } from "./TextInput";

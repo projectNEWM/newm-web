@@ -27,7 +27,7 @@ export { default as SideBarHeader } from "./home/SideBarHeader";
 export { default as StyledPagination } from "./styled/StyledPagination";
 export { default as SolidOutline } from "./styled/SolidOutline";
 export { default as SquareGridCard } from "./SquareGridCard";
-export { default as SwitchField } from "./form/SwitchField";
+export { default as SwitchInputField } from "./form/SwitchInputField";
 export { default as TextAreaField } from "./form/TextAreaField";
 export { default as TextInputField } from "./form/TextInputField";
 export { default as Toast } from "./Toast";

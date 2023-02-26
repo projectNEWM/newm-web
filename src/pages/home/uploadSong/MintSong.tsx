@@ -62,6 +62,7 @@ const MintSong: FunctionComponent = () => {
         sx={ {
           backgroundColor: theme.colors.grey600,
           padding: theme.spacing(3),
+          border: `2px solid ${theme.colors.grey500}`,
         } }
       >
         <Stack
