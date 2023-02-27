@@ -17,6 +17,10 @@ const initialState: SessionState = {
     pictureUrl: "",
     role: "",
     genre: "",
+    verifiedStatus: "unverified",
+  },
+  idenfy: {
+    authToken: "",
   },
 };
 
@@ -24,6 +28,9 @@ const sessionSlice = createSlice({
   initialState,
   name: "session",
   reducers: {
+    receiveIdenfyToken(state, { payload }) {
+      state.idenfy.authToken = payload;
+    },
     receiveProfile(state, { payload }) {
       state.profile = payload;
     },
@@ -35,6 +42,7 @@ const sessionSlice = createSlice({
 
 export const {
   logOut,
+  receiveIdenfyToken,
   receiveProfile,
   receiveRefreshToken,
   receiveSuccessfullAuthentication,

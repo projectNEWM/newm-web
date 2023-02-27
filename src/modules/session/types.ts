@@ -1,6 +1,9 @@
+import { IdenfyTokenResponse } from "api";
+
 export interface SessionState {
   isLoggedIn: boolean;
   profile: Profile;
+  idenfy: Partial<IdenfyTokenResponse>;
 }
 
 export interface Profile {
@@ -14,6 +17,7 @@ export interface Profile {
   readonly pictureUrl: string;
   readonly role: string;
   readonly genre: string;
+  readonly verifiedStatus: "unverified" | "pending" | "verified";
 }
 
 export interface NewmOAuthRequest {
@@ -52,6 +56,7 @@ export interface UpdateProfileRequest {
   readonly newPassword?: string;
   readonly confirmPassword?: string;
   readonly authCode?: number;
+  readonly verifiedStatus?: "unverified" | "pending" | "verified";
 }
 
 export interface GetProfileResponse {
@@ -65,6 +70,7 @@ export interface GetProfileResponse {
   readonly role: string;
   readonly genre: string;
   readonly email: string;
+  readonly verifiedStatus: "unverified" | "pending" | "verified";
 }
 
 export interface Request2FACode {
@@ -82,6 +88,7 @@ export interface CreateAccountRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly role?: string;
+  readonly verifiedStatus?: "unverified" | "pending" | "verified";
 }
 
 export interface ResetPasswordRequest {

@@ -2,12 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
+import { IdenfyTokenRequest, idenfyApi } from "api";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
   ResetPasswordRequest,
   UpdateProfileRequest,
 } from "./types";
+import { receiveIdenfyToken } from "./slice";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -92,6 +94,27 @@ export const createAccount = createAsyncThunk(
     }
 
     history.push("/create-profile");
+  }
+);
+
+/**
+ * Request a iDenfy authToken.
+ * Update state with token and set verified status to pending.
+ */
+export const requestVerificationToken = createAsyncThunk(
+  "session/requestVerificationToken",
+  async (body: IdenfyTokenRequest, { dispatch }) => {
+    const idenfyTokenResponse = await dispatch(
+      idenfyApi.endpoints.requestVerificationToken.initiate(body)
+    );
+
+    if ("error" in idenfyTokenResponse) {
+      return;
+    }
+
+    dispatch(receiveIdenfyToken(idenfyTokenResponse.data.authToken));
+
+    dispatch(updateProfile({ verifiedStatus: "pending" }));
   }
 );
 

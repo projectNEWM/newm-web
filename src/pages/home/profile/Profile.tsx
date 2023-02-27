@@ -1,19 +1,26 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, HorizontalLine, Typography } from "elements";
+import { Container, IconButton, Stack } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Form, Formik, FormikValues } from "formik";
+import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
   PasswordInputField,
   ProfileImage,
   TextInputField,
 } from "components";
-import { Container, Stack } from "@mui/material";
-import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
-import { selectSession, updateProfile } from "modules/session";
+import {
+  requestVerificationToken,
+  selectSession,
+  updateProfile,
+} from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
+import IdenfyModal from "./IdenfyModal";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -24,12 +31,30 @@ const Profile: FunctionComponent = () => {
       email,
       firstName,
       genre,
+      id = "",
       lastName,
       nickname,
       pictureUrl,
       role,
+      verifiedStatus,
     } = {},
+    idenfy: { authToken },
   } = useSelector(selectSession);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isUnverified = verifiedStatus === "unverified";
+  const isPendingVerification = verifiedStatus === "pending";
+  const isVerified = verifiedStatus === "verified";
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleVerificationSession = () => {
+    if (!authToken) {
+      dispatch(requestVerificationToken({ clientId: id }));
+    }
+    setIsModalOpen(!isModalOpen);
+  };
 
   const initialValues = {
     firstName,
@@ -96,17 +121,43 @@ const Profile: FunctionComponent = () => {
         textAlign: ["center", "center", "initial"],
       } }
     >
-      <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
-        PROFILE
-      </Typography>
-      { pictureUrl && (
-        <ProfileImage
-          alt="Profile picture"
-          src={ pictureUrl }
-          sx={ { marginBottom: 5 } }
-          referrerPolicy="no-referrer"
-        />
-      ) }
+      <Stack direction="row" justifyContent="space-between">
+        <Typography variant="h3" fontWeight={ 800 }>
+          PROFILE
+        </Typography>
+        { isUnverified || isPendingVerification ? (
+          <Stack direction="row">
+            <Button
+              color="partners"
+              variant="outlined"
+              width="compact"
+              onClick={ handleVerificationSession }
+            >
+              { isUnverified ? "Verify your profile" : "Pending Verification" }
+            </Button>
+            <Tooltip title="Verification process takes about 20 minutes.">
+              <IconButton>
+                <HelpIcon sx={ { color: theme.colors.grey100 } } />
+              </IconButton>
+            </Tooltip>
+            <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
+          </Stack>
+        ) : null }
+      </Stack>
+      <Stack direction="row" alignItems="center" columnGap={ 2 } mt={ 5 }>
+        { pictureUrl && (
+          <ProfileImage
+            alt="Profile picture"
+            src={ pictureUrl }
+            sx={ { mb: 5 } }
+            referrerPolicy="no-referrer"
+          />
+        ) }
+        <Typography variant="h3" fontWeight="700">
+          { nickname }
+        </Typography>
+        { isVerified ? <CheckCircleIcon color="success" /> : null }
+      </Stack>
       <Formik
         enableReinitialize={ true }
         initialValues={ initialValues }
