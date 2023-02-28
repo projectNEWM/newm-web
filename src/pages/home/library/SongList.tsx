@@ -19,7 +19,7 @@ import { Song } from "modules/song";
 import { TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
-import { Pause, PlayArrow } from "@mui/icons-material";
+import { Loop, PlayArrow, Stop } from "@mui/icons-material";
 import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
@@ -173,15 +173,31 @@ export default function SongList({
                         onClick={ () => onSongPlayPause(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
-                        { song.id === currentPlayingSongId ? (
-                          <Pause
-                            fontSize="medium"
-                            sx={ { color: theme.colors.white } }
-                          />
+                        { song.streamUrl ? (
+                          song.id === currentPlayingSongId ? (
+                            <Stop
+                              fontSize="medium"
+                              sx={ { color: theme.colors.white } }
+                            />
+                          ) : (
+                            <PlayArrow
+                              fontSize="medium"
+                              sx={ { color: theme.colors.white } }
+                            />
+                          )
                         ) : (
-                          <PlayArrow
-                            fontSize="medium"
-                            sx={ { color: theme.colors.white } }
+                          <Loop
+                            sx={ {
+                              animation: "spin 3s linear infinite",
+                              "@keyframes spin": {
+                                "0%": {
+                                  transform: "rotate(360deg)",
+                                },
+                                "100%": {
+                                  transform: "rotate(0deg)",
+                                },
+                              },
+                            } }
                           />
                         ) }
                       </IconButton>
