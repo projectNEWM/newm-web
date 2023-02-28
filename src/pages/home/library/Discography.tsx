@@ -5,6 +5,8 @@ import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
+import videojs from "video.js";
+import Player from "video.js/dist/types/player";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
@@ -16,7 +18,22 @@ const Discography: FunctionComponent = () => {
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
     string | null
   >(null);
+  const [audioPlayer, setAudioPlayer] = useState<Player>();
   const viewportWidth = useWindowDimensions()?.width;
+
+  // initialize audio player on page load
+  useEffect(() => {
+    const audioElement = new Audio();
+    audioElement.onended = () => setCurrentPlayingSongId(null);
+    const newAudioPlayer = videojs(audioElement);
+    setAudioPlayer(newAudioPlayer);
+
+    return () => {
+      if (!newAudioPlayer.isDisposed()) {
+        newAudioPlayer.dispose();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setFilteredData(songData);
@@ -44,16 +61,25 @@ const Discography: FunctionComponent = () => {
       return filteredSong.id === currentPlayingSongId;
     });
 
-    if (!isSongFound) {
+    if (!isSongFound && audioPlayer) {
       setCurrentPlayingSongId(null);
+      audioPlayer?.pause();
+      audioPlayer?.src(undefined);
     }
-  }, [currentPlayingSongId, filteredData]);
+  }, [audioPlayer, currentPlayingSongId, filteredData]);
 
+  // Play and stop audio stream source when selected
   const handleSongPlayPause = (song: Song) => {
     if (song.id === currentPlayingSongId) {
       setCurrentPlayingSongId(null);
+      audioPlayer?.pause();
+      audioPlayer?.src(undefined);
     } else {
-      setCurrentPlayingSongId(song.id);
+      if (song.streamUrl) {
+        setCurrentPlayingSongId(song.id);
+        audioPlayer?.src(song.streamUrl);
+        audioPlayer?.play();
+      }
     }
   };
 
