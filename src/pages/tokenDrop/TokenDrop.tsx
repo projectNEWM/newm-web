@@ -98,7 +98,7 @@ const TokenDrop: FunctionComponent = () => {
           <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
             <Typography
               variant="h1"
-              fontSize={ ["42px", "70px", "78px", "100px"] }
+              fontSize={ ["42px", "68px", "72px", "100px"] }
               lineHeight="86px"
               paddingRight={ [0, 0, 18] }
             >

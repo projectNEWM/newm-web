@@ -13,6 +13,7 @@ interface ProjectDetails {
   readonly description: string;
   readonly socials: ReadonlyArray<{
     readonly heading: string;
+    readonly discord?: string;
     readonly twitter?: string;
     readonly instagram?: string;
     readonly spotify?: string;
@@ -295,6 +296,32 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         twitter: "https://twitter.com/awesomeisjayell",
         youTube: "https://www.youtube.com/@awesomeisjayell",
         website: "https://www.awesomeisjayell.com",
+      },
+    ],
+  },
+  oddshapeshadow: {
+    artistName: "Oddshapeshadow",
+    songName: "Show Me",
+    launchTimestamp: 1677859200000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 14,
+    bundleAmount: 400000,
+    totalTokens: 100000000,
+    bundlePrice: 50,
+    royaltyAgreement:
+      "https://6gpx3w4moxhrl5oc672wznyuzbauhecwdswumkcrt2rzmveuxd3a.arweave" +
+      ".net/8Z9924x1zxX1wvf1bLcUyEFDkFYcrUYoUZ6jllSUuPY",
+    poolLink: "https://pool.pm/asset1x47rkfwaqhv3aqlc3qa2rzrj3ukzcfqmvzc8f4",
+    spotifyLink:
+      "https://open.spotify.com/track/2cZOjrm6568Uhennot4uGx?si=94b01925eca74db3",
+    description:
+      // TODO copy still needed
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias, voluptatem?",
+    socials: [
+      {
+        heading: "Oddshapeshadow",
+        discord: "https://discord.gg/kmBWdPsFsk",
+        twitter: "https://twitter.com/MGBedford",
+        soundcloud: "https://soundcloud.com/oddshapeshadow",
       },
     ],
   },

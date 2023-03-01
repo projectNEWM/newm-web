@@ -7,6 +7,7 @@ import TwitterIcon from "assets/images/TwitterIcon";
 import SoundcloudIcon from "assets/images/SoundcloudIcon";
 import TiktokIcon from "assets/images/TiktokIcon";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import DiscordIcon from "assets/images/DiscordIcon";
 import { AccentButton } from "elements";
 import { projectDetails } from "buildParams";
 
@@ -44,6 +45,7 @@ const SocialsModal = () => {
         (
           {
             heading,
+            discord,
             twitter,
             instagram,
             soundcloud,
@@ -77,6 +79,13 @@ const SocialsModal = () => {
                 flexWrap: "wrap",
               } }
             >
+              { discord && (
+                <SocialButton
+                  href={ discord }
+                  icon={ <DiscordIcon /> }
+                  text="Discord"
+                />
+              ) }
               { twitter && (
                 <SocialButton
                   href={ twitter }
