@@ -5,11 +5,22 @@ import {
   Alert as MUIAlert,
   AlertProps as MUIAlertProps,
 } from "@mui/material";
+import WarningIcon from "@mui/icons-material/Warning";
+import InfoIcon from "@mui/icons-material/Info";
 import theme from "theme";
 
 interface AlertProps extends MUIAlertProps {
   open?: boolean;
 }
+
+const iconStyles = {
+  alignSelf: "center",
+};
+
+const iconMapping = {
+  info: <InfoIcon sx={ iconStyles } />,
+  warning: <WarningIcon sx={ iconStyles } />,
+};
 
 const Alert: FunctionComponent<AlertProps> = ({
   action,
@@ -22,8 +33,13 @@ const Alert: FunctionComponent<AlertProps> = ({
     <Box sx={ { width: "100%" } }>
       <Collapse in={ open }>
         <MUIAlert
-          action={ action }
+          action={
+            <Box sx={ { display: "flex", height: "100%", alignItems: "center" } }>
+              { action }
+            </Box>
+          }
           severity={ severity }
+          iconMapping={ iconMapping }
           sx={ {
             backgroundColor: theme.colors.grey600,
             borderRadius: "6px",

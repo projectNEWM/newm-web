@@ -13,40 +13,21 @@ Default.args = {
   children: "Button Text",
 };
 
-export const Color: ComponentStory<typeof Button> = (args) => (
+export const Color: ComponentStory<typeof Button> = () => (
   <div style={ { display: "flex", gap: "16px" } }>
-    <Button { ...args } color="company">
-      Company
-    </Button>
-    <Button { ...args } color="crypto">
-      Crypto
-    </Button>
-    <Button { ...args } color="magazine">
-      Magazine
-    </Button>
-    <Button { ...args } color="music">
-      Music
-    </Button>
-    <Button { ...args } color="partners">
-      Partners
-    </Button>
-    <Button { ...args } color="white">
-      White
-    </Button>
+    <Button gradient="company">Company</Button>
+    <Button gradient="crypto">Crypto</Button>
+    <Button gradient="magazine">Magazine</Button>
+    <Button gradient="music">Music</Button>
+    <Button gradient="partners">Partners</Button>
   </div>
 );
 
-export const Variant: ComponentStory<typeof Button> = (args) => (
+export const Variant: ComponentStory<typeof Button> = () => (
   <div style={ { display: "flex", gap: "16px" } }>
-    <Button { ...args } variant="primary">
-      Primary
-    </Button>
-    <Button { ...args } variant="secondary">
-      Secondary
-    </Button>
-    <Button { ...args } variant="outlined">
-      Outlined
-    </Button>
+    <Button variant="primary">Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="outlined">Outlined</Button>
   </div>
 );
 

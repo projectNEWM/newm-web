@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
-import { Button, HorizontalLine, Typography } from "elements";
+import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
 import {
@@ -36,6 +36,14 @@ const SongInfo: FunctionComponent = () => {
 
   const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
     setFieldValue("creditors", creditors);
+  };
+
+  const handleVerifyProfile = () => {
+    // trigger iDenfy flow
+  };
+
+  const handleConnectWallet = () => {
+    // trigger connect wallet modal
   };
 
   return (
@@ -134,6 +142,26 @@ const SongInfo: FunctionComponent = () => {
           <HorizontalLine />
         </Box>
 
+        <Alert
+          severity="warning"
+          action={
+            <Button
+              aria-label="close"
+              variant="outlined"
+              color="yellow"
+              onClick={ handleVerifyProfile }
+              sx={ { textTransform: "none" } }
+            >
+              Verify profile
+            </Button>
+          }
+        >
+          <Typography color="yellow">Verify your profile</Typography>
+          <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+            These details cannot be changed after minting.
+          </Typography>
+        </Alert>
+
         <Box mt={ 5 }>
           <Box
             sx={ {
@@ -162,6 +190,26 @@ const SongInfo: FunctionComponent = () => {
             ) }
           </Box>
         </Box>
+
+        <Alert
+          severity="warning"
+          action={
+            <Button
+              aria-label="close"
+              variant="outlined"
+              color="yellow"
+              onClick={ handleConnectWallet }
+              sx={ { textTransform: "none" } }
+            >
+              Connect wallet
+            </Button>
+          }
+        >
+          <Typography color="yellow">Verify your profile</Typography>
+          <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+            To continue, please connect a wallet.
+          </Typography>
+        </Alert>
 
         <Box mt={ 5 }>
           <HorizontalLine />

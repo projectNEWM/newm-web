@@ -239,6 +239,9 @@ const theme = createTheme({
     info: {
       main: colors.baseBlue,
     },
+    warning: {
+      main: colors.yellow,
+    },
 
     action: {
       disabled: colors.white,

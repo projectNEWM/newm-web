@@ -71,7 +71,7 @@ const Mint = () => {
   return (
     <Box sx={ { maxWidth: "700px" } }>
       { showWarning && (
-        <Stack sx={ { mt: 2 } }>
+        <Box sx={ { mt: 2 } }>
           <Alert
             action={
               <MUIButton
@@ -90,7 +90,7 @@ const Mint = () => {
               These details cannot be changed after minting.
             </Typography>
           </Alert>
-        </Stack>
+        </Box>
       ) }
 
       <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
