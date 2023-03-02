@@ -127,7 +127,7 @@ declare module "@mui/material/Typography" {
 }
 
 const colors = {
-  blue: "#0099CC",
+  blue: "#3985F7",
   purple: "#CC33CC",
   pink: "#DC3CAA",
   red: "#EB5545",
@@ -207,6 +207,10 @@ const theme = createTheme({
     },
     error: {
       main: "#FF453A",
+    },
+    info: {
+      light: "#3985F7",
+      main: "#3985F7",
     },
     success: {
       main: "#68CD67",
