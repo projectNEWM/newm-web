@@ -63,7 +63,7 @@ const SignUp: FunctionComponent = () => {
         display: "flex",
         flex: 1,
         maxWidth: "100%",
-        pt: 7.5,
+        pt: 5,
         px: 2,
         textAlign: "center",
       } }

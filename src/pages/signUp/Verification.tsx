@@ -44,7 +44,7 @@ const Verification: FunctionComponent = () => {
           mb={ 7.5 }
           style={ { ...theme.typography.emphasized } }
         >
-          Paste your verification code here.
+          Enter your verification code below:
         </GradientTypography>
         <Stack
           spacing={ 1.5 }
