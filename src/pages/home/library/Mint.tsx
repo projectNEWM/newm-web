@@ -1,70 +1,72 @@
-import {
-  Box,
-  FormControlLabel,
-  InputAdornment,
-  Button as MUIButton,
-  Stack,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { useWindowDimensions } from "common";
-import {
-  Alert,
-  Button,
-  Checkbox,
-  HorizontalLine,
-  Switch,
-  TextInput,
-  Typography,
-} from "elements";
+import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { Owner, Song } from "modules/song";
-import { ChangeEvent, useEffect, useState } from "react";
-import AddOwnerModal from "../uploadSong/AddOwnerModal";
+import {
+  Creditor,
+  Owner,
+  Song,
+  generateArtistAgreement,
+  selectSong,
+} from "modules/song";
+import { useState } from "react";
+import { ConfirmContract, SwitchInputField } from "components";
+import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSession } from "modules/session";
+import SelectCoCeators from "components/minting/SelectCoCreators";
+
+interface FormValues {
+  readonly hasAgreedToTerms: boolean;
+  readonly isMinting: boolean;
+  readonly owners: Array<Owner>;
+  readonly creditors: Array<Creditor>;
+}
 
 const Mint = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { id = "", title } = location.state as Song;
+  const { title } = location.state as Song;
 
-  const [isExclusiveCreator, setIsExclusiveCreator] = useState(false);
-  const [hasAgreedToTerms, setHasAgreedToTerms] = useState(false);
+  const { profile } = useSelector(selectSession);
+  const { isLoading } = useSelector(selectSong);
+
+  const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
-  const [isMintSwitchOn, setIsMintSwitchOn] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFirstStep, setIsFirstStep] = useState(true);
-  const [isFullyOwned, setIsFullyOwned] = useState(false);
-  const [futureOwners, setFutureOwners] = useState<Owner[]>([]);
-  const [futureCreditors, setFutureCreditors] = useState<Partial<Owner>[]>([]);
+
+  const initialValues: FormValues = {
+    hasAgreedToTerms: false,
+    isMinting: false,
+    owners: [],
+    creditors: [],
+  };
 
   const handleSubmit = () => {
-    // Potentially filter out futureOwners who have 0% ownership
-    // to prevent them from being marked as owners
-    // eslint-disable-next-line no-console
-    console.log("Do something with this ID:", id);
+    // do something
   };
 
-  const handlePercentageChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    email: string
-  ) => {
-    const newState: Owner[] = [...futureOwners];
-    const index = newState.findIndex((owner: Owner) => owner.email === email);
+  const handleCompleteStepOne = () => {
+    const songName = title;
+    // TODO: reference company name when exists in profile
+    const companyName = "ACME";
+    const artistName = `${profile.firstName} ${profile.lastName}`;
+    const stageName = profile.nickname;
 
-    newState[index].percentage = event.target.valueAsNumber;
-
-    setFutureOwners(newState);
-  };
-
-  useEffect(() => {
-    setIsFullyOwned(
-      futureOwners.reduce(
-        (acc, { percentage }) => (isNaN(percentage) ? acc : acc + percentage),
-        0
-      ) === 100
+    dispatch(
+      generateArtistAgreement({
+        body: {
+          songName,
+          companyName,
+          artistName,
+          stageName,
+        },
+        callback: () => setStepIndex(1),
+      })
     );
-  }, [futureOwners]);
+  };
 
   return (
     <Box sx={ { maxWidth: "700px" } }>
@@ -91,358 +93,130 @@ const Mint = () => {
         </Stack>
       ) }
 
-      { isFirstStep ? (
-        <>
-          <Box
-            sx={ {
-              backgroundColor: theme.colors.grey600,
-              mt: 4,
-              p: 3,
-            } }
-          >
-            <Stack
-              spacing={ 1 }
-              sx={ {
-                alignItems: "center",
-                display: "flex",
-                flexDirection: [null, null, "row"],
-                justifyContent: "space-between",
-              } }
-            >
-              <Stack spacing={ 1 } sx={ { maxWidth: "500px" } }>
-                <Typography>Mint Song</Typography>
-                <Typography fontSize={ 12 } variant="subtitle1">
-                  Minting a song will create an NFT that reflects ownership,
-                  making streaming royalties purchasable. Once a song is minted,
-                  it cannot be deleted.
-                </Typography>
-              </Stack>
+      <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
+        { ({ values, setFieldValue }) => {
+          const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
+            setFieldValue("owners", owners);
+          };
 
-              <Switch
-                checked={ isMintSwitchOn }
-                onChange={ () => {
-                  setIsMintSwitchOn(!isMintSwitchOn);
-                } }
-                sx={ { mt: [2, 2, 0] } }
-              />
-            </Stack>
+          const handleChangeCreditors = (
+            creditors: ReadonlyArray<Creditor>
+          ) => {
+            setFieldValue("creditors", creditors);
+          };
 
-            { isMintSwitchOn && (
-              <>
-                <HorizontalLine sx={ { my: 4 } } />
+          return (
+            <>
+              { stepIndex === 0 && (
+                <Stack pt={ 2 }>
+                  <SwitchInputField
+                    name="isMinting"
+                    title="Mint song"
+                    description={
+                      "Minting a song will create an NFT that reflects " +
+                      "ownership, making streaming royalties purchasable. Once " +
+                      "a song is minted, it cannot be deleted."
+                    }
+                  />
 
-                { futureOwners.length ? (
-                  <>
-                    <Stack flexDirection="row" justifyContent="space-between">
-                      <Typography color="grey100" variant="h5">
-                        MASTER OWNERS
-                      </Typography>
-                      <Typography color="grey100" variant="h5">
-                        SHARES
-                      </Typography>
-                    </Stack>
-                    { futureOwners.map((owner: Owner) => (
-                      <Stack
-                        key={ owner.email }
-                        sx={ {
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          mt: 1.5,
-                        } }
+                  { values.isMinting && (
+                    <SelectCoCeators
+                      owners={ values.owners }
+                      creditors={ values.creditors }
+                      onChangeOwners={ handleChangeOwners }
+                      onChangeCreditors={ handleChangeCreditors }
+                    />
+                  ) }
+
+                  <Stack direction="row" columnGap={ 2 } mt={ 5 }>
+                    <Button
+                      onClick={ () => navigate(-1) }
+                      variant="secondary"
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                    >
+                      Cancel
+                    </Button>
+
+                    { values.isMinting && (
+                      <Button
+                        disabled={ !values.owners.length }
+                        isLoading={ isLoading }
+                        onClick={ handleCompleteStepOne }
+                        width={
+                          windowWidth &&
+                          windowWidth > theme.breakpoints.values.md
+                            ? "compact"
+                            : "default"
+                        }
                       >
-                        <Stack>
-                          <Typography>{ `${owner.firstName} ${owner.lastName}` }</Typography>
-                          <Typography variant="subtitle1">
-                            { owner.email }
-                          </Typography>
-                        </Stack>
-                        <Stack flexDirection="row" alignItems="center">
-                          <TextInput
-                            aria-label="Ownership percentage"
-                            defaultValue={ 0 }
-                            endAdornment={
-                              <InputAdornment
-                                position="start"
-                                sx={ {
-                                  color: theme.colors.white,
-                                  mr: 1,
-                                } }
-                              >
-                                <Typography>%</Typography>
-                              </InputAdornment>
-                            }
-                            max={ 100 }
-                            min={ 0 }
-                            onChange={ (event) =>
-                              handlePercentageChange(event, owner.email)
-                            }
-                            placeholder="%"
-                            type="number"
-                          />
-                          <Button
-                            color="white"
-                            sx={ { ml: 3 } }
-                            variant="outlined"
-                            width="icon"
-                            onClick={ () => {
-                              setFutureOwners(
-                                futureOwners.filter(
-                                  (futureOwner) =>
-                                    futureOwner.email !== owner.email
-                                )
-                              );
-                            } }
-                          >
-                            <CloseIcon sx={ { color: theme.colors.white } } />
-                          </Button>
-                        </Stack>
-                      </Stack>
-                    )) }
-                    { !isFullyOwned && (
-                      <Typography
-                        color="red"
-                        fontSize="12px"
-                        mt={ 1 }
-                        textAlign="end"
-                      >
-                        100% ownership must be distributed.
-                      </Typography>
+                        Next
+                      </Button>
                     ) }
-
-                    <HorizontalLine sx={ { my: 4 } } />
-                  </>
-                ) : null }
-
-                { futureCreditors.length ? (
-                  <>
-                    <Typography color="grey100" mb={ -0.5 } variant="h5">
-                      CREDITS TO SHOW ON SONG DETAIL
-                    </Typography>
-                    { futureCreditors.map((owner) => (
-                      <Stack
-                        key={ owner.email }
-                        sx={ {
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          mt: 2,
-                        } }
-                      >
-                        <Stack>
-                          <Typography>{ `${owner.firstName} ${owner.lastName}` }</Typography>
-                          <Typography variant="subtitle1">
-                            { owner.email }
-                          </Typography>
-                        </Stack>
-                        <Button
-                          color="white"
-                          sx={ { ml: 3 } }
-                          variant="outlined"
-                          width="icon"
-                          onClick={ () => {
-                            setFutureCreditors(
-                              futureCreditors.filter(
-                                (futureOwner) =>
-                                  futureOwner.email !== owner.email
-                              )
-                            );
-                          } }
-                        >
-                          <CloseIcon sx={ { color: theme.colors.white } } />
-                        </Button>
-                      </Stack>
-                    )) }
-
-                    <HorizontalLine sx={ { my: 4 } } />
-                  </>
-                ) : null }
-                <Stack>
-                  <Button
-                    color="white"
-                    variant="outlined"
-                    width="full"
-                    onClick={ () => {
-                      setIsModalOpen(true);
-                    } }
-                  >
-                    Add new owner
-                  </Button>
+                  </Stack>
                 </Stack>
-              </>
-            ) }
-          </Box>
+              ) }
 
-          <Stack direction="row" columnGap={ 2 } mt={ 5 }>
-            <Button
-              onClick={ () => navigate(-1) }
-              variant="secondary"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
-              }
-            >
-              Cancel
-            </Button>
+              { stepIndex === 1 && (
+                <Stack>
+                  <Stack sx={ { my: 4, rowGap: 2 } }>
+                    <Typography>ONE LAST THING</Typography>
+                    <Typography variant="subtitle1">
+                      You&apos;re almost ready to mint! To proceed please review
+                      your ownership contract and follow the steps below.
+                    </Typography>
+                  </Stack>
 
-            { isMintSwitchOn && (
-              <Button
-                disabled={ !isFullyOwned }
-                onClick={ () => {
-                  setIsFirstStep(false);
-                } }
-                width={
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "compact"
-                    : "default"
-                }
-              >
-                Next
-              </Button>
-            ) }
-          </Stack>
-        </>
-      ) : (
-        <>
-          <Stack sx={ { mt: 4, rowGap: 2 } }>
-            <Typography>ONE LAST THING</Typography>
-            <Typography variant="subtitle1">
-              You&apos;re almost ready to mint! To proceed please review your
-              ownership contract and follow the steps below.
-            </Typography>
-          </Stack>
-          <Typography
-            color="grey100"
-            fontWeight={ 500 }
-            sx={ { mt: 4 } }
-            variant="h5"
-          >
-            View your contract here.
-          </Typography>
-          <p>PLACEHOLDER: INSERT CONTRACT HERE</p>
-          <Stack mt={ 4 } rowGap={ 2 }>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={ isExclusiveCreator }
-                  onChange={ () => {
-                    setIsExclusiveCreator(!isExclusiveCreator);
-                  } }
-                />
-              }
-              label={ `I confirm that I am the exclusive creator of ${title}.` }
-              sx={ { display: "flex", columnGap: 1.5, ml: 0, fontWeight: "400" } }
-              componentsProps={ {
-                typography: {
-                  variant: "subtitle1",
-                  sx: { fontSize: "12px", color: "white" },
-                },
-              } }
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={ hasAgreedToTerms }
-                  onChange={ () => {
-                    setHasAgreedToTerms(!hasAgreedToTerms);
-                  } }
-                />
-              }
-              label="By 'Requesting Minting' you agree to this contract."
-              sx={ { columnGap: 1.5, display: "flex", fontWeight: "400", ml: 0 } }
-              componentsProps={ {
-                typography: {
-                  sx: { fontSize: "12px", color: "white" },
-                  variant: "subtitle1",
-                },
-              } }
-            />
-          </Stack>
-          <Typography
-            color="white"
-            fontWeight={ 400 }
-            sx={ { mt: 4 } }
-            variant="subtitle1"
-          >
-            The minting process has a fee of ₳6.00 and may take 3-15 days to
-            complete.
-          </Typography>
-          <HorizontalLine sx={ { my: 4 } } />
-          <Stack alignItems="center" columnGap={ 2 } direction="row" mt={ 5 }>
-            <Button
-              onClick={ () => {
-                setIsFirstStep(true);
-              } }
-              variant="secondary"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
-              }
-            >
-              Previous
-            </Button>
+                  <ConfirmContract
+                    songTitle={ title }
+                    isCoCreator={ values.owners.length > 1 }
+                    onConfirm={ (value: boolean) =>
+                      setFieldValue("hasAgreedToTerms", value)
+                    }
+                  />
 
-            <Button
-              disabled={ !(hasAgreedToTerms && isExclusiveCreator) }
-              onClick={ handleSubmit }
-              type="submit"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
-              }
-            >
-              Request Minting
-            </Button>
-          </Stack>
-        </>
-      ) }
-      <AddOwnerModal
-        open={ isModalOpen }
-        onClose={ () => {
-          setIsModalOpen(false);
+                  <HorizontalLine sx={ { my: 4 } } />
+
+                  <Stack
+                    alignItems="center"
+                    columnGap={ 2 }
+                    direction="row"
+                    mt={ 5 }
+                  >
+                    <Button
+                      onClick={ () => setStepIndex(0) }
+                      variant="secondary"
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                    >
+                      Previous
+                    </Button>
+
+                    <Button
+                      disabled={ !values.hasAgreedToTerms }
+                      onClick={ handleSubmit }
+                      type="submit"
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                    >
+                      Request Minting
+                    </Button>
+                  </Stack>
+                </Stack>
+              ) }
+            </>
+          );
         } }
-        onSubmit={ ({
-          email,
-          firstName,
-          isCreator,
-          isRightsOwner,
-          lastName,
-          role,
-        }) => {
-          if (!futureCreditors.find((owner) => owner.email === email)) {
-            if (isCreator) {
-              setFutureCreditors([
-                ...futureCreditors,
-                {
-                  email,
-                  firstName,
-                  isCreator,
-                  isRightsOwner,
-                  lastName,
-                  role,
-                },
-              ]);
-            }
-            if (isRightsOwner) {
-              setFutureOwners([
-                ...futureOwners,
-                {
-                  email,
-                  firstName,
-                  isCreator,
-                  isRightsOwner,
-                  lastName,
-                  percentage: 0,
-                  role,
-                },
-              ]);
-            }
-          }
-
-          setIsModalOpen(false);
-        } }
-      />
+      </Formik>
     </Box>
   );
 };

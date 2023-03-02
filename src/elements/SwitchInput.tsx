@@ -25,8 +25,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    mt: 2,
-    p: 1.5,
+    p: 2,
   };
 
   const borderStyles: SxProps = {

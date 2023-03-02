@@ -1,24 +1,42 @@
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Button, HorizontalLine, Typography } from "elements";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
-import { selectSong } from "modules/song";
+import {
+  Creditor,
+  Owner,
+  UploadSongFormValues,
+  selectSong,
+} from "modules/song";
 import {
   DropdownSelectField,
+  SwitchInputField,
   TextAreaField,
   TextInputField,
   UploadImageField,
   UploadSongField,
 } from "components";
 import { useWindowDimensions } from "common";
-import theme from "theme";
-import MintSong from "./MintSong";
+import SelectCoCeators from "components/minting/SelectCoCreators";
+import { useFormikContext } from "formik";
 
 const SongInfo: FunctionComponent = () => {
+  const theme = useTheme();
+
   const { genres } = useSelector(selectContent);
   const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
+
+  const { values, setFieldValue } = useFormikContext<UploadSongFormValues>();
+
+  const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
+    setFieldValue("owners", owners);
+  };
+
+  const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
+    setFieldValue("creditors", creditors);
+  };
 
   return (
     <Stack direction="column">
@@ -59,48 +77,90 @@ const SongInfo: FunctionComponent = () => {
       </Stack>
 
       <Stack
+        spacing={ 2.5 }
         sx={ {
-          display: "grid",
-          gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
-          rowGap: ["16px", null, "12px"],
-          columnGap: [undefined, undefined, "20px"],
-          maxWidth: [undefined, undefined, "700px"],
+          marginX: ["auto", "auto", "unset"],
+          maxWidth: ["340px", "340px", "700px"],
         } }
       >
         <TextInputField
           name="title"
           label="SONG TITLE"
           placeholder="Give your track a name..."
+          widthType="full"
         />
 
-        { /* TODO: Allow selecting multiple genres - CU-8669m5gcq */ }
-        <DropdownSelectField
-          name="genre"
-          label="GENRE"
-          options={ genres }
-          placeholder="Select all that apply"
-        />
-      </Stack>
+        <Stack
+          sx={ {
+            display: "grid",
+            gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
+            rowGap: ["16px", null, "12px"],
+            columnGap: [undefined, undefined, "20px"],
+          } }
+        >
+          { /* TODO: Allow selecting multiple genres - CU-8669m5gcq */ }
+          <DropdownSelectField
+            name="genre"
+            label="GENRE"
+            options={ genres }
+            placeholder="Select all that apply"
+          />
 
-      <Stack
-        sx={ {
-          marginTop: 2.5,
-          marginX: ["auto", "auto", "unset"],
-          maxWidth: ["340px", "340px", "700px"],
-        } }
-      >
+          { /* TODO: Implement moods on back-end */ }
+          <DropdownSelectField
+            name="mood"
+            label="MOOD"
+            options={ [] }
+            placeholder="Select all that apply"
+          />
+        </Stack>
+
         <TextAreaField
           name="description"
           label="SONG DESCRIPTION"
           placeholder="Tell us about your song"
         />
 
-        <Box mt={ 5 }>
+        <SwitchInputField
+          name="isExplicit"
+          title="DOES THE SONG CONTAIN EXPLICIT CONTENT?"
+          description={
+            "Explicit content includes strong or discriminatory language, " +
+            "or depictions of sex, violence or substance abuse."
+          }
+        />
+
+        <Box py={ 2.5 }>
           <HorizontalLine />
         </Box>
 
         <Box mt={ 5 }>
-          <MintSong />
+          <Box
+            sx={ {
+              backgroundColor: theme.colors.grey600,
+              border: `2px solid ${theme.colors.grey400}`,
+              borderRadius: "4px",
+            } }
+          >
+            <SwitchInputField
+              name="isMinting"
+              title="MINT SONG"
+              includeBorder={ false }
+              description={
+                "Minting a song will make it an NFT, becoming a uniquely " +
+                "publishing token on the blockchain to make it purchasable."
+              }
+            />
+
+            { values.isMinting && (
+              <SelectCoCeators
+                owners={ values.owners }
+                creditors={ values.creditors }
+                onChangeOwners={ handleChangeOwners }
+                onChangeCreditors={ handleChangeCreditors }
+              />
+            ) }
+          </Box>
         </Box>
 
         <Box mt={ 5 }>

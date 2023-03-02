@@ -2,6 +2,8 @@
 
 export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
+export { default as Creditors } from "./minting/Creditors";
+export { default as ConfirmContract } from "./minting/ConfirmContract";
 export { default as DashedOutline } from "./styled/DashedOutline";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
@@ -17,6 +19,7 @@ export { default as PaperInput } from "./styled/PaperInput";
 export { default as SelectWalletItem } from "./uploadSong/SelectWalletItem";
 export { default as PasswordInputField } from "./form/PasswordInputField";
 export { default as Modal } from "./Modal";
+export { default as Owners } from "./minting/Owners";
 export { default as Popup } from "./Popup";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProfileImage } from "./styled/ProfileImage";

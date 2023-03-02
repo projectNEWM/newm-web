@@ -9,12 +9,14 @@ import {
 } from "modules/song";
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmUpload from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { profile } = useSelector(selectSession);
 
@@ -23,13 +25,13 @@ const UploadSong: FunctionComponent = () => {
     audio: undefined,
     title: "",
     genre: "",
+    mood: "",
     description: "",
+    isExplicit: false,
     isMinting: false,
-    largestUtxo: undefined,
     owners: [],
-    hasViewedAgreement: false,
-    isCreator: false,
-    agreesToContract: false,
+    creditors: [],
+    consentsToContract: false,
   };
 
   const handleSongInfo = (values: UploadSongFormValues) => {
@@ -42,10 +44,13 @@ const UploadSong: FunctionComponent = () => {
 
       dispatch(
         generateArtistAgreement({
-          songName,
-          companyName,
-          artistName,
-          stageName,
+          body: {
+            songName,
+            companyName,
+            artistName,
+            stageName,
+          },
+          callback: () => navigate("/confirm"),
         })
       );
     } else {
