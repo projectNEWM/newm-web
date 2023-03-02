@@ -11,7 +11,7 @@ import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import ConfirmUpload from "./ConfirmAgreement";
+import ConfirmAgreement from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
@@ -107,7 +107,7 @@ const UploadSong: FunctionComponent = () => {
               }),
             },
             {
-              element: <ConfirmUpload />,
+              element: <ConfirmAgreement />,
               path: "confirm",
               validationSchema: Yup.object().shape({
                 agreesToContract: validations.agreesToContract,
