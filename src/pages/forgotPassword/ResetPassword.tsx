@@ -55,7 +55,7 @@ const ResetPassword: FunctionComponent = () => {
           showEndAdornment={ showEndAdornment }
         />
         <Button type="submit" disabled={ !isValid }>
-          Reset password
+          Confirm
         </Button>
       </Stack>
     </Box>

@@ -8,10 +8,10 @@ import { FunctionComponent } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";
 import { useDispatch } from "react-redux";
-import LinkedInIcon from "assets/images/LinkedInIcon";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "elements";
 
-const LinkedInLogin: FunctionComponent = () => {
+const LinkedInLogin: FunctionComponent = ({ children }) => {
   const dispatch = useDispatch();
 
   const redirectUri = `${window.location.origin}/linkedin`;
@@ -36,11 +36,9 @@ const LinkedInLogin: FunctionComponent = () => {
       onClick={ linkedInLogin }
       variant="outlined"
       color="white"
-      sx={ {
-        height: "42px",
-      } }
+      startIcon={ <LinkedInIcon /> }
     >
-      <LinkedInIcon />
+      { children }
     </Button>
   );
 };

@@ -1,9 +1,9 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Container, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
+import { history } from "common/history";
 import { Form, Formik, FormikValues } from "formik";
 import {
   FacebookLogin,
@@ -18,7 +18,6 @@ import { extendedApi as sessionApi } from "modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [maskPassword, setMaskPassword] = useState(true);
 
@@ -38,7 +37,8 @@ const Login: FunctionComponent = () => {
   useAuthenticatedRedirect();
 
   return (
-    <Box
+    <Container
+      maxWidth={ false }
       sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
@@ -47,12 +47,24 @@ const Login: FunctionComponent = () => {
         width: "100%",
       } }
     >
-      <Box sx={ { mt: [5, 5, 7.5] } }>
+      <Stack
+        sx={ { alignItems: "center", gap: 1, mt: [2, 4, 5], width: "100%" } }
+      >
+        <Button
+          onClick={ () => {
+            history.push("/sign-up");
+          } }
+          sx={ { alignSelf: "flex-end", mr: [1, 1, 2] } }
+          variant="secondary"
+          width="compact"
+        >
+          Create an account
+        </Button>
         <ResponsiveNEWMLogo />
-      </Box>
+      </Stack>
 
-      <Typography sx={ { mt: [5.5, 5.5, 7.5] } } variant="h3">
-        Back to the music
+      <Typography variant="h1" sx={ { mt: [5.5, 5.5, 7.5] } }>
+        Welcome back
       </Typography>
       <Formik
         initialValues={ { email: "", password: "" } }
@@ -64,8 +76,8 @@ const Login: FunctionComponent = () => {
             <Stack
               display="inline-flex"
               maxWidth={ theme.inputField.maxWidth }
-              mt={ 2.5 }
-              spacing={ 2 }
+              mt={ 3 }
+              spacing={ 1.5 }
               width="100%"
             >
               <TextInputField
@@ -82,41 +94,42 @@ const Login: FunctionComponent = () => {
                 showEndAdornment={ !!password }
               />
 
-              <Button
-                disabled={ !isValid || isSubmitting }
-                style={ { marginBottom: "20px" } }
-                type="submit"
-              >
+              <Button disabled={ !isValid || isSubmitting } type="submit">
                 Log In
               </Button>
-              <Button
-                onClick={ () => {
-                  navigate("/forgot-password");
-                } }
-                variant="outlined"
+              <Link
+                color="grey100"
+                sx={ { textDecoration: "none" } }
+                to="/forgot-password"
+                variant="subtitle1"
+                mt={ 0.5 }
               >
                 Forgot password?
-              </Button>
-              <Link to="/sign-up" style={ { marginBottom: "8px" } }>
-                Create new account
               </Link>
-
-              <HorizontalLine />
             </Stack>
           </Form>
         ) }
       </Formik>
 
-      <Typography align="center" mt={ 2.5 }>
-        Or continue with
-      </Typography>
-
-      <Stack direction="row" mt={ 2 } spacing={ 2 }>
-        <GoogleLogin />
-        <FacebookLogin />
-        <LinkedInLogin />
+      <Stack
+        alignItems="center"
+        columnGap={ 2 }
+        direction="row"
+        maxWidth={ theme.inputField.maxWidth }
+        mt={ 3 }
+        width="100%"
+      >
+        <HorizontalLine />
+        <Typography>or</Typography>
+        <HorizontalLine />
       </Stack>
-    </Box>
+
+      <Stack my={ 2 } spacing={ 2 } width="100%" alignItems="center">
+        <GoogleLogin>Continue with Google</GoogleLogin>
+        <FacebookLogin>Continue with Facebook</FacebookLogin>
+        <LinkedInLogin>Continue with Linkedin</LinkedInLogin>
+      </Stack>
+    </Container>
   );
 };
 
