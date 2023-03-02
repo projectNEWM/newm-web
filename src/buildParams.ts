@@ -314,8 +314,17 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     spotifyLink:
       "https://open.spotify.com/track/2cZOjrm6568Uhennot4uGx?si=94b01925eca74db3",
     description:
-      // TODO copy still needed
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestias, voluptatem?",
+      "Oddshapeshadow is an alias that manifested from a love of all genres " +
+      "of music. The name reflects my goal to always surprise an audience " +
+      "with a range of different styles, and the shadow I cast as a UK-based " +
+      "Electronic Producer will always be unpredictable. Over the past " +
+      "couple of years, I have found an amazing community within Web3 " +
+      "Cardano to collaborate and develop new sounds, and it's been an " +
+      "amazing journey that continues to unfold.\n\n" +
+      "This new track embodies the passion of sharing your energy and what " +
+      "you love with the community. Shout out to all those who have helped " +
+      "me build and had fun along the way! Join me in showcasing what NEWM " +
+      "can offer to the future of the blockchain-music scene!",
     socials: [
       {
         heading: "Oddshapeshadow",
