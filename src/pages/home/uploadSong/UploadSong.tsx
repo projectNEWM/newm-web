@@ -50,7 +50,7 @@ const UploadSong: FunctionComponent = () => {
             artistName,
             stageName,
           },
-          callback: () => navigate("/confirm"),
+          callback: () => navigate("confirm"),
         })
       );
     } else {
@@ -68,8 +68,7 @@ const UploadSong: FunctionComponent = () => {
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
     genre: Yup.string().required("This field is required"),
-    isCreator: Yup.bool().required("This field is required"),
-    agreesToContract: Yup.bool().required("This field is required"),
+    consentsToContract: Yup.bool().required("This field is required"),
   };
 
   return (
@@ -110,8 +109,7 @@ const UploadSong: FunctionComponent = () => {
               element: <ConfirmAgreement />,
               path: "confirm",
               validationSchema: Yup.object().shape({
-                agreesToContract: validations.agreesToContract,
-                isCreator: validations.isCreator,
+                consentsToContract: validations.consentsToContract,
               }),
             },
           ] }

@@ -142,26 +142,6 @@ const SongInfo: FunctionComponent = () => {
           <HorizontalLine />
         </Box>
 
-        <Alert
-          severity="warning"
-          action={
-            <Button
-              aria-label="close"
-              variant="outlined"
-              color="yellow"
-              onClick={ handleVerifyProfile }
-              sx={ { textTransform: "none" } }
-            >
-              Verify profile
-            </Button>
-          }
-        >
-          <Typography color="yellow">Verify your profile</Typography>
-          <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-            These details cannot be changed after minting.
-          </Typography>
-        </Alert>
-
         <Box mt={ 5 }>
           <Box
             sx={ {
@@ -191,25 +171,51 @@ const SongInfo: FunctionComponent = () => {
           </Box>
         </Box>
 
-        <Alert
-          severity="warning"
-          action={
-            <Button
-              aria-label="close"
-              variant="outlined"
-              color="yellow"
-              onClick={ handleConnectWallet }
-              sx={ { textTransform: "none" } }
-            >
-              Connect wallet
-            </Button>
-          }
-        >
-          <Typography color="yellow">Verify your profile</Typography>
-          <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-            To continue, please connect a wallet.
-          </Typography>
-        </Alert>
+        { /** TODO: hide if user is already verified */ }
+        { values.isMinting && (
+          <Alert
+            severity="warning"
+            action={
+              <Button
+                aria-label="close"
+                variant="outlined"
+                color="yellow"
+                onClick={ handleVerifyProfile }
+                sx={ { textTransform: "none" } }
+              >
+                Verify profile
+              </Button>
+            }
+          >
+            <Typography color="yellow">Verify your profile</Typography>
+            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+              These details cannot be changed after minting.
+            </Typography>
+          </Alert>
+        ) }
+
+        { /** TODO: hide if wallet is already connected */ }
+        { values.isMinting && (
+          <Alert
+            severity="warning"
+            action={
+              <Button
+                aria-label="close"
+                variant="outlined"
+                color="yellow"
+                onClick={ handleConnectWallet }
+                sx={ { textTransform: "none" } }
+              >
+                Connect wallet
+              </Button>
+            }
+          >
+            <Typography color="yellow">Verify your profile</Typography>
+            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+              To continue, please connect a wallet.
+            </Typography>
+          </Alert>
+        ) }
 
         <Box mt={ 5 }>
           <HorizontalLine />

@@ -12,7 +12,9 @@ const ConfirmAgreement: FunctionComponent = () => {
 
   const { isLoading } = useSelector(selectSong);
 
-  const { values, setFieldValue } = useFormikContext<UploadSongFormValues>();
+  const { values, errors, setFieldValue } =
+    useFormikContext<UploadSongFormValues>();
+  console.log("errors: ", errors);
 
   const windowWidth = useWindowDimensions()?.width;
 
