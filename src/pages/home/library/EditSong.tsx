@@ -8,7 +8,7 @@ import { Button } from "elements";
 import { ProfileImage } from "components";
 import { Song } from "modules/song";
 import SongInfo from "./SongInfo";
-import Mint from "./Mint";
+import MintSong from "./MintSong";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -112,7 +112,7 @@ const EditSong = () => {
         <SongInfo />
       </TabPanel>
       <TabPanel value={ tab } index={ 1 }>
-        <Mint />
+        <MintSong />
       </TabPanel>
       <TabPanel value={ tab } index={ 2 }>
         Marketplace content goes here
