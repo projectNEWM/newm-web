@@ -6,20 +6,15 @@ import {
   AlertProps as MUIAlertProps,
 } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
-import InfoIcon from "@mui/icons-material/Info";
 import theme from "theme";
 
 interface AlertProps extends MUIAlertProps {
   open?: boolean;
 }
 
-const iconStyles = {
-  alignSelf: "center",
-};
-
+// replaces warning icon (filled instead of outline)
 const iconMapping = {
-  info: <InfoIcon sx={ iconStyles } />,
-  warning: <WarningIcon sx={ iconStyles } />,
+  warning: <WarningIcon />,
 };
 
 const Alert: FunctionComponent<AlertProps> = ({
@@ -44,6 +39,9 @@ const Alert: FunctionComponent<AlertProps> = ({
             backgroundColor: theme.colors.grey600,
             borderRadius: "6px",
             p: "8px 16px",
+            ".MuiAlert-icon": {
+              alignItems: "center",
+            },
             ".MuiSvgIcon-root": {
               color: "inherit",
             },

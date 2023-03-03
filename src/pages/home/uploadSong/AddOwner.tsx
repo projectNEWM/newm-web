@@ -4,7 +4,7 @@ import { IconButton, Stack, useTheme } from "@mui/material";
 import { ProfileImage, TextInputField } from "components";
 import CloseIcon from "@mui/icons-material/Close";
 import InputAdornment from "@mui/material/InputAdornment";
-import AddOwnerModal from "../../../components/minting/AddOwnerModal";
+import AddOwnerModal from "components/minting/AddOwnerModal";
 
 const AddOwner: FunctionComponent = () => {
   const theme = useTheme();

@@ -26,7 +26,7 @@ interface FormValues {
   readonly consentsToContract: boolean;
 }
 
-const Mint = () => {
+const MintSong = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -325,4 +325,4 @@ const Mint = () => {
   );
 };
 
-export default Mint;
+export default MintSong;
