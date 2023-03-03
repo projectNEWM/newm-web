@@ -45,7 +45,6 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
 
 const FormContent: FunctionComponent<FormContentProps> = ({
   values,
-  errors,
   setFieldValue,
   handleSubmit,
 }) => {
@@ -81,12 +80,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
               setFieldValue("owners", newOwners);
             } }
           />
-
-          { !!errors.owners && (
-            <Typography color="red" fontSize="12px" mt={ 1 } textAlign="end">
-              { errors.owners }
-            </Typography>
-          ) }
 
           <HorizontalLine sx={ { my: 4 } } />
         </>
