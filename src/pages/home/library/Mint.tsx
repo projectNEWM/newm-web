@@ -8,20 +8,22 @@ import {
   Owner,
   Song,
   generateArtistAgreement,
+  patchSong,
   selectSong,
 } from "modules/song";
 import { useState } from "react";
-import { ConfirmContract, SwitchInputField } from "components";
+import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
+import * as Yup from "yup";
 
 interface FormValues {
-  readonly hasAgreedToTerms: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
   readonly creditors: Array<Creditor>;
+  readonly consentsToContract: boolean;
 }
 
 const Mint = () => {
@@ -29,7 +31,7 @@ const Mint = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { title } = location.state as Song;
+  const { id, title } = location.state as Song;
 
   const { profile } = useSelector(selectSession);
   const { isLoading } = useSelector(selectSong);
@@ -38,17 +40,42 @@ const Mint = () => {
   const [showWarning, setShowWarning] = useState(true);
 
   const initialValues: FormValues = {
-    hasAgreedToTerms: false,
     isMinting: false,
     owners: [],
     creditors: [],
+    consentsToContract: false,
   };
 
-  const handleSubmit = () => {
-    // do something
+  const validationSchema = Yup.object().shape({
+    owners: Yup.array().when("isMinting", {
+      is: (value: boolean) => !!value,
+      then: Yup.array()
+        .min(1, "At least one owner is required when minting")
+        .test({
+          message: "100% ownership must be distributed",
+          test: (owners) => {
+            if (!owners) return false;
+
+            const percentageSum = owners.reduce((sum, owner) => {
+              return sum + owner.percentage;
+            }, 0);
+
+            return percentageSum === 100;
+          },
+        }),
+    }),
+    consentsToContract: Yup.bool().required("This field is required"),
+  });
+
+  const handleSubmitStep = (values: FormValues) => {
+    if (stepIndex === 0) {
+      handleCompleteFirstStep();
+    } else {
+      dispatch(patchSong({ id, ...values }));
+    }
   };
 
-  const handleCompleteStepOne = () => {
+  const handleCompleteFirstStep = () => {
     const songName = title;
     // TODO: reference company name when exists in profile
     const companyName = "ACME";
@@ -66,6 +93,14 @@ const Mint = () => {
         callback: () => setStepIndex(1),
       })
     );
+  };
+
+  const handleVerifyProfile = () => {
+    // trigger iDenfy flow
+  };
+
+  const handleConnectWallet = () => {
+    // trigger connect wallet modal
   };
 
   return (
@@ -93,8 +128,12 @@ const Mint = () => {
         </Box>
       ) }
 
-      <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
-        { ({ values, setFieldValue }) => {
+      <Formik
+        initialValues={ initialValues }
+        onSubmit={ handleSubmitStep }
+        validationSchema={ validationSchema }
+      >
+        { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
           const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
             setFieldValue("owners", owners);
           };
@@ -108,7 +147,7 @@ const Mint = () => {
           return (
             <>
               { stepIndex === 0 && (
-                <Stack pt={ 2 }>
+                <Stack pt={ 2.5 }>
                   <SwitchInputField
                     name="isMinting"
                     title="Mint song"
@@ -120,13 +159,79 @@ const Mint = () => {
                   />
 
                   { values.isMinting && (
-                    <SelectCoCeators
-                      owners={ values.owners }
-                      creditors={ values.creditors }
-                      onChangeOwners={ handleChangeOwners }
-                      onChangeCreditors={ handleChangeCreditors }
-                    />
+                    <Stack spacing={ 0.5 }>
+                      <SelectCoCeators
+                        owners={ values.owners }
+                        creditors={ values.creditors }
+                        onChangeOwners={ handleChangeOwners }
+                        onChangeCreditors={ handleChangeCreditors }
+                      />
+
+                      { !!touched.owners && !!errors.owners && (
+                        <ErrorMessage>{ errors.owners }</ErrorMessage>
+                      ) }
+                    </Stack>
                   ) }
+
+                  <Stack spacing={ 2.5 } mt={ 2.5 }>
+                    { /** TODO: hide if user is already verified */ }
+                    { values.isMinting && (
+                      <Alert
+                        severity="warning"
+                        action={
+                          <Button
+                            aria-label="close"
+                            variant="outlined"
+                            color="yellow"
+                            onClick={ handleVerifyProfile }
+                            sx={ { textTransform: "none" } }
+                          >
+                            Verify profile
+                          </Button>
+                        }
+                      >
+                        <Typography color="yellow">
+                          Verify your profile
+                        </Typography>
+                        <Typography
+                          color="yellow"
+                          fontWeight={ 400 }
+                          variant="subtitle1"
+                        >
+                          These details cannot be changed after minting.
+                        </Typography>
+                      </Alert>
+                    ) }
+
+                    { /** TODO: hide if wallet is already connected */ }
+                    { values.isMinting && (
+                      <Alert
+                        severity="warning"
+                        action={
+                          <Button
+                            aria-label="close"
+                            variant="outlined"
+                            color="yellow"
+                            onClick={ handleConnectWallet }
+                            sx={ { textTransform: "none" } }
+                          >
+                            Connect wallet
+                          </Button>
+                        }
+                      >
+                        <Typography color="yellow">
+                          Verify your profile
+                        </Typography>
+                        <Typography
+                          color="yellow"
+                          fontWeight={ 400 }
+                          variant="subtitle1"
+                        >
+                          To continue, please connect a wallet.
+                        </Typography>
+                      </Alert>
+                    ) }
+                  </Stack>
 
                   <Stack direction="row" columnGap={ 2 } mt={ 5 }>
                     <Button
@@ -141,11 +246,11 @@ const Mint = () => {
                       Cancel
                     </Button>
 
+                    { /** TODO: disable button if verify or wallet warnings visible */ }
                     { values.isMinting && (
                       <Button
-                        disabled={ !values.owners.length }
+                        onClick={ () => handleSubmit() }
                         isLoading={ isLoading }
-                        onClick={ handleCompleteStepOne }
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
@@ -174,7 +279,7 @@ const Mint = () => {
                     songTitle={ title }
                     isCoCreator={ values.owners.length > 1 }
                     onConfirm={ (value: boolean) =>
-                      setFieldValue("hasAgreedToTerms", value)
+                      setFieldValue("consentsToContract", value)
                     }
                   />
 
@@ -199,9 +304,8 @@ const Mint = () => {
                     </Button>
 
                     <Button
-                      disabled={ !values.hasAgreedToTerms }
-                      onClick={ handleSubmit }
-                      type="submit"
+                      onClick={ () => handleSubmit() }
+                      disabled={ !values.consentsToContract }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"

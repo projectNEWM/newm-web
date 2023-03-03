@@ -11,6 +11,7 @@ import {
 } from "modules/song";
 import {
   DropdownSelectField,
+  ErrorMessage,
   SwitchInputField,
   TextAreaField,
   TextInputField,
@@ -28,7 +29,8 @@ const SongInfo: FunctionComponent = () => {
   const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
 
-  const { values, setFieldValue } = useFormikContext<UploadSongFormValues>();
+  const { values, errors, touched, setFieldValue } =
+    useFormikContext<UploadSongFormValues>();
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -169,6 +171,12 @@ const SongInfo: FunctionComponent = () => {
               />
             ) }
           </Box>
+
+          { !!touched.owners && !!errors.owners && (
+            <Box mt={ 0.5 }>
+              <ErrorMessage>{ errors.owners }</ErrorMessage>
+            </Box>
+          ) }
         </Box>
 
         { /** TODO: hide if user is already verified */ }
@@ -221,6 +229,7 @@ const SongInfo: FunctionComponent = () => {
           <HorizontalLine />
         </Box>
 
+        { /** TODO: disable button if verify or wallet warnings visible */ }
         <Button
           sx={ { mt: 5 } }
           type="submit"
