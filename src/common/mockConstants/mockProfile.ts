@@ -11,5 +11,5 @@ export const mockProfile: Profile = {
   pictureUrl: "",
   role: "Producer",
   genre: "Instrumental",
-  verifiedStatus: "unverified",
+  verificationStatus: "Unverified",
 };

@@ -13,11 +13,7 @@ import {
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
-import {
-  requestVerificationToken,
-  selectSession,
-  updateProfile,
-} from "modules/session";
+import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
 import IdenfyModal from "./IdenfyModal";
@@ -31,28 +27,29 @@ const Profile: FunctionComponent = () => {
       email,
       firstName,
       genre,
-      id = "",
       lastName,
       nickname,
       pictureUrl,
       role,
-      verifiedStatus,
+      verificationStatus,
     } = {},
-    idenfy: { authToken },
   } = useSelector(selectSession);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isUnverified = verifiedStatus === "unverified";
-  const isPendingVerification = verifiedStatus === "pending";
-  const isVerified = verifiedStatus === "verified";
+  const [hasRequestedVerification, setHasRequestedVerification] =
+    useState(false);
+  const isUnverified = verificationStatus === "Unverified";
+  const isPendingVerification = verificationStatus === "Pending";
+  const isVerified = verificationStatus === "Verified";
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
   const handleVerificationSession = () => {
-    if (!authToken) {
-      dispatch(requestVerificationToken({ clientId: id }));
+    if (!hasRequestedVerification) {
+      setHasRequestedVerification(true);
     }
+
     setIsModalOpen(!isModalOpen);
   };
 
@@ -140,7 +137,9 @@ const Profile: FunctionComponent = () => {
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
             </Tooltip>
-            <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
+            { hasRequestedVerification ? (
+              <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
+            ) : null }
           </Stack>
         ) : null }
       </Stack>

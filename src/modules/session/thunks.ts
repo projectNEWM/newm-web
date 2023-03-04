@@ -1,15 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
-import { IdenfyTokenRequest, idenfyApi } from "api";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
   ResetPasswordRequest,
   UpdateProfileRequest,
 } from "./types";
-import { receiveIdenfyToken } from "./slice";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -98,23 +97,28 @@ export const createAccount = createAsyncThunk(
 );
 
 /**
- * Request a iDenfy authToken.
- * Update state with token and set verified status to pending.
+ * Request a iDenfy authToken and set it as a cookie.
  */
-export const requestVerificationToken = createAsyncThunk(
-  "session/requestVerificationToken",
-  async (body: IdenfyTokenRequest, { dispatch }) => {
+export const getIdenfyAuthToken = createAsyncThunk(
+  "session/getIdenfyAuthToken",
+  async (_, { dispatch }) => {
     const idenfyTokenResponse = await dispatch(
-      idenfyApi.endpoints.requestVerificationToken.initiate(body)
+      sessionApi.endpoints.getIdenfyAuthToken.initiate()
     );
 
     if ("error" in idenfyTokenResponse) {
       return;
     }
 
-    dispatch(receiveIdenfyToken(idenfyTokenResponse.data.authToken));
+    const { data: { authToken = "", expiryTime = 1200 } = {} } =
+      idenfyTokenResponse;
 
-    dispatch(updateProfile({ verifiedStatus: "pending" }));
+    if (authToken) {
+      Cookies.set("idenfyAuthToken", authToken, {
+        expires: expiryTime / 86400,
+        secure: true,
+      });
+    }
   }
 );
 
