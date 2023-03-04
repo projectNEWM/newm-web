@@ -158,8 +158,9 @@ const SongInfo: FunctionComponent = () => {
                 title="MINT SONG"
                 includeBorder={ false }
                 description={
-                  "Minting a song will make it an NFT, becoming a uniquely " +
-                  "publishing token on the blockchain to make it purchasable."
+                  "Minting a song will create an NFT that reflects " +
+                  "ownership, makes streaming royalties available for " +
+                  "purchase, and enables royalty distribution to your account."
                 }
               />
 

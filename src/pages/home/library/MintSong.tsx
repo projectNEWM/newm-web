@@ -155,8 +155,9 @@ const MintSong = () => {
                         title="MINT SONG"
                         includeBorder={ false }
                         description={
-                          "Minting a song will make it an NFT, becoming a uniquely " +
-                          "publishing token on the blockchain to make it purchasable."
+                          "Minting a song will make it an NFT, becoming a " +
+                          "uniquely publishing token on the blockchain to " +
+                          "make it purchasable."
                         }
                       />
 
