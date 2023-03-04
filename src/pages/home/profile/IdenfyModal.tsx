@@ -47,8 +47,10 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
           allow="camera"
           allowFullScreen={ true }
           style={ {
-            width: "100%",
+            border: "none",
             height: "100%",
+            padding: "24px",
+            width: "100%",
           } }
           src={ `https://ui.idenfy.com/?authToken=${idenfyAuthToken}` }
           title="iDenfy verification session"
