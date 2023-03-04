@@ -49,11 +49,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       try {
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
-            if (error.message === "File type must be image/*") {
-              throw new Error("Please select an image file.");
-            } else {
-              throw new Error("There was an error selecting your file.");
-            }
+            throw new Error(error.message);
           });
         });
 
@@ -69,9 +65,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         );
 
         if (!hasValidDimensions) {
-          throw new Error(
-            "Please upload an image with a height and width of least 2048 pixels."
-          );
+          throw new Error("Image must be at least 2048 x 2048 pixels.");
         }
 
         onChange(fileWithPreview);
@@ -90,7 +84,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
-    accept: "image/*",
+    accept: { "image/*": [".png", ".jpeg", ".jpg", ".webp"] },
   });
 
   /**
@@ -144,6 +138,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             <IconMessage
               icon={ <AddImageIcon /> }
               message="Drag and drop or browse your image"
+              subtitle="Minimum size: 2048x2048 px"
             />
           </DashedOutline>
         ) }

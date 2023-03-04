@@ -9,12 +9,14 @@ import {
 } from "modules/song";
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import ConfirmUpload from "./ConfirmAgreement";
+import ConfirmAgreement from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { profile } = useSelector(selectSession);
 
@@ -23,13 +25,13 @@ const UploadSong: FunctionComponent = () => {
     audio: undefined,
     title: "",
     genre: "",
+    mood: "",
     description: "",
+    isExplicit: false,
     isMinting: false,
-    largestUtxo: undefined,
     owners: [],
-    hasViewedAgreement: false,
-    isCreator: false,
-    agreesToContract: false,
+    creditors: [],
+    consentsToContract: false,
   };
 
   const handleSongInfo = (values: UploadSongFormValues) => {
@@ -42,10 +44,13 @@ const UploadSong: FunctionComponent = () => {
 
       dispatch(
         generateArtistAgreement({
-          songName,
-          companyName,
-          artistName,
-          stageName,
+          body: {
+            songName,
+            companyName,
+            artistName,
+            stageName,
+          },
+          callback: () => navigate("confirm"),
         })
       );
     } else {
@@ -63,8 +68,24 @@ const UploadSong: FunctionComponent = () => {
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
     genre: Yup.string().required("This field is required"),
-    isCreator: Yup.bool().required("This field is required"),
-    agreesToContract: Yup.bool().required("This field is required"),
+    owners: Yup.array().when("isMinting", {
+      is: (value: boolean) => !!value,
+      then: Yup.array()
+        .min(1, "At least one owner is required when minting")
+        .test({
+          message: "100% ownership must be distributed",
+          test: (owners) => {
+            if (!owners) return false;
+
+            const percentageSum = owners.reduce((sum, owner) => {
+              return sum + owner.percentage;
+            }, 0);
+
+            return percentageSum === 100;
+          },
+        }),
+    }),
+    consentsToContract: Yup.bool().required("This field is required"),
   };
 
   return (
@@ -99,14 +120,14 @@ const UploadSong: FunctionComponent = () => {
                 audio: validations.audio,
                 title: validations.title,
                 genre: validations.genre,
+                owners: validations.owners,
               }),
             },
             {
-              element: <ConfirmUpload />,
+              element: <ConfirmAgreement />,
               path: "confirm",
               validationSchema: Yup.object().shape({
-                agreesToContract: validations.agreesToContract,
-                isCreator: validations.isCreator,
+                consentsToContract: validations.consentsToContract,
               }),
             },
           ] }

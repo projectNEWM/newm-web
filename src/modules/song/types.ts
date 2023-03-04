@@ -16,18 +16,25 @@ export interface Owner {
   role: string;
 }
 
+export interface Creditor {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+}
+
 export interface UploadSongFormValues {
   readonly image?: any; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
   readonly title: string;
   readonly genre: string;
+  readonly mood: string;
   readonly description: string;
+  readonly isExplicit: boolean;
   readonly isMinting: boolean;
-  readonly largestUtxo?: number;
   readonly owners: Array<Owner>;
-  readonly hasViewedAgreement: boolean;
-  readonly isCreator: boolean;
-  readonly agreesToContract: boolean;
+  readonly creditors: Array<Creditor>;
+  readonly consentsToContract: boolean;
 }
 
 export interface UploadSongRequest {
@@ -101,4 +108,9 @@ export interface GenerateArtistAgreementBody {
 
 export interface GenerateArtistAgreementResponse {
   readonly message: string;
+}
+
+export interface GenerateArtistAgreementPayload {
+  readonly body: GenerateArtistAgreementBody;
+  readonly callback: VoidFunction;
 }

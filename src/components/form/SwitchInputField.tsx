@@ -1,20 +1,23 @@
-import { Switch } from "elements";
 import { SwitchProps } from "@mui/material";
 import { Field, FieldProps } from "formik";
 import { FunctionComponent } from "react";
+import SwitchInput from "elements/SwitchInput";
 
-interface SwitchFieldProps extends SwitchProps {
+interface SwitchInputFieldProps extends SwitchProps {
   readonly name: string;
+  readonly title: string;
+  readonly description: string;
+  readonly includeBorder?: boolean;
 }
 
-const SwitchField: FunctionComponent<SwitchFieldProps> = ({
+const SwitchInputField: FunctionComponent<SwitchInputFieldProps> = ({
   name,
   ...props
 }) => {
   return (
     <Field name={ name }>
       { ({ form, field }: FieldProps) => (
-        <Switch
+        <SwitchInput
           checked={ field.value }
           onChange={ () => form.setFieldValue(field.name, !field.value) }
           { ...props }
@@ -24,4 +27,4 @@ const SwitchField: FunctionComponent<SwitchFieldProps> = ({
   );
 };
 
-export default SwitchField;
+export default SwitchInputField;

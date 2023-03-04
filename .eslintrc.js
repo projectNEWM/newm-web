@@ -72,6 +72,7 @@ module.exports = {
       },
     ],
     "no-console": "warn",
+    "no-debugger": "warn",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "off",
     "object-curly-spacing": ["warn", "always"],

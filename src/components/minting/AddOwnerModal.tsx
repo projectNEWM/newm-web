@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { Box, DialogProps, Stack, Typography } from "@mui/material";
 import { Button, Dialog, HorizontalLine } from "elements";
-import { DropdownSelectField, SwitchField, TextInputField } from "components";
+import {
+  DropdownSelectField,
+  SwitchInputField,
+  TextInputField,
+} from "components";
 import { commonYupValidation } from "common";
 import { selectContent } from "modules/content";
 import theme from "theme";
@@ -14,6 +18,9 @@ interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onSubmit: (values: FormikValues) => void;
 }
 
+/**
+ * Allows adding an owner and/or creditor when minting a song.
+ */
 const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   open,
   onClose,
@@ -97,50 +104,20 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <HorizontalLine mt={ 2 } />
 
-              <Stack
-                sx={ {
-                  alignItems: "center",
-                  backgroundColor: theme.colors.grey500,
-                  border: `2px solid ${theme.colors.grey400}`,
-                  borderRadius: "4px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  mt: 2,
-                  p: 1.5,
-                } }
-              >
-                <Stack>
-                  <Typography pr={ 1 }>IP RIGHTS</Typography>
-                  <Typography fontSize={ 12 } pr={ 1 } variant="subtitle1">
-                    Does this person own IP rights to this song?
-                  </Typography>
-                </Stack>
-                <SwitchField name="isRightsOwner" />
-              </Stack>
+              <SwitchInputField
+                name="isRightsOwner"
+                title="IP RIGHTS"
+                description="Does this person own IP rights to this song?"
+              />
 
-              <Stack
-                sx={ {
-                  alignItems: "center",
-                  backgroundColor: theme.colors.grey500,
-                  border: `2px solid ${theme.colors.grey400}`,
-                  borderRadius: "4px",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  mt: 2,
-                  p: 1.5,
-                } }
-              >
-                <Stack>
-                  <Typography pr={ 1 }>CREDITS</Typography>
-                  <Typography fontSize={ 12 } pr={ 1 } variant="subtitle1">
-                    Did they have a role in making the song? Enable to credit
-                    them as a contributor.
-                  </Typography>
-                </Stack>
-                <SwitchField name="isCreator" />
-              </Stack>
+              <SwitchInputField
+                name="isCreator"
+                title="CREDITS"
+                description={
+                  "Did they have a role in making the song? Enable to credit " +
+                  "them as a contributor."
+                }
+              />
 
               { touched.isCreator && errors.isCreator ? (
                 <Typography variant="h5" color="error">

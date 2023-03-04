@@ -133,6 +133,7 @@ const SongInfo = () => {
                   placeholder="Genre"
                 />
               </Stack>
+
               <Stack
                 sx={ {
                   marginTop: 2.5,
@@ -151,6 +152,7 @@ const SongInfo = () => {
                   }
                 />
               </Stack>
+
               <Stack
                 sx={ {
                   marginY: 5,

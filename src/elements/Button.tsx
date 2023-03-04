@@ -3,21 +3,33 @@ import {
   CircularProgress,
   Button as MUIButton,
   ButtonProps as MUIButtonProps,
+  Theme,
 } from "@mui/material";
 import theme from "theme";
 
-export interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
-  readonly color?:
-    | "company"
-    | "crypto"
-    | "magazine"
-    | "music"
-    | "partners"
-    | "white";
+export interface CommonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly isLoading?: boolean;
-  readonly variant?: "primary" | "secondary" | "outlined";
   readonly width?: "compact" | "default" | "full" | "icon";
 }
+
+type ConditionalProps =
+  | {
+      readonly variant?: never;
+      readonly gradient?: keyof Theme["gradients"];
+      readonly color?: never;
+    }
+  | {
+      readonly variant?: "primary";
+      readonly gradient?: keyof Theme["gradients"];
+      readonly color?: never;
+    }
+  | {
+      readonly variant?: "secondary" | "outlined";
+      readonly color?: keyof Theme["colors"];
+      readonly gradient?: never;
+    };
+
+export type ButtonProps = CommonProps & ConditionalProps;
 
 /**
  * Implements Material UI Button.
@@ -26,7 +38,8 @@ export interface ButtonProps extends Omit<MUIButtonProps, "color" | "variant"> {
  */
 const Button: FunctionComponent<ButtonProps> = ({
   children,
-  color = "music",
+  color = "white",
+  gradient = "music",
   disabled = false,
   isLoading = false,
   variant = "primary",
@@ -55,8 +68,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 
   const variantStyles = {
     primary: {
-      background:
-        color === "white" ? theme.gradients.music : theme.gradients[color],
+      background: theme.gradients[gradient],
       color: theme.colors.white,
       px: 2.25,
       py: 1.25,
