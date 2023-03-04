@@ -17,7 +17,7 @@ interface OwnersProps {
  * TODO - display owners with static text when
  * not editable (https://app.clickup.com/t/8669nr0q7)
  */
-const MintSong: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
+const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
   return (
     <Box>
       { owners.map((owner, idx) => (
@@ -73,4 +73,4 @@ const MintSong: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
   );
 };
 
-export default MintSong;
+export default Owners;

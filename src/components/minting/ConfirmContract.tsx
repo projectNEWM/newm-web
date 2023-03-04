@@ -68,7 +68,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   const { artistAgreement } = useSelector(selectSong);
 
   /**
-   * Call onChange callback prop when form values change.
+   * Call onConfirm callback when form values change.
    */
   useEffect(() => {
     handleSubmit();

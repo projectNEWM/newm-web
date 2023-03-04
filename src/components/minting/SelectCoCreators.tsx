@@ -21,7 +21,7 @@ interface SelectCoOwnersProps {
 }
 
 /**
- * Select and update owners and creditors when minting a song.
+ * Add, update, and remove owners and creditors when minting a song.
  */
 const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
   owners,
@@ -54,7 +54,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**
-   * Call onChange callback props when form values change.
+   * Call onChange callbacks when form values change.
    */
   useEffect(() => {
     handleSubmit();
