@@ -43,7 +43,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           <Button
             color="white"
             sx={ { ml: 3 } }
-            variant="outlined"
+            variant="secondary"
             width="icon"
             onClick={ () => {
               onDelete(creditor.email, creditors);

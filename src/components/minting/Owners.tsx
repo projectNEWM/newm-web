@@ -58,7 +58,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
             <Button
               color="white"
               sx={ { ml: 3 } }
-              variant="outlined"
+              variant="secondary"
               width="icon"
               onClick={ () => {
                 onDelete(owner.email, owners);

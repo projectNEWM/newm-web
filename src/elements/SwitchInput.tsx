@@ -29,7 +29,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   };
 
   const borderStyles: SxProps = {
-    backgroundColor: theme.colors.grey500,
+    backgroundColor: theme.colors.grey600,
     border: `2px solid ${theme.colors.grey400}`,
     borderRadius: "4px",
   };
