@@ -20,6 +20,9 @@ interface SelectCoOwnersProps {
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
 }
 
+/**
+ * Select and update owners and creditors when minting a song.
+ */
 const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
   owners,
   creditors,

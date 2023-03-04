@@ -12,6 +12,12 @@ interface CreditorsProps {
   ) => void;
 }
 
+/**
+ * Allows for displaying and updating creditors when minting a song.
+ *
+ * TODO - display creditors with static text when
+ * not editable (https://app.clickup.com/t/8669nr0q7)
+ */
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
   onDelete,

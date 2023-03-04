@@ -219,9 +219,7 @@ const MintSong = () => {
                           </Button>
                         }
                       >
-                        <Typography color="yellow">
-                          Verify your profile
-                        </Typography>
+                        <Typography color="yellow">Connect a wallet</Typography>
                         <Typography
                           color="yellow"
                           fontWeight={ 400 }

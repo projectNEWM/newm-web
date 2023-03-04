@@ -62,7 +62,6 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
-    // TODO: only allow uncompressed file types
     accept: {
       audio: [".flac", ".fla", ".wav"],
     },

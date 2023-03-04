@@ -108,7 +108,7 @@ const SongInfo: FunctionComponent = () => {
             columnGap: [undefined, undefined, "20px"],
           } }
         >
-          { /* TODO: Allow selecting multiple genres - CU-8669m5gcq */ }
+          { /* TODO: Select multiple genres - https://app.clickup.com/t/8669m5gcq */ }
           <DropdownSelectField
             name="genre"
             label="GENRE"
@@ -116,7 +116,7 @@ const SongInfo: FunctionComponent = () => {
             placeholder="Select all that apply"
           />
 
-          { /* TODO: Implement moods on back-end */ }
+          { /* TODO: Select multiple moods - https://app.clickup.com/t/8669nr1ah */ }
           <DropdownSelectField
             name="mood"
             label="MOOD"
@@ -218,7 +218,7 @@ const SongInfo: FunctionComponent = () => {
               </Button>
             }
           >
-            <Typography color="yellow">Verify your profile</Typography>
+            <Typography color="yellow">Connect a wallet</Typography>
             <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
               To continue, please connect a wallet.
             </Typography>

@@ -18,6 +18,9 @@ interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onSubmit: (values: FormikValues) => void;
 }
 
+/**
+ * Allows adding an owner and/or creditor when minting a song.
+ */
 const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   open,
   onClose,

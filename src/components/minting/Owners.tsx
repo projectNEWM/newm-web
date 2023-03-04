@@ -11,6 +11,12 @@ interface OwnersProps {
   readonly onDelete: (email: string, owners: ReadonlyArray<Owner>) => void;
 }
 
+/**
+ * Allows for displaying and updating owners when minting a song.
+ *
+ * TODO - display owners with static text when
+ * not editable (https://app.clickup.com/t/8669nr0q7)
+ */
 const MintSong: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
   return (
     <Box>

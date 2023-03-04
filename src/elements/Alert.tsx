@@ -12,7 +12,7 @@ interface AlertProps extends MUIAlertProps {
   open?: boolean;
 }
 
-// replaces warning icon (filled instead of outline)
+// replaces default warning icon (filled instead of outlined)
 const iconMapping = {
   warning: <WarningIcon />,
 };
