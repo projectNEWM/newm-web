@@ -198,7 +198,8 @@ const MintSong = () => {
                           fontWeight={ 400 }
                           variant="subtitle1"
                         >
-                          These details cannot be changed after minting.
+                          Profile verification is required to mint. Please
+                          verify your profile.
                         </Typography>
                       </Alert>
                     ) }

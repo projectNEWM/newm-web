@@ -45,6 +45,9 @@ const Alert: FunctionComponent<AlertProps> = ({
             ".MuiSvgIcon-root": {
               color: "inherit",
             },
+            ".MuiAlert-message": {
+              paddingRight: 1,
+            },
             ".MuiAlert-action": {
               p: 0,
               mr: 0,
