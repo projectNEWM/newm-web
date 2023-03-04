@@ -204,7 +204,7 @@ export const extendedApi = api.injectEndpoints({
 
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       query: () => ({
-        url: "v1/users/whatever",
+        url: "/v1/idenfy/session",
         method: "GET",
       }),
 
