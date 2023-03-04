@@ -22,6 +22,7 @@ const Alert: FunctionComponent<AlertProps> = ({
   children,
   open = true,
   severity = "info",
+  sx,
   ...rest
 }) => {
   return (
@@ -52,6 +53,7 @@ const Alert: FunctionComponent<AlertProps> = ({
               p: 0,
               mr: 0,
             },
+            ...sx,
           } }
           { ...rest }
         >

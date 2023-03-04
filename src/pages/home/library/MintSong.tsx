@@ -106,7 +106,7 @@ const MintSong = () => {
   return (
     <Box sx={ { maxWidth: "700px" } }>
       { showWarning && (
-        <Box sx={ { mt: 2 } }>
+        <Box sx={ { mt: 3 } }>
           <Alert
             action={
               <MUIButton
@@ -147,33 +147,35 @@ const MintSong = () => {
           return (
             <>
               { stepIndex === 0 && (
-                <Stack pt={ 2.5 }>
-                  <SwitchInputField
-                    name="isMinting"
-                    title="Mint song"
-                    description={
-                      "Minting a song will create an NFT that reflects " +
-                      "ownership, making streaming royalties purchasable. Once " +
-                      "a song is minted, it cannot be deleted."
-                    }
-                  />
-
-                  { values.isMinting && (
-                    <Stack spacing={ 0.5 }>
-                      <SelectCoCeators
-                        owners={ values.owners }
-                        creditors={ values.creditors }
-                        onChangeOwners={ handleChangeOwners }
-                        onChangeCreditors={ handleChangeCreditors }
+                <Stack pt={ 3 }>
+                  <Stack spacing={ 5 }>
+                    <Box>
+                      <SwitchInputField
+                        name="isMinting"
+                        title="MINT SONG"
+                        includeBorder={ false }
+                        description={
+                          "Minting a song will make it an NFT, becoming a uniquely " +
+                          "publishing token on the blockchain to make it purchasable."
+                        }
                       />
 
-                      { !!touched.owners && !!errors.owners && (
-                        <ErrorMessage>{ errors.owners }</ErrorMessage>
+                      { values.isMinting && (
+                        <SelectCoCeators
+                          owners={ values.owners }
+                          creditors={ values.creditors }
+                          onChangeOwners={ handleChangeOwners }
+                          onChangeCreditors={ handleChangeCreditors }
+                        />
                       ) }
-                    </Stack>
-                  ) }
+                    </Box>
 
-                  <Stack spacing={ 2.5 } mt={ 2.5 }>
+                    { !!touched.owners && !!errors.owners && (
+                      <Box mt={ 0.5 }>
+                        <ErrorMessage>{ errors.owners }</ErrorMessage>
+                      </Box>
+                    ) }
+
                     { /** TODO: hide if user is already verified */ }
                     { values.isMinting && (
                       <Alert
@@ -207,6 +209,7 @@ const MintSong = () => {
                     { /** TODO: hide if wallet is already connected */ }
                     { values.isMinting && (
                       <Alert
+                        sx={ { py: 2.5 } }
                         severity="warning"
                         action={
                           <Button
@@ -232,7 +235,11 @@ const MintSong = () => {
                     ) }
                   </Stack>
 
-                  <Stack direction="row" columnGap={ 2 } mt={ 5 }>
+                  <Box py={ 5 }>
+                    <HorizontalLine />
+                  </Box>
+
+                  <Stack direction="row" columnGap={ 2 }>
                     <Button
                       onClick={ () => navigate(-1) }
                       variant="secondary"
@@ -282,7 +289,7 @@ const MintSong = () => {
                     }
                   />
 
-                  <HorizontalLine sx={ { my: 4 } } />
+                  <HorizontalLine sx={ { my: 5 } } />
 
                   <Stack
                     alignItems="center"

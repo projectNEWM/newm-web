@@ -144,89 +144,92 @@ const SongInfo: FunctionComponent = () => {
           <HorizontalLine />
         </Box>
 
-        <Box mt={ 5 }>
-          <Box
-            sx={ {
-              backgroundColor: theme.colors.grey600,
-              border: `2px solid ${theme.colors.grey400}`,
-              borderRadius: "4px",
-            } }
-          >
-            <SwitchInputField
-              name="isMinting"
-              title="MINT SONG"
-              includeBorder={ false }
-              description={
-                "Minting a song will make it an NFT, becoming a uniquely " +
-                "publishing token on the blockchain to make it purchasable."
-              }
-            />
-
-            { values.isMinting && (
-              <SelectCoCeators
-                owners={ values.owners }
-                creditors={ values.creditors }
-                onChangeOwners={ handleChangeOwners }
-                onChangeCreditors={ handleChangeCreditors }
+        <Stack mt={ 5 } spacing={ 5 }>
+          <Box>
+            <Box
+              sx={ {
+                backgroundColor: theme.colors.grey600,
+                border: `2px solid ${theme.colors.grey400}`,
+                borderRadius: "4px",
+              } }
+            >
+              <SwitchInputField
+                name="isMinting"
+                title="MINT SONG"
+                includeBorder={ false }
+                description={
+                  "Minting a song will make it an NFT, becoming a uniquely " +
+                  "publishing token on the blockchain to make it purchasable."
+                }
               />
+
+              { values.isMinting && (
+                <SelectCoCeators
+                  owners={ values.owners }
+                  creditors={ values.creditors }
+                  onChangeOwners={ handleChangeOwners }
+                  onChangeCreditors={ handleChangeCreditors }
+                />
+              ) }
+            </Box>
+
+            { !!touched.owners && !!errors.owners && (
+              <Box mt={ 0.5 }>
+                <ErrorMessage>{ errors.owners }</ErrorMessage>
+              </Box>
             ) }
           </Box>
 
-          { !!touched.owners && !!errors.owners && (
-            <Box mt={ 0.5 }>
-              <ErrorMessage>{ errors.owners }</ErrorMessage>
-            </Box>
+          { /** TODO: hide if user is already verified */ }
+          { values.isMinting && (
+            <Alert
+              severity="warning"
+              action={
+                <Button
+                  aria-label="close"
+                  variant="outlined"
+                  color="yellow"
+                  onClick={ handleVerifyProfile }
+                  sx={ { textTransform: "none" } }
+                >
+                  Verify profile
+                </Button>
+              }
+            >
+              <Typography color="yellow">Verify your profile</Typography>
+              <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                Profile verification is required to mint. Please verify your
+                profile.
+              </Typography>
+            </Alert>
           ) }
-        </Box>
 
-        { /** TODO: hide if user is already verified */ }
-        { values.isMinting && (
-          <Alert
-            severity="warning"
-            action={
-              <Button
-                aria-label="close"
-                variant="outlined"
-                color="yellow"
-                onClick={ handleVerifyProfile }
-                sx={ { textTransform: "none" } }
-              >
-                Verify profile
-              </Button>
-            }
-          >
-            <Typography color="yellow">Verify your profile</Typography>
-            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-              Profile verification is required to mint. Please verify your
-              profile.
-            </Typography>
-          </Alert>
-        ) }
+          { /** TODO: hide if wallet is already connected */ }
+          { values.isMinting && (
+            <Alert
+              sx={ { py: 2.5 } }
+              severity="warning"
+              action={
+                <Button
+                  aria-label="close"
+                  variant="outlined"
+                  color="yellow"
+                  onClick={ handleConnectWallet }
+                  sx={ { textTransform: "none" } }
+                >
+                  Connect wallet
+                </Button>
+              }
+            >
+              <Typography color="yellow">Connect a wallet</Typography>
+              <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                To continue, please connect a wallet.
+              </Typography>
+            </Alert>
+          ) }
+        </Stack>
 
-        { /** TODO: hide if wallet is already connected */ }
-        { values.isMinting && (
-          <Alert
-            severity="warning"
-            action={
-              <Button
-                aria-label="close"
-                variant="outlined"
-                color="yellow"
-                onClick={ handleConnectWallet }
-                sx={ { textTransform: "none" } }
-              >
-                Connect wallet
-              </Button>
-            }
-          >
-            <Typography color="yellow">Connect a wallet</Typography>
-            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-              To continue, please connect a wallet.
-            </Typography>
-          </Alert>
-        ) }
-
-        <Box mt={ 5 }>
+        <Box py={ 2.5 }>
           <HorizontalLine />
         </Box>
 
@@ -241,7 +244,7 @@ const SongInfo: FunctionComponent = () => {
               : "default"
           }
         >
-          Upload
+          { values.isMinting ? "Next" : "Upload" }
         </Button>
       </Stack>
     </Stack>

@@ -62,10 +62,10 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
   return (
     <Stack px={ 2 } pb={ 2 }>
-      <HorizontalLine sx={ { my: 4 } } />
-
       { !!values.owners.length && (
         <>
+          <HorizontalLine sx={ { my: 5 } } />
+
           <Stack flexDirection="row" justifyContent="space-between">
             <Typography color="grey100" variant="h5">
               MASTER OWNERS
@@ -83,13 +83,13 @@ const FormContent: FunctionComponent<FormContentProps> = ({
               setFieldValue("owners", newOwners);
             } }
           />
-
-          <HorizontalLine sx={ { my: 4 } } />
         </>
       ) }
 
       { !!values.creditors.length && (
         <>
+          <HorizontalLine sx={ { my: 5 } } />
+
           <Typography color="grey100" mb={ -0.5 } variant="h5">
             CREDITS TO SHOW ON SONG DETAIL
           </Typography>
@@ -104,10 +104,10 @@ const FormContent: FunctionComponent<FormContentProps> = ({
               setFieldValue("creditors", newOwners);
             } }
           />
-
-          <HorizontalLine sx={ { my: 4 } } />
         </>
       ) }
+
+      <HorizontalLine sx={ { mt: 5, mb: 2.5 } } />
 
       <Stack>
         <Button
