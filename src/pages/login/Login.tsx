@@ -1,4 +1,4 @@
-import { Container, Stack, useTheme } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -37,8 +37,7 @@ const Login: FunctionComponent = () => {
   useAuthenticatedRedirect();
 
   return (
-    <Container
-      maxWidth={ false }
+    <Box
       sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
@@ -63,7 +62,7 @@ const Login: FunctionComponent = () => {
         <ResponsiveNEWMLogo />
       </Stack>
 
-      <Typography variant="h1" sx={ { mt: [5.5, 5.5, 7.5] } }>
+      <Typography variant="h1" sx={ { mt: [4, 4, 5] } }>
         Welcome back
       </Typography>
       <Formik
@@ -129,7 +128,7 @@ const Login: FunctionComponent = () => {
         <FacebookLogin>Continue with Facebook</FacebookLogin>
         <LinkedInLogin>Continue with Linkedin</LinkedInLogin>
       </Stack>
-    </Container>
+    </Box>
   );
 };
 

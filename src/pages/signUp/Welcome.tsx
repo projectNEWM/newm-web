@@ -47,7 +47,7 @@ const SignUp: FunctionComponent = () => {
       </Typography>
       <Stack
         maxWidth={ theme.inputField.maxWidth }
-        mt={ 5 }
+        mt={ 3 }
         spacing={ 1.5 }
         width="100%"
       >
