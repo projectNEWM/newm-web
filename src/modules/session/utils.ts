@@ -26,6 +26,7 @@ export const handleSuccessfulAuthentication = (
 export const handleLogout = (state: SessionState) => {
   Cookies.remove("accessToken");
   Cookies.remove("refreshToken");
+  Cookies.remove("idenfyAuthToken");
 
   state.isLoggedIn = false;
 };

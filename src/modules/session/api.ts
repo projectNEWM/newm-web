@@ -4,6 +4,7 @@ import { setToastMessage } from "modules/ui";
 import {
   CreateAccountRequest,
   GetProfileResponse,
+  IdenfyTokenResponse,
   LoginRequest,
   NewmAuthResponse,
   NewmOAuthRequest,
@@ -194,6 +195,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while resetting your password",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
+      query: () => ({
+        url: "/v1/idenfy/session",
+        method: "GET",
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message:
+                "There was an error creating an auth token, try again later.",
               severity: "error",
             })
           );
