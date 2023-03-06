@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import {
   Box,
+  CircularProgress,
   IconButton,
   Table,
   TableBody,
@@ -13,13 +14,13 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { useEffect, useState } from "react";
-import { Button } from "elements";
+import { Button, Tooltip } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
 import { TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
-import { Loop, PlayArrow, Stop } from "@mui/icons-material";
+import { PlayArrow, Stop } from "@mui/icons-material";
 import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
@@ -175,30 +176,23 @@ export default function SongList({
                       >
                         { song.streamUrl ? (
                           song.id === currentPlayingSongId ? (
-                            <Stop
-                              fontSize="medium"
-                              sx={ { color: theme.colors.white } }
-                            />
+                            <Stop sx={ { color: theme.colors.white } } />
                           ) : (
-                            <PlayArrow
-                              fontSize="medium"
-                              sx={ { color: theme.colors.white } }
-                            />
+                            <PlayArrow sx={ { color: theme.colors.white } } />
                           )
                         ) : (
-                          <Loop
-                            sx={ {
-                              animation: "spin 3s linear infinite",
-                              "@keyframes spin": {
-                                "0%": {
-                                  transform: "rotate(360deg)",
-                                },
-                                "100%": {
-                                  transform: "rotate(0deg)",
-                                },
-                              },
-                            } }
-                          />
+                          <Tooltip
+                            title={
+                              "Upload in progress. Please allow a few " +
+                              "minutes to complete the process."
+                            }
+                          >
+                            <CircularProgress
+                              disableShrink
+                              size={ 20 }
+                              color="secondary"
+                            />
+                          </Tooltip>
                         ) }
                       </IconButton>
                       <img
@@ -248,7 +242,7 @@ export default function SongList({
                   >
                     { song.duration
                       ? formatSongDurationToSongLength(song.duration)
-                      : "-" }
+                      : "--:--" }
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ {
