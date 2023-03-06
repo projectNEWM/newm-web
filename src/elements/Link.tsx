@@ -12,7 +12,7 @@ const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
   ref
 ) => {
   return (
-    <RouterLink to={ to } replace={ replace }>
+    <RouterLink to={ to } replace={ replace } style={ { textDecoration: "none" } }>
       <Typography
         { ...typographyProps }
         ref={ ref }

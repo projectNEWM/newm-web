@@ -14,7 +14,7 @@ import GoogleLoginHelper, {
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button } from "elements";
 
-const GoogleLogin: FunctionComponent = () => {
+const GoogleLogin: FunctionComponent = ({ children }) => {
   const dispatch = useDispatch();
 
   const { pathname } = useLocation();
@@ -48,11 +48,9 @@ const GoogleLogin: FunctionComponent = () => {
           onClick={ renderProps.onClick }
           variant="outlined"
           color="white"
-          sx={ {
-            height: "42px",
-          } }
+          startIcon={ <GoogleIcon /> }
         >
-          <GoogleIcon style={ { fill: "white" } } />
+          { children }
         </Button>
       ) }
       onSuccess={ handleGoogleRespSuccess }

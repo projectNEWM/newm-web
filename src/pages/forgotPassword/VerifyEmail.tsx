@@ -41,7 +41,7 @@ const VerifyEmail: FunctionComponent = () => {
         } }
       >
         <Typography maxWidth={ 800 } mt={ 4 } variant="h1">
-          Check your inbox
+          Check your email!
         </Typography>
 
         <GradientTypography
@@ -50,7 +50,7 @@ const VerifyEmail: FunctionComponent = () => {
           style={ { ...theme.typography.emphasized } }
           variant="h1"
         >
-          Paste your verification code here.
+          Enter your verification code below:
         </GradientTypography>
 
         <TextInputField

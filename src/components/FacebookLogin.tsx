@@ -9,10 +9,10 @@ import { useDispatch } from "react-redux";
 import FacebookLoginHelper, {
   LoginResponse,
 } from "@greatsumini/react-facebook-login";
-import FacebookIcon from "assets/images/FacebookIcon";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "elements";
 
-const FacebookLogin: FunctionComponent = () => {
+const FacebookLogin: FunctionComponent = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {
@@ -43,11 +43,9 @@ const FacebookLogin: FunctionComponent = () => {
           onClick={ onClick }
           variant="outlined"
           color="white"
-          sx={ {
-            height: "42px",
-          } }
+          startIcon={ <FacebookIcon /> }
         >
-          <FacebookIcon />
+          { children }
         </Button>
       ) }
     />
