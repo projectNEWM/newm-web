@@ -1,4 +1,4 @@
-import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
   DisplayText,
   Modal,
@@ -36,6 +36,7 @@ import { TimeRemaining, getTimeRemaining } from "common";
 import { browserName } from "react-device-detect";
 import { displayUsd } from "common/stringUtils";
 import { projectDetails } from "buildParams";
+import { Info } from "@mui/icons-material";
 
 interface InitialFormValues {
   readonly walletAddress: string;
@@ -453,12 +454,32 @@ const Payment: FunctionComponent = () => {
                     </Stack>
 
                     <Box mt={ 1 }>
-                      <Typography variant="subtitle1">
-                        { paymentAddress
-                          ? `Send ${purchasePrice} ADA to the ` +
-                            "payment address above."
-                          : "Submit a wallet address to generate a payment address." }
-                      </Typography>
+                      { paymentAddress ? (
+                        <Alert
+                          severity="info"
+                          iconMapping={ {
+                            info: <Info fontSize="inherit" color="info" />,
+                          } }
+                          sx={ {
+                            backgroundColor: theme.colors.grey600,
+                            borderRadius: "6px",
+                            p: "8px 16px",
+                          } }
+                        >
+                          <Typography
+                            color="blue"
+                            fontWeight={ 600 }
+                            variant="subtitle1"
+                          >
+                            Send { purchasePrice } ADA to the payment address
+                            above.
+                          </Typography>
+                        </Alert>
+                      ) : (
+                        <Typography variant="subtitle1">
+                          Submit a wallet address to generate a payment address.
+                        </Typography>
+                      ) }
                     </Box>
                   </Form>
                 ) }

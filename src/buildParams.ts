@@ -13,6 +13,7 @@ interface ProjectDetails {
   readonly description: string;
   readonly socials: ReadonlyArray<{
     readonly heading: string;
+    readonly discord?: string;
     readonly twitter?: string;
     readonly instagram?: string;
     readonly spotify?: string;
@@ -295,6 +296,41 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         twitter: "https://twitter.com/awesomeisjayell",
         youTube: "https://www.youtube.com/@awesomeisjayell",
         website: "https://www.awesomeisjayell.com",
+      },
+    ],
+  },
+  oddshapeshadow: {
+    artistName: "Oddshapeshadow",
+    songName: "Show Me",
+    launchTimestamp: 1677859200000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 14,
+    bundleAmount: 400000,
+    totalTokens: 100000000,
+    bundlePrice: 50,
+    royaltyAgreement:
+      "https://6gpx3w4moxhrl5oc672wznyuzbauhecwdswumkcrt2rzmveuxd3a.arweave" +
+      ".net/8Z9924x1zxX1wvf1bLcUyEFDkFYcrUYoUZ6jllSUuPY",
+    poolLink: "https://pool.pm/asset1x47rkfwaqhv3aqlc3qa2rzrj3ukzcfqmvzc8f4",
+    spotifyLink:
+      "https://open.spotify.com/track/2cZOjrm6568Uhennot4uGx?si=94b01925eca74db3",
+    description:
+      "Oddshapeshadow is an alias that manifested from a love of all genres " +
+      "of music. The name reflects my goal to always surprise an audience " +
+      "with a range of different styles, and the shadow I cast as a UK-based " +
+      "Electronic Producer will always be unpredictable. Over the past " +
+      "couple of years, I have found an amazing community within Web3 " +
+      "Cardano to collaborate and develop new sounds, and it's been an " +
+      "amazing journey that continues to unfold.\n\n" +
+      "This new track embodies the passion of sharing your energy and what " +
+      "you love with the community. Shout out to all those who have helped " +
+      "me build and had fun along the way! Join me in showcasing what NEWM " +
+      "can offer to the future of the blockchain-music scene!",
+    socials: [
+      {
+        heading: "Oddshapeshadow",
+        discord: "https://discord.gg/kmBWdPsFsk",
+        twitter: "https://twitter.com/MGBedford",
+        soundcloud: "https://soundcloud.com/oddshapeshadow",
       },
     ],
   },
