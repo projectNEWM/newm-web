@@ -1,7 +1,8 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
+import { Button, HorizontalLine, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
 import { useAuthenticatedRedirect } from "common";
+import { history } from "common/history";
 import { FormikValues, useFormikContext } from "formik";
 import {
   FacebookLogin,
@@ -27,16 +28,26 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
-      <Box mb={ 4 }>
+      <Stack sx={ { alignItems: "center", gap: 1, width: "100%" } }>
+        <Button
+          onClick={ () => {
+            history.push("/login");
+          } }
+          sx={ { alignSelf: "flex-end" } }
+          variant="secondary"
+          width="compact"
+        >
+          Already have an account?
+        </Button>
         <ResponsiveNEWMLogo />
-      </Box>
+      </Stack>
 
-      <Typography variant="h1" mb={ 5 }>
+      <Typography variant="h1" mt={ 5 }>
         Welcome
       </Typography>
       <Stack
         maxWidth={ theme.inputField.maxWidth }
-        mb={ 5 }
+        mt={ 3 }
         spacing={ 1.5 }
         width="100%"
       >
@@ -62,18 +73,27 @@ const SignUp: FunctionComponent = () => {
           showEndAdornment={ showEndAdornment }
         />
         <Button disabled={ !isValid } type="submit">
-          Enter
+          Create account
         </Button>
       </Stack>
 
-      <Typography align="center" mb={ 2 }>
-        or sign up via
-      </Typography>
+      <Stack
+        alignItems="center"
+        columnGap={ 2 }
+        direction="row"
+        maxWidth={ theme.inputField.maxWidth }
+        mt={ 3 }
+        width="100%"
+      >
+        <HorizontalLine />
+        <Typography>or</Typography>
+        <HorizontalLine />
+      </Stack>
 
-      <Stack direction="row" spacing={ 2 }>
-        <GoogleLogin />
-        <FacebookLogin />
-        <LinkedInLogin />
+      <Stack my={ 3 } spacing={ 2 } width="100%" alignItems="center">
+        <GoogleLogin>Join with Google</GoogleLogin>
+        <FacebookLogin>Join with Facebook</FacebookLogin>
+        <LinkedInLogin>Join with Linkedin</LinkedInLogin>
       </Stack>
     </Box>
   );

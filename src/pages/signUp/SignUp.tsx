@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Box, Container, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { useDispatch } from "react-redux";
@@ -62,13 +62,14 @@ const SignUp: FunctionComponent = () => {
         backgroundColor: theme.colors.black,
         display: "flex",
         flex: 1,
+        justifyContent: "center",
         maxWidth: "100%",
-        pt: 7.5,
+        pt: 5,
         px: 2,
         textAlign: "center",
       } }
     >
-      <Container maxWidth="xl">
+      <Box width="100%">
         <WizardForm
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
@@ -94,7 +95,7 @@ const SignUp: FunctionComponent = () => {
             },
           ] }
         />
-      </Container>
+      </Box>
     </Box>
   );
 };

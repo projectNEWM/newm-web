@@ -239,6 +239,9 @@ const theme = createTheme({
     info: {
       main: colors.baseBlue,
     },
+    warning: {
+      main: colors.yellow,
+    },
 
     action: {
       disabled: colors.white,
@@ -316,6 +319,14 @@ const theme = createTheme({
       fontWeight: 400,
       fontSize: "14px",
       lineHeight: "20px",
+      color: colors.grey100,
+    },
+    subtitle2: {
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "12px",
+      lineHeight: "18px",
       color: colors.grey100,
     },
 

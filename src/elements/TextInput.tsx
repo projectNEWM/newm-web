@@ -46,6 +46,18 @@ const StyledInputElement = styled.input`
   &:focus {
     outline: none;
   }
+
+  /* Hide number arrows - Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Hide number arrows - Firefox */
+  &: [type=number] {
+    -moz-appearance: textfield;
+  }
 `;
 
 export const TextInput: ForwardRefRenderFunction<

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
@@ -92,6 +93,32 @@ export const createAccount = createAsyncThunk(
     }
 
     history.push("/create-profile");
+  }
+);
+
+/**
+ * Request a iDenfy authToken and set it as a cookie.
+ */
+export const getIdenfyAuthToken = createAsyncThunk(
+  "session/getIdenfyAuthToken",
+  async (_, { dispatch }) => {
+    const idenfyTokenResponse = await dispatch(
+      sessionApi.endpoints.getIdenfyAuthToken.initiate()
+    );
+
+    if ("error" in idenfyTokenResponse) {
+      return;
+    }
+
+    const { data: { authToken = "", expiryTime = 1200 } = {} } =
+      idenfyTokenResponse;
+
+    if (authToken) {
+      Cookies.set("idenfyAuthToken", authToken, {
+        expires: expiryTime / 86400,
+        secure: true,
+      });
+    }
   }
 );
 

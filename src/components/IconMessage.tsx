@@ -5,6 +5,7 @@ import { Typography } from "elements";
 interface IconMessageProps {
   readonly icon: JSX.Element;
   readonly message: string;
+  readonly subtitle?: string;
 }
 
 /**
@@ -13,6 +14,7 @@ interface IconMessageProps {
 const IconMessage: FunctionComponent<IconMessageProps> = ({
   icon,
   message,
+  subtitle,
 }) => (
   <Stack
     spacing={ 1 }
@@ -21,9 +23,17 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   >
     { icon }
 
-    <Typography variant="h5" textAlign="center" fontWeight={ 400 }>
-      { message }
-    </Typography>
+    <Stack>
+      <Typography variant="h5" textAlign="center" fontWeight={ 400 }>
+        { message }
+      </Typography>
+
+      { !!subtitle && (
+        <Typography variant="subtitle2" textAlign="center">
+          { subtitle }
+        </Typography>
+      ) }
+    </Stack>
   </Stack>
 );
 

@@ -3,13 +3,9 @@
 }
 
 @property --angle {
-  syntax: "<angle>";
+  syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
-}
-
-.MuiSvgIcon-root {
-  color: #DC3CAA;
 }
 
 .App-logo {
@@ -24,7 +20,7 @@
 }
 
 .App-header {
-  background-color: #2C2C2E;
+  background-color: #2c2c2e;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -17,6 +17,7 @@ const initialState: SessionState = {
     pictureUrl: "",
     role: "",
     genre: "",
+    verificationStatus: "Unverified",
   },
 };
 

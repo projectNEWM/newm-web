@@ -1,9 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
-import { history } from "common/history";
 import {
-  GenerateArtistAgreementBody,
+  GenerateArtistAgreementPayload,
   PatchSongRequest,
   UploadSongFormValues,
 } from "./types";
@@ -100,7 +99,7 @@ export const uploadSong = createAsyncThunk(
  */
 export const generateArtistAgreement = createAsyncThunk(
   "song/generateArtistAgreement",
-  async (body: GenerateArtistAgreementBody, { dispatch }) => {
+  async ({ body, callback }: GenerateArtistAgreementPayload, { dispatch }) => {
     try {
       dispatch(setSongIsLoading(true));
 
@@ -110,7 +109,7 @@ export const generateArtistAgreement = createAsyncThunk(
 
       if ("error" in artistAgreementResp) return;
 
-      history.push(`${history.location.pathname}/confirm`);
+      callback();
     } catch (err) {
       // do nothing
     } finally {
