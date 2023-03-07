@@ -4,4 +4,5 @@ import { mockProfile } from "./mockProfile";
 export const mockSession: SessionState = {
   isLoggedIn: true,
   profile: mockProfile,
+  verificationPingStartedAt: undefined,
 };

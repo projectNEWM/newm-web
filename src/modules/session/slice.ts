@@ -19,6 +19,7 @@ const initialState: SessionState = {
     genre: "",
     verificationStatus: "Unverified",
   },
+  verificationPingStartedAt: new Date().getTime(),
 };
 
 const sessionSlice = createSlice({
