@@ -4,7 +4,6 @@ export { default as Alert } from "./Alert";
 export { default as Button } from "./Button";
 export * from "./Button";
 export { default as Checkbox } from "./Checkbox";
-export { default as Tooltip } from "./styled/Tooltip";
 export { default as Dialog } from "./styled/Dialog";
 export { default as DropdownSelect } from "./DropdownSelect";
 export * from "./DropdownSelect";
