@@ -6,6 +6,8 @@ import Home from "pages/home";
 import SignUp from "pages/signUp";
 import ForgotPassword from "pages/forgotPassword";
 import CreateProfile from "pages/createProfile";
+import IdenfySuccessSession from "pages/home/profile/idenfy/IdenfySuccessSession";
+import IdenfyFailSession from "pages/home/profile/idenfy/IdenfyFailSession";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -42,6 +44,16 @@ const App = () => {
                 <Route path="forgot-password/*" element={ <ForgotPassword /> } />
 
                 <Route path="sign-up/*" element={ <SignUp /> } />
+
+                <Route
+                  path="idenfy-success-session"
+                  element={ <IdenfySuccessSession /> }
+                />
+
+                <Route
+                  path="idenfy-fail-session"
+                  element={ <IdenfyFailSession /> }
+                />
 
                 <Route
                   path="home/*"

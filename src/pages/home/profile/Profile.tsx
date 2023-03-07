@@ -16,7 +16,7 @@ import { selectContent } from "modules/content";
 import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
-import IdenfyModal from "./IdenfyModal";
+import IdenfyModal from "./idenfy/IdenfyModal";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
