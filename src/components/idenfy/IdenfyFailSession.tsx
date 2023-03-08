@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect } from "react";
 import { Button } from "elements";
 import theme from "theme";
 
-const IdenfySuccessSession: FunctionComponent = () => {
+const IdenfyFailSession: FunctionComponent = () => {
   useEffect(() => {
     window.postMessage("idenfy-verification-fail");
   }, []);
@@ -37,4 +37,4 @@ const IdenfySuccessSession: FunctionComponent = () => {
   );
 };
 
-export default IdenfySuccessSession;
+export default IdenfyFailSession;
