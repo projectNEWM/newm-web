@@ -12,6 +12,7 @@ export { default as FadeTransition } from "./FadeTransition";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";
 export { default as GoogleLogin } from "./GoogleLogin";
 export { default as GradientTextInputField } from "./form/GradientTextInputField";
+export * from "./idenfy";
 export { default as IconMessage } from "./IconMessage";
 export { default as LinkedInLogin } from "./LinkedInLogin";
 export { default as NEWMLogo } from "./NEWMLogo";

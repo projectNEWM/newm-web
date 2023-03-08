@@ -1,13 +1,17 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, PrivateRoute, Toast } from "components";
+import {
+  Background,
+  IdenfyFailSession,
+  IdenfySuccessSession,
+  PrivateRoute,
+  Toast,
+} from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
 import ForgotPassword from "pages/forgotPassword";
 import CreateProfile from "pages/createProfile";
-import IdenfySuccessSession from "pages/home/profile/idenfy/IdenfySuccessSession";
-import IdenfyFailSession from "pages/home/profile/idenfy/IdenfyFailSession";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";

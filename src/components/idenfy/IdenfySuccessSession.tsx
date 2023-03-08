@@ -1,12 +1,16 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Button, GradientTypography } from "elements";
 import theme from "theme";
 
 const IdenfySuccessSession: FunctionComponent = () => {
-  const handleClick = () => {
+  useEffect(() => {
     window.postMessage("idenfy-verification-success");
+  }, []);
+
+  const handleClick = () => {
+    window.postMessage("idenfy-modal-close");
   };
 
   return (

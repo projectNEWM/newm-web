@@ -1,11 +1,15 @@
 import { Stack, Typography } from "@mui/material";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Button } from "elements";
 import theme from "theme";
 
 const IdenfySuccessSession: FunctionComponent = () => {
-  const handleClick = () => {
+  useEffect(() => {
     window.postMessage("idenfy-verification-fail");
+  }, []);
+
+  const handleClick = () => {
+    window.postMessage("idenfy-modal-close");
   };
 
   return (

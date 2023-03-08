@@ -10,6 +10,7 @@ import {
   extendedApi as sessionApi,
   startVerificationTimer,
 } from "modules/session";
+import theme from "theme";
 
 interface IdenfyModalProps {
   readonly isOpen: boolean;
@@ -53,6 +54,12 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
           dispatch(startVerificationTimer());
         }
       }
+
+      if (event?.data === "idenfy-modal-close") {
+        const event = new Event("close");
+
+        onClose(event);
+      }
     };
 
     window.addEventListener("message", handleMessage);
@@ -60,7 +67,7 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [dispatch, verificationPingStartedAt]);
+  }, [dispatch, onClose, verificationPingStartedAt]);
 
   /**
    * Requests profile information at 1 second interval.
@@ -118,10 +125,13 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
         ></iframe>
       ) : (
         <Stack
-          alignItems="center"
-          height="100%"
-          justifyContent="center"
-          width="100%"
+          sx={ {
+            alignItems: "center",
+            backgroundColor: theme.colors.black,
+            height: "100%",
+            justifyContent: "center",
+            width: "100%",
+          } }
         >
           <CircularProgress />
         </Stack>
