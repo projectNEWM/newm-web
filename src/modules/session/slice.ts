@@ -19,6 +19,7 @@ const initialState: SessionState = {
     genre: "",
     verificationStatus: "Unverified",
   },
+  verificationPingStartedAt: undefined,
 };
 
 const sessionSlice = createSlice({
@@ -31,6 +32,12 @@ const sessionSlice = createSlice({
     receiveRefreshToken: handleSuccessfulAuthentication,
     receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
     logOut: handleLogout,
+    startVerificationTimer: (state) => {
+      state.verificationPingStartedAt = new Date().getTime();
+    },
+    removeVerificationTimer: (state) => {
+      state.verificationPingStartedAt = undefined;
+    },
   },
 });
 
@@ -39,6 +46,8 @@ export const {
   receiveProfile,
   receiveRefreshToken,
   receiveSuccessfullAuthentication,
+  startVerificationTimer,
+  removeVerificationTimer,
 } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

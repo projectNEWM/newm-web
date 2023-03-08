@@ -1,6 +1,7 @@
 export interface SessionState {
   isLoggedIn: boolean;
   profile: Profile;
+  verificationPingStartedAt?: number;
 }
 
 export interface Profile {
