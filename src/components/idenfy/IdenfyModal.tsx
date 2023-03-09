@@ -73,10 +73,10 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
    * Clears interval when it has been more than 20 minutes or user is verified.
    */
   useEffect(() => {
-    if (shouldRequestProfile) {
+    if (shouldRequestProfile && verificationPingStartedAt) {
       const TWENTY_MINUTES = 20 * 60 * 1000;
-      const hasExceededAllowedTime =
-        verificationPingStartedAt && verificationPingStartedAt > TWENTY_MINUTES;
+      const pingExpiry = verificationPingStartedAt + TWENTY_MINUTES;
+      const hasExceededAllowedTime = verificationPingStartedAt > pingExpiry;
       const verificationStatusInterval = setInterval(() => {
         dispatch(sessionApi.endpoints.getProfile.initiate());
       }, 60000);
