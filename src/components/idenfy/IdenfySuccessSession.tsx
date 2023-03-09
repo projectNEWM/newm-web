@@ -6,11 +6,11 @@ import theme from "theme";
 
 const IdenfySuccessSession: FunctionComponent = () => {
   useEffect(() => {
-    window.postMessage("idenfy-verification-success");
+    window.parent.postMessage("idenfy-verification-success");
   }, []);
 
   const handleClick = () => {
-    window.postMessage("idenfy-modal-close");
+    window.parent.postMessage("idenfy-modal-close");
   };
 
   return (
