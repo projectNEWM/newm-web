@@ -23,24 +23,21 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
   onClose,
 }) => {
   const dispatch = useDispatch();
+  const [shouldRequestProfile, setShouldRequestProfile] = useState(false);
   const [idenfyAuthToken, setIdenfyAuthToken] = useState(
     Cookies.get("idenfyAuthToken")
   );
-
   const { verificationPingStartedAt, profile: { verificationStatus } = {} } =
     useSelector(selectSession);
+  const isVerified = verificationStatus === "Verified";
 
   if (!idenfyAuthToken) {
     dispatch(getIdenfyAuthToken());
   }
 
-  /** Triggers onClose when user is verified and removes verification timer. */
-  if (verificationStatus === "Verified") {
-    const event = new Event("close");
-
+  /** Removes verification timer when verified. */
+  if (isVerified && verificationPingStartedAt) {
     dispatch(removeVerificationTimer());
-
-    onClose(event);
   }
 
   /**
@@ -50,6 +47,8 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event?.data === "idenfy-verification-success") {
+        setShouldRequestProfile(true);
+
         if (!verificationPingStartedAt) {
           dispatch(startVerificationTimer());
         }
@@ -70,23 +69,25 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
   }, [dispatch, onClose, verificationPingStartedAt]);
 
   /**
-   * Requests profile information at 1 second interval.
+   * Requests profile information at 1 minute interval on success page.
    * Clears interval when it has been more than 20 minutes or user is verified.
    */
   useEffect(() => {
-    const TWENTY_MINUTES = 20 * 60 * 1000;
-    const hasExceededAllowedTime =
-      verificationPingStartedAt && verificationPingStartedAt > TWENTY_MINUTES;
-    const verificationStatusInterval = setInterval(() => {
-      dispatch(sessionApi.endpoints.getProfile.initiate());
-    }, 1000);
+    if (shouldRequestProfile && verificationPingStartedAt) {
+      const TWENTY_MINUTES = 20 * 60 * 1000;
+      const pingExpiry = verificationPingStartedAt + TWENTY_MINUTES;
+      const hasExceededAllowedTime = verificationPingStartedAt > pingExpiry;
+      const verificationStatusInterval = setInterval(() => {
+        dispatch(sessionApi.endpoints.getProfile.initiate());
+      }, 60000);
 
-    if (hasExceededAllowedTime || verificationStatus === "Verified") {
-      clearInterval(verificationStatusInterval);
+      if (hasExceededAllowedTime || isVerified) {
+        clearInterval(verificationStatusInterval);
+      }
+
+      return () => clearInterval(verificationStatusInterval);
     }
-
-    return () => clearInterval(verificationStatusInterval);
-  }, [dispatch, verificationPingStartedAt, verificationStatus]);
+  }, [dispatch, isVerified, shouldRequestProfile, verificationPingStartedAt]);
 
   /**
    * Gets "idenfyAuthToken" cookie at 1 second interval.

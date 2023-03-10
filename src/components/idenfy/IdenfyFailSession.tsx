@@ -5,11 +5,11 @@ import theme from "theme";
 
 const IdenfyFailSession: FunctionComponent = () => {
   useEffect(() => {
-    window.postMessage("idenfy-verification-fail");
+    window.parent.postMessage("idenfy-verification-fail");
   }, []);
 
   const handleClick = () => {
-    window.postMessage("idenfy-modal-close");
+    window.parent.postMessage("idenfy-modal-close");
   };
 
   return (
