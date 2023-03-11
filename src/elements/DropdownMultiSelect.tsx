@@ -82,7 +82,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   };
 
   const hasResults = groupedOptions.length > 0;
-  const showNoResults = !!inputValue && !hasResults && popupOpen;
+  const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
 
   return (

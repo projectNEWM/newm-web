@@ -65,7 +65,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   });
 
   const hasResults = groupedOptions.length > 0;
-  const showNoResults = !!inputValue && !hasResults && popupOpen;
+  const showNoResults = !hasResults && popupOpen;
 
   /**
    * This prevents a form submission when input

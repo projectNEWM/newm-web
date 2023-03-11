@@ -5,6 +5,7 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
 import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
 import {
+  DropdownMultiSelectField,
   ErrorMessage,
   SwitchInputField,
   TextAreaField,
@@ -15,7 +16,6 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
-import DropdownMultiSelectField from "components/form/DropdownMultiSelectField";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
