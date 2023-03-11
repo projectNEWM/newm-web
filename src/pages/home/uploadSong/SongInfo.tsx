@@ -3,14 +3,8 @@ import { useSelector } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
+import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
 import {
-  Creditor,
-  Owner,
-  UploadSongFormValues,
-  selectSong,
-} from "modules/song";
-import {
-  DropdownSelectField,
   ErrorMessage,
   SwitchInputField,
   TextAreaField,
@@ -21,6 +15,7 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
+import DropdownMultiSelectField from "components/form/DropdownMultiSelectField";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
@@ -30,7 +25,7 @@ const SongInfo: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
 
   const { values, errors, touched, setFieldValue } =
-    useFormikContext<UploadSongFormValues>();
+    useFormikContext<UploadSongRequest>();
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -108,20 +103,19 @@ const SongInfo: FunctionComponent = () => {
             columnGap: [undefined, undefined, "20px"],
           } }
         >
-          { /* TODO: Select multiple genres - https://app.clickup.com/t/8669m5gcq */ }
-          <DropdownSelectField
-            name="genre"
-            label="GENRE"
-            options={ genres }
+          <DropdownMultiSelectField
+            label="Genres"
+            name="genres"
             placeholder="Select all that apply"
+            options={ genres }
           />
 
-          { /* TODO: Select multiple moods - https://app.clickup.com/t/8669nr1ah */ }
-          <DropdownSelectField
+          { /** TODO: get moods from back-end */ }
+          <DropdownMultiSelectField
+            label="Mood"
             name="mood"
-            label="MOOD"
-            options={ [] }
             placeholder="Select all that apply"
+            options={ [] }
           />
         </Stack>
 

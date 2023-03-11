@@ -7,9 +7,11 @@ import {
 } from "react";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import styled from "styled-components";
 import theme from "theme";
+import { Box } from "@mui/material";
 import TextInput from "./TextInput";
+import ResultsList from "./styled/ResultsList";
+import NoResultsText from "./styled/NoResultsList";
 
 export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
@@ -23,43 +25,6 @@ export interface DropdownSelectProps
   readonly placeholder?: string;
   readonly widthType?: "default" | "full";
 }
-const StyledDropdownSelectContainer = styled.div`
-  position: relative;
-`;
-
-const StyledResultsList = styled.ul`
-  background-color: ${theme.colors.grey500};
-  border-radius: 4px;
-  border: 2px solid ${theme.colors.grey400};
-  list-style: none;
-  margin: 4px 0 0;
-  max-height: 200px;
-  overflow: auto;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
-
-  li {
-    cursor: pointer;
-    padding: 12px 12px;
-
-    &.Mui-focused {
-      background-color: ${theme.colors.grey400};
-    }
-  }
-`;
-
-const StyledNoResultsText = styled.span`
-  background-color: ${theme.colors.grey500};
-  border-radius: 4px;
-  border: 2px solid ${theme.colors.grey400};
-  color: ${theme.colors.grey100};
-  margin: 4px 0 0;
-  padding: 12px 12px;
-  position: absolute;
-  width: 100%;
-`;
 
 const DropdownSelect: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -100,7 +65,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   });
 
   const hasResults = groupedOptions.length > 0;
-  const showNoResults = !hasResults && popupOpen;
+  const showNoResults = !!inputValue && !hasResults && popupOpen;
 
   /**
    * This prevents a form submission when input
@@ -111,7 +76,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   };
 
   return (
-    <StyledDropdownSelectContainer>
+    <Box sx={ { position: "relative" } }>
       <div { ...getRootProps() }>
         <TextInput
           ref={ ref }
@@ -136,19 +101,17 @@ const DropdownSelect: ForwardRefRenderFunction<
       </div>
 
       { hasResults ? (
-        <StyledResultsList { ...getListboxProps() }>
+        <ResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
             <li { ...getOptionProps({ option, index }) } key={ index }>
               { option }
             </li>
           )) }
-        </StyledResultsList>
+        </ResultsList>
       ) : null }
 
-      { showNoResults ? (
-        <StyledNoResultsText>{ noResultsText }</StyledNoResultsText>
-      ) : null }
-    </StyledDropdownSelectContainer>
+      { showNoResults ? <NoResultsText>{ noResultsText }</NoResultsText> : null }
+    </Box>
   );
 };
 

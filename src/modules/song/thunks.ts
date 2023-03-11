@@ -4,7 +4,7 @@ import { getFileBinary } from "common";
 import {
   GenerateArtistAgreementPayload,
   PatchSongRequest,
-  UploadSongFormValues,
+  UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { setSongIsLoading } from "./slice";
@@ -17,7 +17,7 @@ import { setSongIsLoading } from "./slice";
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
-  async (body: UploadSongFormValues, { dispatch }) => {
+  async (body: UploadSongRequest, { dispatch }) => {
     try {
       // set loading state to show loading indicator
       dispatch(setSongIsLoading(true));
@@ -52,7 +52,8 @@ export const uploadSong = createAsyncThunk(
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           title: body.title,
-          genre: body.genre,
+          genres: body.genres,
+          mood: body.mood,
           description: body.description,
           coverArtUrl: cloudinaryResp.data.secure_url,
         })
@@ -170,7 +171,7 @@ export const patchSong = createAsyncThunk(
           id: body.id,
           title: body.title,
           description: body.description,
-          genre: body.genre,
+          genres: body.genres,
           ...cloudinaryImage,
         })
       );
