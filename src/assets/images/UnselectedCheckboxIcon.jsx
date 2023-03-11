@@ -1,5 +1,3 @@
-import * as React from "react"
-
 const UnselectedCheckboxIcon = (props) => (
   <svg
     width={20}

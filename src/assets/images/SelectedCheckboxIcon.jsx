@@ -1,4 +1,4 @@
-const SvgComponent = () => (
+const SelectedCheckboxIcon = () => (
   <svg width={ 20 } height={ 20 } fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x={ 0.5 } y={ 0.5 } width={ 19 } height={ 19 } rx={ 1.5 } fill="#DC3CAA" />
     <path
@@ -9,4 +9,4 @@ const SvgComponent = () => (
   </svg>
 );
 
-export default SvgComponent;
+export default SelectedCheckboxIcon;

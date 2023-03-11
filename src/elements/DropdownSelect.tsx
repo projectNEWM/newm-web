@@ -100,7 +100,7 @@ const DropdownSelect: ForwardRefRenderFunction<
         />
       </div>
 
-      { hasResults ? (
+      { hasResults && (
         <ResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
             <li { ...getOptionProps({ option, index }) } key={ index }>
@@ -108,7 +108,7 @@ const DropdownSelect: ForwardRefRenderFunction<
             </li>
           )) }
         </ResultsList>
-      ) : null }
+      ) }
 
       { showNoResults ? <NoResultsText>{ noResultsText }</NoResultsText> : null }
     </Box>

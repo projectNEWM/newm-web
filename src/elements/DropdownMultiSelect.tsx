@@ -23,7 +23,7 @@ export interface DropdownMultiSelectProps
   readonly name: string;
   readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
-  readonly value?: ReadonlyArray<string>;
+  readonly value?: Array<string>;
   readonly placeholder?: string;
   readonly widthType?: "default" | "full";
 }
@@ -54,21 +54,20 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     groupedOptions,
     popupOpen,
     inputValue,
-    value: internalValue,
+    value: selected,
   } = useAutocomplete({
     id: name,
     getOptionLabel: (option) => option,
     multiple: true,
     disableCloseOnSelect: true,
     options,
+    value,
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(newValue);
       }
     },
   });
-
-  const selected = value || internalValue;
 
   const getDisplayValue = () => {
     if (selected.length === 0) {
@@ -118,7 +117,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
         </Stack>
       </div>
 
-      { groupedOptions.length > 0 && (
+      { hasResults && (
         <ResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => {
             const isSelected = selected.includes(option);

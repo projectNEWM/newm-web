@@ -12,7 +12,9 @@ const DropdownMultiSelectField: ForwardRefRenderFunction<
         { ...field }
         { ...props }
         errorMessage={ meta.touched ? meta.error : "" }
-        handleChange={ (value) => form.setFieldValue(field.name, value) }
+        handleChange={ (value: ReadonlyArray<string>) => {
+          form.setFieldValue(field.name, value);
+        } }
         ref={ ref }
       />
     ) }

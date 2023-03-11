@@ -67,7 +67,7 @@ const UploadSong: FunctionComponent = () => {
     image: Yup.mixed().required("This field is required"),
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
-    genres: Yup.array().required("This field is required"),
+    genres: Yup.array().min(1, "This field is required"),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()
@@ -119,7 +119,7 @@ const UploadSong: FunctionComponent = () => {
                 image: validations.image,
                 audio: validations.audio,
                 title: validations.title,
-                genre: validations.genres,
+                genres: validations.genres,
                 owners: validations.owners,
               }),
             },
