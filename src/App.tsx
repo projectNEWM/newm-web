@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import {
   Background,
   IdenfyFailSession,
+  IdenfyPingUserStatus,
   IdenfySuccessSession,
   PrivateRoute,
   Toast,
@@ -35,6 +36,7 @@ const App = () => {
         <PersistGate loading={ null } persistor={ persistor }>
           <Toast />
           <CssBaseline />
+          <IdenfyPingUserStatus />
 
           <Background>
             <BrowserRouter history={ history }>
