@@ -12,7 +12,12 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { Song, patchSong, useGetSongQuery } from "modules/song";
+import {
+  Song,
+  patchSong,
+  useGetSongGenresQuery,
+  useGetSongQuery,
+} from "modules/song";
 import { selectContent } from "modules/content";
 
 const SongInfo = () => {
@@ -20,7 +25,8 @@ const SongInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { genres } = useSelector(selectContent);
+  const { genreData = [] } = useGetSongGenresQuery();
+  const genres = genreData.filter((genre: string) => genre.length > 0);
   const { id = "" } = location.state as Song;
   const { data = {} } = useGetSongQuery(id);
   const {

@@ -14,6 +14,7 @@ import {
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
+import { useGetSongGenresQuery } from "modules/song";
 import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
@@ -21,7 +22,9 @@ import theme from "theme";
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
   const windowWidth = useWindowDimensions()?.width;
-  const { roles, genres } = useSelector(selectContent);
+  const { roles } = useSelector(selectContent);
+  const { data = [] } = useGetSongGenresQuery();
+  const genres = data.filter((genre: string) => genre.length > 0);
   const {
     profile: {
       email,

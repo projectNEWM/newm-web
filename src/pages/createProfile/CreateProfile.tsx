@@ -6,6 +6,7 @@ import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContent } from "modules/content";
+import { useGetSongGenresQuery } from "modules/song";
 import * as Yup from "yup";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
@@ -22,7 +23,9 @@ interface ProfileFormValues {
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { roles, genres } = useSelector(selectContent);
+  const { roles } = useSelector(selectContent);
+  const { data = [] } = useGetSongGenresQuery();
+  const genres = data.filter((genre: string) => genre.length > 0);
 
   /**
    * Initial form values.
