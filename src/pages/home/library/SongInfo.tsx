@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import {
-  DropdownSelectField,
+  DropdownMultiSelectField,
   TextAreaField,
   TextInputField,
   UploadImageField,
@@ -108,30 +108,46 @@ const SongInfo = () => {
               </Stack>
 
               <Stack
+                spacing={ 2.5 }
                 sx={ {
-                  display: "grid",
-                  gridTemplateColumns: [
-                    "repeat(1, 1fr)",
-                    null,
-                    "repeat(2, 1fr)",
-                  ],
-                  rowGap: ["16px", null, "12px"],
-                  columnGap: [undefined, undefined, "20px"],
-                  maxWidth: [undefined, undefined, "700px"],
+                  marginX: ["auto", "auto", "unset"],
+                  maxWidth: ["340px", "340px", "700px"],
                 } }
               >
                 <TextInputField
                   name="title"
                   label="SONG TITLE"
-                  placeholder="Song Title"
+                  placeholder="Give your track a name..."
+                  widthType="full"
                 />
 
-                <DropdownSelectField
-                  name="genre"
-                  label="GENRE"
-                  options={ genres }
-                  placeholder="Genre"
-                />
+                <Stack
+                  sx={ {
+                    display: "grid",
+                    gridTemplateColumns: [
+                      "repeat(1, 1fr)",
+                      null,
+                      "repeat(2, 1fr)",
+                    ],
+                    rowGap: ["16px", null, "12px"],
+                    columnGap: [undefined, undefined, "20px"],
+                  } }
+                >
+                  <DropdownMultiSelectField
+                    label="Genres"
+                    name="genres"
+                    placeholder="Select all that apply"
+                    options={ genres }
+                  />
+
+                  { /** TODO: get moods from back-end */ }
+                  <DropdownMultiSelectField
+                    label="Mood"
+                    name="mood"
+                    placeholder="Select all that apply"
+                    options={ [] }
+                  />
+                </Stack>
               </Stack>
 
               <Stack

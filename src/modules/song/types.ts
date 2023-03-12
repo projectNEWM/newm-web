@@ -23,11 +23,11 @@ export interface Creditor {
   role: string;
 }
 
-export interface UploadSongFormValues {
+export interface UploadSongRequest {
   readonly image?: any; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
   readonly title: string;
-  readonly genre: string;
+  readonly genres: ReadonlyArray<string>;
   readonly mood: string;
   readonly description: string;
   readonly isExplicit: boolean;
@@ -37,21 +37,12 @@ export interface UploadSongFormValues {
   readonly consentsToContract: boolean;
 }
 
-export interface UploadSongRequest {
-  readonly title: string;
-  readonly genre: string;
-  readonly coverArtUrl: string;
-  readonly description?: string;
-  readonly credits?: string;
-}
-
 export interface UploadSongResponse {
   readonly songId: string;
 }
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
   readonly id: string;
-  readonly image?: any; // eslint-disable-line
 }
 
 export interface CloudinarySignatureResponse {

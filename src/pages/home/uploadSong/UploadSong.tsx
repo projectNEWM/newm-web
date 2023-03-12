@@ -3,7 +3,7 @@ import { WizardForm } from "components";
 import { Typography } from "elements";
 import { selectSession } from "modules/session";
 import {
-  UploadSongFormValues,
+  UploadSongRequest,
   generateArtistAgreement,
   uploadSong,
 } from "modules/song";
@@ -20,11 +20,11 @@ const UploadSong: FunctionComponent = () => {
 
   const { profile } = useSelector(selectSession);
 
-  const initialValues: UploadSongFormValues = {
+  const initialValues: UploadSongRequest = {
     image: undefined,
     audio: undefined,
     title: "",
-    genre: "",
+    genres: [],
     mood: "",
     description: "",
     isExplicit: false,
@@ -34,7 +34,7 @@ const UploadSong: FunctionComponent = () => {
     consentsToContract: false,
   };
 
-  const handleSongInfo = (values: UploadSongFormValues) => {
+  const handleSongInfo = (values: UploadSongRequest) => {
     if (values.isMinting) {
       const songName = values.title;
       // TODO: reference company name when exists in profile
@@ -67,7 +67,7 @@ const UploadSong: FunctionComponent = () => {
     image: Yup.mixed().required("This field is required"),
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
-    genre: Yup.string().required("This field is required"),
+    genres: Yup.array().min(1, "This field is required"),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()
@@ -119,7 +119,7 @@ const UploadSong: FunctionComponent = () => {
                 image: validations.image,
                 audio: validations.audio,
                 title: validations.title,
-                genre: validations.genre,
+                genres: validations.genres,
                 owners: validations.owners,
               }),
             },
