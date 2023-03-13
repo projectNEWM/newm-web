@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 
 import {
   Box,
-  CircularProgress,
   IconButton,
   Table,
   TableBody,
@@ -14,13 +13,12 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { useEffect, useState } from "react";
-import { Button, Tooltip } from "elements";
+import { Button } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
-import { TablePagination } from "components";
+import { SongStreamPlaybackIcon, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
-import { PlayArrow, Stop } from "@mui/icons-material";
 import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
@@ -174,26 +172,10 @@ export default function SongList({
                         onClick={ () => onSongPlayPause(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
-                        { song.streamUrl ? (
-                          song.id === currentPlayingSongId ? (
-                            <Stop sx={ { color: theme.colors.white } } />
-                          ) : (
-                            <PlayArrow sx={ { color: theme.colors.white } } />
-                          )
-                        ) : (
-                          <Tooltip
-                            title={
-                              "Upload in progress. Please allow a few " +
-                              "minutes to complete the process."
-                            }
-                          >
-                            <CircularProgress
-                              disableShrink
-                              size={ 20 }
-                              color="secondary"
-                            />
-                          </Tooltip>
-                        ) }
+                        <SongStreamPlaybackIcon
+                          isSongPlaying={ song.id === currentPlayingSongId }
+                          isSongUploaded={ !!song.streamUrl }
+                        />
                       </IconButton>
                       <img
                         style={ {
