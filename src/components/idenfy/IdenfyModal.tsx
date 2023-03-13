@@ -4,6 +4,7 @@ import { CircularProgress, Stack } from "@mui/material";
 import Cookies from "js-cookie";
 import { Modal } from "components";
 import { getIdenfyAuthToken } from "modules/session";
+import theme from "theme";
 
 interface IdenfyModalProps {
   readonly isOpen: boolean;
@@ -24,6 +25,27 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
     dispatch(getIdenfyAuthToken());
   }
 
+  /** Listens for modal close message. */
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event?.data === "idenfy-modal-close") {
+        const event = new Event("close");
+
+        onClose(event);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [onClose]);
+
+  /**
+   * Gets "idenfyAuthToken" cookie at 1 second interval.
+   * Clears the interval when a value is found.
+   */
   useEffect(() => {
     const cookieRefreshInterval = setInterval(() => {
       const newAuthToken = Cookies.get("idenfyAuthToken");
@@ -57,10 +79,13 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
         ></iframe>
       ) : (
         <Stack
-          alignItems="center"
-          height="100%"
-          justifyContent="center"
-          width="100%"
+          sx={ {
+            alignItems: "center",
+            backgroundColor: theme.colors.black,
+            height: "100%",
+            justifyContent: "center",
+            width: "100%",
+          } }
         >
           <CircularProgress />
         </Stack>

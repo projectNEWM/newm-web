@@ -2,7 +2,7 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { useWindowDimensions } from "common";
 import { Button, Typography } from "elements";
 import { useFormikContext } from "formik";
-import { UploadSongFormValues, selectSong } from "modules/song";
+import { UploadSongRequest, selectSong } from "modules/song";
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { ConfirmContract } from "components";
@@ -12,7 +12,7 @@ const ConfirmAgreement: FunctionComponent = () => {
 
   const { isLoading } = useSelector(selectSong);
 
-  const { values, setFieldValue } = useFormikContext<UploadSongFormValues>();
+  const { values, setFieldValue } = useFormikContext<UploadSongRequest>();
 
   const windowWidth = useWindowDimensions()?.width;
 

@@ -7,6 +7,7 @@ import { Form, Formik, FormikValues } from "formik";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
+  IdenfyModal,
   PasswordInputField,
   ProfileImage,
   TextInputField,
@@ -16,7 +17,6 @@ import { selectContent } from "modules/content";
 import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
-import IdenfyModal from "./IdenfyModal";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,13 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Background, PrivateRoute, Toast } from "components";
+import {
+  Background,
+  IdenfyFailSession,
+  IdenfyPingUserStatus,
+  IdenfySuccessSession,
+  PrivateRoute,
+  Toast,
+} from "components";
 import Login from "pages/login";
 import Home from "pages/home";
 import SignUp from "pages/signUp";
@@ -15,7 +22,8 @@ import { useEffect } from "react";
 import { ensureWallets } from "modules/wallet";
 import BrowserRouter from "common/BrowserRouter";
 import { history } from "common/history";
-import store from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "./store";
 
 const App = () => {
   useEffect(() => {
@@ -25,42 +33,55 @@ const App = () => {
   return (
     <ThemeProvider theme={ theme }>
       <Provider store={ store }>
-        <Toast />
-        <CssBaseline />
+        <PersistGate loading={ null } persistor={ persistor }>
+          <Toast />
+          <CssBaseline />
+          <IdenfyPingUserStatus />
 
-        <Background>
-          <BrowserRouter history={ history }>
-            <Routes>
-              <Route path="/" element={ <Navigate to="home" replace /> } />
+          <Background>
+            <BrowserRouter history={ history }>
+              <Routes>
+                <Route path="/" element={ <Navigate to="home" replace /> } />
 
-              <Route path="linkedin" element={ <LinkedInCallback /> } />
+                <Route path="linkedin" element={ <LinkedInCallback /> } />
 
-              <Route path="login" element={ <Login /> } />
+                <Route path="login" element={ <Login /> } />
 
-              <Route path="forgot-password/*" element={ <ForgotPassword /> } />
+                <Route path="forgot-password/*" element={ <ForgotPassword /> } />
 
-              <Route path="sign-up/*" element={ <SignUp /> } />
+                <Route path="sign-up/*" element={ <SignUp /> } />
 
-              <Route
-                path="home/*"
-                element={
-                  <PrivateRoute>
-                    <Home />
-                  </PrivateRoute>
-                }
-              />
+                <Route
+                  path="idenfy-success-session"
+                  element={ <IdenfySuccessSession /> }
+                />
 
-              <Route
-                path="create-profile/*"
-                element={
-                  <PrivateRoute>
-                    <CreateProfile />
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </Background>
+                <Route
+                  path="idenfy-fail-session"
+                  element={ <IdenfyFailSession /> }
+                />
+
+                <Route
+                  path="home/*"
+                  element={
+                    <PrivateRoute>
+                      <Home />
+                    </PrivateRoute>
+                  }
+                />
+
+                <Route
+                  path="create-profile/*"
+                  element={
+                    <PrivateRoute>
+                      <CreateProfile />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </Background>
+        </PersistGate>
       </Provider>
     </ThemeProvider>
   );
