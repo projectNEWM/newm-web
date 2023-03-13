@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
@@ -18,20 +18,32 @@ const Discography: FunctionComponent = () => {
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
     string | null
   >(null);
-  const [audioPlayer, setAudioPlayer] = useState<Player>();
+  const audioPlayerRef = useRef<Player>();
   const viewportWidth = useWindowDimensions()?.width;
 
   // initialize audio player on page load
   useEffect(() => {
     const audioElement = new Audio();
-    audioElement.onended = () => setCurrentPlayingSongId(null);
     const newAudioPlayer = videojs(audioElement);
-    setAudioPlayer(newAudioPlayer);
+
+    audioElement.onended = () => {
+      if (setCurrentPlayingSongId) {
+        setCurrentPlayingSongId(null);
+      }
+    };
+
+    // handles stopping audio using OS or browser media controls
+    audioElement.onpause = () => {
+      if (setCurrentPlayingSongId) {
+        audioElement.src = "";
+        setCurrentPlayingSongId(null);
+      }
+    };
+
+    audioPlayerRef.current = newAudioPlayer;
 
     return () => {
-      if (!newAudioPlayer.isDisposed()) {
-        newAudioPlayer.dispose();
-      }
+      audioPlayerRef.current?.dispose();
     };
   }, []);
 
@@ -61,24 +73,25 @@ const Discography: FunctionComponent = () => {
       return filteredSong.id === currentPlayingSongId;
     });
 
-    if (!isSongFound && audioPlayer) {
+    if (!isSongFound) {
       setCurrentPlayingSongId(null);
-      audioPlayer?.pause();
-      audioPlayer?.src(undefined);
+      audioPlayerRef.current?.pause();
+      audioPlayerRef.current?.src(undefined);
     }
-  }, [audioPlayer, currentPlayingSongId, filteredData]);
+  }, [currentPlayingSongId, filteredData]);
 
   // Play and stop audio stream source when selected
   const handleSongPlayPause = (song: Song) => {
     if (song.id === currentPlayingSongId) {
       setCurrentPlayingSongId(null);
-      audioPlayer?.pause();
-      audioPlayer?.src(undefined);
+      audioPlayerRef.current?.pause();
+      audioPlayerRef.current?.src(undefined);
     } else {
       if (song.streamUrl) {
         setCurrentPlayingSongId(song.id);
-        audioPlayer?.src(song.streamUrl);
-        audioPlayer?.play();
+        audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
+        audioPlayerRef.current?.src(song.streamUrl);
+        audioPlayerRef.current?.play();
       }
     }
   };
@@ -131,7 +144,7 @@ const Discography: FunctionComponent = () => {
           <SongList
             songData={ filteredData }
             currentPlayingSongId={ currentPlayingSongId }
-            onSongPlayPause={ handleSongPlayPause }
+            handleSongPlayPause={ handleSongPlayPause }
             page={ page }
             onPageChange={ handlePageChange }
           />

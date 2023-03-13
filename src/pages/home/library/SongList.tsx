@@ -25,7 +25,7 @@ interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
   currentPlayingSongId: string | null;
-  onSongPlayPause: (song: Song) => void;
+  handleSongPlayPause: (song: Song) => void;
   page: number;
   onPageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 }
@@ -62,7 +62,7 @@ export default function SongList({
   songData,
   rowHeight = 65,
   currentPlayingSongId,
-  onSongPlayPause,
+  handleSongPlayPause,
   page,
   onPageChange,
 }: SongListProps) {
@@ -156,7 +156,7 @@ export default function SongList({
               )
               .map((song) => (
                 <TableRow
-                  onClick={ () => onSongPlayPause(song) }
+                  onClick={ () => handleSongPlayPause(song) }
                   key={ song.id }
                   sx={ {
                     cursor: "pointer",
@@ -169,7 +169,7 @@ export default function SongList({
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton
-                        onClick={ () => onSongPlayPause(song) }
+                        onClick={ () => handleSongPlayPause(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
                         <SongStreamPlaybackIcon
