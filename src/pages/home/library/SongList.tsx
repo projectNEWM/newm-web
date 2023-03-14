@@ -16,17 +16,16 @@ import { useEffect, useState } from "react";
 import { Button } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
-import { TablePagination } from "components";
+import { SongStreamPlaybackIcon, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
-import { Pause, PlayArrow } from "@mui/icons-material";
 import { MintingStatus } from "./MintingStatus";
 
 interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
   currentPlayingSongId: string | null;
-  onSongPlayPause: (song: Song) => void;
+  handleSongPlayPause: (song: Song) => void;
   page: number;
   onPageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 }
@@ -63,7 +62,7 @@ export default function SongList({
   songData,
   rowHeight = 65,
   currentPlayingSongId,
-  onSongPlayPause,
+  handleSongPlayPause,
   page,
   onPageChange,
 }: SongListProps) {
@@ -157,7 +156,7 @@ export default function SongList({
               )
               .map((song) => (
                 <TableRow
-                  onClick={ () => onSongPlayPause(song) }
+                  onClick={ () => handleSongPlayPause(song) }
                   key={ song.id }
                   sx={ {
                     cursor: "pointer",
@@ -170,20 +169,13 @@ export default function SongList({
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton
-                        onClick={ () => onSongPlayPause(song) }
+                        onClick={ () => handleSongPlayPause(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
-                        { song.id === currentPlayingSongId ? (
-                          <Pause
-                            fontSize="medium"
-                            sx={ { color: theme.colors.white } }
-                          />
-                        ) : (
-                          <PlayArrow
-                            fontSize="medium"
-                            sx={ { color: theme.colors.white } }
-                          />
-                        ) }
+                        <SongStreamPlaybackIcon
+                          isSongPlaying={ song.id === currentPlayingSongId }
+                          isSongUploaded={ !!song.streamUrl }
+                        />
                       </IconButton>
                       <img
                         style={ {
@@ -232,7 +224,7 @@ export default function SongList({
                   >
                     { song.duration
                       ? formatSongDurationToSongLength(song.duration)
-                      : "-" }
+                      : "--:--" }
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ {
