@@ -334,6 +334,33 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       },
     ],
   },
+  cusi: {
+    artistName: "CÜSI",
+    songName: "Indiclouds",
+    launchTimestamp: 1679068800000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 15,
+    bundleAmount: 333333,
+    totalTokens: 100000000,
+    bundlePrice: 150,
+    royaltyAgreement:
+      "https://7thbbrzrsta5egijzeydlmepn2bifsnuphf7kajvzzagcnmrj4lq.arweave" +
+      ".net/_M4QxzGUwdIZCckwNbCPboKCybR5y_UBNc5AYTWRTxc",
+    poolLink: "https://pool.pm/asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht",
+    spotifyLink: "", // TODO
+    description: "", // TODO
+    socials: [
+      {
+        heading: "CÜSI",
+        twitter: "https://twitter.com/CusiWorld",
+        spotify:
+          "https://open.spotify.com/artist/6LJSWCQif1oZjIch2aDs00?si=Ni2fIQ6KRUG1egAsBDFagg",
+        facebook: "https://www.facebook.com/profile.php?id=100087220639690",
+        instagram: "https://www.instagram.com/Cusi.world/",
+        youTube: "https://www.youtube.com/channel/UCcmX6Is8W977wTOB0oZqrog",
+        // TODO linktree:
+      },
+    ],
+  },
 };
 
 export const projectDetails = projectDetailsMap[artistName];
