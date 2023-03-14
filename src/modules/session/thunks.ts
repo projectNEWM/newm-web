@@ -24,13 +24,7 @@ export const updateProfile = createAsyncThunk(
       return;
     }
 
-    const getProfileResponse = await dispatch(
-      sessionApi.endpoints.getProfile.initiate()
-    );
-
-    if ("error" in getProfileResponse) {
-      return;
-    }
+    await dispatch(sessionApi.endpoints.getProfile.initiate());
   }
 );
 
@@ -41,7 +35,11 @@ export const updateProfile = createAsyncThunk(
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: UpdateProfileRequest, { dispatch }) => {
-    await dispatch(updateProfile(body));
+    const updateProfileResponse = await dispatch(updateProfile(body));
+
+    if ("error" in updateProfileResponse) {
+      return;
+    }
 
     history.push("/home");
   }
@@ -54,11 +52,19 @@ export const updateInitialProfile = createAsyncThunk(
 export const getInitialData = createAsyncThunk(
   "session/getInitialData",
   async (_, { dispatch }) => {
-    dispatch(songApi.endpoints.getSongs.initiate());
+    const songsResponse = await dispatch(songApi.endpoints.getSongs.initiate());
+
+    if ("error" in songsResponse) {
+      return;
+    }
 
     const profileResponse = await dispatch(
       sessionApi.endpoints.getProfile.initiate()
     );
+
+    if ("error" in profileResponse) {
+      return;
+    }
 
     if (!profileResponse?.data?.nickname) {
       history.push("/create-profile/what-should-we-call-you");
