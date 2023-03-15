@@ -16,6 +16,7 @@ interface ProjectDetails {
     readonly discord?: string;
     readonly twitter?: string;
     readonly instagram?: string;
+    readonly linktree?: string;
     readonly spotify?: string;
     readonly soundcloud?: string;
     readonly facebook?: string;
@@ -347,7 +348,20 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       ".net/_M4QxzGUwdIZCckwNbCPboKCybR5y_UBNc5AYTWRTxc",
     poolLink: "https://pool.pm/asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht",
     spotifyLink: "", // TODO
-    description: "", // TODO
+    description:
+      "Indiclouds is an introspective song that’ll take you on a " +
+      "journey through my mind and struggles. It captures the essence of " +
+      "getting high and gaining new perspectives. The lyrics are deeply " +
+      "personal as I reflect on my experiences, finding clarity and purpose " +
+      "through the haze of smoke. Despite the difficulties, the message is " +
+      "clear – sometimes, the simple things in life are the most profound.\n\n" +
+      "As my first Stream Token Sale, I’m sharing 50% of the future streaming " +
+      "royalties, giving fans new ways to support their favorite artists and " +
+      "be a part of our success.\n\n" +
+      "With its deep message and soulful melody, this is the kind of song that " +
+      "just hits different. So if you feel music in your soul, grab yourself a " +
+      "piece of music history and help support me on my path to become " +
+      "somebody’s favorite artist!",
     socials: [
       {
         heading: "CÜSI",
@@ -356,8 +370,8 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
           "https://open.spotify.com/artist/6LJSWCQif1oZjIch2aDs00?si=Ni2fIQ6KRUG1egAsBDFagg",
         facebook: "https://www.facebook.com/profile.php?id=100087220639690",
         instagram: "https://www.instagram.com/Cusi.world/",
+        linktree: "https://linktr.ee/CusiWorld",
         youTube: "https://www.youtube.com/channel/UCcmX6Is8W977wTOB0oZqrog",
-        // TODO linktree:
       },
     ],
   },
