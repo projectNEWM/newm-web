@@ -347,7 +347,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       "https://7thbbrzrsta5egijzeydlmepn2bifsnuphf7kajvzzagcnmrj4lq.arweave" +
       ".net/_M4QxzGUwdIZCckwNbCPboKCybR5y_UBNc5AYTWRTxc",
     poolLink: "https://pool.pm/asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht",
-    spotifyLink: "", // TODO
+    spotifyLink: "https://open.spotify.com/track/1NSYMGBhD0JO0TepbQNKIj",
     description:
       "Indiclouds is an introspective song that’ll take you on a " +
       "journey through my mind and struggles. It captures the essence of " +
