@@ -164,12 +164,14 @@ export const patchSong = createAsyncThunk(
       }
 
       // patch song information
-      await thunkApi.dispatch(
+      const patchSongResp = await thunkApi.dispatch(
         songApi.endpoints.patchSong.initiate({
           ...body,
           ...cloudinaryImage,
         })
       );
+
+      if ("error" in patchSongResp || !("data" in patchSongResp)) return;
 
       // navigate to library page to view updated song
       history.push("/home/library");
