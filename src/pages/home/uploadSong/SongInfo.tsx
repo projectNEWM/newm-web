@@ -33,6 +33,10 @@ const SongInfo: FunctionComponent = () => {
   const { values, errors, touched, setFieldValue } =
     useFormikContext<UploadSongRequest>();
 
+  // TODO: Also disable submit if minting and wallet is not connected, once
+  // connecting wallet has been implemented. Allow for now for testing purposes.
+  const isSubmitDisabled = values.isMinting && !isVerified;
+
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
   };
@@ -237,6 +241,7 @@ const SongInfo: FunctionComponent = () => {
         <Button
           sx={ { mt: 5 } }
           type="submit"
+          disabled={ isSubmitDisabled }
           isLoading={ isLoading }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md

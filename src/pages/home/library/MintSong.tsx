@@ -254,11 +254,12 @@ const MintSong = () => {
                       Cancel
                     </Button>
 
-                    { /** TODO: disable button if verify or wallet warnings visible */ }
+                    { /** TODO: disable button if wallet warning is visible */ }
                     { values.isMinting && (
                       <Button
                         onClick={ () => handleSubmit() }
                         isLoading={ isLoading }
+                        disabled={ !isVerified }
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
