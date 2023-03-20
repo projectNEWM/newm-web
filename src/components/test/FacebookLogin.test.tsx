@@ -9,17 +9,6 @@ jest.mock("react-redux", () => ({
   useDispatch: () => jest.fn(),
 }));
 
-// mock API call thunk
-jest.mock("modules/session", () => ({
-  extendedApi: {
-    endpoints: {
-      facebookLogin: {
-        initiate: jest.fn(),
-      },
-    },
-  },
-}));
-
 // mock successful Facebook auth response on click
 jest.mock("@greatsumini/react-facebook-login", () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,6 +21,8 @@ jest.mock("@greatsumini/react-facebook-login", () => {
 
 describe("<FacebookLogin />", () => {
   it("calls the API after successful response from Facebook", () => {
+    jest.spyOn(extendedApi.endpoints.facebookLogin, "initiate");
+
     const { getByLabelText } = renderWithContext(<FacebookLogin />);
 
     const button = getByLabelText("facebook authorization");

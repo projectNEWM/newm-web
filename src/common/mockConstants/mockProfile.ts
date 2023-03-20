@@ -1,4 +1,4 @@
-import { Profile, VerificationStatus } from "modules/session";
+import { Profile, VerificationStatus } from "modules/session/types";
 
 export const mockProfile: Profile = {
   id: "ABCD1234",
