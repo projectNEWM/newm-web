@@ -14,9 +14,15 @@ import {
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
-import { selectSession, updateProfile } from "modules/session";
+import {
+  VerificationStatus,
+  selectSession,
+  updateProfile,
+} from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
+
+const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -37,9 +43,9 @@ const Profile: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasRequestedVerification, setHasRequestedVerification] =
     useState(false);
-  const isUnverified = verificationStatus === "Unverified";
-  const isPendingVerification = verificationStatus === "Pending";
-  const isVerified = verificationStatus === "Verified";
+  const isUnverified = verificationStatus === Unverified;
+  const isPendingVerification = verificationStatus === Pending;
+  const isVerified = verificationStatus === Verified;
 
   const handleCloseModal = () => {
     setIsModalOpen(false);

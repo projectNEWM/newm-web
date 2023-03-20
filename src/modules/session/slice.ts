@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { SessionState } from "./types";
+import { SessionState, VerificationStatus } from "./types";
 import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
@@ -17,7 +17,7 @@ const initialState: SessionState = {
     pictureUrl: "",
     role: "",
     genre: "",
-    verificationStatus: "Unverified",
+    verificationStatus: VerificationStatus.Unverified,
   },
   verificationPingStartedAt: undefined,
 };

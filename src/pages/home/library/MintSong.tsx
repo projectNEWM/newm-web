@@ -15,7 +15,7 @@ import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSession } from "modules/session";
+import { VerificationStatus, selectSession } from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
 
@@ -38,6 +38,8 @@ const MintSong = () => {
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
+
+  const isVerified = profile.verificationStatus === VerificationStatus.Verified;
 
   const initialValues: FormValues = {
     isMinting: false,
@@ -177,8 +179,7 @@ const MintSong = () => {
                       </Box>
                     ) }
 
-                    { /** TODO: hide if user is already verified */ }
-                    { values.isMinting && (
+                    { values.isMinting && !isVerified && (
                       <Alert
                         severity="warning"
                         action={

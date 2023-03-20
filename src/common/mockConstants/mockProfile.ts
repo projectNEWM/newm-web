@@ -1,4 +1,4 @@
-import { Profile } from "modules/session";
+import { Profile, VerificationStatus } from "modules/session";
 
 export const mockProfile: Profile = {
   id: "ABCD1234",
@@ -11,5 +11,5 @@ export const mockProfile: Profile = {
   pictureUrl: "",
   role: "Producer",
   genre: "Instrumental",
-  verificationStatus: "Unverified",
+  verificationStatus: VerificationStatus.Unverified,
 };

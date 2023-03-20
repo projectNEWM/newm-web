@@ -16,13 +16,19 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
+import { VerificationStatus, selectSession } from "modules/session";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
 
   const { genres } = useSelector(selectContent);
   const { isLoading } = useSelector(selectSong);
+  const {
+    profile: { verificationStatus },
+  } = useSelector(selectSession);
   const windowWidth = useWindowDimensions()?.width;
+
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   const { values, errors, touched, setFieldValue } =
     useFormikContext<UploadSongRequest>();
@@ -175,8 +181,7 @@ const SongInfo: FunctionComponent = () => {
             ) }
           </Box>
 
-          { /** TODO: hide if user is already verified */ }
-          { values.isMinting && (
+          { values.isMinting && !isVerified && (
             <Alert
               severity="warning"
               action={
