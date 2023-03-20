@@ -66,6 +66,13 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileSecondary: require("./oddshapeshadow/profile-cropped.webp"),
     preview: require("./oddshapeshadow/preview.mp3"),
   },
+  cusi: {
+    albumArt: require("./cusi/album-art.webp"),
+    albumArtXs: require("./cusi/album-art@80.webp"),
+    profilePrimary: require("./cusi/profile-cut.webp"),
+    profileSecondary: require("./cusi/profile-cropped.webp"),
+    preview: require("./cusi/preview.mp3"),
+  },
 };
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";

@@ -1,13 +1,15 @@
 import { ReactNode } from "react";
 import { Stack, Typography } from "@mui/material";
+import DiscordIcon from "assets/images/DiscordIcon";
+import FacebookIcon from "assets/images/FacebookIcon";
 import GoogleChromeIcon from "assets/images/GoogleChromeIcon";
 import InstagramIcon from "assets/images/InstagramIcon";
+import LinktreeIcon from "assets/images/LinktreeIcon";
 import SpotifyIcon from "assets/images/SpotifyIcon";
 import TwitterIcon from "assets/images/TwitterIcon";
 import SoundcloudIcon from "assets/images/SoundcloudIcon";
 import TiktokIcon from "assets/images/TiktokIcon";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import DiscordIcon from "assets/images/DiscordIcon";
 import { AccentButton } from "elements";
 import { projectDetails } from "buildParams";
 
@@ -46,11 +48,13 @@ const SocialsModal = () => {
           {
             heading,
             discord,
-            twitter,
+            facebook,
             instagram,
+            linktree,
             soundcloud,
             spotify,
             tikTok,
+            twitter,
             youTube,
             website,
           },
@@ -86,11 +90,11 @@ const SocialsModal = () => {
                   text="Discord"
                 />
               ) }
-              { twitter && (
+              { facebook && (
                 <SocialButton
-                  href={ twitter }
-                  icon={ <TwitterIcon /> }
-                  text="Twitter"
+                  href={ facebook }
+                  icon={ <FacebookIcon /> }
+                  text="Facebook"
                 />
               ) }
               { instagram && (
@@ -98,6 +102,13 @@ const SocialsModal = () => {
                   href={ instagram }
                   icon={ <InstagramIcon /> }
                   text="Instagram"
+                />
+              ) }
+              { linktree && (
+                <SocialButton
+                  href={ linktree }
+                  icon={ <LinktreeIcon /> }
+                  text="Linktree"
                 />
               ) }
               { soundcloud && (
@@ -121,6 +132,13 @@ const SocialsModal = () => {
                   href={ tikTok }
                   icon={ <TiktokIcon /> }
                   text="TikTok"
+                />
+              ) }
+              { twitter && (
+                <SocialButton
+                  href={ twitter }
+                  icon={ <TwitterIcon /> }
+                  text="Twitter"
                 />
               ) }
               { youTube && (
