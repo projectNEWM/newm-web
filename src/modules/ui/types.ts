@@ -4,4 +4,5 @@ export interface UIState {
     message: string;
     severity?: "error" | "success";
   };
+  isIdenfyModalOpen: boolean;
 }

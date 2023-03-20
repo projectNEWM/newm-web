@@ -7,7 +7,6 @@ import { Form, Formik, FormikValues } from "formik";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
-  IdenfyModal,
   PasswordInputField,
   ProfileImage,
   TextInputField,
@@ -21,6 +20,7 @@ import {
 } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
+import { setIsIdenfyModalOpen } from "modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
@@ -40,23 +40,12 @@ const Profile: FunctionComponent = () => {
       verificationStatus,
     } = {},
   } = useSelector(selectSession);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasRequestedVerification, setHasRequestedVerification] =
-    useState(false);
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   const handleVerificationSession = () => {
-    if (!hasRequestedVerification) {
-      setHasRequestedVerification(true);
-    }
-
-    setIsModalOpen(!isModalOpen);
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const initialValues = {
@@ -143,9 +132,6 @@ const Profile: FunctionComponent = () => {
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
             </Tooltip>
-            { hasRequestedVerification ? (
-              <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
-            ) : null }
           </Stack>
         ) : null }
       </Stack>

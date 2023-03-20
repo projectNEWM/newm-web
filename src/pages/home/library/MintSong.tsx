@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { VerificationStatus, selectSession } from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
+import { setIsIdenfyModalOpen } from "modules/ui";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -98,7 +99,7 @@ const MintSong = () => {
   };
 
   const handleVerifyProfile = () => {
-    // trigger iDenfy flow
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const handleConnectWallet = () => {

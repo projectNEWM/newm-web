@@ -1,22 +1,17 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress, Stack } from "@mui/material";
 import Cookies from "js-cookie";
 import { Modal } from "components";
 import { getIdenfyAuthToken } from "modules/session";
 import theme from "theme";
+import { selectUi, setIsIdenfyModalOpen } from "modules/ui";
 
-interface IdenfyModalProps {
-  readonly isOpen: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly onClose: (event: React.SyntheticEvent<any> | Event) => void;
-}
-
-const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
-  isOpen = false,
-  onClose,
-}) => {
+const IdenfyModal: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const { isIdenfyModalOpen: isOpen } = useSelector(selectUi);
+
   const [idenfyAuthToken, setIdenfyAuthToken] = useState(
     Cookies.get("idenfyAuthToken")
   );
@@ -25,13 +20,15 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
     dispatch(getIdenfyAuthToken());
   }
 
+  const handleClose = useCallback(() => {
+    dispatch(setIsIdenfyModalOpen(false));
+  }, [dispatch]);
+
   /** Listens for modal close message. */
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event?.data === "idenfy-modal-close") {
-        const event = new Event("close");
-
-        onClose(event);
+        handleClose();
       }
     };
 
@@ -40,7 +37,7 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [onClose]);
+  }, [handleClose]);
 
   /**
    * Gets "idenfyAuthToken" cookie at 1 second interval.
@@ -63,7 +60,7 @@ const IdenfyModal: FunctionComponent<IdenfyModalProps> = ({
   }, [idenfyAuthToken]);
 
   return (
-    <Modal isOpen={ isOpen } onClose={ onClose }>
+    <Modal isOpen={ isOpen } onClose={ handleClose }>
       { idenfyAuthToken ? (
         <iframe
           allow="camera"

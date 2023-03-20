@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
@@ -17,9 +17,11 @@ import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import { VerificationStatus, selectSession } from "modules/session";
+import { setIsIdenfyModalOpen } from "modules/ui";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
   const { isLoading } = useSelector(selectSong);
@@ -46,7 +48,7 @@ const SongInfo: FunctionComponent = () => {
   };
 
   const handleVerifyProfile = () => {
-    // trigger iDenfy flow
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const handleConnectWallet = () => {
