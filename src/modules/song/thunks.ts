@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
+import { history } from "common/history";
 import {
   GenerateArtistAgreementPayload,
   PatchSongRequest,
@@ -51,10 +52,7 @@ export const uploadSong = createAsyncThunk(
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
-          title: body.title,
-          genres: body.genres,
-          mood: body.mood,
-          description: body.description,
+          ...body,
           coverArtUrl: cloudinaryResp.data.secure_url,
         })
       );
@@ -83,8 +81,8 @@ export const uploadSong = createAsyncThunk(
         body: JSON.stringify({ file: audioBinaryStr }),
       });
 
-      // fetch user's songs
-      dispatch(songApi.endpoints.getSongs.initiate());
+      // navigate to library page to view new song
+      history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
     } finally {
@@ -166,17 +164,15 @@ export const patchSong = createAsyncThunk(
       }
 
       // patch song information
-      const patchSong = await thunkApi.dispatch(
+      await thunkApi.dispatch(
         songApi.endpoints.patchSong.initiate({
-          id: body.id,
-          title: body.title,
-          description: body.description,
-          genres: body.genres,
+          ...body,
           ...cloudinaryImage,
         })
       );
 
-      if ("error" in patchSong || !("data" in patchSong)) return;
+      // navigate to library page to view updated song
+      history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
     } finally {

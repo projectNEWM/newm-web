@@ -28,7 +28,7 @@ export interface UploadSongRequest {
   readonly audio?: any; // eslint-disable-line
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
-  readonly mood: string;
+  readonly moods: ReadonlyArray<string>;
   readonly description: string;
   readonly isExplicit: boolean;
   readonly isMinting: boolean;

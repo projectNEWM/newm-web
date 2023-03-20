@@ -1,6 +1,7 @@
 import api, { CloudinaryUploadParams, lambdaApi } from "api";
 import { mergeApis } from "common/apiUtils";
 import { setToastMessage } from "modules/ui";
+import { useCallback } from "react";
 import { receiveArtistAgreement } from "./slice";
 import {
   AudioUploadUrlRequest,
@@ -127,7 +128,7 @@ const extendedNewmApi = api.injectEndpoints({
       AudioUploadUrlRequest
     >({
       query: ({ songId, ...body }) => ({
-        url: `/v1/songs/${songId}/upload`,
+        url: `/v1/songs/${songId}/audio`,
         method: "POST",
         body,
       }),
@@ -178,5 +179,41 @@ const extendedLambdaApi = lambdaApi.injectEndpoints({
 });
 
 export const extendedApi = mergeApis(extendedNewmApi, extendedLambdaApi);
+
+// TEMP: Replace with actual API hook
+export const useGetSongMoods = () => {
+  const resp = useCallback(
+    () => ({
+      data: [
+        "Aggressive",
+        "Brooding",
+        "Cool",
+        "Defiant",
+        "Easygoing",
+        "Empowering",
+        "Energizing",
+        "Excited",
+        "Fiery",
+        "Gritty",
+        "Melancholy",
+        "Other",
+        "Peaceful",
+        "Romantic",
+        "Rowdy",
+        "Sensual",
+        "Sentimental",
+        "Serious",
+        "Sophisticated",
+        "Stirring",
+        "Tender",
+        "Upbeat",
+        "Yearning",
+      ],
+    }),
+    []
+  );
+
+  return resp();
+};
 
 export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
