@@ -16,7 +16,6 @@ interface ProjectDetails {
     readonly discord?: string;
     readonly twitter?: string;
     readonly instagram?: string;
-    readonly linktree?: string;
     readonly spotify?: string;
     readonly soundcloud?: string;
     readonly facebook?: string;
@@ -332,46 +331,6 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
         discord: "https://discord.gg/kmBWdPsFsk",
         twitter: "https://twitter.com/MGBedford",
         soundcloud: "https://soundcloud.com/oddshapeshadow",
-      },
-    ],
-  },
-  cusi: {
-    artistName: "CÜSI",
-    songName: "Indiclouds",
-    launchTimestamp: 1679068800000,
-    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 15,
-    bundleAmount: 333333,
-    totalTokens: 100000000,
-    bundlePrice: 150,
-    royaltyAgreement:
-      "https://7thbbrzrsta5egijzeydlmepn2bifsnuphf7kajvzzagcnmrj4lq.arweave" +
-      ".net/_M4QxzGUwdIZCckwNbCPboKCybR5y_UBNc5AYTWRTxc",
-    poolLink: "https://pool.pm/asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht",
-    spotifyLink: "https://open.spotify.com/track/1NSYMGBhD0JO0TepbQNKIj",
-    description:
-      "Indiclouds is an introspective song that’ll take you on a " +
-      "journey through my mind and struggles. It captures the essence of " +
-      "getting high and gaining new perspectives. The lyrics are deeply " +
-      "personal as I reflect on my experiences, finding clarity and purpose " +
-      "through the haze of smoke. Despite the difficulties, the message is " +
-      "clear – sometimes, the simple things in life are the most profound.\n\n" +
-      "As my first Stream Token Sale, I’m sharing 50% of the future streaming " +
-      "royalties, giving fans new ways to support their favorite artists and " +
-      "be a part of our success.\n\n" +
-      "With its deep message and soulful melody, this is the kind of song that " +
-      "just hits different. So if you feel music in your soul, grab yourself a " +
-      "piece of music history and help support me on my path to become " +
-      "somebody’s favorite artist!",
-    socials: [
-      {
-        heading: "CÜSI",
-        twitter: "https://twitter.com/CusiWorld",
-        spotify:
-          "https://open.spotify.com/artist/6LJSWCQif1oZjIch2aDs00?si=Ni2fIQ6KRUG1egAsBDFagg",
-        facebook: "https://www.facebook.com/profile.php?id=100087220639690",
-        instagram: "https://www.instagram.com/Cusi.world/",
-        linktree: "https://linktr.ee/CusiWorld",
-        youTube: "https://www.youtube.com/channel/UCcmX6Is8W977wTOB0oZqrog",
       },
     ],
   },

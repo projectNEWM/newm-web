@@ -76,17 +76,6 @@
           "destination": "/index.html"
         }
       ]
-    },
-    {
-      "target": "projectcusi",
-      "public": "build",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
     }
   ]
 }
