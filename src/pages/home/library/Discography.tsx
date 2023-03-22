@@ -11,7 +11,11 @@ import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const { data: songData = [], isLoading, isSuccess } = useGetSongsQuery();
+  const {
+    data: songs = [],
+    isLoading,
+    isSuccess,
+  } = useGetSongsQuery({ ownerIds: ["me"] });
   const [filteredData, setFilteredData] = useState<Song[]>([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
@@ -48,17 +52,17 @@ const Discography: FunctionComponent = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredData(songData);
-  }, [songData]);
+    setFilteredData(songs);
+  }, [songs]);
 
   const handleSearch = (searched: string) => {
     setQuery(searched);
     setPage(1);
     if (searched == "") {
-      setFilteredData(songData);
+      setFilteredData(songs);
     } else {
       setFilteredData(
-        songData.filter(
+        songs.filter(
           ({ title = "", genre = "" }) =>
             title.toLowerCase().includes(searched.toLowerCase()) ||
             genre.toLowerCase().includes(searched.toLowerCase())
@@ -108,7 +112,7 @@ const Discography: FunctionComponent = () => {
   const renderContent = (
     isLoading: boolean,
     isSuccess: boolean,
-    songData: Song[]
+    songs: Song[]
   ) => {
     if (isLoading) {
       return (
@@ -127,13 +131,13 @@ const Discography: FunctionComponent = () => {
           />
         </>
       );
-    } else if (isSuccess && songData.length == 0) {
+    } else if (isSuccess && songs.length === 0) {
       return (
         <Box sx={ { margin: "auto", position: "relative", bottom: "50px" } }>
           <NoSongsYet />
         </Box>
       );
-    } else if (isSuccess && songData.length > 0) {
+    } else if (isSuccess && songs.length > 0) {
       return (
         <>
           <SearchBox
@@ -142,7 +146,7 @@ const Discography: FunctionComponent = () => {
             onSearch={ handleSearch }
           />
           <SongList
-            songData={ filteredData }
+            songData={ songs }
             currentPlayingSongId={ currentPlayingSongId }
             handleSongPlayPause={ handleSongPlayPause }
             page={ page }
@@ -157,7 +161,7 @@ const Discography: FunctionComponent = () => {
       <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
-      { renderContent(isLoading, isSuccess, songData) }
+      { renderContent(isLoading, isSuccess, songs) }
     </>
   );
 };
