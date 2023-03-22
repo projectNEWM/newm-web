@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import {
   Background,
   IdenfyFailSession,
+  IdenfyModal,
   IdenfyPingUserStatus,
   IdenfySuccessSession,
   PrivateRoute,
@@ -37,6 +38,7 @@ const App = () => {
           <Toast />
           <CssBaseline />
           <IdenfyPingUserStatus />
+          <IdenfyModal />
 
           <Background>
             <BrowserRouter history={ history }>

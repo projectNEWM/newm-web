@@ -15,7 +15,7 @@ export interface Profile {
   readonly pictureUrl: string;
   readonly role: string;
   readonly genre: string;
-  readonly verificationStatus: Readonly<"Unverified" | "Pending" | "Verified">;
+  readonly verificationStatus: Readonly<VerificationStatus>;
 }
 
 export interface NewmOAuthRequest {
@@ -54,7 +54,7 @@ export interface UpdateProfileRequest {
   readonly newPassword?: string;
   readonly confirmPassword?: string;
   readonly authCode?: number;
-  readonly verificationStatus?: Readonly<"Unverified" | "Pending" | "Verified">;
+  readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
 export interface GetProfileResponse {
@@ -68,7 +68,7 @@ export interface GetProfileResponse {
   readonly role: string;
   readonly genre: string;
   readonly email: string;
-  readonly verificationStatus: Readonly<"Unverified" | "Pending" | "Verified">;
+  readonly verificationStatus: Readonly<VerificationStatus>;
 }
 
 export interface Request2FACode {
@@ -86,7 +86,7 @@ export interface CreateAccountRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly role?: string;
-  readonly verificationStatus?: Readonly<"Unverified" | "Pending" | "Verified">;
+  readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
 export interface ResetPasswordRequest {
@@ -99,4 +99,10 @@ export interface ResetPasswordRequest {
 export interface IdenfyTokenResponse {
   readonly authToken: string;
   readonly expiryTime: number;
+}
+
+export enum VerificationStatus {
+  Verified = "Verified",
+  Pending = "Pending",
+  Unverified = "Unverified",
 }

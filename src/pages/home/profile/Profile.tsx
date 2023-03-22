@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
@@ -7,16 +7,22 @@ import { Form, Formik, FormikValues } from "formik";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
-  IdenfyModal,
   PasswordInputField,
   ProfileImage,
   TextInputField,
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
-import { selectSession, updateProfile } from "modules/session";
+import {
+  VerificationStatus,
+  selectSession,
+  updateProfile,
+} from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
+import { setIsIdenfyModalOpen } from "modules/ui";
+
+const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -34,23 +40,12 @@ const Profile: FunctionComponent = () => {
       verificationStatus,
     } = {},
   } = useSelector(selectSession);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasRequestedVerification, setHasRequestedVerification] =
-    useState(false);
-  const isUnverified = verificationStatus === "Unverified";
-  const isPendingVerification = verificationStatus === "Pending";
-  const isVerified = verificationStatus === "Verified";
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const isUnverified = verificationStatus === Unverified;
+  const isPendingVerification = verificationStatus === Pending;
+  const isVerified = verificationStatus === Verified;
 
   const handleVerificationSession = () => {
-    if (!hasRequestedVerification) {
-      setHasRequestedVerification(true);
-    }
-
-    setIsModalOpen(!isModalOpen);
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const initialValues = {
@@ -137,9 +132,6 @@ const Profile: FunctionComponent = () => {
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
             </Tooltip>
-            { hasRequestedVerification ? (
-              <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
-            ) : null }
           </Stack>
         ) : null }
       </Stack>
