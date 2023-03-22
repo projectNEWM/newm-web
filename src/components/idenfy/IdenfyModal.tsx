@@ -16,16 +16,14 @@ const IdenfyModal: FunctionComponent = () => {
     Cookies.get("idenfyAuthToken")
   );
 
-  if (!idenfyAuthToken) {
-    dispatch(getIdenfyAuthToken());
-  }
-
   const handleClose = useCallback(() => {
     dispatch(setIsIdenfyModalOpen(false));
   }, [dispatch]);
 
   /** Listens for modal close message. */
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleMessage = (event: MessageEvent) => {
       if (event?.data === "idenfy-modal-close") {
         handleClose();
@@ -37,13 +35,15 @@ const IdenfyModal: FunctionComponent = () => {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [handleClose]);
+  }, [isOpen, handleClose]);
 
   /**
    * Gets "idenfyAuthToken" cookie at 1 second interval.
    * Clears the interval when a value is found.
    */
   useEffect(() => {
+    if (!isOpen) return;
+
     const cookieRefreshInterval = setInterval(() => {
       const newAuthToken = Cookies.get("idenfyAuthToken");
 
@@ -52,12 +52,14 @@ const IdenfyModal: FunctionComponent = () => {
       }
     }, 1000);
 
-    if (idenfyAuthToken) {
+    if (!idenfyAuthToken) {
+      dispatch(getIdenfyAuthToken());
+    } else {
       clearInterval(cookieRefreshInterval);
     }
 
     return () => clearInterval(cookieRefreshInterval);
-  }, [idenfyAuthToken]);
+  }, [isOpen, idenfyAuthToken, dispatch]);
 
   return (
     <Modal isOpen={ isOpen } onClose={ handleClose }>
@@ -73,7 +75,7 @@ const IdenfyModal: FunctionComponent = () => {
           } }
           src={ `https://ui.idenfy.com/?authToken=${idenfyAuthToken}` }
           title="iDenfy verification session"
-        ></iframe>
+        />
       ) : (
         <Stack
           sx={ {
