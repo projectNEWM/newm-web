@@ -44,6 +44,8 @@ const Profile: FunctionComponent = () => {
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
 
+  const { isLoading } = useSelector(selectSession);
+
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
@@ -109,6 +111,7 @@ const Profile: FunctionComponent = () => {
       maxWidth={ false }
       sx={ {
         marginX: [null, null, 3],
+        paddingBottom: 8,
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
       } }
@@ -156,7 +159,7 @@ const Profile: FunctionComponent = () => {
         validationSchema={ validationSchema }
       >
         { ({
-          isValid,
+          dirty,
           values: { currentPassword, newPassword, confirmPassword },
         }) => {
           const showEndAdornment = !!(
@@ -164,6 +167,7 @@ const Profile: FunctionComponent = () => {
             newPassword ||
             confirmPassword
           );
+
           return (
             <Form>
               <Stack
@@ -262,8 +266,10 @@ const Profile: FunctionComponent = () => {
                   showEndAdornment={ showEndAdornment }
                 />
               </Stack>
+
               <Button
-                disabled={ !isValid }
+                disabled={ !dirty }
+                isLoading={ isLoading }
                 width={
                   windowWidth && windowWidth > theme.breakpoints.values.md
                     ? "compact"

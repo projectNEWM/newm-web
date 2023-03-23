@@ -38,7 +38,7 @@ export const commonYupValidation = {
     .test(
       "is-trimmed",
       "Password must not start or end with a space character",
-      (password) => (password ? password === password?.trim() : false)
+      (password) => (password ? password === password.trim() : true)
     )
     .matches(
       passwordRequirementRegex,

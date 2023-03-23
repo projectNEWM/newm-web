@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
+import { setIsLoading } from "./slice";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
@@ -16,15 +17,23 @@ import {
 export const updateProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: UpdateProfileRequest, { dispatch }) => {
-    const updateProfileResponse = await dispatch(
-      sessionApi.endpoints.updateProfile.initiate(body)
-    );
+    try {
+      dispatch(setIsLoading(true));
 
-    if ("error" in updateProfileResponse) {
-      return;
+      const updateProfileResponse = await dispatch(
+        sessionApi.endpoints.updateProfile.initiate(body)
+      );
+
+      if ("error" in updateProfileResponse) {
+        return;
+      }
+
+      await dispatch(sessionApi.endpoints.getProfile.initiate());
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    } finally {
+      dispatch(setIsLoading(false));
     }
-
-    await dispatch(sessionApi.endpoints.getProfile.initiate());
   }
 );
 
