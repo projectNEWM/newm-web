@@ -44,6 +44,8 @@ const Profile: FunctionComponent = () => {
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
 
+  const { isLoading } = useSelector(selectSession);
+
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
@@ -267,6 +269,7 @@ const Profile: FunctionComponent = () => {
 
               <Button
                 disabled={ !dirty }
+                isLoading={ isLoading }
                 width={
                   windowWidth && windowWidth > theme.breakpoints.values.md
                     ? "compact"

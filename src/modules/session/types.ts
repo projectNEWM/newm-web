@@ -2,6 +2,7 @@ export interface SessionState {
   isLoggedIn: boolean;
   profile: Profile;
   verificationPingStartedAt?: number;
+  isLoading: boolean;
 }
 
 export interface Profile {

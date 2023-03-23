@@ -225,4 +225,6 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
+export const { useUpdateProfileMutation } = extendedApi;
+
 export default extendedApi;
