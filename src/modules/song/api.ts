@@ -132,7 +132,7 @@ const extendedNewmApi = api.injectEndpoints({
       AudioUploadUrlRequest
     >({
       query: ({ songId, ...body }) => ({
-        url: `/v1/songs/${songId}/upload`,
+        url: `/v1/songs/${songId}/audio`,
         method: "POST",
         body,
       }),
