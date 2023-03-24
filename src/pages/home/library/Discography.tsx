@@ -109,11 +109,7 @@ const Discography: FunctionComponent = () => {
     setCurrentPlayingSongId(null);
   };
 
-  const renderContent = (
-    isLoading: boolean,
-    isSuccess: boolean,
-    songs: Song[]
-  ) => {
+  const renderContent = () => {
     if (isLoading) {
       return (
         <>
@@ -161,7 +157,7 @@ const Discography: FunctionComponent = () => {
       <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
-      { renderContent(isLoading, isSuccess, songs) }
+      { renderContent() }
     </>
   );
 };
