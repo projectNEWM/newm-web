@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { selectContent } from "modules/content";
@@ -16,16 +16,28 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
+import { VerificationStatus, selectSession } from "modules/session";
+import { setIsIdenfyModalOpen } from "modules/ui";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const { genres } = useSelector(selectContent);
   const { isLoading } = useSelector(selectSong);
+  const {
+    profile: { verificationStatus },
+  } = useSelector(selectSession);
   const windowWidth = useWindowDimensions()?.width;
+
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   const { values, errors, touched, setFieldValue } =
     useFormikContext<UploadSongRequest>();
+
+  // TODO: Also disable submit if minting and wallet is not connected, once
+  // connecting wallet has been implemented. Allow for now for testing purposes.
+  const isSubmitDisabled = values.isMinting && !isVerified;
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -36,7 +48,7 @@ const SongInfo: FunctionComponent = () => {
   };
 
   const handleVerifyProfile = () => {
-    // trigger iDenfy flow
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const handleConnectWallet = () => {
@@ -175,8 +187,7 @@ const SongInfo: FunctionComponent = () => {
             ) }
           </Box>
 
-          { /** TODO: hide if user is already verified */ }
-          { values.isMinting && (
+          { values.isMinting && !isVerified && (
             <Alert
               severity="warning"
               action={
@@ -232,6 +243,7 @@ const SongInfo: FunctionComponent = () => {
         <Button
           sx={ { mt: 5 } }
           type="submit"
+          disabled={ isSubmitDisabled }
           isLoading={ isLoading }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { SessionState } from "./types";
+import { SessionState, VerificationStatus } from "./types";
 import { handleLogout, handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
@@ -17,16 +17,17 @@ const initialState: SessionState = {
     pictureUrl: "",
     role: "",
     genre: "",
-    verificationStatus: "Unverified",
+    verificationStatus: VerificationStatus.Unverified,
   },
   verificationPingStartedAt: undefined,
+  isLoading: false,
 };
 
 const sessionSlice = createSlice({
   initialState,
   name: "session",
   reducers: {
-    receiveProfile(state, { payload }) {
+    receiveProfile: (state, { payload }) => {
       state.profile = payload;
     },
     receiveRefreshToken: handleSuccessfulAuthentication,
@@ -38,6 +39,9 @@ const sessionSlice = createSlice({
     removeVerificationTimer: (state) => {
       state.verificationPingStartedAt = undefined;
     },
+    setIsLoading: (state, { payload }) => {
+      state.isLoading = payload;
+    },
   },
 });
 
@@ -48,6 +52,7 @@ export const {
   receiveSuccessfullAuthentication,
   startVerificationTimer,
   removeVerificationTimer,
+  setIsLoading,
 } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

@@ -15,9 +15,10 @@ import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSession } from "modules/session";
+import { VerificationStatus, selectSession } from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
+import { setIsIdenfyModalOpen } from "modules/ui";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -38,6 +39,8 @@ const MintSong = () => {
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
+
+  const isVerified = profile.verificationStatus === VerificationStatus.Verified;
 
   const initialValues: FormValues = {
     isMinting: false,
@@ -96,7 +99,7 @@ const MintSong = () => {
   };
 
   const handleVerifyProfile = () => {
-    // trigger iDenfy flow
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const handleConnectWallet = () => {
@@ -177,8 +180,7 @@ const MintSong = () => {
                       </Box>
                     ) }
 
-                    { /** TODO: hide if user is already verified */ }
-                    { values.isMinting && (
+                    { values.isMinting && !isVerified && (
                       <Alert
                         severity="warning"
                         action={
@@ -253,11 +255,12 @@ const MintSong = () => {
                       Cancel
                     </Button>
 
-                    { /** TODO: disable button if verify or wallet warnings visible */ }
+                    { /** TODO: disable button if wallet warning is visible */ }
                     { values.isMinting && (
                       <Button
                         onClick={ () => handleSubmit() }
                         isLoading={ isLoading }
+                        disabled={ !isVerified }
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md

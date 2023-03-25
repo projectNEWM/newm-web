@@ -5,4 +5,5 @@ export const mockSession: SessionState = {
   isLoggedIn: true,
   profile: mockProfile,
   verificationPingStartedAt: undefined,
+  isLoading: false,
 };
