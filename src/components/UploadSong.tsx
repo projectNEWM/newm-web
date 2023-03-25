@@ -59,11 +59,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     [onChange, onBlur, onError]
   );
 
+  // TODO: Remove ".mp3" support after transcoded is fixed for supported files
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
     accept: {
-      audio: [".flac", ".fla", ".wav"],
+      audio: [".flac", ".fla", ".wav", ".mp3"],
     },
   });
 
