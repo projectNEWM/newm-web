@@ -8,6 +8,7 @@ import {
   CloudinarySignatureResponse,
   GenerateArtistAgreementBody,
   GenerateArtistAgreementResponse,
+  GetSongsRequest,
   GetSongsResponse,
   PatchSongRequest,
   Song,
@@ -36,8 +37,12 @@ const extendedNewmApi = api.injectEndpoints({
         }
       },
     }),
-    getSongs: build.query<GetSongsResponse, void>({
-      query: () => "v1/songs",
+    getSongs: build.query<GetSongsResponse, GetSongsRequest>({
+      query: (params) => ({
+        url: "v1/songs",
+        method: "GET",
+        params,
+      }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -127,7 +132,7 @@ const extendedNewmApi = api.injectEndpoints({
       AudioUploadUrlRequest
     >({
       query: ({ songId, ...body }) => ({
-        url: `/v1/songs/${songId}/upload`,
+        url: `/v1/songs/${songId}/audio`,
         method: "POST",
         body,
       }),

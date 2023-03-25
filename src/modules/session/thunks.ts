@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
-import { extendedApi as songApi } from "modules/song";
 import { history } from "common/history";
 import { setIsLoading } from "./slice";
 import { extendedApi as sessionApi } from "./api";
@@ -61,12 +60,6 @@ export const updateInitialProfile = createAsyncThunk(
 export const getInitialData = createAsyncThunk(
   "session/getInitialData",
   async (_, { dispatch }) => {
-    const songsResponse = await dispatch(songApi.endpoints.getSongs.initiate());
-
-    if ("error" in songsResponse) {
-      return;
-    }
-
     const profileResponse = await dispatch(
       sessionApi.endpoints.getProfile.initiate()
     );
