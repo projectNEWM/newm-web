@@ -95,7 +95,11 @@ const SongInfo = () => {
                   SONG COVER ART
                 </Typography>
 
-                <UploadImageField name="image" />
+                <UploadImageField
+                  name="image"
+                  message="Drag and drop or browse your image"
+                  minDimensions={ { width: 2048, height: 2048 } }
+                />
               </Stack>
               <Stack
                 sx={ {
