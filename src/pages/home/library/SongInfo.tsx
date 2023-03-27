@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import {
@@ -12,13 +12,8 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import {
-  Song,
-  patchSong,
-  useGetSongMoods,
-  useGetSongQuery,
-} from "modules/song";
-import { selectContent } from "modules/content";
+import { Song, patchSong, useGetSongQuery } from "modules/song";
+import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
@@ -27,9 +22,10 @@ const SongInfo = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
 
-  const { genres: genreOptions } = useSelector(selectContent);
-  const { data: moodOptions = [] } = useGetSongMoods();
+  const { data: genreOptions } = useGetGenresQuery();
+  const { data: moodOptions } = useGetMoodsQuery();
   const { data: song = {} } = useGetSongQuery(id);
+
   const {
     coverArtUrl = "",
     description = "",
@@ -150,14 +146,14 @@ const SongInfo = () => {
                     label="Genres"
                     name="genres"
                     placeholder="Select all that apply"
-                    options={ genreOptions }
+                    options={ genreOptions as string[] }
                   />
 
                   <DropdownMultiSelectField
                     label="Moods"
                     name="moods"
                     placeholder="Select all that apply"
-                    options={ moodOptions }
+                    options={ moodOptions as string[] }
                   />
                 </Stack>
               </Stack>

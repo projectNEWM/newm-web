@@ -4,9 +4,9 @@ import { Box, Container, useTheme } from "@mui/material";
 import { updateInitialProfile } from "modules/session";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
-import { useDispatch, useSelector } from "react-redux";
-import { selectContent } from "modules/content";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -22,7 +22,8 @@ interface ProfileFormValues {
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { roles, genres } = useSelector(selectContent);
+  const { data: genres = [] } = useGetGenresQuery();
+  const { data: roles = [] } = useGetRolesQuery();
 
   /**
    * Initial form values.

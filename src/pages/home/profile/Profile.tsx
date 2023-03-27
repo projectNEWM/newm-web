@@ -13,15 +13,18 @@ import {
   TextInputField,
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
-import { selectContent } from "modules/content";
 import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
 import theme from "theme";
+import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
+
   const windowWidth = useWindowDimensions()?.width;
-  const { roles, genres } = useSelector(selectContent);
+  const { data: roles = [] } = useGetRolesQuery();
+  const { data: genres = [] } = useGetGenresQuery();
+
   const {
     profile: {
       email,

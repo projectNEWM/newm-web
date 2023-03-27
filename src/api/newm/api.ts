@@ -11,6 +11,8 @@ const baseQuery = fetchBaseQuery({
 const api = createApi({
   reducerPath: "newmApi",
   baseQuery: fetchBaseQueryWithReauth(baseQuery),
+  // TODO: Update caching behavior for endpoints to avoid re-fetching data on
+  // each mount (docs: https://redux-toolkit.js.org/rtk-query/usage/automated-refetching).
   refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
 });

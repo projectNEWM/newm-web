@@ -3,7 +3,6 @@ import logger from "redux-logger";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import newmApi, { cloudinaryApi, lambdaApi } from "api";
-import { contentReducer } from "modules/content";
 import { playlistReducer } from "modules/playlist";
 import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
@@ -12,7 +11,6 @@ import { uiReducer } from "modules/ui";
 import { walletReducer } from "modules/wallet";
 
 export const reducer = combineReducers({
-  content: contentReducer,
   playlist: playlistReducer,
   session: sessionReducer,
   song: songReducer,
