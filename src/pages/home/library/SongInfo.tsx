@@ -146,14 +146,14 @@ const SongInfo = () => {
                     label="Genres"
                     name="genres"
                     placeholder="Select all that apply"
-                    options={ genreOptions as string[] }
+                    options={ genreOptions }
                   />
 
                   <DropdownMultiSelectField
                     label="Moods"
                     name="moods"
                     placeholder="Select all that apply"
-                    options={ moodOptions as string[] }
+                    options={ moodOptions }
                   />
                 </Stack>
               </Stack>

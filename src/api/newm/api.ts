@@ -13,6 +13,7 @@ const api = createApi({
   baseQuery: fetchBaseQueryWithReauth(baseQuery),
   // TODO: Update caching behavior for endpoints to avoid re-fetching data on
   // each mount (docs: https://redux-toolkit.js.org/rtk-query/usage/automated-refetching).
+  // ClickUp ticket: https://app.clickup.com/t/8669z53e4
   refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
 });
