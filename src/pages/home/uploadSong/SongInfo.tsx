@@ -66,7 +66,7 @@ const SongInfo: FunctionComponent = () => {
           rowGap: ["16px", null, "12px"],
         } }
       >
-        <Stack spacing={ 0.5 } width="100%">
+        <Stack spacing={ 0.5 }>
           <Typography color="grey100" fontWeight={ 500 }>
             MUSIC
           </Typography>
@@ -74,16 +74,12 @@ const SongInfo: FunctionComponent = () => {
           <UploadSongField name="audio" />
         </Stack>
 
-        <Stack spacing={ 0.5 } width="100%">
+        <Stack spacing={ 0.5 } alignItems="center">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
 
-          <UploadImageField
-            name="image"
-            message="Drag and drop or browse your image"
-            minDimensions={ { width: 2048, height: 2048 } }
-          />
+          <UploadImageField name="image" />
         </Stack>
       </Stack>
 

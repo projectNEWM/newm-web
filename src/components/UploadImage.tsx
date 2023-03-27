@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
-import { SxProps, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
@@ -14,23 +14,12 @@ export interface FileWithPreview extends File {
   readonly preview: string;
 }
 
-export interface UploadImageProps {
+interface UploadImageProps {
   readonly file?: FileWithPreview;
   readonly onChange: (file: FileWithPreview) => void;
   readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;
-  readonly minDimensions?: {
-    readonly width: number;
-    readonly height: number;
-  };
-  readonly maxDimensions?: {
-    readonly width: number;
-    readonly height: number;
-  };
-  readonly isDimensionLabelTruncated?: boolean;
-  readonly message?: string;
   readonly errorMessage?: string;
-  readonly sx?: SxProps;
 }
 
 interface ImagePreviewProps extends BoxProps {
@@ -46,19 +35,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   onChange,
   onBlur,
   onError,
-  message,
   errorMessage,
-  minDimensions,
-  maxDimensions,
-  isDimensionLabelTruncated,
-  sx = {},
 }) => {
   const theme = useTheme();
 
   const [isHovering, setIsHovering] = useState(false);
-
-  const minLabel = isDimensionLabelTruncated ? "Min" : "Minimum size";
-  const maxLabel = isDimensionLabelTruncated ? "Max" : "Maximum size";
 
   const handleDrop = useCallback(
     async (
@@ -77,13 +58,15 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           preview: URL.createObjectURL(firstFile),
         });
 
-        await validateImageDimensions({
-          imageUrl: fileWithPreview.preview,
-          minWidth: minDimensions?.width,
-          maxWidth: maxDimensions?.width,
-          minHeight: minDimensions?.height,
-          maxHeight: maxDimensions?.height,
-        });
+        const hasValidDimensions = await validateImageDimensions(
+          fileWithPreview.preview,
+          2048,
+          2048
+        );
+
+        if (!hasValidDimensions) {
+          throw new Error("Image must be at least 2048 x 2048 pixels.");
+        }
 
         onChange(fileWithPreview);
         onError("");
@@ -95,7 +78,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         onBlur();
       }
     },
-    [minDimensions, maxDimensions, onChange, onBlur, onError]
+    [onChange, onBlur, onError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -125,6 +108,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         sx={ {
           display: "flex",
           flexDirection: "column",
+          flexGrow: 1,
+          height: 100,
+          width: "100%",
           maxWidth: theme.inputField.maxWidth,
           cursor: "pointer",
           borderRadius: "4px",
@@ -137,7 +123,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             onMouseEnter={ () => setIsHovering(true) }
             onMouseLeave={ () => setIsHovering(false) }
             imageUrl={ (file.preview || file) as string }
-            sx={ { height: 100, ...sx } }
           >
             { isHovering || isDragActive ? (
               <IconMessage
@@ -149,22 +134,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             ) }
           </ImagePreview>
         ) : (
-          <DashedOutline
-            sx={ { display: "flex", flexGrow: 1, height: 100, ...sx } }
-          >
+          <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
             <IconMessage
               icon={ <AddImageIcon /> }
-              message={ message }
-              subtitle1={
-                minDimensions
-                  ? `${minLabel}: ${minDimensions.width}x${minDimensions.height} px`
-                  : undefined
-              }
-              subtitle2={
-                maxDimensions
-                  ? `${maxLabel}: ${maxDimensions.width}x${maxDimensions.height} px`
-                  : undefined
-              }
+              message="Drag and drop or browse your image"
+              subtitle="Minimum size: 2048x2048 px"
             />
           </DashedOutline>
         ) }

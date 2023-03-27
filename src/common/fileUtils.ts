@@ -1,45 +1,16 @@
-import { ValidateDimensionsParams } from "./types";
-
 /**
- * @returns a promise that resolves true if the provided image
- * has valid dimensions and throws an error if not.
+ * @returns a promise with a true or false value depending
+ * on whether the image has the correct dimensions.
  */
-export const validateImageDimensions = ({
-  imageUrl,
-  minWidth,
-  maxWidth,
-  minHeight,
-  maxHeight,
-}: ValidateDimensionsParams) => {
-  return new Promise<boolean>((resolve, reject) => {
+export const validateImageDimensions = (
+  imageUrl: string,
+  minWidth: number,
+  minHeight: number
+) => {
+  return new Promise<boolean>((resolve) => {
     const image = new Image();
-
     image.onload = () => {
-      const hasValidMinDimensions =
-        minWidth && minHeight
-          ? image.width >= minWidth && image.height >= minHeight
-          : true;
-
-      const hasValidMaxDimensions =
-        maxWidth && maxHeight
-          ? image.width <= maxWidth && image.height <= maxHeight
-          : true;
-
-      if (!hasValidMinDimensions) {
-        reject(
-          new Error(`Image must be at least ${minWidth} x ${minHeight} pixels.`)
-        );
-      }
-
-      if (!hasValidMaxDimensions) {
-        reject(
-          new Error(
-            `Image must be no larger than ${maxWidth} x ${maxHeight} pixels.`
-          )
-        );
-      }
-
-      resolve(true);
+      resolve(image.width >= minWidth && image.height >= minHeight);
     };
 
     image.src = imageUrl;
