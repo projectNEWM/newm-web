@@ -4,6 +4,7 @@ import { Typography } from "elements";
 import {
   LogoutButton,
   ProfileImage,
+  SideBarExternalNavLink,
   SideBarHeader,
   SideBarNavLink,
 } from "components";
@@ -17,6 +18,9 @@ import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import EmailIcon from "@mui/icons-material/Email";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import TelegramIcon from "@mui/icons-material/Telegram";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -131,6 +135,31 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
 
             <LogoutButton />
+          </Stack>
+
+          <Box mt={ 2 } ml={ 2.5 }>
+            <SideBarHeader>SUPPORT</SideBarHeader>
+          </Box>
+
+          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+            <SideBarExternalNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <LiveHelpIcon sx={ { fontSize: "16px" } } /> }
+              label="FAQ"
+              href="https://newm.io/faq_artist-portal"
+            />
+            <SideBarExternalNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <TelegramIcon sx={ { fontSize: "16px" } } /> }
+              label="ASK THE COMMUNITY"
+              href="https://t.me/NEWM_artist-support"
+            />
+            <SideBarExternalNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <EmailIcon sx={ { fontSize: "16px" } } /> }
+              label="SUPPORT"
+              href="mailto: support@newm.io"
+            />
           </Stack>
         </Box>
       </Box>

@@ -14,7 +14,7 @@ import Analytics from "./analytics/Analytics";
 import Profile from "./profile/Profile";
 
 const Home: FunctionComponent = () => {
-  const drawerWidth = 240;
+  const drawerWidth = 230;
 
   const theme = useTheme();
 

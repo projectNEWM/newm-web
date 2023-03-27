@@ -28,6 +28,7 @@ export { default as ProfileImage } from "./styled/ProfileImage";
 export { default as ResponsiveNEWMLogo } from "./ResponsiveNEWMLogo";
 export { default as LogoutButton } from "./home/LogoutButton";
 export { default as SideBarNavLink } from "./home/SideBarNavLink";
+export { default as SideBarExternalNavLink } from "./home/SideBarExternalNavLink";
 export { default as SideBarHeader } from "./home/SideBarHeader";
 export { default as StyledPagination } from "./styled/StyledPagination";
 export { default as SolidOutline } from "./styled/SolidOutline";
