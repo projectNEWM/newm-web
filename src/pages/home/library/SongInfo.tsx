@@ -22,8 +22,8 @@ const SongInfo = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
 
-  const { data: genreOptions } = useGetGenresQuery();
-  const { data: moodOptions } = useGetMoodsQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: song = {} } = useGetSongQuery(id);
 
   const {

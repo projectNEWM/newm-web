@@ -7,6 +7,7 @@ const initialState: UIState = {
     message: "",
     severity: "error",
   },
+  isIdenfyModalOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -23,9 +24,13 @@ const uiSlice = createSlice({
       state.toast.message = payload.message;
       state.toast.severity = payload.severity;
     },
+    setIsIdenfyModalOpen: (state, { payload }) => {
+      state.isIdenfyModalOpen = payload;
+    },
   },
 });
 
-export const { clearToastMessage, setToastMessage } = uiSlice.actions;
+export const { clearToastMessage, setToastMessage, setIsIdenfyModalOpen } =
+  uiSlice.actions;
 
 export default uiSlice.reducer;

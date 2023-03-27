@@ -1,10 +1,19 @@
 export interface SongState {
-  songs: Array<Song>;
   artistAgreement: string;
   isLoading: boolean;
 }
 
 export type GetSongsResponse = Array<Song>;
+
+export interface GetSongsRequest {
+  genres?: string[];
+  ids?: string[];
+  limit?: number;
+  newerThan?: string;
+  offset?: number;
+  olderThan?: string;
+  ownerIds?: string[];
+}
 
 export interface Owner {
   email: string;

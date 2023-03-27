@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToastMessage } from "modules/ui";
 import Cookies from "js-cookie";
 import {
+  VerificationStatus,
   removeVerificationTimer,
   selectSession,
   extendedApi as sessionApi,
@@ -14,7 +15,7 @@ const IdenfyModal: FunctionComponent = () => {
 
   const { verificationPingStartedAt, profile: { verificationStatus } = {} } =
     useSelector(selectSession);
-  const isVerified = verificationStatus === "Verified";
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   /**
    * Removes verification timer and token when verified.

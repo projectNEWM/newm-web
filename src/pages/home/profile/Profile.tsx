@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
@@ -7,16 +7,22 @@ import { Form, Formik, FormikValues } from "formik";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
-  IdenfyModal,
   PasswordInputField,
   ProfileImage,
   TextInputField,
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
-import { selectSession, updateProfile } from "modules/session";
 import * as Yup from "yup";
-import theme from "theme";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import {
+  VerificationStatus,
+  selectSession,
+  updateProfile,
+} from "modules/session";
+import theme from "theme";
+import { setIsIdenfyModalOpen } from "modules/ui";
+
+const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -37,23 +43,14 @@ const Profile: FunctionComponent = () => {
       verificationStatus,
     } = {},
   } = useSelector(selectSession);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasRequestedVerification, setHasRequestedVerification] =
-    useState(false);
-  const isUnverified = verificationStatus === "Unverified";
-  const isPendingVerification = verificationStatus === "Pending";
-  const isVerified = verificationStatus === "Verified";
+  const isUnverified = verificationStatus === Unverified;
+  const isPendingVerification = verificationStatus === Pending;
+  const isVerified = verificationStatus === Verified;
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const { isLoading } = useSelector(selectSession);
 
   const handleVerificationSession = () => {
-    if (!hasRequestedVerification) {
-      setHasRequestedVerification(true);
-    }
-
-    setIsModalOpen(!isModalOpen);
+    dispatch(setIsIdenfyModalOpen(true));
   };
 
   const initialValues = {
@@ -117,6 +114,7 @@ const Profile: FunctionComponent = () => {
       maxWidth={ false }
       sx={ {
         marginX: [null, null, 3],
+        paddingBottom: 8,
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
       } }
@@ -140,9 +138,6 @@ const Profile: FunctionComponent = () => {
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
             </Tooltip>
-            { hasRequestedVerification ? (
-              <IdenfyModal isOpen={ isModalOpen } onClose={ handleCloseModal } />
-            ) : null }
           </Stack>
         ) : null }
       </Stack>
@@ -167,7 +162,7 @@ const Profile: FunctionComponent = () => {
         validationSchema={ validationSchema }
       >
         { ({
-          isValid,
+          dirty,
           values: { currentPassword, newPassword, confirmPassword },
         }) => {
           const showEndAdornment = !!(
@@ -175,6 +170,7 @@ const Profile: FunctionComponent = () => {
             newPassword ||
             confirmPassword
           );
+
           return (
             <Form>
               <Stack
@@ -273,8 +269,10 @@ const Profile: FunctionComponent = () => {
                   showEndAdornment={ showEndAdornment }
                 />
               </Stack>
+
               <Button
-                disabled={ !isValid }
+                disabled={ !dirty }
+                isLoading={ isLoading }
                 width={
                   windowWidth && windowWidth > theme.breakpoints.values.md
                     ? "compact"
