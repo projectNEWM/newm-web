@@ -98,7 +98,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
               <IconMessage
                 icon={ <AddSongIcon /> }
                 message="Upload a new song"
-                subtitle=".flac, .fla, or .wav"
+                subtitle1=".flac, .fla, or .wav"
               />
             ) : (
               <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
@@ -109,7 +109,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             <IconMessage
               icon={ <AddSongIcon /> }
               message="Drag and drop or browse your song"
-              subtitle=".flac, .fla, or .wav"
+              subtitle1=".flac, .fla, or .wav"
             />
           </DashedOutline>
         ) }

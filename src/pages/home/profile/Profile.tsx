@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, IconButton, Stack } from "@mui/material";
+import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik, FormikValues } from "formik";
@@ -8,8 +8,8 @@ import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
   PasswordInputField,
-  ProfileImage,
   TextInputField,
+  UploadImageField,
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import { selectContent } from "modules/content";
@@ -57,6 +57,7 @@ const Profile: FunctionComponent = () => {
     nickname,
     role,
     genre,
+    pictureUrl,
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -138,20 +139,7 @@ const Profile: FunctionComponent = () => {
           </Stack>
         ) : null }
       </Stack>
-      <Stack direction="row" alignItems="center" columnGap={ 2 } mt={ 5 }>
-        { pictureUrl && (
-          <ProfileImage
-            alt="Profile picture"
-            src={ pictureUrl }
-            sx={ { mb: 5 } }
-            referrerPolicy="no-referrer"
-          />
-        ) }
-        <Typography variant="h3" fontWeight="700">
-          { nickname }
-        </Typography>
-        { isVerified ? <CheckCircleIcon color="success" /> : null }
-      </Stack>
+
       <Formik
         enableReinitialize={ true }
         initialValues={ initialValues }
@@ -170,6 +158,34 @@ const Profile: FunctionComponent = () => {
 
           return (
             <Form>
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                gap={ 5 }
+                mt={ 5 }
+                mb={ 8 }
+              >
+                <UploadImageField
+                  name="profileUrl"
+                  message="Upload an image"
+                  minDimensions={ { width: 3000, height: 3000 } }
+                  maxDimensions={ { width: 5000, height: 5000 } }
+                  isDimensionLabelTruncated={ true }
+                  sx={ {
+                    borderRadius: "50%",
+                    width: 200,
+                    height: 200,
+                    padding: 1,
+                  } }
+                />
+                <Typography variant="h3" fontWeight="700">
+                  { nickname?.toUpperCase() }
+                </Typography>
+                { isVerified ? <CheckCircleIcon color="success" /> : null }
+              </Box>
+
               <Stack
                 sx={ {
                   display: "grid",
