@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import { selectContent } from "modules/content";
+import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
 import {
   DropdownMultiSelectField,
@@ -23,7 +23,8 @@ const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const { genres } = useSelector(selectContent);
+  const { data: genres = [] } = useGetGenresQuery();
+  const { data: moods = [] } = useGetMoodsQuery();
   const { isLoading } = useSelector(selectSong);
   const {
     profile: { verificationStatus },
@@ -124,10 +125,10 @@ const SongInfo: FunctionComponent = () => {
 
           { /** TODO: get moods from back-end */ }
           <DropdownMultiSelectField
-            label="Mood"
-            name="mood"
+            label="Moods"
+            name="moods"
             placeholder="Select all that apply"
-            options={ [] }
+            options={ moods }
           />
         </Stack>
 

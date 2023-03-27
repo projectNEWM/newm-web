@@ -79,6 +79,7 @@ const EditSong = () => {
           <DeleteIcon fontSize="small" sx={ { color: "white" } } />
         </Button>
       </Stack>
+
       <Stack sx={ { borderBottom: 1, borderColor: theme.colors.grey300, mt: 4 } }>
         <Tabs
           value={ tab }
@@ -108,6 +109,7 @@ const EditSong = () => {
           <Tab label="Marketplace" id="tab-2" aria-controls="tabpanel-2" />
         </Tabs>
       </Stack>
+
       <TabPanel value={ tab } index={ 0 }>
         <SongInfo />
       </TabPanel>

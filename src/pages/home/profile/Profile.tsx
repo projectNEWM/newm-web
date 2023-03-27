@@ -12,13 +12,13 @@ import {
   TextInputField,
 } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
-import { selectContent } from "modules/content";
+import * as Yup from "yup";
+import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
   selectSession,
   updateProfile,
 } from "modules/session";
-import * as Yup from "yup";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
 
@@ -26,8 +26,11 @@ const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
+
   const windowWidth = useWindowDimensions()?.width;
-  const { roles, genres } = useSelector(selectContent);
+  const { data: roles = [] } = useGetRolesQuery();
+  const { data: genres = [] } = useGetGenresQuery();
+
   const {
     profile: {
       email,

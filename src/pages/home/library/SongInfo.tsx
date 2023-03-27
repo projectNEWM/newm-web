@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import {
@@ -13,27 +13,32 @@ import {
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import { Song, patchSong, useGetSongQuery } from "modules/song";
-import { selectContent } from "modules/content";
+import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { genres } = useSelector(selectContent);
   const { id = "" } = location.state as Song;
-  const { data = {} } = useGetSongQuery(id);
+
+  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: moodOptions = [] } = useGetMoodsQuery();
+  const { data: song = {} } = useGetSongQuery(id);
+
   const {
     coverArtUrl = "",
     description = "",
-    genre = "",
+    genres = [],
+    moods = [],
     title = "",
-  } = data as Song;
+  } = song;
 
   const initialValues = {
     image: coverArtUrl,
     description,
-    genre,
+    genres,
+    moods,
     title,
   };
 
@@ -55,12 +60,16 @@ const SongInfo = () => {
     if (description !== values.description) {
       updatedValues.description = values.description;
     }
-    if (genre !== values.genre) {
+    if (JSON.stringify(genres) !== JSON.stringify(values.genres)) {
+      updatedValues.genre = values.genre;
+    }
+    if (JSON.stringify(moods) !== JSON.stringify(values.moods)) {
       updatedValues.genre = values.genre;
     }
     if (title !== values.title) {
       updatedValues.title = values.title;
     }
+
     dispatch(patchSong({ id, ...updatedValues }));
   };
 
@@ -137,15 +146,14 @@ const SongInfo = () => {
                     label="Genres"
                     name="genres"
                     placeholder="Select all that apply"
-                    options={ genres }
+                    options={ genreOptions }
                   />
 
-                  { /** TODO: get moods from back-end */ }
                   <DropdownMultiSelectField
-                    label="Mood"
-                    name="mood"
+                    label="Moods"
+                    name="moods"
                     placeholder="Select all that apply"
-                    options={ [] }
+                    options={ moodOptions }
                   />
                 </Stack>
               </Stack>

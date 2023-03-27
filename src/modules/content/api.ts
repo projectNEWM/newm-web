@@ -1,22 +1,50 @@
 import api from "api";
 import { setToastMessage } from "modules/ui";
-import { receiveContent } from "./slice";
-import { ContentResponse } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getContent: build.query<ContentResponse, void>({
-      query: () => "v1/content",
+    getGenres: build.query<Array<string>, void>({
+      query: () => "contents/predefined-genres.json",
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveContent(data));
-          // eslint-disable-next-line
-        } catch (resp) {
+          await queryFulfilled;
+        } catch (err) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching content data",
+              message: "An error occurred while fetching moods",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getRoles: build.query<Array<string>, void>({
+      query: () => "contents/predefined-roles.json",
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching moods",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getMoods: build.query<Array<string>, void>({
+      query: () => "contents/predefined-moods.json",
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching moods",
               severity: "error",
             })
           );
@@ -26,6 +54,7 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetContentQuery } = extendedApi;
+export const { useGetGenresQuery, useGetRolesQuery, useGetMoodsQuery } =
+  extendedApi;
 
 export default extendedApi;
