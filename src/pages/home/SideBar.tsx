@@ -14,7 +14,6 @@ import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
 import WalletIcon from "assets/images/WalletIcon";
-import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -112,13 +111,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
-            />
-
-            <SideBarNavLink
-              onClick={ () => props.setMobileOpen(false) }
-              icon={ <AnalyticsIcon /> }
-              label="ANALYTICS"
-              to="/home/analytics"
             />
           </Stack>
 
