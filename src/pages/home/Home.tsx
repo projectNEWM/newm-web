@@ -13,7 +13,7 @@ import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
 
 const Home: FunctionComponent = () => {
-  const drawerWidth = 230;
+  const drawerWidth = 240;
 
   const theme = useTheme();
 

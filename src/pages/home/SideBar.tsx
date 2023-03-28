@@ -81,11 +81,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             to="/home/upload-song"
           />
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
@@ -101,11 +101,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
@@ -114,11 +114,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
@@ -134,26 +134,26 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 4 } ml={ 2.5 }>
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarExternalNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <LiveHelpIcon sx={ { fontSize: "16px" } } /> }
+              icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
               label="FAQ"
               href="https://newm.io/faq_artist-portal"
             />
             <SideBarExternalNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <TelegramIcon sx={ { fontSize: "16px" } } /> }
+              icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
               label="ASK THE COMMUNITY"
               href="https://t.me/NEWM_artist-support"
             />
             <SideBarExternalNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <EmailIcon sx={ { fontSize: "16px" } } /> }
+              icon={ <EmailIcon sx={ { fontSize: "18px" } } /> }
               label="SUPPORT"
               href="mailto: support@newm.io"
             />
