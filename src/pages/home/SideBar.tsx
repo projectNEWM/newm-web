@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import {
-  LogoutButton,
   ProfileImage,
   SideBarExternalNavLink,
   SideBarHeader,
@@ -20,6 +19,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import EmailIcon from "@mui/icons-material/Email";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -126,7 +126,12 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               to="/home/profile"
             />
 
-            <LogoutButton />
+            <SideBarNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <SettingsIcon sx={ { fontSize: "18px" } } /> }
+              label="SETTINGS"
+              to="/home/settings"
+            />
           </Stack>
 
           <Box mt={ 2 } ml={ 2.5 }>
