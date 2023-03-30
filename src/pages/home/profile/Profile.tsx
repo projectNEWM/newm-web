@@ -15,6 +15,7 @@ import { commonYupValidation, useWindowDimensions } from "common";
 import * as Yup from "yup";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
+  ProfileFormValues,
   VerificationStatus,
   selectSession,
   updateProfile,
@@ -53,14 +54,14 @@ const Profile: FunctionComponent = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
 
-  const initialValues = {
+  const initialValues: ProfileFormValues = {
     firstName,
     lastName,
     email,
     nickname,
     role,
     genre,
-    pictureUrl,
+    profileImage: pictureUrl,
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -94,8 +95,8 @@ const Profile: FunctionComponent = () => {
       ...(genre !== values.genre && { genre: values.genre }),
       ...(lastName !== values.lastName && { lastName: values.lastName }),
       ...(nickname !== values.nickname && { nickname: values.nickname }),
-      ...(pictureUrl !== values.pictureUrl && {
-        pictureUrl: values.pictureUrl,
+      ...(pictureUrl !== values.profileImage && {
+        profileImage: values.profileImage,
       }),
       ...(role !== values.role && { role: values.role }),
       ...(values.currentPassword && {
@@ -171,11 +172,11 @@ const Profile: FunctionComponent = () => {
                 mb={ 8 }
               >
                 <UploadImageField
-                  name="profileUrl"
+                  name="profileImage"
                   message="Upload an image"
-                  minDimensions={ { width: 3000, height: 3000 } }
-                  maxDimensions={ { width: 5000, height: 5000 } }
+                  minDimensions={ { width: 200, height: 200 } }
                   isDimensionLabelTruncated={ true }
+                  isSuccessIconDisplayed={ false }
                   sx={ {
                     borderRadius: "50%",
                     width: 200,

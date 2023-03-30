@@ -30,6 +30,7 @@ export interface UploadImageProps {
   readonly isDimensionLabelTruncated?: boolean;
   readonly message?: string;
   readonly errorMessage?: string;
+  readonly isSuccessIconDisplayed?: boolean;
   readonly sx?: SxProps;
 }
 
@@ -50,7 +51,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   errorMessage,
   minDimensions,
   maxDimensions,
-  isDimensionLabelTruncated,
+  isDimensionLabelTruncated = false,
+  isSuccessIconDisplayed = true,
   sx = {},
 }) => {
   const theme = useTheme();
@@ -144,9 +146,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                 icon={ <AddImageIcon /> }
                 message="Upload a new image"
               />
-            ) : (
+            ) : isSuccessIconDisplayed ? (
               <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
-            ) }
+            ) : null }
           </ImagePreview>
         ) : (
           <DashedOutline

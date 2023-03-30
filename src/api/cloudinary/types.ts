@@ -21,4 +21,13 @@ export interface CloudinaryUploadResponse {
   readonly version: number;
   readonly version_id: string;
   readonly width: number;
+  readonly eager?: ReadonlyArray<{
+    readonly bytes: number;
+    readonly format: string;
+    readonly height: number;
+    readonly secure_url: string;
+    readonly transformation: string;
+    readonly url: string;
+    readonly width: number;
+  }>;
 }

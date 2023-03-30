@@ -48,7 +48,7 @@ export interface UpdateProfileRequest {
   readonly firstName?: string;
   readonly lastName?: string;
   readonly nickname?: string;
-  readonly pictureUrl?: string;
+  readonly pictureUrl?: string | File;
   readonly role?: string;
   readonly genre?: string;
   readonly email?: string;
@@ -56,6 +56,14 @@ export interface UpdateProfileRequest {
   readonly confirmPassword?: string;
   readonly authCode?: number;
   readonly verificationStatus?: Readonly<VerificationStatus>;
+}
+
+export interface ProfileFormValues
+  extends Omit<UpdateProfileRequest, "pictureUrl"> {
+  readonly profileImage?: File | string;
+  readonly currentPassword?: string;
+  readonly newPassword?: string;
+  readonly confirmPassword?: string;
 }
 
 export interface GetProfileResponse {
