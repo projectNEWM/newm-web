@@ -94,7 +94,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 
   return (
     <MUIButton
-      disabled={ disabled }
+      disabled={ isLoading || disabled }
       sx={ {
         color: theme.colors[color],
         fontWeight: theme.typography.fontWeightSemiBold,
