@@ -40,6 +40,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     options,
     placeholder,
     value,
+    widthType,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -76,7 +77,13 @@ const DropdownSelect: ForwardRefRenderFunction<
   };
 
   return (
-    <Box sx={ { position: "relative" } }>
+    <Box
+      sx={ {
+        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        position: "relative",
+        width: "100%",
+      } }
+    >
       <div { ...getRootProps() }>
         <TextInput
           ref={ ref }

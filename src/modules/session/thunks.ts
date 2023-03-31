@@ -24,8 +24,21 @@ export const updateProfile = createAsyncThunk(
       );
 
       if ("error" in updateProfileResponse) {
+        dispatch(
+          setToastMessage({
+            message: "There was an error updating your profile",
+            severity: "error",
+          })
+        );
         return;
       }
+
+      dispatch(
+        setToastMessage({
+          message: "Successfully updated profile information.",
+          severity: "success",
+        })
+      );
 
       await dispatch(sessionApi.endpoints.getProfile.initiate());
     } catch (err) {
