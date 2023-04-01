@@ -18,7 +18,7 @@ export const mockProfile: Profile = {
   websiteUrl: "https://newm.io/",
   twitterUrl: "https://newm.io/",
   instagramUrl: "https://newm.io/",
-  isIpRightsUnderCompany: false,
+  companyIpRights: false,
   companyName: "",
   companyLogoUrl: "",
 };

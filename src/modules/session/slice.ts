@@ -21,7 +21,7 @@ const initialState: SessionState = {
     biography: "",
     bannerUrl: "",
     instagramUrl: "",
-    isIpRightsUnderCompany: false,
+    companyIpRights: false,
     location: "",
     twitterUrl: "",
     websiteUrl: "",

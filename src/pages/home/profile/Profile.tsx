@@ -45,7 +45,7 @@ const Profile: FunctionComponent = () => {
       email,
       firstName,
       instagramUrl,
-      isIpRightsUnderCompany,
+      companyIpRights,
       lastName,
       nickname,
       pictureUrl,
@@ -78,7 +78,7 @@ const Profile: FunctionComponent = () => {
     firstName,
     genre,
     instagramUrl,
-    isIpRightsUnderCompany,
+    companyIpRights,
     lastName,
     nickname,
     role,
@@ -88,14 +88,14 @@ const Profile: FunctionComponent = () => {
 
   const validationSchema = Yup.object({
     biography: Yup.string(),
-    companyName: Yup.string().when("isIpRightsUnderCompany", {
+    companyName: Yup.string().when("companyIpRights", {
       is: true,
       then: Yup.string().required("Company name is required"),
       otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,
     instagramUrl: Yup.string().url("Please enter a valid url"),
-    isIpRightsUnderCompany: Yup.bool(),
+    companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
@@ -112,7 +112,7 @@ const Profile: FunctionComponent = () => {
       companyName,
       firstName,
       instagramUrl,
-      isIpRightsUnderCompany,
+      companyIpRights,
       lastName,
       nickname,
       pictureUrl,
@@ -124,8 +124,8 @@ const Profile: FunctionComponent = () => {
     const updatedValues = getUpdatedValues(originalValues, values);
 
     if (
-      updatedValues.isIpRightsUnderCompany === false ||
-      values.isIpRightsUnderCompany === false
+      updatedValues.companyIpRights === false ||
+      values.companyIpRights === false
     ) {
       updatedValues.companyName = "";
     }
@@ -313,7 +313,7 @@ const Profile: FunctionComponent = () => {
                       OTHER SETTINGS
                     </Typography>
                     <SwitchInputField
-                      name="isIpRightsUnderCompany"
+                      name="companyIpRights"
                       title="DO YOU HAVE A COMPANY?"
                       description={
                         "If your IP Rights are held under your Company, please select this option."

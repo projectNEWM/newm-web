@@ -23,7 +23,7 @@ export interface Profile {
   readonly websiteUrl: string;
   readonly twitterUrl: string;
   readonly instagramUrl: string;
-  readonly isIpRightsUnderCompany: boolean;
+  readonly companyIpRights: boolean;
   readonly companyName: string;
   readonly companyLogoUrl: string;
 }
