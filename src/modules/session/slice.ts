@@ -25,7 +25,7 @@ const initialState: SessionState = {
     location: "",
     twitterUrl: "",
     websiteUrl: "",
-    companyImageUrl: "",
+    companyLogoUrl: "",
     companyName: "",
   },
   verificationPingStartedAt: undefined,

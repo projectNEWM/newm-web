@@ -25,7 +25,7 @@ export interface Profile {
   readonly instagramUrl: string;
   readonly isIpRightsUnderCompany: boolean;
   readonly companyName: string;
-  readonly companyImageUrl: string;
+  readonly companyLogoUrl: string;
 }
 
 export interface NewmOAuthRequest {

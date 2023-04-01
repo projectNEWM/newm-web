@@ -20,5 +20,5 @@ export const mockProfile: Profile = {
   instagramUrl: "https://newm.io/",
   isIpRightsUnderCompany: false,
   companyName: "",
-  companyImageUrl: "",
+  companyLogoUrl: "",
 };
