@@ -1,11 +1,10 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
-import { useSelector } from "react-redux";
 import { FormikValues, useFormikContext } from "formik";
-import { selectContent } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 
 const SelectRole: FunctionComponent = () => {
-  const { roles } = useSelector(selectContent);
+  const { data: roles = [] } = useGetRolesQuery();
   const { values } = useFormikContext();
 
   return (

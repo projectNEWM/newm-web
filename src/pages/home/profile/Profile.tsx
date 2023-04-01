@@ -4,6 +4,7 @@ import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik, FormikValues } from "formik";
+import * as Yup from "yup";
 import { useGetSongsQuery } from "modules/song";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
@@ -19,13 +20,12 @@ import {
   useWindowDimensions,
 } from "common";
 
-import { selectContent } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
   selectSession,
   updateProfile,
 } from "modules/session";
-import * as Yup from "yup";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
 
@@ -33,8 +33,10 @@ const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
+
   const windowWidth = useWindowDimensions()?.width;
-  const { roles } = useSelector(selectContent);
+  const { data: roles = [] } = useGetRolesQuery();
+
   const {
     isLoading,
     profile: {

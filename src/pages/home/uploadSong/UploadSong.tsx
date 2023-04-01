@@ -25,7 +25,7 @@ const UploadSong: FunctionComponent = () => {
     audio: undefined,
     title: "",
     genres: [],
-    mood: "",
+    moods: [],
     description: "",
     isExplicit: false,
     isMinting: false,

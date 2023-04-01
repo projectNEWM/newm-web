@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { Box, DialogProps, Stack, Typography } from "@mui/material";
 import { Button, Dialog, HorizontalLine } from "elements";
@@ -10,8 +9,8 @@ import {
   TextInputField,
 } from "components";
 import { commonYupValidation } from "common";
-import { selectContent } from "modules/content";
 import theme from "theme";
+import { useGetRolesQuery } from "modules/content";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
@@ -26,7 +25,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   onClose,
   onSubmit,
 }) => {
-  const { roles } = useSelector(selectContent);
+  const { data: roles = [] } = useGetRolesQuery();
 
   const initialValues = {
     email: "",
