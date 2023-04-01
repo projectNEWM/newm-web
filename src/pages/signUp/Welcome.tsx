@@ -53,6 +53,7 @@ const SignUp: FunctionComponent = () => {
       >
         <TextInputField
           aria-label="Email input field"
+          isOptional={ false }
           name="email"
           placeholder="Email"
           type="email"
@@ -61,6 +62,7 @@ const SignUp: FunctionComponent = () => {
           aria-label="Password input field"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
+          isOptional={ false }
           name="newPassword"
           showEndAdornment={ showEndAdornment }
         />
@@ -68,6 +70,7 @@ const SignUp: FunctionComponent = () => {
           aria-label="Confirm password input field"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
+          isOptional={ false }
           name="confirmPassword"
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }

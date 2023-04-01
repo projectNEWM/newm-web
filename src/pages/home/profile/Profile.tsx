@@ -225,7 +225,6 @@ const Profile: FunctionComponent = () => {
                       />
                     </Stack>
                     <TextAreaField
-                      isOptional={ true }
                       label="DESCRIPTION"
                       name="biography"
                       placeholder="Tell us about yourself"
@@ -249,14 +248,12 @@ const Profile: FunctionComponent = () => {
                       } }
                     >
                       <TextInputField
-                        isOptional={ true }
                         label="WEBSITE"
                         name="websiteUrl"
                         placeholder="Your website link"
                         type="text"
                       />
                       <TextInputField
-                        isOptional={ true }
                         label="TWITTER"
                         name="twitterUrl"
                         placeholder="Twitter link"
@@ -264,7 +261,6 @@ const Profile: FunctionComponent = () => {
                       />
                     </Stack>
                     <TextInputField
-                      isOptional={ true }
                       label="INSTAGRAM"
                       name="instagramUrl"
                       placeholder="Instagram link"
@@ -303,6 +299,7 @@ const Profile: FunctionComponent = () => {
                     <TextInputField
                       disabled={ true }
                       label="PRIMARY EMAIL"
+                      isOptional={ false }
                       name="email"
                       placeholder="john@mail.com"
                       type="email"

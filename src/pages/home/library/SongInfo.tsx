@@ -124,6 +124,7 @@ const SongInfo = () => {
                 } }
               >
                 <TextInputField
+                  isOptional={ false }
                   name="title"
                   label="SONG TITLE"
                   placeholder="Give your track a name..."
@@ -144,6 +145,7 @@ const SongInfo = () => {
                 >
                   <DropdownMultiSelectField
                     label="Genres"
+                    isOptional={ false }
                     name="genres"
                     placeholder="Select all that apply"
                     options={ genreOptions }

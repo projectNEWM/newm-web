@@ -42,6 +42,7 @@ const ResetPassword: FunctionComponent = () => {
           aria-label="Enter your new password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
+          isOptional={ false }
           name="newPassword"
           placeholder="Your new password"
           showEndAdornment={ showEndAdornment }
@@ -50,6 +51,7 @@ const ResetPassword: FunctionComponent = () => {
           aria-label="Confirm your new password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
+          isOptional={ false }
           name="confirmPassword"
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }
