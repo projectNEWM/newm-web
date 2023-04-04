@@ -49,6 +49,12 @@ export const commonYupValidation = {
         "You need to type or select one of the ones below",
         (role) => (role ? roles.includes(role) : false)
       ),
+  genre: (genreOptions: string[]) =>
+    Yup.string().test(
+      "is-genre",
+      "You need to type or select one of the ones below",
+      (genre) => (genre ? genreOptions.includes(genre) : false)
+    ),
   genres: (genreOptions: string[]) =>
     Yup.array(Yup.string()).test(
       "is-genres",

@@ -30,8 +30,8 @@ const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const windowWidth = useWindowDimensions()?.width;
-  const { data: roles = [] } = useGetRolesQuery();
-  const { data: genres = [] } = useGetGenresQuery();
+  const { data: roleOptions = [] } = useGetRolesQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
 
   const {
     profile: {
@@ -79,10 +79,8 @@ const Profile: FunctionComponent = () => {
     lastName: commonYupValidation.lastName,
     email: commonYupValidation.email,
     nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roles),
-    genre: commonYupValidation
-      .genres(genres)
-      .min(1, "At lease one genre is required"),
+    role: commonYupValidation.role(roleOptions),
+    genre: commonYupValidation.genre(genreOptions),
     currentPassword: Yup.string().when("newPassword", {
       is: (currentValue: string) => currentValue,
       then: Yup.string().required("Current password is required"),
@@ -285,13 +283,13 @@ const Profile: FunctionComponent = () => {
                 <DropdownSelectField
                   label="MAIN ROLE"
                   name="role"
-                  options={ roles }
+                  options={ roleOptions }
                   placeholder="Main role"
                 />
                 <DropdownSelectField
                   label="MUSIC GENRE"
                   name="genre"
-                  options={ genres }
+                  options={ genreOptions }
                   placeholder="Music genre"
                 />
               </Stack>
