@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
 import { history } from "common/history";
+import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
   GenerateArtistAgreementPayload,
   PatchSongRequest,
@@ -26,34 +26,17 @@ export const uploadSong = createAsyncThunk(
       // optional upload params to format or crop image could go here
       const uploadParams = {};
 
-      const signatureResp = await dispatch(
-        songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+      const coverArtUrl = await uploadToCloudinary(
+        body.image,
+        uploadParams,
+        dispatch
       );
-
-      if ("error" in signatureResp || !("data" in signatureResp)) return;
-
-      const { apiKey, signature, timestamp } = signatureResp.data;
-
-      const imageBinaryStr = await getFileBinary(body.image);
-
-      // upload image to cloudinary
-      const cloudinaryResp = await dispatch(
-        cloudinaryApi.endpoints.uploadImage.initiate({
-          api_key: apiKey,
-          file: imageBinaryStr,
-          signature,
-          timestamp,
-          ...uploadParams,
-        })
-      );
-
-      if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           ...body,
-          coverArtUrl: cloudinaryResp.data.secure_url,
+          coverArtUrl,
         })
       );
 
@@ -124,12 +107,12 @@ export const generateArtistAgreement = createAsyncThunk(
  */
 export const patchSong = createAsyncThunk(
   "song/patchSong",
-  async (body: PatchSongRequest, thunkApi) => {
+  async (body: PatchSongRequest, { dispatch }) => {
     try {
       // set loading state to show loading indicator
-      thunkApi.dispatch(setSongIsLoading(true));
+      dispatch(setSongIsLoading(true));
 
-      let cloudinaryImage = {};
+      let coverArtUrl;
 
       if (body.image) {
         // TODO: Delete previously saved image from cloudinary after successfully updating it.
@@ -137,37 +120,18 @@ export const patchSong = createAsyncThunk(
         // optional upload params to format or crop image could go here
         const uploadParams = {};
 
-        const signatureResp = await thunkApi.dispatch(
-          songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+        coverArtUrl = await uploadToCloudinary(
+          body.image,
+          uploadParams,
+          dispatch
         );
-
-        if ("error" in signatureResp || !("data" in signatureResp)) return;
-
-        const { apiKey, signature, timestamp } = signatureResp.data;
-
-        const imageBinaryStr = await getFileBinary(body.image);
-
-        // upload image to cloudinary
-        const cloudinaryResp = await thunkApi.dispatch(
-          cloudinaryApi.endpoints.uploadImage.initiate({
-            api_key: apiKey,
-            file: imageBinaryStr,
-            signature,
-            timestamp,
-            ...uploadParams,
-          })
-        );
-
-        if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
-
-        cloudinaryImage = { coverArtUrl: cloudinaryResp.data.secure_url };
       }
 
       // patch song information
-      const patchSongResp = await thunkApi.dispatch(
+      const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
           ...body,
-          ...cloudinaryImage,
+          ...{ coverArtUrl },
         })
       );
 
@@ -179,7 +143,7 @@ export const patchSong = createAsyncThunk(
       // do nothing, errors handled by endpoints
     } finally {
       // done fetching songs
-      thunkApi.dispatch(setSongIsLoading(false));
+      dispatch(setSongIsLoading(false));
     }
   }
 );

@@ -80,7 +80,9 @@ const Profile: FunctionComponent = () => {
     email: commonYupValidation.email,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.genre(genres).required("Genre is required"),
+    genre: commonYupValidation
+      .genres(genres)
+      .min(1, "At lease one genre is required"),
     currentPassword: Yup.string().when("newPassword", {
       is: (currentValue: string) => currentValue,
       then: Yup.string().required("Current password is required"),
