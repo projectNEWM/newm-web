@@ -10,6 +10,7 @@ import { Box, Stack } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
+import { WidthType } from "common";
 import Typography from "./Typography";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -17,7 +18,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly errorMessage?: string;
   readonly label?: string;
   readonly startAdornment?: JSX.Element;
-  readonly widthType?: "default" | "full";
+  readonly widthType?: WidthType;
 }
 
 const StyledRootElement = styled.div`

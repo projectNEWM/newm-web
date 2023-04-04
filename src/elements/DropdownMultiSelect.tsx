@@ -10,6 +10,7 @@ import theme from "theme";
 import { Box, Stack } from "@mui/material";
 import SelectedCheckboxIcon from "assets/images/SelectedCheckboxIcon";
 import UnselectedCheckboxIcon from "assets/images/UnselectedCheckboxIcon";
+import { WidthType } from "common";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsList";
@@ -25,7 +26,7 @@ export interface DropdownMultiSelectProps
   readonly options: ReadonlyArray<string>;
   readonly value?: Array<string>;
   readonly placeholder?: string;
-  readonly widthType?: "default" | "full";
+  readonly widthType?: WidthType;
 }
 
 const DropdownMultiSelect: ForwardRefRenderFunction<

@@ -32,3 +32,5 @@ export interface ValidateDimensionsParams {
   readonly minHeight?: number;
   readonly maxHeight?: number;
 }
+
+export type WidthType = "default" | "full";

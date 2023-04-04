@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { SxProps, useTheme } from "@mui/material/styles";
@@ -27,11 +27,13 @@ export interface UploadImageProps {
     readonly width: number;
     readonly height: number;
   };
+  readonly errorMessageLocation?: "inside" | "outside";
   readonly isDimensionLabelTruncated?: boolean;
   readonly message?: string;
   readonly errorMessage?: string;
   readonly isSuccessIconDisplayed?: boolean;
-  readonly sx?: SxProps;
+  readonly rootSx?: SxProps;
+  readonly contentSx?: SxProps;
 }
 
 interface ImagePreviewProps extends BoxProps {
@@ -51,9 +53,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   errorMessage,
   minDimensions,
   maxDimensions,
+  errorMessageLocation = "outside",
   isDimensionLabelTruncated = false,
   isSuccessIconDisplayed = true,
-  sx = {},
+  rootSx = {},
+  contentSx = {},
 }) => {
   const theme = useTheme();
 
@@ -120,62 +124,78 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     return handleLoad;
   }, [file]);
 
-  return (
-    <>
-      <Box
-        { ...getRootProps() }
-        sx={ {
-          display: "flex",
-          flexDirection: "column",
-          maxWidth: theme.inputField.maxWidth,
-          cursor: "pointer",
-          borderRadius: "4px",
-        } }
-      >
-        <input { ...getInputProps() } />
+  const internalErrorMessage =
+    errorMessageLocation === "inside" && !!errorMessage
+      ? errorMessage
+      : undefined;
 
-        { file ? (
-          <ImagePreview
-            onMouseEnter={ () => setIsHovering(true) }
-            onMouseLeave={ () => setIsHovering(false) }
-            imageUrl={ (file.preview || file) as string }
-            sx={ { height: 100, ...sx } }
-          >
-            { isHovering || isDragActive ? (
-              <IconMessage
-                icon={ <AddImageIcon /> }
-                message="Upload a new image"
-              />
-            ) : isSuccessIconDisplayed ? (
-              <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
-            ) : null }
-          </ImagePreview>
-        ) : (
-          <DashedOutline
-            sx={ { display: "flex", flexGrow: 1, height: 100, ...sx } }
-          >
+  const externalErrorMessage =
+    errorMessageLocation === "outside" && !!errorMessage
+      ? errorMessage
+      : undefined;
+
+  return (
+    <Stack
+      { ...getRootProps() }
+      gap={ 1 }
+      sx={ {
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: theme.inputField.maxWidth,
+        cursor: "pointer",
+        borderRadius: "4px",
+        ...rootSx,
+      } }
+    >
+      <input { ...getInputProps() } />
+
+      { file ? (
+        <ImagePreview
+          onMouseEnter={ () => setIsHovering(true) }
+          onMouseLeave={ () => setIsHovering(false) }
+          imageUrl={ (file.preview || file) as string }
+          sx={ { height: 100, ...contentSx } }
+        >
+          { isHovering || isDragActive ? (
             <IconMessage
               icon={ <AddImageIcon /> }
-              message={ message }
-              subtitle1={
-                minDimensions
-                  ? `${minLabel}: ${minDimensions.width}x${minDimensions.height} px`
-                  : undefined
-              }
-              subtitle2={
-                maxDimensions
-                  ? `${maxLabel}: ${maxDimensions.width}x${maxDimensions.height} px`
-                  : undefined
-              }
+              message="Upload a new image"
+              errorMessage={ internalErrorMessage }
             />
-          </DashedOutline>
-        ) }
-      </Box>
-
-      { !!errorMessage && (
-        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
+          ) : isSuccessIconDisplayed ? (
+            <IconMessage
+              icon={ <CheckCircleIcon /> }
+              message={ file.name }
+              errorMessage={ internalErrorMessage }
+            />
+          ) : null }
+        </ImagePreview>
+      ) : (
+        <DashedOutline
+          sx={ { display: "flex", flexGrow: 1, height: 100, ...contentSx } }
+        >
+          <IconMessage
+            icon={ <AddImageIcon /> }
+            message={ message }
+            subtitle1={
+              minDimensions
+                ? `${minLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
+                : undefined
+            }
+            subtitle2={
+              maxDimensions
+                ? `${maxLabel}: ${maxDimensions.width}x${maxDimensions.height} px`
+                : undefined
+            }
+            errorMessage={ internalErrorMessage }
+          />
+        </DashedOutline>
       ) }
-    </>
+
+      { !!externalErrorMessage && (
+        <ErrorMessage align="center">{ externalErrorMessage }</ErrorMessage>
+      ) }
+    </Stack>
   );
 };
 

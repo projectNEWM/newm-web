@@ -15,6 +15,7 @@ const initialState: SessionState = {
     lastName: "",
     nickname: "",
     pictureUrl: "",
+    heroImageUrl: "",
     role: "",
     genre: "",
     verificationStatus: VerificationStatus.Unverified,

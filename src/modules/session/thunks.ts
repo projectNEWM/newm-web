@@ -2,9 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
-import { cloudinaryApi } from "api";
-import { extendedApi as songApi } from "modules/song/api";
-import { getFileBinary } from "common";
+import { uploadToCloudinary } from "api/cloudinary/utils";
 import { setIsLoading } from "./slice";
 import { extendedApi as sessionApi } from "./api";
 import {
@@ -23,49 +21,40 @@ export const updateProfile = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
 
-      let cloudinaryImage;
+      let heroImageUrl;
+      let pictureUrl;
+
+      if (body.heroImage) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_fit,w_1600,h_200",
+        };
+
+        heroImageUrl = await uploadToCloudinary(
+          body.heroImage as File,
+          uploadParams,
+          dispatch
+        );
+      }
 
       if (body.profileImage) {
-        // TODO: Delete previously saved image from cloudinary after successfully updating it.
-
-        // downsize image to 400x400 px if necessary
+        // downsize if necessary
         const uploadParams = {
           eager: "c_fit,w_400,h_400",
         };
 
-        const signatureResp = await dispatch(
-          songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+        pictureUrl = await uploadToCloudinary(
+          body.profileImage as File,
+          uploadParams,
+          dispatch
         );
-
-        if ("error" in signatureResp || !("data" in signatureResp)) return;
-
-        const { apiKey, signature, timestamp } = signatureResp.data;
-
-        const imageBinaryStr = await getFileBinary(body.profileImage as File);
-
-        // upload image to cloudinary
-        const cloudinaryResp = await dispatch(
-          cloudinaryApi.endpoints.uploadImage.initiate({
-            api_key: apiKey,
-            file: imageBinaryStr,
-            signature,
-            timestamp,
-            ...uploadParams,
-          })
-        );
-
-        if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
-
-        const pictureUrl = cloudinaryResp.data.eager
-          ? cloudinaryResp.data.eager[0].secure_url
-          : cloudinaryResp.data.secure_url;
-        cloudinaryImage = { pictureUrl };
       }
 
       const updateProfileResponse = await dispatch(
         sessionApi.endpoints.updateProfile.initiate({
           ...body,
-          ...cloudinaryImage,
+          ...{ heroImageUrl },
+          ...{ pictureUrl },
         })
       );
 

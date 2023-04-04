@@ -1,12 +1,14 @@
 import { FunctionComponent } from "react";
 import { Stack } from "@mui/material";
 import { Typography } from "elements";
+import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {
   readonly icon: JSX.Element;
   readonly message?: string;
   readonly subtitle1?: string;
   readonly subtitle2?: string;
+  readonly errorMessage?: string;
 }
 
 /**
@@ -17,6 +19,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   message,
   subtitle1,
   subtitle2,
+  errorMessage,
 }) => (
   <Stack
     spacing={ 1 }
@@ -42,6 +45,10 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
         <Typography variant="subtitle2" textAlign="center">
           { subtitle2 }
         </Typography>
+      ) }
+
+      { !!errorMessage && (
+        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
       ) }
     </Stack>
   </Stack>

@@ -185,3 +185,5 @@ const extendedLambdaApi = lambdaApi.injectEndpoints({
 export const extendedApi = mergeApis(extendedNewmApi, extendedLambdaApi);
 
 export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
+
+export default extendedApi;

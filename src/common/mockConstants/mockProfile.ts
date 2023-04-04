@@ -9,6 +9,7 @@ export const mockProfile: Profile = {
   lastName: "Smith",
   nickname: "Johnny",
   pictureUrl: "",
+  heroImageUrl: "",
   role: "Producer",
   genre: "Instrumental",
   verificationStatus: VerificationStatus.Unverified,

@@ -41,6 +41,7 @@ const Profile: FunctionComponent = () => {
       lastName,
       nickname,
       pictureUrl,
+      heroImageUrl,
       location,
       role,
       verificationStatus,
@@ -66,6 +67,7 @@ const Profile: FunctionComponent = () => {
     role,
     genre,
     profileImage: pictureUrl,
+    heroImage: heroImageUrl,
     location,
     currentPassword: "",
     newPassword: "",
@@ -103,6 +105,9 @@ const Profile: FunctionComponent = () => {
       ...(pictureUrl !== values.profileImage && {
         profileImage: values.profileImage,
       }),
+      ...(heroImageUrl !== values.heroImageUrl && {
+        heroImageUrl: values.heroImageUrl,
+      }),
       ...(location !== values.location && { location: values.location }),
       ...(role !== values.role && { role: values.role }),
       ...(values.currentPassword && {
@@ -131,6 +136,7 @@ const Profile: FunctionComponent = () => {
         <Typography variant="h3" fontWeight={ 800 }>
           PROFILE
         </Typography>
+
         { isUnverified || isPendingVerification ? (
           <Stack direction="row">
             <Button
@@ -141,6 +147,7 @@ const Profile: FunctionComponent = () => {
             >
               { isUnverified ? "Verify your profile" : "Pending Verification" }
             </Button>
+
             <Tooltip title="Verification process takes about 20 minutes.">
               <IconButton>
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
@@ -168,13 +175,33 @@ const Profile: FunctionComponent = () => {
 
           return (
             <Form>
+              <UploadImageField
+                name="heroImage"
+                message="Drag & drop to upload or browse"
+                minDimensions={ { width: 1200, height: 200 } }
+                errorMessageLocation="inside"
+                rootSx={ {
+                  position: "absolute",
+                  left: [0, 0, "15rem"],
+                  right: "2px",
+                  top: "10rem",
+                  zIndex: 0,
+                  maxWidth: "99999px",
+                } }
+                contentSx={ {
+                  height: "200px",
+                } }
+              />
+
               <Stack
                 display="flex"
-                flexDirection="row"
+                flexDirection={ ["column", "column", "row"] }
                 justifyContent="flex-start"
                 alignItems="center"
+                position="relative"
+                zIndex={ 10 }
                 gap={ 5 }
-                mt={ 5 }
+                mt={ 29.5 }
                 mb={ 8 }
               >
                 <UploadImageField
@@ -183,16 +210,23 @@ const Profile: FunctionComponent = () => {
                   minDimensions={ { width: 200, height: 200 } }
                   isDimensionLabelTruncated={ true }
                   isSuccessIconDisplayed={ false }
-                  sx={ {
+                  contentSx={ {
                     borderRadius: "50%",
                     width: 200,
                     height: 200,
                     padding: 1,
+                    marginTop: "-1.5rem",
+                    backgroundColor: theme.colors.grey700,
                   } }
                 />
 
-                <Stack gap={ 1 }>
-                  <Stack direction="row" alignItems="center" gap={ 2 }>
+                <Stack gap={ 1 } width="100%">
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent={ ["center", "center", "flex-start"] }
+                    gap={ 2 }
+                  >
                     <Typography variant="h3" fontWeight="700">
                       { nickname?.toUpperCase() }
                     </Typography>
@@ -204,8 +238,7 @@ const Profile: FunctionComponent = () => {
                     name="location"
                     placeholder="Select your country of residence"
                     options={ countryOptions }
-                    widthType="full"
-                    style={ { width: "20rem" } }
+                    widthType="default"
                   />
                 </Stack>
               </Stack>

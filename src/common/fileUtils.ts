@@ -49,7 +49,9 @@ export const validateImageDimensions = ({
 /**
  * Create a base64 binary string representation of a file.
  */
-export const getFileBinary = async (file: File) => {
+export const getFileBinary = async (
+  file: File
+): Promise<string | ArrayBuffer | null> => {
   return await new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => {

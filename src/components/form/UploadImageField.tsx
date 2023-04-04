@@ -23,7 +23,7 @@ const UploadImageField: FunctionComponent<UploadImageFieldProps> = ({
             file={ field.value }
             onChange={ (file) => form.setFieldValue(field.name, file) }
             onError={ (error: string) => form.setFieldError(field.name, error) }
-            onBlur={ () => form.setFieldTouched(field.name) }
+            onBlur={ () => form.setFieldTouched(field.name, true, false) }
             errorMessage={ meta.touched ? meta.error : undefined }
           />
         );
