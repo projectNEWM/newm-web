@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import LogoutIcon from "assets/images/LogoutIcon";
 import { logOut, selectSession } from "modules/session";
-import SideBarNavLink from "./SideBarNavLink";
+import { Button, Typography } from "elements";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const LogoutButton: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -14,11 +14,9 @@ const LogoutButton: FunctionComponent = () => {
   const { isLoggedIn } = useSelector(selectSession);
 
   return isLoggedIn ? (
-    <SideBarNavLink
-      label="LOG OUT"
-      icon={ <LogoutIcon /> }
-      onClick={ handleLogout }
-    />
+    <Button variant="outlined" onClick={ handleLogout } width="compact">
+      <LogoutIcon sx={ { mr: 1 } } /> <Typography>Log out</Typography>
+    </Button>
   ) : null;
 };
 
