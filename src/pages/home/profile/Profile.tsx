@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Container, IconButton, Stack } from "@mui/material";
+import { Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik, FormikValues } from "formik";
@@ -22,6 +22,7 @@ import {
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
+import countries from "country-list";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
@@ -40,6 +41,7 @@ const Profile: FunctionComponent = () => {
       lastName,
       nickname,
       pictureUrl,
+      location,
       role,
       verificationStatus,
     } = {},
@@ -49,6 +51,8 @@ const Profile: FunctionComponent = () => {
   const isVerified = verificationStatus === Verified;
 
   const { isLoading } = useSelector(selectSession);
+
+  const countryOptions = countries.getNames();
 
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
@@ -62,6 +66,7 @@ const Profile: FunctionComponent = () => {
     role,
     genre,
     profileImage: pictureUrl,
+    location,
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
@@ -98,6 +103,7 @@ const Profile: FunctionComponent = () => {
       ...(pictureUrl !== values.profileImage && {
         profileImage: values.profileImage,
       }),
+      ...(location !== values.location && { location: values.location }),
       ...(role !== values.role && { role: values.role }),
       ...(values.currentPassword && {
         currentPassword: values.currentPassword,
@@ -162,7 +168,7 @@ const Profile: FunctionComponent = () => {
 
           return (
             <Form>
-              <Box
+              <Stack
                 display="flex"
                 flexDirection="row"
                 justifyContent="flex-start"
@@ -184,11 +190,25 @@ const Profile: FunctionComponent = () => {
                     padding: 1,
                   } }
                 />
-                <Typography variant="h3" fontWeight="700">
-                  { nickname?.toUpperCase() }
-                </Typography>
-                { isVerified ? <CheckCircleIcon color="success" /> : null }
-              </Box>
+
+                <Stack gap={ 1 }>
+                  <Stack direction="row" alignItems="center" gap={ 2 }>
+                    <Typography variant="h3" fontWeight="700">
+                      { nickname?.toUpperCase() }
+                    </Typography>
+                    { isVerified ? <CheckCircleIcon color="success" /> : null }
+                  </Stack>
+
+                  <DropdownSelectField
+                    label="LOCATION"
+                    name="location"
+                    placeholder="Select your country of residence"
+                    options={ countryOptions }
+                    widthType="full"
+                    style={ { width: "20rem" } }
+                  />
+                </Stack>
+              </Stack>
 
               <Stack
                 sx={ {

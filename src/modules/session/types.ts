@@ -14,6 +14,7 @@ export interface Profile {
   readonly lastName: string;
   readonly nickname: string;
   readonly pictureUrl: string;
+  readonly location?: string;
   readonly role: string;
   readonly genre: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
@@ -49,6 +50,7 @@ export interface UpdateProfileRequest {
   readonly lastName?: string;
   readonly nickname?: string;
   readonly pictureUrl?: string | File;
+  readonly location?: string;
   readonly role?: string;
   readonly genre?: string;
   readonly email?: string;
