@@ -23,8 +23,10 @@ export const uploadSong = createAsyncThunk(
       // set loading state to show loading indicator
       dispatch(setSongIsLoading(true));
 
-      // optional upload params to format or crop image could go here
-      const uploadParams = {};
+      // downsize if necessary
+      const uploadParams = {
+        eager: "c_fit,w_5000,h_5000",
+      };
 
       const coverArtUrl = await uploadToCloudinary(
         body.image,
@@ -115,10 +117,10 @@ export const patchSong = createAsyncThunk(
       let coverArtUrl;
 
       if (body.image) {
-        // TODO: Delete previously saved image from cloudinary after successfully updating it.
-
-        // optional upload params to format or crop image could go here
-        const uploadParams = {};
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_fit,w_5000,h_5000",
+        };
 
         coverArtUrl = await uploadToCloudinary(
           body.image,

@@ -23,8 +23,8 @@ const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const { data: genres = [] } = useGetGenresQuery();
-  const { data: moods = [] } = useGetMoodsQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: moodOptions = [] } = useGetMoodsQuery();
   const { isLoading } = useSelector(selectSong);
   const {
     profile: { verificationStatus },
@@ -124,7 +124,7 @@ const SongInfo: FunctionComponent = () => {
             label="Genres"
             name="genres"
             placeholder="Select all that apply"
-            options={ genres }
+            options={ genreOptions }
           />
 
           { /** TODO: get moods from back-end */ }
@@ -132,7 +132,7 @@ const SongInfo: FunctionComponent = () => {
             label="Moods"
             name="moods"
             placeholder="Select all that apply"
-            options={ moods }
+            options={ moodOptions }
           />
         </Stack>
 

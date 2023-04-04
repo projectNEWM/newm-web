@@ -13,8 +13,8 @@ export interface Profile {
   readonly firstName: string;
   readonly lastName: string;
   readonly nickname: string;
-  readonly pictureUrl: string;
-  readonly heroImageUrl: string;
+  readonly pictureUrl?: string;
+  readonly heroImageUrl?: string;
   readonly location?: string;
   readonly role: string;
   readonly genre: string;

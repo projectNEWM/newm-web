@@ -5,7 +5,8 @@ import { songApi } from "modules/song";
 import { CloudinaryUploadOptions } from "./types";
 
 /**
- * Uploads an image to Cloudinary and returns the response.
+ * Uploads an image to Cloudinary. Returns the response if
+ * successful and throws an error if not.
  */
 export const uploadToCloudinary = async (
   image: File,
