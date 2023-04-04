@@ -27,10 +27,8 @@ export interface WrapperProps {
 
 export interface ValidateDimensionsParams {
   readonly imageUrl: string;
-  readonly minWidth?: number;
-  readonly maxWidth?: number;
-  readonly minHeight?: number;
-  readonly maxHeight?: number;
+  readonly minWidth: number;
+  readonly minHeight: number;
 }
 
 export type WidthType = "default" | "full";

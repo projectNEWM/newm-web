@@ -6,8 +6,7 @@ import ErrorMessage from "./styled/ErrorMessage";
 interface IconMessageProps {
   readonly icon: JSX.Element;
   readonly message?: string;
-  readonly subtitle1?: string;
-  readonly subtitle2?: string;
+  readonly subtitle?: string;
   readonly errorMessage?: string;
 }
 
@@ -17,8 +16,7 @@ interface IconMessageProps {
 const IconMessage: FunctionComponent<IconMessageProps> = ({
   icon,
   message,
-  subtitle1,
-  subtitle2,
+  subtitle,
   errorMessage,
 }) => (
   <Stack
@@ -35,15 +33,9 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
         </Typography>
       ) }
 
-      { !!subtitle1 && (
+      { !!subtitle && (
         <Typography variant="subtitle2" textAlign="center">
-          { subtitle1 }
-        </Typography>
-      ) }
-
-      { !!subtitle2 && (
-        <Typography variant="subtitle2" textAlign="center">
-          { subtitle2 }
+          { subtitle }
         </Typography>
       ) }
 

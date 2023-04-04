@@ -1,4 +1,4 @@
-import { Box, BoxProps, Stack } from "@mui/material";
+import { BoxProps, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { validateImageDimensions } from "common";
 import { SxProps, useTheme } from "@mui/material/styles";
@@ -20,10 +20,6 @@ export interface UploadImageProps {
   readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;
   readonly minDimensions?: {
-    readonly width: number;
-    readonly height: number;
-  };
-  readonly maxDimensions?: {
     readonly width: number;
     readonly height: number;
   };
@@ -52,7 +48,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   message,
   errorMessage,
   minDimensions,
-  maxDimensions,
   errorMessageLocation = "outside",
   isDimensionLabelTruncated = false,
   isSuccessIconDisplayed = true,
@@ -64,7 +59,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   const [isHovering, setIsHovering] = useState(false);
 
   const minLabel = isDimensionLabelTruncated ? "Min" : "Minimum size";
-  const maxLabel = isDimensionLabelTruncated ? "Max" : "Maximum size";
 
   const handleDrop = useCallback(
     async (
@@ -83,13 +77,13 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           preview: URL.createObjectURL(firstFile),
         });
 
-        await validateImageDimensions({
-          imageUrl: fileWithPreview.preview,
-          minWidth: minDimensions?.width,
-          maxWidth: maxDimensions?.width,
-          minHeight: minDimensions?.height,
-          maxHeight: maxDimensions?.height,
-        });
+        if (minDimensions) {
+          await validateImageDimensions({
+            imageUrl: fileWithPreview.preview,
+            minWidth: minDimensions.width,
+            minHeight: minDimensions.height,
+          });
+        }
 
         onChange(fileWithPreview);
         onError("");
@@ -101,7 +95,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         onBlur();
       }
     },
-    [minDimensions, maxDimensions, onChange, onBlur, onError]
+    [minDimensions, onChange, onBlur, onError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -177,14 +171,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           <IconMessage
             icon={ <AddImageIcon /> }
             message={ message }
-            subtitle1={
+            subtitle={
               minDimensions
                 ? `${minLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
-                : undefined
-            }
-            subtitle2={
-              maxDimensions
-                ? `${maxLabel}: ${maxDimensions.width}x${maxDimensions.height} px`
                 : undefined
             }
             errorMessage={ internalErrorMessage }
