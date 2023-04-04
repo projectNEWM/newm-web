@@ -90,7 +90,6 @@ const Login: FunctionComponent = () => {
                 aria-label="Password input field"
                 externalMaskPassword={ maskPassword }
                 handlePressEndAdornment={ togglePasswordMask }
-                isOptional={ false }
                 name="password"
                 showEndAdornment={ !!password }
               />
