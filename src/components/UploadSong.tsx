@@ -59,12 +59,11 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     [onChange, onBlur, onError]
   );
 
-  // TODO: Remove ".mp3" support after transcoded is fixed for supported files
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
     accept: {
-      audio: [".flac", ".fla", ".wav", ".mp3"],
+      audio: [".flac", ".wav"],
     },
   });
 
@@ -99,7 +98,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
               <IconMessage
                 icon={ <AddSongIcon /> }
                 message="Upload a new song"
-                subtitle=".flac, .fla, or .wav"
+                subtitle=".wav or .flac"
               />
             ) : (
               <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
@@ -110,7 +109,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             <IconMessage
               icon={ <AddSongIcon /> }
               message="Drag and drop or browse your song"
-              subtitle=".flac, .fla, or .wav"
+              subtitle=".wav or .flac"
             />
           </DashedOutline>
         ) }

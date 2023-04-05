@@ -78,7 +78,7 @@ export const uploadSong = createAsyncThunk(
       // upload audio to AWS, song audioUrl will be updated after it's transcoded
       await fetch(uploadUrl, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/octet-stream" },
         body: body.audio,
       });
 
