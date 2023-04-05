@@ -77,6 +77,7 @@ const Settings: FunctionComponent = () => {
         { ({
           dirty,
           values: { currentPassword, newPassword, confirmPassword },
+          handleReset,
         }) => {
           const showEndAdornment = !!(
             currentPassword ||
@@ -171,7 +172,7 @@ const Settings: FunctionComponent = () => {
                     }
                     variant="secondary"
                     color="music"
-                    type="reset"
+                    onClick={ handleReset }
                   >
                     Cancel
                   </Button>
