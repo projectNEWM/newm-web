@@ -53,6 +53,7 @@ const SignUp: FunctionComponent = () => {
       >
         <TextInputField
           aria-label="Email input field"
+          isOptional={ false }
           name="email"
           placeholder="Email"
           type="email"

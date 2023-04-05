@@ -60,7 +60,7 @@ export const TextArea: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
-    isOptional = false,
+    isOptional = true,
     widthType = "default",
     ...rest
   },

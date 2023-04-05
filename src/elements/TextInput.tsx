@@ -75,7 +75,7 @@ export const TextInput: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
-    isOptional = false,
+    isOptional = true,
     tooltipText = "",
     widthType = "default",
     ...rest

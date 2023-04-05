@@ -84,17 +84,20 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <Stack direction="row" columnGap={ 1.5 }>
                 <TextInputField
+                  isOptional={ false }
                   label="FIRST NAME"
                   name="firstName"
                   placeholder="John"
                 />
                 <TextInputField
+                  isOptional={ false }
                   label="LAST NAME"
                   name="lastName"
                   placeholder="Smith"
                 />
               </Stack>
               <TextInputField
+                isOptional={ false }
                 label="EMAIL"
                 name="email"
                 placeholder="john.smith@gmail.com"
@@ -126,6 +129,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <DropdownSelectField
                 label="ROLE"
+                isOptional={ false }
                 name="role"
                 options={ roles }
                 placeholder="Select role"
