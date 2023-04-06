@@ -17,6 +17,15 @@ export interface Profile {
   readonly role: string;
   readonly genre: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
+  readonly biography: string;
+  readonly bannerUrl: string;
+  readonly location: string;
+  readonly websiteUrl: string;
+  readonly twitterUrl: string;
+  readonly instagramUrl: string;
+  readonly companyIpRights: boolean;
+  readonly companyName: string;
+  readonly companyLogoUrl: string;
 }
 
 export interface NewmOAuthRequest {

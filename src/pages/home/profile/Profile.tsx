@@ -1,19 +1,26 @@
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, IconButton, Stack } from "@mui/material";
+import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik, FormikValues } from "formik";
+import * as Yup from "yup";
+import { useGetSongsQuery } from "modules/song";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
-  PasswordInputField,
   ProfileImage,
+  SwitchInputField,
+  TextAreaField,
   TextInputField,
 } from "components";
-import { commonYupValidation, useWindowDimensions } from "common";
-import * as Yup from "yup";
-import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import {
+  commonYupValidation,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "common";
+
+import { useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
   selectSession,
@@ -29,82 +36,99 @@ const Profile: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
-  const { data: genres = [] } = useGetGenresQuery();
 
   const {
+    isLoading,
     profile: {
+      biography,
+      companyName,
       email,
       firstName,
-      genre,
+      instagramUrl,
+      companyIpRights,
       lastName,
       nickname,
       pictureUrl,
       role,
+      twitterUrl,
       verificationStatus,
+      websiteUrl,
     } = {},
   } = useSelector(selectSession);
+
+  const { data: songData = [] } = useGetSongsQuery({
+    ownerIds: ["me"],
+    limit: 1,
+  });
+
+  const genre = songData?.[0]?.genres?.[0] ?? "";
+
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
-
-  const { isLoading } = useSelector(selectSession);
 
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
 
   const initialValues = {
-    firstName,
-    lastName,
+    biography,
+    companyName,
     email,
+    firstName,
+    genre,
+    instagramUrl,
+    companyIpRights,
+    lastName,
     nickname,
     role,
-    genre,
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    twitterUrl,
+    websiteUrl,
   };
 
   const validationSchema = Yup.object({
+    biography: Yup.string(),
+    companyName: Yup.string().when("companyIpRights", {
+      is: true,
+      then: Yup.string().required("Company name is required"),
+      otherwise: Yup.string(),
+    }),
     firstName: commonYupValidation.firstName,
+    instagramUrl: Yup.string().url("Please enter a valid url"),
+    companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
-    email: commonYupValidation.email,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.genre(genres).required("Genre is required"),
-    currentPassword: Yup.string().when("newPassword", {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Current password is required"),
-    }),
-    newPassword: commonYupValidation.newPassword,
-    confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Confirm new password is required"),
-    }),
+    twitterUrl: Yup.string().url("Please enter a valid url"),
+    websiteUrl: Yup.string().url("Please enter a valid url"),
   });
 
   /**
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: FormikValues) => {
-    const updatedValues = {
-      ...(email !== values.email && { email: values.email }),
-      ...(firstName !== values.firstName && { firstName: values.firstName }),
-      ...(genre !== values.genre && { genre: values.genre }),
-      ...(lastName !== values.lastName && { lastName: values.lastName }),
-      ...(nickname !== values.nickname && { nickname: values.nickname }),
-      ...(pictureUrl !== values.pictureUrl && {
-        pictureUrl: values.pictureUrl,
-      }),
-      ...(role !== values.role && { role: values.role }),
-      ...(values.currentPassword && {
-        currentPassword: values.currentPassword,
-      }),
-      ...(values.newPassword && { newPassword: values.newPassword }),
-      ...(values.confirmPassword && {
-        confirmPassword: values.confirmPassword,
-      }),
+    const originalValues = {
+      biography,
+      companyName,
+      firstName,
+      instagramUrl,
+      companyIpRights,
+      lastName,
+      nickname,
+      pictureUrl,
+      role,
+      twitterUrl,
+      websiteUrl,
     };
+
+    const updatedValues = getUpdatedValues(originalValues, values);
+
+    if (
+      updatedValues.companyIpRights === false ||
+      values.companyIpRights === false
+    ) {
+      updatedValues.companyName = "";
+    }
 
     dispatch(updateProfile({ ...updatedValues }));
   };
@@ -161,127 +185,201 @@ const Profile: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({
-          dirty,
-          values: { currentPassword, newPassword, confirmPassword },
-        }) => {
-          const showEndAdornment = !!(
-            currentPassword ||
-            newPassword ||
-            confirmPassword
-          );
-
+        { ({ dirty, handleReset }) => {
           return (
             <Form>
-              <Stack
-                sx={ {
-                  display: "grid",
-                  gridTemplateColumns: [
-                    "repeat(1, 1fr)",
-                    null,
-                    "repeat(2, 1fr)",
-                  ],
-                  columnGap: [undefined, undefined, "20px"],
-                  maxWidth: [undefined, undefined, "700px"],
-                  rowGap: ["16px", null, "12px"],
-                } }
+              <Box
+                sx={ { maxWidth: ["340px", "340px", "700px"], margin: "0 auto" } }
               >
-                <TextInputField
-                  label="FIRST NAME"
-                  name="firstName"
-                  placeholder="First name"
-                  type="text"
-                />
-                <TextInputField
-                  label="LAST NAME"
-                  name="lastName"
-                  placeholder="Last name"
-                  type="text"
-                />
-                <TextInputField
-                  label="EMAIL"
-                  name="email"
-                  placeholder="Email"
-                  type="email"
-                />
-                <TextInputField
-                  label="STAGE NAME"
-                  name="nickname"
-                  placeholder="Stage name"
-                  type="text"
-                />
-                <DropdownSelectField
-                  label="MAIN ROLE"
-                  name="role"
-                  options={ roles }
-                  placeholder="Main role"
-                />
-                <DropdownSelectField
-                  label="MUSIC GENRE"
-                  name="genre"
-                  options={ genres }
-                  placeholder="Music genre"
-                />
-              </Stack>
-              <Stack
-                sx={ {
-                  marginY: 5,
-                  marginX: ["auto", "auto", "unset"],
-                  maxWidth: ["340px", "340px", "700px"],
-                } }
-              >
-                <HorizontalLine />
-              </Stack>
-              <Typography variant="subtitle1" fontWeight={ 700 }>
-                CHANGE PASSWORD
-              </Typography>
-              <Stack
-                sx={ {
-                  marginTop: 2.5,
-                  marginBottom: 7.5,
-                  display: "grid",
-                  gridTemplateColumns: [
-                    "repeat(1, 1fr)",
-                    null,
-                    "repeat(2, 1fr)",
-                  ],
-                  rowGap: ["16px", null, "12px"],
-                  columnGap: [undefined, undefined, "20px"],
-                  maxWidth: [undefined, undefined, "700px"],
-                } }
-              >
-                <PasswordInputField
-                  label="CURRENT PASSWORD"
-                  name="currentPassword"
-                  placeholder="Password"
-                  showEndAdornment={ showEndAdornment }
-                />
-                <PasswordInputField
-                  label="NEW PASSWORD"
-                  name="newPassword"
-                  placeholder="New password"
-                  showEndAdornment={ showEndAdornment }
-                />
-                <PasswordInputField
-                  label="RETYPE NEW PASSWORD"
-                  name="confirmPassword"
-                  placeholder="New password"
-                  showEndAdornment={ showEndAdornment }
-                />
-              </Stack>
+                <Stack rowGap={ 10 }>
+                  <Stack rowGap={ 2 }>
+                    <Typography variant="h4" fontWeight="700">
+                      YOUR PUBLIC PROFILE
+                    </Typography>
+                    <TextInputField
+                      label="STAGE NAME"
+                      name="nickname"
+                      placeholder="Stage name"
+                      type="text"
+                    />
+                    <Stack
+                      sx={ {
+                        flexDirection: ["column", "column", "row"],
+                        justifyContent: "space-between",
+                        rowGap: 2,
+                      } }
+                    >
+                      <DropdownSelectField
+                        label="MAIN ROLE"
+                        name="role"
+                        options={ roles }
+                        placeholder="Main role"
+                      />
+                      <TextInputField
+                        disabled={ true }
+                        label="MUSIC GENRE"
+                        name="genre"
+                        placeholder="Music genre"
+                        tooltipText="Your genre is determined by the songs you upload."
+                        type="text"
+                      />
+                    </Stack>
+                    <TextAreaField
+                      label="DESCRIPTION"
+                      name="biography"
+                      placeholder="Tell us about yourself"
+                    />
+                  </Stack>
+                  <Stack rowGap={ 2 }>
+                    <Stack rowGap={ 0.5 }>
+                      <Typography variant="h4" fontWeight="700">
+                        SOCIAL MEDIA
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        Link your preferred profiles so fans can follow and
+                        connect with you.
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      sx={ {
+                        flexDirection: ["column", "column", "row"],
+                        justifyContent: "space-between",
+                        rowGap: 2,
+                      } }
+                    >
+                      <TextInputField
+                        label="WEBSITE"
+                        name="websiteUrl"
+                        placeholder="Your website link"
+                        type="text"
+                      />
+                      <TextInputField
+                        label="TWITTER"
+                        name="twitterUrl"
+                        placeholder="Twitter link"
+                        type="text"
+                      />
+                    </Stack>
+                    <TextInputField
+                      label="INSTAGRAM"
+                      name="instagramUrl"
+                      placeholder="Instagram link"
+                      type="text"
+                    />
+                  </Stack>
+                  <Stack rowGap={ 2 }>
+                    <Stack rowGap={ 0.5 }>
+                      <Typography variant="h4" fontWeight="700">
+                        ABOUT YOU
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        This info will not be made public on your profile.
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      sx={ {
+                        flexDirection: ["column", "column", "row"],
+                        justifyContent: "space-between",
+                        rowGap: 2,
+                      } }
+                    >
+                      <TextInputField
+                        label="FIRST NAME"
+                        name="firstName"
+                        placeholder="First name"
+                        type="text"
+                      />
+                      <TextInputField
+                        label="LAST NAME"
+                        name="lastName"
+                        placeholder="Last name"
+                        type="text"
+                      />
+                    </Stack>
+                    <TextInputField
+                      disabled={ true }
+                      label="PRIMARY EMAIL"
+                      isOptional={ false }
+                      name="email"
+                      placeholder="john@mail.com"
+                      type="email"
+                    />
+                  </Stack>
+                  <Stack rowGap={ 2 }>
+                    <Typography variant="h4" fontWeight="700">
+                      OTHER SETTINGS
+                    </Typography>
+                    <SwitchInputField
+                      name="companyIpRights"
+                      title="DO YOU HAVE A COMPANY?"
+                      description={
+                        "If your IP Rights are held under your Company, please select this option."
+                      }
+                    >
+                      <Stack
+                        alignItems="center"
+                        columnGap={ 1.5 }
+                        flexDirection="row"
+                        mt={ 2 }
+                      >
+                        <img
+                          alt="TODO: Replace this with reusable img component"
+                          src={ pictureUrl }
+                          style={ { height: "60px", width: "60px" } }
+                        />
+                        <TextInputField
+                          aria-label="Your company name"
+                          name="companyName"
+                          placeholder="Your company name"
+                          type="text"
+                        />
+                      </Stack>
+                    </SwitchInputField>
+                  </Stack>
+                </Stack>
 
-              <Button
-                disabled={ !dirty }
-                isLoading={ isLoading }
-                width={
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "compact"
-                    : "default"
-                }
-                type="submit"
-              >
-                Save
-              </Button>
+                <HorizontalLine
+                  sx={ {
+                    maxWidth: ["340px", "340px", "700px"],
+                    mx: ["auto", "auto", "unset"],
+                    my: 5,
+                  } }
+                />
+                <Stack
+                  sx={ {
+                    columnGap: 2,
+                    flexDirection: [null, null, "row"],
+                    mt: 5,
+                    rowGap: 2,
+                  } }
+                >
+                  <Button
+                    disabled={ !dirty }
+                    onClick={ handleReset }
+                    variant="secondary"
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.md
+                        ? "compact"
+                        : "default"
+                    }
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    disabled={ !dirty }
+                    isLoading={ isLoading }
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.md
+                        ? "compact"
+                        : "default"
+                    }
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Box>
             </Form>
           );
         } }

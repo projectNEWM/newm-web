@@ -6,15 +6,18 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
-import Typography from "./Typography";
+import { Tooltip } from "elements";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
+  readonly isOptional?: boolean;
+  readonly tooltipText?: string;
   readonly label?: string;
   readonly startAdornment?: JSX.Element;
   readonly widthType?: "default" | "full";
@@ -72,6 +75,8 @@ export const TextInput: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
+    isOptional = true,
+    tooltipText = "",
     widthType = "default",
     ...rest
   },
@@ -115,8 +120,39 @@ export const TextInput: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography fontWeight={ 500 } color="grey100">
-          { label }
+        <Typography
+          color={ theme.colors.grey100 }
+          columnGap={ 0.5 }
+          display="flex"
+          fontWeight={ 500 }
+        >
+          <>
+            { label }
+
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: 0 } }>
+                  <HelpIcon
+                    sx={ {
+                      color: theme.colors.grey100,
+                      height: "18px",
+                      width: "18px",
+                    } }
+                  />
+                </IconButton>
+              </Tooltip>
+            ) }
+
+            { isOptional && (
+              <Typography
+                color={ theme.colors.grey400 }
+                component="span"
+                marginLeft="auto"
+              >
+                OPTIONAL
+              </Typography>
+            ) }
+          </>
         </Typography>
       ) }
 

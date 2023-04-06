@@ -12,4 +12,13 @@ export const mockProfile: Profile = {
   role: "Producer",
   genre: "Instrumental",
   verificationStatus: VerificationStatus.Unverified,
+  biography: "biography",
+  bannerUrl: "https://newm.io/",
+  location: "Remote, Earth",
+  websiteUrl: "https://newm.io/",
+  twitterUrl: "https://newm.io/",
+  instagramUrl: "https://newm.io/",
+  companyIpRights: false,
+  companyName: "",
+  companyLogoUrl: "",
 };
