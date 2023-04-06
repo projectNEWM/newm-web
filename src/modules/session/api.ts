@@ -1,4 +1,4 @@
-import api from "api";
+import api, { Tags } from "api";
 import { EmptyResponse } from "common";
 import { setToastMessage } from "modules/ui";
 import {
@@ -118,6 +118,7 @@ export const extendedApi = api.injectEndpoints({
         url: "v1/users/me",
         method: "GET",
       }),
+      providesTags: [Tags.Profile],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -139,6 +140,7 @@ export const extendedApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: [Tags.Profile],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {

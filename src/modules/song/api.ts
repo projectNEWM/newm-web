@@ -1,4 +1,4 @@
-import api, { CloudinaryUploadParams } from "api";
+import api, { CloudinaryUploadParams, Tags } from "api";
 import { setToastMessage } from "modules/ui";
 import {
   AudioUploadUrlRequest,
@@ -37,6 +37,7 @@ export const extendedApi = api.injectEndpoints({
         url: `v1/songs/${id}`,
         method: "GET",
       }),
+      providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -57,6 +58,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -77,6 +79,7 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -97,6 +100,7 @@ export const extendedApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
