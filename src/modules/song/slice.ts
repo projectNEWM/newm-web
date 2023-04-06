@@ -13,12 +13,12 @@ const songSlice = createSlice({
     receiveArtistAgreement(state, { payload }) {
       state.artistAgreement = payload;
     },
-    setSongIsLoading(state, { payload }) {
+    setIsLoading(state, { payload }) {
       state.isLoading = payload;
     },
   },
 });
 
-export const { receiveArtistAgreement, setSongIsLoading } = songSlice.actions;
+export const { receiveArtistAgreement, setIsLoading } = songSlice.actions;
 
 export default songSlice.reducer;

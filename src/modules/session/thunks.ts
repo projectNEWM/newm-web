@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
-import { setIsLoading } from "./slice";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
@@ -11,39 +10,15 @@ import {
 } from "./types";
 
 /**
- * Updates the user's profile and fetches the updated data.
- */
-export const updateProfile = createAsyncThunk(
-  "session/updateInitialProfile",
-  async (body: UpdateProfileRequest, { dispatch }) => {
-    try {
-      dispatch(setIsLoading(true));
-
-      const updateProfileResponse = await dispatch(
-        sessionApi.endpoints.updateProfile.initiate(body)
-      );
-
-      if ("error" in updateProfileResponse) {
-        return;
-      }
-
-      await dispatch(sessionApi.endpoints.getProfile.initiate());
-    } catch (err) {
-      // do nothing, errors handled by endpoints
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  }
-);
-
-/**
  * Updates the user's profile, fetches the updated data,
  * and navigates to the home page if successful.
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: UpdateProfileRequest, { dispatch }) => {
-    const updateProfileResponse = await dispatch(updateProfile(body));
+    const updateProfileResponse = await dispatch(
+      sessionApi.endpoints.updateProfile.initiate(body)
+    );
 
     if ("error" in updateProfileResponse) {
       return;

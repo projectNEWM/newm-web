@@ -7,7 +7,6 @@ const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
   isLoggedIn: !!Cookies.get("refreshToken"),
   verificationPingStartedAt: undefined,
-  isLoading: false,
 };
 
 const sessionSlice = createSlice({
@@ -23,9 +22,6 @@ const sessionSlice = createSlice({
     removeVerificationTimer: (state) => {
       state.verificationPingStartedAt = undefined;
     },
-    setIsLoading: (state, { payload }) => {
-      state.isLoading = payload;
-    },
   },
 });
 
@@ -35,7 +31,6 @@ export const {
   receiveSuccessfullAuthentication,
   startVerificationTimer,
   removeVerificationTimer,
-  setIsLoading,
 } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

@@ -1,5 +1,5 @@
 export interface SongState {
-  artistAgreement: "";
+  artistAgreement: string;
   isLoading: boolean;
 }
 

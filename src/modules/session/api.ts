@@ -242,6 +242,6 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetProfileQuery } = extendedApi;
+export const { useGetProfileQuery, useUpdateProfileMutation } = extendedApi;
 
 export default extendedApi;

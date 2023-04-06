@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -17,9 +17,8 @@ import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
   emptyProfile,
-  selectSession,
-  updateProfile,
   useGetProfileQuery,
+  useUpdateProfileMutation,
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
@@ -34,6 +33,7 @@ const Profile: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
 
   const {
+    isLoading,
     data: {
       email,
       firstName,
@@ -46,11 +46,11 @@ const Profile: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
 
+  const [updateProfile] = useUpdateProfileMutation();
+
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
-
-  const { isLoading } = useSelector(selectSession);
 
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
@@ -109,7 +109,7 @@ const Profile: FunctionComponent = () => {
       }),
     };
 
-    dispatch(updateProfile({ ...updatedValues }));
+    updateProfile({ ...updatedValues });
   };
 
   return (
