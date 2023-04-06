@@ -21,6 +21,7 @@ interface SideBarProps {
   mobileVersion?: boolean;
   setMobileOpen: (field: boolean) => void;
 }
+
 export const SideBar: FunctionComponent<SideBarProps> = (
   props: SideBarProps
 ) => {
