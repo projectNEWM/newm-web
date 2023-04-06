@@ -24,7 +24,7 @@ export interface UploadImageProps {
     readonly height: number;
   };
   readonly errorMessageLocation?: "inside" | "outside";
-  readonly isDimensionLabelTruncated?: boolean;
+  readonly minimumSizeLabel?: string;
   readonly message?: string;
   readonly errorMessage?: string;
   readonly isSuccessIconDisplayed?: boolean;
@@ -49,7 +49,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   errorMessage,
   minDimensions,
   errorMessageLocation = "outside",
-  isDimensionLabelTruncated = false,
+  minimumSizeLabel = "Minimum size",
   isSuccessIconDisplayed = true,
   rootSx = {},
   contentSx = {},
@@ -57,8 +57,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   const theme = useTheme();
 
   const [isHovering, setIsHovering] = useState(false);
-
-  const minLabel = isDimensionLabelTruncated ? "Min" : "Minimum size";
 
   const handleDrop = useCallback(
     async (
@@ -173,7 +171,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             message={ message }
             subtitle={
               minDimensions
-                ? `${minLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
+                ? `${minimumSizeLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
                 : undefined
             }
             errorMessage={ internalErrorMessage }

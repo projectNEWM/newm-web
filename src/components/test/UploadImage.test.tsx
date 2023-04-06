@@ -10,6 +10,7 @@ describe("<UploadImage>", () => {
     it("displays the filename", () => {
       const { queryByText } = renderWithContext(
         <UploadImage
+          message="Drag and drop or browse your image"
           file={ mockFile }
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
@@ -25,6 +26,7 @@ describe("<UploadImage>", () => {
     it("displays instructions to upload an image", () => {
       const { getByText } = renderWithContext(
         <UploadImage
+          message="Drag and drop or browse your image"
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
           onError={ jest.fn() }

@@ -208,7 +208,7 @@ const Profile: FunctionComponent = () => {
                   name="profileImage"
                   message="Upload an image"
                   minDimensions={ { width: 200, height: 200 } }
-                  isDimensionLabelTruncated={ true }
+                  minimumSizeLabel="Min"
                   isSuccessIconDisplayed={ false }
                   contentSx={ {
                     borderRadius: "50%",
