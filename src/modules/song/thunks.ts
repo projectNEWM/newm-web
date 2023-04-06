@@ -1,12 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "api";
+import { GenerateArtistAgreementPayload, cloudinaryApi, lambdaApi } from "api";
 import { getFileBinary } from "common";
 import { history } from "common/history";
-import {
-  GenerateArtistAgreementPayload,
-  PatchSongRequest,
-  UploadSongRequest,
-} from "./types";
+import { PatchSongRequest, UploadSongRequest } from "./types";
 import { extendedApi as songApi } from "./api";
 import { setSongIsLoading } from "./slice";
 
@@ -102,7 +98,7 @@ export const generateArtistAgreement = createAsyncThunk(
       dispatch(setSongIsLoading(true));
 
       const artistAgreementResp = await dispatch(
-        songApi.endpoints.generateArtistAgreement.initiate(body)
+        lambdaApi.endpoints.generateArtistAgreement.initiate(body)
       );
 
       if ("error" in artistAgreementResp) return;

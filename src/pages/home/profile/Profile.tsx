@@ -16,8 +16,10 @@ import * as Yup from "yup";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
+  emptyProfile,
   selectSession,
   updateProfile,
+  useGetProfileQuery,
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
@@ -32,7 +34,7 @@ const Profile: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
 
   const {
-    profile: {
+    data: {
       email,
       firstName,
       genre,
@@ -41,8 +43,9 @@ const Profile: FunctionComponent = () => {
       pictureUrl,
       role,
       verificationStatus,
-    } = {},
-  } = useSelector(selectSession);
+    } = emptyProfile,
+  } = useGetProfileQuery();
+
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;

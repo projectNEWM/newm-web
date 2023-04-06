@@ -15,7 +15,11 @@ import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { VerificationStatus, selectSession } from "modules/session";
+import {
+  VerificationStatus,
+  emptyProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
 import { setIsIdenfyModalOpen } from "modules/ui";
@@ -34,7 +38,8 @@ const MintSong = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { id, title } = location.state as Song;
 
-  const { profile } = useSelector(selectSession);
+  const { data: profile = emptyProfile } = useGetProfileQuery();
+
   const { isLoading } = useSelector(selectSong);
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);

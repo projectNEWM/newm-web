@@ -12,7 +12,7 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { Song, patchSong, useGetSongQuery } from "modules/song";
+import { Song, emptySong, patchSong, useGetSongQuery } from "modules/song";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
@@ -24,15 +24,9 @@ const SongInfo = () => {
 
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
-  const { data: song = {} } = useGetSongQuery(id);
+  const { data: song = emptySong } = useGetSongQuery(id);
 
-  const {
-    coverArtUrl = "",
-    description = "",
-    genres = [],
-    moods = [],
-    title = "",
-  } = song;
+  const { coverArtUrl, description, genres, moods, title } = song;
 
   const initialValues = {
     image: coverArtUrl,
@@ -44,7 +38,7 @@ const SongInfo = () => {
 
   const validationSchema = Yup.object({
     description: Yup.string(),
-    genre: commonYupValidation.genre(genres),
+    genre: commonYupValidation.genre(genreOptions),
     image: Yup.mixed(),
     title: Yup.string(),
   });

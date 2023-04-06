@@ -8,14 +8,21 @@ import {
   selectSession,
   extendedApi as sessionApi,
   startVerificationTimer,
+  useGetProfileQuery,
 } from "modules/session";
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  const { verificationPingStartedAt, profile: { verificationStatus } = {} } =
-    useSelector(selectSession);
-  const isVerified = verificationStatus === VerificationStatus.Verified;
+  const {
+    data: profile = {
+      verificationStatus: false,
+    },
+  } = useGetProfileQuery();
+
+  const { verificationPingStartedAt } = useSelector(selectSession);
+  const isVerified =
+    profile?.verificationStatus === VerificationStatus.Verified;
 
   /**
    * Removes verification timer and token when verified.

@@ -8,12 +8,28 @@ import {
   LoginRequest,
   NewmAuthResponse,
   NewmOAuthRequest,
+  Profile,
   Request2FACode,
   ResetPasswordRequest,
   UpdateProfileRequest,
+  VerificationStatus,
 } from "./types";
 import { handleSocialLoginError } from "./thunks";
-import { receiveProfile, receiveSuccessfullAuthentication } from "./slice";
+import { receiveSuccessfullAuthentication } from "./slice";
+
+export const emptyProfile: Profile = {
+  id: "",
+  oauthId: "",
+  oauthType: "",
+  email: "",
+  firstName: "",
+  role: "",
+  genre: "",
+  lastName: "",
+  nickname: "",
+  pictureUrl: "",
+  verificationStatus: VerificationStatus.Unverified,
+};
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -105,8 +121,7 @@ export const extendedApi = api.injectEndpoints({
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveProfile(data));
+          await queryFulfilled;
         } catch ({ error }) {
           dispatch(
             setToastMessage({
@@ -224,5 +239,7 @@ export const extendedApi = api.injectEndpoints({
     }),
   }),
 });
+
+export const { useGetProfileQuery } = extendedApi;
 
 export default extendedApi;

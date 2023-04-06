@@ -1,14 +1,14 @@
 import { Box, Container } from "@mui/material";
 import { WizardForm } from "components";
 import { Typography } from "elements";
-import { selectSession } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   UploadSongRequest,
   generateArtistAgreement,
   uploadSong,
 } from "modules/song";
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
@@ -18,7 +18,7 @@ const UploadSong: FunctionComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { profile } = useSelector(selectSession);
+  const { data: profile = emptyProfile } = useGetProfileQuery();
 
   const initialValues: UploadSongRequest = {
     image: undefined,

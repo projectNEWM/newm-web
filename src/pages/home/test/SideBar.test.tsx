@@ -1,19 +1,20 @@
-import { mockSession, renderWithContext } from "common";
-import { Profile } from "modules/session";
+import { mockProfile, renderWithContext } from "common";
+import { Profile, sessionApi } from "modules/session";
 import { SideBar } from "../SideBar";
 
 const renderSidebar = (profileData: Partial<Profile> = {}) => {
-  return renderWithContext(<SideBar setMobileOpen={ () => 1 } />, {
-    preloadedState: {
-      session: {
-        ...mockSession,
-        profile: {
-          ...mockSession.profile,
-          ...profileData,
-        },
-      },
+  const mockResponse = {
+    data: {
+      ...mockProfile,
+      ...profileData,
     },
-  });
+  } as any; // eslint-disable-line
+
+  jest
+    .spyOn(sessionApi.endpoints.getProfile, "initiate")
+    .mockImplementation(jest.fn(() => mockResponse));
+
+  return renderWithContext(<SideBar setMobileOpen={ () => 1 } />);
 };
 
 describe("<Sidebar>", () => {

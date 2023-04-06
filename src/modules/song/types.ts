@@ -1,5 +1,5 @@
 export interface SongState {
-  artistAgreement: string;
+  artistAgreement: "";
   isLoading: boolean;
 }
 
@@ -35,6 +35,7 @@ export interface Creditor {
 export interface UploadSongRequest {
   readonly image?: any; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
+  readonly coverArtUrl?: string;
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
   readonly moods: ReadonlyArray<string>;
@@ -75,7 +76,8 @@ export interface Song {
   readonly ownerId: string;
   readonly createdAt: string;
   readonly title: string;
-  readonly genre: string;
+  readonly genres: ReadonlyArray<string>;
+  readonly moods: ReadonlyArray<string>;
   readonly coverArtUrl?: string;
   readonly description?: string;
   readonly credits?: string;
@@ -97,20 +99,4 @@ export interface Contributor {
   readonly name: string;
   readonly role: string;
   readonly stake: number;
-}
-
-export interface GenerateArtistAgreementBody {
-  readonly songName: string;
-  readonly companyName: string;
-  readonly artistName: string;
-  readonly stageName: string;
-}
-
-export interface GenerateArtistAgreementResponse {
-  readonly message: string;
-}
-
-export interface GenerateArtistAgreementPayload {
-  readonly body: GenerateArtistAgreementBody;
-  readonly callback: VoidFunction;
 }

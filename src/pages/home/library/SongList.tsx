@@ -214,7 +214,7 @@ export default function SongList({
                   <StyledTableCell
                     sx={ { display: { xs: "none", lg: "table-cell" } } }
                   >
-                    { song.genre }
+                    { song.genres.join(", ") }
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ {

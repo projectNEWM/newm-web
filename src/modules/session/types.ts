@@ -1,6 +1,5 @@
 export interface SessionState {
   isLoggedIn: boolean;
-  profile: Profile;
   verificationPingStartedAt?: number;
   isLoading: boolean;
 }
@@ -58,19 +57,7 @@ export interface UpdateProfileRequest {
   readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
-export interface GetProfileResponse {
-  readonly id: string;
-  readonly oauthType: string;
-  readonly oauthId: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-  readonly pictureUrl: string;
-  readonly role: string;
-  readonly genre: string;
-  readonly email: string;
-  readonly verificationStatus: Readonly<VerificationStatus>;
-}
+export type GetProfileResponse = Profile;
 
 export interface Request2FACode {
   readonly email: string;

@@ -62,10 +62,8 @@ const Discography: FunctionComponent = () => {
       setFilteredData(songs);
     } else {
       setFilteredData(
-        songs.filter(
-          ({ title = "", genre = "" }) =>
-            title.toLowerCase().includes(searched.toLowerCase()) ||
-            genre.toLowerCase().includes(searched.toLowerCase())
+        songs.filter(({ title = "" }) =>
+          title.toLowerCase().includes(searched.toLowerCase())
         )
       );
     }
