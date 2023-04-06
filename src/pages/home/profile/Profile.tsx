@@ -33,7 +33,6 @@ const Profile: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
 
   const {
-    isLoading,
     data: {
       email,
       firstName,
@@ -46,7 +45,7 @@ const Profile: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
 
-  const [updateProfile] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
