@@ -16,22 +16,25 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
-import { VerificationStatus, useGetProfileQuery } from "modules/session";
+import {
+  VerificationStatus,
+  emptyProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import { setIsIdenfyModalOpen } from "modules/ui";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const { data: profile } = useGetProfileQuery();
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moods = [] } = useGetMoodsQuery();
 
   const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
 
-  const isVerified =
-    profile?.verificationStatus === VerificationStatus.Verified;
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   const { values, errors, touched, setFieldValue } =
     useFormikContext<UploadSongRequest>();
