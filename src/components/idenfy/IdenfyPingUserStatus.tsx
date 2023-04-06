@@ -4,6 +4,7 @@ import { setToastMessage } from "modules/ui";
 import Cookies from "js-cookie";
 import {
   VerificationStatus,
+  emptyProfile,
   removeVerificationTimer,
   selectSession,
   extendedApi as sessionApi,
@@ -14,15 +15,11 @@ import {
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  const {
-    data: profile = {
-      verificationStatus: false,
-    },
-  } = useGetProfileQuery();
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
 
   const { verificationPingStartedAt } = useSelector(selectSession);
-  const isVerified =
-    profile?.verificationStatus === VerificationStatus.Verified;
+
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   /**
    * Removes verification timer and token when verified.
