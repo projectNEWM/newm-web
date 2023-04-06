@@ -21,17 +21,17 @@ export const updateProfile = createAsyncThunk(
     try {
       dispatch(setIsLoading(true));
 
-      let heroImageUrl;
+      let bannerUrl;
       let pictureUrl;
 
-      if (body.heroImage) {
+      if (body.bannerImage) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_fit,w_1600,h_200",
+          eager: "c_lfill,w_1600,h_200",
         };
 
-        heroImageUrl = await uploadToCloudinary(
-          body.heroImage as File,
+        bannerUrl = await uploadToCloudinary(
+          body.bannerImage as File,
           uploadParams,
           dispatch
         );
@@ -40,7 +40,7 @@ export const updateProfile = createAsyncThunk(
       if (body.profileImage) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_fit,w_400,h_400",
+          eager: "c_lfill,w_400,h_400",
         };
 
         pictureUrl = await uploadToCloudinary(
@@ -53,7 +53,7 @@ export const updateProfile = createAsyncThunk(
       const updateProfileResponse = await dispatch(
         sessionApi.endpoints.updateProfile.initiate({
           ...body,
-          ...{ heroImageUrl },
+          ...{ bannerUrl },
           ...{ pictureUrl },
         })
       );

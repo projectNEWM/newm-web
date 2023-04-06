@@ -14,7 +14,7 @@ export interface Profile {
   readonly lastName: string;
   readonly nickname: string;
   readonly pictureUrl?: string;
-  readonly heroImageUrl?: string;
+  readonly bannerUrl?: string;
   readonly location?: string;
   readonly role: string;
   readonly genre: string;
@@ -64,7 +64,7 @@ export interface UpdateProfileRequest {
 export interface ProfileFormValues
   extends Omit<UpdateProfileRequest, "pictureUrl"> {
   readonly profileImage?: File | string;
-  readonly heroImage?: File | string;
+  readonly bannerImage?: File | string;
   readonly currentPassword?: string;
   readonly newPassword?: string;
   readonly confirmPassword?: string;

@@ -41,7 +41,7 @@ const Profile: FunctionComponent = () => {
       lastName,
       nickname,
       pictureUrl,
-      heroImageUrl,
+      bannerUrl,
       location,
       role,
       verificationStatus,
@@ -67,7 +67,7 @@ const Profile: FunctionComponent = () => {
     role,
     genre,
     profileImage: pictureUrl,
-    heroImage: heroImageUrl,
+    bannerImage: bannerUrl,
     location,
     currentPassword: "",
     newPassword: "",
@@ -105,8 +105,8 @@ const Profile: FunctionComponent = () => {
       ...(pictureUrl !== values.profileImage && {
         profileImage: values.profileImage,
       }),
-      ...(heroImageUrl !== values.heroImageUrl && {
-        heroImageUrl: values.heroImageUrl,
+      ...(bannerUrl !== values.bannerImage && {
+        bannerImage: values.bannerImage,
       }),
       ...(location !== values.location && { location: values.location }),
       ...(role !== values.role && { role: values.role }),
@@ -176,10 +176,11 @@ const Profile: FunctionComponent = () => {
           return (
             <Form>
               <UploadImageField
-                name="heroImage"
+                name="bannerImage"
                 message="Drag & drop to upload or browse"
                 minDimensions={ { width: 1200, height: 200 } }
                 errorMessageLocation="inside"
+                isSuccessIconDisplayed={ false }
                 rootSx={ {
                   position: "absolute",
                   left: [0, 0, "15rem"],
