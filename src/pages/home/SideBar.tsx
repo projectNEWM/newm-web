@@ -7,7 +7,7 @@ import {
   SideBarHeader,
   SideBarNavLink,
 } from "components";
-import { useGetProfileQuery } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
@@ -27,7 +27,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 ) => {
   const theme = useTheme();
 
-  const { data: profile } = useGetProfileQuery();
+  const { data: profile = emptyProfile } = useGetProfileQuery();
 
   return (
     <Box
@@ -57,16 +57,16 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
-          { !!profile?.pictureUrl && (
+          { !!profile.pictureUrl && (
             <ProfileImage
-              src={ profile?.pictureUrl }
+              src={ profile.pictureUrl }
               aria-label="profile image"
               referrerPolicy="no-referrer"
             />
           ) }
 
           <Typography variant="h4" fontWeight={ 700 } align="center">
-            { profile?.nickname }
+            { profile.nickname }
           </Typography>
         </Stack>
 
