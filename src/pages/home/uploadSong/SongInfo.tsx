@@ -106,6 +106,7 @@ const SongInfo: FunctionComponent = () => {
         } }
       >
         <TextInputField
+          isOptional={ false }
           name="title"
           label="SONG TITLE"
           placeholder="Give your track a name..."
@@ -122,6 +123,7 @@ const SongInfo: FunctionComponent = () => {
         >
           <DropdownMultiSelectField
             label="Genres"
+            isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
             options={ genreOptions }

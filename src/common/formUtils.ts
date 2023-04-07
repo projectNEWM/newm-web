@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { FormikValues } from "formik";
 
 /**
  * Password regex, it must contain the following:
@@ -79,4 +80,27 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
+};
+
+/**
+ * Returns an object containing the updated values by comparing the original values with the new values.
+ * If a value has been updated, the key-value pair will be included in the returned object.
+ *
+ * @param {FormikValues} originalValues - The original form values.
+ * @param {FormikValues} newValues - The new form values.
+ * @returns {Partial<FormikValues>} An object containing only the updated values.
+ */
+export const getUpdatedValues = (
+  originalValues: FormikValues,
+  newValues: FormikValues
+) => {
+  const updatedValues: Partial<FormikValues> = {};
+
+  Object.keys(originalValues).forEach((key) => {
+    if (originalValues[key] !== newValues[key]) {
+      updatedValues[key] = newValues[key];
+    }
+  });
+
+  return updatedValues;
 };

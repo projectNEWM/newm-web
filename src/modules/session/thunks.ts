@@ -9,7 +9,6 @@ import {
   CreateAccountRequest,
   ProfileFormValues,
   ResetPasswordRequest,
-  UpdateProfileRequest,
 } from "./types";
 
 /**
@@ -24,27 +23,27 @@ export const updateProfile = createAsyncThunk(
       let bannerUrl;
       let pictureUrl;
 
-      if (body.bannerImage) {
+      if (body.bannerUrl) {
         // downsize if necessary
         const uploadParams = {
           eager: "c_lfill,w_1600,h_200",
         };
 
         bannerUrl = await uploadToCloudinary(
-          body.bannerImage as File,
+          body.bannerUrl as File,
           uploadParams,
           dispatch
         );
       }
 
-      if (body.profileImage) {
+      if (body.pictureUrl) {
         // downsize if necessary
         const uploadParams = {
           eager: "c_lfill,w_400,h_400",
         };
 
         pictureUrl = await uploadToCloudinary(
-          body.profileImage as File,
+          body.pictureUrl as File,
           uploadParams,
           dispatch
         );
@@ -59,8 +58,21 @@ export const updateProfile = createAsyncThunk(
       );
 
       if ("error" in updateProfileResponse) {
+        dispatch(
+          setToastMessage({
+            message: "There was an error updating your profile",
+            severity: "error",
+          })
+        );
         return;
       }
+
+      dispatch(
+        setToastMessage({
+          message: "Successfully updated profile information.",
+          severity: "success",
+        })
+      );
 
       await dispatch(sessionApi.endpoints.getProfile.initiate());
     } catch (err) {
@@ -77,7 +89,7 @@ export const updateProfile = createAsyncThunk(
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
-  async (body: UpdateProfileRequest, { dispatch }) => {
+  async (body: ProfileFormValues, { dispatch }) => {
     const updateProfileResponse = await dispatch(updateProfile(body));
 
     if ("error" in updateProfileResponse) {

@@ -6,12 +6,11 @@ import {
   forwardRef,
   useState,
 } from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
 import { WidthType } from "common";
-import Typography from "./Typography";
 
 export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
@@ -19,6 +18,7 @@ export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly startAdornment?: JSX.Element;
   readonly endAdornment?: JSX.Element;
   readonly widthType?: WidthType;
+  readonly isOptional?: boolean;
 }
 
 const StyledRootElement = styled.div`
@@ -61,6 +61,7 @@ export const TextArea: ForwardRefRenderFunction<
     startAdornment,
     endAdornment,
     disabled = false,
+    isOptional = true,
     widthType = "default",
     ...rest
   },
@@ -106,8 +107,23 @@ export const TextArea: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography fontWeight={ 500 } color="grey100">
+        <Typography
+          color={ theme.colors.grey100 }
+          columnGap={ 0.5 }
+          display="flex"
+          fontWeight={ 500 }
+        >
           { label }
+
+          { isOptional && (
+            <Typography
+              color={ theme.colors.grey400 }
+              component="span"
+              marginLeft="auto"
+            >
+              OPTIONAL
+            </Typography>
+          ) }
         </Typography>
       ) }
 

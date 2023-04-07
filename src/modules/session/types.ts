@@ -19,6 +19,13 @@ export interface Profile {
   readonly role: string;
   readonly genre: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
+  readonly biography: string;
+  readonly websiteUrl: string;
+  readonly twitterUrl: string;
+  readonly instagramUrl: string;
+  readonly companyIpRights: boolean;
+  readonly companyName: string;
+  readonly companyLogoUrl: string;
 }
 
 export interface NewmOAuthRequest {
@@ -50,7 +57,8 @@ export interface UpdateProfileRequest {
   readonly firstName?: string;
   readonly lastName?: string;
   readonly nickname?: string;
-  readonly pictureUrl?: string | File;
+  readonly pictureUrl?: string;
+  readonly bannerUrl?: string;
   readonly location?: string;
   readonly role?: string;
   readonly genre?: string;
@@ -62,12 +70,9 @@ export interface UpdateProfileRequest {
 }
 
 export interface ProfileFormValues
-  extends Omit<UpdateProfileRequest, "pictureUrl"> {
-  readonly profileImage?: File | string;
-  readonly bannerImage?: File | string;
-  readonly currentPassword?: string;
-  readonly newPassword?: string;
-  readonly confirmPassword?: string;
+  extends Omit<UpdateProfileRequest, "pictureUrl" | "bannerUrl"> {
+  readonly pictureUrl?: File;
+  readonly bannerUrl?: File;
 }
 
 export interface GetProfileResponse {
