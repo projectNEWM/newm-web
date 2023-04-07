@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
-import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
+import { Creditor, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
   ErrorMessage,
@@ -31,12 +31,11 @@ const SongInfo: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moods = [] } = useGetMoodsQuery();
 
-  const { isLoading } = useSelector(selectSong);
   const windowWidth = useWindowDimensions()?.width;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue } =
+  const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
 
   // TODO: Also disable submit if minting and wallet is not connected, once
@@ -248,7 +247,7 @@ const SongInfo: FunctionComponent = () => {
           sx={ { mt: 5 } }
           type="submit"
           disabled={ isSubmitDisabled }
-          isLoading={ isLoading }
+          isLoading={ isSubmitting }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"

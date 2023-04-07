@@ -1,6 +1,5 @@
 export interface SongState {
   artistAgreement: string;
-  isLoading: boolean;
 }
 
 export type GetSongsResponse = Array<Song>;

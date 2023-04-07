@@ -4,21 +4,23 @@ import { Typography } from "elements";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   UploadSongRequest,
-  generateArtistAgreement,
-  uploadSong,
+  useGenerateArtistAgreementThunk,
+  useUploadSongThunk,
 } from "modules/song";
 import { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data: profile = emptyProfile } = useGetProfileQuery();
+  const [uploadSong, isLoading] = useUploadSongThunk();
+  const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
+
+  console.log("IS LOADING: ", isLoading);
 
   const initialValues: UploadSongRequest = {
     image: undefined,
@@ -42,17 +44,15 @@ const UploadSong: FunctionComponent = () => {
       const artistName = `${profile.firstName} ${profile.lastName}`;
       const stageName = profile.nickname;
 
-      dispatch(
-        generateArtistAgreement({
-          body: {
-            songName,
-            companyName,
-            artistName,
-            stageName,
-          },
-          callback: () => navigate("confirm"),
-        })
-      );
+      generateArtistAgreement({
+        body: {
+          songName,
+          companyName,
+          artistName,
+          stageName,
+        },
+        callback: () => navigate("confirm"),
+      });
     } else {
       handleSubmit(values);
     }
@@ -60,7 +60,7 @@ const UploadSong: FunctionComponent = () => {
 
   // eslint-disable-next-line
   const handleSubmit = (values: any) => {
-    dispatch(uploadSong(values));
+    uploadSong(values);
   };
 
   const validations = {

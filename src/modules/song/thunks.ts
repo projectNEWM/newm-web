@@ -1,10 +1,9 @@
+import { asThunkHook, getFileBinary } from "common";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementPayload, cloudinaryApi, lambdaApi } from "api";
-import { getFileBinary } from "common";
 import { history } from "common/history";
 import { PatchSongRequest, UploadSongRequest } from "./types";
 import { extendedApi as songApi } from "./api";
-import { setIsLoading } from "./slice";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -16,10 +15,7 @@ export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
     try {
-      // set loading state to show loading indicator
-      dispatch(setIsLoading(true));
-
-      // optional upload params to format or crop image could go here
+      /// optional upload params to format or crop image could go here
       const uploadParams = {};
 
       const signatureResp = await dispatch(
@@ -80,9 +76,6 @@ export const uploadSong = createAsyncThunk(
       history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
-    } finally {
-      // done fetching songs
-      dispatch(setIsLoading(false));
     }
   }
 );
@@ -95,8 +88,6 @@ export const generateArtistAgreement = createAsyncThunk(
   "song/generateArtistAgreement",
   async ({ body, callback }: GenerateArtistAgreementPayload, { dispatch }) => {
     try {
-      dispatch(setIsLoading(true));
-
       const artistAgreementResp = await dispatch(
         lambdaApi.endpoints.generateArtistAgreement.initiate(body)
       );
@@ -106,8 +97,6 @@ export const generateArtistAgreement = createAsyncThunk(
       callback();
     } catch (err) {
       // do nothing
-    } finally {
-      dispatch(setIsLoading(false));
     }
   }
 );
@@ -121,9 +110,6 @@ export const patchSong = createAsyncThunk(
   "song/patchSong",
   async (body: PatchSongRequest, thunkApi) => {
     try {
-      // set loading state to show loading indicator
-      thunkApi.dispatch(setIsLoading(true));
-
       let cloudinaryImage = {};
 
       if (body.image) {
@@ -172,9 +158,14 @@ export const patchSong = createAsyncThunk(
       history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
-    } finally {
-      // done fetching songs
-      thunkApi.dispatch(setIsLoading(false));
     }
   }
+);
+
+export const useUploadSongThunk = asThunkHook(uploadSong);
+
+export const usePatchSongThunk = asThunkHook(patchSong);
+
+export const useGenerateArtistAgreementThunk = asThunkHook(
+  generateArtistAgreement
 );

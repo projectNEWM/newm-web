@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
 import { commonYupValidation, useWindowDimensions } from "common";
 import {
@@ -12,12 +11,16 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { Song, emptySong, patchSong, useGetSongQuery } from "modules/song";
+import {
+  Song,
+  emptySong,
+  useGetSongQuery,
+  usePatchSongThunk,
+} from "modules/song";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
@@ -25,6 +28,8 @@ const SongInfo = () => {
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: song = emptySong } = useGetSongQuery(id);
+
+  const [patchSong] = usePatchSongThunk();
 
   const { coverArtUrl, description, genres, moods, title } = song;
 
@@ -64,7 +69,7 @@ const SongInfo = () => {
       updatedValues.title = values.title;
     }
 
-    dispatch(patchSong({ id, ...updatedValues }));
+    patchSong({ id, ...updatedValues });
   };
 
   return (
@@ -76,7 +81,7 @@ const SongInfo = () => {
         validateOnBlur={ false }
         validationSchema={ validationSchema }
       >
-        { ({ dirty }) => {
+        { ({ dirty, isSubmitting }) => {
           return (
             <Form
               style={ {
@@ -201,6 +206,7 @@ const SongInfo = () => {
 
                   <Button
                     sx={ { display: dirty ? "inline-flex" : "none" } }
+                    isLoading={ isSubmitting }
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.md
                         ? "compact"
