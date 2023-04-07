@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
  * Wraps a thunk so that it can be used as a hook that returns
  * a function to call the thunk and a loading status.
  *
- * @param thunk thunk with the logic to be performed
- * @param args arguments that the thunk is called with
+ * @param thunk thunk that should be wrapped with the hook
  * @returns a function that returns the touple: [wrapped thunk, loading status]
  */
 export const asThunkHook = <T>(
