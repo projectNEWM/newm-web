@@ -24,8 +24,8 @@ export interface Profile {
   readonly twitterUrl: string;
   readonly instagramUrl: string;
   readonly companyIpRights: boolean;
-  readonly companyName: string;
-  readonly companyLogoUrl: string;
+  readonly companyName?: string;
+  readonly companyLogoUrl?: string;
 }
 
 export interface NewmOAuthRequest {
@@ -59,6 +59,7 @@ export interface UpdateProfileRequest {
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly bannerUrl?: string;
+  readonly companyLogoUrl?: string;
   readonly location?: string;
   readonly role?: string;
   readonly genre?: string;
@@ -70,24 +71,16 @@ export interface UpdateProfileRequest {
 }
 
 export interface ProfileFormValues
-  extends Omit<UpdateProfileRequest, "pictureUrl" | "bannerUrl"> {
+  extends Omit<
+    UpdateProfileRequest,
+    "pictureUrl" | "bannerUrl" | "companyLogoUrl"
+  > {
   readonly pictureUrl?: File;
   readonly bannerUrl?: File;
+  readonly companyLogoUrl?: File;
 }
 
-export interface GetProfileResponse {
-  readonly id: string;
-  readonly oauthType: string;
-  readonly oauthId: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-  readonly pictureUrl: string;
-  readonly role: string;
-  readonly genre: string;
-  readonly email: string;
-  readonly verificationStatus: Readonly<VerificationStatus>;
-}
+export type GetProfileResponse = Profile;
 
 export interface Request2FACode {
   readonly email: string;

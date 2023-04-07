@@ -22,6 +22,7 @@ export const updateProfile = createAsyncThunk(
 
       let bannerUrl;
       let pictureUrl;
+      let companyLogoUrl;
 
       if (body.bannerUrl) {
         // downsize if necessary
@@ -49,11 +50,25 @@ export const updateProfile = createAsyncThunk(
         );
       }
 
+      if (body.companyLogoUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_200,h_200",
+        };
+
+        companyLogoUrl = await uploadToCloudinary(
+          body.companyLogoUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
       const updateProfileResponse = await dispatch(
         sessionApi.endpoints.updateProfile.initiate({
           ...body,
           ...{ bannerUrl },
           ...{ pictureUrl },
+          ...{ companyLogoUrl },
         })
       );
 

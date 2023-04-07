@@ -20,7 +20,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   errorMessage,
 }) => (
   <Stack
-    spacing={ 1 }
+    spacing={ message || subtitle || errorMessage ? 1 : 0 }
     direction="column"
     sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
   >

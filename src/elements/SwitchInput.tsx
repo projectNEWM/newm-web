@@ -15,7 +15,6 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   title,
   description,
   includeBorder = true,
-  checked,
   children,
   ...props
 }) => {
@@ -49,7 +48,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
 
         <Switch { ...props } />
       </Stack>
-      { checked ? children : null }
+      { props.checked ? children : null }
     </Stack>
   );
 };

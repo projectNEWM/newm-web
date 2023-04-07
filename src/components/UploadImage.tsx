@@ -25,9 +25,11 @@ export interface UploadImageProps {
   };
   readonly errorMessageLocation?: "inside" | "outside";
   readonly minimumSizeLabel?: string;
-  readonly message?: string;
+  readonly emptyMessage?: string;
+  readonly replaceMessage?: string;
   readonly errorMessage?: string;
   readonly isSuccessIconDisplayed?: boolean;
+  readonly isMinimumSizeDisplayed?: boolean;
   readonly rootSx?: SxProps;
   readonly contentSx?: SxProps;
 }
@@ -45,12 +47,14 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   onChange,
   onBlur,
   onError,
-  message,
+  emptyMessage = "Drag & drop to upload or browse",
+  replaceMessage = "Upload a new image",
   errorMessage,
   minDimensions,
   errorMessageLocation = "outside",
   minimumSizeLabel = "Minimum size",
   isSuccessIconDisplayed = true,
+  isMinimumSizeDisplayed = true,
   rootSx = {},
   contentSx = {},
 }) => {
@@ -151,7 +155,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           { isHovering || isDragActive ? (
             <IconMessage
               icon={ <AddImageIcon /> }
-              message="Upload a new image"
+              message={ replaceMessage }
               errorMessage={ internalErrorMessage }
             />
           ) : isSuccessIconDisplayed ? (
@@ -168,9 +172,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         >
           <IconMessage
             icon={ <AddImageIcon /> }
-            message={ message }
+            message={ emptyMessage }
             subtitle={
-              minDimensions
+              isMinimumSizeDisplayed && minDimensions
                 ? `${minimumSizeLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
                 : undefined
             }

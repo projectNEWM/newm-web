@@ -51,6 +51,7 @@ const Profile: FunctionComponent = () => {
       nickname,
       pictureUrl,
       bannerUrl,
+      companyLogoUrl,
       location,
       role,
       twitterUrl,
@@ -89,6 +90,7 @@ const Profile: FunctionComponent = () => {
     role,
     pictureUrl,
     bannerUrl,
+    companyLogoUrl,
     location,
     currentPassword: "",
     newPassword: "",
@@ -138,6 +140,7 @@ const Profile: FunctionComponent = () => {
       nickname,
       pictureUrl,
       bannerUrl,
+      companyLogoUrl,
       location,
       role,
       twitterUrl,
@@ -202,7 +205,7 @@ const Profile: FunctionComponent = () => {
             <Form>
               <UploadImageField
                 name="bannerUrl"
-                message="Drag & drop to upload or browse"
+                emptyMessage="Drag & drop to upload or browse"
                 minDimensions={ { width: 1200, height: 200 } }
                 errorMessageLocation="inside"
                 isSuccessIconDisplayed={ false }
@@ -232,7 +235,7 @@ const Profile: FunctionComponent = () => {
               >
                 <UploadImageField
                   name="pictureUrl"
-                  message="Upload an image"
+                  emptyMessage="Upload an image"
                   minDimensions={ { width: 200, height: 200 } }
                   minimumSizeLabel="Min"
                   isSuccessIconDisplayed={ false }
@@ -403,10 +406,19 @@ const Profile: FunctionComponent = () => {
                         flexDirection="row"
                         mt={ 2 }
                       >
-                        <img
-                          alt="TODO: Replace this with reusable img component"
-                          src={ pictureUrl }
-                          style={ { height: "60px", width: "60px" } }
+                        <UploadImageField
+                          name="companyLogoUrl"
+                          minDimensions={ { width: 100, height: 100 } }
+                          minimumSizeLabel="Min"
+                          emptyMessage=""
+                          replaceMessage=""
+                          isSuccessIconDisplayed={ false }
+                          isMinimumSizeDisplayed={ false }
+                          contentSx={ {
+                            borderRadius: "50%",
+                            width: 60,
+                            height: 60,
+                          } }
                         />
                         <TextInputField
                           aria-label="Your company name"
