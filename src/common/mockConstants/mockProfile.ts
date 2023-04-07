@@ -8,7 +8,6 @@ export const mockProfile: Profile = {
   firstName: "John",
   lastName: "Smith",
   nickname: "Johnny",
-  pictureUrl: "https://newm.io/image",
   bannerUrl: "https://newm.io/image",
   role: "Producer",
   genre: "Instrumental",

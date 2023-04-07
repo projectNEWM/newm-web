@@ -249,7 +249,11 @@ const Profile: FunctionComponent = () => {
                   } }
                 />
 
-                <Stack gap={ 1 } width="100%">
+                <Stack
+                  gap={ 1 }
+                  width="100%"
+                  alignItems={ ["center", "center", "flex-start"] }
+                >
                   <Stack
                     direction="row"
                     alignItems="center"
