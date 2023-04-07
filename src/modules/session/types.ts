@@ -13,19 +13,19 @@ export interface Profile {
   readonly firstName: string;
   readonly lastName: string;
   readonly nickname: string;
-  readonly pictureUrl: string;
+  readonly pictureUrl?: string;
+  readonly bannerUrl?: string;
+  readonly location?: string;
   readonly role: string;
   readonly genre: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
   readonly biography: string;
-  readonly bannerUrl: string;
-  readonly location: string;
   readonly websiteUrl: string;
   readonly twitterUrl: string;
   readonly instagramUrl: string;
   readonly companyIpRights: boolean;
-  readonly companyName: string;
-  readonly companyLogoUrl: string;
+  readonly companyName?: string;
+  readonly companyLogoUrl?: string;
 }
 
 export interface NewmOAuthRequest {
@@ -58,6 +58,9 @@ export interface UpdateProfileRequest {
   readonly lastName?: string;
   readonly nickname?: string;
   readonly pictureUrl?: string;
+  readonly bannerUrl?: string;
+  readonly companyLogoUrl?: string;
+  readonly location?: string;
   readonly role?: string;
   readonly genre?: string;
   readonly email?: string;
@@ -67,19 +70,17 @@ export interface UpdateProfileRequest {
   readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
-export interface GetProfileResponse {
-  readonly id: string;
-  readonly oauthType: string;
-  readonly oauthId: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname: string;
-  readonly pictureUrl: string;
-  readonly role: string;
-  readonly genre: string;
-  readonly email: string;
-  readonly verificationStatus: Readonly<VerificationStatus>;
+export interface ProfileFormValues
+  extends Omit<
+    UpdateProfileRequest,
+    "pictureUrl" | "bannerUrl" | "companyLogoUrl"
+  > {
+  readonly pictureUrl?: File;
+  readonly bannerUrl?: File;
+  readonly companyLogoUrl?: File;
 }
+
+export type GetProfileResponse = Profile;
 
 export interface Request2FACode {
   readonly email: string;

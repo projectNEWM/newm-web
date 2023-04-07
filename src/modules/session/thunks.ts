@@ -2,25 +2,74 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
+import { uploadToCloudinary } from "api/cloudinary/utils";
 import { setIsLoading } from "./slice";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
+  ProfileFormValues,
   ResetPasswordRequest,
-  UpdateProfileRequest,
 } from "./types";
 
 /**
  * Updates the user's profile and fetches the updated data.
  */
 export const updateProfile = createAsyncThunk(
-  "session/updateInitialProfile",
-  async (body: UpdateProfileRequest, { dispatch }) => {
+  "session/updateProfile",
+  async (body: ProfileFormValues, { dispatch }) => {
     try {
       dispatch(setIsLoading(true));
 
+      let bannerUrl;
+      let pictureUrl;
+      let companyLogoUrl;
+
+      if (body.bannerUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_1600,h_200",
+        };
+
+        bannerUrl = await uploadToCloudinary(
+          body.bannerUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
+      if (body.pictureUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_400,h_400",
+        };
+
+        pictureUrl = await uploadToCloudinary(
+          body.pictureUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
+      if (body.companyLogoUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_200,h_200",
+        };
+
+        companyLogoUrl = await uploadToCloudinary(
+          body.companyLogoUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
       const updateProfileResponse = await dispatch(
-        sessionApi.endpoints.updateProfile.initiate(body)
+        sessionApi.endpoints.updateProfile.initiate({
+          ...body,
+          ...{ bannerUrl },
+          ...{ pictureUrl },
+          ...{ companyLogoUrl },
+        })
       );
 
       if ("error" in updateProfileResponse) {
@@ -55,7 +104,7 @@ export const updateProfile = createAsyncThunk(
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
-  async (body: UpdateProfileRequest, { dispatch }) => {
+  async (body: ProfileFormValues, { dispatch }) => {
     const updateProfileResponse = await dispatch(updateProfile(body));
 
     if ("error" in updateProfileResponse) {

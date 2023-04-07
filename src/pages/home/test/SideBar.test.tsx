@@ -23,7 +23,7 @@ describe("<Sidebar>", () => {
     expect(queryByText("Sushi")).toBeTruthy();
   });
 
-  describe("if a `profileUrl` field is present", () => {
+  describe("if a `pictureUrl` field is present", () => {
     it("renders the profile image", () => {
       const { queryByLabelText } = renderSidebar({
         pictureUrl: "https://www.example.com/image.png",
@@ -33,7 +33,7 @@ describe("<Sidebar>", () => {
     });
   });
 
-  describe("if a `profileUrl` field is not present", () => {
+  describe("if a `pictureUrl` field is not present", () => {
     it("does not render the profile image", () => {
       const { queryByLabelText } = renderSidebar();
 

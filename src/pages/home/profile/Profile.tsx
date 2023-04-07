@@ -9,18 +9,17 @@ import { useGetSongsQuery } from "modules/song";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import {
   DropdownSelectField,
-  ProfileImage,
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  UploadImageField,
 } from "components";
 import {
   commonYupValidation,
   getUpdatedValues,
   useWindowDimensions,
 } from "common";
-
-import { useGetRolesQuery } from "modules/content";
+import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
   VerificationStatus,
   selectSession,
@@ -28,6 +27,7 @@ import {
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
+import countries from "country-list";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
@@ -35,7 +35,8 @@ const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const windowWidth = useWindowDimensions()?.width;
-  const { data: roles = [] } = useGetRolesQuery();
+  const { data: roleOptions = [] } = useGetRolesQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
 
   const {
     isLoading,
@@ -49,6 +50,9 @@ const Profile: FunctionComponent = () => {
       lastName,
       nickname,
       pictureUrl,
+      bannerUrl,
+      companyLogoUrl,
+      location,
       role,
       twitterUrl,
       verificationStatus,
@@ -67,11 +71,13 @@ const Profile: FunctionComponent = () => {
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
 
+  const countryOptions = countries.getNames();
+
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
 
-  const initialValues = {
+  const initialValues: FormikValues = {
     biography,
     companyName,
     email,
@@ -82,6 +88,13 @@ const Profile: FunctionComponent = () => {
     lastName,
     nickname,
     role,
+    pictureUrl,
+    bannerUrl,
+    companyLogoUrl,
+    location,
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
     twitterUrl,
     websiteUrl,
   };
@@ -98,7 +111,17 @@ const Profile: FunctionComponent = () => {
     companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roles),
+    role: commonYupValidation.role(roleOptions),
+    genre: commonYupValidation.genre(genreOptions),
+    currentPassword: Yup.string().when("newPassword", {
+      is: (currentValue: string) => currentValue,
+      then: Yup.string().required("Current password is required"),
+    }),
+    newPassword: commonYupValidation.newPassword,
+    confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
+      is: (currentValue: string) => currentValue,
+      then: Yup.string().required("Confirm new password is required"),
+    }),
     twitterUrl: Yup.string().url("Please enter a valid url"),
     websiteUrl: Yup.string().url("Please enter a valid url"),
   });
@@ -116,6 +139,9 @@ const Profile: FunctionComponent = () => {
       lastName,
       nickname,
       pictureUrl,
+      bannerUrl,
+      companyLogoUrl,
+      location,
       role,
       twitterUrl,
       websiteUrl,
@@ -147,6 +173,7 @@ const Profile: FunctionComponent = () => {
         <Typography variant="h3" fontWeight={ 800 }>
           PROFILE
         </Typography>
+
         { isUnverified || isPendingVerification ? (
           <Stack direction="row">
             <Button
@@ -157,6 +184,7 @@ const Profile: FunctionComponent = () => {
             >
               { isUnverified ? "Verify your profile" : "Pending Verification" }
             </Button>
+
             <Tooltip title="Verification process takes about 20 minutes.">
               <IconButton>
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
@@ -165,20 +193,7 @@ const Profile: FunctionComponent = () => {
           </Stack>
         ) : null }
       </Stack>
-      <Stack direction="row" alignItems="center" columnGap={ 2 } mt={ 5 }>
-        { pictureUrl && (
-          <ProfileImage
-            alt="Profile picture"
-            src={ pictureUrl }
-            sx={ { mb: 5 } }
-            referrerPolicy="no-referrer"
-          />
-        ) }
-        <Typography variant="h3" fontWeight="700">
-          { nickname }
-        </Typography>
-        { isVerified ? <CheckCircleIcon color="success" /> : null }
-      </Stack>
+
       <Formik
         enableReinitialize={ true }
         initialValues={ initialValues }
@@ -188,6 +203,79 @@ const Profile: FunctionComponent = () => {
         { ({ dirty, handleReset }) => {
           return (
             <Form>
+              <UploadImageField
+                name="bannerUrl"
+                emptyMessage="Drag & drop to upload or browse"
+                minDimensions={ { width: 1200, height: 200 } }
+                errorMessageLocation="inside"
+                isSuccessIconDisplayed={ false }
+                rootSx={ {
+                  position: "absolute",
+                  left: [0, 0, "15rem"],
+                  right: "2px",
+                  top: "10rem",
+                  zIndex: 0,
+                  maxWidth: "99999px",
+                } }
+                contentSx={ {
+                  height: "200px",
+                } }
+              />
+
+              <Stack
+                display="flex"
+                flexDirection={ ["column", "column", "row"] }
+                justifyContent="flex-start"
+                alignItems="center"
+                position="relative"
+                zIndex={ 10 }
+                gap={ 5 }
+                mt={ 29.5 }
+                mb={ 8 }
+              >
+                <UploadImageField
+                  name="pictureUrl"
+                  emptyMessage="Upload an image"
+                  minDimensions={ { width: 200, height: 200 } }
+                  minimumSizeLabel="Min"
+                  isSuccessIconDisplayed={ false }
+                  contentSx={ {
+                    borderRadius: "50%",
+                    width: 200,
+                    height: 200,
+                    padding: 1,
+                    marginTop: "-1.5rem",
+                    backgroundColor: theme.colors.grey700,
+                  } }
+                />
+
+                <Stack
+                  gap={ 1 }
+                  width="100%"
+                  alignItems={ ["center", "center", "flex-start"] }
+                >
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent={ ["center", "center", "flex-start"] }
+                    gap={ 2 }
+                  >
+                    <Typography variant="h3" fontWeight="700">
+                      { nickname?.toUpperCase() }
+                    </Typography>
+                    { isVerified ? <CheckCircleIcon color="success" /> : null }
+                  </Stack>
+
+                  <DropdownSelectField
+                    label="LOCATION"
+                    name="location"
+                    placeholder="Select your country of residence"
+                    options={ countryOptions }
+                    widthType="default"
+                  />
+                </Stack>
+              </Stack>
+
               <Box
                 sx={ { maxWidth: ["340px", "340px", "700px"], margin: "0 auto" } }
               >
@@ -212,7 +300,7 @@ const Profile: FunctionComponent = () => {
                       <DropdownSelectField
                         label="MAIN ROLE"
                         name="role"
-                        options={ roles }
+                        options={ roleOptions }
                         placeholder="Main role"
                       />
                       <TextInputField
@@ -322,10 +410,19 @@ const Profile: FunctionComponent = () => {
                         flexDirection="row"
                         mt={ 2 }
                       >
-                        <img
-                          alt="TODO: Replace this with reusable img component"
-                          src={ pictureUrl }
-                          style={ { height: "60px", width: "60px" } }
+                        <UploadImageField
+                          name="companyLogoUrl"
+                          minDimensions={ { width: 100, height: 100 } }
+                          minimumSizeLabel="Min"
+                          emptyMessage=""
+                          replaceMessage=""
+                          isSuccessIconDisplayed={ false }
+                          isMinimumSizeDisplayed={ false }
+                          contentSx={ {
+                            borderRadius: "50%",
+                            width: 60,
+                            height: 60,
+                          } }
                         />
                         <TextInputField
                           aria-label="Your company name"

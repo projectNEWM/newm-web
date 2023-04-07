@@ -11,6 +11,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
+import { WidthType } from "common";
 import { Tooltip } from "elements";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -20,7 +21,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly tooltipText?: string;
   readonly label?: string;
   readonly startAdornment?: JSX.Element;
-  readonly widthType?: "default" | "full";
+  readonly widthType?: WidthType;
 }
 
 const StyledRootElement = styled.div`

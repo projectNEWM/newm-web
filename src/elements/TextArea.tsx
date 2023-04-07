@@ -10,14 +10,15 @@ import { Box, Stack, Typography } from "@mui/material";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
+import { WidthType } from "common";
 
 export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
   readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
   readonly endAdornment?: JSX.Element;
+  readonly widthType?: WidthType;
   readonly isOptional?: boolean;
-  readonly widthType?: "default" | "full";
 }
 
 const StyledRootElement = styled.div`

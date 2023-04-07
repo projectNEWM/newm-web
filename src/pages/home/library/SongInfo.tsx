@@ -44,7 +44,9 @@ const SongInfo = () => {
 
   const validationSchema = Yup.object({
     description: Yup.string(),
-    genre: commonYupValidation.genre(genres),
+    genres: commonYupValidation
+      .genres(genreOptions)
+      .min(1, "At lease one genre is required"),
     image: Yup.mixed(),
     title: Yup.string(),
   });
@@ -61,10 +63,10 @@ const SongInfo = () => {
       updatedValues.description = values.description;
     }
     if (JSON.stringify(genres) !== JSON.stringify(values.genres)) {
-      updatedValues.genre = values.genre;
+      updatedValues.genres = values.genres;
     }
     if (JSON.stringify(moods) !== JSON.stringify(values.moods)) {
-      updatedValues.genre = values.genre;
+      updatedValues.moods = values.moods;
     }
     if (title !== values.title) {
       updatedValues.title = values.title;
@@ -104,7 +106,11 @@ const SongInfo = () => {
                   SONG COVER ART
                 </Typography>
 
-                <UploadImageField name="image" />
+                <UploadImageField
+                  name="image"
+                  emptyMessage="Drag and drop or browse your image"
+                  minDimensions={ { width: 2048, height: 2048 } }
+                />
               </Stack>
               <Stack
                 sx={ {
