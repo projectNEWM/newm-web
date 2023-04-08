@@ -17,6 +17,7 @@ export const SearchBox = ({
     <Box sx={ { pb: 3, maxWidth: "340px" } }>
       <TextInput
         value={ query }
+        isOptional={ false }
         onChange={ (e) => onSearch(e.target.value) }
         startAdornment={
           <SearchRoundedIcon

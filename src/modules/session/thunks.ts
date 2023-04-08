@@ -2,12 +2,97 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
+import { uploadToCloudinary } from "api/cloudinary/utils";
+import { asThunkHook } from "common";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
+  ProfileFormValues,
   ResetPasswordRequest,
-  UpdateProfileRequest,
 } from "./types";
+
+/**
+ * Updates the user's profile and fetches the updated data.
+ */
+export const updateProfile = createAsyncThunk(
+  "session/updateProfile",
+  async (body: ProfileFormValues, { dispatch }) => {
+    try {
+      let bannerUrl;
+      let pictureUrl;
+      let companyLogoUrl;
+
+      if (body.bannerUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_1600,h_200",
+        };
+
+        bannerUrl = await uploadToCloudinary(
+          body.bannerUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
+      if (body.pictureUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_400,h_400",
+        };
+
+        pictureUrl = await uploadToCloudinary(
+          body.pictureUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
+      if (body.companyLogoUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_lfill,w_200,h_200",
+        };
+
+        companyLogoUrl = await uploadToCloudinary(
+          body.companyLogoUrl as File,
+          uploadParams,
+          dispatch
+        );
+      }
+
+      const updateProfileResponse = await dispatch(
+        sessionApi.endpoints.updateProfile.initiate({
+          ...body,
+          ...{ bannerUrl },
+          ...{ pictureUrl },
+          ...{ companyLogoUrl },
+        })
+      );
+
+      if ("error" in updateProfileResponse) {
+        dispatch(
+          setToastMessage({
+            message: "There was an error updating your profile",
+            severity: "error",
+          })
+        );
+        return;
+      }
+
+      dispatch(
+        setToastMessage({
+          message: "Successfully updated profile information.",
+          severity: "success",
+        })
+      );
+
+      await dispatch(sessionApi.endpoints.getProfile.initiate());
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    }
+  }
+);
 
 /**
  * Updates the user's profile, fetches the updated data,
@@ -15,9 +100,9 @@ import {
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
-  async (body: UpdateProfileRequest, { dispatch }) => {
+  async ({ nickname, role }: ProfileFormValues, { dispatch }) => {
     const updateProfileResponse = await dispatch(
-      sessionApi.endpoints.updateProfile.initiate(body)
+      sessionApi.endpoints.updateProfile.initiate({ nickname, role })
     );
 
     if ("error" in updateProfileResponse) {
@@ -150,3 +235,5 @@ export const handleSocialLoginError = createAsyncThunk(
     );
   }
 );
+
+export const useUpdateProfileThunk = asThunkHook(updateProfile);

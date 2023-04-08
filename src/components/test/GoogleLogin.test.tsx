@@ -9,16 +9,7 @@ jest.mock("react-redux", () => ({
   useDispatch: () => jest.fn(),
 }));
 
-// mock API call thunk
-jest.mock("modules/session", () => ({
-  extendedApi: {
-    endpoints: {
-      googleLogin: {
-        initiate: jest.fn(),
-      },
-    },
-  },
-}));
+jest.spyOn(extendedApi.endpoints.googleLogin, "initiate");
 
 // mock successful Google auth response on click
 jest.mock("react-google-login", () => {

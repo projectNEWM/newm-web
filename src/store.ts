@@ -10,9 +10,15 @@ import { enableReduxLogging, isProd } from "buildParams";
 import { uiReducer } from "modules/ui";
 import { walletReducer } from "modules/wallet";
 
+const sessionPersistConfig = {
+  key: "session",
+  storage,
+  whitelist: ["verificationPingStartedAt"],
+};
+
 export const reducer = combineReducers({
   playlist: playlistReducer,
-  session: sessionReducer,
+  session: persistReducer(sessionPersistConfig, sessionReducer),
   song: songReducer,
   ui: uiReducer,
   wallet: walletReducer,
@@ -20,14 +26,6 @@ export const reducer = combineReducers({
   [lambdaApi.reducerPath]: lambdaApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
 });
-
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["session"],
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
   devTools: !isProd,
@@ -40,7 +38,7 @@ const store = configureStore({
     ];
     return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
   },
-  reducer: persistedReducer,
+  reducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -1,5 +1,12 @@
-export interface CloudinaryUploadParams {
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export interface CloudinaryUploadOptions {
+  readonly eager?: string;
+}
+
+export interface CloudinaryUploadParams extends CloudinaryUploadOptions {
+  readonly api_key: string;
+  readonly file: string | ArrayBuffer | null;
+  readonly signature: string;
+  readonly timestamp: number;
 }
 
 export interface CloudinaryUploadResponse {
@@ -21,4 +28,13 @@ export interface CloudinaryUploadResponse {
   readonly version: number;
   readonly version_id: string;
   readonly width: number;
+  readonly eager?: ReadonlyArray<{
+    readonly bytes: number;
+    readonly format: string;
+    readonly height: number;
+    readonly secure_url: string;
+    readonly transformation: string;
+    readonly url: string;
+    readonly width: number;
+  }>;
 }

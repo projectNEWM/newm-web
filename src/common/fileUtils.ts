@@ -1,16 +1,28 @@
+import { ValidateDimensionsParams } from "./types";
+
 /**
- * @returns a promise with a true or false value depending
- * on whether the image has the correct dimensions.
+ * @returns a promise that resolves true if the provided image
+ * has valid dimensions and throws an error if not.
  */
-export const validateImageDimensions = (
-  imageUrl: string,
-  minWidth: number,
-  minHeight: number
-) => {
-  return new Promise<boolean>((resolve) => {
+export const validateImageDimensions = ({
+  imageUrl,
+  minWidth,
+  minHeight,
+}: ValidateDimensionsParams) => {
+  return new Promise<boolean>((resolve, reject) => {
     const image = new Image();
+
     image.onload = () => {
-      resolve(image.width >= minWidth && image.height >= minHeight);
+      const hasValidDimensions =
+        image.width >= minWidth && image.height >= minHeight;
+
+      if (!hasValidDimensions) {
+        reject(
+          new Error(`Image must be at least ${minWidth} x ${minHeight} pixels.`)
+        );
+      }
+
+      resolve(true);
     };
 
     image.src = imageUrl;
@@ -20,7 +32,9 @@ export const validateImageDimensions = (
 /**
  * Create a base64 binary string representation of a file.
  */
-export const getFileBinary = async (file: File) => {
+export const getFileBinary = async (
+  file: File
+): Promise<string | ArrayBuffer | null> => {
   return await new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => {

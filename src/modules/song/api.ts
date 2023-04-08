@@ -1,4 +1,4 @@
-import api, { CloudinaryUploadParams, Tags } from "api";
+import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
 import {
   AudioUploadUrlRequest,
@@ -124,7 +124,7 @@ export const extendedApi = api.injectEndpoints({
     }),
     getCloudinarySignature: build.mutation<
       CloudinarySignatureResponse,
-      CloudinaryUploadParams
+      CloudinaryUploadOptions
     >({
       query: (body) => ({
         url: "v1/cloudinary/sign",

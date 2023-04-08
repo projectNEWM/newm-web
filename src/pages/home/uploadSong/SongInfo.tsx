@@ -28,8 +28,8 @@ const SongInfo: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
-  const { data: genres = [] } = useGetGenresQuery();
-  const { data: moods = [] } = useGetMoodsQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: moodOptions = [] } = useGetMoodsQuery();
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -69,7 +69,7 @@ const SongInfo: FunctionComponent = () => {
           rowGap: ["16px", null, "12px"],
         } }
       >
-        <Stack spacing={ 0.5 }>
+        <Stack spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             MUSIC
           </Typography>
@@ -77,12 +77,16 @@ const SongInfo: FunctionComponent = () => {
           <UploadSongField name="audio" />
         </Stack>
 
-        <Stack spacing={ 0.5 } alignItems="center">
+        <Stack spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
 
-          <UploadImageField name="image" />
+          <UploadImageField
+            name="image"
+            emptyMessage="Drag and drop or browse your image"
+            minDimensions={ { width: 2048, height: 2048 } }
+          />
         </Stack>
       </Stack>
 
@@ -104,6 +108,7 @@ const SongInfo: FunctionComponent = () => {
         } }
       >
         <TextInputField
+          isOptional={ false }
           name="title"
           label="SONG TITLE"
           placeholder="Give your track a name..."
@@ -120,9 +125,10 @@ const SongInfo: FunctionComponent = () => {
         >
           <DropdownMultiSelectField
             label="Genres"
+            isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
-            options={ genres }
+            options={ genreOptions }
           />
 
           { /** TODO: get moods from back-end */ }
@@ -130,7 +136,7 @@ const SongInfo: FunctionComponent = () => {
             label="Moods"
             name="moods"
             placeholder="Select all that apply"
-            options={ moods }
+            options={ moodOptions }
           />
         </Stack>
 

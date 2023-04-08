@@ -23,12 +23,20 @@ export const emptyProfile: Profile = {
   oauthType: "",
   email: "",
   firstName: "",
-  role: "",
-  genre: "",
   lastName: "",
   nickname: "",
+  location: "",
   pictureUrl: "",
+  bannerUrl: "",
+  role: "",
   verificationStatus: VerificationStatus.Unverified,
+  biography: "",
+  instagramUrl: "",
+  companyIpRights: false,
+  twitterUrl: "",
+  websiteUrl: "",
+  companyLogoUrl: "",
+  companyName: "",
 };
 
 export const extendedApi = api.injectEndpoints({

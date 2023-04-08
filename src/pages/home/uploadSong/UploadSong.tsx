@@ -1,6 +1,8 @@
 import { Box, Container } from "@mui/material";
+import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
+import { useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   UploadSongRequest,
@@ -16,11 +18,10 @@ import SongInfo from "./SongInfo";
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
 
+  const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: profile = emptyProfile } = useGetProfileQuery();
-  const [uploadSong, isLoading] = useUploadSongThunk();
+  const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
-
-  console.log("IS LOADING: ", isLoading);
 
   const initialValues: UploadSongRequest = {
     image: undefined,
@@ -67,7 +68,9 @@ const UploadSong: FunctionComponent = () => {
     image: Yup.mixed().required("This field is required"),
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
-    genres: Yup.array().min(1, "This field is required"),
+    genres: commonYupValidation
+      .genres(genreOptions)
+      .min(1, "At lease one genre is required"),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()
