@@ -83,7 +83,7 @@ const SongInfo: FunctionComponent = () => {
           </Typography>
 
           <UploadImageField
-            name="image"
+            name="coverArtUrl"
             emptyMessage="Drag and drop or browse your image"
             minDimensions={ { width: 2048, height: 2048 } }
           />

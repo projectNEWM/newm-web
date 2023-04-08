@@ -134,24 +134,7 @@ const Profile: FunctionComponent = () => {
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: UpdateProfileRequest) => {
-    const originalValues = {
-      biography,
-      companyName,
-      firstName,
-      instagramUrl,
-      companyIpRights,
-      lastName,
-      nickname,
-      pictureUrl,
-      bannerUrl,
-      companyLogoUrl,
-      location,
-      role,
-      twitterUrl,
-      websiteUrl,
-    };
-
-    const updatedValues = getUpdatedValues(originalValues, values);
+    const updatedValues = getUpdatedValues(initialValues, values);
 
     if (
       updatedValues.companyIpRights === false ||

@@ -100,9 +100,9 @@ export const updateProfile = createAsyncThunk(
  */
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
-  async ({ nickname, role }: ProfileFormValues, { dispatch }) => {
+  async (body: ProfileFormValues, { dispatch }) => {
     const updateProfileResponse = await dispatch(
-      sessionApi.endpoints.updateProfile.initiate({ nickname, role })
+      sessionApi.endpoints.updateProfile.initiate(body)
     );
 
     if ("error" in updateProfileResponse) {
@@ -237,3 +237,5 @@ export const handleSocialLoginError = createAsyncThunk(
 );
 
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
+
+export const useUpdateInitialProfile = asThunkHook(updateInitialProfile);

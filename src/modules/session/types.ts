@@ -72,11 +72,7 @@ export interface ProfileFormValues
   readonly newPassword?: string;
 }
 
-export interface UpdateProfileRequest
-  extends Omit<
-    ProfileFormValues,
-    "id" | "email" | "oauthType" | "oauthId" | "verificationStatus"
-  > {
+export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
   readonly newPassword?: string;
   readonly confirmPassword?: string;
   readonly authCode?: number;

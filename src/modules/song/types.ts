@@ -32,9 +32,8 @@ export interface Creditor {
 }
 
 export interface UploadSongRequest {
-  readonly image?: any; // eslint-disable-line
+  readonly coverArtUrl?: string | File; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
-  readonly coverArtUrl?: string;
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
   readonly moods: ReadonlyArray<string>;

@@ -22,7 +22,7 @@ export const uploadSong = createAsyncThunk(
       };
 
       const coverArtUrl = await uploadToCloudinary(
-        body.image,
+        body.coverArtUrl as File,
         uploadParams,
         dispatch
       );
@@ -98,14 +98,14 @@ export const patchSong = createAsyncThunk(
     try {
       let coverArtUrl;
 
-      if (body.image) {
+      if (body.coverArtUrl) {
         // downsize if necessary
         const uploadParams = {
           eager: "c_fit,w_5000,h_5000",
         };
 
         coverArtUrl = await uploadToCloudinary(
-          body.image,
+          body.coverArtUrl as File,
           uploadParams,
           dispatch
         );

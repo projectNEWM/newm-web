@@ -1,9 +1,8 @@
 import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import { ProfileFormValues, updateInitialProfile } from "modules/session";
+import { ProfileFormValues, useUpdateInitialProfile } from "modules/session";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
@@ -14,9 +13,10 @@ import Complete from "./Complete";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
+
+  const [updateInitialProfile] = useUpdateInitialProfile();
 
   /**
    * Initial form values.
@@ -40,7 +40,7 @@ const CreateProfile: FunctionComponent = () => {
    * Submits the form when on the last route of the form.
    */
   const handleSubmit = (values: ProfileFormValues) => {
-    dispatch(updateInitialProfile({ ...values }));
+    updateInitialProfile({ ...values });
   };
 
   return (

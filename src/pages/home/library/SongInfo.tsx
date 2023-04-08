@@ -2,7 +2,11 @@ import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { Form, Formik, FormikValues } from "formik";
-import { commonYupValidation, useWindowDimensions } from "common";
+import {
+  commonYupValidation,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "common";
 import {
   DropdownMultiSelectField,
   TextAreaField,
@@ -27,14 +31,19 @@ const SongInfo = () => {
 
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
-  const { data: song = emptySong } = useGetSongQuery(id);
-
+  const {
+    data: {
+      title,
+      coverArtUrl,
+      description,
+      genres = [],
+      moods = [],
+    } = emptySong,
+  } = useGetSongQuery(id);
   const [patchSong] = usePatchSongThunk();
 
-  const { coverArtUrl, description, genres, moods, title } = song;
-
   const initialValues = {
-    image: coverArtUrl,
+    coverArtUrl,
     description,
     genres,
     moods,
@@ -43,11 +52,9 @@ const SongInfo = () => {
 
   const validationSchema = Yup.object({
     description: Yup.string(),
-    genre: commonYupValidation.genre(genreOptions),
     genres: commonYupValidation
       .genres(genreOptions)
       .min(1, "At lease one genre is required"),
-    image: Yup.mixed(),
     title: Yup.string(),
   });
 
@@ -55,22 +62,7 @@ const SongInfo = () => {
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: FormikValues) => {
-    const updatedValues: FormikValues = {};
-    if (values.image && coverArtUrl !== values.image) {
-      updatedValues.image = values.image;
-    }
-    if (description !== values.description) {
-      updatedValues.description = values.description;
-    }
-    if (JSON.stringify(genres) !== JSON.stringify(values.genres)) {
-      updatedValues.genres = values.genres;
-    }
-    if (JSON.stringify(moods) !== JSON.stringify(values.moods)) {
-      updatedValues.moods = values.moods;
-    }
-    if (title !== values.title) {
-      updatedValues.title = values.title;
-    }
+    const updatedValues = getUpdatedValues(initialValues, values);
 
     patchSong({ id, ...updatedValues });
   };
@@ -107,7 +99,7 @@ const SongInfo = () => {
                 </Typography>
 
                 <UploadImageField
-                  name="image"
+                  name="coverArtUrl"
                   emptyMessage="Drag and drop or browse your image"
                   minDimensions={ { width: 2048, height: 2048 } }
                 />
