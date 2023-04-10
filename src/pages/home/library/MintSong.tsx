@@ -34,18 +34,43 @@ const MintSong = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { id, title } = location.state as Song;
 
-  const { profile } = useSelector(selectSession);
+  const {
+    profile: {
+      email,
+      firstName,
+      lastName,
+      nickname: stageName,
+      verificationStatus,
+    },
+  } = useSelector(selectSession);
   const { isLoading } = useSelector(selectSong);
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
 
-  const isVerified = profile.verificationStatus === VerificationStatus.Verified;
+  const isVerified = verificationStatus === VerificationStatus.Verified;
 
   const initialValues: FormValues = {
     isMinting: false,
-    owners: [],
-    creditors: [],
+    owners: [
+      {
+        email,
+        firstName,
+        isCreator: true,
+        isRightsOwner: true,
+        lastName,
+        percentage: 100,
+        role: "Arranger",
+      },
+    ],
+    creditors: [
+      {
+        email,
+        firstName,
+        lastName,
+        role: "Arranger",
+      },
+    ],
     consentsToContract: false,
   };
 
@@ -82,8 +107,7 @@ const MintSong = () => {
     const songName = title;
     // TODO: reference company name when exists in profile
     const companyName = "ACME";
-    const artistName = `${profile.firstName} ${profile.lastName}`;
-    const stageName = profile.nickname;
+    const artistName = `${firstName} ${lastName}`;
 
     dispatch(
       generateArtistAgreement({
