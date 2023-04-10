@@ -128,7 +128,9 @@ export const TextInput: ForwardRefRenderFunction<
           fontWeight={ 500 }
         >
           <>
-            { label }
+            <Typography sx={ { textTransform: "uppercase", fontWeight: 500 } }>
+              { label }
+            </Typography>
 
             { !!tooltipText && (
               <Tooltip title={ tooltipText }>
