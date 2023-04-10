@@ -4,6 +4,7 @@ import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
+  DeleteSongRequest,
   GetSongsRequest,
   GetSongsResponse,
   PatchSongRequest,
@@ -116,6 +117,34 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    deleteSong: build.mutation<void, DeleteSongRequest>({
+      query: ({ songId, ...params }) => ({
+        url: `v1/songs/${songId}`,
+        method: "DELETE",
+        params,
+      }),
+      invalidatesTags: [Tags.Song],
+
+      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            setToastMessage({
+              message: "Successfully deleted song",
+              severity: "success",
+            })
+          );
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while deleting your song",
               severity: "error",
             })
           );

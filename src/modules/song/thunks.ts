@@ -3,7 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementPayload, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import { PatchSongRequest, UploadSongRequest } from "./types";
+import {
+  DeleteSongRequest,
+  PatchSongRequest,
+  UploadSongRequest,
+} from "./types";
 import { extendedApi as songApi } from "./api";
 
 /**
@@ -129,9 +133,34 @@ export const patchSong = createAsyncThunk(
   }
 );
 
+/**
+ * Request to delete user song. If successful, navigate to
+ * library and fetch new songs.
+ */
+export const deleteSong = createAsyncThunk(
+  "song/deleteSong",
+  async (body: DeleteSongRequest, { dispatch }) => {
+    try {
+      // request song deletion
+      const deleteSongResp = await dispatch(
+        songApi.endpoints.deleteSong.initiate(body)
+      );
+
+      if ("error" in deleteSongResp) return;
+
+      // navigate to library page to view updated library
+      history.push("/home/library");
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    }
+  }
+);
+
 export const useUploadSongThunk = asThunkHook(uploadSong);
 
 export const usePatchSongThunk = asThunkHook(patchSong);
+
+export const useDeleteSongThunk = asThunkHook(deleteSong);
 
 export const useGenerateArtistAgreementThunk = asThunkHook(
   generateArtistAgreement
