@@ -36,7 +36,7 @@ export interface UploadSongRequest {
   readonly audio?: any; // eslint-disable-line
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
-  readonly moods: ReadonlyArray<string>;
+  readonly moods?: ReadonlyArray<string>;
   readonly description: string;
   readonly isExplicit: boolean;
   readonly isMinting: boolean;
@@ -79,7 +79,7 @@ export interface Song {
   readonly createdAt: string;
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
-  readonly moods: ReadonlyArray<string>;
+  readonly moods?: ReadonlyArray<string>;
   readonly coverArtUrl?: string;
   readonly description?: string;
   readonly credits?: string;

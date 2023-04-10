@@ -141,15 +141,13 @@ export const deleteSong = createAsyncThunk(
   "song/deleteSong",
   async (body: DeleteSongRequest, { dispatch }) => {
     try {
-      // request song deletion
-      const deleteSongResp = await dispatch(
-        songApi.endpoints.deleteSong.initiate(body)
-      );
+      // navigate to library page before deleting due to known
+      // issue where RTK Query hook will re-fetch data after
+      // delete call invalidates cache tag, causing 404 error to
+      // display: https://github.com/reduxjs/redux-toolkit/issues/1672
+      history.replace("/home/library");
 
-      if ("error" in deleteSongResp) return;
-
-      // navigate to library page to view updated library
-      history.push("/home/library");
+      await dispatch(songApi.endpoints.deleteSong.initiate(body));
     } catch (err) {
       // do nothing, errors handled by endpoints
     }

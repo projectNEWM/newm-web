@@ -31,6 +31,7 @@ const SongInfo = () => {
 
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
+  const [patchSong] = usePatchSongThunk();
   const {
     data: {
       title,
@@ -40,7 +41,6 @@ const SongInfo = () => {
       moods = [],
     } = emptySong,
   } = useGetSongQuery(id);
-  const [patchSong] = usePatchSongThunk();
 
   const initialValues = {
     coverArtUrl,
