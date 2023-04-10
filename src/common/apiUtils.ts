@@ -19,24 +19,3 @@ export const prepareNewmAuthHeader = (
 
   return headers;
 };
-
-/**
- * Takes multiple RTK Query API objects and returns
- * a single merged API object.
- */
-export const mergeApis = (
-  // eslint-disable-next-line
-  ...apis: any[]
-) => {
-  return apis.reduce(
-    (merged, api) => ({
-      ...api,
-      ...merged,
-      endpoints: {
-        ...merged.endpoints,
-        ...api.endpoints,
-      },
-    }),
-    {}
-  );
-};

@@ -7,15 +7,18 @@ import {
   Creditor,
   Owner,
   Song,
-  generateArtistAgreement,
-  patchSong,
-  selectSong,
+  useGenerateArtistAgreementThunk,
+  usePatchSongThunk,
 } from "modules/song";
 import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
 import { Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-import { VerificationStatus, selectSession } from "modules/session";
+import { useDispatch } from "react-redux";
+import {
+  VerificationStatus,
+  emptyProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
 import { setIsIdenfyModalOpen } from "modules/ui";
@@ -34,8 +37,9 @@ const MintSong = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { id, title } = location.state as Song;
 
-  const { profile } = useSelector(selectSession);
-  const { isLoading } = useSelector(selectSong);
+  const { data: profile = emptyProfile } = useGetProfileQuery();
+  const [patchSong] = usePatchSongThunk();
+  const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
@@ -74,7 +78,7 @@ const MintSong = () => {
     if (stepIndex === 0) {
       handleCompleteFirstStep();
     } else {
-      dispatch(patchSong({ id, ...values }));
+      patchSong({ id, ...values });
     }
   };
 
@@ -85,17 +89,15 @@ const MintSong = () => {
     const artistName = `${profile.firstName} ${profile.lastName}`;
     const stageName = profile.nickname;
 
-    dispatch(
-      generateArtistAgreement({
-        body: {
-          songName,
-          companyName,
-          artistName,
-          stageName,
-        },
-        callback: () => setStepIndex(1),
-      })
-    );
+    generateArtistAgreement({
+      body: {
+        songName,
+        companyName,
+        artistName,
+        stageName,
+      },
+      callback: () => setStepIndex(1),
+    });
   };
 
   const handleVerifyProfile = () => {
@@ -136,7 +138,14 @@ const MintSong = () => {
         onSubmit={ handleSubmitStep }
         validationSchema={ validationSchema }
       >
-        { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
+        { ({
+          values,
+          errors,
+          touched,
+          setFieldValue,
+          handleSubmit,
+          isSubmitting,
+        }) => {
           const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
             setFieldValue("owners", owners);
           };
@@ -259,7 +268,7 @@ const MintSong = () => {
                     { values.isMinting && (
                       <Button
                         onClick={ () => handleSubmit() }
-                        isLoading={ isLoading }
+                        isLoading={ isSubmitting }
                         disabled={ !isVerified }
                         width={
                           windowWidth &&
@@ -316,6 +325,7 @@ const MintSong = () => {
                     <Button
                       onClick={ () => handleSubmit() }
                       disabled={ !values.consentsToContract }
+                      isLoading={ isSubmitting }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"

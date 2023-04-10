@@ -2,12 +2,11 @@ import { Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ReactNode, SyntheticEvent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
-import { Song, deleteSong } from "modules/song";
+import { Song, useDeleteSongThunk } from "modules/song";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
 import DeleteSongModal from "./DeleteSongModal";
@@ -37,9 +36,10 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
 };
 
 const EditSong = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [deleteSong] = useDeleteSongThunk();
 
   const [tab, setTab] = useState(0);
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
@@ -98,7 +98,7 @@ const EditSong = () => {
             { isDeleteModalActive && (
               <DeleteSongModal
                 primaryAction={ () => {
-                  dispatch(deleteSong({ songId }));
+                  deleteSong({ songId });
                 } }
                 secondaryAction={ () => {
                   setIsDeleteModalActive(false);

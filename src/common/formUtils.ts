@@ -97,10 +97,12 @@ export const getUpdatedValues = (
   const updatedValues: Partial<FormikValues> = {};
 
   Object.keys(originalValues).forEach((key) => {
-    if (originalValues[key] !== newValues[key]) {
+    if (
+      JSON.stringify(originalValues[key]) !== JSON.stringify(newValues[key])
+    ) {
       updatedValues[key] = newValues[key];
     }
   });
 
-  return updatedValues;
+  return updatedValues as any; // eslint-disable-line
 };

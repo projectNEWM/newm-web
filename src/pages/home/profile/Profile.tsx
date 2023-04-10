@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Form, Formik, FormikValues } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useGetSongsQuery } from "modules/song";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
@@ -21,9 +21,12 @@ import {
 } from "common";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import {
+  ProfileFormValues,
+  UpdateProfileRequest,
   VerificationStatus,
-  selectSession,
-  updateProfile,
+  emptyProfile,
+  useGetProfileQuery,
+  useUpdateProfileThunk,
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
@@ -39,8 +42,7 @@ const Profile: FunctionComponent = () => {
   const { data: genreOptions = [] } = useGetGenresQuery();
 
   const {
-    isLoading,
-    profile: {
+    data: {
       biography,
       companyName,
       email,
@@ -57,8 +59,10 @@ const Profile: FunctionComponent = () => {
       twitterUrl,
       verificationStatus,
       websiteUrl,
-    } = {},
-  } = useSelector(selectSession);
+    } = emptyProfile,
+  } = useGetProfileQuery();
+
+  const [updateProfile] = useUpdateProfileThunk();
 
   const { data: songData = [] } = useGetSongsQuery({
     ownerIds: ["me"],
@@ -77,7 +81,7 @@ const Profile: FunctionComponent = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
 
-  const initialValues: FormikValues = {
+  const initialValues: ProfileFormValues = {
     biography,
     companyName,
     email,
@@ -129,25 +133,8 @@ const Profile: FunctionComponent = () => {
   /**
    * Update profile data with modifications made.
    */
-  const handleSubmit = (values: FormikValues) => {
-    const originalValues = {
-      biography,
-      companyName,
-      firstName,
-      instagramUrl,
-      companyIpRights,
-      lastName,
-      nickname,
-      pictureUrl,
-      bannerUrl,
-      companyLogoUrl,
-      location,
-      role,
-      twitterUrl,
-      websiteUrl,
-    };
-
-    const updatedValues = getUpdatedValues(originalValues, values);
+  const handleSubmit = (values: UpdateProfileRequest) => {
+    const updatedValues = getUpdatedValues(initialValues, values);
 
     if (
       updatedValues.companyIpRights === false ||
@@ -156,7 +143,7 @@ const Profile: FunctionComponent = () => {
       updatedValues.companyName = "";
     }
 
-    dispatch(updateProfile({ ...updatedValues }));
+    updateProfile({ ...updatedValues });
   };
 
   return (
@@ -200,7 +187,7 @@ const Profile: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({ dirty, handleReset }) => {
+        { ({ dirty, isSubmitting, handleReset }) => {
           return (
             <Form>
               <UploadImageField
@@ -465,7 +452,7 @@ const Profile: FunctionComponent = () => {
 
                   <Button
                     disabled={ !dirty }
-                    isLoading={ isLoading }
+                    isLoading={ isSubmitting }
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.md
                         ? "compact"
