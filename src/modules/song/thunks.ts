@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
+  DeleteSongRequest,
   GenerateArtistAgreementPayload,
   PatchSongRequest,
   UploadSongRequest,
@@ -143,6 +144,35 @@ export const patchSong = createAsyncThunk(
       // do nothing, errors handled by endpoints
     } finally {
       // done fetching songs
+      dispatch(setSongIsLoading(false));
+    }
+  }
+);
+
+/**
+ * Request to delete user song. If successful, navigate to
+ * library and fetch new songs.
+ */
+export const deleteSong = createAsyncThunk(
+  "song/deleteSong",
+  async (body: DeleteSongRequest, { dispatch }) => {
+    try {
+      // set loading state to show loading indicator
+      dispatch(setSongIsLoading(true));
+
+      // request song deletion
+      const deleteSongResp = await dispatch(
+        songApi.endpoints.deleteSong.initiate(body)
+      );
+
+      if ("error" in deleteSongResp) return;
+
+      // navigate to library page to view updated library
+      history.push("/home/library");
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    } finally {
+      // done deleting song
       dispatch(setSongIsLoading(false));
     }
   }

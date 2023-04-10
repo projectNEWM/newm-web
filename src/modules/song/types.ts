@@ -50,6 +50,10 @@ export interface UploadSongResponse {
   readonly songId: string;
 }
 
+export interface DeleteSongRequest {
+  readonly songId: string;
+}
+
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
   readonly id: string;
 }
