@@ -1,6 +1,9 @@
 import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import { ProfileFormValues, useUpdateInitialProfile } from "modules/session";
+import {
+  ProfileFormValues,
+  useUpdateInitialProfileThunk,
+} from "modules/session";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import * as Yup from "yup";
@@ -16,7 +19,7 @@ const CreateProfile: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
 
-  const [updateInitialProfile] = useUpdateInitialProfile();
+  const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
   /**
    * Initial form values.
