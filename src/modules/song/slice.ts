@@ -3,7 +3,6 @@ import { SongState } from "./types";
 
 const initialState: SongState = {
   artistAgreement: "",
-  isLoading: false,
 };
 
 const songSlice = createSlice({
@@ -13,12 +12,9 @@ const songSlice = createSlice({
     receiveArtistAgreement(state, { payload }) {
       state.artistAgreement = payload;
     },
-    setSongIsLoading(state, { payload }) {
-      state.isLoading = payload;
-    },
   },
 });
 
-export const { receiveArtistAgreement, setSongIsLoading } = songSlice.actions;
+export const { receiveArtistAgreement } = songSlice.actions;
 
 export default songSlice.reducer;

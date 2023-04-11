@@ -31,6 +31,7 @@ const InitiateReset: FunctionComponent = () => {
       >
         <TextInputField
           aria-label="Enter email to reset password"
+          isOptional={ false }
           name="email"
           placeholder="Your email"
           type="text"

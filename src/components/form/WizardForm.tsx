@@ -26,7 +26,8 @@ interface FormRoute {
   ) => void;
 }
 
-interface WizardFormProps extends FormikConfig<FormikValues> {
+// eslint-disable-next-line
+interface WizardFormProps extends FormikConfig<any> {
   readonly rootPath?: string;
   readonly routes: ReadonlyArray<FormRoute>;
 }

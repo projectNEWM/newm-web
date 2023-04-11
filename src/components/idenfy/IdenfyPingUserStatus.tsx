@@ -4,17 +4,21 @@ import { setToastMessage } from "modules/ui";
 import Cookies from "js-cookie";
 import {
   VerificationStatus,
+  emptyProfile,
   removeVerificationTimer,
   selectSession,
   extendedApi as sessionApi,
   startVerificationTimer,
+  useGetProfileQuery,
 } from "modules/session";
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  const { verificationPingStartedAt, profile: { verificationStatus } = {} } =
-    useSelector(selectSession);
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+
+  const { verificationPingStartedAt } = useSelector(selectSession);
+
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
   /**

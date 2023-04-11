@@ -1,14 +1,14 @@
+import { asThunkHook } from "common";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "api";
-import { getFileBinary } from "common";
+import { GenerateArtistAgreementPayload, lambdaApi } from "api";
 import { history } from "common/history";
+import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
-  GenerateArtistAgreementPayload,
+  DeleteSongRequest,
   PatchSongRequest,
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
-import { setSongIsLoading } from "./slice";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -20,40 +20,22 @@ export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
     try {
-      // set loading state to show loading indicator
-      dispatch(setSongIsLoading(true));
+      // downsize if necessary
+      const uploadParams = {
+        eager: "c_fit,w_5000,h_5000",
+      };
 
-      // optional upload params to format or crop image could go here
-      const uploadParams = {};
-
-      const signatureResp = await dispatch(
-        songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+      const coverArtUrl = await uploadToCloudinary(
+        body.coverArtUrl as File,
+        uploadParams,
+        dispatch
       );
-
-      if ("error" in signatureResp || !("data" in signatureResp)) return;
-
-      const { apiKey, signature, timestamp } = signatureResp.data;
-
-      const imageBinaryStr = await getFileBinary(body.image);
-
-      // upload image to cloudinary
-      const cloudinaryResp = await dispatch(
-        cloudinaryApi.endpoints.uploadImage.initiate({
-          api_key: apiKey,
-          file: imageBinaryStr,
-          signature,
-          timestamp,
-          ...uploadParams,
-        })
-      );
-
-      if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
 
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           ...body,
-          coverArtUrl: cloudinaryResp.data.secure_url,
+          coverArtUrl,
         })
       );
 
@@ -72,22 +54,18 @@ export const uploadSong = createAsyncThunk(
       if ("error" in audioUploadUrlResp) return;
 
       const { uploadUrl } = audioUploadUrlResp.data;
-      const audioBinaryStr = await getFileBinary(body.audio);
 
       // upload audio to AWS, song audioUrl will be updated after it's transcoded
       await fetch(uploadUrl, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ file: audioBinaryStr }),
+        headers: { "Content-Type": "application/octet-stream" },
+        body: body.audio,
       });
 
       // navigate to library page to view new song
       history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
-    } finally {
-      // done fetching songs
-      dispatch(setSongIsLoading(false));
     }
   }
 );
@@ -100,10 +78,8 @@ export const generateArtistAgreement = createAsyncThunk(
   "song/generateArtistAgreement",
   async ({ body, callback }: GenerateArtistAgreementPayload, { dispatch }) => {
     try {
-      dispatch(setSongIsLoading(true));
-
       const artistAgreementResp = await dispatch(
-        songApi.endpoints.generateArtistAgreement.initiate(body)
+        lambdaApi.endpoints.generateArtistAgreement.initiate(body)
       );
 
       if ("error" in artistAgreementResp) return;
@@ -111,8 +87,6 @@ export const generateArtistAgreement = createAsyncThunk(
       callback();
     } catch (err) {
       // do nothing
-    } finally {
-      dispatch(setSongIsLoading(false));
     }
   }
 );
@@ -124,50 +98,28 @@ export const generateArtistAgreement = createAsyncThunk(
  */
 export const patchSong = createAsyncThunk(
   "song/patchSong",
-  async (body: PatchSongRequest, thunkApi) => {
+  async (body: PatchSongRequest, { dispatch }) => {
     try {
-      // set loading state to show loading indicator
-      thunkApi.dispatch(setSongIsLoading(true));
+      let coverArtUrl;
 
-      let cloudinaryImage = {};
+      if (body.coverArtUrl) {
+        // downsize if necessary
+        const uploadParams = {
+          eager: "c_fit,w_5000,h_5000",
+        };
 
-      if (body.image) {
-        // TODO: Delete previously saved image from cloudinary after successfully updating it.
-
-        // optional upload params to format or crop image could go here
-        const uploadParams = {};
-
-        const signatureResp = await thunkApi.dispatch(
-          songApi.endpoints.getCloudinarySignature.initiate(uploadParams)
+        coverArtUrl = await uploadToCloudinary(
+          body.coverArtUrl as File,
+          uploadParams,
+          dispatch
         );
-
-        if ("error" in signatureResp || !("data" in signatureResp)) return;
-
-        const { apiKey, signature, timestamp } = signatureResp.data;
-
-        const imageBinaryStr = await getFileBinary(body.image);
-
-        // upload image to cloudinary
-        const cloudinaryResp = await thunkApi.dispatch(
-          cloudinaryApi.endpoints.uploadImage.initiate({
-            api_key: apiKey,
-            file: imageBinaryStr,
-            signature,
-            timestamp,
-            ...uploadParams,
-          })
-        );
-
-        if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) return;
-
-        cloudinaryImage = { coverArtUrl: cloudinaryResp.data.secure_url };
       }
 
       // patch song information
-      const patchSongResp = await thunkApi.dispatch(
+      const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
           ...body,
-          ...cloudinaryImage,
+          ...{ coverArtUrl },
         })
       );
 
@@ -177,9 +129,37 @@ export const patchSong = createAsyncThunk(
       history.push("/home/library");
     } catch (err) {
       // do nothing, errors handled by endpoints
-    } finally {
-      // done fetching songs
-      thunkApi.dispatch(setSongIsLoading(false));
     }
   }
+);
+
+/**
+ * Request to delete user song. If successful, navigate to
+ * library and fetch new songs.
+ */
+export const deleteSong = createAsyncThunk(
+  "song/deleteSong",
+  async (body: DeleteSongRequest, { dispatch }) => {
+    try {
+      // navigate to library page before deleting due to known
+      // issue where RTK Query hook will re-fetch data after
+      // delete call invalidates cache tag, causing 404 error to
+      // display: https://github.com/reduxjs/redux-toolkit/issues/1672
+      history.replace("/home/library");
+
+      await dispatch(songApi.endpoints.deleteSong.initiate(body));
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    }
+  }
+);
+
+export const useUploadSongThunk = asThunkHook(uploadSong);
+
+export const usePatchSongThunk = asThunkHook(patchSong);
+
+export const useDeleteSongThunk = asThunkHook(deleteSong);
+
+export const useGenerateArtistAgreementThunk = asThunkHook(
+  generateArtistAgreement
 );

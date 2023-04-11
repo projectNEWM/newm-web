@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from "react-router";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
-import { Song } from "modules/song";
+import { Song, useDeleteSongThunk } from "modules/song";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
+import DeleteSongModal from "./DeleteSongModal";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -38,9 +39,20 @@ const EditSong = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [tab, setTab] = useState(0);
+  const [deleteSong] = useDeleteSongThunk();
 
-  const { coverArtUrl = "", title = "" } = location.state as Song;
+  const [tab, setTab] = useState(0);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
+
+  const {
+    coverArtUrl = "",
+    title = "",
+    mintingStatus,
+    id: songId,
+  } = location.state as Song;
+
+  const isMinted = mintingStatus === "Distributed";
+  const isPending = mintingStatus === "Pending";
 
   const colorMap: ColorMap = {
     0: "music",
@@ -70,14 +82,31 @@ const EditSong = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
-        <Button
-          color="white"
-          variant="outlined"
-          width="icon"
-          sx={ { marginLeft: "auto" } }
-        >
-          <DeleteIcon fontSize="small" sx={ { color: "white" } } />
-        </Button>
+        { !(isMinted || isPending) && (
+          <>
+            <Button
+              color="white"
+              variant="outlined"
+              width="icon"
+              sx={ { marginLeft: "auto" } }
+              onClick={ () => {
+                setIsDeleteModalActive(true);
+              } }
+            >
+              <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+            </Button>
+            { isDeleteModalActive && (
+              <DeleteSongModal
+                primaryAction={ () => {
+                  deleteSong({ songId });
+                } }
+                secondaryAction={ () => {
+                  setIsDeleteModalActive(false);
+                } }
+              />
+            ) }
+          </>
+        ) }
       </Stack>
 
       <Stack sx={ { borderBottom: 1, borderColor: theme.colors.grey300, mt: 4 } }>

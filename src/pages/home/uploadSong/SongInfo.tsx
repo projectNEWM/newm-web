@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
-import { Creditor, Owner, UploadSongRequest, selectSong } from "modules/song";
+import { Creditor, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
   ErrorMessage,
@@ -16,24 +16,26 @@ import {
 import { useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
-import { VerificationStatus, selectSession } from "modules/session";
+import {
+  VerificationStatus,
+  emptyProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import { setIsIdenfyModalOpen } from "modules/ui";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const { data: genres = [] } = useGetGenresQuery();
-  const { data: moods = [] } = useGetMoodsQuery();
-  const { isLoading } = useSelector(selectSong);
-  const {
-    profile: { verificationStatus },
-  } = useSelector(selectSession);
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: moodOptions = [] } = useGetMoodsQuery();
+
   const windowWidth = useWindowDimensions()?.width;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue } =
+  const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
 
   // TODO: Also disable submit if minting and wallet is not connected, once
@@ -60,14 +62,14 @@ const SongInfo: FunctionComponent = () => {
     <Stack direction="column">
       <Stack
         sx={ {
-          display: "grid",
-          gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
           columnGap: [undefined, undefined, "20px"],
-          maxWidth: [undefined, undefined, "700px"],
           rowGap: ["16px", null, "12px"],
+          maxWidth: [undefined, undefined, "700px"],
         } }
       >
-        <Stack spacing={ 0.5 }>
+        <Stack spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             MUSIC
           </Typography>
@@ -75,12 +77,17 @@ const SongInfo: FunctionComponent = () => {
           <UploadSongField name="audio" />
         </Stack>
 
-        <Stack spacing={ 0.5 } alignItems="center">
+        <Stack spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
 
-          <UploadImageField name="image" />
+          <UploadImageField
+            rootSx={ { width: "100%", alignSelf: "center" } }
+            name="coverArtUrl"
+            emptyMessage="Drag and drop or browse your image"
+            minDimensions={ { width: 2048, height: 2048 } }
+          />
         </Stack>
       </Stack>
 
@@ -102,6 +109,7 @@ const SongInfo: FunctionComponent = () => {
         } }
       >
         <TextInputField
+          isOptional={ false }
           name="title"
           label="SONG TITLE"
           placeholder="Give your track a name..."
@@ -118,9 +126,10 @@ const SongInfo: FunctionComponent = () => {
         >
           <DropdownMultiSelectField
             label="Genres"
+            isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
-            options={ genres }
+            options={ genreOptions }
           />
 
           { /** TODO: get moods from back-end */ }
@@ -128,7 +137,7 @@ const SongInfo: FunctionComponent = () => {
             label="Moods"
             name="moods"
             placeholder="Select all that apply"
-            options={ moods }
+            options={ moodOptions }
           />
         </Stack>
 
@@ -245,7 +254,7 @@ const SongInfo: FunctionComponent = () => {
           sx={ { mt: 5 } }
           type="submit"
           disabled={ isSubmitDisabled }
-          isLoading={ isLoading }
+          isLoading={ isSubmitting }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"

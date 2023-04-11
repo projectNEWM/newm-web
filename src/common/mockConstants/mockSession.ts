@@ -1,9 +1,8 @@
 import { SessionState } from "modules/session";
-import { mockProfile } from "./mockProfile";
+import { PersistPartial } from "redux-persist/lib/persistReducer";
 
-export const mockSession: SessionState = {
+export const mockSession: SessionState & PersistPartial = {
+  _persist: { version: 0, rehydrated: false },
   isLoggedIn: true,
-  profile: mockProfile,
   verificationPingStartedAt: undefined,
-  isLoading: false,
 };

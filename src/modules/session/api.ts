@@ -1,4 +1,4 @@
-import api from "api";
+import api, { Tags } from "api";
 import { EmptyResponse } from "common";
 import { setToastMessage } from "modules/ui";
 import {
@@ -8,12 +8,36 @@ import {
   LoginRequest,
   NewmAuthResponse,
   NewmOAuthRequest,
+  Profile,
   Request2FACode,
   ResetPasswordRequest,
   UpdateProfileRequest,
+  VerificationStatus,
 } from "./types";
 import { handleSocialLoginError } from "./thunks";
-import { receiveProfile, receiveSuccessfullAuthentication } from "./slice";
+import { receiveSuccessfullAuthentication } from "./slice";
+
+export const emptyProfile: Profile = {
+  id: "",
+  oauthId: "",
+  oauthType: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  nickname: "",
+  location: "",
+  pictureUrl: "",
+  bannerUrl: "",
+  role: "",
+  verificationStatus: VerificationStatus.Unverified,
+  biography: "",
+  instagramUrl: "",
+  companyIpRights: false,
+  twitterUrl: "",
+  websiteUrl: "",
+  companyLogoUrl: "",
+  companyName: "",
+};
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -102,11 +126,11 @@ export const extendedApi = api.injectEndpoints({
         url: "v1/users/me",
         method: "GET",
       }),
+      providesTags: [Tags.Profile],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveProfile(data));
+          await queryFulfilled;
         } catch ({ error }) {
           dispatch(
             setToastMessage({
@@ -124,6 +148,7 @@ export const extendedApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: [Tags.Profile],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -224,5 +249,7 @@ export const extendedApi = api.injectEndpoints({
     }),
   }),
 });
+
+export const { useGetProfileQuery, useUpdateProfileMutation } = extendedApi;
 
 export default extendedApi;

@@ -24,3 +24,11 @@ export interface RenderProps extends RenderOptions {
 export interface WrapperProps {
   readonly children: ReactElement;
 }
+
+export interface ValidateDimensionsParams {
+  readonly imageUrl: string;
+  readonly minWidth: number;
+  readonly minHeight: number;
+}
+
+export type WidthType = "default" | "full";
