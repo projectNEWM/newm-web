@@ -1,6 +1,7 @@
 import { renderWithContext } from "common";
 import * as routerUtils from "react-router-dom";
 import UploadIcon from "assets/images/UploadIcon";
+import theme from "theme";
 import SideBarNavLink from "../home/SideBarNavLink";
 
 jest.mock("react-router-dom", () => ({
@@ -25,7 +26,7 @@ describe("<SideBarNavLink>", () => {
       );
 
       expect(getByTestId("navStyled")).toHaveStyle(
-        "background: rgba(255, 255, 255, 0.1);"
+        `background: ${theme.colors.activeBackground};`
       );
     });
   });
