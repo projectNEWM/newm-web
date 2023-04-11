@@ -14,20 +14,31 @@ interface LinkProps extends ButtonProps {
   readonly to: string;
 }
 
-type WrapperProps = LinkProps | ButtonProps;
+interface AnchorProps extends ButtonProps {
+  readonly href: string;
+}
+
+type WrapperProps = LinkProps | ButtonProps | AnchorProps;
 
 interface SideBarNavLinkProps {
   readonly label: string;
   readonly icon: JSX.Element;
   readonly to?: string;
+  readonly href?: string;
   readonly onClick?: VoidFunction;
 }
 
-const Wrapper: FunctionComponent<WrapperProps> = (props) => {
+const Wrapper: FunctionComponent<WrapperProps> = ({ children, ...props }) => {
   if ("to" in props && props.to) {
-    return <Link { ...props } />;
+    return <Link { ...props }>{ children }</Link>;
+  } else if ("href" in props && props.href) {
+    return (
+      <a target="_blank" rel="noreferrer" { ...props }>
+        { children }
+      </a>
+    );
   } else {
-    return <Box { ...props } />;
+    return <Box { ...props }>{ children }</Box>;
   }
 };
 
@@ -35,6 +46,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   label,
   icon,
   to,
+  href,
   onClick,
 }) => {
   const resolved = useResolvedPath(to || "");
@@ -45,6 +57,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
     <Wrapper
       onClick={ onClick }
       to={ to }
+      href={ href }
       style={ {
         textDecoration: "none",
         minWidth: "100%",

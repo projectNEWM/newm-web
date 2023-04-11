@@ -1,12 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
-import {
-  ProfileImage,
-  SideBarExternalNavLink,
-  SideBarHeader,
-  SideBarNavLink,
-} from "components";
+import { ProfileImage, SideBarHeader, SideBarNavLink } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
@@ -139,19 +134,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           </Box>
 
           <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
-            <SideBarExternalNavLink
+            <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
               label="FAQ"
               href="https://newm.io/faq_artist-portal"
             />
-            <SideBarExternalNavLink
+            <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
               label="ASK THE COMMUNITY"
               href="https://t.me/NEWM_artist-support"
             />
-            <SideBarExternalNavLink
+            <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <EmailIcon sx={ { fontSize: "18px" } } /> }
               label="SUPPORT"
