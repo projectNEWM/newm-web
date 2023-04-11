@@ -17,6 +17,7 @@
     "country-list": "^2.3.0",
     "cross-env": "^7.0.3",
     "formik": "^2.2.9",
+    "hls.js": "^1.3.5",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "material-ui-image": "^3.3.2",

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { Box } from "@mui/material";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import theme from "theme";
@@ -5,50 +6,51 @@ import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import videojs from "video.js";
-import Player from "video.js/dist/types/player";
+// import videojs from "video.js";
+// import Player from "video.js/dist/types/player";
+import Hls from "hls.js";
+import { useDispatch } from "react-redux";
+import { setToastMessage } from "modules/ui";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
+  const dispatch = useDispatch();
+
   const {
     data: songs = [],
     isLoading,
     isSuccess,
   } = useGetSongsQuery({ ownerIds: ["me"] });
-  const [filteredData, setFilteredData] = useState<Song[]>([]);
+  const [filteredData, setFilteredData] = useState<Song[]>([]); // eslint-disable-line
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
     string | null
   >(null);
-  const audioPlayerRef = useRef<Player>();
   const viewportWidth = useWindowDimensions()?.width;
+  const videoRef = useRef<HTMLMediaElement | null>(null);
+  const hlsRef = useRef(
+    new Hls({
+      xhrSetup: (xhr) => {
+        xhr.withCredentials = true;
+      },
+    })
+  );
 
   // initialize audio player on page load
   useEffect(() => {
-    const audioElement = new Audio();
-    const newAudioPlayer = videojs(audioElement);
+    hlsRef.current.on(Hls.Events.MEDIA_ATTACHED, () => {
+      console.log("video and hls.js are now bound together!");
+    });
 
-    audioElement.onended = () => {
-      if (setCurrentPlayingSongId) {
-        setCurrentPlayingSongId(null);
-      }
-    };
+    hlsRef.current.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
+      console.log(
+        "manifest loaded, found " + data.levels.length + " quality level"
+      );
 
-    // handles stopping audio using OS or browser media controls
-    audioElement.onpause = () => {
-      if (setCurrentPlayingSongId) {
-        audioElement.src = "";
-        setCurrentPlayingSongId(null);
-      }
-    };
-
-    audioPlayerRef.current = newAudioPlayer;
-
-    return () => {
-      audioPlayerRef.current?.dispose();
-    };
+      videoRef.current?.play();
+    });
   }, []);
 
   useEffect(() => {
@@ -70,31 +72,44 @@ const Discography: FunctionComponent = () => {
   };
 
   // Keep song in a playing state till the song has been filtered out
-  useEffect(() => {
-    const isSongFound = !!filteredData?.find((filteredSong) => {
-      return filteredSong.id === currentPlayingSongId;
-    });
+  // useEffect(() => {
+  //   const isSongFound = !!filteredData?.find((filteredSong) => {
+  //     return filteredSong.id === currentPlayingSongId;
+  //   });
 
-    if (!isSongFound) {
-      setCurrentPlayingSongId(null);
-      audioPlayerRef.current?.pause();
-      audioPlayerRef.current?.src(undefined);
-    }
-  }, [currentPlayingSongId, filteredData]);
+  //   if (!isSongFound) {
+  //     setCurrentPlayingSongId(null);
+  //     audioPlayerRef.current?.pause();
+  //     audioPlayerRef.current?.src(undefined);
+  //   }
+  // }, [currentPlayingSongId, filteredData]);
 
   // Play and stop audio stream source when selected
   const handleSongPlayPause = (song: Song) => {
-    if (song.id === currentPlayingSongId) {
-      setCurrentPlayingSongId(null);
-      audioPlayerRef.current?.pause();
-      audioPlayerRef.current?.src(undefined);
+    // if (song.id === currentPlayingSongId) {
+    //   setCurrentPlayingSongId(null);
+    //   audioPlayerRef.current?.pause();
+    //   audioPlayerRef.current?.src(undefined);
+    // } else {
+    //   if (song.streamUrl) {
+    //     setCurrentPlayingSongId(song.id);
+    //     audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
+    //     audioPlayerRef.current?.src(song.streamUrl);
+    //     audioPlayerRef.current?.play();
+    //   }
+    // }
+    if (videoRef.current?.canPlayType("application/vnd.apple.mpegurl")) {
+      videoRef.current?.play();
+    } else if (videoRef.current && song.streamUrl) {
+      hlsRef.current.loadSource(song.streamUrl);
+      hlsRef.current.attachMedia(videoRef.current);
     } else {
-      if (song.streamUrl) {
-        setCurrentPlayingSongId(song.id);
-        audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
-        audioPlayerRef.current?.src(song.streamUrl);
-        audioPlayerRef.current?.play();
-      }
+      dispatch(
+        setToastMessage({
+          message: "Browser does not support audio streaming",
+          severity: "error",
+        })
+      );
     }
   };
 
@@ -156,6 +171,11 @@ const Discography: FunctionComponent = () => {
       <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
+      <video
+        style={ { display: "none" } }
+        ref={ (ref) => (videoRef.current = ref) }
+        controls
+      />
       { renderContent() }
     </>
   );
