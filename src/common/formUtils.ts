@@ -54,7 +54,8 @@ export const commonYupValidation = {
     Yup.string().test(
       "is-genre",
       "You need to type or select one of the ones below",
-      (genre) => (genre ? genreOptions.includes(genre) : false)
+      // validate that genre is valid, but only if one is present
+      (genre) => (genre ? genreOptions.includes(genre) : true)
     ),
   genres: (genreOptions: string[]) =>
     Yup.array(Yup.string()).test(

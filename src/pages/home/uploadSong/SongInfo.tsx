@@ -62,11 +62,11 @@ const SongInfo: FunctionComponent = () => {
     <Stack direction="column">
       <Stack
         sx={ {
-          display: "grid",
-          gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
           columnGap: [undefined, undefined, "20px"],
-          maxWidth: [undefined, undefined, "700px"],
           rowGap: ["16px", null, "12px"],
+          maxWidth: [undefined, undefined, "700px"],
         } }
       >
         <Stack spacing={ 0.5 } width="100%">
@@ -83,6 +83,7 @@ const SongInfo: FunctionComponent = () => {
           </Typography>
 
           <UploadImageField
+            rootSx={ { width: "100%", alignSelf: "center" } }
             name="coverArtUrl"
             emptyMessage="Drag and drop or browse your image"
             minDimensions={ { width: 2048, height: 2048 } }

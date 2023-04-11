@@ -209,259 +209,264 @@ const Profile: FunctionComponent = () => {
                 } }
               />
 
-              <Stack
-                display="flex"
-                flexDirection={ ["column", "column", "row"] }
-                justifyContent="flex-start"
-                alignItems="center"
-                position="relative"
-                zIndex={ 10 }
-                gap={ 5 }
-                mt={ 29.5 }
-                mb={ 8 }
-              >
-                <UploadImageField
-                  name="pictureUrl"
-                  emptyMessage="Upload an image"
-                  minDimensions={ { width: 200, height: 200 } }
-                  minimumSizeLabel="Min"
-                  isSuccessIconDisplayed={ false }
-                  contentSx={ {
-                    borderRadius: "50%",
-                    width: 200,
-                    height: 200,
-                    padding: 1,
-                    marginTop: "-1.5rem",
-                    backgroundColor: theme.colors.grey700,
-                  } }
-                />
-
-                <Stack
-                  gap={ 1 }
-                  width="100%"
-                  alignItems={ ["center", "center", "flex-start"] }
-                >
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent={ ["center", "center", "flex-start"] }
-                    gap={ 2 }
-                  >
-                    <Typography variant="h3" fontWeight="700">
-                      { nickname?.toUpperCase() }
-                    </Typography>
-                    { isVerified ? <CheckCircleIcon color="success" /> : null }
-                  </Stack>
-
-                  <DropdownSelectField
-                    label="LOCATION"
-                    name="location"
-                    placeholder="Select your country of residence"
-                    options={ countryOptions }
-                    widthType="default"
-                  />
-                </Stack>
-              </Stack>
-
               <Box
-                sx={ { maxWidth: ["340px", "340px", "700px"], margin: "0 auto" } }
+                display="flex"
+                justifyContent={ ["center", "center", "flex-start"] }
               >
-                <Stack rowGap={ 10 }>
-                  <Stack rowGap={ 2 }>
-                    <Typography variant="h4" fontWeight="700">
-                      YOUR PUBLIC PROFILE
-                    </Typography>
-                    <TextInputField
-                      label="STAGE NAME"
-                      name="nickname"
-                      placeholder="Stage name"
-                      type="text"
-                    />
-                    <Stack
-                      sx={ {
-                        flexDirection: ["column", "column", "row"],
-                        justifyContent: "space-between",
-                        rowGap: 2,
+                <Stack maxWidth={ ["340px", "340px", "700px"] } flexGrow={ 1 }>
+                  <Stack
+                    display="flex"
+                    flexDirection={ ["column", "column", "row"] }
+                    justifyContent={ ["center", "center", "flex-start"] }
+                    alignItems="center"
+                    position="relative"
+                    zIndex={ 10 }
+                    gap={ 5 }
+                    mt={ 29.5 }
+                    mb={ 8 }
+                  >
+                    <UploadImageField
+                      name="pictureUrl"
+                      emptyMessage="Upload an image"
+                      minDimensions={ { width: 200, height: 200 } }
+                      minimumSizeLabel="Min"
+                      isSuccessIconDisplayed={ false }
+                      contentSx={ {
+                        borderRadius: "50%",
+                        width: 200,
+                        height: 200,
+                        padding: 1,
+                        marginTop: "-1.5rem",
+                        backgroundColor: theme.colors.grey700,
                       } }
-                    >
-                      <DropdownSelectField
-                        label="MAIN ROLE"
-                        name="role"
-                        options={ roleOptions }
-                        placeholder="Main role"
-                      />
-                      <TextInputField
-                        disabled={ true }
-                        label="MUSIC GENRE"
-                        name="genre"
-                        placeholder="Music genre"
-                        tooltipText="Your genre is determined by the songs you upload."
-                        type="text"
-                      />
-                    </Stack>
-                    <TextAreaField
-                      label="DESCRIPTION"
-                      name="biography"
-                      placeholder="Tell us about yourself"
                     />
-                  </Stack>
-                  <Stack rowGap={ 2 }>
-                    <Stack rowGap={ 0.5 }>
-                      <Typography variant="h4" fontWeight="700">
-                        SOCIAL MEDIA
-                      </Typography>
-                      <Typography variant="subtitle2">
-                        Link your preferred profiles so fans can follow and
-                        connect with you.
-                      </Typography>
-                    </Stack>
+
                     <Stack
-                      sx={ {
-                        flexDirection: ["column", "column", "row"],
-                        justifyContent: "space-between",
-                        rowGap: 2,
-                      } }
-                    >
-                      <TextInputField
-                        label="WEBSITE"
-                        name="websiteUrl"
-                        placeholder="Your website link"
-                        type="text"
-                      />
-                      <TextInputField
-                        label="TWITTER"
-                        name="twitterUrl"
-                        placeholder="Twitter link"
-                        type="text"
-                      />
-                    </Stack>
-                    <TextInputField
-                      label="INSTAGRAM"
-                      name="instagramUrl"
-                      placeholder="Instagram link"
-                      type="text"
-                    />
-                  </Stack>
-                  <Stack rowGap={ 2 }>
-                    <Stack rowGap={ 0.5 }>
-                      <Typography variant="h4" fontWeight="700">
-                        ABOUT YOU
-                      </Typography>
-                      <Typography variant="subtitle2">
-                        This info will not be made public on your profile.
-                      </Typography>
-                    </Stack>
-                    <Stack
-                      sx={ {
-                        flexDirection: ["column", "column", "row"],
-                        justifyContent: "space-between",
-                        rowGap: 2,
-                      } }
-                    >
-                      <TextInputField
-                        label="FIRST NAME"
-                        name="firstName"
-                        placeholder="First name"
-                        type="text"
-                      />
-                      <TextInputField
-                        label="LAST NAME"
-                        name="lastName"
-                        placeholder="Last name"
-                        type="text"
-                      />
-                    </Stack>
-                    <TextInputField
-                      disabled={ true }
-                      label="PRIMARY EMAIL"
-                      isOptional={ false }
-                      name="email"
-                      placeholder="john@mail.com"
-                      type="email"
-                    />
-                  </Stack>
-                  <Stack rowGap={ 2 }>
-                    <Typography variant="h4" fontWeight="700">
-                      OTHER SETTINGS
-                    </Typography>
-                    <SwitchInputField
-                      name="companyIpRights"
-                      title="DO YOU HAVE A COMPANY?"
-                      description={
-                        "If your IP Rights are held under your Company, please select this option."
-                      }
+                      gap={ 1 }
+                      width="100%"
+                      alignItems={ ["center", "center", "flex-start"] }
                     >
                       <Stack
+                        direction="row"
                         alignItems="center"
-                        columnGap={ 1.5 }
-                        flexDirection="row"
-                        mt={ 2 }
+                        justifyContent={ ["center", "center", "flex-start"] }
+                        gap={ 2 }
                       >
-                        <UploadImageField
-                          name="companyLogoUrl"
-                          minDimensions={ { width: 100, height: 100 } }
-                          minimumSizeLabel="Min"
-                          emptyMessage=""
-                          replaceMessage=""
-                          isSuccessIconDisplayed={ false }
-                          isMinimumSizeDisplayed={ false }
-                          contentSx={ {
-                            borderRadius: "50%",
-                            width: 60,
-                            height: 60,
-                          } }
+                        <Typography variant="h3" fontWeight="700">
+                          { nickname?.toUpperCase() }
+                        </Typography>
+                        { isVerified ? (
+                          <CheckCircleIcon color="success" />
+                        ) : null }
+                      </Stack>
+
+                      <DropdownSelectField
+                        label="LOCATION"
+                        name="location"
+                        placeholder="Select your country of residence"
+                        options={ countryOptions }
+                        widthType="default"
+                      />
+                    </Stack>
+                  </Stack>
+
+                  <Stack rowGap={ 10 }>
+                    <Stack rowGap={ 2 }>
+                      <Typography variant="h4" fontWeight="700">
+                        YOUR PUBLIC PROFILE
+                      </Typography>
+                      <TextInputField
+                        label="STAGE NAME"
+                        name="nickname"
+                        placeholder="Stage name"
+                        type="text"
+                      />
+                      <Stack
+                        sx={ {
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <DropdownSelectField
+                          label="MAIN ROLE"
+                          name="role"
+                          options={ roleOptions }
+                          placeholder="Main role"
                         />
                         <TextInputField
-                          aria-label="Your company name"
-                          name="companyName"
-                          placeholder="Your company name"
+                          isOptional={ false }
+                          disabled={ true }
+                          label="MUSIC GENRE"
+                          name="genre"
+                          tooltipText="Your genre is determined by the songs you upload."
                           type="text"
                         />
                       </Stack>
-                    </SwitchInputField>
+                      <TextAreaField
+                        label="DESCRIPTION"
+                        name="biography"
+                        placeholder="Tell us about yourself"
+                      />
+                    </Stack>
+                    <Stack rowGap={ 2 }>
+                      <Stack rowGap={ 0.5 }>
+                        <Typography variant="h4" fontWeight="700">
+                          SOCIAL MEDIA
+                        </Typography>
+                        <Typography variant="subtitle2">
+                          Link your preferred profiles so fans can follow and
+                          connect with you.
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        sx={ {
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <TextInputField
+                          label="WEBSITE"
+                          name="websiteUrl"
+                          placeholder="Your website link"
+                          type="text"
+                        />
+                        <TextInputField
+                          label="TWITTER"
+                          name="twitterUrl"
+                          placeholder="Twitter link"
+                          type="text"
+                        />
+                      </Stack>
+                      <TextInputField
+                        label="INSTAGRAM"
+                        name="instagramUrl"
+                        placeholder="Instagram link"
+                        type="text"
+                      />
+                    </Stack>
+                    <Stack rowGap={ 2 }>
+                      <Stack rowGap={ 0.5 }>
+                        <Typography variant="h4" fontWeight="700">
+                          ABOUT YOU
+                        </Typography>
+                        <Typography variant="subtitle2">
+                          This info will not be made public on your profile.
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        sx={ {
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <TextInputField
+                          label="FIRST NAME"
+                          name="firstName"
+                          placeholder="First name"
+                          type="text"
+                        />
+                        <TextInputField
+                          label="LAST NAME"
+                          name="lastName"
+                          placeholder="Last name"
+                          type="text"
+                        />
+                      </Stack>
+                      <TextInputField
+                        disabled={ true }
+                        label="PRIMARY EMAIL"
+                        isOptional={ false }
+                        name="email"
+                        placeholder="john@mail.com"
+                        type="email"
+                      />
+                    </Stack>
+                    <Stack rowGap={ 2 }>
+                      <Typography variant="h4" fontWeight="700">
+                        OTHER SETTINGS
+                      </Typography>
+                      <SwitchInputField
+                        name="companyIpRights"
+                        title="DO YOU HAVE A COMPANY?"
+                        description={
+                          "If your IP Rights are held under your Company, please select this option."
+                        }
+                      >
+                        <Stack
+                          alignItems="center"
+                          columnGap={ 1.5 }
+                          flexDirection="row"
+                          mt={ 2 }
+                        >
+                          <UploadImageField
+                            name="companyLogoUrl"
+                            minDimensions={ { width: 100, height: 100 } }
+                            minimumSizeLabel="Min"
+                            emptyMessage=""
+                            replaceMessage=""
+                            isSuccessIconDisplayed={ false }
+                            isMinimumSizeDisplayed={ false }
+                            contentSx={ {
+                              borderRadius: "50%",
+                              width: 60,
+                              height: 60,
+                            } }
+                          />
+                          <TextInputField
+                            aria-label="Your company name"
+                            name="companyName"
+                            placeholder="Your company name"
+                            type="text"
+                          />
+                        </Stack>
+                      </SwitchInputField>
+                    </Stack>
                   </Stack>
-                </Stack>
 
-                <HorizontalLine
-                  sx={ {
-                    maxWidth: ["340px", "340px", "700px"],
-                    mx: ["auto", "auto", "unset"],
-                    my: 5,
-                  } }
-                />
-                <Stack
-                  sx={ {
-                    columnGap: 2,
-                    flexDirection: [null, null, "row"],
-                    mt: 5,
-                    rowGap: 2,
-                  } }
-                >
-                  <Button
-                    disabled={ !dirty }
-                    onClick={ handleReset }
-                    variant="secondary"
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.md
-                        ? "compact"
-                        : "default"
-                    }
+                  <HorizontalLine
+                    sx={ {
+                      maxWidth: ["340px", "340px", "700px"],
+                      mx: ["auto", "auto", "unset"],
+                      my: 5,
+                    } }
+                  />
+                  <Stack
+                    sx={ {
+                      columnGap: 2,
+                      flexDirection: [null, null, "row"],
+                      mt: 5,
+                      rowGap: 2,
+                    } }
                   >
-                    Cancel
-                  </Button>
+                    <Button
+                      disabled={ !dirty }
+                      onClick={ handleReset }
+                      variant="secondary"
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                    >
+                      Cancel
+                    </Button>
 
-                  <Button
-                    disabled={ !dirty }
-                    isLoading={ isSubmitting }
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.md
-                        ? "compact"
-                        : "default"
-                    }
-                    type="submit"
-                  >
-                    Save
-                  </Button>
+                    <Button
+                      disabled={ !dirty }
+                      isLoading={ isSubmitting }
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                      type="submit"
+                    >
+                      Save
+                    </Button>
+                  </Stack>
                 </Stack>
               </Box>
             </Form>
