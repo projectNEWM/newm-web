@@ -3,8 +3,6 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import theme from "theme";
 
-const activeBackground = "rgba(255, 255, 255, 0.1)";
-
 interface ButtonProps {
   readonly onClick?: VoidFunction;
   readonly style: CSSProperties;
@@ -76,7 +74,9 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
           borderRadius: "6px",
           padding: "12px 20px",
           color: "white",
-          background: isActiveLink ? activeBackground : "transparent",
+          background: isActiveLink
+            ? theme.colors.activeBackground
+            : "transparent",
           opacity: isActiveLink ? 1 : 0.5,
           transition: "background-color 0ms",
           display: "flex",
@@ -84,7 +84,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
           justifyContent: "flex-start",
           "&:hover": {
             opacity: "1",
-            background: `${activeBackground}`,
+            background: theme.colors.activeBackground,
           },
         } }
         data-testid="navStyled"

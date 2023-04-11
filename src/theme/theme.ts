@@ -3,6 +3,7 @@ import { Theme, createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Theme {
     colors: {
+      activeBackground: string;
       baseBlue: string;
       baseGreen: string;
       baseOrange: string;
@@ -56,6 +57,7 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   interface ThemeOptions {
     colors?: {
+      activeBackground?: string;
       baseBlue?: string;
       baseGreen?: string;
       baseOrange?: string;
@@ -143,6 +145,7 @@ declare module "@mui/material/Typography" {
 }
 
 const colors = {
+  activeBackground: "#FFFFFF1A",
   baseBlue: "#5091EB",
   baseGreen: "#41BE91",
   baseOrange: "#FF6E32",
