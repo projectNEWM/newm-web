@@ -7,8 +7,7 @@ import {
   SideBarHeader,
   SideBarNavLink,
 } from "components";
-import { useSelector } from "react-redux";
-import { selectSession } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
@@ -22,12 +21,13 @@ interface SideBarProps {
   mobileVersion?: boolean;
   setMobileOpen: (field: boolean) => void;
 }
+
 export const SideBar: FunctionComponent<SideBarProps> = (
   props: SideBarProps
 ) => {
   const theme = useTheme();
 
-  const { profile } = useSelector(selectSession);
+  const { data: profile = emptyProfile } = useGetProfileQuery();
 
   return (
     <Box

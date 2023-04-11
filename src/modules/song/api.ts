@@ -1,14 +1,10 @@
-import api, { CloudinaryUploadParams, lambdaApi } from "api";
-import { mergeApis } from "common/apiUtils";
+import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
-import { receiveArtistAgreement } from "./slice";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
   DeleteSongRequest,
-  GenerateArtistAgreementBody,
-  GenerateArtistAgreementResponse,
   GetSongsRequest,
   GetSongsResponse,
   PatchSongRequest,
@@ -17,13 +13,32 @@ import {
   UploadSongResponse,
 } from "./types";
 
-const extendedNewmApi = api.injectEndpoints({
+export const emptySong: Song = {
+  id: "",
+  ownerId: "",
+  createdAt: "",
+  title: "",
+  genres: [],
+  moods: [],
+  coverArtUrl: "",
+  description: "",
+  credits: "",
+  duration: undefined,
+  streamUrl: "",
+  nftPolicyId: "",
+  nftName: "",
+  mintingStatus: "",
+  marketplaceStatus: "",
+};
+
+export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getSong: build.query<Song, string>({
       query: (id) => ({
         url: `v1/songs/${id}`,
         method: "GET",
       }),
+      providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -44,6 +59,7 @@ const extendedNewmApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -64,6 +80,7 @@ const extendedNewmApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -84,6 +101,7 @@ const extendedNewmApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -111,6 +129,7 @@ const extendedNewmApi = api.injectEndpoints({
         method: "DELETE",
         params,
       }),
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(_params, { dispatch, queryFulfilled }) {
         try {
@@ -134,7 +153,7 @@ const extendedNewmApi = api.injectEndpoints({
     }),
     getCloudinarySignature: build.mutation<
       CloudinarySignatureResponse,
-      CloudinaryUploadParams
+      CloudinaryUploadOptions
     >({
       query: (body) => ({
         url: "v1/cloudinary/sign",
@@ -180,37 +199,6 @@ const extendedNewmApi = api.injectEndpoints({
     }),
   }),
 });
-
-const extendedLambdaApi = lambdaApi.injectEndpoints({
-  endpoints: (build) => ({
-    generateArtistAgreement: build.mutation<
-      GenerateArtistAgreementResponse,
-      GenerateArtistAgreementBody
-    >({
-      query: (body) => ({
-        url: "generate-artist-agreement/",
-        method: "POST",
-        body,
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveArtistAgreement(data.message));
-        } catch ({ error }) {
-          dispatch(
-            setToastMessage({
-              message: "An error occured while fetching your artist agreement",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-  }),
-});
-
-export const extendedApi = mergeApis(extendedNewmApi, extendedLambdaApi);
 
 export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
 

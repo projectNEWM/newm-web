@@ -1,8 +1,6 @@
 export interface SessionState {
   isLoggedIn: boolean;
-  profile: Profile;
   verificationPingStartedAt?: number;
-  isLoading: boolean;
 }
 
 export interface Profile {
@@ -10,19 +8,19 @@ export interface Profile {
   readonly oauthType: string;
   readonly oauthId: string;
   readonly email: string;
-  readonly firstName: string;
-  readonly lastName: string;
+  readonly firstName?: string;
+  readonly lastName?: string;
   readonly nickname: string;
   readonly pictureUrl?: string;
   readonly bannerUrl?: string;
   readonly location?: string;
   readonly role: string;
-  readonly genre: string;
+  readonly genre?: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
-  readonly biography: string;
-  readonly websiteUrl: string;
-  readonly twitterUrl: string;
-  readonly instagramUrl: string;
+  readonly biography?: string;
+  readonly websiteUrl?: string;
+  readonly twitterUrl?: string;
+  readonly instagramUrl?: string;
   readonly companyIpRights: boolean;
   readonly companyName?: string;
   readonly companyLogoUrl?: string;
@@ -53,31 +51,31 @@ export interface DecodedJwt {
   readonly jti: string;
 }
 
-export interface UpdateProfileRequest {
-  readonly firstName?: string;
-  readonly lastName?: string;
-  readonly nickname?: string;
-  readonly pictureUrl?: string;
-  readonly bannerUrl?: string;
-  readonly companyLogoUrl?: string;
-  readonly location?: string;
-  readonly role?: string;
-  readonly genre?: string;
-  readonly email?: string;
+export interface ProfileFormValues
+  extends Omit<
+    Profile,
+    | "id"
+    | "oauthType"
+    | "oauthId"
+    | "verificationStatus"
+    | "pictureUrl"
+    | "bannerUrl"
+    | "companyLogoUrl"
+    | "companyIpRights"
+  > {
+  readonly pictureUrl?: string | File;
+  readonly bannerUrl?: string | File;
+  readonly companyIpRights?: boolean;
+  readonly companyLogoUrl?: string | File;
+  readonly currentPassword?: string;
+  readonly confirmPassword?: string;
+  readonly newPassword?: string;
+}
+
+export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
   readonly newPassword?: string;
   readonly confirmPassword?: string;
   readonly authCode?: number;
-  readonly verificationStatus?: Readonly<VerificationStatus>;
-}
-
-export interface ProfileFormValues
-  extends Omit<
-    UpdateProfileRequest,
-    "pictureUrl" | "bannerUrl" | "companyLogoUrl"
-  > {
-  readonly pictureUrl?: File;
-  readonly bannerUrl?: File;
-  readonly companyLogoUrl?: File;
 }
 
 export type GetProfileResponse = Profile;

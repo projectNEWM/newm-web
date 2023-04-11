@@ -100,7 +100,14 @@ export default function SongList({
     if (!url) {
       return "";
     } else if (url.split("/")[2] == "res.cloudinary.com") {
-      return url.replace("upload/", "upload/w_40,h_40,c_fill,q_auto,f_auto/");
+      const stringToReplace = url.includes("upload/c_fit,w_5000,h_5000")
+        ? "upload/c_fit,w_5000,h_5000"
+        : "upload/";
+
+      return url.replace(
+        stringToReplace,
+        "upload/w_40,h_40,c_fill,q_auto,f_auto/"
+      );
     } else {
       return url;
     }
@@ -214,7 +221,7 @@ export default function SongList({
                   <StyledTableCell
                     sx={ { display: { xs: "none", lg: "table-cell" } } }
                   >
-                    { song.genre }
+                    { song.genres.join(", ") }
                   </StyledTableCell>
                   <StyledTableCell
                     sx={ {

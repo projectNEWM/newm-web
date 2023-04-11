@@ -3,31 +3,35 @@ import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
 import { useGetGenresQuery } from "modules/content";
-import { selectSession } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   UploadSongRequest,
-  generateArtistAgreement,
-  uploadSong,
+  useGenerateArtistAgreementThunk,
+  useUploadSongThunk,
 } from "modules/song";
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
 
 const UploadSong: FunctionComponent = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data: genreOptions = [] } = useGetGenresQuery();
-
   const {
-    profile: { firstName, lastName, nickname: stageName, email },
-  } = useSelector(selectSession);
+    data: {
+      firstName = "",
+      lastName = "",
+      nickname: stageName,
+      email,
+    } = emptyProfile,
+  } = useGetProfileQuery();
+  const [uploadSong] = useUploadSongThunk();
+  const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
 
   const initialValues: UploadSongRequest = {
-    image: undefined,
+    coverArtUrl: "",
     audio: undefined,
     title: "",
     genres: [],
@@ -64,29 +68,27 @@ const UploadSong: FunctionComponent = () => {
       const companyName = "ACME";
       const artistName = `${firstName} ${lastName}`;
 
-      dispatch(
-        generateArtistAgreement({
-          body: {
-            songName,
-            companyName,
-            artistName,
-            stageName,
-          },
-          callback: () => navigate("confirm"),
-        })
-      );
+      generateArtistAgreement({
+        body: {
+          songName,
+          companyName,
+          artistName,
+          stageName,
+        },
+        callback: () => navigate("confirm"),
+      });
     } else {
       handleSubmit(values);
     }
   };
 
   // eslint-disable-next-line
-  const handleSubmit = (values: any) => {
-    dispatch(uploadSong(values));
+  const handleSubmit = (values: UploadSongRequest) => {
+    uploadSong(values);
   };
 
   const validations = {
-    image: Yup.mixed().required("This field is required"),
+    coverArtUrl: Yup.mixed().required("This field is required"),
     audio: Yup.mixed().required("This field is required"),
     title: Yup.string().required("This field is required"),
     genres: commonYupValidation
@@ -140,7 +142,7 @@ const UploadSong: FunctionComponent = () => {
               navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
-                image: validations.image,
+                coverArtUrl: validations.coverArtUrl,
                 audio: validations.audio,
                 title: validations.title,
                 genres: validations.genres,

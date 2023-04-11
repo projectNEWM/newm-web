@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import { setIsLoading } from "./slice";
+import { asThunkHook } from "common";
 import { extendedApi as sessionApi } from "./api";
 import {
   CreateAccountRequest,
@@ -18,8 +18,6 @@ export const updateProfile = createAsyncThunk(
   "session/updateProfile",
   async (body: ProfileFormValues, { dispatch }) => {
     try {
-      dispatch(setIsLoading(true));
-
       let bannerUrl;
       let pictureUrl;
       let companyLogoUrl;
@@ -92,8 +90,6 @@ export const updateProfile = createAsyncThunk(
       await dispatch(sessionApi.endpoints.getProfile.initiate());
     } catch (err) {
       // do nothing, errors handled by endpoints
-    } finally {
-      dispatch(setIsLoading(false));
     }
   }
 );
@@ -105,7 +101,9 @@ export const updateProfile = createAsyncThunk(
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: ProfileFormValues, { dispatch }) => {
-    const updateProfileResponse = await dispatch(updateProfile(body));
+    const updateProfileResponse = await dispatch(
+      sessionApi.endpoints.updateProfile.initiate(body)
+    );
 
     if ("error" in updateProfileResponse) {
       return;
@@ -237,3 +235,7 @@ export const handleSocialLoginError = createAsyncThunk(
     );
   }
 );
+
+export const useUpdateProfileThunk = asThunkHook(updateProfile);
+
+export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);

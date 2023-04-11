@@ -1,9 +1,12 @@
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
 import { Form, Formik, FormikValues } from "formik";
-import { commonYupValidation, useWindowDimensions } from "common";
+import {
+  commonYupValidation,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "common";
 import {
   DropdownMultiSelectField,
   TextAreaField,
@@ -12,30 +15,35 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { Song, patchSong, useGetSongQuery } from "modules/song";
+import {
+  Song,
+  emptySong,
+  useGetSongQuery,
+  usePatchSongThunk,
+} from "modules/song";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
 
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
-  const { data: song = {} } = useGetSongQuery(id);
-
+  const [patchSong] = usePatchSongThunk();
   const {
-    coverArtUrl = "",
-    description = "",
-    genres = [],
-    moods = [],
-    title = "",
-  } = song;
+    data: {
+      title,
+      coverArtUrl,
+      description,
+      genres = [],
+      moods = [],
+    } = emptySong,
+  } = useGetSongQuery(id);
 
   const initialValues = {
-    image: coverArtUrl,
+    coverArtUrl,
     description,
     genres,
     moods,
@@ -47,7 +55,6 @@ const SongInfo = () => {
     genres: commonYupValidation
       .genres(genreOptions)
       .min(1, "At lease one genre is required"),
-    image: Yup.mixed(),
     title: Yup.string(),
   });
 
@@ -55,24 +62,9 @@ const SongInfo = () => {
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: FormikValues) => {
-    const updatedValues: FormikValues = {};
-    if (values.image && coverArtUrl !== values.image) {
-      updatedValues.image = values.image;
-    }
-    if (description !== values.description) {
-      updatedValues.description = values.description;
-    }
-    if (JSON.stringify(genres) !== JSON.stringify(values.genres)) {
-      updatedValues.genres = values.genres;
-    }
-    if (JSON.stringify(moods) !== JSON.stringify(values.moods)) {
-      updatedValues.moods = values.moods;
-    }
-    if (title !== values.title) {
-      updatedValues.title = values.title;
-    }
+    const updatedValues = getUpdatedValues(initialValues, values);
 
-    dispatch(patchSong({ id, ...updatedValues }));
+    patchSong({ id, ...updatedValues });
   };
 
   return (
@@ -84,7 +76,7 @@ const SongInfo = () => {
         validateOnBlur={ false }
         validationSchema={ validationSchema }
       >
-        { ({ dirty }) => {
+        { ({ dirty, isSubmitting }) => {
           return (
             <Form
               style={ {
@@ -107,7 +99,7 @@ const SongInfo = () => {
                 </Typography>
 
                 <UploadImageField
-                  name="image"
+                  name="coverArtUrl"
                   emptyMessage="Drag and drop or browse your image"
                   minDimensions={ { width: 2048, height: 2048 } }
                 />
@@ -215,6 +207,7 @@ const SongInfo = () => {
 
                   <Button
                     sx={ { display: dirty ? "inline-flex" : "none" } }
+                    isLoading={ isSubmitting }
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.md
                         ? "compact"
