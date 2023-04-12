@@ -73,6 +73,13 @@ const ArtistAssets: Record<string, ArtistAssets> = {
     profileSecondary: require("./cusi/profile-cropped.webp"),
     preview: require("./cusi/preview.mp3"),
   },
+  mikelerman: {
+    albumArt: require("./mikelerman/album-art.webp"),
+    albumArtXs: require("./mikelerman/album-art@80.webp"),
+    profilePrimary: require("./mikelerman/profile-cut.webp"),
+    profileSecondary: require("./mikelerman/profile-cropped.webp"),
+    preview: require("./mikelerman/preview.mp3"),
+  },
 };
 
 const artistName = process.env.REACT_APP_ARTIST_NAME || "murs";

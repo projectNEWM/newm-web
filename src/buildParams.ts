@@ -375,6 +375,43 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
       },
     ],
   },
+  mikelerman: {
+    artistName: "Mike Lerman",
+    songName: "Baby Bird",
+    launchTimestamp: 1681488000000,
+    projectId: Number(process.env.REACT_APP_PROJECT_ID) || 18,
+    bundleAmount: 500000,
+    totalTokens: 100000000,
+    bundlePrice: 50,
+    royaltyAgreement:
+      "https://arweave.net/UCaxKsPlu_xxtJtuImQDffLtlOJjjkD6qlwXeZB8lS4",
+    poolLink: "https://pool.pm/asset1mx5sdpzkar2l084urxx8fjuwt34c6evswtqfs8",
+    spotifyLink: "", // TODO Add link when available
+    description:
+      "Baby Bird is about a newborn nestling whose mother had to leave " +
+      "during a storm, resulting in the baby learning to fly on its own. " +
+      "Nature can be brutal, but so is determination.\n\n" +
+      "This hard rock lullaby is for those holding on until the morning; " +
+      "those who rely on themselves in times of trouble and need assurance " +
+      "that the storm will pass.\n\n" +
+      "I love this song and hope you do too. The raw energy brings me back " +
+      "to my childhood and is the heaviest track on my Underdog album. It’s " +
+      "dedicated to my son, my wife and all others learning to fly. I want " +
+      "to thank everyone who made this song possible, as well as the " +
+      "listeners, NEWM, Sick City and the Cardano Community for providing " +
+      "solutions for the Baby Birds of this world.\n\n" +
+      "With determination,\n\n" +
+      "Mike Lerman",
+    socials: [
+      {
+        heading: "Mike Lerman",
+        twitter: "https://twitter.com/MikeLerman",
+        instagram: "https://www.instagram.com/mikelermanmusic",
+        linktree: "https://linktr.ee/MikeLerman",
+        website: "https://mikelermanmusic.com/",
+      },
+    ],
+  },
 };
 
 export const projectDetails = projectDetailsMap[artistName];

@@ -87,6 +87,17 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "target": "projectmikelerman",
+      "public": "build",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }
