@@ -24,7 +24,7 @@ const TokenDrop: FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const window = useWindowDimensions();
-  const isXLargeScreen = window.height > 1000 && window.width > 1000;
+  const isXLargeScreen = window.width > theme.breakpoints.values.md;
 
   const [displayCountdown, setDisplayCountdown] = useState(
     getShouldDisplayCountdown()
@@ -64,18 +64,24 @@ const TokenDrop: FunctionComponent = () => {
         justifyContent: "space-between",
       } }
     >
-      <Box
-        sx={ {
-          display: ["none", "none", "flex"],
-          position: "fixed",
-          top: 32,
-          right: [0, 0, 32, 160],
-        } }
-      >
-        <a href="https://www.newm.io" target="_blank" rel="noopener noreferrer">
-          <NEWMLogo width={ 110 } height={ 110 } />
-        </a>
-      </Box>
+      { isXLargeScreen ? (
+        <Box
+          sx={ {
+            display: "flex",
+            position: "fixed",
+            top: 32,
+            right: [0, 0, 32, 160],
+          } }
+        >
+          <a
+            href="https://www.newm.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <NEWMLogo width={ 110 } height={ 110 } />
+          </a>
+        </Box>
+      ) : null }
 
       <Box
         sx={ {
@@ -95,15 +101,44 @@ const TokenDrop: FunctionComponent = () => {
           paddingLeft={ [1, 1, 10] }
           paddingRight={ [1, 1, 0] }
         >
-          <Stack spacing={ 1 } sx={ { marginBottom: 2.5 } }>
-            <Typography
-              variant="h1"
-              fontSize={ ["42px", "68px", "72px", "100px"] }
-              lineHeight="86px"
-              paddingRight={ [0, 0, 18] }
+          <Stack
+            spacing={ 1 }
+            sx={ {
+              marginBottom: 2.5,
+            } }
+          >
+            <Stack
+              sx={ {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              } }
             >
-              { projectDetails.artistName }
-            </Typography>
+              <Typography
+                variant="h1"
+                fontSize={ ["42px", "68px", "72px", "100px"] }
+                lineHeight="86px"
+                paddingRight={ [0, 0, 18] }
+              >
+                { projectDetails.artistName }
+              </Typography>
+              <Box
+                sx={ {
+                  display: ["flex", "flex", "none"],
+                  width: [60, 80],
+                  height: [60, 80],
+                } }
+              >
+                <a
+                  href="https://www.newm.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <NEWMLogo width={ "auto" } height={ "auto" } />
+                </a>
+              </Box>
+            </Stack>
 
             { !!projectDetails.subtitle && (
               <Typography
