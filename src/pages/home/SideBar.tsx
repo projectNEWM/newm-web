@@ -138,13 +138,13 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
               label="FAQ"
-              href="https://newm.io/faq_artist-portal"
+              href="http://newm.io/artists-faq"
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
               label="ASK THE COMMUNITY"
-              href="https://t.me/NEWM_artist-support"
+              href="http://t.me/NEWMartists"
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
