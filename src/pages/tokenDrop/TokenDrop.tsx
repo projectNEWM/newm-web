@@ -64,25 +64,6 @@ const TokenDrop: FunctionComponent = () => {
         justifyContent: "space-between",
       } }
     >
-      { isXLargeScreen ? (
-        <Box
-          sx={ {
-            display: "flex",
-            position: "fixed",
-            top: 32,
-            right: [0, 0, 32, 160],
-          } }
-        >
-          <a
-            href="https://www.newm.io"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <NEWMLogo width={ 110 } height={ 110 } />
-          </a>
-        </Box>
-      ) : null }
-
       <Box
         sx={ {
           display: ["flex", "flex", "none"],
@@ -125,9 +106,12 @@ const TokenDrop: FunctionComponent = () => {
               </Typography>
               <Box
                 sx={ {
-                  display: ["flex", "flex", "none"],
-                  width: [60, 80],
-                  height: [60, 80],
+                  display: "flex",
+                  width: [60, 80, 110],
+                  height: [60, 80, 110],
+                  position: ["static", "static", "fixed"],
+                  top: [0, 0, 32],
+                  right: [0, 0, 32, 160],
                 } }
               >
                 <a
