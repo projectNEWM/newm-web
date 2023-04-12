@@ -1,21 +1,19 @@
 import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
-import {
-  LogoutButton,
-  ProfileImage,
-  SideBarHeader,
-  SideBarNavLink,
-} from "components";
+import { ProfileImage, SideBarHeader, SideBarNavLink } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import UploadIcon from "assets/images/UploadIcon";
 import FoldersIcon from "assets/images/FoldersIcon";
 import PeopleIcon from "assets/images/PeopleIcon";
 import WalletIcon from "assets/images/WalletIcon";
-import AnalyticsIcon from "assets/images/AnalyticsIcon";
 import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import EmailIcon from "@mui/icons-material/Email";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -78,11 +76,11 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             to="/home/upload-song"
           />
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <FoldersIcon /> }
@@ -98,31 +96,24 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <WalletIcon /> }
               label="WALLET"
               to="/home/wallet"
             />
-
-            <SideBarNavLink
-              onClick={ () => props.setMobileOpen(false) }
-              icon={ <AnalyticsIcon /> }
-              label="ANALYTICS"
-              to="/home/analytics"
-            />
           </Stack>
 
-          <Box mt={ 2 } ml={ 2.5 }>
+          <Box mt={ 3.5 } ml={ 2.5 }>
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <StarIcon /> }
@@ -130,7 +121,37 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               to="/home/profile"
             />
 
-            <LogoutButton />
+            <SideBarNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <SettingsIcon sx={ { fontSize: "18px" } } /> }
+              label="SETTINGS"
+              to="/home/settings"
+            />
+          </Stack>
+
+          <Box mt={ 4 } ml={ 2.5 }>
+            <SideBarHeader>SUPPORT</SideBarHeader>
+          </Box>
+
+          <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
+            <SideBarNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
+              label="FAQ"
+              href="http://newm.io/artists-faq"
+            />
+            <SideBarNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
+              label="ASK THE COMMUNITY"
+              href="http://t.me/NEWMartists"
+            />
+            <SideBarNavLink
+              onClick={ () => props.setMobileOpen(false) }
+              icon={ <EmailIcon sx={ { fontSize: "18px" } } /> }
+              label="SUPPORT"
+              href="mailto: support@newm.io"
+            />
           </Stack>
         </Box>
       </Box>

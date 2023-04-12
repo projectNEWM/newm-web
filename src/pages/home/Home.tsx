@@ -10,7 +10,6 @@ import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
 import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
-import Analytics from "./analytics/Analytics";
 import Profile from "./profile/Profile";
 
 const Home: FunctionComponent = () => {
@@ -62,7 +61,6 @@ const Home: FunctionComponent = () => {
           <Route path="library/*" element={ <Library /> } />
           <Route path="owners" element={ <Owners /> } />
           <Route path="wallet" element={ <Wallet /> } />
-          <Route path="analytics" element={ <Analytics /> } />
           <Route path="profile" element={ <Profile /> } />
         </Routes>
       </Box>
