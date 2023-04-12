@@ -84,7 +84,9 @@ export const generateArtistAgreement = createAsyncThunk(
 
       if ("error" in artistAgreementResp) return;
 
-      callback();
+      if (typeof callback === "function") {
+        callback();
+      }
     } catch (err) {
       // do nothing
     }

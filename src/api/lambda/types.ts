@@ -3,6 +3,8 @@ export interface GenerateArtistAgreementBody {
   readonly companyName: string;
   readonly artistName: string;
   readonly stageName: string;
+  readonly songId?: string;
+  readonly save?: boolean;
 }
 
 export interface GenerateArtistAgreementResponse {
@@ -11,5 +13,5 @@ export interface GenerateArtistAgreementResponse {
 
 export interface GenerateArtistAgreementPayload {
   readonly body: GenerateArtistAgreementBody;
-  readonly callback: VoidFunction;
+  readonly callback?: VoidFunction;
 }
