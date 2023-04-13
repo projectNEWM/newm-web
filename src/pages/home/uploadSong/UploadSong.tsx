@@ -21,14 +21,18 @@ const UploadSong: FunctionComponent = () => {
   const { data: genreOptions = [] } = useGetGenresQuery();
   const {
     data: {
+      companyName = "",
       firstName = "",
       lastName = "",
       nickname: stageName,
       email,
+      id,
     } = emptyProfile,
   } = useGetProfileQuery();
   const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
+
+  const artistName = `${firstName} ${lastName}`;
 
   const initialValues: UploadSongRequest = {
     coverArtUrl: "",
@@ -63,14 +67,9 @@ const UploadSong: FunctionComponent = () => {
 
   const handleSongInfo = (values: UploadSongRequest) => {
     if (values.isMinting) {
-      const songName = values.title;
-      // TODO: reference company name when exists in profile
-      const companyName = "ACME";
-      const artistName = `${firstName} ${lastName}`;
-
       generateArtistAgreement({
         body: {
-          songName,
+          songName: values.title,
           companyName,
           artistName,
           stageName,
@@ -84,6 +83,16 @@ const UploadSong: FunctionComponent = () => {
 
   // eslint-disable-next-line
   const handleSubmit = (values: UploadSongRequest) => {
+    generateArtistAgreement({
+      body: {
+        songName: values.title,
+        companyName,
+        artistName,
+        stageName,
+        songId: id,
+        save: true,
+      },
+    });
     uploadSong(values);
   };
 
