@@ -386,7 +386,7 @@ const projectDetailsMap: Record<string, ProjectDetails> = {
     royaltyAgreement:
       "https://arweave.net/UCaxKsPlu_xxtJtuImQDffLtlOJjjkD6qlwXeZB8lS4",
     poolLink: "https://pool.pm/asset1mx5sdpzkar2l084urxx8fjuwt34c6evswtqfs8",
-    spotifyLink: "", // TODO Add link when available
+    spotifyLink: "https://open.spotify.com/track/11wB8zEELSt5Ke6vyrghQh",
     description:
       "Baby Bird is about a newborn nestling whose mother had to leave " +
       "during a storm, resulting in the baby learning to fly on its own. " +
