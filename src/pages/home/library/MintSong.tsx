@@ -114,8 +114,8 @@ const MintSong = () => {
           songId: id,
           save: true,
         },
+        callback: () => patchSong({ id, ...values }),
       });
-      patchSong({ id, ...values });
     }
   };
 

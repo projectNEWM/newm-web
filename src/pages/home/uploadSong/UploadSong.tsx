@@ -83,17 +83,21 @@ const UploadSong: FunctionComponent = () => {
 
   // eslint-disable-next-line
   const handleSubmit = (values: UploadSongRequest) => {
-    generateArtistAgreement({
-      body: {
-        songName: values.title,
-        companyName,
-        artistName,
-        stageName,
-        songId: id,
-        save: true,
-      },
-    });
-    uploadSong(values);
+    if (values.isMinting) {
+      generateArtistAgreement({
+        body: {
+          songName: values.title,
+          companyName,
+          artistName,
+          stageName,
+          songId: id,
+          save: true,
+        },
+        callback: () => uploadSong(values),
+      });
+    } else {
+      uploadSong(values);
+    }
   };
 
   const validations = {
