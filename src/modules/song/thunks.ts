@@ -54,13 +54,22 @@ export const uploadSong = createAsyncThunk(
 
       if ("error" in audioUploadUrlResp) return;
 
-      const { uploadUrl } = audioUploadUrlResp.data;
+      const { url: uploadUrl, fields } = audioUploadUrlResp.data;
 
-      // upload audio to AWS, song audioUrl will be updated after it's transcoded
+      // build a form with AWS presigned fields and upload audio to AWS
+      //  song audioUrl will be updated after it's transcoded
+      const formData = new FormData();
+      for(const key in fields) {
+        formData.append(key, fields[key]);
+      }
+      formData.append("file", body.audio);
       await fetch(uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": "application/octet-stream" },
-        body: body.audio,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "ContentDisposition": `filename=${body.audio.name}`
+        },
+        body: formData,
       });
 
       // navigate to library page to view new song
