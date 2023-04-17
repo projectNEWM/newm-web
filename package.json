@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "@dcspark/cardano-multiplatform-lib-asmjs": "^0.3.0",
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
     "@greatsumini/react-facebook-login": "^3.2.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
