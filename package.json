@@ -46,8 +46,8 @@
     "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "format": "prettier-eslint --config .prettierrc.json --write \"src/**/*.{jsx,js,ts,tsx}\"",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook": "storybook dev -p 6006 -s public",
+    "build-storybook": "storybook build -s public"
   },
   "browserslist": {
     "production": [
@@ -62,16 +62,16 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.20",
-    "@storybook/addon-essentials": "^6.4.20",
-    "@storybook/addon-interactions": "^6.4.20",
-    "@storybook/addon-links": "^6.4.20",
-    "@storybook/builder-webpack5": "^6.4.20",
-    "@storybook/manager-webpack5": "^6.4.20",
-    "@storybook/node-logger": "^6.4.20",
-    "@storybook/preset-create-react-app": "^4.1.0",
-    "@storybook/react": "^6.4.20",
-    "@storybook/testing-library": "0.0.9",
+    "@storybook/addon-actions": "^7.0.5",
+    "@storybook/addon-essentials": "^7.0.5",
+    "@storybook/addon-interactions": "^7.0.5",
+    "@storybook/addon-links": "^7.0.5",
+    "@storybook/addon-mdx-gfm": "^7.0.5",
+    "@storybook/node-logger": "^7.0.5",
+    "@storybook/preset-create-react-app": "^7.0.5",
+    "@storybook/react": "^7.0.5",
+    "@storybook/react-webpack5": "^7.0.5",
+    "@storybook/testing-library": "0.1.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -94,11 +94,12 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-storybook": "^0.5.7",
+    "eslint-plugin-storybook": "^0.6.11",
     "eslint-plugin-testing-library": "^5.0.5",
     "prettier-eslint": "13.0.0",
     "prettier-eslint-cli": "^5.0.1",
     "redux-logger": "^3.0.6",
+    "storybook": "^7.0.5",
     "typescript": "^4.5.5",
     "webpack": "^5.71.0"
   },
