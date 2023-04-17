@@ -5,7 +5,7 @@ import {
   KeyboardEvent,
   forwardRef,
 } from "react";
-import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
+import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "theme";
 import { Box } from "@mui/material";
