@@ -56,8 +56,8 @@ const DropdownSelect: ForwardRefRenderFunction<
     popupOpen,
     inputValue,
   } = useAutocomplete({
-    getOptionLabel: (option) => option,
     id: name,
+    getOptionLabel: (option) => option,
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(newValue as string);

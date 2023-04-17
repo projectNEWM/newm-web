@@ -3,6 +3,13 @@ import { fireEvent } from "@testing-library/react";
 import { extendedApi } from "modules/session";
 import GoogleLogin from "../GoogleLogin";
 
+interface OnSuccessParams {
+  readonly access_token: string;
+}
+interface UseGoogleLoginParams {
+  readonly onSuccess: ({ access_token }: OnSuccessParams) => void;
+}
+
 // mock useDispatch so that it doesn't actually fire any Redux functionality
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -11,14 +18,14 @@ jest.mock("react-redux", () => ({
 
 jest.spyOn(extendedApi.endpoints.googleLogin, "initiate");
 
-// mock successful Google auth response on click
-jest.mock("react-google-login", () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const MockGoogleLogin = ({ onSuccess, render }: any) => {
-    return render({ onClick: () => onSuccess({ accessToken: "MOCK" }) });
+jest.mock("@react-oauth/google", () => {
+  return {
+    ...jest.requireActual("@react-oauth/google"),
+    // mock successful response
+    useGoogleLogin({ onSuccess }: UseGoogleLoginParams) {
+      return () => onSuccess({ access_token: "example-token" });
+    },
   };
-
-  return MockGoogleLogin;
 });
 
 describe("<GoogleLogin />", () => {
