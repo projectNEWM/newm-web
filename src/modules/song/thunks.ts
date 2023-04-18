@@ -62,13 +62,13 @@ export const uploadSong = createAsyncThunk(
       for(const key in fields) {
         formData.append(key, fields[key]);
       }
+      const headers = new Headers({
+        "ContentDisposition": `filename=${body.audio.name}`
+      })
       formData.append("file", body.audio);
       await fetch(uploadUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/octet-stream",
-          "ContentDisposition": `filename=${body.audio.name}`
-        },
+        headers: Object.assign({}, headers),
         body: formData,
       });
 

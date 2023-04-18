@@ -179,7 +179,7 @@ export const extendedApi = api.injectEndpoints({
       AudioUploadUrlRequest
     >({
       query: ({ songId, ...body }) => ({
-        url: `/v1/songs/${songId}/audio`,
+        url: `/v1/songs/${songId}/upload`,
         method: "POST",
         body,
       }),
