@@ -7,10 +7,47 @@ import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
 import videojs from "video.js";
 import Player from "video.js/dist/types/player";
+import Hls from "hls.js";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const playSong = (song: Song) => {
+    if (!Hls.isSupported()) {
+      console.log("HLS not supported");
+      return;
+    }
+
+    if (!videoRef.current) {
+      console.log("No video element");
+      return;
+    }
+
+    if (!song.streamUrl) {
+      console.log("Missing stream ur,");
+      return;
+    }
+
+    const hls = new Hls();
+
+    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+      console.log("In business.");
+    });
+    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+      console.log(
+        "manifest loaded, found " + data.levels.length + " quality level"
+      );
+    });
+
+    hls.loadSource(song.streamUrl);
+    // bind them together
+    hls.attachMedia(videoRef.current);
+
+    videoRef.current.play();
+  };
+
   const {
     data: songs = [],
     isLoading,
@@ -83,20 +120,20 @@ const Discography: FunctionComponent = () => {
   }, [currentPlayingSongId, filteredData]);
 
   // Play and stop audio stream source when selected
-  const handleSongPlayPause = (song: Song) => {
-    if (song.id === currentPlayingSongId) {
-      setCurrentPlayingSongId(null);
-      audioPlayerRef.current?.pause();
-      audioPlayerRef.current?.src(undefined);
-    } else {
-      if (song.streamUrl) {
-        setCurrentPlayingSongId(song.id);
-        audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
-        audioPlayerRef.current?.src(song.streamUrl);
-        audioPlayerRef.current?.play();
-      }
-    }
-  };
+  // const handleSongPlayPause = (song: Song) => {
+  //   if (song.id === currentPlayingSongId) {
+  //     setCurrentPlayingSongId(null);
+  //     audioPlayerRef.current?.pause();
+  //     audioPlayerRef.current?.src(undefined);
+  //   } else {
+  //     if (song.streamUrl) {
+  //       setCurrentPlayingSongId(song.id);
+  //       audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
+  //       audioPlayerRef.current?.src(song.streamUrl);
+  //       audioPlayerRef.current?.play();
+  //     }
+  //   }
+  // };
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -142,7 +179,7 @@ const Discography: FunctionComponent = () => {
           <SongList
             songData={ songs }
             currentPlayingSongId={ currentPlayingSongId }
-            handleSongPlayPause={ handleSongPlayPause }
+            handleSongPlayPause={ playSong }
             page={ page }
             onPageChange={ handlePageChange }
           />
@@ -153,6 +190,10 @@ const Discography: FunctionComponent = () => {
 
   return (
     <>
+      <video ref={ videoRef } style={ { display: "none" } }>
+        <track kind="captions" />
+      </video>
+
       <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
