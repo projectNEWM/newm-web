@@ -15,23 +15,23 @@ const Settings: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
 
-  const { isLoading } = useSelector(selectSession);
-
   const initialValues = {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   };
 
+  // TODO validate if user login by email and or social
+  // TODO Does toast return on current password failure?
   const validationSchema = Yup.object({
-    currentPassword: Yup.string().when("newPassword", {
+    currentPassword: Yup.string().required("Current password is required"),
+    newPassword: commonYupValidation.newPassword.when("currentPassword", {
       is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Current password is required"),
+      then: Yup.string().required("New password is required"),
     }),
-    newPassword: commonYupValidation.newPassword,
     confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
       is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Confirm new password is required"),
+      then: Yup.string().required("Must match new password"),
     }),
   });
 
@@ -48,7 +48,7 @@ const Settings: FunctionComponent = () => {
         confirmPassword: values.confirmPassword,
       }),
     };
-
+    // TODO fix dispatch to update values
     dispatch(updateProfile({ ...updatedValues }));
   };
 
@@ -56,7 +56,7 @@ const Settings: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
-        margin: [null, null, 3],
+        marginX: [null, null, 3],
         paddingBottom: 8,
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
@@ -66,7 +66,9 @@ const Settings: FunctionComponent = () => {
         <Typography variant="h3" fontWeight={ 800 }>
           SETTINGS
         </Typography>{ " " }
-        <LogoutButton />
+        <Stack>
+          <LogoutButton />
+        </Stack>
       </Stack>
 
       <Formik
@@ -144,7 +146,7 @@ const Settings: FunctionComponent = () => {
                       ABOUT
                     </Typography>
                     <Typography variant="subtitle1">
-                      Terms of Service
+                      Terms of Service { /* TODO update with link*/ }
                     </Typography>
                   </Stack>
                 </Stack>
@@ -176,8 +178,6 @@ const Settings: FunctionComponent = () => {
                     Cancel
                   </Button>
                   <Button
-                    disabled={ !dirty }
-                    isLoading={ isLoading }
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.lg
                         ? "compact"
