@@ -32,21 +32,21 @@ const Discography: FunctionComponent = () => {
 
     if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
       videoRef.current.src = song.streamUrl;
-      videoRef.current.addEventListener("loadedmetadata", function () {
+      videoRef.current.addEventListener("loadedmetadata", () => {
         videoRef.current?.play();
       });
 
-      console.log("played natively");
+      console.log("Played natively");
 
       return;
     }
 
     const hls = new Hls();
 
-    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-      console.log("Media attached.");
+    hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+      console.log("Media attached");
     });
-    hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+    hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
       console.log(`Manifest loaded, found ${data.levels.length} quality level`);
     });
 
