@@ -1,12 +1,16 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikValues } from "formik";
 import { Button, HorizontalLine } from "elements";
 import { LogoutButton, PasswordInputField } from "components";
 import { commonYupValidation, useWindowDimensions } from "common";
 import * as Yup from "yup";
-import { selectSession, updateProfile } from "modules/session";
+import {
+  emptyProfile,
+  updateProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import theme from "theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 
@@ -15,13 +19,15 @@ const Settings: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
 
+  const { data: { oauthType } = emptyProfile } = useGetProfileQuery();
+  const isLoginUsernameAndPassword = !oauthType;
+
   const initialValues = {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   };
 
-  // TODO validate if user login by email and or social
   // TODO Does toast return on current password failure?
   const validationSchema = Yup.object({
     currentPassword: Yup.string().required("Current password is required"),
@@ -97,38 +103,46 @@ const Settings: FunctionComponent = () => {
                 } }
               >
                 <Stack rowGap={ 10 }>
-                  <Stack rowGap={ 2 }>
-                    <Typography variant="h4" fontWeight={ 700 }>
-                      CHANGE PASSWORD
-                    </Typography>
-                    <PasswordInputField
-                      label="CURRENT PASSWORD"
-                      name="currentPassword"
-                      placeholder="Password"
-                      showEndAdornment={ showEndAdornment }
-                    />
-                    <Stack
-                      sx={ {
-                        flexDirection: { xs: "column", lg: "row" },
-                        justifyContent: "space-between",
-                        rowGap: 2,
-                      } }
-                    >
+                  { isLoginUsernameAndPassword ? (
+                    <Stack rowGap={ 2 }>
+                      <Typography variant="h4" fontWeight={ 700 }>
+                        CHANGE PASSWORD
+                      </Typography>
                       <PasswordInputField
-                        label="NEW PASSWORD"
-                        name="newPassword"
-                        placeholder="New password"
+                        label="CURRENT PASSWORD"
+                        name="currentPassword"
+                        placeholder="Password"
                         showEndAdornment={ showEndAdornment }
                       />
-                      <PasswordInputField
-                        label="RETYPE NEW PASSWORD"
-                        name="confirmPassword"
-                        placeholder="New password"
-                        showEndAdornment={ showEndAdornment }
-                      />
+                      <Stack
+                        sx={ {
+                          flexDirection: { xs: "column", lg: "row" },
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <PasswordInputField
+                          label="NEW PASSWORD"
+                          name="newPassword"
+                          placeholder="New password"
+                          showEndAdornment={ showEndAdornment }
+                        />
+                        <PasswordInputField
+                          label="RETYPE NEW PASSWORD"
+                          name="confirmPassword"
+                          placeholder="New password"
+                          showEndAdornment={ showEndAdornment }
+                        />
+                      </Stack>
                     </Stack>
-                  </Stack>
-
+                  ) : (
+                    <Stack rowGap={ 1 }>
+                      <Typography variant="h4">CHANGE PASSWORD</Typography>
+                      <Typography variant="subtitle1">
+                        This account uses { oauthType } for authentication.
+                      </Typography>
+                    </Stack>
+                  ) }
                   <Stack justifyContent="space-between" rowGap={ 2 }>
                     <Stack rowGap={ 0.5 }>
                       <Typography variant="h4" fontWeight={ 700 }>
@@ -156,38 +170,40 @@ const Settings: FunctionComponent = () => {
                     mt: 5,
                   } }
                 />
-                <Stack
-                  sx={ {
-                    columnGap: 2,
-                    flexDirection: { sx: "null", lg: "row" },
-                    mt: 5,
-                    rowGap: 2,
-                  } }
-                >
-                  <Button
-                    disabled={ !dirty }
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? "compact"
-                        : "default"
-                    }
-                    variant="secondary"
-                    color="music"
-                    onClick={ handleReset }
+                { isLoginUsernameAndPassword ? (
+                  <Stack
+                    sx={ {
+                      columnGap: 2,
+                      flexDirection: { sx: "null", lg: "row" },
+                      mt: 5,
+                      rowGap: 2,
+                    } }
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? "compact"
-                        : "default"
-                    }
-                    type="submit"
-                  >
-                    Save
-                  </Button>
-                </Stack>
+                    <Button
+                      disabled={ !dirty }
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.lg
+                          ? "compact"
+                          : "default"
+                      }
+                      variant="secondary"
+                      color="music"
+                      onClick={ handleReset }
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.lg
+                          ? "compact"
+                          : "default"
+                      }
+                      type="submit"
+                    >
+                      Save
+                    </Button>
+                  </Stack>
+                ) : null }
               </Box>
             </Form>
           );
