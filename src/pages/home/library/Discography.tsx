@@ -5,7 +5,7 @@ import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import videojs from "video.js";
+// import videojs from "video.js";
 import Player from "video.js/dist/types/player";
 import Hls from "hls.js";
 import NoSongsYet from "./NoSongsYet";
@@ -15,34 +15,42 @@ const Discography: FunctionComponent = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const playSong = (song: Song) => {
-    if (!Hls.isSupported()) {
-      console.log("HLS not supported");
-      return;
-    }
-
     if (!videoRef.current) {
       console.log("No video element");
       return;
     }
 
     if (!song.streamUrl) {
-      console.log("Missing stream ur,");
+      console.log("Missing stream url");
+      return;
+    }
+
+    if (!Hls.isSupported()) {
+      console.log("HLS not supported");
+      return;
+    }
+
+    if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+      videoRef.current.src = song.streamUrl;
+      videoRef.current.addEventListener("loadedmetadata", function () {
+        videoRef.current?.play();
+      });
+
+      console.log("played natively");
+
       return;
     }
 
     const hls = new Hls();
 
     hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-      console.log("In business.");
+      console.log("Media attached.");
     });
     hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-      console.log(
-        "manifest loaded, found " + data.levels.length + " quality level"
-      );
+      console.log(`Manifest loaded, found ${data.levels.length} quality level`);
     });
 
     hls.loadSource(song.streamUrl);
-    // bind them together
     hls.attachMedia(videoRef.current);
 
     videoRef.current.play();
@@ -62,31 +70,31 @@ const Discography: FunctionComponent = () => {
   const audioPlayerRef = useRef<Player>();
   const viewportWidth = useWindowDimensions()?.width;
 
-  // initialize audio player on page load
-  useEffect(() => {
-    const audioElement = new Audio();
-    const newAudioPlayer = videojs(audioElement);
+  // // initialize audio player on page load
+  // useEffect(() => {
+  //   const audioElement = new Audio();
+  //   const newAudioPlayer = videojs(audioElement);
 
-    audioElement.onended = () => {
-      if (setCurrentPlayingSongId) {
-        setCurrentPlayingSongId(null);
-      }
-    };
+  //   audioElement.onended = () => {
+  //     if (setCurrentPlayingSongId) {
+  //       setCurrentPlayingSongId(null);
+  //     }
+  //   };
 
-    // handles stopping audio using OS or browser media controls
-    audioElement.onpause = () => {
-      if (setCurrentPlayingSongId) {
-        audioElement.src = "";
-        setCurrentPlayingSongId(null);
-      }
-    };
+  //   // handles stopping audio using OS or browser media controls
+  //   audioElement.onpause = () => {
+  //     if (setCurrentPlayingSongId) {
+  //       audioElement.src = "";
+  //       setCurrentPlayingSongId(null);
+  //     }
+  //   };
 
-    audioPlayerRef.current = newAudioPlayer;
+  //   audioPlayerRef.current = newAudioPlayer;
 
-    return () => {
-      audioPlayerRef.current?.dispose();
-    };
-  }, []);
+  //   return () => {
+  //     audioPlayerRef.current?.dispose();
+  //   };
+  // }, []);
 
   useEffect(() => {
     setFilteredData(songs);
