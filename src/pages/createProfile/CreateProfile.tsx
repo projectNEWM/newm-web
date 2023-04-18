@@ -1,10 +1,11 @@
 import { FunctionComponent } from "react";
-import { FormikValues } from "formik";
 import { Box, Container, useTheme } from "@mui/material";
-import { updateInitialProfile } from "modules/session";
+import {
+  ProfileFormValues,
+  useUpdateInitialProfileThunk,
+} from "modules/session";
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
@@ -13,22 +14,17 @@ import SelectRole from "./SelectRole";
 import SelectGenre from "./SelectGenre";
 import Complete from "./Complete";
 
-interface ProfileFormValues {
-  readonly nickname: string;
-  readonly role: string;
-  readonly genre: string;
-}
-
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
+
+  const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
   /**
    * Initial form values.
    */
-  const initialValues: ProfileFormValues = {
+  const initialValues: Partial<ProfileFormValues> = {
     nickname: "",
     role: "",
     genre: "",
@@ -46,8 +42,8 @@ const CreateProfile: FunctionComponent = () => {
   /**
    * Submits the form when on the last route of the form.
    */
-  const handleSubmit = (values: FormikValues) => {
-    dispatch(updateInitialProfile({ ...values }));
+  const handleSubmit = (values: ProfileFormValues) => {
+    updateInitialProfile({ ...values });
   };
 
   return (

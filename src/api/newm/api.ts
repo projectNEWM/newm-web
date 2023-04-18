@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
 import { prepareNewmAuthHeader } from "common/apiUtils";
+import { Tags } from "./types";
 import { fetchBaseQueryWithReauth } from "./utils";
 
 const baseQuery = fetchBaseQuery({
@@ -10,11 +11,8 @@ const baseQuery = fetchBaseQuery({
 
 const api = createApi({
   reducerPath: "newmApi",
+  tagTypes: [Tags.Profile, Tags.Song],
   baseQuery: fetchBaseQueryWithReauth(baseQuery),
-  // TODO: Update caching behavior for endpoints to avoid re-fetching data on
-  // each mount (docs: https://redux-toolkit.js.org/rtk-query/usage/automated-refetching).
-  // ClickUp ticket: https://app.clickup.com/t/8669z53e4
-  refetchOnMountOrArgChange: true,
   endpoints: () => ({}),
 });
 

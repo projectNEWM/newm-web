@@ -2,17 +2,15 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { useWindowDimensions } from "common";
 import { Button, Typography } from "elements";
 import { useFormikContext } from "formik";
-import { UploadSongRequest, selectSong } from "modules/song";
+import { UploadSongRequest } from "modules/song";
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import { ConfirmContract } from "components";
 
 const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
 
-  const { isLoading } = useSelector(selectSong);
-
-  const { values, setFieldValue } = useFormikContext<UploadSongRequest>();
+  const { values, setFieldValue, isSubmitting } =
+    useFormikContext<UploadSongRequest>();
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -40,7 +38,7 @@ const ConfirmAgreement: FunctionComponent = () => {
       <Box mt={ 6 }>
         <Button
           type="submit"
-          isLoading={ isLoading }
+          isLoading={ isSubmitting }
           disabled={ !values.consentsToContract }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md

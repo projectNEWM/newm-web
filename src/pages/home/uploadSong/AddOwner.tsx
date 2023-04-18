@@ -80,6 +80,7 @@ const AddOwner: FunctionComponent = () => {
                   <Typography>%</Typography>
                 </InputAdornment>
               }
+              isOptional={ false }
               max="100"
               min="1"
               name="Owner"

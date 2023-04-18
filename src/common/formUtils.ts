@@ -1,10 +1,36 @@
 import * as Yup from "yup";
+import { FormikValues } from "formik";
 
 /**
  * Password regex, it must contain the following:
  * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
  */
 const passwordRequirementRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+/**
+ * Returns true if all genres are included in the genre options array
+ *
+ * NOTE: Accounts for known Yup issue where array and elements in array
+ * can be an undefined type: https://github.com/jquense/yup/issues/1853
+ */
+const includesGenres = (
+  genreOptions: ReadonlyArray<string>,
+  genres?: ReadonlyArray<string | undefined>
+) => {
+  // don't validate that genres array is present, this is validated separately
+  if (!genres) return true;
+
+  // return false if a genre is found to not be included in genreOptions
+  const hasInvalidGenre = !!genres.find((genre) => {
+    // return as invalid if genre is undefined (see above note)
+    if (!genre) return true;
+
+    return !genreOptions.includes(genre);
+  });
+
+  // return true if all genres were valid
+  return !hasInvalidGenre;
+};
 
 export const commonYupValidation = {
   email: Yup.string()
@@ -24,11 +50,18 @@ export const commonYupValidation = {
         "You need to type or select one of the ones below",
         (role) => (role ? roles.includes(role) : false)
       ),
-  genre: (genres: string[]) =>
+  genre: (genreOptions: string[]) =>
     Yup.string().test(
       "is-genre",
       "You need to type or select one of the ones below",
-      (genre) => (genre ? genres.includes(genre) : false)
+      // validate that genre is valid, but only if one is present
+      (genre) => (genre ? genreOptions.includes(genre) : true)
+    ),
+  genres: (genreOptions: string[]) =>
+    Yup.array(Yup.string()).test(
+      "is-genres",
+      "You need to select one or more of the genres below",
+      (genre) => includesGenres(genreOptions, genre)
     ),
   nickname: Yup.string()
     .required("Stage name is required")
@@ -48,4 +81,29 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
+};
+
+/**
+ * Returns an object containing the updated values by comparing the original values with the new values.
+ * If a value has been updated, the key-value pair will be included in the returned object.
+ *
+ * @param {FormikValues} originalValues - The original form values.
+ * @param {FormikValues} newValues - The new form values.
+ * @returns {Partial<FormikValues>} An object containing only the updated values.
+ */
+export const getUpdatedValues = (
+  originalValues: FormikValues,
+  newValues: FormikValues
+) => {
+  const updatedValues: Partial<FormikValues> = {};
+
+  Object.keys(originalValues).forEach((key) => {
+    if (
+      JSON.stringify(originalValues[key]) !== JSON.stringify(newValues[key])
+    ) {
+      updatedValues[key] = newValues[key];
+    }
+  });
+
+  return updatedValues as any; // eslint-disable-line
 };

@@ -9,6 +9,7 @@ import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "theme";
 import { Box } from "@mui/material";
+import { WidthType } from "common";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsList";
@@ -19,11 +20,12 @@ export interface DropdownSelectProps
   readonly errorMessage?: string;
   readonly handleChange?: (newValue: string) => void;
   readonly label: string;
+  readonly isOptional?: boolean;
   readonly name: string;
   readonly noResultsText?: string;
   readonly options: string[];
   readonly placeholder?: string;
-  readonly widthType?: "default" | "full";
+  readonly widthType?: WidthType;
 }
 
 const DropdownSelect: ForwardRefRenderFunction<
@@ -40,6 +42,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     options,
     placeholder,
     value,
+    widthType,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -76,7 +79,13 @@ const DropdownSelect: ForwardRefRenderFunction<
   };
 
   return (
-    <Box sx={ { position: "relative" } }>
+    <Box
+      sx={ {
+        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        position: "relative",
+        width: "100%",
+      } }
+    >
       <div { ...getRootProps() }>
         <TextInput
           ref={ ref }

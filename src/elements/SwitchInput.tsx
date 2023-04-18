@@ -14,44 +14,41 @@ export interface SwitchInputProps extends SwitchProps {
 const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   title,
   description,
-  sx,
   includeBorder = true,
+  children,
   ...props
 }) => {
   const theme = useTheme();
 
-  const baseStyles: SxProps = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    p: 2,
-  };
-
-  const borderStyles: SxProps = {
-    backgroundColor: theme.colors.grey600,
-    border: `2px solid ${theme.colors.grey400}`,
-    borderRadius: "4px",
-  };
-
-  const styles = includeBorder
+  const borderStyles: SxProps = includeBorder
     ? {
-        ...baseStyles,
-        ...borderStyles,
+        backgroundColor: theme.colors.grey600,
+        border: `2px solid ${theme.colors.grey400}`,
+        borderRadius: "4px",
       }
-    : baseStyles;
+    : {};
 
   return (
-    <Stack sx={ { ...styles, ...sx } }>
-      <Stack>
-        <Typography pr={ 1 }>{ title }</Typography>
+    <Stack sx={ { p: 2, ...borderStyles } }>
+      <Stack
+        sx={ {
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        } }
+      >
+        <Stack>
+          <Typography pr={ 1 }>{ title }</Typography>
 
-        <Typography pr={ 1 } variant="subtitle2">
-          { description }
-        </Typography>
+          <Typography pr={ 1 } variant="subtitle2">
+            { description }
+          </Typography>
+        </Stack>
+
+        <Switch { ...props } />
       </Stack>
-
-      <Switch { ...props } />
+      { props.checked ? children : null }
     </Stack>
   );
 };
