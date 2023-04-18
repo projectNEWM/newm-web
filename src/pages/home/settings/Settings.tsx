@@ -8,6 +8,7 @@ import { commonYupValidation, useWindowDimensions } from "common";
 import * as Yup from "yup";
 import { selectSession, updateProfile } from "modules/session";
 import theme from "theme";
+import DeleteAccountDialog from "./DeleteAccountDialog";
 
 const Settings: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -135,9 +136,7 @@ const Settings: FunctionComponent = () => {
                         This action cannot be undone.
                       </Typography>
                     </Stack>
-                    <Button variant="secondary" color="magazine">
-                      Delete account
-                    </Button>
+                    <DeleteAccountDialog />
                   </Stack>
 
                   <Stack justifyContent="space-between" rowGap={ 2 }>
