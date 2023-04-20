@@ -41,7 +41,7 @@ export const useHlsJs = ({
   );
 
   /**
-   * Calls onSongEnded if it exists and removes it as a listner.
+   * Calls onSongEnded if it exists and removes it as a listener.
    */
   const handleSongEnded: EventListener = useCallback(
     (event: Event) => {

@@ -2,10 +2,9 @@ import { Box } from "@mui/material";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
-import { Song, useGetSongsQuery } from "modules/song";
+import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import { useHlsJs } from "modules/song/hooks";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
@@ -33,7 +32,7 @@ const Discography: FunctionComponent = () => {
   const { playSong, stopSong } = useHlsJs(hlsJsParams);
 
   /**
-   * Play or stops the song depending on if it's currently playing or not.
+   * Plays and/or stops the song depending on if it's currently playing or not.
    */
   const handleSongPlayPause = (song: Song) => {
     const isSongPlaying = !!currentPlayingSongId;
@@ -62,7 +61,7 @@ const Discography: FunctionComponent = () => {
     page: number
   ) => {
     setPage(page);
-    // Changing the page from a playing song will pause the song
+    // Changing the page while playing song will stop the song
     stopSong();
   };
 
