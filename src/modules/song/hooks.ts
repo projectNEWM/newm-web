@@ -41,7 +41,7 @@ export const useHlsJs = ({
   );
 
   /**
-   * Calls onSongEnded if it exists and removes it as a listener.
+   * Calls onSongEnded if it exists and removes itself as a listener.
    */
   const handleSongEnded: EventListener = useCallback(
     (event: Event) => {
@@ -78,38 +78,42 @@ export const useHlsJs = ({
     videoRef.current.play();
   };
 
+  const playSong = useCallback(
+    (song: Song) => {
+      if (!videoRef.current) return;
+
+      if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+        playSongNatively(song);
+      } else {
+        playSongWithHlsJs(song);
+      }
+
+      handlePlaySong(song);
+
+      videoRef.current.addEventListener("ended", handleSongEnded);
+    },
+    [handlePlaySong, handleSongEnded]
+  );
+
+  const stopSong = useCallback(
+    (song?: Song) => {
+      if (!videoRef.current) return;
+
+      videoRef.current.pause();
+      videoRef.current.removeAttribute("src");
+      videoRef.current.load();
+
+      handleStopSong(song);
+
+      videoRef.current.removeEventListener("ended", handleSongEnded);
+    },
+    [handleStopSong, handleSongEnded]
+  );
+
   /**
    * Memoized playSong and stopSong handlers.
    */
-  const result = useMemo(
-    () => ({
-      playSong: (song: Song) => {
-        if (!videoRef.current) return;
-
-        if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
-          playSongNatively(song);
-        } else {
-          playSongWithHlsJs(song);
-        }
-
-        handlePlaySong(song);
-
-        videoRef.current.addEventListener("ended", handleSongEnded);
-      },
-      stopSong: (song?: Song) => {
-        if (!videoRef.current) return;
-
-        videoRef.current.pause();
-        videoRef.current.removeAttribute("src");
-        videoRef.current.load();
-
-        handleStopSong(song);
-
-        videoRef.current.removeEventListener("ended", handleSongEnded);
-      },
-    }),
-    [handlePlaySong, handleStopSong, handleSongEnded]
-  );
+  const result = useMemo(() => ({ playSong, stopSong }), [playSong, stopSong]);
 
   /**
    * Create video element and attach ref.
@@ -124,10 +128,10 @@ export const useHlsJs = ({
    */
   useEffect(() => {
     return () => {
-      result.stopSong();
+      stopSong();
       videoRef.current?.removeEventListener("ended", handleSongEnded);
     };
-  }, [result, handleSongEnded]);
+  }, [stopSong, handleSongEnded]);
 
   return result;
 };
