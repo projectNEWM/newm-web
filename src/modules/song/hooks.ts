@@ -17,7 +17,7 @@ export const useHlsJs = ({
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   /**
-   * Calls the onPlaySong handler if it exists.
+   * Calls onPlaySong if it exists.
    */
   const handlePlaySong = useCallback(
     (song: Song) => {
@@ -78,6 +78,9 @@ export const useHlsJs = ({
     videoRef.current.play();
   };
 
+  /**
+   * Plays song using either native browser or hls.js functionality.
+   */
   const playSong = useCallback(
     (song: Song) => {
       if (!videoRef.current) return;
@@ -95,6 +98,9 @@ export const useHlsJs = ({
     [handlePlaySong, handleSongEnded]
   );
 
+  /**
+   * Stops the song and resets the video element.
+   */
   const stopSong = useCallback(
     (song?: Song) => {
       if (!videoRef.current) return;
@@ -129,7 +135,6 @@ export const useHlsJs = ({
   useEffect(() => {
     return () => {
       stopSong();
-      videoRef.current?.removeEventListener("ended", handleSongEnded);
     };
   }, [stopSong, handleSongEnded]);
 
