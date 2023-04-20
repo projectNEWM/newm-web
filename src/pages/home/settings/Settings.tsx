@@ -10,10 +10,10 @@ import {
 } from "common";
 import * as Yup from "yup";
 import {
-  ChangePasswordFormValues,
+  ChangePasswordRequest,
   emptyProfile,
+  useChangePasswordThunk,
   useGetProfileQuery,
-  useUpdateProfileThunk,
 } from "modules/session";
 import theme from "theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
@@ -24,14 +24,15 @@ const Settings: FunctionComponent = () => {
   const { data: { oauthType } = emptyProfile } = useGetProfileQuery();
   const isLoginUsernameAndPassword = !oauthType;
 
-  const [updateProfile, isLoading] = useUpdateProfileThunk();
+  const [changePassword, isLoading] = useChangePasswordThunk();
 
-  const initialValues: ChangePasswordFormValues = {
+  const initialValues: ChangePasswordRequest = {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   };
 
+  // TODO add validation for different password than current on new password
   const validationSchema = Yup.object({
     currentPassword: Yup.string().required("Current password is required"),
     newPassword: commonYupValidation.newPassword.when("currentPassword", {
@@ -48,13 +49,11 @@ const Settings: FunctionComponent = () => {
    * Update profile data with modifications made.
    */
   const handleSubmit = (
-    values: ChangePasswordFormValues,
-    { resetForm }: FormikHelpers<ChangePasswordFormValues>
+    values: ChangePasswordRequest,
+    { resetForm }: FormikHelpers<ChangePasswordRequest>
   ) => {
     const updatedValues = getUpdatedValues(initialValues, values);
-    /* TODO Does toast return error on current password failure? Yes but needs fix on toast message
-  might need a separate dispatch/thunk, remove from Profile? and create Settings Request?*/
-    updateProfile({ ...updatedValues });
+    changePassword({ ...updatedValues });
     resetForm();
   };
 

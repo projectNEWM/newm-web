@@ -6,6 +6,7 @@ import { uploadToCloudinary } from "api/cloudinary/utils";
 import { asThunkHook } from "common";
 import { extendedApi as sessionApi } from "./api";
 import {
+  ChangePasswordRequest,
   CreateAccountRequest,
   ProfileFormValues,
   ResetPasswordRequest,
@@ -217,6 +218,30 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+/**
+ * Change user password.
+ */
+export const changePassword = createAsyncThunk(
+  "session/resetPassword",
+  async (body: ChangePasswordRequest, { dispatch }) => {
+    const changePasswordResponse = await dispatch(
+      sessionApi.endpoints.changePassword.initiate(body)
+    );
+
+    if ("error" in changePasswordResponse) {
+      return;
+    }
+
+    dispatch(
+      setToastMessage({
+        heading: "Password changed!",
+        message: "On next login use the newly defined password.",
+        severity: "success",
+      })
+    );
+  }
+);
+
 export const handleSocialLoginError = createAsyncThunk(
   "session/handleSocialLoginError",
   // eslint-disable-next-line
@@ -239,3 +264,5 @@ export const handleSocialLoginError = createAsyncThunk(
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
 
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);
+
+export const useChangePasswordThunk = asThunkHook(changePassword);

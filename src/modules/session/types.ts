@@ -102,7 +102,7 @@ export interface ResetPasswordRequest {
   readonly newPassword: string;
 }
 
-export interface ChangePasswordFormValues {
+export interface ChangePasswordRequest {
   readonly currentPassword: string;
   readonly newPassword: string;
   readonly confirmPassword: string;
