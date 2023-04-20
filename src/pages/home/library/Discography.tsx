@@ -1,27 +1,15 @@
 import { Box } from "@mui/material";
-import {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
 import { Song, useGetSongsQuery } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import Hls from "hls.js";
-import { isProd } from "buildParams";
-import { setToastMessage } from "modules/ui";
-import { useDispatch } from "react-redux";
+import { useHlsJs } from "modules/song/hooks";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
   const {
     data: songs = [],
     isLoading,
@@ -33,73 +21,26 @@ const Discography: FunctionComponent = () => {
   const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
   const viewportWidth = useWindowDimensions()?.width;
 
-  /**
-   * Stop currently playing song and reset video element.
-   */
-  const stopSong = () => {
-    if (!videoRef.current) return;
+  const hlsJsParams = useMemo(
+    () => ({
+      onPlaySong: ({ id }: Song) => setCurrentPlayingSongId(id),
+      onStopSong: () => setCurrentPlayingSongId(undefined),
+      onSongEnded: () => setCurrentPlayingSongId(undefined),
+    }),
+    []
+  );
 
-    videoRef.current.pause();
-    videoRef.current.removeAttribute("src");
-    videoRef.current.load();
-    setCurrentPlayingSongId(undefined);
-  };
-
-  /**
-   * Play song using native browser functionality.
-   */
-  const playSongNatively = (song: Song) => {
-    if (!videoRef.current || !song.streamUrl) return;
-
-    videoRef.current.src = song.streamUrl;
-    videoRef.current.addEventListener("loadedmetadata", () => {
-      videoRef.current?.play();
-      setCurrentPlayingSongId(song.id);
-    });
-  };
+  const { playSong, stopSong } = useHlsJs(hlsJsParams);
 
   /**
-   * Play song using HLS library.
-   */
-  const playSongWithHlsJs = (song: Song) => {
-    if (!videoRef.current || !song.streamUrl) return;
-
-    const hls = new Hls({ debug: !isProd });
-    hls.loadSource(song.streamUrl);
-    hls.attachMedia(videoRef.current);
-    videoRef.current.play();
-    setCurrentPlayingSongId(song.id);
-  };
-
-  /**
-   * Play song natively if possible, otherwise, play using the HLS package.
+   * Play or stops the song depending on if it's currently playing or not.
    */
   const handleSongPlayPause = (song: Song) => {
-    try {
-      if (!videoRef.current || !song.streamUrl || !Hls.isSupported()) {
-        throw new Error();
-      }
+    const isSongPlaying = !!currentPlayingSongId;
+    const isNewSong = song.id !== currentPlayingSongId;
 
-      const isSongPlaying = !!currentPlayingSongId;
-      const isNewSong = song.id !== currentPlayingSongId;
-
-      if (isSongPlaying) stopSong();
-
-      if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
-        if (isNewSong) playSongNatively(song);
-      } else {
-        if (isNewSong) playSongWithHlsJs(song);
-      }
-    } catch (err) {
-      dispatch(
-        setToastMessage({
-          message: "Unable to play song",
-          severity: "Error",
-        })
-      );
-
-      return;
-    }
+    if (isSongPlaying) stopSong(song);
+    if (isNewSong) playSong(song);
   };
 
   const handleSearch = (searched: string) => {
@@ -125,43 +66,9 @@ const Discography: FunctionComponent = () => {
     stopSong();
   };
 
-  /**
-   * Called with useEffect when song ends to reset icon.
-   */
-  const handleSongEnded = useCallback(() => {
-    setCurrentPlayingSongId(undefined);
-  }, []);
-
   useEffect(() => {
     setFilteredData(songs);
   }, [songs]);
-
-  /**
-   * Create video element and attach ref.
-   */
-  useEffect(() => {
-    const video = document.createElement("video");
-    videoRef.current = video;
-  }, []);
-
-  /**
-   * Update ended listener to reset playing status when playback completes.
-   */
-  useEffect(() => {
-    if (!videoRef.current) return;
-
-    const ref = videoRef.current;
-
-    if (currentPlayingSongId) {
-      ref.addEventListener("ended", handleSongEnded);
-    } else {
-      ref.removeEventListener("ended", handleSongEnded);
-    }
-
-    return () => {
-      ref.removeEventListener("ended", handleSongEnded);
-    };
-  }, [currentPlayingSongId, handleSongEnded]);
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
@@ -172,7 +79,7 @@ const Discography: FunctionComponent = () => {
     if (!isSongFound) {
       stopSong();
     }
-  }, [filteredData, currentPlayingSongId]);
+  }, [filteredData, currentPlayingSongId, stopSong]);
 
   const renderContent = () => {
     if (isLoading) {
