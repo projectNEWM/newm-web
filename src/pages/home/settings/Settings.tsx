@@ -1,34 +1,37 @@
 import { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { Form, Formik, FormikValues } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine } from "elements";
 import { LogoutButton, PasswordInputField } from "components";
-import { commonYupValidation, useWindowDimensions } from "common";
+import {
+  commonYupValidation,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "common";
 import * as Yup from "yup";
 import {
+  ChangePasswordFormValues,
   emptyProfile,
-  updateProfile,
   useGetProfileQuery,
+  useUpdateProfileThunk,
 } from "modules/session";
 import theme from "theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 
 const Settings: FunctionComponent = () => {
-  const dispatch = useDispatch();
-
   const windowWidth = useWindowDimensions()?.width;
 
   const { data: { oauthType } = emptyProfile } = useGetProfileQuery();
   const isLoginUsernameAndPassword = !oauthType;
 
-  const initialValues = {
+  const [updateProfile, isLoading] = useUpdateProfileThunk();
+
+  const initialValues: ChangePasswordFormValues = {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   };
 
-  // TODO Does toast return on current password failure?
   const validationSchema = Yup.object({
     currentPassword: Yup.string().required("Current password is required"),
     newPassword: commonYupValidation.newPassword.when("currentPassword", {
@@ -44,18 +47,15 @@ const Settings: FunctionComponent = () => {
   /**
    * Update profile data with modifications made.
    */
-  const handleSubmit = (values: FormikValues) => {
-    const updatedValues = {
-      ...(values.currentPassword && {
-        currentPassword: values.currentPassword,
-      }),
-      ...(values.newPassword && { newPassword: values.newPassword }),
-      ...(values.confirmPassword && {
-        confirmPassword: values.confirmPassword,
-      }),
-    };
-    // TODO fix dispatch to update values
-    dispatch(updateProfile({ ...updatedValues }));
+  const handleSubmit = (
+    values: ChangePasswordFormValues,
+    { resetForm }: FormikHelpers<ChangePasswordFormValues>
+  ) => {
+    const updatedValues = getUpdatedValues(initialValues, values);
+    /* TODO Does toast return error on current password failure? Yes but needs fix on toast message
+  might need a separate dispatch/thunk, remove from Profile? and create Settings Request?*/
+    updateProfile({ ...updatedValues });
+    resetForm();
   };
 
   return (
@@ -193,12 +193,13 @@ const Settings: FunctionComponent = () => {
                       Cancel
                     </Button>
                     <Button
+                      isLoading={ isLoading }
+                      type="submit"
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.lg
                           ? "compact"
                           : "default"
                       }
-                      type="submit"
                     >
                       Save
                     </Button>

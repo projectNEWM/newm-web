@@ -67,9 +67,6 @@ export interface ProfileFormValues
   readonly bannerUrl?: string | File;
   readonly companyIpRights?: boolean;
   readonly companyLogoUrl?: string | File;
-  readonly currentPassword?: string;
-  readonly confirmPassword?: string;
-  readonly newPassword?: string;
 }
 
 export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
@@ -103,6 +100,12 @@ export interface ResetPasswordRequest {
   readonly confirmPassword: string;
   readonly email: string;
   readonly newPassword: string;
+}
+
+export interface ChangePasswordFormValues {
+  readonly currentPassword: string;
+  readonly newPassword: string;
+  readonly confirmPassword: string;
 }
 
 export interface IdenfyTokenResponse {
