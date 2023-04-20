@@ -32,12 +32,16 @@ const Settings: FunctionComponent = () => {
     confirmPassword: "",
   };
 
-  // TODO add validation for different password than current on new password
   const validationSchema = Yup.object({
     currentPassword: Yup.string().required("Current password is required"),
     newPassword: commonYupValidation.newPassword.when("currentPassword", {
       is: (currentValue: string) => currentValue,
-      then: Yup.string().required("New password is required"),
+      then: Yup.string()
+        .required("New password is required")
+        .notOneOf(
+          [Yup.ref("currentPassword")],
+          "New password cannot be the same as the current password"
+        ),
     }),
     confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
       is: (currentValue: string) => currentValue,
