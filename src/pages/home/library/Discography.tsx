@@ -19,8 +19,8 @@ import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const dispatch = useDispatch();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const {
     data: songs = [],
@@ -83,16 +83,13 @@ const Discography: FunctionComponent = () => {
       const isSongPlaying = !!currentPlayingSongId;
       const isNewSong = song.id !== currentPlayingSongId;
 
-      // Play file natively if possible
-      if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
-        if (isSongPlaying) stopSong();
-        if (isNewSong) playSongNatively(song);
-
-        return;
-      }
-
       if (isSongPlaying) stopSong();
-      if (isNewSong) playSongWithHlsJs(song);
+
+      if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+        if (isNewSong) playSongNatively(song);
+      } else {
+        if (isNewSong) playSongWithHlsJs(song);
+      }
     } catch (err) {
       dispatch(
         setToastMessage({
@@ -125,7 +122,7 @@ const Discography: FunctionComponent = () => {
   ) => {
     setPage(page);
     // Changing the page from a playing song will pause the song
-    setCurrentPlayingSongId(undefined);
+    stopSong();
   };
 
   /**
