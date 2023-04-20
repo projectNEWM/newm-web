@@ -19,7 +19,7 @@ import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const dispatch = useDispatch();
 
   const {
@@ -129,7 +129,7 @@ const Discography: FunctionComponent = () => {
   };
 
   /**
-   * Called with useEffect when song ends to reset icon
+   * Called with useEffect when song ends to reset icon.
    */
   const handleSongEnded = useCallback(() => {
     setCurrentPlayingSongId(undefined);
@@ -138,6 +138,14 @@ const Discography: FunctionComponent = () => {
   useEffect(() => {
     setFilteredData(songs);
   }, [songs]);
+
+  /**
+   * Create video element and attach ref.
+   */
+  useEffect(() => {
+    const video = document.createElement("video");
+    videoRef.current = video;
+  }, []);
 
   /**
    * Update ended listener to reset playing status when playback completes.
@@ -215,10 +223,6 @@ const Discography: FunctionComponent = () => {
 
   return (
     <>
-      <video ref={ videoRef } style={ { display: "none" } }>
-        <track kind="captions" />
-      </video>
-
       <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
