@@ -86,17 +86,13 @@ const Discography: FunctionComponent = () => {
       // Play file natively if possible
       if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
         if (isSongPlaying) stopSong();
-        if (isNewSong) {
-          playSongNatively(song);
-        }
+        if (isNewSong) playSongNatively(song);
 
         return;
       }
 
       if (isSongPlaying) stopSong();
-      if (isNewSong) {
-        playSongWithHlsJs(song);
-      }
+      if (isNewSong) playSongWithHlsJs(song);
     } catch (err) {
       dispatch(
         setToastMessage({
@@ -135,7 +131,7 @@ const Discography: FunctionComponent = () => {
   /**
    * Called with useEffect when song ends to reset icon
    */
-  const onSongEnd = useCallback(() => {
+  const handleSongEnded = useCallback(() => {
     setCurrentPlayingSongId(undefined);
   }, []);
 
@@ -144,7 +140,7 @@ const Discography: FunctionComponent = () => {
   }, [songs]);
 
   /**
-   * Set song to reset playing status when playback completes.
+   * Update ended listener to reset playing status when playback completes.
    */
   useEffect(() => {
     if (!videoRef.current) return;
@@ -152,15 +148,15 @@ const Discography: FunctionComponent = () => {
     const ref = videoRef.current;
 
     if (currentPlayingSongId) {
-      ref.addEventListener("ended", onSongEnd);
+      ref.addEventListener("ended", handleSongEnded);
     } else {
-      ref.removeEventListener("ended", onSongEnd);
+      ref.removeEventListener("ended", handleSongEnded);
     }
 
     return () => {
-      ref.removeEventListener("ended", onSongEnd);
+      ref.removeEventListener("ended", handleSongEnded);
     };
-  }, [currentPlayingSongId, onSongEnd]);
+  }, [currentPlayingSongId, handleSongEnded]);
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
@@ -169,7 +165,7 @@ const Discography: FunctionComponent = () => {
     });
 
     if (!isSongFound) {
-      videoRef.current?.pause();
+      stopSong();
     }
   }, [filteredData, currentPlayingSongId]);
 
