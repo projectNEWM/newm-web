@@ -8,9 +8,11 @@ import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
+  DeleteAccountRequest,
   ProfileFormValues,
   ResetPasswordRequest,
 } from "./types";
+import { logOut } from "./slice";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -166,6 +168,32 @@ export const createAccount = createAsyncThunk(
 );
 
 /**
+ * Delete a user account. Navigate to the login page.
+ */
+export const deleteAccount = createAsyncThunk(
+  "session/deleteAccount",
+  async (body: DeleteAccountRequest, { dispatch }) => {
+    const deleteAccountResponse = await dispatch(
+      sessionApi.endpoints.deleteAccount.initiate(body)
+    );
+
+    if ("error" in deleteAccountResponse) {
+      return;
+    }
+
+    dispatch(logOut());
+
+    dispatch(
+      setToastMessage({
+        heading: "Account deleted!",
+        message: "Your account has been deleted.",
+        severity: "success",
+      })
+    );
+  }
+);
+
+/**
  * Request a iDenfy authToken and set it as a cookie.
  */
 export const getIdenfyAuthToken = createAsyncThunk(
@@ -222,7 +250,7 @@ export const resetPassword = createAsyncThunk(
  * Change user password.
  */
 export const changePassword = createAsyncThunk(
-  "session/resetPassword",
+  "session/changePassword",
   async (body: ChangePasswordRequest, { dispatch }) => {
     const changePasswordResponse = await dispatch(
       sessionApi.endpoints.changePassword.initiate(body)
@@ -266,3 +294,5 @@ export const useUpdateProfileThunk = asThunkHook(updateProfile);
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);
 
 export const useChangePasswordThunk = asThunkHook(changePassword);
+
+export const useDeleteAccountThunk = asThunkHook(deleteAccount);

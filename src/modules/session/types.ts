@@ -95,6 +95,10 @@ export interface CreateAccountRequest {
   readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
+export interface DeleteAccountRequest {
+  readonly id: string;
+}
+
 export interface ResetPasswordRequest {
   readonly authCode: string;
   readonly confirmPassword: string;

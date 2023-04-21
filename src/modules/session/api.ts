@@ -4,6 +4,7 @@ import { setToastMessage } from "modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
+  DeleteAccountRequest,
   GetProfileResponse,
   IdenfyTokenResponse,
   LoginRequest,
@@ -200,6 +201,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while creating your account",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
+      query: (body) => ({
+        url: "v1/users/me",
+        method: "DELETE",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while deleting your account",
               severity: "error",
             })
           );

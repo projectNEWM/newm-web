@@ -5,9 +5,21 @@ import { Form, Formik, FormikValues } from "formik";
 import { FunctionComponent, useState } from "react";
 import * as Yup from "yup";
 import theme from "theme";
+import {
+  emptyProfile,
+  useDeleteAccountThunk,
+  useGetProfileQuery,
+} from "modules/session";
 
 const DeleteAccountDialog: FunctionComponent = () => {
+  const deleteAccountPhrase = "YES";
+  const regExpPhrase = new RegExp(`^${deleteAccountPhrase}$`);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data: { id } = emptyProfile } = useGetProfileQuery();
+
+  const [deleteAccount, isLoading] = useDeleteAccountThunk();
 
   const initialValues = {
     confirmationStatement: "",
@@ -15,14 +27,17 @@ const DeleteAccountDialog: FunctionComponent = () => {
 
   const validationSchema = Yup.object().shape({
     confirmationStatement: Yup.string()
-      .required("confirmation statement is a required field")
-      .matches(/YES/, "Must type the word \"YES\" in all caps"),
+      .required(`Must type the word "${deleteAccountPhrase}"`)
+      .matches(regExpPhrase, `Must type the word "${deleteAccountPhrase}"`),
   });
 
-  const handleSubmit = (values: FormikValues) => {
-    // TODO handle deletion of account, send appropriate response
-    setIsModalOpen(false);
+  const handleSubmit = ({ confirmationStatement }: FormikValues) => {
+    if (confirmationStatement === deleteAccountPhrase) {
+      deleteAccount({ id });
+      setIsModalOpen(false);
+    }
   };
+
   const handleCloseDialog = () => {
     setIsModalOpen(false);
   };
@@ -91,6 +106,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
                     Cancel
                   </Button>
                   <Button
+                    isLoading={ isLoading }
                     width="compact"
                     type="submit"
                     sx={ { background: theme.colors.red } }
