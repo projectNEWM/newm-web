@@ -196,6 +196,7 @@ const Settings: FunctionComponent = () => {
                       Cancel
                     </Button>
                     <Button
+                      disabled={ !dirty }
                       isLoading={ isLoading }
                       type="submit"
                       width={
