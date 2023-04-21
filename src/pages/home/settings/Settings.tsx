@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine } from "elements";
 import { LogoutButton, PasswordInputField } from "components";
@@ -162,9 +162,16 @@ const Settings: FunctionComponent = () => {
                     <Typography variant="h4" fontWeight={ 700 }>
                       ABOUT
                     </Typography>
-                    <Typography variant="subtitle1">
-                      Terms of Service { /* TODO update with link*/ }
-                    </Typography>
+                    <Link
+                      href="https://newm.io/tos_artist-portal/"
+                      target="_blank"
+                      rel="noopener"
+                      color={ theme.colors.grey100 }
+                      variant="subtitle1"
+                      underline="none"
+                    >
+                      Terms of Service
+                    </Link>
                   </Stack>
                 </Stack>
 
