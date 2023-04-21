@@ -46,12 +46,14 @@ const MintSong = () => {
       verificationStatus,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const [patchSong] = usePatchSongThunk();
-  const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
+  const [patchSong, isSongLoading] = usePatchSongThunk();
+  const [generateArtistAgreement, isArtistAgreementLoading] =
+    useGenerateArtistAgreementThunk();
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
 
+  const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
   const initialValues: FormValues = {
@@ -162,14 +164,7 @@ const MintSong = () => {
         onSubmit={ handleSubmitStep }
         validationSchema={ validationSchema }
       >
-        { ({
-          values,
-          errors,
-          touched,
-          setFieldValue,
-          handleSubmit,
-          isSubmitting,
-        }) => {
+        { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
           const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
             setFieldValue("owners", owners);
           };
@@ -209,7 +204,7 @@ const MintSong = () => {
 
                     { !!touched.owners && !!errors.owners && (
                       <Box mt={ 0.5 }>
-                        <ErrorMessage>{ errors.owners }</ErrorMessage>
+                        <ErrorMessage>{ errors.owners as string }</ErrorMessage>
                       </Box>
                     ) }
 
@@ -292,7 +287,7 @@ const MintSong = () => {
                     { values.isMinting && (
                       <Button
                         onClick={ () => handleSubmit() }
-                        isLoading={ isSubmitting }
+                        isLoading={ isLoading }
                         disabled={ !isVerified }
                         width={
                           windowWidth &&
@@ -349,7 +344,7 @@ const MintSong = () => {
                     <Button
                       onClick={ () => handleSubmit() }
                       disabled={ !values.consentsToContract }
-                      isLoading={ isSubmitting }
+                      isLoading={ isLoading }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"

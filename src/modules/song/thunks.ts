@@ -9,6 +9,7 @@ import {
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
+import { receiveArtistAgreement } from "./slice";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -84,7 +85,11 @@ export const generateArtistAgreement = createAsyncThunk(
 
       if ("error" in artistAgreementResp) return;
 
-      callback();
+      dispatch(receiveArtistAgreement(artistAgreementResp.data.message));
+
+      if (typeof callback === "function") {
+        callback();
+      }
     } catch (err) {
       // do nothing
     }

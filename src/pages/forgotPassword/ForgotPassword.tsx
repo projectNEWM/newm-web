@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FunctionComponent } from "react";
-import { FormikValues } from "formik";
+import { FormikHelpers, FormikValues } from "formik";
 import { useDispatch } from "react-redux";
 import theme from "theme";
 import { ResponsiveNEWMLogo, WizardForm } from "components";
@@ -30,8 +30,12 @@ const ForgotPassword: FunctionComponent = () => {
     dispatch(resetPassword({ authCode, confirmPassword, email, newPassword }));
   };
 
-  const handleVerificationEmail = (values: FormikValues): void => {
+  const handleVerificationEmail = (
+    values: FormikValues,
+    { setSubmitting }: FormikHelpers<FormikValues>
+  ): void => {
     dispatch(sendVerificationEmail(values.email));
+    setSubmitting(false);
   };
 
   return (

@@ -1,6 +1,4 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
-
 import {
   Box,
   IconButton,
@@ -12,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import { useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import { Button } from "elements";
 import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
@@ -24,9 +22,9 @@ import { MintingStatus } from "./MintingStatus";
 interface SongListProps {
   songData: Song[] | null | undefined;
   rowHeight?: number;
-  currentPlayingSongId: string | null;
-  handleSongPlayPause: (song: Song) => void;
+  currentPlayingSongId?: string;
   page: number;
+  onSongPlayPause: (song: Song) => void;
   onPageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
 }
 
@@ -62,7 +60,7 @@ export default function SongList({
   songData,
   rowHeight = 65,
   currentPlayingSongId,
-  handleSongPlayPause,
+  onSongPlayPause,
   page,
   onPageChange,
 }: SongListProps) {
@@ -95,6 +93,15 @@ export default function SongList({
         : 5
     );
   }, [windowHeight, rowHeight]);
+
+  /**
+   * Play song and ensure the event doesn't bubble up to the row
+   * onClick handler, causing the song to be played twice.
+   */
+  const handlePressPlayButton = (song: Song) => (event: MouseEvent) => {
+    onSongPlayPause(song);
+    event.stopPropagation();
+  };
 
   const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
     if (!url) {
@@ -163,7 +170,7 @@ export default function SongList({
               )
               .map((song) => (
                 <TableRow
-                  onClick={ () => handleSongPlayPause(song) }
+                  onClick={ () => onSongPlayPause(song) }
                   key={ song.id }
                   sx={ {
                     cursor: "pointer",
@@ -176,7 +183,7 @@ export default function SongList({
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <IconButton
-                        onClick={ () => handleSongPlayPause(song) }
+                        onClick={ handlePressPlayButton(song) }
                         sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
                       >
                         <SongStreamPlaybackIcon

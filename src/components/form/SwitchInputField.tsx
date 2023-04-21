@@ -1,6 +1,6 @@
 import { SwitchProps } from "@mui/material";
 import { Field, FieldProps } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import SwitchInput from "elements/SwitchInput";
 
 interface SwitchInputFieldProps extends SwitchProps {
@@ -8,6 +8,7 @@ interface SwitchInputFieldProps extends SwitchProps {
   readonly title: string;
   readonly description: string;
   readonly includeBorder?: boolean;
+  readonly children?: ReactNode;
 }
 
 const SwitchInputField: FunctionComponent<SwitchInputFieldProps> = ({

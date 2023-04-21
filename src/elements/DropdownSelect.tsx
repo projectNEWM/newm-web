@@ -5,7 +5,7 @@ import {
   KeyboardEvent,
   forwardRef,
 } from "react";
-import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
+import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "theme";
 import { Box } from "@mui/material";
@@ -56,8 +56,8 @@ const DropdownSelect: ForwardRefRenderFunction<
     popupOpen,
     inputValue,
   } = useAutocomplete({
-    getOptionLabel: (option) => option,
     id: name,
+    getOptionLabel: (option) => option,
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(newValue as string);
