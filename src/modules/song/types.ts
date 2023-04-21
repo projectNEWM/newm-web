@@ -102,3 +102,14 @@ export interface Contributor {
   readonly role: string;
   readonly stake: number;
 }
+
+export interface UseHlsJsParams {
+  readonly onPlaySong?: (song: Song) => void;
+  readonly onStopSong?: (song?: Song) => void;
+  readonly onSongEnded?: (event: Event) => any; // eslint-disable-line
+}
+
+export interface UseHlsJsResult {
+  readonly playSong: (song: Song) => void;
+  readonly stopSong: (song?: Song) => void;
+}

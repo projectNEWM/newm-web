@@ -17,6 +17,7 @@
     "country-list": "^2.3.0",
     "cross-env": "^7.0.3",
     "formik": "^2.2.9",
+    "hls.js": "^1.4.1-0.canary.9072",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
@@ -31,7 +32,6 @@
     "react-scripts": "5.0.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.3",
-    "video.js": "^8.0.4",
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },
