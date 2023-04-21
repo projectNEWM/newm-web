@@ -24,6 +24,7 @@ import { ensureWallets } from "modules/wallet";
 import BrowserRouter from "common/BrowserRouter";
 import { history } from "common/history";
 import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import store, { persistor } from "./store";
 
 const App = () => {
@@ -31,60 +32,67 @@ const App = () => {
     ensureWallets();
   }, []);
 
+  const googleClientID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
+
   return (
     <ThemeProvider theme={ theme }>
-      <Provider store={ store }>
-        <PersistGate loading={ null } persistor={ persistor }>
-          <Toast />
-          <CssBaseline />
-          <IdenfyPingUserStatus />
-          <IdenfyModal />
+      <GoogleOAuthProvider clientId={ googleClientID }>
+        <Provider store={ store }>
+          <PersistGate loading={ null } persistor={ persistor }>
+            <Toast />
+            <CssBaseline />
+            <IdenfyPingUserStatus />
+            <IdenfyModal />
 
-          <Background>
-            <BrowserRouter history={ history }>
-              <Routes>
-                <Route path="/" element={ <Navigate to="home" replace /> } />
+            <Background>
+              <BrowserRouter history={ history }>
+                <Routes>
+                  <Route path="/" element={ <Navigate to="home" replace /> } />
 
-                <Route path="linkedin" element={ <LinkedInCallback /> } />
+                  <Route path="linkedin" element={ <LinkedInCallback /> } />
 
-                <Route path="login" element={ <Login /> } />
+                  <Route path="login" element={ <Login /> } />
 
-                <Route path="forgot-password/*" element={ <ForgotPassword /> } />
+                  <Route
+                    path="forgot-password/*"
+                    element={ <ForgotPassword /> }
+                  />
 
-                <Route path="sign-up/*" element={ <SignUp /> } />
+                  <Route path="sign-up/*" element={ <SignUp /> } />
 
-                <Route
-                  path="idenfy-success-session"
-                  element={ <IdenfySuccessSession /> }
-                />
+                  <Route
+                    path="idenfy-success-session"
+                    element={ <IdenfySuccessSession /> }
+                  />
 
-                <Route
-                  path="idenfy-fail-session"
-                  element={ <IdenfyFailSession /> }
-                />
+                  <Route
+                    path="idenfy-fail-session"
+                    element={ <IdenfyFailSession /> }
+                  />
 
-                <Route
-                  path="home/*"
-                  element={
-                    <PrivateRoute>
-                      <Home />
-                    </PrivateRoute>
-                  }
-                />
+                  <Route
+                    path="home/*"
+                    element={
+                      <PrivateRoute>
+                        <Home />
+                      </PrivateRoute>
+                    }
+                  />
 
-                <Route
-                  path="create-profile/*"
-                  element={
-                    <PrivateRoute>
-                      <CreateProfile />
-                    </PrivateRoute>
-                  }
-                />
-              </Routes>
-            </BrowserRouter>
-          </Background>
-        </PersistGate>
-      </Provider>
+                  <Route
+                    path="create-profile/*"
+                    element={
+                      <PrivateRoute>
+                        <CreateProfile />
+                      </PrivateRoute>
+                    }
+                  />
+                </Routes>
+              </BrowserRouter>
+            </Background>
+          </PersistGate>
+        </Provider>
+      </GoogleOAuthProvider>
     </ThemeProvider>
   );
 };

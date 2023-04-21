@@ -1,4 +1,4 @@
-import { CSSProperties, FunctionComponent } from "react";
+import { CSSProperties, FunctionComponent, ReactNode } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import theme from "theme";
@@ -6,14 +6,17 @@ import theme from "theme";
 interface ButtonProps {
   readonly onClick?: VoidFunction;
   readonly style: CSSProperties;
+  readonly children: ReactNode;
 }
 
 interface LinkProps extends ButtonProps {
   readonly to: string;
+  readonly children: ReactNode;
 }
 
 interface AnchorProps extends ButtonProps {
   readonly href: string;
+  readonly children: ReactNode;
 }
 
 type WrapperProps = LinkProps | ButtonProps | AnchorProps;

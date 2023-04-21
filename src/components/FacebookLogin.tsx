@@ -4,7 +4,7 @@
 
 import { extendedApi as sessionApi } from "modules/session";
 import { setToastMessage } from "modules/ui";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import FacebookLoginHelper, {
   LoginResponse,
@@ -12,7 +12,11 @@ import FacebookLoginHelper, {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "elements";
 
-const FacebookLogin: FunctionComponent = ({ children }) => {
+interface Props {
+  readonly children?: ReactNode;
+}
+
+const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {

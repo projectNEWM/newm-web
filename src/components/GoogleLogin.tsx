@@ -4,59 +4,45 @@
 
 import { extendedApi as sessionApi } from "modules/session";
 import { setToastMessage } from "modules/ui";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import GoogleLoginHelper, {
-  GoogleLoginResponse,
-  GoogleLoginResponseOffline,
-} from "react-google-login";
+import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button } from "elements";
 
-const GoogleLogin: FunctionComponent = ({ children }) => {
+interface Props {
+  readonly children?: ReactNode;
+}
+
+const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useDispatch();
 
-  const { pathname } = useLocation();
+  const handleLogin = useGoogleLogin({
+    onSuccess: ({ access_token: accessToken }) => {
+      if (!accessToken) {
+        dispatch(
+          setToastMessage({
+            heading: "Google",
+            message: "Google authentication service offline.",
+            severity: "error",
+          })
+        );
+      }
 
-  const handleGoogleRespSuccess = (
-    resp: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) => {
-    const loginResponse = resp as GoogleLoginResponse;
-    const { accessToken } = loginResponse;
-
-    if (!accessToken) {
-      dispatch(
-        setToastMessage({
-          heading: "Google",
-          message: "Google authentication service offline.",
-          severity: "error",
-        })
-      );
-    }
-
-    dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
-  };
+      dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
+    },
+  });
 
   return (
-    <GoogleLoginHelper
-      clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID || "" }
-      render={ (renderProps) => (
-        <Button
-          aria-label="google authorization"
-          disabled={ renderProps.disabled }
-          onClick={ renderProps.onClick }
-          variant="outlined"
-          color="white"
-          startIcon={ <GoogleIcon /> }
-        >
-          { children }
-        </Button>
-      ) }
-      onSuccess={ handleGoogleRespSuccess }
-      redirectUri={ `${window.location.origin}${pathname}` }
-      cookiePolicy={ "single_host_origin" }
-    />
+    <Button
+      aria-label="google authorization"
+      onClick={ () => handleLogin() }
+      variant="outlined"
+      color="white"
+      startIcon={ <GoogleIcon /> }
+    >
+      { children }
+    </Button>
   );
 };
 

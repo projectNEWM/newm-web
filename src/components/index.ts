@@ -9,7 +9,6 @@ export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as DropdownMultiSelectField } from "./form/DropdownMultiSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
 export { default as FacebookLogin } from "./FacebookLogin";
-export { default as FadeTransition } from "./FadeTransition";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";
 export { default as GoogleLogin } from "./GoogleLogin";
 export { default as GradientTextInputField } from "./form/GradientTextInputField";
