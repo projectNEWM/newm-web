@@ -4,6 +4,7 @@ import { Button, Dialog } from "elements";
 import { Form, Formik, FormikValues } from "formik";
 import { FunctionComponent, useState } from "react";
 import * as Yup from "yup";
+import theme from "theme";
 
 const DeleteAccountDialog: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
   });
 
   const handleSubmit = (values: FormikValues) => {
-    console.log(values);
+    // TODO handle deletion of account, send appropriate response
     setIsModalOpen(false);
   };
   const handleCloseDialog = () => {
@@ -89,7 +90,11 @@ const DeleteAccountDialog: FunctionComponent = () => {
                   >
                     Cancel
                   </Button>
-                  <Button width="compact" gradient="magazine" type="submit">
+                  <Button
+                    width="compact"
+                    type="submit"
+                    sx={ { background: theme.colors.red } }
+                  >
                     Delete account
                   </Button>
                 </Stack>
