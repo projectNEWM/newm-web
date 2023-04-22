@@ -2,23 +2,54 @@ import { Box } from "@mui/material";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
-import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
+import {
+  Song,
+  useGetSongCountQuery,
+  useGetSongsQuery,
+  useHlsJs,
+} from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
+  const headerHeight = 245;
+  const footerHeight = 40;
+  const bottomPadding = 30;
+  const rowHeight = 65;
+  const viewportWidth = useWindowDimensions()?.width;
+  const viewportHeight = useWindowDimensions()?.height;
+
+  const [filteredData, setFilteredData] = useState<Song[]>([]);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(1);
+  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
+
+  let songsToRequest = rowsPerPage;
+  const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
+    ownerIds: ["me"],
+  });
+
+  const totalPagesCount = Math.ceil(totalCountOfSongs / rowsPerPage);
+  const remainingSongsOnLastPage = totalCountOfSongs % rowsPerPage;
+
+  // Determines how many songs to request for the last page
+  if (page === totalPagesCount) {
+    songsToRequest =
+      remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
+  }
+
   const {
     data: songs = [],
     isLoading,
     isSuccess,
-  } = useGetSongsQuery({ ownerIds: ["me"] });
-  const [filteredData, setFilteredData] = useState<Song[]>([]);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
-  const viewportWidth = useWindowDimensions()?.width;
+  } = useGetSongsQuery({
+    ownerIds: ["me"],
+    offset: page - 1,
+    limit: songsToRequest,
+  });
 
   const hlsJsParams = useMemo(
     () => ({
@@ -64,6 +95,21 @@ const Discography: FunctionComponent = () => {
     // Changing the page while playing song will stop the song
     stopSong();
   };
+
+  // sets the # of rows per page depending on viewport height
+  useEffect(() => {
+    if (viewportHeight) {
+      const rowsWithCurrentHeight = Math.abs(
+        Math.floor(
+          (viewportHeight - headerHeight - footerHeight - bottomPadding) /
+            rowHeight
+        )
+      );
+
+      setRowsPerPage(rowsWithCurrentHeight ? rowsWithCurrentHeight : 1);
+      setPage(1);
+    }
+  }, [viewportHeight]);
 
   useEffect(() => {
     setFilteredData(songs);
@@ -113,11 +159,13 @@ const Discography: FunctionComponent = () => {
             onSearch={ handleSearch }
           />
           <SongList
-            songData={ songs }
             currentPlayingSongId={ currentPlayingSongId }
+            onPageChange={ handlePageChange }
             onSongPlayPause={ handleSongPlayPause }
             page={ page }
-            onPageChange={ handlePageChange }
+            rowsPerPage={ rowsPerPage }
+            songData={ songs }
+            totalCountOfSongs={ totalCountOfSongs }
           />
         </>
       );

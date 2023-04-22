@@ -10,9 +10,8 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent } from "react";
 import { Button } from "elements";
-import { useWindowDimensions } from "common";
 import { Song } from "modules/song";
 import { SongStreamPlaybackIcon, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +25,8 @@ interface SongListProps {
   page: number;
   onSongPlayPause: (song: Song) => void;
   onPageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
+  totalCountOfSongs: number;
+  rowsPerPage: number;
 }
 
 const StyledHeaderCell = styled(TableCell)({
@@ -58,41 +59,17 @@ const StyledTableCell = styled(TableCell)({
 
 export default function SongList({
   songData,
-  rowHeight = 65,
+  totalCountOfSongs,
   currentPlayingSongId,
   onSongPlayPause,
   page,
   onPageChange,
+  rowsPerPage,
 }: SongListProps) {
-  const headerHeight = 245;
-  const footerHeight = 40;
-  const bottomPadding = 30;
-  const [rowsPerPage, setRowsPerPage] = useState(0);
-  // Used to avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = songData
-    ? page > 1
-      ? Math.max(0, page * rowsPerPage - songData.length)
-      : 0
-    : 0;
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
-
-  // determines how many rows to display per page
-  const windowHeight = useWindowDimensions()?.height;
 
   // navigation for song edit page
   const navigate = useNavigate();
-
-  // sets the # of rows per page depending on viewport height
-  useEffect(() => {
-    setRowsPerPage(
-      windowHeight
-        ? Math.floor(
-            (windowHeight - headerHeight - footerHeight - bottomPadding) /
-              rowHeight
-          )
-        : 5
-    );
-  }, [windowHeight, rowHeight]);
 
   /**
    * Play song and ensure the event doesn't bubble up to the row
@@ -163,112 +140,102 @@ export default function SongList({
             </TableRow>
           </TableHead>
           <TableBody>
-            { songData
-              .slice(
-                (page - 1) * rowsPerPage,
-                (page - 1) * rowsPerPage + rowsPerPage
-              )
-              .map((song) => (
-                <TableRow
-                  onClick={ () => onSongPlayPause(song) }
-                  key={ song.id }
-                  sx={ {
-                    cursor: "pointer",
-                    WebkitTapHighlightColor: "transparent",
-                    "&:hover": {
-                      background: "rgba(255, 255, 255, 0.1)",
-                    },
-                  } }
-                >
-                  <StyledTableCell>
-                    <Box sx={ { display: "flex", alignItems: "center" } }>
-                      <IconButton
-                        onClick={ handlePressPlayButton(song) }
-                        sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
-                      >
-                        <SongStreamPlaybackIcon
-                          isSongPlaying={ song.id === currentPlayingSongId }
-                          isSongUploaded={ !!song.streamUrl }
-                        />
-                      </IconButton>
-                      <img
-                        style={ {
-                          borderRadius: "4px",
-                          width: "40px",
-                          height: "40px",
-                        } }
-                        src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
-                        alt="Album cover"
+            { songData.map((song) => (
+              <TableRow
+                onClick={ () => onSongPlayPause(song) }
+                key={ song.id }
+                sx={ {
+                  cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                  "&:hover": {
+                    background: "rgba(255, 255, 255, 0.1)",
+                  },
+                } }
+              >
+                <StyledTableCell>
+                  <Box sx={ { display: "flex", alignItems: "center" } }>
+                    <IconButton
+                      onClick={ handlePressPlayButton(song) }
+                      sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
+                    >
+                      <SongStreamPlaybackIcon
+                        isSongPlaying={ song.id === currentPlayingSongId }
+                        isSongUploaded={ !!song.streamUrl }
                       />
-                      <Box
-                        sx={ {
-                          fontWeight: "500",
-                          paddingLeft: "12px",
-                          overflow: "auto",
-                          whiteSpace: "nowrap",
-                          maxWidth: { xs: "110px", sm: "none" },
-                        } }
-                      >
-                        { song.title }
-                      </Box>
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ { display: { xs: "none", sm: "table-cell" } } }
-                  >
+                    </IconButton>
+                    <img
+                      style={ {
+                        borderRadius: "4px",
+                        width: "40px",
+                        height: "40px",
+                      } }
+                      src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
+                      alt="Album cover"
+                    />
                     <Box
                       sx={ {
-                        display: "flex",
-                        alignItems: "center",
+                        fontWeight: "500",
+                        paddingLeft: "12px",
+                        overflow: "auto",
+                        whiteSpace: "nowrap",
+                        maxWidth: { xs: "110px", sm: "none" },
                       } }
                     >
-                      <MintingStatus mintingStatus={ song.mintingStatus } />
+                      { song.title }
                     </Box>
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ { display: { xs: "none", lg: "table-cell" } } }
-                  >
-                    { song.genres.join(", ") }
-                  </StyledTableCell>
-                  <StyledTableCell
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={ { display: { xs: "none", sm: "table-cell" } } }
+                >
+                  <Box
                     sx={ {
-                      textAlign: "end",
-                      display: { xs: "none", md: "table-cell" },
+                      display: "flex",
+                      alignItems: "center",
                     } }
                   >
-                    { song.duration
-                      ? formatSongDurationToSongLength(song.duration)
-                      : "--:--" }
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ {
-                      paddingLeft: [0, 1],
-                      paddingRight: [1, 3],
-                      width: "0",
+                    <MintingStatus mintingStatus={ song.mintingStatus } />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={ { display: { xs: "none", lg: "table-cell" } } }
+                >
+                  { song.genres.join(", ") }
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={ {
+                    textAlign: "end",
+                    display: { xs: "none", md: "table-cell" },
+                  } }
+                >
+                  { song.duration
+                    ? formatSongDurationToSongLength(song.duration)
+                    : "--:--" }
+                </StyledTableCell>
+                <StyledTableCell
+                  sx={ {
+                    paddingLeft: [0, 1],
+                    paddingRight: [1, 3],
+                    width: "0",
+                  } }
+                >
+                  <Button
+                    variant="secondary"
+                    width="icon"
+                    onClick={ (e) => {
+                      e.stopPropagation();
+                      return navigate("edit-song", { state: { ...song } });
                     } }
                   >
-                    <Button
-                      variant="secondary"
-                      width="icon"
-                      onClick={ (e) => {
-                        e.stopPropagation();
-                        return navigate("edit-song", { state: { ...song } });
-                      } }
-                    >
-                      <EditPencilIcon />
-                    </Button>
-                  </StyledTableCell>
-                </TableRow>
-              )) }
-            { emptyRows > 0 && (
-              <TableRow style={ { height: rowHeight * emptyRows } }>
-                <StyledTableCell colSpan={ 3 } />
+                    <EditPencilIcon />
+                  </Button>
+                </StyledTableCell>
               </TableRow>
-            ) }
+            )) }
           </TableBody>
-          { songData.length > rowsPerPage && (
+          { totalCountOfSongs > songData.length && (
             <TablePagination
-              numberOfRows={ songData.length }
+              numberOfRows={ totalCountOfSongs }
               page={ page }
               rowsPerPage={ rowsPerPage }
               lastRowOnPage={ lastRowOnPage }
