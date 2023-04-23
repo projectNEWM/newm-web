@@ -7,6 +7,7 @@ import { ReactElement, ReactNode } from "react";
 import { Form, Formik, FormikConfig } from "formik";
 import { reducer } from "store";
 import theme from "theme";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { RenderProps, StringMap, WrapperProps } from "./types";
 
 /**
@@ -34,9 +35,11 @@ export const renderWithContext = (
   const Wrapper = ({ children }: WrapperProps) => {
     return (
       <ThemeProvider theme={ theme }>
-        <Provider store={ store }>
-          <BrowserRouter>{ children }</BrowserRouter>
-        </Provider>
+        <GoogleOAuthProvider clientId="">
+          <Provider store={ store }>
+            <BrowserRouter>{ children }</BrowserRouter>
+          </Provider>
+        </GoogleOAuthProvider>
       </ThemeProvider>
     );
   };

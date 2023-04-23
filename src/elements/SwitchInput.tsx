@@ -1,11 +1,12 @@
 import { Switch, Typography } from "elements";
 import { Stack, SwitchProps, SxProps, useTheme } from "@mui/material";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 
 export interface SwitchInputProps extends SwitchProps {
   readonly title: string;
   readonly description: string;
   readonly includeBorder?: boolean;
+  readonly children?: ReactNode;
 }
 
 /**

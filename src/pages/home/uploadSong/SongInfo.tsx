@@ -192,7 +192,7 @@ const SongInfo: FunctionComponent = () => {
 
             { !!touched.owners && !!errors.owners && (
               <Box mt={ 0.5 }>
-                <ErrorMessage>{ errors.owners }</ErrorMessage>
+                <ErrorMessage>{ errors.owners as string }</ErrorMessage>
               </Box>
             ) }
           </Box>

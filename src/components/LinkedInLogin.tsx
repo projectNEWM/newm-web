@@ -4,14 +4,18 @@
  * and log the user into the app.
  */
 
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";
 import { useDispatch } from "react-redux";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "elements";
 
-const LinkedInLogin: FunctionComponent = ({ children }) => {
+interface Props {
+  readonly children?: ReactNode;
+}
+
+const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useDispatch();
 
   const redirectUri = `${window.location.origin}/linkedin`;

@@ -1,19 +1,19 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button } from "elements";
 
 export default {
   component: Button,
   title: "Button",
-} as ComponentMeta<typeof Button>;
+} as Meta;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button { ...args } />;
+const Template: StoryFn = (args) => <Button { ...args } />;
 
 export const Default = Template.bind({});
 Default.args = {
   children: "Button Text",
 };
 
-export const Color: ComponentStory<typeof Button> = () => (
+export const Color: StoryFn = () => (
   <div style={ { display: "flex", gap: "16px" } }>
     <Button gradient="company">Company</Button>
     <Button gradient="crypto">Crypto</Button>
@@ -23,7 +23,7 @@ export const Color: ComponentStory<typeof Button> = () => (
   </div>
 );
 
-export const Variant: ComponentStory<typeof Button> = () => (
+export const Variant: StoryFn = () => (
   <div style={ { display: "flex", gap: "16px" } }>
     <Button variant="primary">Primary</Button>
     <Button variant="secondary">Secondary</Button>
@@ -31,7 +31,7 @@ export const Variant: ComponentStory<typeof Button> = () => (
   </div>
 );
 
-export const Width: ComponentStory<typeof Button> = (args) => (
+export const Width: StoryFn = (args) => (
   <div style={ { display: "flex", flexDirection: "column", gap: "16px" } }>
     <Button { ...args } width="icon">
       +
@@ -48,7 +48,7 @@ export const Width: ComponentStory<typeof Button> = (args) => (
   </div>
 );
 
-export const Icon: ComponentStory<typeof Button> = (args) => (
+export const Icon: StoryFn = (args) => (
   <div style={ { display: "flex", gap: "16px" } }>
     <Button
       { ...args }

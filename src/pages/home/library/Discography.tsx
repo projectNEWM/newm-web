@@ -1,12 +1,10 @@
 import { Box } from "@mui/material";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import theme from "theme";
 import { SearchBox } from "components";
-import { Song, useGetSongsQuery } from "modules/song";
+import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
-import videojs from "video.js";
-import Player from "video.js/dist/types/player";
 import NoSongsYet from "./NoSongsYet";
 import SongList from "./SongList";
 
@@ -19,41 +17,30 @@ const Discography: FunctionComponent = () => {
   const [filteredData, setFilteredData] = useState<Song[]>([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<
-    string | null
-  >(null);
-  const audioPlayerRef = useRef<Player>();
+  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
   const viewportWidth = useWindowDimensions()?.width;
 
-  // initialize audio player on page load
-  useEffect(() => {
-    const audioElement = new Audio();
-    const newAudioPlayer = videojs(audioElement);
+  const hlsJsParams = useMemo(
+    () => ({
+      onPlaySong: ({ id }: Song) => setCurrentPlayingSongId(id),
+      onStopSong: () => setCurrentPlayingSongId(undefined),
+      onSongEnded: () => setCurrentPlayingSongId(undefined),
+    }),
+    []
+  );
 
-    audioElement.onended = () => {
-      if (setCurrentPlayingSongId) {
-        setCurrentPlayingSongId(null);
-      }
-    };
+  const { playSong, stopSong } = useHlsJs(hlsJsParams);
 
-    // handles stopping audio using OS or browser media controls
-    audioElement.onpause = () => {
-      if (setCurrentPlayingSongId) {
-        audioElement.src = "";
-        setCurrentPlayingSongId(null);
-      }
-    };
+  /**
+   * Plays and/or stops the song depending on if it's currently playing or not.
+   */
+  const handleSongPlayPause = (song: Song) => {
+    const isSongPlaying = !!currentPlayingSongId;
+    const isNewSong = song.id !== currentPlayingSongId;
 
-    audioPlayerRef.current = newAudioPlayer;
-
-    return () => {
-      audioPlayerRef.current?.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
-    setFilteredData(songs);
-  }, [songs]);
+    if (isSongPlaying) stopSong(song);
+    if (isNewSong) playSong(song);
+  };
 
   const handleSearch = (searched: string) => {
     setQuery(searched);
@@ -69,6 +56,19 @@ const Discography: FunctionComponent = () => {
     }
   };
 
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setPage(page);
+    // Changing the page while playing song will stop the song
+    stopSong();
+  };
+
+  useEffect(() => {
+    setFilteredData(songs);
+  }, [songs]);
+
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
     const isSongFound = !!filteredData?.find((filteredSong) => {
@@ -76,36 +76,9 @@ const Discography: FunctionComponent = () => {
     });
 
     if (!isSongFound) {
-      setCurrentPlayingSongId(null);
-      audioPlayerRef.current?.pause();
-      audioPlayerRef.current?.src(undefined);
+      stopSong();
     }
-  }, [currentPlayingSongId, filteredData]);
-
-  // Play and stop audio stream source when selected
-  const handleSongPlayPause = (song: Song) => {
-    if (song.id === currentPlayingSongId) {
-      setCurrentPlayingSongId(null);
-      audioPlayerRef.current?.pause();
-      audioPlayerRef.current?.src(undefined);
-    } else {
-      if (song.streamUrl) {
-        setCurrentPlayingSongId(song.id);
-        audioPlayerRef.current?.options({ poster: `${song.coverArtUrl}` });
-        audioPlayerRef.current?.src(song.streamUrl);
-        audioPlayerRef.current?.play();
-      }
-    }
-  };
-
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page);
-    // Changing the page from a playing song will pause the song
-    setCurrentPlayingSongId(null);
-  };
+  }, [filteredData, currentPlayingSongId, stopSong]);
 
   const renderContent = () => {
     if (isLoading) {
@@ -142,7 +115,7 @@ const Discography: FunctionComponent = () => {
           <SongList
             songData={ songs }
             currentPlayingSongId={ currentPlayingSongId }
-            handleSongPlayPause={ handleSongPlayPause }
+            onSongPlayPause={ handleSongPlayPause }
             page={ page }
             onPageChange={ handlePageChange }
           />

@@ -2,6 +2,7 @@ import { Box, Container } from "@mui/material";
 import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
+import { FormikHelpers, FormikValues } from "formik";
 import { useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
@@ -65,7 +66,10 @@ const UploadSong: FunctionComponent = () => {
     consentsToContract: false,
   };
 
-  const handleSongInfo = (values: UploadSongRequest) => {
+  const handleSongInfo = (
+    values: UploadSongRequest,
+    { setSubmitting }: FormikHelpers<FormikValues>
+  ) => {
     if (values.isMinting) {
       generateArtistAgreement({
         body: {
@@ -74,7 +78,10 @@ const UploadSong: FunctionComponent = () => {
           artistName,
           stageName,
         },
-        callback: () => navigate("confirm"),
+        callback: () => {
+          navigate("confirm");
+          setSubmitting(false);
+        },
       });
     } else {
       handleSubmit(values);
