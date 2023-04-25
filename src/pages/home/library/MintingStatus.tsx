@@ -1,12 +1,13 @@
 import { Check, Close } from "@mui/icons-material";
 import InfoCircleLine from "assets/images/InfoCircleLine";
 import TimeCircleLine from "assets/images/TimeCircleLine";
+import { MintingStatus as MintingStatusType } from "modules/song";
 import { IconStatus } from "components";
 import { FunctionComponent } from "react";
 import theme from "theme";
 
 interface MintingStatusProps {
-  readonly mintingStatus: string | undefined;
+  readonly mintingStatus: MintingStatusType;
 }
 
 export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
@@ -27,9 +28,9 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
         status="Pending"
       />
     );
-  } else if (mintingStatus === "Rejected") {
+  } else if (mintingStatus === "Declined") {
     return (
-      <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Rejected" />
+      <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Declined" />
     );
   } else if (mintingStatus === "Undistributed") {
     return (
