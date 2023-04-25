@@ -59,12 +59,12 @@ export const uploadSong = createAsyncThunk(
       // build a form with AWS presigned fields and upload audio to AWS
       //  song audioUrl will be updated after it's transcoded
       const formData = new FormData();
-      for(const key in fields) {
+      for (const key in fields) {
         formData.append(key, fields[key]);
       }
       const headers = new Headers({
-        "ContentDisposition": `filename=${body.audio.name}`
-      })
+        ContentDisposition: `filename=${body.audio.name}`,
+      });
       formData.append("file", body.audio);
       await fetch(uploadUrl, {
         method: "POST",
