@@ -15,7 +15,7 @@ import { receiveArtistAgreement } from "./slice";
  * Retreive a Cloudinary signature, use the signature to upload
  * the album cover art image to Cloudinary, upload the song to AWS,
  * save the song in the NEWM back-end with the file url information,
- * and then fetch the user's songs.
+ * save the generated artist agreement if minting and then fetch the user's songs.
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
@@ -57,7 +57,7 @@ export const uploadSong = createAsyncThunk(
       const { url: uploadUrl, fields } = audioUploadUrlResp.data;
 
       // build a form with AWS presigned fields and upload audio to AWS
-      //  song audioUrl will be updated after it's transcoded
+      // song audioUrl will be updated after it's transcoded
       const formData = new FormData();
       for (const key in fields) {
         formData.append(key, fields[key]);
@@ -65,12 +65,29 @@ export const uploadSong = createAsyncThunk(
       const headers = new Headers({
         ContentDisposition: `filename=${body.audio.name}`,
       });
+
       formData.append("file", body.audio);
+
       await fetch(uploadUrl, {
         method: "POST",
         headers: Object.assign({}, headers),
         body: formData,
       });
+
+      if (body.isMinting) {
+        await dispatch(
+          generateArtistAgreement({
+            body: {
+              artistName: body.artistName,
+              companyName: body.companyName,
+              save: true,
+              songId,
+              songName: body.title,
+              stageName: body.stageName,
+            },
+          })
+        );
+      }
 
       // navigate to library page to view new song
       history.push("/home/library");

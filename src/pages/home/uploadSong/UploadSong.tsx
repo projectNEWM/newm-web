@@ -25,9 +25,8 @@ const UploadSong: FunctionComponent = () => {
       companyName = "",
       firstName = "",
       lastName = "",
-      nickname: stageName,
+      nickname: stageName = "",
       email,
-      id,
     } = emptyProfile,
   } = useGetProfileQuery();
   const [uploadSong] = useUploadSongThunk();
@@ -64,6 +63,9 @@ const UploadSong: FunctionComponent = () => {
       },
     ],
     consentsToContract: false,
+    companyName,
+    artistName,
+    stageName,
   };
 
   const handleSongInfo = (
@@ -90,21 +92,7 @@ const UploadSong: FunctionComponent = () => {
 
   // eslint-disable-next-line
   const handleSubmit = (values: UploadSongRequest) => {
-    if (values.isMinting) {
-      generateArtistAgreement({
-        body: {
-          songName: values.title,
-          companyName,
-          artistName,
-          stageName,
-          songId: id,
-          save: true,
-        },
-        callback: () => uploadSong(values),
-      });
-    } else {
-      uploadSong(values);
-    }
+    uploadSong(values);
   };
 
   const validations = {
