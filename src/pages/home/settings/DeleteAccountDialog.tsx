@@ -78,13 +78,14 @@ const DeleteAccountDialog: FunctionComponent = () => {
                     by typing &ldquo;YES&rdquo; below.
                   </Typography>
                 </Stack>
+
                 <Stack
                   sx={ {
                     display: "flex",
                     justifyContent: "start",
                   } }
                 >
-                  <TextInputField name="confirmationStatement"></TextInputField>
+                  <TextInputField name="confirmationStatement" />
                 </Stack>
 
                 <Stack
@@ -98,6 +99,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
                   } }
                 >
                   <Button
+                    disabled={ isLoading }
                     variant="secondary"
                     color="music"
                     width="compact"
