@@ -96,9 +96,6 @@ const Profile: FunctionComponent = () => {
     bannerUrl,
     companyLogoUrl,
     location,
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
     twitterUrl,
     websiteUrl,
   };
@@ -117,15 +114,6 @@ const Profile: FunctionComponent = () => {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roleOptions),
     genre: commonYupValidation.genre(genreOptions),
-    currentPassword: Yup.string().when("newPassword", {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Current password is required"),
-    }),
-    newPassword: commonYupValidation.newPassword,
-    confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Confirm new password is required"),
-    }),
     twitterUrl: Yup.string().url("Please enter a valid url"),
     websiteUrl: Yup.string().url("Please enter a valid url"),
   });

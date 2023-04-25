@@ -2,7 +2,9 @@ import api, { Tags } from "api";
 import { EmptyResponse } from "common";
 import { setToastMessage } from "modules/ui";
 import {
+  ChangePasswordRequest,
   CreateAccountRequest,
+  DeleteAccountRequest,
   GetProfileResponse,
   IdenfyTokenResponse,
   LoginRequest,
@@ -177,7 +179,7 @@ export const extendedApi = api.injectEndpoints({
         } catch ({ error }) {
           dispatch(
             setToastMessage({
-              message: "An error occured while sending the verification email",
+              message: "An error occurred while sending the verification email",
               severity: "error",
             })
           );
@@ -198,7 +200,28 @@ export const extendedApi = api.injectEndpoints({
         } catch ({ error }) {
           dispatch(
             setToastMessage({
-              message: "An error occured while creating your account",
+              message: "An error occurred while creating your account",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
+      query: (body) => ({
+        url: "v1/users/me",
+        method: "DELETE",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while deleting your account",
               severity: "error",
             })
           );
@@ -219,7 +242,28 @@ export const extendedApi = api.injectEndpoints({
         } catch ({ error }) {
           dispatch(
             setToastMessage({
-              message: "An error occured while resetting your password",
+              message: "An error occurred while resetting your password",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
+      query: (body) => ({
+        url: "v1/users/me",
+        method: "PATCH",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while changing your password",
               severity: "error",
             })
           );

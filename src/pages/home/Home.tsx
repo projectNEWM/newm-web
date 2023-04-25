@@ -11,6 +11,7 @@ import Library from "./library/Library";
 import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
+import Settings from "./settings/Settings";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 240;
@@ -62,6 +63,7 @@ const Home: FunctionComponent = () => {
           <Route path="owners" element={ <Owners /> } />
           <Route path="wallet" element={ <Wallet /> } />
           <Route path="profile" element={ <Profile /> } />
+          <Route path="settings" element={ <Settings /> } />
         </Routes>
       </Box>
     </Box>
