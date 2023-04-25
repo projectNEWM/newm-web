@@ -3,30 +3,28 @@ on:
   pull_request:
     paths:
       - .github/workflows/firebase-hosting-pull-request.yml
-      - 'public/**'
-      - 'src/**'
-      - '**.json'
-      - '.**.js'
-      - '**.js'
+      - "public/**"
+      - "src/**"
+      - "**.json"
+      - ".**.js"
+      - "**.js"
 jobs:
   build_and_preview:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
-    runs-on: ubuntu-latest
+    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm install
       - run: npm run build
         env:
           REACT_APP_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           REACT_APP_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
-          REACT_APP_TEMP_LOGIN_EMAIL: ${{ secrets.TEMP_LOGIN_EMAIL }}
-          REACT_APP_TEMP_LOGIN_PASSWORD: ${{ secrets.TEMP_LOGIN_PASSWORD }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}'
-          projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID }}"
           expires: 30d

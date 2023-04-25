@@ -70,7 +70,8 @@ export interface AudioUploadUrlRequest {
 }
 
 export interface AudioUploadUrlResponse {
-  readonly uploadUrl: string;
+  readonly url: string;
+  readonly fields: Record<string, string>;
 }
 
 export interface Song {
