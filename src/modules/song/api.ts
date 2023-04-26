@@ -5,6 +5,8 @@ import {
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
   DeleteSongRequest,
+  GetSongCountRequest,
+  GetSongCountResponse,
   GetSongsRequest,
   GetSongsResponse,
   PatchSongRequest,
@@ -68,6 +70,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getSongCount: build.query<GetSongCountResponse, GetSongCountRequest>({
+      query: (params) => ({
+        url: "v1/songs/count",
+        method: "GET",
+        params,
+      }),
+      providesTags: [Tags.Song],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song count",
               severity: "error",
             })
           );
@@ -200,6 +223,7 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetSongsQuery, useGetSongQuery } = extendedApi;
+export const { useGetSongsQuery, useGetSongQuery, useGetSongCountQuery } =
+  extendedApi;
 
 export default extendedApi;

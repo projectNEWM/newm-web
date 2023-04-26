@@ -12,6 +12,7 @@ export interface GetSongsRequest {
   offset?: number;
   olderThan?: string;
   ownerIds?: string[];
+  phrase?: string;
 }
 
 export interface Owner {
@@ -116,4 +117,18 @@ export interface UseHlsJsParams {
 export interface UseHlsJsResult {
   readonly playSong: (song: Song) => void;
   readonly stopSong: (song?: Song) => void;
+}
+
+export interface GetSongCountRequest {
+  phrase?: string;
+  ids?: string[];
+  ownerIds?: string[];
+  genres?: string[];
+  moods?: string[];
+  olderThan?: string;
+  newerThan?: string;
+}
+
+export interface GetSongCountResponse {
+  count: number;
 }
