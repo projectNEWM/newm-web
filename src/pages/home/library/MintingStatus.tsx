@@ -16,7 +16,6 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   const pendingStatus = [
     "StreamTokenAgreementApproved",
     "MintingPaymentReceived",
-    "MintingPaymentRequested",
     "ReadyToDistribute",
     "SubmittedForDistribution",
     "Distributed",
@@ -42,6 +41,14 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   } else if (mintingStatus === "Declined") {
     return (
       <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Declined" />
+    );
+  } else if (mintingStatus === "MintingPaymentRequested") {
+    return (
+      <IconStatus
+        icon={ <TimeCircleLine /> }
+        iconColor="yellow"
+        status="Minting Payment Requested"
+      />
     );
   } else if (mintingStatus === "Undistributed") {
     return (
