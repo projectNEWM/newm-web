@@ -39,6 +39,7 @@ const MintSong = () => {
 
   const {
     data: {
+      companyName = "",
       email,
       firstName = "",
       lastName = "",
@@ -55,6 +56,7 @@ const MintSong = () => {
 
   const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
+  const artistName = `${firstName} ${lastName}`;
 
   const initialValues: FormValues = {
     isMinting: false,
@@ -105,19 +107,24 @@ const MintSong = () => {
     if (stepIndex === 0) {
       handleCompleteFirstStep();
     } else {
-      patchSong({ id, ...values });
+      generateArtistAgreement({
+        body: {
+          songName: title,
+          companyName,
+          artistName,
+          stageName,
+          songId: id,
+          save: true,
+        },
+        callback: () => patchSong({ id, ...values }),
+      });
     }
   };
 
   const handleCompleteFirstStep = () => {
-    const songName = title;
-    // TODO: reference company name when exists in profile
-    const companyName = "ACME";
-    const artistName = `${firstName} ${lastName}`;
-
     generateArtistAgreement({
       body: {
-        songName,
+        songName: title,
         companyName,
         artistName,
         stageName,

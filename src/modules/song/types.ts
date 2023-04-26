@@ -43,6 +43,9 @@ export interface UploadSongRequest {
   readonly owners: Array<Owner>;
   readonly creditors: Array<Creditor>;
   readonly consentsToContract: boolean;
+  readonly companyName: string;
+  readonly artistName: string;
+  readonly stageName: string;
 }
 
 export interface UploadSongResponse {
