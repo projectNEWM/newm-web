@@ -13,6 +13,16 @@ interface MintingStatusProps {
 export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   mintingStatus,
 }) => {
+  const pendingStatus = [
+    "StreamTokenAgreementApproved",
+    "MintingPaymentReceived",
+    "ReadyToDistribute",
+    "SubmittedForDistribution",
+    "Distributed",
+    "Pending",
+  ];
+  const isPending = pendingStatus.includes(mintingStatus);
+
   if (mintingStatus === "Distributed") {
     return (
       <IconStatus
@@ -20,7 +30,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
         status="Distributed"
       />
     );
-  } else if (mintingStatus === "Pending") {
+  } else if (isPending) {
     return (
       <IconStatus
         icon={ <TimeCircleLine /> }

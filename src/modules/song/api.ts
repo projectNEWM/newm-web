@@ -27,7 +27,7 @@ export const emptySong: Song = {
   streamUrl: "",
   nftPolicyId: "",
   nftName: "",
-  mintingStatus: "Undistributed",
+  mintingStatus: "Pending",
   marketplaceStatus: "",
 };
 
