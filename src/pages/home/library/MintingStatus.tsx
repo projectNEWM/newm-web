@@ -16,6 +16,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   const pendingStatus = [
     "StreamTokenAgreementApproved",
     "MintingPaymentReceived",
+    "MintingPaymentRequested",
     "ReadyToDistribute",
     "SubmittedForDistribution",
     "Distributed",
