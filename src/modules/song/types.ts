@@ -12,6 +12,7 @@ export interface GetSongsRequest {
   offset?: number;
   olderThan?: string;
   ownerIds?: string[];
+  phrase?: string;
 }
 
 export interface Owner {
