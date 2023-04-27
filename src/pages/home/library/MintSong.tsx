@@ -279,6 +279,7 @@ const MintSong = () => {
 
                   <Stack direction="row" columnGap={ 2 }>
                     <Button
+                      color="music"
                       onClick={ () => navigate(-1) }
                       variant="secondary"
                       width={
@@ -337,6 +338,7 @@ const MintSong = () => {
                     mt={ 5 }
                   >
                     <Button
+                      color="music"
                       onClick={ () => setStepIndex(0) }
                       variant="secondary"
                       width={

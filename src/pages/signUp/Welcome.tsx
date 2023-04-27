@@ -30,6 +30,7 @@ const SignUp: FunctionComponent = () => {
     <Box alignItems="center" display="flex" flexDirection="column">
       <Stack sx={ { alignItems: "center", gap: 1, width: "100%" } }>
         <Button
+          color="music"
           onClick={ () => {
             history.push("/login");
           } }

@@ -54,7 +54,12 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
           padding: "12px 24px",
         } }
       >
-        <Button onClick={ secondaryAction } variant="secondary" width="compact">
+        <Button
+          color="music"
+          onClick={ secondaryAction }
+          variant="secondary"
+          width="compact"
+        >
           Cancel
         </Button>
         <Button onClick={ primaryAction } width="compact">

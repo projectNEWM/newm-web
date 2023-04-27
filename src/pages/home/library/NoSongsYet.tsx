@@ -1,39 +1,39 @@
 import { FunctionComponent } from "react";
-import { Box, IconButton } from "@mui/material";
-import { Typography } from "elements";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import { Stack, Table } from "@mui/material";
+import { Button, HorizontalLine, Typography } from "elements";
 import { useNavigate } from "react-router-dom";
+import theme from "theme";
+import TableHead from "./Table/TableHead";
 
 const NoSongsYet: FunctionComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <Box
+    <Stack
       sx={ {
-        display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "flex-start",
       } }
     >
+      <Table>
+        <TableHead />
+      </Table>
       <Typography
-        fontWeight="bold"
-        fontSize="20px"
-        paddingBottom={ 2 }
-        paddingTop={ 5 }
+        variant="subtitle2"
+        sx={ { color: theme.colors.white, mt: [3, 3, 5], mb: 1.5 } }
       >
-        You have no songs yet
+        You haven&apos;t uploaded any songs yet!
       </Typography>
-      <Typography fontWeight="regular" fontSize="14x">
-        Click below to upload your first song
-      </Typography>
-      <IconButton>
-        <AddCircleOutlineOutlinedIcon
-          onClick={ () => navigate("/home/upload-song") }
-          fontSize="large"
-        />
-      </IconButton>
-    </Box>
+      <Button
+        color="music"
+        onClick={ () => navigate("/home/upload-song") }
+        variant="secondary"
+        width="compact"
+      >
+        Upload your first song
+      </Button>
+
+      <HorizontalLine sx={ { mt: [3, 3, 5] } } />
+    </Stack>
   );
 };
 

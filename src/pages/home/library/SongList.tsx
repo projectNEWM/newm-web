@@ -7,7 +7,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -20,26 +19,13 @@ import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
+import TableHead from "./Table/TableHead";
 
 interface SongListProps {
   rowHeight?: number;
   totalCountOfSongs: number;
   query: string;
 }
-
-const StyledHeaderCell = styled(TableCell)({
-  paddingTop: "16px",
-  paddingBottom: "16px",
-  paddingLeft: "24px",
-  borderBottom: `1px solid ${theme.colors.grey500}`,
-
-  fontFamily: "Inter",
-  fontStyle: "normal",
-  fontWeight: 600,
-  fontSize: "14px",
-  lineHeight: "17px",
-  color: theme.colors.grey100,
-});
 
 const StyledTableCell = styled(TableCell)({
   paddingTop: "10px",
@@ -202,39 +188,13 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   }
 
   if (isSuccess && songData?.length === 0 && !query) {
-    return (
-      <Box sx={ { margin: "auto", position: "relative", bottom: "50px" } }>
-        <NoSongsYet />
-      </Box>
-    );
+    return <NoSongsYet />;
   }
 
   return songData?.length ? (
     <TableContainer>
       <Table size="small" aria-label="Song List">
-        <TableHead>
-          <TableRow>
-            <StyledHeaderCell>SONG NAME</StyledHeaderCell>
-            <StyledHeaderCell
-              sx={ { display: { xs: "none", sm: "table-cell" } } }
-            >
-              MINTING
-            </StyledHeaderCell>
-            <StyledHeaderCell
-              sx={ { display: { xs: "none", lg: "table-cell" } } }
-            >
-              GENRE
-            </StyledHeaderCell>
-            <StyledHeaderCell
-              sx={ {
-                textAlign: "end",
-                display: { xs: "none", md: "table-cell" },
-              } }
-            >
-              LENGTH
-            </StyledHeaderCell>
-          </TableRow>
-        </TableHead>
+        <TableHead />
         <TableBody>
           { songData.map((song) => (
             <TableRow

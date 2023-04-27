@@ -430,6 +430,7 @@ const Profile: FunctionComponent = () => {
                     } }
                   >
                     <Button
+                      color="music"
                       disabled={ !dirty }
                       onClick={ handleReset }
                       variant="secondary"
