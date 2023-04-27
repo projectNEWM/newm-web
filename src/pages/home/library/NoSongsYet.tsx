@@ -24,6 +24,7 @@ const NoSongsYet: FunctionComponent = () => {
         You haven&apos;t uploaded any songs yet!
       </Typography>
       <Button
+        color="music"
         onClick={ () => navigate("/home/upload-song") }
         variant="secondary"
         width="compact"

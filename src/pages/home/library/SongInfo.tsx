@@ -194,6 +194,7 @@ const SongInfo = () => {
                   } }
                 >
                   <Button
+                    color="music"
                     onClick={ () => navigate(-1) }
                     variant="secondary"
                     width={

@@ -50,6 +50,7 @@ const Login: FunctionComponent = () => {
         sx={ { alignItems: "center", gap: 1, mt: [2, 4, 5], width: "100%" } }
       >
         <Button
+          color="music"
           onClick={ () => {
             history.push("/sign-up");
           } }
