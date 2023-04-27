@@ -78,6 +78,18 @@ export interface AudioUploadUrlResponse {
   readonly fields: Record<string, string>;
 }
 
+export type MintingStatus =
+  | "Undistributed"
+  | "StreamTokenAgreementApproved"
+  | "MintingPaymentRequested"
+  | "MintingPaymentReceived"
+  | "ReadyToDistribute"
+  | "SubmittedForDistribution"
+  | "Distributed"
+  | "Declined"
+  | "Pending"
+  | "Minted";
+
 export interface Song {
   readonly id: string;
   readonly ownerId: string;
@@ -92,7 +104,7 @@ export interface Song {
   readonly streamUrl?: string;
   readonly nftPolicyId?: string;
   readonly nftName?: string;
-  readonly mintingStatus?: string;
+  readonly mintingStatus: MintingStatus;
   readonly marketplaceStatus?: string;
 }
 
