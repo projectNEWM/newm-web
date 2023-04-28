@@ -22,10 +22,20 @@ const ConnectWalletModal: FunctionComponent = () => {
     );
   };
 
+  const handleError = (message: string) => {
+    dispatch(
+      setToastMessage({
+        message,
+        severity: "error",
+      })
+    );
+  };
+
   return (
     <WalletModal
       isOpen={ isConnectWalletModalOpen }
       onConnect={ handleConnect }
+      onError={ handleError }
       style={ {
         backgroundColor: theme.colors.grey400,
       } }
