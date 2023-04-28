@@ -21,11 +21,13 @@ import {
   emptyProfile,
   useGetProfileQuery,
 } from "modules/session";
-import { setIsIdenfyModalOpen } from "modules/ui";
+import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const { wallet } = useConnectWallet();
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
   const { data: genreOptions = [] } = useGetGenresQuery();
@@ -52,10 +54,6 @@ const SongInfo: FunctionComponent = () => {
 
   const handleVerifyProfile = () => {
     dispatch(setIsIdenfyModalOpen(true));
-  };
-
-  const handleConnectWallet = () => {
-    // trigger connect wallet modal
   };
 
   return (
@@ -221,7 +219,7 @@ const SongInfo: FunctionComponent = () => {
           ) }
 
           { /** TODO: hide if wallet is already connected */ }
-          { values.isMinting && (
+          { values.isMinting && !wallet && (
             <Alert
               sx={ { py: 2.5 } }
               severity="warning"
@@ -230,7 +228,10 @@ const SongInfo: FunctionComponent = () => {
                   aria-label="close"
                   variant="outlined"
                   color="yellow"
-                  onClick={ handleConnectWallet }
+                  onClick={ () => {
+                    console.log("CLICKED!!!!"); // eslint-disable-line
+                    dispatch(setIsConnectWalletModalOpen(true));
+                  } }
                   sx={ { textTransform: "none" } }
                 >
                   Connect wallet

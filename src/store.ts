@@ -8,7 +8,6 @@ import { sessionReducer } from "modules/session";
 import { songReducer } from "modules/song";
 import { enableReduxLogging, isProd } from "buildParams";
 import { uiReducer } from "modules/ui";
-import { walletReducer } from "modules/wallet";
 
 const sessionPersistConfig = {
   key: "session",
@@ -21,7 +20,6 @@ export const reducer = combineReducers({
   session: persistReducer(sessionPersistConfig, sessionReducer),
   song: songReducer,
   ui: uiReducer,
-  wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
   [lambdaApi.reducerPath]: lambdaApi.reducer,
   [cloudinaryApi.reducerPath]: cloudinaryApi.reducer,
