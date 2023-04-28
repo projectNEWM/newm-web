@@ -1,4 +1,8 @@
-import { selectUi, setIsConnectWalletModalOpen } from "modules/ui";
+import {
+  selectUi,
+  setIsConnectWalletModalOpen,
+  setToastMessage,
+} from "modules/ui";
 import { FunctionComponent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
@@ -9,9 +13,19 @@ const ConnectWalletModal: FunctionComponent = () => {
   const dispatch = useDispatch();
   const { isConnectWalletModalOpen } = useSelector(selectUi);
 
+  const handleConnect = () => {
+    dispatch(
+      setToastMessage({
+        message: "Wallet successfully connected",
+        severity: "success",
+      })
+    );
+  };
+
   return (
     <WalletModal
       isOpen={ isConnectWalletModalOpen }
+      onConnect={ handleConnect }
       style={ {
         backgroundColor: theme.colors.grey400,
       } }
