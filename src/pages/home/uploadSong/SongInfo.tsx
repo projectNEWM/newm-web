@@ -229,7 +229,6 @@ const SongInfo: FunctionComponent = () => {
                   variant="outlined"
                   color="yellow"
                   onClick={ () => {
-                    console.log("CLICKED!!!!"); // eslint-disable-line
                     dispatch(setIsConnectWalletModalOpen(true));
                   } }
                   sx={ { textTransform: "none" } }

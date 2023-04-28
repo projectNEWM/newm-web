@@ -24,6 +24,7 @@ const ConnectWalletModal: FunctionComponent = () => {
         border: `2px solid ${theme.colors.white}`,
       } }
       isInverted={ true }
+      fontFamily="Inter"
       onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
     />
   );
