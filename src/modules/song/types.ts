@@ -144,3 +144,38 @@ export interface GetSongCountRequest {
 export interface GetSongCountResponse {
   count: number;
 }
+
+export interface GetCollaborationsRequest {
+  readonly offset: number;
+  readonly limit: number;
+  readonly ids: string;
+  readonly songIds: string;
+  readonly emails: string;
+  readonly olderThan: string;
+  readonly newerThan: string;
+}
+
+export interface Collaboration {
+  readonly id: string;
+  readonly createdAt: string;
+  readonly songId: string;
+  readonly email: string;
+  readonly role: string;
+  readonly royaltyRate: string;
+  readonly credited: boolean;
+  readonly accepted: "Editing" | "Waiting" | "Rejected" | "Accepted";
+}
+
+export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
+
+export interface CreateCollaborationRequest {
+  readonly songId: string;
+  readonly email: string;
+  readonly role: string;
+  readonly royaltyRate: number;
+  readonly credited: boolean;
+}
+
+export interface CreateCollaborationResponse {
+  readonly collaborationId: string;
+}
