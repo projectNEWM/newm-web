@@ -233,7 +233,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [Tags.Song],
+      providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -257,7 +257,7 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: [Tags.Collaborator],
+      invalidatesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
