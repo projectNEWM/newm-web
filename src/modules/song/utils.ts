@@ -1,6 +1,13 @@
 import { uniq } from "lodash";
 import { Collaborator, Creditor, Owner } from "./types";
 
+/**
+ * Generates a list of collaborators from a list of owners and creditors.
+ *
+ * @param owners a list of users with initial ownership of the song royalties
+ * @param creditors a list of users displayed in the song credits
+ * @returns a unified list of collaborators for the song
+ */
 export const generateCollaborators = (
   owners: ReadonlyArray<Owner>,
   creditors: ReadonlyArray<Creditor>

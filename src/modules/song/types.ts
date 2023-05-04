@@ -152,6 +152,13 @@ export interface GetSongCountResponse {
   count: number;
 }
 
+export enum CollaborationAcceptedStatus {
+  Editing = "Editing",
+  Waiting = "Waiting",
+  Rejected = "Rejected",
+  Accepted = "Accepted,",
+}
+
 export interface GetCollaborationsRequest {
   readonly offset?: number;
   readonly limit?: number;
@@ -170,7 +177,7 @@ export interface Collaboration {
   readonly role?: string;
   readonly royaltyRate?: string;
   readonly credited: boolean;
-  readonly accepted: "Editing" | "Waiting" | "Rejected" | "Accepted";
+  readonly accepted: CollaborationAcceptedStatus;
 }
 
 export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
