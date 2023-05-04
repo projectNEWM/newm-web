@@ -1,8 +1,7 @@
 import { Box, IconButton } from "@mui/material";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getInitialData } from "modules/session";
+import { useGetInitialData } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideBar from "./SideBar";
@@ -18,11 +17,7 @@ const Home: FunctionComponent = () => {
 
   const theme = useTheme();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getInitialData());
-  }, [dispatch]);
+  useGetInitialData();
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 

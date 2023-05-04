@@ -225,8 +225,8 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getCollaborations: build.query<
-      GetCollaborationsRequest,
-      GetCollaborationsResponse
+      GetCollaborationsResponse,
+      GetCollaborationsRequest
     >({
       query: (params) => ({
         url: "v1/collaborations",
@@ -275,7 +275,11 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetSongsQuery, useGetSongQuery, useGetSongCountQuery } =
-  extendedApi;
+export const {
+  useGetSongsQuery,
+  useGetSongQuery,
+  useGetSongCountQuery,
+  useGetCollaborationsQuery,
+} = extendedApi;
 
 export default extendedApi;

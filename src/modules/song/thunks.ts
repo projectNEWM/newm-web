@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
+import { generateCollaborators } from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -75,6 +76,30 @@ export const uploadSong = createAsyncThunk(
       });
 
       if (body.isMinting) {
+        const collaborators = generateCollaborators(
+          body.owners,
+          body.creditors
+        );
+
+        // TODO: create bulk collaboration creation endpoint in API.
+        const collabResponses = await Promise.all(
+          collaborators.map((collaborator) => {
+            return dispatch(
+              songApi.endpoints.createCollaboration.initiate({
+                songId,
+                email: collaborator.email,
+                role: collaborator.role,
+                royaltyRate: collaborator.royaltyRate,
+                credited: collaborator.isCredited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of collabResponses) {
+          if ("error" in collabResp) return;
+        }
+
         await dispatch(
           generateArtistAgreement({
             body: {

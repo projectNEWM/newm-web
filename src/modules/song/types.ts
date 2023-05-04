@@ -32,6 +32,13 @@ export interface Creditor {
   role: string;
 }
 
+export interface Collaborator {
+  readonly email: string;
+  readonly role?: string;
+  readonly royaltyRate?: number;
+  readonly isCredited: boolean;
+}
+
 export interface UploadSongRequest {
   readonly coverArtUrl?: string | File; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
@@ -146,13 +153,13 @@ export interface GetSongCountResponse {
 }
 
 export interface GetCollaborationsRequest {
-  readonly offset: number;
-  readonly limit: number;
-  readonly ids: string;
-  readonly songIds: string;
-  readonly emails: string;
-  readonly olderThan: string;
-  readonly newerThan: string;
+  readonly offset?: number;
+  readonly limit?: number;
+  readonly ids?: string;
+  readonly songIds?: string;
+  readonly emails?: string;
+  readonly olderThan?: string;
+  readonly newerThan?: string;
 }
 
 export interface Collaboration {
@@ -160,8 +167,8 @@ export interface Collaboration {
   readonly createdAt: string;
   readonly songId: string;
   readonly email: string;
-  readonly role: string;
-  readonly royaltyRate: string;
+  readonly role?: string;
+  readonly royaltyRate?: string;
   readonly credited: boolean;
   readonly accepted: "Editing" | "Waiting" | "Rejected" | "Accepted";
 }
@@ -171,8 +178,8 @@ export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
 export interface CreateCollaborationRequest {
   readonly songId: string;
   readonly email: string;
-  readonly role: string;
-  readonly royaltyRate: number;
+  readonly role?: string;
+  readonly royaltyRate?: number;
   readonly credited: boolean;
 }
 
