@@ -78,14 +78,16 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       phrase: query,
     },
     {
-      // Polls for new songs every minute if the streamUrl is missing
+      // Refetch songs every minute if the streamUrl is missing for any song
       pollingInterval: streamUrlMissing ? 60000 : undefined,
     }
   );
 
   // Checks if any of the songs are missing a streamUrl
   useEffect(() => {
-    if (songData.some((song) => !song.streamUrl)) {
+    const someSongsNotTranscoded = songData.some((song) => !song.streamUrl);
+
+    if (someSongsNotTranscoded) {
       setStreamUrlMissing(true);
     } else {
       setStreamUrlMissing(false);
