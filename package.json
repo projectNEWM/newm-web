@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dcspark/cardano-multiplatform-lib-asmjs": "^0.3.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@greatsumini/react-facebook-login": "^3.2.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.7",
+    "@newm.io/cardano-dapp-wallet-connector": "^0.2.38",
     "@react-oauth/google": "^0.10.0",
     "@reduxjs/toolkit": "^1.7.2",
     "async-mutex": "^0.3.2",
@@ -36,8 +36,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts start",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "test:ci": "npm run test -- --coverage --watchAll=false",
     "eject": "react-scripts eject",
@@ -71,7 +71,7 @@
     "@storybook/react": "^7.0.5",
     "@storybook/react-webpack5": "^7.0.5",
     "@storybook/testing-library": "0.1.0",
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/country-list": "^2.1.1",

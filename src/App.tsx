@@ -18,20 +18,15 @@ import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import theme from "theme";
-import "./App.css";
-import { useEffect } from "react";
-import { ensureWallets } from "modules/wallet";
 import BrowserRouter from "common/BrowserRouter";
 import { history } from "common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ConnectWalletModal from "components/ConnectWalletModal";
 import store, { persistor } from "./store";
+import "./App.css";
 
 const App = () => {
-  useEffect(() => {
-    ensureWallets();
-  }, []);
-
   const googleClientID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
   return (
@@ -43,6 +38,7 @@ const App = () => {
             <CssBaseline />
             <IdenfyPingUserStatus />
             <IdenfyModal />
+            <ConnectWalletModal />
 
             <Background>
               <BrowserRouter history={ history }>

@@ -5,4 +5,5 @@ export interface UIState {
     severity?: "error" | "success";
   };
   isIdenfyModalOpen: boolean;
+  isConnectWalletModalOpen: boolean;
 }
