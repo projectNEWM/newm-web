@@ -21,7 +21,8 @@ import {
 } from "modules/session";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
-import { setIsIdenfyModalOpen } from "modules/ui";
+import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -35,6 +36,7 @@ const MintSong = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
+  const { wallet } = useConnectWallet();
   const { id, title } = location.state as Song;
 
   const {
@@ -138,7 +140,7 @@ const MintSong = () => {
   };
 
   const handleConnectWallet = () => {
-    // trigger connect wallet modal
+    dispatch(setIsConnectWalletModalOpen(true));
   };
 
   return (
@@ -244,8 +246,7 @@ const MintSong = () => {
                       </Alert>
                     ) }
 
-                    { /** TODO: hide if wallet is already connected */ }
-                    { values.isMinting && (
+                    { values.isMinting && !wallet && (
                       <Alert
                         sx={ { py: 2.5 } }
                         severity="warning"

@@ -8,6 +8,7 @@ const initialState: UIState = {
     severity: "error",
   },
   isIdenfyModalOpen: false,
+  isConnectWalletModalOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -27,10 +28,17 @@ const uiSlice = createSlice({
     setIsIdenfyModalOpen: (state, { payload }) => {
       state.isIdenfyModalOpen = payload;
     },
+    setIsConnectWalletModalOpen: (state, { payload }) => {
+      state.isConnectWalletModalOpen = payload;
+    },
   },
 });
 
-export const { clearToastMessage, setToastMessage, setIsIdenfyModalOpen } =
-  uiSlice.actions;
+export const {
+  clearToastMessage,
+  setToastMessage,
+  setIsIdenfyModalOpen,
+  setIsConnectWalletModalOpen,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;
