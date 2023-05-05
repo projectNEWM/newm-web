@@ -4,5 +4,4 @@ export * from "./mockFile";
 export * from "./mockSong";
 export * from "./mockWallet";
 export * from "./mockSongRoyalties";
-export * from "./mockOwnersData";
 export * from "./mockTransactions";

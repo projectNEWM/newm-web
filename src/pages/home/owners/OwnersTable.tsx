@@ -1,166 +1,196 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-
+import { useEffect, useState } from "react";
 import {
   Box,
+  Stack,
   Table,
   TableBody,
-  TableCell,
-  TableCellProps,
   TableContainer,
   TableHead,
   TableRow,
 } from "@mui/material";
 import theme from "theme";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Typography } from "elements";
-import { Owner, useWindowDimensions } from "common";
-import PendingBadge from "assets/images/PendingBadge";
-import { TablePagination } from "components";
+import { useGetCollaboratorsQuery } from "modules/song";
+import { TableSkeleton, Typography } from "elements";
+import { useWindowDimensions } from "common";
+import { TableCell, TableHeadCell, TablePagination } from "components";
+import NoOwnersYet from "./NoOwnersYet";
+
 interface OwnersTableProps {
-  ownersData: Owner[];
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  query: string;
+  totalCollaborators: number;
 }
 
 export default function OwnersTable({
-  ownersData,
-  page,
-  setPage,
+  query,
+  totalCollaborators,
 }: OwnersTableProps) {
-  const rowHeight = 60;
   const headerHeight = 245;
-  const footerHeight = 65;
+  const footerHeight = 40;
   const bottomPadding = 30;
-  const [rowsPerPage, setRowsPerPage] = useState(0);
-  // Used to avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 1 ? Math.max(0, page * rowsPerPage - ownersData.length) : 0;
-  const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
-  const StyledTableCell = styled(TableCell)<TableCellProps>`
-    border-color: ${theme.colors.grey500};
-    color: ${theme.colors.grey100};
-    height: ${rowHeight}px;
-  `;
-  const StyledTableCellHeader = styled(TableCell)<TableCellProps>`
-    border-color: ${theme.colors.grey500};
-    color: ${theme.colors.grey100};
-    font-weight: ${theme.typography.fontWeightBold};
-  `;
+  const rowHeight = 65;
+  const viewportWidth = useWindowDimensions()?.width;
+  const viewportHeight = useWindowDimensions()?.height;
+  const [rowsPerPage, setRowsPerPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  // determines how many rows to display per page
-  const windowHeight = useWindowDimensions()?.height;
-  useEffect(() => {
-    setRowsPerPage(
-      windowHeight
-        ? Math.floor(
-            (windowHeight - headerHeight - footerHeight - bottomPadding) /
-              rowHeight
-          )
-        : 5
-    );
-  }, [windowHeight]);
+  let collaboratorsToRequest = rowsPerPage;
+
+  const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
+  const totalPagesCount = Math.ceil(totalCollaborators / rowsPerPage);
+  const remainingSongsOnLastPage = totalCollaborators % rowsPerPage;
+
+  // Determines how many collaborators to request for the last page
+  if (page === totalPagesCount) {
+    collaboratorsToRequest =
+      remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
+  }
+
+  const {
+    data: collaboratorsData = [],
+    isLoading,
+    isSuccess,
+  } = useGetCollaboratorsQuery({
+    offset: page - 1,
+    limit: collaboratorsToRequest,
+    phrase: query,
+  });
 
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     page: number
   ) => {
     setPage(page);
   };
-  if (ownersData) {
+
+  useEffect(() => {
+    setPage(1);
+  }, [query]);
+
+  // sets the # of rows per page depending on viewport height
+  useEffect(() => {
+    if (viewportHeight) {
+      const rowsWithCurrentHeight = Math.abs(
+        Math.floor(
+          (viewportHeight - headerHeight - footerHeight - bottomPadding) /
+            rowHeight
+        )
+      );
+
+      setRowsPerPage(rowsWithCurrentHeight ? rowsWithCurrentHeight : 1);
+      setPage(1);
+    }
+  }, [viewportHeight]);
+
+  if (isLoading) {
     return (
-      <TableContainer>
-        <Table size="small" aria-label="Owners pagination table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCellHeader>
-                <Typography>COLLABORATORS</Typography>
-              </StyledTableCellHeader>
-              <StyledTableCellHeader>
-                <Typography>COLLABORATIONS</Typography>
-              </StyledTableCellHeader>
-              <StyledTableCellHeader
-                sx={ {
-                  display: { xs: "none", sm: "inline" },
-                } }
-              >
-                <Typography>INFO TBD</Typography>
-              </StyledTableCellHeader>
-            </TableRow>
-          </TableHead>
-          <TableBody sx={ { backgroundColor: theme.colors.grey600 } }>
-            { ownersData
-              .slice(
-                (page - 1) * rowsPerPage,
-                (page - 1) * rowsPerPage + rowsPerPage
-              )
-              .map((row) => (
-                <TableRow key={ row.id }>
-                  <StyledTableCell
-                    sx={ {
-                      color: theme.colors.white,
-                      maxWidth: ["150px", "unset"],
-                    } }
-                  >
-                    <Box
-                      sx={ { display: "flex" } }
-                      overflow="scroll"
-                      whiteSpace="nowrap"
-                    >
-                      <Box>{ row.name }</Box>
-                      { row.registered ? (
-                        <Box
-                          sx={ {
-                            marginLeft: "16px",
-                            display: { xs: "none", sm: "flex" },
-                          } }
-                        >
-                          <PendingBadge />
-                        </Box>
-                      ) : null }
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ {
-                      overflow: "scroll",
-                      whiteSpace: "nowrap",
-                      maxWidth: ["154px", "unset"],
-                    } }
-                  >
-                    { row.song }
-                  </StyledTableCell>
-                  <StyledTableCell
-                    sx={ { display: { xs: "none", sm: "table-cell" } } }
-                  >
-                    { row.info_tbd }%
-                  </StyledTableCell>
-                </TableRow>
-              )) }
-            { emptyRows > 0 && (
-              <TableRow style={ { height: rowHeight * emptyRows } }>
-                <StyledTableCell
-                  sx={ { backgroundColor: theme.colors.grey700 } }
-                  colSpan={ 3 }
-                />
-              </TableRow>
-            ) }
-          </TableBody>
-          { ownersData.length > rowsPerPage ? (
-            <TablePagination
-              numberOfRows={ ownersData.length }
-              page={ page }
-              rowsPerPage={ rowsPerPage }
-              lastRowOnPage={ lastRowOnPage }
-              handlePageChange={ handlePageChange }
-              colSpan={ 3 }
-              rows="collaborators"
-              cellStyles={ { paddingTop: "12px" } }
-            />
-          ) : null }
-        </Table>
-      </TableContainer>
+      <TableSkeleton
+        cols={
+          viewportWidth && viewportWidth > theme.breakpoints.values.sm ? 3 : 2
+        }
+      />
     );
-  } else {
-    return null;
   }
+
+  if (isSuccess && collaboratorsData?.length === 0 && !query) {
+    return <NoOwnersYet />;
+  }
+
+  return collaboratorsData?.length ? (
+    <TableContainer>
+      <Table size="small" aria-label="Song List">
+        <TableHead>
+          <TableRow sx={ { justifyContent: "space-between" } }>
+            <TableHeadCell>COLLABORATORS</TableHeadCell>
+            <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
+              OWNER OF
+            </TableHeadCell>
+            <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
+              EMAIL
+            </TableHeadCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          { collaboratorsData.map(
+            (
+              {
+                email,
+                songCount,
+                user: {
+                  firstName = "",
+                  id = "",
+                  lastName = "",
+                  pictureUrl = "",
+                } = {},
+              },
+              index
+            ) => (
+              <TableRow key={ id || index }>
+                <TableCell>
+                  <Stack
+                    sx={ {
+                      maxWidth: { xs: "110px", sm: "none" },
+                      flexDirection: "row",
+                      alignItems: "center",
+                      columnGap: 1.5,
+                      whiteSpace: "nowrap",
+                    } }
+                  >
+                    { pictureUrl ? (
+                      <img
+                        style={ {
+                          borderRadius: "50%",
+                          width: "40px",
+                          height: "40px",
+                        } }
+                        src={ pictureUrl }
+                        alt="Profile"
+                      />
+                    ) : (
+                      <Stack sx={ { height: "40px", width: "40px" } }></Stack>
+                    ) }
+                    { firstName && lastName ? `${firstName} ${lastName}` : null }
+                  </Stack>
+                </TableCell>
+                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
+                  <Box
+                    sx={ {
+                      display: "flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap",
+                    } }
+                  >
+                    { `${songCount} song${songCount > 1 ? "s" : ""}` }
+                  </Box>
+                </TableCell>
+                <TableCell
+                  sx={ {
+                    paddingLeft: [0, 1],
+                    paddingRight: [1, 3],
+                    width: "0",
+                    whiteSpace: "nowrap",
+                  } }
+                >
+                  { email }
+                </TableCell>
+              </TableRow>
+            )
+          ) }
+        </TableBody>
+        { totalCollaborators > collaboratorsData.length && (
+          <TablePagination
+            numberOfRows={ totalCollaborators }
+            page={ page }
+            rowsPerPage={ rowsPerPage }
+            lastRowOnPage={ lastRowOnPage }
+            handlePageChange={ handlePageChange }
+            colSpan={ 3 }
+            rows="collaborators"
+            cellStyles={ { paddingTop: "12px" } }
+          />
+        ) }
+      </Table>
+    </TableContainer>
+  ) : (
+    <Typography>No collaborators matched your search.</Typography>
+  );
 }

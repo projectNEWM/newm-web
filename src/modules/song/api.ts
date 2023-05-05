@@ -5,6 +5,10 @@ import {
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
   DeleteSongRequest,
+  GetCollaboratorCountRequest,
+  GetCollaboratorCountResponse,
+  GetCollaboratorsRequest,
+  GetCollaboratorsResponse,
   GetSongCountRequest,
   GetSongCountResponse,
   GetSongsRequest,
@@ -220,10 +224,63 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getCollaborators: build.query<
+      GetCollaboratorsResponse,
+      GetCollaboratorsRequest
+    >({
+      query: (params) => ({
+        url: "v1/collaborations/collaborators",
+        method: "GET",
+        params,
+      }),
+      providesTags: [Tags.Collaborator],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song count",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getCollaboratorCount: build.query<
+      GetCollaboratorCountResponse,
+      GetCollaboratorCountRequest
+    >({
+      query: (params) => ({
+        url: "v1/collaborations/collaborators/count",
+        method: "GET",
+        params,
+      }),
+      providesTags: [Tags.Collaborator],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song count",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetSongsQuery, useGetSongQuery, useGetSongCountQuery } =
-  extendedApi;
+export const {
+  useGetCollaboratorsQuery,
+  useGetCollaboratorCountQuery,
+  useGetSongCountQuery,
+  useGetSongQuery,
+  useGetSongsQuery,
+} = extendedApi;
 
 export default extendedApi;
