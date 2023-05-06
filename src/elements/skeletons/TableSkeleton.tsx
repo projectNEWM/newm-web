@@ -20,7 +20,7 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
       pt={ 4 }
       px={ 4 }
       sx={ { backgroundColor: theme.colors.grey600 } }
-      data-testId="table-skeleton"
+      data-testid="table-skeleton"
     >
       <Stack
         columnGap={ 4 }

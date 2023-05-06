@@ -27,6 +27,7 @@ const UploadSong: FunctionComponent = () => {
       lastName = "",
       nickname: stageName = "",
       email,
+      role,
     } = emptyProfile,
   } = useGetProfileQuery();
   const [uploadSong] = useUploadSongThunk();
@@ -51,7 +52,7 @@ const UploadSong: FunctionComponent = () => {
         isRightsOwner: true,
         lastName,
         percentage: 100,
-        role: "Arranger",
+        role,
       },
     ],
     creditors: [
@@ -59,7 +60,7 @@ const UploadSong: FunctionComponent = () => {
         email,
         firstName,
         lastName,
-        role: "Arranger",
+        role,
       },
     ],
     consentsToContract: false,
@@ -68,12 +69,12 @@ const UploadSong: FunctionComponent = () => {
     stageName,
   };
 
-  const handleSongInfo = (
+  const handleSongInfo = async (
     values: UploadSongRequest,
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
-      generateArtistAgreement({
+      await generateArtistAgreement({
         body: {
           songName: values.title,
           companyName,
@@ -82,9 +83,10 @@ const UploadSong: FunctionComponent = () => {
         },
         callback: () => {
           navigate("confirm");
-          setSubmitting(false);
         },
       });
+
+      setSubmitting(false);
     } else {
       handleSubmit(values);
     }
@@ -143,6 +145,7 @@ const UploadSong: FunctionComponent = () => {
           onSubmit={ handleSubmit }
           rootPath="home/upload-song"
           validateOnMount={ true }
+          enableReinitialize={ true }
           routes={ [
             {
               element: <SongInfo />,

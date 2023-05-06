@@ -289,6 +289,8 @@ export const handleSocialLoginError = createAsyncThunk(
   }
 );
 
+export const useGetInitialData = asThunkHook(getInitialData);
+
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
 
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);

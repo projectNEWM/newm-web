@@ -32,6 +32,13 @@ export interface Creditor {
   role: string;
 }
 
+export interface Collaborator {
+  readonly email: string;
+  readonly role?: string;
+  readonly royaltyRate?: number;
+  readonly isCredited: boolean;
+}
+
 export interface UploadSongRequest {
   readonly coverArtUrl?: string | File; // eslint-disable-line
   readonly audio?: any; // eslint-disable-line
@@ -145,7 +152,49 @@ export interface GetSongCountResponse {
   count: number;
 }
 
-export interface Collaborator {
+export enum CollaborationAcceptedStatus {
+  Editing = "Editing",
+  Waiting = "Waiting",
+  Rejected = "Rejected",
+  Accepted = "Accepted,",
+}
+
+export interface GetCollaborationsRequest {
+  readonly offset?: number;
+  readonly limit?: number;
+  readonly ids?: string;
+  readonly songIds?: string;
+  readonly emails?: string;
+  readonly olderThan?: string;
+  readonly newerThan?: string;
+}
+
+export interface Collaboration {
+  readonly id: string;
+  readonly createdAt: string;
+  readonly songId: string;
+  readonly email: string;
+  readonly role?: string;
+  readonly royaltyRate?: string;
+  readonly credited: boolean;
+  readonly accepted: CollaborationAcceptedStatus;
+}
+
+export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
+
+export interface CreateCollaborationRequest {
+  readonly songId: string;
+  readonly email: string;
+  readonly role?: string;
+  readonly royaltyRate?: number;
+  readonly credited: boolean;
+}
+
+export interface CreateCollaborationResponse {
+  readonly collaborationId: string;
+}
+
+export interface CollaboratorInfo {
   id?: string;
   createdAt?: string;
   firstName?: string;
@@ -161,7 +210,7 @@ export interface Collaborator {
 export interface Collaborators {
   email: string;
   songCount: number;
-  user?: Collaborator;
+  user?: CollaboratorInfo;
 }
 
 export interface GetCollaboratorsRequest {

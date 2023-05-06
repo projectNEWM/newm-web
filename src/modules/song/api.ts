@@ -4,7 +4,11 @@ import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
   CloudinarySignatureResponse,
+  CreateCollaborationRequest,
+  CreateCollaborationResponse,
   DeleteSongRequest,
+  GetCollaborationsRequest,
+  GetCollaborationsResponse,
   GetCollaboratorCountRequest,
   GetCollaboratorCountResponse,
   GetCollaboratorsRequest,
@@ -49,7 +53,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching song info",
@@ -70,7 +74,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching songs",
@@ -91,7 +95,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching song count",
@@ -112,7 +116,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while uploading your song",
@@ -140,7 +144,7 @@ export const extendedApi = api.injectEndpoints({
               severity: "success",
             })
           );
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while uploading your song",
@@ -168,7 +172,7 @@ export const extendedApi = api.injectEndpoints({
               severity: "success",
             })
           );
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while deleting your song",
@@ -191,7 +195,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error while uploading your image",
@@ -214,10 +218,58 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getCollaborations: build.query<
+      GetCollaborationsResponse,
+      GetCollaborationsRequest
+    >({
+      query: (params) => ({
+        url: "v1/collaborations",
+        method: "GET",
+        params,
+      }),
+      providesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching collaborators",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    createCollaboration: build.mutation<
+      CreateCollaborationResponse,
+      CreateCollaborationRequest
+    >({
+      query: (body) => ({
+        url: "v1/collaborations",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while adding a collaborator",
               severity: "error",
             })
           );
@@ -238,7 +290,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching collaborators",
@@ -262,7 +314,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching collaborator count",
@@ -276,8 +328,9 @@ export const extendedApi = api.injectEndpoints({
 });
 
 export const {
-  useGetCollaboratorsQuery,
+  useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
+  useGetCollaboratorsQuery,
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,

@@ -47,6 +47,7 @@ const MintSong = () => {
       lastName = "",
       nickname: stageName,
       verificationStatus,
+      role,
     } = emptyProfile,
   } = useGetProfileQuery();
   const [patchSong, isSongLoading] = usePatchSongThunk();
@@ -70,7 +71,7 @@ const MintSong = () => {
         isRightsOwner: true,
         lastName,
         percentage: 100,
-        role: "Arranger",
+        role,
       },
     ],
     creditors: [
@@ -78,7 +79,7 @@ const MintSong = () => {
         email,
         firstName,
         lastName,
-        role: "Arranger",
+        role,
       },
     ],
     consentsToContract: false,
