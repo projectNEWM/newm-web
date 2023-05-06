@@ -241,7 +241,7 @@ export const extendedApi = api.injectEndpoints({
         } catch ({ error }) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching song count",
+              message: "An error occured while fetching collaborators",
               severity: "error",
             })
           );
@@ -265,7 +265,7 @@ export const extendedApi = api.injectEndpoints({
         } catch ({ error }) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching song count",
+              message: "An error occured while fetching collaborator count",
               severity: "error",
             })
           );

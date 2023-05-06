@@ -168,12 +168,14 @@ export interface GetCollaboratorsRequest {
   limit?: number;
   offset?: number;
   phrase?: string;
+  songIds?: string[];
 }
 
 export type GetCollaboratorsResponse = Array<Collaborators>;
 
 export interface GetCollaboratorCountRequest {
   phrase?: string;
+  songIds?: string[];
 }
 
 export interface GetCollaboratorCountResponse {
