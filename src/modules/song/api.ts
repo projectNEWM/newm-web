@@ -1,5 +1,6 @@
 import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
+import { EmptyResponse } from "common";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
@@ -18,6 +19,7 @@ import {
   GetSongsRequest,
   GetSongsResponse,
   PatchSongRequest,
+  ProcessStreamTokenAgreementRequest,
   Song,
   UploadSongRequest,
   UploadSongResponse,
@@ -176,6 +178,29 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while deleting your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    processStreamTokenAgreement: build.mutation<
+      EmptyResponse,
+      ProcessStreamTokenAgreementRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `v1/songs/${songId}/agreement`,
+        method: "PUT",
+        body,
+      }),
+
+      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error accepting your agreement",
               severity: "error",
             })
           );

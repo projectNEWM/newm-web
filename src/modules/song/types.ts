@@ -230,3 +230,8 @@ export interface GetCollaboratorCountRequest {
 export interface GetCollaboratorCountResponse {
   count: number;
 }
+
+export interface ProcessStreamTokenAgreementRequest {
+  accepted: boolean;
+  songId: string;
+}
