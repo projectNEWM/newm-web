@@ -100,13 +100,11 @@ export default function OwnersTable({
       <Table size="small" aria-label="Song List">
         <TableHead>
           <TableRow sx={ { justifyContent: "space-between" } }>
-            <TableHeadCell>COLLABORATORS</TableHeadCell>
             <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
-              OWNER OF
+              COLLABORATORS
             </TableHeadCell>
-            <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-              EMAIL
-            </TableHeadCell>
+            <TableHeadCell>OWNER OF</TableHeadCell>
+            <TableHeadCell>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -125,7 +123,7 @@ export default function OwnersTable({
               index
             ) => (
               <TableRow key={ id || index }>
-                <TableCell>
+                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
                   <Stack
                     sx={ {
                       maxWidth: { xs: "110px", sm: "none" },
@@ -151,7 +149,7 @@ export default function OwnersTable({
                     { firstName && lastName ? `${firstName} ${lastName}` : null }
                   </Stack>
                 </TableCell>
-                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
+                <TableCell>
                   <Box
                     sx={ {
                       display: "flex",
