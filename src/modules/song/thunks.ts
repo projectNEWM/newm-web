@@ -115,18 +115,14 @@ export const uploadSong = createAsyncThunk(
 
         if ("error" in generateArtistAgreementResponse) return;
 
-        if (
-          generateArtistAgreementResponse.meta.requestStatus === "fulfilled"
-        ) {
-          const processStreamTokenAgreementResponse = await dispatch(
-            songApi.endpoints.processStreamTokenAgreement.initiate({
-              songId,
-              accepted: body.consentsToContract,
-            })
-          );
+        const processStreamTokenAgreementResponse = await dispatch(
+          songApi.endpoints.processStreamTokenAgreement.initiate({
+            songId,
+            accepted: body.consentsToContract,
+          })
+        );
 
-          if ("error" in processStreamTokenAgreementResponse) return;
-        }
+        if ("error" in processStreamTokenAgreementResponse) return;
       }
 
       // navigate to library page to view new song
