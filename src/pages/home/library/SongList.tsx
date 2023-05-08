@@ -48,16 +48,31 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
   }
 
+  const [isStreamUrlMissing, setIsStreamUrlMissing] = useState(true);
+
   const {
     data: songData = [],
     isLoading,
     isSuccess,
-  } = useGetSongsQuery({
-    ownerIds: ["me"],
-    offset: page - 1,
-    limit: songsToRequest,
-    phrase: query,
-  });
+  } = useGetSongsQuery(
+    {
+      ownerIds: ["me"],
+      offset: page - 1,
+      limit: songsToRequest,
+      phrase: query,
+    },
+    {
+      // Refetch songs every minute if the streamUrl is missing for any song
+      pollingInterval: isStreamUrlMissing ? 5000 : undefined,
+    }
+  );
+
+  // Checks if any of the songs are missing a streamUrl
+  useEffect(() => {
+    const isAnySongStreamUrlMissing = songData.some((song) => !song.streamUrl);
+
+    setIsStreamUrlMissing(isAnySongStreamUrlMissing);
+  }, [songData]);
 
   const hlsJsParams = useMemo(
     () => ({
