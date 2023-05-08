@@ -79,7 +79,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     },
     {
       // Refetch songs every minute if the streamUrl is missing for any song
-      pollingInterval: isStreamUrlMissing ? 60000 : undefined,
+      pollingInterval: isStreamUrlMissing ? 5000 : undefined,
     }
   );
 
