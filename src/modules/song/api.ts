@@ -17,7 +17,9 @@ import {
   GetSongCountResponse,
   GetSongsRequest,
   GetSongsResponse,
+  MarketplaceStatus,
   PatchSongRequest,
+  ReplyCollaborationRequest,
   Song,
   UploadSongRequest,
   UploadSongResponse,
@@ -32,13 +34,21 @@ export const emptySong: Song = {
   moods: [],
   coverArtUrl: "",
   description: "",
-  credits: "",
   duration: undefined,
   streamUrl: "",
   nftPolicyId: "",
   nftName: "",
   mintingStatus: "Pending",
-  marketplaceStatus: "",
+  marketplaceStatus: MarketplaceStatus.NotSelling,
+  lyricsUrl: "",
+  album: "",
+  language: "",
+  copyrights: "",
+  parentalAdvisory: "",
+  isrc: "",
+  iswc: "",
+  ipis: "",
+  releaseDate: "",
 };
 
 export const extendedApi = api.injectEndpoints({
@@ -318,6 +328,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching collaborator count",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    replyToCollaboration: build.mutation<void, ReplyCollaborationRequest>({
+      query: ({ collaborationId, ...body }) => ({
+        url: `v1/collaborations/${collaborationId}/reply`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while replying to a collaboration",
               severity: "error",
             })
           );

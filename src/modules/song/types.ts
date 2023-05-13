@@ -1,5 +1,6 @@
 export interface SongState {
   artistAgreement: string;
+  invites: Invite[];
 }
 
 export type GetSongsResponse = Array<Song>;
@@ -97,6 +98,10 @@ export type MintingStatus =
   | "Pending"
   | "Minted";
 
+export enum MarketplaceStatus {
+  Selling = "Selling",
+  NotSelling = "NotSelling",
+}
 export interface Song {
   readonly id: string;
   readonly ownerId: string;
@@ -105,14 +110,23 @@ export interface Song {
   readonly genres: ReadonlyArray<string>;
   readonly moods?: ReadonlyArray<string>;
   readonly coverArtUrl?: string;
+  readonly lyricsUrl?: string;
   readonly description?: string;
-  readonly credits?: string;
+  readonly album?: string;
+  readonly track?: number;
+  readonly language?: string;
+  readonly copyrights?: string;
+  readonly parentalAdvisory?: string;
+  readonly isrc?: string;
+  readonly iswc?: string;
+  readonly ipis?: string;
+  readonly releaseDate?: string;
   readonly duration?: number;
   readonly streamUrl?: string;
   readonly nftPolicyId?: string;
   readonly nftName?: string;
   readonly mintingStatus: MintingStatus;
-  readonly marketplaceStatus?: string;
+  readonly marketplaceStatus: MarketplaceStatus;
 }
 
 export interface Artist {
@@ -156,7 +170,7 @@ export enum CollaborationAcceptedStatus {
   Editing = "Editing",
   Waiting = "Waiting",
   Rejected = "Rejected",
-  Accepted = "Accepted,",
+  Accepted = "Accepted",
 }
 
 export interface GetCollaborationsRequest {
@@ -167,6 +181,8 @@ export interface GetCollaborationsRequest {
   readonly emails?: string;
   readonly olderThan?: string;
   readonly newerThan?: string;
+  readonly inbound?: boolean;
+  readonly statuses?: CollaborationAcceptedStatus[];
 }
 
 export interface Collaboration {
@@ -175,9 +191,22 @@ export interface Collaboration {
   readonly songId: string;
   readonly email: string;
   readonly role?: string;
-  readonly royaltyRate?: string;
+  readonly royaltyRate?: number;
   readonly credited: boolean;
-  readonly accepted: CollaborationAcceptedStatus;
+  readonly status: CollaborationAcceptedStatus;
+}
+
+export interface Invite {
+  readonly collaborationId: string;
+  readonly coverArtUrl?: string;
+  readonly duration?: number;
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly pictureUrl?: string;
+  readonly role?: string;
+  readonly royaltyRate?: number;
+  readonly status: CollaborationAcceptedStatus;
+  readonly title: string;
 }
 
 export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
@@ -229,4 +258,9 @@ export interface GetCollaboratorCountRequest {
 
 export interface GetCollaboratorCountResponse {
   count: number;
+}
+
+export interface ReplyCollaborationRequest {
+  collaborationId: string;
+  accepted: boolean;
 }

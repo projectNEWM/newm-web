@@ -26,6 +26,10 @@ export interface Profile {
   readonly companyLogoUrl?: string;
 }
 
+export interface GetUserRequest {
+  readonly userId: string;
+}
+
 export interface NewmOAuthRequest {
   readonly accessToken?: string;
   readonly code?: string;

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Button, TableSkeleton } from "elements";
-import { useWindowDimensions } from "common";
+import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
 import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
@@ -103,23 +103,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const handlePressPlayButton = (song: Song) => (event: MouseEvent) => {
     handleSongPlayPause(song);
     event.stopPropagation();
-  };
-
-  const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
-    if (!url) {
-      return "";
-    } else if (url.split("/")[2] == "res.cloudinary.com") {
-      const stringToReplace = url.includes("upload/c_fit,w_5000,h_5000")
-        ? "upload/c_fit,w_5000,h_5000"
-        : "upload/";
-
-      return url.replace(
-        stringToReplace,
-        "upload/w_40,h_40,c_fill,q_auto,f_auto/"
-      );
-    } else {
-      return url;
-    }
   };
 
   /**

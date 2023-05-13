@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { SongState } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Invite, SongState } from "./types";
 
 const initialState: SongState = {
   artistAgreement: "",
+  invites: [],
 };
 
 const songSlice = createSlice({
@@ -12,9 +13,12 @@ const songSlice = createSlice({
     receiveArtistAgreement(state, { payload }) {
       state.artistAgreement = payload;
     },
+    setInvites(state, action: PayloadAction<Invite[]>) {
+      state.invites = action.payload;
+    },
   },
 });
 
-export const { receiveArtistAgreement } = songSlice.actions;
+export const { receiveArtistAgreement, setInvites } = songSlice.actions;
 
 export default songSlice.reducer;

@@ -6,6 +6,7 @@ import {
   CreateAccountRequest,
   DeleteAccountRequest,
   GetProfileResponse,
+  GetUserRequest,
   IdenfyTokenResponse,
   LoginRequest,
   NewmAuthResponse,
@@ -137,6 +138,26 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "There was an error fetching your profile data",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+
+    getUser: build.query<GetProfileResponse, GetUserRequest>({
+      query: ({ userId }) => ({
+        url: `v1/users/${userId}`,
+        method: "GET",
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch ({ error }) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error fetching requested profile",
               severity: "error",
             })
           );

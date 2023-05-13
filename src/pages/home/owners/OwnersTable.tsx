@@ -99,14 +99,12 @@ export default function OwnersTable({
     <TableContainer>
       <Table size="small" aria-label="Song List">
         <TableHead>
-          <TableRow sx={ { justifyContent: "space-between" } }>
+          <TableRow>
             <TableHeadCell>COLLABORATORS</TableHeadCell>
             <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
               OWNER OF
             </TableHeadCell>
-            <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-              EMAIL
-            </TableHeadCell>
+            <TableHeadCell sx={ { textAlign: "end" } }>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -128,7 +126,6 @@ export default function OwnersTable({
                 <TableCell>
                   <Stack
                     sx={ {
-                      maxWidth: { xs: "110px", sm: "none" },
                       flexDirection: "row",
                       alignItems: "center",
                       columnGap: 1.5,
@@ -164,9 +161,7 @@ export default function OwnersTable({
                 </TableCell>
                 <TableCell
                   sx={ {
-                    paddingLeft: [0, 1],
-                    paddingRight: [1, 3],
-                    width: "0",
+                    textAlign: "end",
                     whiteSpace: "nowrap",
                   } }
                 >
