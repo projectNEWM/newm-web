@@ -148,6 +148,7 @@ const InvitationsTable: FunctionComponent<InvitationsTableProps> = ({
                 </TableCell>
                 <TableCell>{ `${royaltyRate}%` }</TableCell>
                 <TableCell>
+                  { /* TODO: Fix after BE changes are integrated */ }
                   { status === "Editing" ? (
                     <Stack
                       flexDirection="row"
@@ -184,7 +185,7 @@ const InvitationsTable: FunctionComponent<InvitationsTableProps> = ({
                       </IconButton>
                     </Stack>
                   ) : (
-                    "ho"
+                    status
                   ) }
                 </TableCell>
               </TableRow>

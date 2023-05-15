@@ -10,7 +10,11 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Button, TableSkeleton } from "elements";
-import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
+import {
+  convertMillisecondsToSongFormat,
+  getResizedAlbumCoverImageUrl,
+  useWindowDimensions,
+} from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
 import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
@@ -103,21 +107,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const handlePressPlayButton = (song: Song) => (event: MouseEvent) => {
     handleSongPlayPause(song);
     event.stopPropagation();
-  };
-
-  /**
-   * Song duration (milliseconds) provided from the getSong API,
-   * formatted into a song time string of minutes and seconds.
-   */
-  const formatSongDurationToSongLength = (songDuration: number): string => {
-    const songLength = new Date(songDuration);
-
-    const minutes = songLength.getMinutes();
-    const seconds = songLength.getSeconds();
-
-    const formattedSongLength = minutes + ":" + seconds;
-
-    return formattedSongLength;
   };
 
   const handlePageChange = (
@@ -243,7 +232,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 } }
               >
                 { song.duration
-                  ? formatSongDurationToSongLength(song.duration)
+                  ? convertMillisecondsToSongFormat(song.duration)
                   : "--:--" }
               </TableCell>
               <TableCell
