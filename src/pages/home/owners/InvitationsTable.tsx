@@ -148,8 +148,7 @@ const InvitationsTable: FunctionComponent<InvitationsTableProps> = ({
                 </TableCell>
                 <TableCell>{ `${royaltyRate}%` }</TableCell>
                 <TableCell>
-                  { /* TODO: Fix after BE changes are integrated */ }
-                  { status === "Editing" ? (
+                  { status === "Waiting" ? (
                     <Stack
                       flexDirection="row"
                       columnGap={ 2 }
