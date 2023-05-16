@@ -290,6 +290,7 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while removing a collaborator",
+              severity: "error",
             })
           );
         }
