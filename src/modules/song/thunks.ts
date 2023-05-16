@@ -105,7 +105,7 @@ export const uploadSong = createAsyncThunk(
             body: {
               artistName: body.artistName,
               companyName: body.companyName,
-              save: true,
+              saved: true,
               songId,
               songName: body.title,
               stageName: body.stageName,
