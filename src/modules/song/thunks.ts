@@ -206,7 +206,7 @@ export const patchSong = createAsyncThunk(
           if ("error" in collabResp) return;
         }
 
-        if (body.artistName && body.title) {
+        if (body.title && body.artistName) {
           await dispatch(
             generateArtistAgreement({
               body: {

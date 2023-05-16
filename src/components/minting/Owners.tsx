@@ -39,6 +39,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
   return (
     <Box>
       { owners.map((owner, idx) => {
+        const isEditable = owner.status === CollaborationStatus.Editing;
         const statusContent = statusContentMap[owner.status];
 
         return (
@@ -62,7 +63,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
             </Stack>
 
             <Stack flexDirection="row" alignItems="center">
-              { owner.status === CollaborationStatus.Editing ? (
+              { isEditable ? (
                 <TextInputField
                   name={ `owners[${idx}].percentage` }
                   aria-label="Ownership percentage"
