@@ -1,61 +1,102 @@
-import { renderWithContext } from "common";
-import { fireEvent } from "@testing-library/react";
-import Owners from "../Owners";
+import { render, screen } from "@testing-library/react";
+import { useGetCollaboratorsQuery } from "modules/song";
+import OwnersTable from "../OwnersTable";
 
-const resizeWindow = (width: number, height: number) => {
-  window.innerWidth = width;
-  window.innerHeight = height;
-  window.dispatchEvent(new Event("resize"));
-};
+jest.mock("modules/song", () => ({
+  useGetCollaboratorsQuery: jest.fn(),
+}));
 
-describe("<OwnersTable>", () => {
-  const cases = ["Jane", "Cody", "Call me", "Life's aw"];
-  it.each(cases)("Search box filteres owners correctly", (input: string) => {
-    resizeWindow(1440, 550);
-
-    const { getByRole, getAllByRole } = renderWithContext(<Owners />);
-
-    const searchBox = getByRole("textbox");
-
-    fireEvent.change(searchBox, { target: { value: input } });
-
-    const cells = getAllByRole("row");
-
-    // check that all rows contains the input string
-    for (let i = 1; i < cells.length; i++) {
-      const owner = cells[i].childNodes[0].textContent?.includes(input);
-      const song = cells[i].childNodes[1].textContent?.includes(input);
-      const inputExistsInFields = owner || song;
-      expect(inputExistsInFields).toBeTruthy();
-    }
-  });
-  it("Should show correct number of rows per page depending on viewport height", () => {
-    resizeWindow(1440, 519);
-
-    const { getAllByRole } = renderWithContext(<Owners />);
-
-    expect(getAllByRole("row")).toHaveLength(4); // header row + 2 data rows + footer row
+describe("OwnersTable should", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  it("Pagination shows has correct number of pages", () => {
-    resizeWindow(1440, 550);
+  const collaboratorsData = [
+    {
+      email: "john@example.com",
+      songCount: 5,
+      user: {
+        firstName: "John",
+        id: "123",
+        lastName: "Doe",
+        pictureUrl: "http://example.com/image.jpg",
+      },
+    },
+    {
+      email: "jane@example.com",
+      songCount: 3,
+      user: {
+        firstName: "Jane",
+        id: "456",
+        lastName: "Doe",
+        pictureUrl: "http://example.com/image.jpg",
+      },
+    },
+  ];
 
-    const { getByLabelText, getByText, queryByLabelText } = renderWithContext(
-      <Owners />
-    );
+  it("render table skeleton when loading", () => {
+    (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      isLoading: true,
+    });
 
-    const rowsPerPage = 3;
-    const totalRows = Number(getByText(/Showing/i).textContent?.split(" ")[5]);
-    const numberOfPages = Math.ceil(totalRows / rowsPerPage);
+    render(<OwnersTable query="" totalCollaborators={ 10 } />);
 
-    expect(getByLabelText(`Go to page ${numberOfPages}`)).toBeTruthy();
-    expect(queryByLabelText(`Go to page ${numberOfPages + 1}`)).toBeFalsy();
+    expect(screen.getByTestId("table-skeleton")).toBeInTheDocument();
+
+    expect(
+      screen.queryByText("No collaborators matched your search.")
+    ).not.toBeInTheDocument();
   });
-  it("Should render 10 rows per page when viewport height is 950px", () => {
-    resizeWindow(1440, 950);
 
-    const { getAllByRole } = renderWithContext(<Owners />);
+  it("render no owners yet message when there are no collaborators and no query", () => {
+    (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      isLoading: false,
+      isSuccess: true,
+      data: [],
+    });
 
-    expect(getAllByRole("row")).toHaveLength(12);
+    render(<OwnersTable query="" totalCollaborators={ 0 } />);
+
+    expect(
+      screen.getByText("There are no collaborators yet.")
+    ).toBeInTheDocument();
+
+    expect(screen.queryByTestId("table-skeleton")).not.toBeInTheDocument();
+  });
+
+  it("not render collaborators when there are no collaborators and query is provided", () => {
+    (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      isLoading: false,
+      isSuccess: true,
+      data: [],
+    });
+
+    render(<OwnersTable query="example" totalCollaborators={ 0 } />);
+
+    expect(
+      screen.getByText("No collaborators matched your search.")
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId("table-skeleton")).not.toBeInTheDocument();
+  });
+
+  it("render collaborators table when data is available", () => {
+    (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      isLoading: false,
+      isSuccess: true,
+      data: collaboratorsData,
+    });
+
+    render(<OwnersTable query="" totalCollaborators={ 2 } />);
+
+    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.getByText("5 songs")).toBeInTheDocument();
+    expect(screen.getByText("john@example.com")).toBeInTheDocument();
+
+    expect(screen.getByText("Jane Doe")).toBeInTheDocument();
+    expect(screen.getByText("3 songs")).toBeInTheDocument();
+    expect(screen.getByText("jane@example.com")).toBeInTheDocument();
+
+    expect(screen.getAllByAltText("Profile")).toHaveLength(2);
+    expect(screen.queryByTestId("table-skeleton")).not.toBeInTheDocument();
   });
 });

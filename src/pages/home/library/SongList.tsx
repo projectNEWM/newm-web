@@ -1,11 +1,9 @@
 import React, { MouseEvent, useEffect, useMemo, useState } from "react";
-import { styled } from "@mui/material/styles";
 import {
   Box,
   IconButton,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableRow,
   Typography,
@@ -14,7 +12,7 @@ import theme from "theme";
 import { Button, TableSkeleton } from "elements";
 import { useWindowDimensions } from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
-import { SongStreamPlaybackIcon, TablePagination } from "components";
+import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";
@@ -26,20 +24,6 @@ interface SongListProps {
   totalCountOfSongs: number;
   query: string;
 }
-
-const StyledTableCell = styled(TableCell)({
-  paddingTop: "10px",
-  paddingBottom: "10px",
-  borderTop: `1px solid ${theme.colors.grey500}`,
-  borderBottom: `1px solid ${theme.colors.grey500}`,
-
-  fontFamily: "Inter",
-  fontStyle: "normal",
-  fontWeight: 400,
-  fontSize: "14px",
-  lineHeight: "20px",
-  color: theme.colors.white,
-});
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const navigate = useNavigate();
@@ -64,16 +48,31 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
   }
 
+  const [isStreamUrlMissing, setIsStreamUrlMissing] = useState(true);
+
   const {
     data: songData = [],
     isLoading,
     isSuccess,
-  } = useGetSongsQuery({
-    ownerIds: ["me"],
-    offset: page - 1,
-    limit: songsToRequest,
-    phrase: query,
-  });
+  } = useGetSongsQuery(
+    {
+      ownerIds: ["me"],
+      offset: page - 1,
+      limit: songsToRequest,
+      phrase: query,
+    },
+    {
+      // Refetch songs every minute if the streamUrl is missing for any song
+      pollingInterval: isStreamUrlMissing ? 5000 : undefined,
+    }
+  );
+
+  // Checks if any of the songs are missing a streamUrl
+  useEffect(() => {
+    const isAnySongStreamUrlMissing = songData.some((song) => !song.streamUrl);
+
+    setIsStreamUrlMissing(isAnySongStreamUrlMissing);
+  }, [songData]);
 
   const hlsJsParams = useMemo(
     () => ({
@@ -208,7 +207,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 },
               } }
             >
-              <StyledTableCell>
+              <TableCell>
                 <Box sx={ { display: "flex", alignItems: "center" } }>
                   <IconButton
                     onClick={ handlePressPlayButton(song) }
@@ -240,10 +239,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     { song.title }
                   </Box>
                 </Box>
-              </StyledTableCell>
-              <StyledTableCell
-                sx={ { display: { xs: "none", sm: "table-cell" } } }
-              >
+              </TableCell>
+              <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
                 <Box
                   sx={ {
                     display: "flex",
@@ -252,13 +249,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 >
                   <MintingStatus mintingStatus={ song.mintingStatus } />
                 </Box>
-              </StyledTableCell>
-              <StyledTableCell
-                sx={ { display: { xs: "none", lg: "table-cell" } } }
-              >
+              </TableCell>
+              <TableCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
                 { song.genres.join(", ") }
-              </StyledTableCell>
-              <StyledTableCell
+              </TableCell>
+              <TableCell
                 sx={ {
                   textAlign: "end",
                   display: { xs: "none", md: "table-cell" },
@@ -267,8 +262,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 { song.duration
                   ? formatSongDurationToSongLength(song.duration)
                   : "--:--" }
-              </StyledTableCell>
-              <StyledTableCell
+              </TableCell>
+              <TableCell
                 sx={ {
                   paddingLeft: [0, 1],
                   paddingRight: [1, 3],
@@ -285,7 +280,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 >
                   <EditPencilIcon />
                 </Button>
-              </StyledTableCell>
+              </TableCell>
             </TableRow>
           )) }
         </TableBody>

@@ -194,3 +194,40 @@ export interface CreateCollaborationRequest {
 export interface CreateCollaborationResponse {
   readonly collaborationId: string;
 }
+
+export interface CollaboratorInfo {
+  id?: string;
+  createdAt?: string;
+  firstName?: string;
+  lastName?: string;
+  pictureUrl?: string;
+  role?: string;
+  genre?: string;
+  biography?: string;
+  walletAddress?: string;
+  email?: string;
+}
+
+export interface Collaborators {
+  email: string;
+  songCount: number;
+  user?: CollaboratorInfo;
+}
+
+export interface GetCollaboratorsRequest {
+  limit?: number;
+  offset?: number;
+  phrase?: string;
+  songIds?: string[];
+}
+
+export type GetCollaboratorsResponse = Array<Collaborators>;
+
+export interface GetCollaboratorCountRequest {
+  phrase?: string;
+  songIds?: string[];
+}
+
+export interface GetCollaboratorCountResponse {
+  count: number;
+}
