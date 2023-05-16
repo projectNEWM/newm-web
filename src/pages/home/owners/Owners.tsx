@@ -13,7 +13,7 @@ import Invitations from "./Invitations";
 
 const Owners: FunctionComponent = () => {
   const [query, setQuery] = useState("");
-  const [fetchCollaborators] = useFetchInvitesThunk();
+  const [fetchInvites] = useFetchInvitesThunk();
   const invites = useSelector(selectInvites);
 
   const { data: { count: totalCollaborators = 0 } = {} } =
@@ -26,8 +26,8 @@ const Owners: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    fetchCollaborators();
-  }, [fetchCollaborators]);
+    fetchInvites();
+  }, [fetchInvites]);
 
   return (
     <>

@@ -235,9 +235,7 @@ export const fetchInvites = createAsyncThunk(
 
     const collaborators = await Promise.all(collaboratorsPromises);
 
-    if (collaborators.length) {
-      dispatch(setInvites(collaborators));
-    }
+    dispatch(setInvites(collaborators));
   }
 );
 
