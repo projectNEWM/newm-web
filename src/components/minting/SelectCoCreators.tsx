@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Owner } from "modules/song";
+import { Creditor, Owner, useDeleteCollaborationMutation } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import AddOwnerModal from "./AddOwnerModal";
 
@@ -53,6 +53,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [deleteCollaboration] = useDeleteCollaborationMutation();
+
   /**
    * Call onChange callbacks when form values change.
    */
@@ -77,9 +79,10 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Owners
             owners={ values.owners }
-            onDelete={ (email, owners) => {
+            onDelete={ ({ id, email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
 
+              if (id) deleteCollaboration(id);
               setFieldValue("owners", newOwners);
             } }
           />
@@ -96,11 +99,12 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Creditors
             creditors={ values.creditors }
-            onDelete={ (email, creditors) => {
+            onDelete={ ({ id, email }, creditors) => {
               const newOwners = creditors.filter(
                 (creditor) => creditor.email !== email
               );
 
+              if (id) deleteCollaboration(id);
               setFieldValue("creditors", newOwners);
             } }
           />
@@ -129,23 +133,22 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         } }
         onSubmit={ ({
           email,
-          firstName,
           isCreator,
           isRightsOwner,
-          lastName,
+          isCredited,
           role,
+          status,
         }) => {
           if (!values.creditors.find((creditor) => creditor.email === email)) {
-            if (isCreator) {
+            if (isCredited) {
               setFieldValue("creditors", [
                 ...values.creditors,
                 {
                   email,
-                  firstName,
                   isCreator,
                   isRightsOwner,
-                  lastName,
                   role,
+                  status,
                 },
               ]);
             }
@@ -155,12 +158,11 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 ...values.owners,
                 {
                   email,
-                  firstName,
                   isCreator,
                   isRightsOwner,
-                  lastName,
                   percentage: 0,
                   role,
+                  status,
                 },
               ]);
             }

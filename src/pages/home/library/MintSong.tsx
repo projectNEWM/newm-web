@@ -4,10 +4,12 @@ import { useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import {
+  CollaborationStatus,
   Creditor,
   Owner,
   Song,
   useGenerateArtistAgreementThunk,
+  useGetCollaborationsQuery,
   usePatchSongThunk,
 } from "modules/song";
 import { useState } from "react";
@@ -54,34 +56,65 @@ const MintSong = () => {
   const [generateArtistAgreement, isArtistAgreementLoading] =
     useGenerateArtistAgreementThunk();
 
+  const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: id });
+
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
 
   const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
   const artistName = `${firstName} ${lastName}`;
+  const owners: Array<Owner> = collabs
+    .filter(({ royaltyRate }) => !!royaltyRate)
+    .map((collab) => ({
+      id: collab.id,
+      email: collab.email,
+      isCreator: false, // TODO: save on back-end
+      isRightsOwner: true,
+      percentage: collab.royaltyRate || 0,
+      role: collab.role,
+      status: collab.status,
+    }));
+  const creditors: Array<Creditor> = collabs
+    .filter(({ credited }) => credited)
+    .map((collab) => ({
+      id: collab.id,
+      email: collab.email,
+      role: collab.role,
+      isCredited: true,
+      status: collab.status,
+    }));
+  const initialOwners =
+    owners.length > 0
+      ? owners
+      : [
+          {
+            email,
+            isCreator: true,
+            isRightsOwner: true,
+            percentage: 100,
+            role,
+            status: CollaborationStatus.Editing,
+          },
+        ];
+  const initialCreditors = creditors.length
+    ? creditors
+    : [
+        {
+          email,
+          role,
+          isCredited: true,
+          status: CollaborationStatus.Editing,
+        },
+      ];
+
+  // Set collaborator content as visible if any have been added
+  const isMinting = collabs.length > 0;
 
   const initialValues: FormValues = {
-    isMinting: false,
-    owners: [
-      {
-        email,
-        firstName,
-        isCreator: true,
-        isRightsOwner: true,
-        lastName,
-        percentage: 100,
-        role,
-      },
-    ],
-    creditors: [
-      {
-        email,
-        firstName,
-        lastName,
-        role,
-      },
-    ],
+    isMinting,
+    owners: initialOwners,
+    creditors: initialCreditors,
     consentsToContract: false,
   };
 
@@ -173,6 +206,7 @@ const MintSong = () => {
         initialValues={ initialValues }
         onSubmit={ handleSubmitStep }
         validationSchema={ validationSchema }
+        enableReinitialize={ true }
       >
         { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
           const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {

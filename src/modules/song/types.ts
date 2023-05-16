@@ -16,20 +16,21 @@ export interface GetSongsRequest {
 }
 
 export interface Owner {
+  id?: string;
   email: string;
-  firstName: string;
   isCreator: boolean;
   isRightsOwner: boolean;
-  lastName: string;
   percentage: number;
   role: string;
+  status: CollaborationStatus;
 }
 
 export interface Creditor {
+  id?: string;
   email: string;
-  firstName: string;
-  lastName: string;
   role: string;
+  isCredited: boolean;
+  status: CollaborationStatus;
 }
 
 export interface Collaborator {
@@ -152,7 +153,7 @@ export interface GetSongCountResponse {
   count: number;
 }
 
-export enum CollaborationAcceptedStatus {
+export enum CollaborationStatus {
   Editing = "Editing",
   Waiting = "Waiting",
   Rejected = "Rejected",
@@ -174,10 +175,10 @@ export interface Collaboration {
   readonly createdAt: string;
   readonly songId: string;
   readonly email: string;
-  readonly role?: string;
-  readonly royaltyRate?: string;
+  readonly role: string;
+  readonly royaltyRate?: number;
   readonly credited: boolean;
-  readonly accepted: CollaborationAcceptedStatus;
+  readonly status: CollaborationStatus;
 }
 
 export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;

@@ -39,8 +39,11 @@ const SongInfo = () => {
       description,
       genres = [],
       moods = [],
+      ...rest
     } = emptySong,
   } = useGetSongQuery(id);
+
+  console.log("song: ", rest);
 
   const initialValues = {
     coverArtUrl,

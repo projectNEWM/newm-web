@@ -181,6 +181,47 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp || !("data" in patchSongResp)) return;
 
+      if (body.isMinting) {
+        const collaborators = generateCollaborators(
+          body.owners || [],
+          body.creditors || []
+        );
+
+        // TODO: create bulk collaboration creation endpoint in API.
+        const collabResponses = await Promise.all(
+          collaborators.map((collaborator) => {
+            return dispatch(
+              songApi.endpoints.createCollaboration.initiate({
+                songId: body.id,
+                email: collaborator.email,
+                role: collaborator.role,
+                royaltyRate: collaborator.royaltyRate,
+                credited: collaborator.isCredited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of collabResponses) {
+          if ("error" in collabResp) return;
+        }
+
+        if (body.artistName && body.title) {
+          await dispatch(
+            generateArtistAgreement({
+              body: {
+                artistName: body.artistName,
+                companyName: body.companyName,
+                save: true,
+                songId: body.id,
+                songName: body.title,
+                stageName: body.stageName,
+              },
+            })
+          );
+        }
+      }
+
       // navigate to library page to view updated song
       history.push("/home/library");
     } catch (err) {

@@ -11,6 +11,7 @@ import {
 import { commonYupValidation } from "common";
 import theme from "theme";
 import { useGetRolesQuery } from "modules/content";
+import { CollaborationStatus } from "modules/song";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
@@ -29,17 +30,16 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
   const initialValues = {
     email: "",
-    firstName: "",
     isCreator: false,
     isRightsOwner: false,
-    lastName: "",
+    isCredited: false,
     role: "",
+    status: CollaborationStatus.Editing,
   };
 
   const validationSchema = Yup.object().shape({
     email: commonYupValidation.email,
-    firstName: commonYupValidation.firstName,
-    isCreator: Yup.boolean()
+    isCredited: Yup.boolean()
       .required()
       .test(
         "at-least-one-true",
@@ -47,7 +47,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
         (item, testContext) => item || testContext.parent.isRightsOwner
       ),
     isRightsOwner: Yup.boolean(),
-    lastName: commonYupValidation.lastName,
+    isCreator: Yup.boolean(),
     role: commonYupValidation.role(roles),
   });
 
@@ -82,20 +82,6 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 Add new
               </Typography>
 
-              <Stack direction="row" columnGap={ 1.5 }>
-                <TextInputField
-                  isOptional={ false }
-                  label="FIRST NAME"
-                  name="firstName"
-                  placeholder="John"
-                />
-                <TextInputField
-                  isOptional={ false }
-                  label="LAST NAME"
-                  name="lastName"
-                  placeholder="Smith"
-                />
-              </Stack>
               <TextInputField
                 isOptional={ false }
                 label="EMAIL"
@@ -113,7 +99,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
               />
 
               <SwitchInputField
-                name="isCreator"
+                name="isCredited"
                 title="CREDITS"
                 description={
                   "Did they have a role in making the song? Enable to credit " +

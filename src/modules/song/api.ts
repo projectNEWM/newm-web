@@ -272,6 +272,26 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    deleteCollaboration: build.mutation<void, string>({
+      query: (collaborationId) => ({
+        url: `v1/collaborations/${collaborationId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while removing a collaborator",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
@@ -280,6 +300,7 @@ export const {
   useGetSongQuery,
   useGetSongCountQuery,
   useGetCollaborationsQuery,
+  useDeleteCollaborationMutation,
 } = extendedApi;
 
 export default extendedApi;
