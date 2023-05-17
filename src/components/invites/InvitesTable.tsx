@@ -19,13 +19,11 @@ import theme from "theme";
 import { Invite, songApi } from "modules/song";
 import { useDispatch } from "react-redux";
 
-interface InvitationsTableProps {
+interface InvitesTableProps {
   invites: Invite[];
 }
 
-const InvitationsTable: FunctionComponent<InvitationsTableProps> = ({
-  invites,
-}) => {
+const InvitesTable: FunctionComponent<InvitesTableProps> = ({ invites }) => {
   const dispatch = useDispatch();
 
   const handleDecline = async (collaborationId: string) => {
@@ -196,4 +194,4 @@ const InvitationsTable: FunctionComponent<InvitationsTableProps> = ({
   );
 };
 
-export default InvitationsTable;
+export default InvitesTable;

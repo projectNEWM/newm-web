@@ -1,5 +1,5 @@
-import { FunctionComponent, useState } from "react";
-import { useSelector } from "react-redux";
+import { FunctionComponent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Dialog,
   DialogActions,
@@ -9,27 +9,29 @@ import {
 } from "@mui/material";
 import { Button, Typography } from "elements";
 import theme from "theme";
-import { selectInvites } from "modules/song";
-import InvitationsTable from "./InvitationsTable";
+import { selectInvites, useFetchInvitesThunk } from "modules/song";
+import { selectUi, setIsInvitesModalOpen } from "modules/ui";
+import { selectSession } from "modules/session";
+import InvitesTable from "./InvitesTable";
 
-const Invitations: FunctionComponent = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalStatus = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
+const InvitesModal: FunctionComponent = () => {
+  const dispatch = useDispatch();
+  const [fetchInvites] = useFetchInvitesThunk();
+  const { isInvitesModalOpen } = useSelector(selectUi);
+  const { isLoggedIn } = useSelector(selectSession);
   const invites = useSelector(selectInvites);
 
-  return invites ? (
+  useEffect(() => {
+    if (isLoggedIn) fetchInvites();
+  }, [fetchInvites, isLoggedIn]);
+
+  return isInvitesModalOpen && invites?.length ? (
     <>
-      <Button onClick={ handleModalStatus } width="compact">
-        Invitation pending
-      </Button>
       <Dialog
         fullWidth={ true }
         maxWidth={ "lg" }
-        open={ isModalOpen }
-        onClose={ handleModalStatus }
+        open={ isInvitesModalOpen }
+        onClose={ () => dispatch(setIsInvitesModalOpen(false)) }
       >
         <DialogTitle
           sx={ { backgroundColor: theme.colors.grey500, pb: 1, pt: 3 } }
@@ -44,12 +46,12 @@ const Invitations: FunctionComponent = () => {
           </Typography>
         </DialogContentText>
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
-          <InvitationsTable invites={ invites } />
+          <InvitesTable invites={ invites } />
         </DialogContent>
         <DialogActions sx={ { backgroundColor: theme.colors.grey600, px: 3 } }>
           <Button
             color="music"
-            onClick={ handleModalStatus }
+            onClick={ () => dispatch(setIsInvitesModalOpen(false)) }
             variant="secondary"
             width="compact"
           >
@@ -61,4 +63,4 @@ const Invitations: FunctionComponent = () => {
   ) : null;
 };
 
-export default Invitations;
+export default InvitesModal;

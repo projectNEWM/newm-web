@@ -1,20 +1,22 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import {
   selectInvites,
   useFetchInvitesThunk,
   useGetCollaboratorCountQuery,
 } from "modules/song";
-import { Typography } from "elements";
+import { selectUi, setIsInvitesModalOpen } from "modules/ui";
+import { Button, Typography } from "elements";
 import { SearchBox } from "components";
 import OwnersTable from "./OwnersTable";
-import Invitations from "./Invitations";
 
 const Owners: FunctionComponent = () => {
+  const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [fetchInvites] = useFetchInvitesThunk();
   const invites = useSelector(selectInvites);
+  const { isInvitesModalOpen } = useSelector(selectUi);
 
   const { data: { count: totalCollaborators = 0 } = {} } =
     useGetCollaboratorCountQuery({
@@ -40,7 +42,14 @@ const Owners: FunctionComponent = () => {
         } }
       >
         <Typography variant="h3">COLLABORATORS</Typography>
-        { invites?.length ? <Invitations /> : null }
+        { invites?.length ? (
+          <Button
+            onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) }
+            width="compact"
+          >
+            Invitation pending
+          </Button>
+        ) : null }
       </Stack>
 
       { totalCollaborators || query ? (

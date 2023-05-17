@@ -23,6 +23,7 @@ import { history } from "common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ConnectWalletModal from "components/ConnectWalletModal";
+import InvitesModal from "components/invites/InvitesModal";
 import store, { persistor } from "./store";
 import "./App.css";
 
@@ -39,6 +40,7 @@ const App = () => {
             <IdenfyPingUserStatus />
             <IdenfyModal />
             <ConnectWalletModal />
+            <InvitesModal />
 
             <Background>
               <BrowserRouter history={ history }>
