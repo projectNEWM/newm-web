@@ -16,9 +16,15 @@ const songSlice = createSlice({
     setInvites(state, action: PayloadAction<Invite[]>) {
       state.invites = action.payload;
     },
+    removeInvite: (state, action: PayloadAction<string>) => {
+      state.invites = state.invites.filter(
+        (collaboration) => collaboration.collaborationId !== action.payload
+      );
+    },
   },
 });
 
-export const { receiveArtistAgreement, setInvites } = songSlice.actions;
+export const { receiveArtistAgreement, setInvites, removeInvite } =
+  songSlice.actions;
 
 export default songSlice.reducer;
