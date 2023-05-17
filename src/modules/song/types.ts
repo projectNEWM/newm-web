@@ -264,3 +264,7 @@ export interface ReplyCollaborationRequest {
   collaborationId: string;
   accepted: boolean;
 }
+export interface ProcessStreamTokenAgreementRequest {
+  accepted: boolean;
+  songId: string;
+}
