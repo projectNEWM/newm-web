@@ -1,6 +1,6 @@
 import api, { Tags } from "api";
 import { EmptyResponse } from "common";
-import { setToastMessage } from "modules/ui";
+import { setIsInvitesModalOpen, setToastMessage } from "modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
@@ -55,6 +55,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
+          dispatch(setIsInvitesModalOpen(true));
           // eslint-disable-next-line
         } catch (resp: any) {
           const errorMessage =
@@ -84,6 +85,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
+          dispatch(setIsInvitesModalOpen(true));
         } catch ({ error }) {
           dispatch(handleSocialLoginError(error));
         }
@@ -101,6 +103,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
+          dispatch(setIsInvitesModalOpen(true));
         } catch ({ error }) {
           dispatch(handleSocialLoginError(error));
         }
@@ -118,6 +121,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
+          dispatch(setIsInvitesModalOpen(true));
         } catch ({ error }) {
           dispatch(handleSocialLoginError(error));
         }

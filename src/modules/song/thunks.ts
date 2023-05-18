@@ -238,7 +238,12 @@ export const fetchInvites = createAsyncThunk(
     );
     const collaborationsData = collaborationsResponse.data;
 
-    if (!collaborationsData || "error" in collaborationsResponse) return;
+    if (
+      !collaborationsData ||
+      !collaborationsData.length ||
+      "error" in collaborationsResponse
+    )
+      return;
 
     const collaboratorsPromises = collaborationsData.map(
       (collaboration: Collaboration) => createInvite(collaboration, dispatch)
