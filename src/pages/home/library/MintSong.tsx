@@ -50,8 +50,8 @@ const MintSong = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const [patchSong, isSongLoading] = usePatchSongThunk();
-  const [generateArtistAgreement, isArtistAgreementLoading] =
+  const [patchSong, { isLoading: isSongLoading }] = usePatchSongThunk();
+  const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
     useGenerateArtistAgreementThunk();
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);

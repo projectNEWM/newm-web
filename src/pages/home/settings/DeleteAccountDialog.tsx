@@ -19,7 +19,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
 
   const { data: { id } = emptyProfile } = useGetProfileQuery();
 
-  const [deleteAccount, isLoading] = useDeleteAccountThunk();
+  const [deleteAccount, { isLoading }] = useDeleteAccountThunk();
 
   const initialValues = {
     confirmationStatement: "",
