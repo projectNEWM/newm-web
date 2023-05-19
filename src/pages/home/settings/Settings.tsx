@@ -24,7 +24,7 @@ const Settings: FunctionComponent = () => {
   const { data: { oauthType } = emptyProfile } = useGetProfileQuery();
   const isLoginUsernameAndPassword = !oauthType;
 
-  const [changePassword, isLoading] = useChangePasswordThunk();
+  const [changePassword, { isLoading }] = useChangePasswordThunk();
 
   const initialValues: ChangePasswordRequest = {
     currentPassword: "",
