@@ -52,8 +52,8 @@ const MintSong = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const [patchSong, isSongLoading] = usePatchSongThunk();
-  const [generateArtistAgreement, isArtistAgreementLoading] =
+  const [patchSong, { isLoading: isSongLoading }] = usePatchSongThunk();
+  const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
     useGenerateArtistAgreementThunk();
 
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: id });
