@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Owner, useDeleteCollaborationMutation } from "modules/song";
+import { Creditor, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import AddOwnerModal from "./AddOwnerModal";
 
@@ -53,8 +53,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [deleteCollaboration] = useDeleteCollaborationMutation();
-
   /**
    * Call onChange callbacks when form values change.
    */
@@ -79,10 +77,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Owners
             owners={ values.owners }
-            onDelete={ ({ id, email }, owners) => {
+            onDelete={ ({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
-
-              if (id) deleteCollaboration(id);
               setFieldValue("owners", newOwners);
             } }
           />
@@ -99,12 +95,11 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Creditors
             creditors={ values.creditors }
-            onDelete={ ({ id, email }, creditors) => {
+            onDelete={ ({ email }, creditors) => {
               const newOwners = creditors.filter(
                 (creditor) => creditor.email !== email
               );
 
-              if (id) deleteCollaboration(id);
               setFieldValue("creditors", newOwners);
             } }
           />

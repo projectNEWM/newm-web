@@ -191,6 +191,11 @@ export interface CreateCollaborationRequest {
   readonly credited: boolean;
 }
 
+export interface UpdateCollaborationRequest
+  extends Partial<CreateCollaborationRequest> {
+  readonly collaborationId: string;
+}
+
 export interface CreateCollaborationResponse {
   readonly collaborationId: string;
 }

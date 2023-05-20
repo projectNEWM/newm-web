@@ -388,7 +388,7 @@ const MintSong = () => {
 
                     <Button
                       onClick={ () => handleSubmit() }
-                      disabled={ !values.consentsToContract }
+                      // disabled={ !values.consentsToContract }
                       isLoading={ isLoading }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md

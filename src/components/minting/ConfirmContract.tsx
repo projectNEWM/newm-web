@@ -111,7 +111,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           <CheckboxField
             name="agreesToContract"
             sx={ { marginRight: 1.5 } }
-            disabled={ !values.hasViewedAgreement }
+            // disabled={ !values.hasViewedAgreement }
           />
           <span style={ { opacity: values.hasViewedAgreement ? 1 : 0.5 } }>
             I have read and agree to this contract.

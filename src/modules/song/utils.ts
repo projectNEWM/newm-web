@@ -1,5 +1,11 @@
 import { uniq } from "lodash";
-import { Collaborator, Creditor, Owner } from "./types";
+import {
+  Collaboration,
+  Collaborator,
+  CreateCollaborationRequest,
+  Creditor,
+  Owner,
+} from "./types";
 
 /**
  * Generates a list of collaborators from a list of owners and creditors.
@@ -46,4 +52,83 @@ export const generateCollaborators = (
       isCredited: !!isCreditor,
     };
   });
+};
+
+/**
+ * Checks which collaborations exist in the current collaborations but
+ * not in the new collaborations and returns them as collaborations to delete.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to delete
+ */
+export const getCollaborationsToDelete = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<CreateCollaborationRequest>
+) => {
+  return currentCollabs.reduce((result, collab) => {
+    if (!newCollabs.map(({ email }) => email).includes(collab.email)) {
+      return [collab.id, ...result];
+    }
+
+    return result;
+  }, [] as Array<string>);
+};
+
+/**
+ * Checks which collaborations exist in the existing collaborations
+ * and the new collaborations and returns them as collaborations to update.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to update
+ */
+export const getCollaborationsToUpdate = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<Partial<Collaboration>>
+) => {
+  return currentCollabs.reduce((result, collab) => {
+    if (newCollabs.map(({ email }) => email).includes(collab.email)) {
+      return [collab, ...result];
+    }
+
+    return result;
+  }, [] as Array<Collaboration>);
+};
+
+/**
+ * Checks with collaborations are in the new array but not in the old array
+ * and returns them as new collaborations to create.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to create
+ */
+export const getCollaborationsToCreate = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<CreateCollaborationRequest>
+) => {
+  return newCollabs.reduce((result, collab) => {
+    if (
+      collab.email &&
+      !currentCollabs.map(({ email }) => email).includes(collab.email)
+    ) {
+      return [collab, ...result];
+    }
+
+    return result;
+  }, [] as Array<CreateCollaborationRequest>);
+};
+
+export const mapCollaboratorsToCollaborations = (
+  songId: string,
+  collaborators: ReadonlyArray<Collaborator>
+) => {
+  return collaborators.map((collaborator) => ({
+    songId,
+    email: collaborator.email,
+    role: collaborator.role,
+    royaltyRate: collaborator.royaltyRate,
+    credited: collaborator.isCredited,
+  }));
 };

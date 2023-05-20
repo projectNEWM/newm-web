@@ -19,6 +19,7 @@ import {
   GetSongsResponse,
   PatchSongRequest,
   Song,
+  UpdateCollaborationRequest,
   UploadSongRequest,
   UploadSongResponse,
 } from "./types";
@@ -270,6 +271,27 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while adding a collaborator",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
+      query: ({ collaborationId, ...body }) => ({
+        url: `v1/collaborations/${collaborationId}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while updating a collaborator",
               severity: "error",
             })
           );

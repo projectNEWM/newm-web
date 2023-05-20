@@ -10,7 +10,13 @@ import {
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
-import { generateCollaborators } from "./utils";
+import {
+  generateCollaborators,
+  getCollaborationsToCreate,
+  getCollaborationsToDelete,
+  getCollaborationsToUpdate,
+  mapCollaboratorsToCollaborations,
+} from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -182,28 +188,80 @@ export const patchSong = createAsyncThunk(
       if ("error" in patchSongResp || !("data" in patchSongResp)) return;
 
       if (body.isMinting) {
-        const collaborators = generateCollaborators(
+        const newCollaborators = generateCollaborators(
           body.owners || [],
           body.creditors || []
         );
-
-        // TODO: create bulk collaboration creation endpoint in API.
-        const collabResponses = await Promise.all(
-          collaborators.map((collaborator) => {
-            return dispatch(
-              songApi.endpoints.createCollaboration.initiate({
-                songId: body.id,
-                email: collaborator.email,
-                role: collaborator.role,
-                royaltyRate: collaborator.royaltyRate,
-                credited: collaborator.isCredited,
-              })
-            );
-          })
+        const newCollabs = mapCollaboratorsToCollaborations(
+          body.id,
+          newCollaborators
+        );
+        const currentCollabs = await dispatch(
+          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
         );
 
-        for (const collabResp of collabResponses) {
-          if ("error" in collabResp) return;
+        if (currentCollabs.data) {
+          const collabsToDelete = getCollaborationsToDelete(
+            currentCollabs.data,
+            newCollabs
+          );
+          const collabsToUpdate = getCollaborationsToUpdate(
+            currentCollabs.data,
+            newCollabs
+          );
+          const collabsToCreate = getCollaborationsToCreate(
+            currentCollabs.data,
+            newCollabs
+          );
+
+          const createCollabResponses = await Promise.all(
+            collabsToCreate.map((collaborator) => {
+              return dispatch(
+                songApi.endpoints.createCollaboration.initiate({
+                  songId: body.id,
+                  email: collaborator.email,
+                  role: collaborator.role,
+                  royaltyRate: collaborator.royaltyRate,
+                  credited: collaborator.credited,
+                })
+              );
+            })
+          );
+
+          for (const collabResp of createCollabResponses) {
+            if ("error" in collabResp) return;
+          }
+
+          const deleteCollabResponses = await Promise.all(
+            collabsToDelete.map((collaborationId) => {
+              return dispatch(
+                songApi.endpoints.deleteCollaboration.initiate(collaborationId)
+              );
+            })
+          );
+
+          for (const collabResp of deleteCollabResponses) {
+            if ("error" in collabResp) return;
+          }
+
+          const updateCollabResponses = await Promise.all(
+            collabsToUpdate.map((collaboration) => {
+              return dispatch(
+                songApi.endpoints.updateCollaboration.initiate({
+                  collaborationId: collaboration.id,
+                  songId: body.id,
+                  email: collaboration.email,
+                  role: collaboration.role,
+                  royaltyRate: collaboration.royaltyRate,
+                  credited: collaboration.credited,
+                })
+              );
+            })
+          );
+
+          for (const collabResp of updateCollabResponses) {
+            if ("error" in collabResp) return;
+          }
         }
 
         if (body.title && body.artistName) {
