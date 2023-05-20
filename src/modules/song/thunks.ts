@@ -11,7 +11,7 @@ import {
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
-import { receiveArtistAgreement, setInvites } from "./slice";
+import { receiveArtistAgreement } from "./slice";
 import { createInvite, generateCollaborators } from "./utils";
 
 /**
@@ -251,7 +251,7 @@ export const fetchInvites = createAsyncThunk(
 
     const collaborators = await Promise.all(collaboratorsPromises);
 
-    dispatch(setInvites(collaborators));
+    return collaborators;
   }
 );
 

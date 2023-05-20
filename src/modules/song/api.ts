@@ -1,7 +1,6 @@
 import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
 import { EmptyResponse } from "common";
-import { removeInvite } from "./slice";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
@@ -321,7 +320,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [Tags.Collaborator],
+      providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -345,7 +344,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [Tags.Collaborator],
+      providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -368,10 +367,7 @@ export const extendedApi = api.injectEndpoints({
       }),
       invalidatesTags: [Tags.Collaboration],
 
-      async onQueryStarted(
-        { collaborationId, accepted },
-        { dispatch, queryFulfilled }
-      ) {
+      async onQueryStarted({ accepted }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
 
@@ -381,8 +377,6 @@ export const extendedApi = api.injectEndpoints({
               severity: "success",
             })
           );
-
-          dispatch(removeInvite(collaborationId));
         } catch (error) {
           dispatch(
             setToastMessage({

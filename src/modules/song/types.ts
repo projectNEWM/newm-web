@@ -1,6 +1,5 @@
 export interface SongState {
   artistAgreement: string;
-  invites: Invite[];
 }
 
 export type GetSongsResponse = Array<Song>;

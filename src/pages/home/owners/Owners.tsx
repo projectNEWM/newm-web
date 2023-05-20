@@ -2,8 +2,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import {
-  selectInvites,
+  CollaborationAcceptedStatus,
   useFetchInvitesThunk,
+  useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
 } from "modules/song";
 import { selectUi, setIsInvitesModalOpen } from "modules/ui";
@@ -14,9 +15,12 @@ import OwnersTable from "./OwnersTable";
 const Owners: FunctionComponent = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [fetchInvites] = useFetchInvitesThunk();
-  const invites = useSelector(selectInvites);
   const { isInvitesModalOpen } = useSelector(selectUi);
+  const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
+  const { data: collaborations = [] } = useGetCollaborationsQuery({
+    inbound: true,
+    statuses: [CollaborationAcceptedStatus.Waiting],
+  });
 
   const { data: { count: totalCollaborators = 0 } = {} } =
     useGetCollaboratorCountQuery({
@@ -29,7 +33,7 @@ const Owners: FunctionComponent = () => {
 
   useEffect(() => {
     fetchInvites();
-  }, [fetchInvites]);
+  }, [fetchInvites, collaborations]);
 
   return (
     <>
