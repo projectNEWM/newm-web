@@ -107,9 +107,9 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 }
               />
 
-              { touched.isCreator && errors.isCreator ? (
+              { touched.isCredited && errors.isCredited ? (
                 <Typography variant="h5" color="error">
-                  { errors.isCreator }
+                  { errors.isCredited }
                 </Typography>
               ) : null }
 

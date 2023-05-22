@@ -192,7 +192,7 @@ export const patchSong = createAsyncThunk(
           songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
         );
 
-        if ("error" in currentCollabsResp) return;
+        if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
 
         const newCollaborators = generateCollaborators(
           body.owners || [],
@@ -203,84 +203,82 @@ export const patchSong = createAsyncThunk(
           newCollaborators
         );
 
-        if (currentCollabsResp.data) {
-          const collabsToDelete = getCollaborationsToDelete(
-            currentCollabsResp.data,
-            newCollabs
-          );
-          const collabsToUpdate = getCollaborationsToUpdate(
-            currentCollabsResp.data,
-            newCollabs
-          );
-          const collabsToCreate = getCollaborationsToCreate(
-            currentCollabsResp.data,
-            newCollabs
-          );
+        const collabsToDelete = getCollaborationsToDelete(
+          currentCollabsResp.data,
+          newCollabs
+        );
+        const collabsToUpdate = getCollaborationsToUpdate(
+          currentCollabsResp.data,
+          newCollabs
+        );
+        const collabsToCreate = getCollaborationsToCreate(
+          currentCollabsResp.data,
+          newCollabs
+        );
 
-          const createCollabResponses = await Promise.all(
-            collabsToCreate.map((collaborator) => {
-              return dispatch(
-                songApi.endpoints.createCollaboration.initiate({
-                  songId: body.id,
-                  email: collaborator.email,
-                  role: collaborator.role,
-                  royaltyRate: collaborator.royaltyRate,
-                  credited: collaborator.credited,
-                })
-              );
-            })
-          );
-
-          for (const collabResp of createCollabResponses) {
-            if ("error" in collabResp) return;
-          }
-
-          const deleteCollabResponses = await Promise.all(
-            collabsToDelete.map((collaborationId) => {
-              return dispatch(
-                songApi.endpoints.deleteCollaboration.initiate(collaborationId)
-              );
-            })
-          );
-
-          for (const collabResp of deleteCollabResponses) {
-            if ("error" in collabResp) return;
-          }
-
-          const updateCollabResponses = await Promise.all(
-            collabsToUpdate.map((collaboration) => {
-              return dispatch(
-                songApi.endpoints.updateCollaboration.initiate({
-                  collaborationId: collaboration.id,
-                  songId: body.id,
-                  email: collaboration.email,
-                  role: collaboration.role,
-                  royaltyRate: collaboration.royaltyRate,
-                  credited: collaboration.credited,
-                })
-              );
-            })
-          );
-
-          for (const collabResp of updateCollabResponses) {
-            if ("error" in collabResp) return;
-          }
-        }
-
-        if (body.title && body.artistName) {
-          await dispatch(
-            generateArtistAgreement({
-              body: {
-                artistName: body.artistName,
-                companyName: body.companyName,
-                save: true,
+        const createCollabResponses = await Promise.all(
+          collabsToCreate.map((collaborator) => {
+            return dispatch(
+              songApi.endpoints.createCollaboration.initiate({
                 songId: body.id,
-                songName: body.title,
-                stageName: body.stageName,
-              },
-            })
-          );
+                email: collaborator.email,
+                role: collaborator.role,
+                royaltyRate: collaborator.royaltyRate,
+                credited: collaborator.credited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of createCollabResponses) {
+          if ("error" in collabResp) return;
         }
+
+        const deleteCollabResponses = await Promise.all(
+          collabsToDelete.map((collaborationId) => {
+            return dispatch(
+              songApi.endpoints.deleteCollaboration.initiate(collaborationId)
+            );
+          })
+        );
+
+        for (const collabResp of deleteCollabResponses) {
+          if ("error" in collabResp) return;
+        }
+
+        const updateCollabResponses = await Promise.all(
+          collabsToUpdate.map((collaboration) => {
+            return dispatch(
+              songApi.endpoints.updateCollaboration.initiate({
+                collaborationId: collaboration.id,
+                songId: body.id,
+                email: collaboration.email,
+                role: collaboration.role,
+                royaltyRate: collaboration.royaltyRate,
+                credited: collaboration.credited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of updateCollabResponses) {
+          if ("error" in collabResp) return;
+        }
+      }
+
+      if (body.title && body.artistName) {
+        await dispatch(
+          generateArtistAgreement({
+            body: {
+              artistName: body.artistName,
+              companyName: body.companyName,
+              save: true,
+              songId: body.id,
+              songName: body.title,
+              stageName: body.stageName,
+            },
+          })
+        );
       }
 
       // navigate to library page to view updated song
