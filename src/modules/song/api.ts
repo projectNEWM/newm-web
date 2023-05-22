@@ -1,5 +1,6 @@
 import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
+import { EmptyResponse } from "common";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
@@ -17,7 +18,10 @@ import {
   GetSongCountResponse,
   GetSongsRequest,
   GetSongsResponse,
+  MarketplaceStatus,
   PatchSongRequest,
+  ProcessStreamTokenAgreementRequest,
+  ReplyCollaborationRequest,
   Song,
   UploadSongRequest,
   UploadSongResponse,
@@ -32,13 +36,21 @@ export const emptySong: Song = {
   moods: [],
   coverArtUrl: "",
   description: "",
-  credits: "",
   duration: undefined,
   streamUrl: "",
   nftPolicyId: "",
   nftName: "",
   mintingStatus: "Pending",
-  marketplaceStatus: "",
+  marketplaceStatus: MarketplaceStatus.NotSelling,
+  lyricsUrl: "",
+  album: "",
+  language: "",
+  copyrights: "",
+  parentalAdvisory: "",
+  isrc: "",
+  iswc: "",
+  ipis: "",
+  releaseDate: "",
 };
 
 export const extendedApi = api.injectEndpoints({
@@ -182,6 +194,29 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    processStreamTokenAgreement: build.mutation<
+      EmptyResponse,
+      ProcessStreamTokenAgreementRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `v1/songs/${songId}/agreement`,
+        method: "PUT",
+        body,
+      }),
+
+      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error accepting your agreement",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     getCloudinarySignature: build.mutation<
       CloudinarySignatureResponse,
       CloudinaryUploadOptions
@@ -285,7 +320,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [Tags.Collaborator],
+      providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -309,7 +344,7 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: [Tags.Collaborator],
+      providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -318,6 +353,34 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching collaborator count",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    replyToCollaboration: build.mutation<void, ReplyCollaborationRequest>({
+      query: ({ collaborationId, ...body }) => ({
+        url: `v1/collaborations/${collaborationId}/reply`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted({ accepted }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            setToastMessage({
+              message: `${accepted ? "Accepted" : "Declined"} collaboration`,
+              severity: "success",
+            })
+          );
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while replying to a collaboration",
               severity: "error",
             })
           );

@@ -3,6 +3,7 @@ export * from "./reduxUtils";
 export * from "./hooks";
 export * from "./mockConstants";
 export * from "./storybookUtils";
+export * from "./songUtils";
 export * from "./testUtils";
 export * from "./urlUtils";
 export * from "./fileUtils";

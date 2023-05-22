@@ -1,9 +1,12 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
-import { Typography } from "elements";
+import { Button, Typography } from "elements";
 import Owner from "assets/images/Owner";
+import { useNavigate } from "react-router-dom";
 
 const NoOwnersYet: FunctionComponent = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={ {
@@ -11,6 +14,8 @@ const NoOwnersYet: FunctionComponent = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        minHeight: "100%",
+        rowGap: 2,
       } }
     >
       <Owner />
@@ -22,6 +27,14 @@ const NoOwnersYet: FunctionComponent = () => {
         After minting, the co-creators and co-owners of your songs will appear
         here.
       </Typography>
+      <Button
+        color="music"
+        onClick={ () => navigate("/home/upload-song") }
+        variant="secondary"
+        width="compact"
+      >
+        Upload your first song
+      </Button>
     </Box>
   );
 };

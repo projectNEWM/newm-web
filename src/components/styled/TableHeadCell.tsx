@@ -11,7 +11,6 @@ const HeaderCell = styled(TableCell)({
   fontWeight: 600,
   lineHeight: "17px",
   paddingBottom: "16px",
-  paddingLeft: "24px",
   paddingTop: "16px",
 });
 
