@@ -185,9 +185,15 @@ export const patchSong = createAsyncThunk(
         })
       );
 
-      if ("error" in patchSongResp || !("data" in patchSongResp)) return;
+      if ("error" in patchSongResp) return;
 
       if (body.isMinting) {
+        const currentCollabsResp = await dispatch(
+          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
+        );
+
+        if ("error" in currentCollabsResp) return;
+
         const newCollaborators = generateCollaborators(
           body.owners || [],
           body.creditors || []
@@ -196,21 +202,18 @@ export const patchSong = createAsyncThunk(
           body.id,
           newCollaborators
         );
-        const currentCollabs = await dispatch(
-          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
-        );
 
-        if (currentCollabs.data) {
+        if (currentCollabsResp.data) {
           const collabsToDelete = getCollaborationsToDelete(
-            currentCollabs.data,
+            currentCollabsResp.data,
             newCollabs
           );
           const collabsToUpdate = getCollaborationsToUpdate(
-            currentCollabs.data,
+            currentCollabsResp.data,
             newCollabs
           );
           const collabsToCreate = getCollaborationsToCreate(
-            currentCollabs.data,
+            currentCollabsResp.data,
             newCollabs
           );
 

@@ -64,6 +64,8 @@ const MintSong = () => {
   const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
   const artistName = `${firstName} ${lastName}`;
+
+  // get owners from collaborations array
   const owners: Array<Owner> = collabs
     .filter(({ royaltyRate }) => !!royaltyRate)
     .map((collab) => ({
@@ -75,6 +77,8 @@ const MintSong = () => {
       role: collab.role,
       status: collab.status,
     }));
+
+  // get credited artists from collaborations array
   const creditors: Array<Creditor> = collabs
     .filter(({ credited }) => credited)
     .map((collab) => ({
@@ -84,6 +88,8 @@ const MintSong = () => {
       isCredited: true,
       status: collab.status,
     }));
+
+  // set initial owner
   const initialOwners =
     owners.length > 0
       ? owners
@@ -97,6 +103,8 @@ const MintSong = () => {
             status: CollaborationStatus.Editing,
           },
         ];
+
+  // set initial creditors
   const initialCreditors = creditors.length
     ? creditors
     : [

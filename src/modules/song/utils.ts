@@ -88,8 +88,11 @@ export const getCollaborationsToUpdate = (
   newCollabs: ReadonlyArray<Partial<Collaboration>>
 ) => {
   return currentCollabs.reduce((result, collab) => {
-    if (newCollabs.map(({ email }) => email).includes(collab.email)) {
-      return [collab, ...result];
+    const newCollab = newCollabs.find(({ email }) => collab.email === email);
+
+    if (newCollab) {
+      const updatedCollab = { ...collab, ...newCollab };
+      return [updatedCollab, ...result];
     }
 
     return result;
@@ -97,7 +100,7 @@ export const getCollaborationsToUpdate = (
 };
 
 /**
- * Checks with collaborations are in the new array but not in the old array
+ * Checks which collaborations are in the new array but not in the old array
  * and returns them as new collaborations to create.
  *
  * @param currentCollabs collaborations that currently exist for the song
@@ -120,6 +123,9 @@ export const getCollaborationsToCreate = (
   }, [] as Array<CreateCollaborationRequest>);
 };
 
+/**
+ * Creates an array of collaborations from an array of collaborators.
+ */
 export const mapCollaboratorsToCollaborations = (
   songId: string,
   collaborators: ReadonlyArray<Collaborator>
