@@ -141,36 +141,32 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             (owner) => owner.email === email
           );
 
-          if (!hasCreditorBeenAdded) {
-            if (isCredited) {
-              setFieldValue("creditors", [
-                ...values.creditors,
-                {
-                  email,
-                  isCreator,
-                  isRightsOwner,
-                  role,
-                  status,
-                  isCredited,
-                },
-              ]);
-            }
+          if (isCredited && !hasCreditorBeenAdded) {
+            setFieldValue("creditors", [
+              ...values.creditors,
+              {
+                email,
+                isCreator,
+                isRightsOwner,
+                role,
+                status,
+                isCredited,
+              },
+            ]);
           }
 
-          if (!hasOwnerBeenAdded) {
-            if (isRightsOwner) {
-              setFieldValue("owners", [
-                ...values.owners,
-                {
-                  email,
-                  isCreator,
-                  isRightsOwner,
-                  percentage: 0,
-                  role,
-                  status,
-                },
-              ]);
-            }
+          if (isRightsOwner && !hasOwnerBeenAdded) {
+            setFieldValue("owners", [
+              ...values.owners,
+              {
+                email,
+                isCreator,
+                isRightsOwner,
+                percentage: 0,
+                role,
+                status,
+              },
+            ]);
           }
 
           setIsModalOpen(false);

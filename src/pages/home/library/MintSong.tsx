@@ -71,7 +71,7 @@ const MintSong = () => {
     .map((collab) => ({
       id: collab.id,
       email: collab.email,
-      isCreator: false, // TODO: save on back-end
+      isCreator: collab.email === email,
       isRightsOwner: true,
       percentage: collab.royaltyRate || 0,
       role: collab.role,
