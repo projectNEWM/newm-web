@@ -151,7 +151,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                   isRightsOwner,
                   role,
                   status,
-                  isCredited: true,
+                  isCredited,
                 },
               ]);
             }
