@@ -42,14 +42,16 @@ export const generateCollaborators = (
   );
 
   return emails.map((email) => {
-    const isOwner = !!ownersMap[email];
-    const isCreditor = !!creditorsMap[email];
+    const collaborator = {
+      ...ownersMap[email],
+      ...creditorsMap[email],
+    };
 
     return {
       email,
-      role: isOwner ? ownersMap[email].role : creditorsMap[email].role,
-      royaltyRate: isOwner ? ownersMap[email].percentage : undefined,
-      isCredited: !!isCreditor,
+      role: collaborator.role,
+      royaltyRate: collaborator.percentage,
+      isCredited: !!collaborator.isCredited,
     };
   });
 };

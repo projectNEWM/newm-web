@@ -134,7 +134,14 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           role,
           status,
         }) => {
-          if (!values.creditors.find((creditor) => creditor.email === email)) {
+          const hasCreditorBeenAdded = values.creditors.find(
+            (creditor) => creditor.email === email
+          );
+          const hasOwnerBeenAdded = values.owners.find(
+            (owner) => owner.email === email
+          );
+
+          if (!hasCreditorBeenAdded) {
             if (isCredited) {
               setFieldValue("creditors", [
                 ...values.creditors,
@@ -144,10 +151,13 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                   isRightsOwner,
                   role,
                   status,
+                  isCredited: true,
                 },
               ]);
             }
+          }
 
+          if (!hasOwnerBeenAdded) {
             if (isRightsOwner) {
               setFieldValue("owners", [
                 ...values.owners,
