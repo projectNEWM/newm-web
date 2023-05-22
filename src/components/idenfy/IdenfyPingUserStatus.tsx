@@ -14,8 +14,12 @@ import {
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector(selectSession);
 
-  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    { skip: !isLoggedIn }
+  );
 
   const { verificationPingStartedAt } = useSelector(selectSession);
 

@@ -23,10 +23,13 @@ const InvitesModal: FunctionComponent = () => {
   const { isInvitesModalOpen } = useSelector(selectUi);
   const { isLoggedIn } = useSelector(selectSession);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
-  const { data: collaborations = [] } = useGetCollaborationsQuery({
-    inbound: true,
-    statuses: [CollaborationAcceptedStatus.Waiting],
-  });
+  const { data: collaborations = [] } = useGetCollaborationsQuery(
+    {
+      inbound: true,
+      statuses: [CollaborationAcceptedStatus.Waiting],
+    },
+    { skip: !isLoggedIn }
+  );
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
 
   useEffect(() => {
