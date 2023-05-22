@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter as Router } from "react-router-dom";
 import { useGetCollaboratorsQuery } from "modules/song";
 import OwnersTable from "../OwnersTable";
 
@@ -55,7 +56,13 @@ describe("OwnersTable should", () => {
       data: [],
     });
 
-    render(<OwnersTable query="" totalCollaborators={ 0 } />);
+    render(
+      <Router>
+        <OwnersTable query="" totalCollaborators={ 0 } />
+      </Router>
+    );
+
+    screen.debug;
 
     expect(
       screen.getByText("There are no collaborators yet.")
