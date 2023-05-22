@@ -201,9 +201,9 @@ const MintSong = () => {
                         title="MINT SONG"
                         includeBorder={ false }
                         description={
-                          "Minting a song will make it an NFT, becoming a " +
-                          "uniquely publishing token on the blockchain to " +
-                          "make it purchasable."
+                          "Minting a song will create an NFT that reflects " +
+                          "ownership, making streaming royalties purchasable. " +
+                          "Once a song is minted, it cannot be deleted."
                         }
                       />
 
