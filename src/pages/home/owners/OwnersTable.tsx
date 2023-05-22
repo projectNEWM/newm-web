@@ -50,7 +50,7 @@ export default function OwnersTable({
     isLoading,
     isSuccess,
   } = useGetCollaboratorsQuery({
-    offset: page - 1,
+    offset: (page - 1) * rowsPerPage,
     limit: collaboratorsToRequest,
     phrase: query,
   });
