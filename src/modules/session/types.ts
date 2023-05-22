@@ -99,6 +99,10 @@ export interface CreateAccountRequest {
   readonly verificationStatus?: Readonly<VerificationStatus>;
 }
 
+export interface CreateAccountResponse {
+  userId: string;
+}
+
 export interface DeleteAccountRequest {
   readonly id: string;
 }
