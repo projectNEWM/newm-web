@@ -61,7 +61,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   } = useGetSongsQuery(
     {
       ownerIds: ["me"],
-      offset: page - 1,
+      offset: (page - 1) * rowsPerPage,
       limit: songsToRequest,
       phrase: query,
     },
