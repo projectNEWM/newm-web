@@ -4,6 +4,7 @@ import { setToastMessage } from "modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
+  CreateAccountResponse,
   DeleteAccountRequest,
   GetProfileResponse,
   GetUserRequest,
@@ -208,10 +209,10 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
 
-    createAccount: build.mutation<EmptyResponse, CreateAccountRequest>({
+    createAccount: build.mutation<CreateAccountResponse, CreateAccountRequest>({
       query: (body) => ({
         url: "v1/users",
-        method: "PUT",
+        method: "POST",
         body,
       }),
 

@@ -281,7 +281,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching collaborators",
+              message: "An error occured while fetching collaborations",
               severity: "error",
             })
           );
