@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import {
-  CollaborationAcceptedStatus,
+  CollaborationStatus,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
@@ -19,7 +19,7 @@ const Owners: FunctionComponent = () => {
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     inbound: true,
-    statuses: [CollaborationAcceptedStatus.Waiting],
+    statuses: [CollaborationStatus.Waiting],
   });
 
   const { data: { count: totalCollaborators = 0 } = {} } =

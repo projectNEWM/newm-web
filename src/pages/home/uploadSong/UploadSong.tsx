@@ -6,6 +6,7 @@ import { FormikHelpers, FormikValues } from "formik";
 import { useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
+  CollaborationStatus,
   UploadSongRequest,
   useGenerateArtistAgreementThunk,
   useUploadSongThunk,
@@ -47,20 +48,19 @@ const UploadSong: FunctionComponent = () => {
     owners: [
       {
         email,
-        firstName,
         isCreator: true,
         isRightsOwner: true,
-        lastName,
         percentage: 100,
         role,
+        status: CollaborationStatus.Editing,
       },
     ],
     creditors: [
       {
         email,
-        firstName,
-        lastName,
         role,
+        isCredited: true,
+        status: CollaborationStatus.Editing,
       },
     ],
     consentsToContract: false,

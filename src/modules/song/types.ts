@@ -16,25 +16,26 @@ export interface GetSongsRequest {
 }
 
 export interface Owner {
+  id?: string;
   email: string;
-  firstName: string;
   isCreator: boolean;
   isRightsOwner: boolean;
-  lastName: string;
   percentage: number;
   role: string;
+  status: CollaborationStatus;
 }
 
 export interface Creditor {
+  id?: string;
   email: string;
-  firstName: string;
-  lastName: string;
   role: string;
+  isCredited: boolean;
+  status: CollaborationStatus;
 }
 
 export interface Collaborator {
   readonly email: string;
-  readonly role?: string;
+  readonly role: string;
   readonly royaltyRate?: number;
   readonly isCredited: boolean;
 }
@@ -165,7 +166,7 @@ export interface GetSongCountResponse {
   count: number;
 }
 
-export enum CollaborationAcceptedStatus {
+export enum CollaborationStatus {
   Editing = "Editing",
   Waiting = "Waiting",
   Rejected = "Rejected",
@@ -181,7 +182,7 @@ export interface GetCollaborationsRequest {
   readonly olderThan?: string;
   readonly newerThan?: string;
   readonly inbound?: boolean;
-  readonly statuses?: CollaborationAcceptedStatus[];
+  readonly statuses?: CollaborationStatus[];
 }
 
 export interface Collaboration {
@@ -189,10 +190,10 @@ export interface Collaboration {
   readonly createdAt: string;
   readonly songId: string;
   readonly email: string;
-  readonly role?: string;
+  readonly role: string;
   readonly royaltyRate?: number;
   readonly credited: boolean;
-  readonly status: CollaborationAcceptedStatus;
+  readonly status: CollaborationStatus;
 }
 
 export interface Invite {
@@ -202,9 +203,9 @@ export interface Invite {
   readonly firstName?: string;
   readonly lastName?: string;
   readonly pictureUrl?: string;
-  readonly role?: string;
+  readonly role: string;
   readonly royaltyRate?: number;
-  readonly status: CollaborationAcceptedStatus;
+  readonly status: CollaborationStatus;
   readonly title: string;
 }
 
@@ -213,9 +214,14 @@ export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
 export interface CreateCollaborationRequest {
   readonly songId: string;
   readonly email: string;
-  readonly role?: string;
+  readonly role: string;
   readonly royaltyRate?: number;
   readonly credited: boolean;
+}
+
+export interface UpdateCollaborationRequest
+  extends Partial<CreateCollaborationRequest> {
+  readonly collaborationId: string;
 }
 
 export interface CreateCollaborationResponse {

@@ -23,6 +23,7 @@ import {
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
   Song,
+  UpdateCollaborationRequest,
   UploadSongRequest,
   UploadSongResponse,
 } from "./types";
@@ -311,6 +312,47 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
+      query: ({ collaborationId, ...body }) => ({
+        url: `v1/collaborations/${collaborationId}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while updating a collaborator",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    deleteCollaboration: build.mutation<void, string>({
+      query: (collaborationId) => ({
+        url: `v1/collaborations/${collaborationId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [Tags.Collaboration],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while removing a collaborator",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     getCollaborators: build.query<
       GetCollaboratorsResponse,
       GetCollaboratorsRequest
@@ -392,6 +434,7 @@ export const extendedApi = api.injectEndpoints({
 
 export const {
   useGetCollaborationsQuery,
+  useDeleteCollaborationMutation,
   useGetCollaboratorCountQuery,
   useGetCollaboratorsQuery,
   useGetSongCountQuery,

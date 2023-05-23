@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
   readonly onDelete: (
-    email: string,
+    creditor: Creditor,
     creditors: ReadonlyArray<Creditor>
   ) => void;
 }
@@ -32,25 +32,28 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           sx={ {
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
             mt: 2,
           } }
         >
-          <Stack>
-            <Typography>{ `${creditor.firstName} ${creditor.lastName}` }</Typography>
-            <Typography variant="subtitle1">{ creditor.email }</Typography>
-          </Stack>
+          <Typography variant="subtitle1">{ creditor.email }</Typography>
 
-          <Button
-            color="white"
-            sx={ { ml: 3 } }
-            variant="secondary"
-            width="icon"
-            onClick={ () => {
-              onDelete(creditor.email, creditors);
-            } }
-          >
-            <CloseIcon sx={ { color: theme.colors.white } } />
-          </Button>
+          <Stack direction="row" gap={ 1 } alignItems="center">
+            <Typography color="white" fontWeight={ 500 }>
+              { creditor.role }
+            </Typography>
+            <Button
+              color="white"
+              sx={ { ml: 3 } }
+              variant="secondary"
+              width="icon"
+              onClick={ () => {
+                onDelete(creditor, creditors);
+              } }
+            >
+              <CloseIcon sx={ { color: theme.colors.white } } />
+            </Button>
+          </Stack>
         </Stack>
       )) }
     </Box>
