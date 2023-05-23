@@ -15,6 +15,7 @@ import {
   UploadImageField,
 } from "components";
 import {
+  FormikPersist,
   commonYupValidation,
   getUpdatedValues,
   useWindowDimensions,
@@ -59,7 +60,7 @@ const Profile: FunctionComponent = () => {
       twitterUrl,
       verificationStatus,
       websiteUrl,
-    } = emptyProfile,
+    } = { ...emptyProfile },
   } = useGetProfileQuery();
 
   const [updateProfile] = useUpdateProfileThunk();
@@ -458,6 +459,7 @@ const Profile: FunctionComponent = () => {
                   </Stack>
                 </Stack>
               </Box>
+              <FormikPersist name="profile-form" />
             </Form>
           );
         } }
