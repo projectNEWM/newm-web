@@ -1,4 +1,4 @@
-import { Box, Button as MUIButton, Stack } from "@mui/material";
+import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
@@ -157,13 +157,18 @@ const MintSong = () => {
                   setShowWarning(false);
                 } }
                 sx={ { textTransform: "none" } }
+                variant={ "outlined" }
               >
                 Dismiss
               </MUIButton>
             }
           >
-            <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
+            <AlertTitle sx={ { color: theme.colors.baseBlue, fontWeight: 600 } }>
               These details cannot be changed after minting.
+            </AlertTitle>
+            <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
+              Please review all details carefully before moving forward with the
+              minting process.
             </Typography>
           </Alert>
         </Box>
@@ -196,9 +201,9 @@ const MintSong = () => {
                         title="MINT SONG"
                         includeBorder={ false }
                         description={
-                          "Minting a song will make it an NFT, becoming a " +
-                          "uniquely publishing token on the blockchain to " +
-                          "make it purchasable."
+                          "Minting a song will create an NFT that reflects " +
+                          "ownership, making streaming royalties purchasable. " +
+                          "Once a song is minted, it cannot be deleted."
                         }
                       />
 
