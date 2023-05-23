@@ -136,7 +136,7 @@ export const mapCollaboratorsToCollaborations = (
     songId,
     email: collaborator.email,
     role: collaborator.role,
-    royaltyRate: collaborator.royaltyRate,
+    royaltyRate: collaborator.royaltyRate || 0,
     credited: collaborator.isCredited,
   }));
 };
