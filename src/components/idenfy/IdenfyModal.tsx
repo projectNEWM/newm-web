@@ -17,8 +17,8 @@ const IdenfyModal: FunctionComponent = () => {
   );
 
   const handleClose = useCallback(() => {
-    dispatch(setIsIdenfyModalOpen(false));
-  }, [dispatch]);
+    if (isOpen) dispatch(setIsIdenfyModalOpen(false));
+  }, [dispatch, isOpen]);
 
   /** Listens for modal close message. */
   useEffect(() => {
