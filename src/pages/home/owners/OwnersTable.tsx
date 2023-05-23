@@ -50,7 +50,7 @@ export default function OwnersTable({
     isLoading,
     isSuccess,
   } = useGetCollaboratorsQuery({
-    offset: page - 1,
+    offset: (page - 1) * rowsPerPage,
     limit: collaboratorsToRequest,
     phrase: query,
   });
@@ -99,14 +99,12 @@ export default function OwnersTable({
     <TableContainer>
       <Table size="small" aria-label="Song List">
         <TableHead>
-          <TableRow sx={ { justifyContent: "space-between" } }>
-            <TableHeadCell>COLLABORATORS</TableHeadCell>
+          <TableRow>
             <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
-              OWNER OF
+              COLLABORATORS
             </TableHeadCell>
-            <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-              EMAIL
-            </TableHeadCell>
+            <TableHeadCell>OWNER OF</TableHeadCell>
+            <TableHeadCell sx={ { textAlign: "end" } }>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -125,10 +123,9 @@ export default function OwnersTable({
               index
             ) => (
               <TableRow key={ id || index }>
-                <TableCell>
+                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
                   <Stack
                     sx={ {
-                      maxWidth: { xs: "110px", sm: "none" },
                       flexDirection: "row",
                       alignItems: "center",
                       columnGap: 1.5,
@@ -151,7 +148,7 @@ export default function OwnersTable({
                     { firstName && lastName ? `${firstName} ${lastName}` : null }
                   </Stack>
                 </TableCell>
-                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
+                <TableCell>
                   <Box
                     sx={ {
                       display: "flex",
@@ -164,9 +161,7 @@ export default function OwnersTable({
                 </TableCell>
                 <TableCell
                   sx={ {
-                    paddingLeft: [0, 1],
-                    paddingRight: [1, 3],
-                    width: "0",
+                    textAlign: "end",
                     whiteSpace: "nowrap",
                   } }
                 >

@@ -4,7 +4,7 @@ export interface GenerateArtistAgreementBody {
   readonly artistName: string;
   readonly stageName?: string;
   readonly songId?: string;
-  readonly save?: boolean;
+  readonly saved?: boolean;
 }
 
 export interface GenerateArtistAgreementResponse {

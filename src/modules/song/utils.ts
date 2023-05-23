@@ -1,11 +1,15 @@
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { uniq } from "lodash";
 import {
   Collaboration,
   Collaborator,
   CreateCollaborationRequest,
   Creditor,
+  Invite,
   Owner,
 } from "./types";
+import { extendedApi as songApi } from "./api";
+import { sessionApi } from "../session";
 
 /**
  * Generates a list of collaborators from a list of owners and creditors.
@@ -139,4 +143,51 @@ export const mapCollaboratorsToCollaborations = (
     royaltyRate: collaborator.royaltyRate || 0,
     credited: collaborator.isCredited,
   }));
+};
+
+/**
+ * Creates an Invite object from a Collaboration object.
+ *
+ * @param collaboration - The collaboration object to create an invite from.
+ * @param dispatch - The dispatch function from Redux.
+ *
+ * @throws Will throw an error if getting song data or user data fails.
+ *
+ * @returns A promise that resolves to an Invite object.
+ */
+export const createInvite = async (
+  collaboration: Collaboration,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+): Promise<Invite> => {
+  const getSongResponse = await dispatch(
+    songApi.endpoints.getSong.initiate(collaboration.songId)
+  );
+
+  const songData = getSongResponse.data;
+
+  if ("error" in getSongResponse || !songData) {
+    throw new Error("Error getting song data");
+  }
+
+  const getUserResponse = await dispatch(
+    sessionApi.endpoints.getUser.initiate({ userId: songData.ownerId })
+  );
+  const userData = getUserResponse.data;
+
+  if ("error" in getUserResponse || !userData) {
+    throw new Error("Error getting user data");
+  }
+
+  return {
+    collaborationId: collaboration.id,
+    coverArtUrl: songData.coverArtUrl,
+    duration: songData.duration,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    pictureUrl: userData.pictureUrl,
+    role: collaboration.role,
+    royaltyRate: collaboration.royaltyRate,
+    status: collaboration.status,
+    title: songData.title,
+  };
 };

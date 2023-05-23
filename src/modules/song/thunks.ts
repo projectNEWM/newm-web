@@ -4,6 +4,8 @@ import { GenerateArtistAgreementPayload, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
+  Collaboration,
+  CollaborationStatus,
   DeleteSongRequest,
   PatchSongRequest,
   UploadSongRequest,
@@ -11,6 +13,7 @@ import {
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
 import {
+  createInvite,
   generateCollaborators,
   getCollaborationsToCreate,
   getCollaborationsToDelete,
@@ -106,18 +109,29 @@ export const uploadSong = createAsyncThunk(
           if ("error" in collabResp) return;
         }
 
-        await dispatch(
+        const generateArtistAgreementResponse = await dispatch(
           generateArtistAgreement({
             body: {
               artistName: body.artistName,
               companyName: body.companyName,
-              save: true,
+              saved: true,
               songId,
               songName: body.title,
               stageName: body.stageName,
             },
           })
         );
+
+        if ("error" in generateArtistAgreementResponse) return;
+
+        const processStreamTokenAgreementResponse = await dispatch(
+          songApi.endpoints.processStreamTokenAgreement.initiate({
+            songId,
+            accepted: body.consentsToContract,
+          })
+        );
+
+        if ("error" in processStreamTokenAgreementResponse) return;
       }
 
       // navigate to library page to view new song
@@ -272,7 +286,7 @@ export const patchSong = createAsyncThunk(
             body: {
               artistName: body.artistName,
               companyName: body.companyName,
-              save: true,
+              saved: true,
               songId: body.id,
               songName: body.title,
               stageName: body.stageName,
@@ -310,7 +324,41 @@ export const deleteSong = createAsyncThunk(
   }
 );
 
+/**
+ * Fetches collaborations in 'Waiting' status.
+ * Dispatches invites to app state.
+ */
+export const fetchInvites = createAsyncThunk(
+  "collaborator/fetchInvites",
+  async (_, { dispatch }) => {
+    const collaborationsResponse = await dispatch(
+      songApi.endpoints.getCollaborations.initiate({
+        inbound: true,
+        statuses: [CollaborationStatus.Waiting],
+      })
+    );
+    const collaborationsData = collaborationsResponse.data;
+
+    if (
+      !collaborationsData ||
+      !collaborationsData.length ||
+      "error" in collaborationsResponse
+    )
+      return;
+
+    const collaboratorsPromises = collaborationsData.map(
+      (collaboration: Collaboration) => createInvite(collaboration, dispatch)
+    );
+
+    const collaborators = await Promise.all(collaboratorsPromises);
+
+    return collaborators;
+  }
+);
+
 export const useUploadSongThunk = asThunkHook(uploadSong);
+
+export const useFetchInvitesThunk = asThunkHook(fetchInvites);
 
 export const usePatchSongThunk = asThunkHook(patchSong);
 

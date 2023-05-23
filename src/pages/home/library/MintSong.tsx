@@ -158,7 +158,7 @@ const MintSong = () => {
           artistName,
           stageName,
           songId: id,
-          save: true,
+          saved: true,
         },
         callback: () => patchSong({ id, ...values }),
       });

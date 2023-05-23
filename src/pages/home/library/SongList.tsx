@@ -10,7 +10,11 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Button, TableSkeleton } from "elements";
-import { useWindowDimensions } from "common";
+import {
+  convertMillisecondsToSongFormat,
+  getResizedAlbumCoverImageUrl,
+  useWindowDimensions,
+} from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
 import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
 import { useNavigate } from "react-router-dom";
@@ -57,7 +61,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   } = useGetSongsQuery(
     {
       ownerIds: ["me"],
-      offset: page - 1,
+      offset: (page - 1) * rowsPerPage,
       limit: songsToRequest,
       phrase: query,
     },
@@ -103,38 +107,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const handlePressPlayButton = (song: Song) => (event: MouseEvent) => {
     handleSongPlayPause(song);
     event.stopPropagation();
-  };
-
-  const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
-    if (!url) {
-      return "";
-    } else if (url.split("/")[2] == "res.cloudinary.com") {
-      const stringToReplace = url.includes("upload/c_fit,w_5000,h_5000")
-        ? "upload/c_fit,w_5000,h_5000"
-        : "upload/";
-
-      return url.replace(
-        stringToReplace,
-        "upload/w_40,h_40,c_fill,q_auto,f_auto/"
-      );
-    } else {
-      return url;
-    }
-  };
-
-  /**
-   * Song duration (milliseconds) provided from the getSong API,
-   * formatted into a song time string of minutes and seconds.
-   */
-  const formatSongDurationToSongLength = (songDuration: number): string => {
-    const songLength = new Date(songDuration);
-
-    const minutes = songLength.getMinutes();
-    const seconds = songLength.getSeconds();
-
-    const formattedSongLength = minutes + ":" + seconds;
-
-    return formattedSongLength;
   };
 
   const handlePageChange = (
@@ -260,7 +232,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 } }
               >
                 { song.duration
-                  ? formatSongDurationToSongLength(song.duration)
+                  ? convertMillisecondsToSongFormat(song.duration)
                   : "--:--" }
               </TableCell>
               <TableCell

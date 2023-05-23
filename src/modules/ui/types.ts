@@ -6,4 +6,5 @@ export interface UIState {
   };
   isIdenfyModalOpen: boolean;
   isConnectWalletModalOpen: boolean;
+  isInvitesModalOpen: boolean;
 }
