@@ -1,7 +1,7 @@
 import { useField } from "formik";
-import TextInput from "./TextInput";
+import TextInput, { TextInputProps } from "./TextInput";
 
-interface DateTimePickerProps {
+interface DateTimePickerProps extends TextInputProps {
   name: string;
   label: string;
   options: string[];

@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Stepper } from "@mui/material";
 import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
 import SongInfo from "./SongInfo";
+import AdvancedSongDetails from "./AdvancedSongDetails";
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -159,6 +160,11 @@ const UploadSong: FunctionComponent = () => {
                 genres: validations.genres,
                 owners: validations.owners,
               }),
+            },
+            {
+              element: <AdvancedSongDetails />,
+              path: "advanced-details",
+              navigateOnSubmitStep: false,
             },
             {
               element: <ConfirmAgreement />,
