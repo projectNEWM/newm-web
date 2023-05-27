@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import {
   Box,
   Stack,
@@ -13,6 +13,7 @@ import { useGetCollaboratorsQuery } from "modules/song";
 import { TableSkeleton, Typography } from "elements";
 import { useWindowDimensions } from "common";
 import { TableCell, TableHeadCell, TablePagination } from "components";
+import { history } from "common/history";
 import NoOwnersYet from "./NoOwnersYet";
 
 interface OwnersTableProps {
@@ -60,6 +61,16 @@ export default function OwnersTable({
     page: number
   ) => {
     setPage(page);
+  };
+
+  const handleNavigateToOwner = (id: string) => {
+    history.push(`/home/collaborators/${id}`);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent, id: string) => {
+    if (event.key === "Enter") {
+      handleNavigateToOwner(id);
+    }
   };
 
   useEffect(() => {
@@ -122,7 +133,23 @@ export default function OwnersTable({
               },
               index
             ) => (
-              <TableRow key={ id || index }>
+              <TableRow
+                key={ id || index }
+                onClick={ id ? () => handleNavigateToOwner(id) : undefined }
+                onKeyDown={ id ? (event) => handleKeyDown(event, id) : undefined }
+                tabIndex={ id ? 0 : undefined }
+                sx={
+                  id
+                    ? {
+                        cursor: "pointer",
+                        WebkitTapHighlightColor: "transparent",
+                        "&:hover, &:focus": {
+                          background: theme.colors.activeBackground,
+                        },
+                      }
+                    : undefined
+                }
+              >
                 <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
                   <Stack
                     sx={ {

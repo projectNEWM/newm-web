@@ -17,6 +17,7 @@ export { default as HorizontalLine } from "./styled/HorizontalLine";
 export { default as Link } from "./Link";
 export { default as NoResultsList } from "./styled/NoResultsList";
 export { default as TableSkeleton } from "./skeletons/TableSkeleton";
+export { default as ProfileSkeleton } from "./skeletons/ProfileSkeleton";
 export { default as ResultsList } from "./styled/ResultsList";
 export { default as Switch } from "./Switch";
 export { default as SwitchInput } from "./SwitchInput";

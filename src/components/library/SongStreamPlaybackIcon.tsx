@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { PlayArrow, Stop } from "@mui/icons-material";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Tooltip } from "elements";
 import theme from "theme";
 
@@ -37,9 +37,9 @@ const SongStreamPlaybackIcon: FunctionComponent<
   };
 
   return (
-    <Box>
+    <>
       { isSongUploaded ? renderSongPlaybackIcon() : renderUploadInProgressIcon() }
-    </Box>
+    </>
   );
 };
 export default SongStreamPlaybackIcon;
