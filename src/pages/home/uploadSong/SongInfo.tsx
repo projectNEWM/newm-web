@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
-import { Creditor, Owner, UploadSongRequest } from "modules/song";
+import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
   ErrorMessage,
@@ -50,6 +50,10 @@ const SongInfo: FunctionComponent = () => {
 
   const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
     setFieldValue("creditors", creditors);
+  };
+
+  const handleChangeFeatured = (featured: ReadonlyArray<Featured>) => {
+    setFieldValue("featured", featured);
   };
 
   const handleVerifyProfile = () => {
@@ -182,8 +186,10 @@ const SongInfo: FunctionComponent = () => {
                 <SelectCoCeators
                   owners={ values.owners }
                   creditors={ values.creditors }
+                  featured={ values.featured }
                   onChangeOwners={ handleChangeOwners }
                   onChangeCreditors={ handleChangeCreditors }
+                  onChangeFeatured={ handleChangeFeatured }
                 />
               ) }
             </Box>

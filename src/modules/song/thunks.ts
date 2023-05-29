@@ -87,7 +87,8 @@ export const uploadSong = createAsyncThunk(
       if (body.isMinting) {
         const collaborators = generateCollaborators(
           body.owners,
-          body.creditors
+          body.creditors,
+          body.featured
         );
 
         // TODO: create bulk collaboration creation endpoint in API.
@@ -210,7 +211,8 @@ export const patchSong = createAsyncThunk(
 
         const newCollaborators = generateCollaborators(
           body.owners || [],
-          body.creditors || []
+          body.creditors || [],
+          body.featured || []
         );
         const newCollabs = mapCollaboratorsToCollaborations(
           body.id,

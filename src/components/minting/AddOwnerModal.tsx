@@ -43,8 +43,11 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       .required()
       .test(
         "at-least-one-true",
-        "Rights or Credits must be true",
-        (item, testContext) => item || testContext.parent.isRightsOwner
+        "Rights, credits or featured must be true",
+        (item, testContext) =>
+          item ||
+          testContext.parent.isRightsOwner ||
+          testContext.parent.isFeatured
       ),
     isRightsOwner: Yup.boolean(),
     isCreator: Yup.boolean(),
@@ -93,6 +96,12 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
               <HorizontalLine mt={ 2 } />
 
               <SwitchInputField
+                name="isFeatured"
+                title="FEATURED ARTIST"
+                description={ "Is this individual a featured artist?" }
+              />
+
+              <SwitchInputField
                 name="isRightsOwner"
                 title="IP RIGHTS"
                 description="Does this person own IP rights to this song?"
@@ -127,7 +136,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
               <Stack
                 sx={ {
                   alignItems: "center",
-                  columnGap: 4,
+                  columnGap: 3,
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "flex-end",

@@ -33,11 +33,20 @@ export interface Creditor {
   status: CollaborationStatus;
 }
 
+export interface Featured {
+  id?: string;
+  email: string;
+  role: string;
+  isFeatured: boolean;
+  status: CollaborationStatus;
+}
+
 export interface Collaborator {
   readonly email: string;
   readonly role: string;
   readonly royaltyRate?: number;
   readonly isCredited: boolean;
+  readonly isFeatured: boolean;
 }
 
 export interface UploadSongRequest {
@@ -51,6 +60,7 @@ export interface UploadSongRequest {
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
   readonly creditors: Array<Creditor>;
+  readonly featured: Array<Featured>;
   readonly consentsToContract: boolean;
   readonly companyName: string;
   readonly artistName: string;
@@ -185,6 +195,9 @@ export interface GetCollaborationsRequest {
   readonly statuses?: CollaborationStatus[];
 }
 
+/**
+ * Collaboration as stored in the NEWM API.
+ */
 export interface Collaboration {
   readonly id: string;
   readonly createdAt: string;
@@ -193,6 +206,7 @@ export interface Collaboration {
   readonly role: string;
   readonly royaltyRate?: number;
   readonly credited: boolean;
+  readonly featured: boolean;
   readonly status: CollaborationStatus;
 }
 

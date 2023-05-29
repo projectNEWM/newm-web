@@ -5,6 +5,7 @@ import {
   Collaborator,
   CreateCollaborationRequest,
   Creditor,
+  Featured,
   Invite,
   Owner,
 } from "./types";
@@ -12,19 +13,23 @@ import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";
 
 /**
- * Generates a list of collaborators from a list of owners and creditors.
+ * Generates a list of collaborators from a list of owners, creditors,
+ * and featured artists.
  *
  * @param owners a list of users with initial ownership of the song royalties
  * @param creditors a list of users displayed in the song credits
+ * @param featured a list of users displayed as featured on the song
  * @returns a unified list of collaborators for the song
  */
 export const generateCollaborators = (
   owners: ReadonlyArray<Owner>,
-  creditors: ReadonlyArray<Creditor>
+  creditors: ReadonlyArray<Creditor>,
+  featured: ReadonlyArray<Featured>
 ): ReadonlyArray<Collaborator> => {
   const emails = uniq([
     ...owners.map(({ email }) => email),
     ...creditors.map(({ email }) => email),
+    ...featured.map(({ email }) => email),
   ]);
 
   const ownersMap: Record<string, Owner> = owners.reduce(
@@ -45,10 +50,20 @@ export const generateCollaborators = (
     {}
   );
 
+  const featuredMap: Record<string, Featured> = featured.reduce(
+    (acc: Record<string, Featured>, featured: Featured) => {
+      acc[featured.email] = featured;
+
+      return acc;
+    },
+    {}
+  );
+
   return emails.map((email) => {
     const collaborator = {
       ...ownersMap[email],
       ...creditorsMap[email],
+      ...featuredMap[email],
     };
 
     return {
@@ -56,6 +71,7 @@ export const generateCollaborators = (
       role: collaborator.role,
       royaltyRate: collaborator.percentage,
       isCredited: !!collaborator.isCredited,
+      isFeatured: !!collaborator.isFeatured,
     };
   });
 };
@@ -130,7 +146,7 @@ export const getCollaborationsToCreate = (
 };
 
 /**
- * Creates an array of collaborations from an array of collaborators.
+ * Creates an array of API collaborations from an array of collaborators.
  */
 export const mapCollaboratorsToCollaborations = (
   songId: string,
@@ -142,6 +158,7 @@ export const mapCollaboratorsToCollaborations = (
     role: collaborator.role,
     royaltyRate: collaborator.royaltyRate || 0,
     credited: collaborator.isCredited,
+    featured: collaborator.isFeatured,
   }));
 };
 
