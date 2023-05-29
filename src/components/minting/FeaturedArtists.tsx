@@ -14,9 +14,6 @@ interface FeaturedArtistsProps {
 
 /**
  * Allows for displaying and updating featured artists when minting a song.
- *
- * TODO - display creditors with static text when
- * not editable (https://app.clickup.com/t/8669nr0q7)
  */
 const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   featured,

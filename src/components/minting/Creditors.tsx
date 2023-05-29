@@ -16,9 +16,6 @@ interface CreditorsProps {
 
 /**
  * Allows for displaying and updating creditors when minting a song.
- *
- * TODO - display creditors with static text when
- * not editable (https://app.clickup.com/t/8669nr0q7)
  */
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
@@ -38,6 +35,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           ROLES
         </Typography>
       </Stack>
+
       { creditors.map((creditor, idx) => {
         const isEditable = creditor.status === CollaborationStatus.Editing;
 
@@ -53,7 +51,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           >
             <Typography variant="subtitle1">{ creditor.email }</Typography>
 
-            <Stack direction="row" gap={ 1 } alignItems="center">
+            <Stack direction="row" alignItems="center">
               { isEditable ? (
                 <DropdownSelectField
                   isOptional={ false }
