@@ -231,6 +231,7 @@ export interface CreateCollaborationRequest {
   readonly role: string;
   readonly royaltyRate?: number;
   readonly credited: boolean;
+  readonly featured: boolean;
 }
 
 export interface UpdateCollaborationRequest
