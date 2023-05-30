@@ -1,9 +1,8 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Stack } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import StarIcon from "assets/images/StarIcon";
 import TwitterLogo from "assets/images/TwitterLogo";
 import GlobalFill from "assets/images/GlobalFill";
 import InstagramLogo from "assets/images/InstagramLogo";
@@ -13,8 +12,11 @@ import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import { history } from "common/history";
 import { VerificationStatus, useGetUserQuery } from "modules/session";
 import { Button, ProfileSkeleton, Typography } from "elements";
+import Songs from "./Songs";
+import OwnerModal from "./OwnerModal";
 
 const Owner: FunctionComponent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { userId = "" } = useParams();
   const windowWidth = useWindowDimensions()?.width;
   const { data: ownerData, isLoading, isError } = useGetUserQuery({ userId });
@@ -30,15 +32,18 @@ const Owner: FunctionComponent = () => {
   }
 
   const {
-    verificationStatus,
     bannerUrl,
-    pictureUrl,
+    biography,
     firstName,
+    instagramUrl,
     lastName,
     location,
-    websiteUrl,
+    nickname,
+    pictureUrl,
+    role,
     twitterUrl,
-    instagramUrl,
+    verificationStatus,
+    websiteUrl,
   } = ownerData;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
@@ -132,11 +137,13 @@ const Owner: FunctionComponent = () => {
           <Stack
             sx={ { columnGap: 1.5, flexDirection: "row", mt: [2, 2, 2, 3.5] } }
           >
-            <Button sx={ { columnGap: 0.5 } } width="compact">
-              <StarIcon />
-              Follow
-            </Button>
-            <Button color="music" variant="secondary" width="compact">
+            <Button
+              color="music"
+              disabled={ !(biography || role) }
+              onClick={ () => setIsModalOpen(!isModalOpen) }
+              variant="secondary"
+              width="compact"
+            >
               About
             </Button>
           </Stack>
@@ -183,6 +190,14 @@ const Owner: FunctionComponent = () => {
           </Button>
         </Stack>
       </Stack>
+      <Songs />
+      <OwnerModal
+        biography={ biography }
+        nickname={ nickname }
+        onClose={ () => setIsModalOpen(false) }
+        open={ isModalOpen }
+        role={ role }
+      />
     </>
   );
 };

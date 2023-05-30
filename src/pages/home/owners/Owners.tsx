@@ -8,11 +8,12 @@ const Owners: FunctionComponent = () => (
   <Container
     maxWidth={ false }
     sx={ {
-      marginX: [null, null, 3],
       display: "flex",
       flexDirection: "column",
       flexGrow: 1,
       flexWrap: "nowrap",
+      marginX: [null, null, 3],
+      paddingBottom: 10.5,
       width: "auto",
     } }
   >
