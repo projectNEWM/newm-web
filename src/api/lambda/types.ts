@@ -10,8 +10,3 @@ export interface GenerateArtistAgreementBody {
 export interface GenerateArtistAgreementResponse {
   readonly message: string;
 }
-
-export interface GenerateArtistAgreementPayload {
-  readonly body: GenerateArtistAgreementBody;
-  readonly callback?: VoidFunction;
-}

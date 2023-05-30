@@ -71,30 +71,30 @@ const UploadSong: FunctionComponent = () => {
 
   const handleSongInfo = async (
     values: UploadSongRequest,
-    { setSubmitting }: FormikHelpers<FormikValues>
+    helpers: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
       await generateArtistAgreement({
-        body: {
-          songName: values.title,
-          companyName,
-          artistName,
-          stageName,
-        },
-        callback: () => {
-          navigate("confirm");
-        },
+        songName: values.title,
+        companyName,
+        artistName,
+        stageName,
       });
 
-      setSubmitting(false);
+      helpers.setSubmitting(false);
+      navigate("confirm");
     } else {
-      handleSubmit(values);
+      await handleSubmit(values, helpers);
+      helpers.setSubmitting(false);
     }
   };
 
-  // eslint-disable-next-line
-  const handleSubmit = (values: UploadSongRequest) => {
-    uploadSong(values);
+  const handleSubmit = async (
+    values: UploadSongRequest,
+    helpers: FormikHelpers<FormikValues>
+  ) => {
+    await uploadSong(values);
+    helpers.setSubmitting(false);
   };
 
   const validations = {
