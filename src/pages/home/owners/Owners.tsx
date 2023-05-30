@@ -25,5 +25,4 @@ const Owners: FunctionComponent = () => (
     </Routes>
   </Container>
 );
-
 export default Owners;

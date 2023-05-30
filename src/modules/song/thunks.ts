@@ -5,14 +5,21 @@ import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
   Collaboration,
-  CollaborationAcceptedStatus,
+  CollaborationStatus,
   DeleteSongRequest,
   PatchSongRequest,
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
-import { createInvite, generateCollaborators } from "./utils";
+import {
+  createInvite,
+  generateCollaborators,
+  getCollaborationsToCreate,
+  getCollaborationsToDelete,
+  getCollaborationsToUpdate,
+  mapCollaboratorsToCollaborations,
+} from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -192,7 +199,101 @@ export const patchSong = createAsyncThunk(
         })
       );
 
-      if ("error" in patchSongResp || !("data" in patchSongResp)) return;
+      if ("error" in patchSongResp) return;
+
+      if (body.isMinting) {
+        const currentCollabsResp = await dispatch(
+          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
+        );
+
+        if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
+
+        const newCollaborators = generateCollaborators(
+          body.owners || [],
+          body.creditors || []
+        );
+        const newCollabs = mapCollaboratorsToCollaborations(
+          body.id,
+          newCollaborators
+        );
+
+        const collabsToDelete = getCollaborationsToDelete(
+          currentCollabsResp.data,
+          newCollabs
+        );
+        const collabsToUpdate = getCollaborationsToUpdate(
+          currentCollabsResp.data,
+          newCollabs
+        );
+        const collabsToCreate = getCollaborationsToCreate(
+          currentCollabsResp.data,
+          newCollabs
+        );
+
+        const createCollabResponses = await Promise.all(
+          collabsToCreate.map((collaborator) => {
+            return dispatch(
+              songApi.endpoints.createCollaboration.initiate({
+                songId: body.id,
+                email: collaborator.email,
+                role: collaborator.role,
+                royaltyRate: collaborator.royaltyRate,
+                credited: collaborator.credited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of createCollabResponses) {
+          if ("error" in collabResp) return;
+        }
+
+        const deleteCollabResponses = await Promise.all(
+          collabsToDelete.map((collaborationId) => {
+            return dispatch(
+              songApi.endpoints.deleteCollaboration.initiate(collaborationId)
+            );
+          })
+        );
+
+        for (const collabResp of deleteCollabResponses) {
+          if ("error" in collabResp) return;
+        }
+
+        const updateCollabResponses = await Promise.all(
+          collabsToUpdate.map((collaboration) => {
+            return dispatch(
+              songApi.endpoints.updateCollaboration.initiate({
+                collaborationId: collaboration.id,
+                songId: body.id,
+                email: collaboration.email,
+                role: collaboration.role,
+                royaltyRate: collaboration.royaltyRate,
+                credited: collaboration.credited,
+              })
+            );
+          })
+        );
+
+        for (const collabResp of updateCollabResponses) {
+          if ("error" in collabResp) return;
+        }
+      }
+
+      if (body.title && body.artistName) {
+        await dispatch(
+          generateArtistAgreement({
+            body: {
+              artistName: body.artistName,
+              companyName: body.companyName,
+              saved: true,
+              songId: body.id,
+              songName: body.title,
+              stageName: body.stageName,
+            },
+          })
+        );
+      }
 
       // navigate to library page to view updated song
       history.push("/home/library");
@@ -233,7 +334,7 @@ export const fetchInvites = createAsyncThunk(
     const collaborationsResponse = await dispatch(
       songApi.endpoints.getCollaborations.initiate({
         inbound: true,
-        statuses: [CollaborationAcceptedStatus.Waiting],
+        statuses: [CollaborationStatus.Waiting],
       })
     );
     const collaborationsData = collaborationsResponse.data;

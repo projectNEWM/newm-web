@@ -1,6 +1,13 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { uniq } from "lodash";
-import { Collaboration, Collaborator, Creditor, Invite, Owner } from "./types";
+import {
+  Collaboration,
+  Collaborator,
+  CreateCollaborationRequest,
+  Creditor,
+  Invite,
+  Owner,
+} from "./types";
 import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";
 
@@ -39,27 +46,114 @@ export const generateCollaborators = (
   );
 
   return emails.map((email) => {
-    const isOwner = !!ownersMap[email];
-    const isCreditor = !!creditorsMap[email];
+    const collaborator = {
+      ...ownersMap[email],
+      ...creditorsMap[email],
+    };
 
     return {
       email,
-      role: isOwner ? ownersMap[email].role : creditorsMap[email].role,
-      royaltyRate: isOwner ? ownersMap[email].percentage : undefined,
-      isCredited: !!isCreditor,
+      role: collaborator.role,
+      royaltyRate: collaborator.percentage,
+      isCredited: !!collaborator.isCredited,
     };
   });
 };
 
 /**
+ * Checks which collaborations exist in the current collaborations but
+ * not in the new collaborations and returns them as collaborations to delete.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to delete
+ */
+export const getCollaborationsToDelete = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<CreateCollaborationRequest>
+) => {
+  return currentCollabs.reduce((result, collab) => {
+    if (!newCollabs.map(({ email }) => email).includes(collab.email)) {
+      return [collab.id, ...result];
+    }
+
+    return result;
+  }, [] as Array<string>);
+};
+
+/**
+ * Checks which collaborations exist in the existing collaborations
+ * and the new collaborations and returns them as collaborations to update.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to update
+ */
+export const getCollaborationsToUpdate = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<Partial<Collaboration>>
+) => {
+  return currentCollabs.reduce((result, collab) => {
+    const newCollab = newCollabs.find(({ email }) => collab.email === email);
+
+    if (newCollab) {
+      const updatedCollab = { ...collab, ...newCollab };
+      return [updatedCollab, ...result];
+    }
+
+    return result;
+  }, [] as Array<Collaboration>);
+};
+
+/**
+ * Checks which collaborations are in the new array but not in the old array
+ * and returns them as new collaborations to create.
+ *
+ * @param currentCollabs collaborations that currently exist for the song
+ * @param newCollabs updated collaborations for the song
+ * @returns a list of collaborations to create
+ */
+export const getCollaborationsToCreate = (
+  currentCollabs: ReadonlyArray<Collaboration>,
+  newCollabs: ReadonlyArray<CreateCollaborationRequest>
+) => {
+  return newCollabs.reduce((result, collab) => {
+    if (
+      collab.email &&
+      !currentCollabs.map(({ email }) => email).includes(collab.email)
+    ) {
+      return [collab, ...result];
+    }
+
+    return result;
+  }, [] as Array<CreateCollaborationRequest>);
+};
+
+/**
+ * Creates an array of collaborations from an array of collaborators.
+ */
+export const mapCollaboratorsToCollaborations = (
+  songId: string,
+  collaborators: ReadonlyArray<Collaborator>
+) => {
+  return collaborators.map((collaborator) => ({
+    songId,
+    email: collaborator.email,
+    role: collaborator.role,
+    royaltyRate: collaborator.royaltyRate || 0,
+    credited: collaborator.isCredited,
+  }));
+};
+
+/**
  * Creates an Invite object from a Collaboration object.
  *
- * @param {Collaboration} collaboration - The collaboration object to create an invite from.
- * @param {ThunkDispatch<unknown, unknown, AnyAction>} dispatch - The dispatch function from Redux.
+ * @param collaboration - The collaboration object to create an invite from.
+ * @param dispatch - The dispatch function from Redux.
  *
  * @throws Will throw an error if getting song data or user data fails.
  *
- * @returns {Promise<Invite>} A promise that resolves to an Invite object.
+ * @returns A promise that resolves to an Invite object.
  */
 export const createInvite = async (
   collaboration: Collaboration,

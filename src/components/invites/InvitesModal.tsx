@@ -10,7 +10,7 @@ import {
 import { Button, Typography } from "elements";
 import theme from "theme";
 import {
-  CollaborationAcceptedStatus,
+  CollaborationStatus,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
 } from "modules/song";
@@ -26,7 +26,7 @@ const InvitesModal: FunctionComponent = () => {
   const { data: collaborations = [] } = useGetCollaborationsQuery(
     {
       inbound: true,
-      statuses: [CollaborationAcceptedStatus.Waiting],
+      statuses: [CollaborationStatus.Waiting],
     },
     { skip: !isLoggedIn }
   );

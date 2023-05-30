@@ -77,9 +77,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Owners
             owners={ values.owners }
-            onDelete={ (email, owners) => {
+            onDelete={ ({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
-
               setFieldValue("owners", newOwners);
             } }
           />
@@ -96,7 +95,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Creditors
             creditors={ values.creditors }
-            onDelete={ (email, creditors) => {
+            onDelete={ ({ email }, creditors) => {
               const newOwners = creditors.filter(
                 (creditor) => creditor.email !== email
               );
@@ -129,41 +128,45 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         } }
         onSubmit={ ({
           email,
-          firstName,
           isCreator,
           isRightsOwner,
-          lastName,
+          isCredited,
           role,
+          status,
         }) => {
-          if (!values.creditors.find((creditor) => creditor.email === email)) {
-            if (isCreator) {
-              setFieldValue("creditors", [
-                ...values.creditors,
-                {
-                  email,
-                  firstName,
-                  isCreator,
-                  isRightsOwner,
-                  lastName,
-                  role,
-                },
-              ]);
-            }
+          const hasCreditorBeenAdded = values.creditors.find(
+            (creditor) => creditor.email === email
+          );
+          const hasOwnerBeenAdded = values.owners.find(
+            (owner) => owner.email === email
+          );
 
-            if (isRightsOwner) {
-              setFieldValue("owners", [
-                ...values.owners,
-                {
-                  email,
-                  firstName,
-                  isCreator,
-                  isRightsOwner,
-                  lastName,
-                  percentage: 0,
-                  role,
-                },
-              ]);
-            }
+          if (isCredited && !hasCreditorBeenAdded) {
+            setFieldValue("creditors", [
+              ...values.creditors,
+              {
+                email,
+                isCreator,
+                isRightsOwner,
+                role,
+                status,
+                isCredited,
+              },
+            ]);
+          }
+
+          if (isRightsOwner && !hasOwnerBeenAdded) {
+            setFieldValue("owners", [
+              ...values.owners,
+              {
+                email,
+                isCreator,
+                isRightsOwner,
+                percentage: 0,
+                role,
+                status,
+              },
+            ]);
           }
 
           setIsModalOpen(false);
