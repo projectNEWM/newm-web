@@ -70,30 +70,36 @@ const UploadSong: FunctionComponent = () => {
     stageName,
   };
 
+  // Navigate to advanced details if minting, otherwise upload song
   const handleSongInfo = async (
     values: UploadSongRequest,
     { setSubmitting }: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
-      await generateArtistAgreement({
-        body: {
-          songName: values.title,
-          companyName,
-          artistName,
-          stageName,
-        },
-        callback: () => {
-          navigate("confirm");
-        },
-      });
-
       setSubmitting(false);
+      navigate("advanced-details");
     } else {
       handleSubmit(values);
     }
   };
 
-  // eslint-disable-next-line
+  // Prepare Artist Agreement for confirmation page
+  const handleAdvancedDetails = async (
+    values: UploadSongRequest,
+    { setSubmitting }: FormikHelpers<FormikValues>
+  ) => {
+    await generateArtistAgreement({
+      body: {
+        songName: values.title,
+        companyName,
+        artistName,
+        stageName,
+      },
+    });
+
+    setSubmitting(false);
+  };
+
   const handleSubmit = (values: UploadSongRequest) => {
     uploadSong(values);
   };
@@ -145,6 +151,7 @@ const UploadSong: FunctionComponent = () => {
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
           rootPath="home/upload-song"
+          isProgressStepperVisible={ true }
           validateOnMount={ true }
           enableReinitialize={ true }
           routes={ [
@@ -163,8 +170,8 @@ const UploadSong: FunctionComponent = () => {
             },
             {
               element: <AdvancedSongDetails />,
+              onSubmitStep: handleAdvancedDetails,
               path: "advanced-details",
-              navigateOnSubmitStep: false,
             },
             {
               element: <ConfirmAgreement />,
