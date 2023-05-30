@@ -9,14 +9,19 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "theme";
-import { Button, TableSkeleton } from "elements";
+import { Button } from "elements";
 import {
   convertMillisecondsToSongFormat,
   getResizedAlbumCoverImageUrl,
   useWindowDimensions,
 } from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
-import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
+import {
+  SongStreamPlaybackIcon,
+  TableCell,
+  TablePagination,
+  TableSkeleton,
+} from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";

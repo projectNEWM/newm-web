@@ -11,7 +11,8 @@ import theme from "theme";
 import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import { history } from "common/history";
 import { VerificationStatus, useGetUserQuery } from "modules/session";
-import { Button, ProfileSkeleton, Typography } from "elements";
+import { Button, Typography } from "elements";
+import { ProfileSkeleton } from "components";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
 

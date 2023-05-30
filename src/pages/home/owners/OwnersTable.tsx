@@ -10,9 +10,14 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { useGetCollaboratorsQuery } from "modules/song";
-import { TableSkeleton, Typography } from "elements";
+import { Typography } from "elements";
 import { useWindowDimensions } from "common";
-import { TableCell, TableHeadCell, TablePagination } from "components";
+import {
+  TableCell,
+  TableHeadCell,
+  TablePagination,
+  TableSkeleton,
+} from "components";
 import { history } from "common/history";
 import NoOwnersYet from "./NoOwnersYet";
 

@@ -4,7 +4,7 @@ import { List, ListItem, ListItemText } from "@mui/material";
 import theme from "theme";
 import { Transaction, mockTransactions, useWindowDimensions } from "common";
 import { Box } from "@mui/system";
-import SkeletonTable from "elements/skeletons/TableSkeleton";
+import SkeletonTable from "components/skeletons/TableSkeleton";
 
 const TransactionsList: FunctionComponent = () => {
   const { data = [], isLoading, isSuccess } = mockTransactions;

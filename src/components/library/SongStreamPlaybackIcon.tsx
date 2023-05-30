@@ -36,10 +36,8 @@ const SongStreamPlaybackIcon: FunctionComponent<
     );
   };
 
-  return (
-    <>
-      { isSongUploaded ? renderSongPlaybackIcon() : renderUploadInProgressIcon() }
-    </>
-  );
+  return isSongUploaded
+    ? renderSongPlaybackIcon()
+    : renderUploadInProgressIcon();
 };
 export default SongStreamPlaybackIcon;
