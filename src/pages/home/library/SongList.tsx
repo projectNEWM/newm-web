@@ -9,14 +9,19 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "theme";
-import { Button, TableSkeleton } from "elements";
+import { Button } from "elements";
 import {
   convertMillisecondsToSongFormat,
   getResizedAlbumCoverImageUrl,
   useWindowDimensions,
 } from "common";
 import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
-import { SongStreamPlaybackIcon, TableCell, TablePagination } from "components";
+import {
+  SongStreamPlaybackIcon,
+  TableCell,
+  TablePagination,
+  TableSkeleton,
+} from "components";
 import { useNavigate } from "react-router-dom";
 import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";
@@ -174,8 +179,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
               sx={ {
                 cursor: "pointer",
                 WebkitTapHighlightColor: "transparent",
-                "&:hover": {
-                  background: "rgba(255, 255, 255, 0.1)",
+                "&:hover, &:focus": {
+                  background: theme.colors.activeBackground,
                 },
               } }
             >
@@ -183,7 +188,12 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 <Box sx={ { display: "flex", alignItems: "center" } }>
                   <IconButton
                     onClick={ handlePressPlayButton(song) }
-                    sx={ { paddingRight: [2, 4], paddingLeft: [0, 1] } }
+                    sx={ {
+                      marginRight: [2, 4],
+                      marginLeft: [0, 1],
+                      height: "40px",
+                      width: "40px",
+                    } }
                   >
                     <SongStreamPlaybackIcon
                       isSongPlaying={ song.id === currentPlayingSongId }

@@ -10,6 +10,8 @@ import theme from "theme";
 export interface CommonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly isLoading?: boolean;
   readonly width?: "compact" | "default" | "full" | "icon";
+  readonly target?: string;
+  readonly href?: string;
 }
 
 type ConditionalProps =
@@ -87,7 +89,7 @@ const Button: FunctionComponent<ButtonProps> = ({
     outlined: {
       border: `2px solid ${theme.colors[color]}`,
       "&:hover": {
-        background: "rgba(255, 255, 255, 0.1)",
+        background: theme.colors.activeBackground,
       },
     },
   };
