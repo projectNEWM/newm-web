@@ -2,13 +2,15 @@ import { Stack } from "@mui/material";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Owner } from "modules/song";
+import { Creditor, Featured, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import AddOwnerModal from "./AddOwnerModal";
+import FeaturedArtists from "./FeaturedArtists";
 
 interface FormValues {
   readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
+  readonly featured: ReadonlyArray<Featured>;
 }
 
 type FormContentProps = FormikProps<FormValues>;
@@ -16,8 +18,10 @@ type FormContentProps = FormikProps<FormValues>;
 interface SelectCoOwnersProps {
   readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
+  readonly featured: ReadonlyArray<Featured>;
   readonly onChangeOwners: (newOwners: ReadonlyArray<Owner>) => void;
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
+  readonly onChangeFeatured: (newFeatured: ReadonlyArray<Featured>) => void;
 }
 
 /**
@@ -26,21 +30,25 @@ interface SelectCoOwnersProps {
 const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
   owners,
   creditors,
+  featured,
   onChangeOwners,
   onChangeCreditors,
+  onChangeFeatured,
 }) => {
   const initialValues = {
     owners,
     creditors,
+    featured,
   };
 
-  const handleChange = (values: FormValues) => {
+  const handleSubmit = (values: FormValues) => {
     onChangeOwners(values.owners);
     onChangeCreditors(values.creditors);
+    onChangeFeatured(values.featured);
   };
 
   return (
-    <Formik initialValues={ initialValues } onSubmit={ handleChange }>
+    <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
       { (formikProps) => <FormContent { ...formikProps } /> }
     </Formik>
   );
@@ -66,15 +74,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         <>
           <HorizontalLine sx={ { my: 5 } } />
 
-          <Stack flexDirection="row" justifyContent="space-between">
-            <Typography color="grey100" variant="h5">
-              MASTER OWNERS
-            </Typography>
-            <Typography color="grey100" variant="h5">
-              SHARES
-            </Typography>
-          </Stack>
-
           <Owners
             owners={ values.owners }
             onDelete={ ({ email }, owners) => {
@@ -89,18 +88,35 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         <>
           <HorizontalLine sx={ { my: 5 } } />
 
-          <Typography color="grey100" mb={ -0.5 } variant="h5">
-            CREDITS TO SHOW ON SONG DETAIL
-          </Typography>
-
           <Creditors
             creditors={ values.creditors }
             onDelete={ ({ email }, creditors) => {
-              const newOwners = creditors.filter(
+              const newCreditors = creditors.filter(
                 (creditor) => creditor.email !== email
               );
 
-              setFieldValue("creditors", newOwners);
+              setFieldValue("creditors", newCreditors);
+            } }
+          />
+        </>
+      ) }
+
+      { !!values.featured.length && (
+        <>
+          <HorizontalLine sx={ { my: 5 } } />
+
+          <Typography color="grey100" mb={ -0.5 } variant="h5">
+            FEATURED ARTISTS
+          </Typography>
+
+          <FeaturedArtists
+            featured={ values.featured }
+            onDelete={ ({ email }, featured) => {
+              const newFeaturedArtists = featured.filter(
+                (featured) => featured.email !== email
+              );
+
+              setFieldValue("featured", newFeaturedArtists);
             } }
           />
         </>
@@ -131,6 +147,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           isCreator,
           isRightsOwner,
           isCredited,
+          isFeatured,
           role,
           status,
         }) => {
@@ -140,20 +157,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           const hasOwnerBeenAdded = values.owners.find(
             (owner) => owner.email === email
           );
-
-          if (isCredited && !hasCreditorBeenAdded) {
-            setFieldValue("creditors", [
-              ...values.creditors,
-              {
-                email,
-                isCreator,
-                isRightsOwner,
-                role,
-                status,
-                isCredited,
-              },
-            ]);
-          }
+          const hasFeaturedBeenAdded = values.featured.find(
+            (featuredArtist) => featuredArtist.email === email
+          );
 
           if (isRightsOwner && !hasOwnerBeenAdded) {
             setFieldValue("owners", [
@@ -164,6 +170,30 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 isRightsOwner,
                 percentage: 0,
                 role,
+                status,
+              },
+            ]);
+          }
+
+          if (isCredited && !hasCreditorBeenAdded) {
+            setFieldValue("creditors", [
+              ...values.creditors,
+              {
+                email,
+                role,
+                isCredited,
+                status,
+              },
+            ]);
+          }
+
+          if (isFeatured && !hasFeaturedBeenAdded) {
+            setFieldValue("featured", [
+              ...values.featured,
+              {
+                email,
+                role,
+                isFeatured,
                 status,
               },
             ]);

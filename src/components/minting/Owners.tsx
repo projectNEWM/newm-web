@@ -18,9 +18,6 @@ interface StatusContent {
 
 /**
  * Allows for displaying and updating owners when minting a song.
- *
- * TODO - display owners with static text when
- * not editable (https://app.clickup.com/t/8669nr0q7)
  */
 const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
   const theme = useTheme();
@@ -38,6 +35,15 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
 
   return (
     <Box>
+      <Stack flexDirection="row" justifyContent="space-between">
+        <Typography color="grey100" variant="h5">
+          MASTER OWNERS
+        </Typography>
+        <Typography color="grey100" variant="h5">
+          SHARES
+        </Typography>
+      </Stack>
+
       { owners.map((owner, idx) => {
         const isEditable = owner.status === CollaborationStatus.Editing;
         const statusContent = statusContentMap[owner.status];
