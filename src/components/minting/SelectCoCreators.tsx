@@ -1,9 +1,11 @@
-import { Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 import { Creditors, Owners } from "components";
-import { Button, HorizontalLine, Typography } from "elements";
+import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
 import { Creditor, Featured, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
+import theme from "theme";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -135,6 +137,30 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         >
           Add new owner
         </Button>
+      </Stack>
+
+      <Stack mt={ 1.5 } flexDirection="row">
+        <Typography variant="subtitle2">
+          For every additional collaborator who will receive royalties, the fee
+          to complete the minting process will increase by 1.5 ADA.
+        </Typography>
+        <Tooltip
+          title={
+            "This cost is increased with each additional collaborator because " +
+            "this ADA needs to travel with each portion of stream tokens in order " +
+            "to complete the split, which is an added extra cost for each transaction."
+          }
+        >
+          <IconButton sx={ { padding: 0 } }>
+            <HelpIcon
+              sx={ {
+                color: theme.colors.grey100,
+                height: "18px",
+                width: "18px",
+              } }
+            />
+          </IconButton>
+        </Tooltip>
       </Stack>
 
       <AddOwnerModal
