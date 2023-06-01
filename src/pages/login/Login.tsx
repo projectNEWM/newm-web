@@ -1,7 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "elements";
 import { FunctionComponent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
 import { history } from "common/history";
 import { Form, Formik, FormikValues } from "formik";
@@ -14,11 +13,11 @@ import {
   TextInputField,
 } from "components";
 import * as Yup from "yup";
-import { extendedApi as sessionApi } from "modules/session";
+import { useLoginMutation } from "modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
   const [maskPassword, setMaskPassword] = useState(true);
 
   const validationSchema = Yup.object({
@@ -30,8 +29,8 @@ const Login: FunctionComponent = () => {
     setMaskPassword(!maskPassword);
   };
 
-  const handleLogin = async ({ email, password }: FormikValues) => {
-    await dispatch(sessionApi.endpoints.login.initiate({ email, password }));
+  const handleLogin = ({ email, password }: FormikValues) => {
+    login({ email, password });
   };
 
   useAuthenticatedRedirect();
@@ -71,7 +70,7 @@ const Login: FunctionComponent = () => {
         onSubmit={ handleLogin }
         validationSchema={ validationSchema }
       >
-        { ({ isValid, values: { password }, isSubmitting }) => (
+        { ({ isValid, values: { password } }) => (
           <Form style={ { textAlign: "center", width: "100%" } }>
             <Stack
               display="inline-flex"
@@ -95,7 +94,7 @@ const Login: FunctionComponent = () => {
                 showEndAdornment={ !!password }
               />
 
-              <Button disabled={ !isValid || isSubmitting } type="submit">
+              <Button disabled={ !isValid || isLoading } type="submit">
                 Log In
               </Button>
               <Link

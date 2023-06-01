@@ -1,6 +1,6 @@
 import { asThunkHook } from "common";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GenerateArtistAgreementPayload, lambdaApi } from "api";
+import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
@@ -113,14 +113,12 @@ export const uploadSong = createAsyncThunk(
 
         const generateArtistAgreementResponse = await dispatch(
           generateArtistAgreement({
-            body: {
-              artistName: body.artistName,
-              companyName: body.companyName,
-              saved: true,
-              songId,
-              songName: body.title,
-              stageName: body.stageName,
-            },
+            artistName: body.artistName,
+            companyName: body.companyName,
+            saved: true,
+            songId,
+            songName: body.title,
+            stageName: body.stageName,
           })
         );
 
@@ -150,7 +148,7 @@ export const uploadSong = createAsyncThunk(
  */
 export const generateArtistAgreement = createAsyncThunk(
   "song/generateArtistAgreement",
-  async ({ body, callback }: GenerateArtistAgreementPayload, { dispatch }) => {
+  async (body: GenerateArtistAgreementBody, { dispatch }) => {
     try {
       const artistAgreementResp = await dispatch(
         lambdaApi.endpoints.generateArtistAgreement.initiate(body)
@@ -159,10 +157,6 @@ export const generateArtistAgreement = createAsyncThunk(
       if ("error" in artistAgreementResp) return;
 
       dispatch(receiveArtistAgreement(artistAgreementResp.data.message));
-
-      if (typeof callback === "function") {
-        callback();
-      }
     } catch (err) {
       // do nothing
     }
@@ -288,14 +282,12 @@ export const patchSong = createAsyncThunk(
       if (body.title && body.artistName) {
         await dispatch(
           generateArtistAgreement({
-            body: {
-              artistName: body.artistName,
-              companyName: body.companyName,
-              saved: true,
-              songId: body.id,
-              songName: body.title,
-              stageName: body.stageName,
-            },
+            artistName: body.artistName,
+            companyName: body.companyName,
+            saved: true,
+            songId: body.id,
+            songName: body.title,
+            stageName: body.stageName,
           })
         );
       }

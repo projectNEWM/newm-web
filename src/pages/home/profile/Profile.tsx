@@ -62,7 +62,7 @@ const Profile: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
 
-  const [updateProfile] = useUpdateProfileThunk();
+  const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
   const { data: songData = [] } = useGetSongsQuery({
     ownerIds: ["me"],
@@ -131,7 +131,7 @@ const Profile: FunctionComponent = () => {
       updatedValues.companyName = "";
     }
 
-    updateProfile({ ...updatedValues });
+    updateProfile(updatedValues);
   };
 
   return (
@@ -175,7 +175,7 @@ const Profile: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({ dirty, isSubmitting, handleReset }) => {
+        { ({ dirty, handleReset }) => {
           return (
             <Form>
               <UploadImageField
@@ -445,7 +445,7 @@ const Profile: FunctionComponent = () => {
 
                     <Button
                       disabled={ !dirty }
-                      isLoading={ isSubmitting }
+                      isLoading={ isLoading }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"
