@@ -6,6 +6,7 @@ import theme from "theme";
 import {
   CollaborationStatus,
   Creditor,
+  Featured,
   Owner,
   Song,
   useGenerateArtistAgreementThunk,
@@ -30,6 +31,7 @@ interface FormValues {
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
   readonly creditors: Array<Creditor>;
+  readonly featured: Array<Featured>;
   readonly consentsToContract: boolean;
 }
 
@@ -89,6 +91,17 @@ const MintSong = () => {
       status: collab.status,
     }));
 
+  // get featured artists from collaborations array
+  const featured: Array<Featured> = collabs
+    .filter(({ featured }) => featured)
+    .map((collab) => ({
+      id: collab.id,
+      email: collab.email,
+      role: collab.role,
+      isFeatured: true,
+      status: collab.status,
+    }));
+
   // set initial owner
   const initialOwners =
     owners.length > 0
@@ -116,6 +129,18 @@ const MintSong = () => {
         },
       ];
 
+  // set initial featured artists
+  const initialFeatured = featured.length
+    ? featured
+    : [
+        {
+          email,
+          role,
+          isFeatured: true,
+          status: CollaborationStatus.Editing,
+        },
+      ];
+
   // Set collaborator content as visible if any have been added
   const isMinting = collabs.length > 0;
 
@@ -123,6 +148,7 @@ const MintSong = () => {
     isMinting,
     owners: initialOwners,
     creditors: initialCreditors,
+    featured: initialFeatured,
     consentsToContract: false,
   };
 
@@ -222,14 +248,16 @@ const MintSong = () => {
         enableReinitialize={ true }
       >
         { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
-          const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
-            setFieldValue("owners", owners);
+          const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
+            setFieldValue("owners", values);
           };
 
-          const handleChangeCreditors = (
-            creditors: ReadonlyArray<Creditor>
-          ) => {
-            setFieldValue("creditors", creditors);
+          const handleChangeCreditors = (values: ReadonlyArray<Creditor>) => {
+            setFieldValue("creditors", values);
+          };
+
+          const handleChangeFeatured = (values: ReadonlyArray<Featured>) => {
+            setFieldValue("featured", values);
           };
 
           return (
@@ -253,8 +281,10 @@ const MintSong = () => {
                         <SelectCoCeators
                           owners={ values.owners }
                           creditors={ values.creditors }
+                          featured={ values.featured }
                           onChangeOwners={ handleChangeOwners }
                           onChangeCreditors={ handleChangeCreditors }
+                          onChangeFeatured={ handleChangeFeatured }
                         />
                       ) }
                     </Box>

@@ -55,7 +55,7 @@ const Home: FunctionComponent = () => {
 
           <Route path="upload-song/*" element={ <UploadSong /> } />
           <Route path="library/*" element={ <Library /> } />
-          <Route path="owners" element={ <Owners /> } />
+          <Route path="collaborators/*" element={ <Owners /> } />
           <Route path="wallet" element={ <Wallet /> } />
           <Route path="profile" element={ <Profile /> } />
           <Route path="settings" element={ <Settings /> } />

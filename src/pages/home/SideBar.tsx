@@ -92,7 +92,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               icon={ <PeopleIcon /> }
               label="COLLABORATORS"
-              to="/home/owners"
+              to="/home/collaborators"
             />
           </Stack>
 

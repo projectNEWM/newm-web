@@ -26,6 +26,8 @@ export { default as Popup } from "./Popup";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProfileImage } from "./styled/ProfileImage";
 export { default as ResponsiveNEWMLogo } from "./ResponsiveNEWMLogo";
+export { default as TableSkeleton } from "./skeletons/TableSkeleton";
+export { default as ProfileSkeleton } from "./skeletons/ProfileSkeleton";
 export { default as LogoutButton } from "./home/LogoutButton";
 export { default as SideBarNavLink } from "./home/SideBarNavLink";
 export { default as SideBarHeader } from "./home/SideBarHeader";

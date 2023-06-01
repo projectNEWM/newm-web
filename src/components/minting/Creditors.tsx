@@ -1,8 +1,10 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { Creditor } from "modules/song";
+import { CollaborationStatus, Creditor } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import DropdownSelectField from "components/form/DropdownSelectField";
+import { useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
@@ -14,9 +16,6 @@ interface CreditorsProps {
 
 /**
  * Allows for displaying and updating creditors when minting a song.
- *
- * TODO - display creditors with static text when
- * not editable (https://app.clickup.com/t/8669nr0q7)
  */
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
@@ -24,38 +23,64 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 }) => {
   const theme = useTheme();
 
+  const { data: roles = [] } = useGetRolesQuery();
+
   return (
     <Box>
-      { creditors.map((creditor) => (
-        <Stack
-          key={ creditor.email }
-          sx={ {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: 2,
-          } }
-        >
-          <Typography variant="subtitle1">{ creditor.email }</Typography>
+      <Stack flexDirection="row" justifyContent="space-between" mb={ -0.5 }>
+        <Typography color="grey100" variant="h5">
+          CREDITS TO SHOW ON SONG DETAIL
+        </Typography>
+        <Typography color="grey100" variant="h5">
+          ROLES
+        </Typography>
+      </Stack>
 
-          <Stack direction="row" gap={ 1 } alignItems="center">
-            <Typography color="white" fontWeight={ 500 }>
-              { creditor.role }
-            </Typography>
-            <Button
-              color="white"
-              sx={ { ml: 3 } }
-              variant="secondary"
-              width="icon"
-              onClick={ () => {
-                onDelete(creditor, creditors);
-              } }
-            >
-              <CloseIcon sx={ { color: theme.colors.white } } />
-            </Button>
+      { creditors.map((creditor, idx) => {
+        const isEditable = creditor.status === CollaborationStatus.Editing;
+
+        return (
+          <Stack
+            key={ creditor.email }
+            sx={ {
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 2,
+            } }
+          >
+            <Typography variant="subtitle1">{ creditor.email }</Typography>
+
+            <Stack direction="row" alignItems="center">
+              { isEditable ? (
+                <DropdownSelectField
+                  isOptional={ false }
+                  name={ `creditors[${idx}].role` }
+                  options={ roles }
+                  placeholder="Select role"
+                  widthType="full"
+                />
+              ) : (
+                <Typography color="white" fontWeight={ 500 }>
+                  { creditor.role }
+                </Typography>
+              ) }
+
+              <Button
+                color="white"
+                sx={ { ml: 3 } }
+                variant="secondary"
+                width="icon"
+                onClick={ () => {
+                  onDelete(creditor, creditors);
+                } }
+              >
+                <CloseIcon sx={ { color: theme.colors.white } } />
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-      )) }
+        );
+      }) }
     </Box>
   );
 };

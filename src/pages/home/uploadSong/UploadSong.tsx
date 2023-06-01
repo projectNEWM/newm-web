@@ -64,6 +64,7 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
+    featured: [],
     consentsToContract: false,
     companyName,
     artistName,

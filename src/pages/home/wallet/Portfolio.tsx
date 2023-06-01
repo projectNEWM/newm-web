@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { SongRoyalties, mockSongRoyalties, useWindowDimensions } from "common";
 import { Box } from "@mui/material";
-import SkeletonTable from "elements/skeletons/TableSkeleton";
+import SkeletonTable from "components/skeletons/TableSkeleton";
 import theme from "theme";
 import AllCaughtUp from "./AllCaughtUp";
 import SongRoyaltiesList from "./SongRoyaltiesList";
