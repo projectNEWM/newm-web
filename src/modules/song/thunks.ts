@@ -87,19 +87,21 @@ export const uploadSong = createAsyncThunk(
       if (body.isMinting) {
         const collaborators = generateCollaborators(
           body.owners,
-          body.creditors
+          body.creditors,
+          body.featured
         );
 
         // TODO: create bulk collaboration creation endpoint in API.
         const collabResponses = await Promise.all(
-          collaborators.map((collaborator) => {
+          collaborators.map((collaboration) => {
             return dispatch(
               songApi.endpoints.createCollaboration.initiate({
                 songId,
-                email: collaborator.email,
-                role: collaborator.role,
-                royaltyRate: collaborator.royaltyRate,
-                credited: collaborator.isCredited,
+                email: collaboration.email,
+                role: collaboration.role,
+                royaltyRate: collaboration.royaltyRate,
+                credited: collaboration.isCredited,
+                featured: collaboration.isFeatured,
               })
             );
           })
@@ -204,7 +206,8 @@ export const patchSong = createAsyncThunk(
 
         const newCollaborators = generateCollaborators(
           body.owners || [],
-          body.creditors || []
+          body.creditors || [],
+          body.featured || []
         );
         const newCollabs = mapCollaboratorsToCollaborations(
           body.id,
@@ -225,14 +228,15 @@ export const patchSong = createAsyncThunk(
         );
 
         const createCollabResponses = await Promise.all(
-          collabsToCreate.map((collaborator) => {
+          collabsToCreate.map((collaboration) => {
             return dispatch(
               songApi.endpoints.createCollaboration.initiate({
                 songId: body.id,
-                email: collaborator.email,
-                role: collaborator.role,
-                royaltyRate: collaborator.royaltyRate,
-                credited: collaborator.credited,
+                email: collaboration.email,
+                role: collaboration.role,
+                royaltyRate: collaboration.royaltyRate,
+                credited: collaboration.credited,
+                featured: collaboration.featured,
               })
             );
           })
@@ -264,6 +268,7 @@ export const patchSong = createAsyncThunk(
                 role: collaboration.role,
                 royaltyRate: collaboration.royaltyRate,
                 credited: collaboration.credited,
+                featured: collaboration.featured,
               })
             );
           })

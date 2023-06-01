@@ -19,7 +19,7 @@ export interface DropdownSelectProps
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleChange?: (newValue: string) => void;
-  readonly label: string;
+  readonly label?: string;
   readonly isOptional?: boolean;
   readonly name: string;
   readonly noResultsText?: string;

@@ -101,7 +101,7 @@ const Profile: FunctionComponent = () => {
   };
 
   const validationSchema = Yup.object({
-    biography: Yup.string(),
+    biography: Yup.string().max(250, "Must be 250 characters or less"),
     companyName: Yup.string().when("companyIpRights", {
       is: true,
       then: Yup.string().required("Company name is required"),
