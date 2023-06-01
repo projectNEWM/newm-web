@@ -20,7 +20,6 @@ const AdvancedSongDetails: React.FC = () => {
     <Stack>
       <Stack
         sx={ {
-          marginY: 5,
           marginX: ["auto", "auto", "unset"],
           maxWidth: ["340px", "340px", "700px"],
         } }

@@ -52,3 +52,4 @@ export { SearchBox } from "./SearchBox";
 export { default as IconStatus } from "./library/IconStatus";
 export * from "./library/IconStatus";
 export { default as SongStreamPlaybackIcon } from "./library/SongStreamPlaybackIcon";
+export { default as FormProgressStepper } from "./form/FormProgressStepper";

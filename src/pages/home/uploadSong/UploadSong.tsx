@@ -1,4 +1,4 @@
-import { Box, Container, Stepper } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
@@ -158,6 +158,7 @@ const UploadSong: FunctionComponent = () => {
             {
               element: <SongInfo />,
               path: "",
+              progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
@@ -172,10 +173,12 @@ const UploadSong: FunctionComponent = () => {
               element: <AdvancedSongDetails />,
               onSubmitStep: handleAdvancedDetails,
               path: "advanced-details",
+              progressStepTitle: "Advanced details",
             },
             {
               element: <ConfirmAgreement />,
               path: "confirm",
+              progressStepTitle: "Distribute & Mint",
               validationSchema: Yup.object().shape({
                 consentsToContract: validations.consentsToContract,
               }),
