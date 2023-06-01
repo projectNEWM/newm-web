@@ -25,6 +25,7 @@ const OwnersList: FunctionComponent = () => {
   const { data: { count: totalCollaborators = 0 } = {} } =
     useGetCollaboratorCountQuery({
       phrase: query,
+      excludeMe: true,
     });
 
   const handleSearch = (searched: string) => {
