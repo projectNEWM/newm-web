@@ -22,6 +22,7 @@ export interface DropdownSelectProps
   readonly label?: string;
   readonly isOptional?: boolean;
   readonly name: string;
+  readonly tooltipText?: string;
   readonly noResultsText?: string;
   readonly options: string[];
   readonly placeholder?: string;

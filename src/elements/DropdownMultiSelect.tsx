@@ -22,6 +22,7 @@ export interface DropdownMultiSelectProps
   readonly handleChange?: (newValue: ReadonlyArray<string>) => void;
   readonly label?: string;
   readonly name: string;
+  readonly tooltipText?: string;
   readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
   readonly value?: Array<string>;

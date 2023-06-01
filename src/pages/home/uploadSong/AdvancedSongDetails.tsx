@@ -26,8 +26,8 @@ const AdvancedSongDetails: React.FC = () => {
       >
         <SwitchInputField
           name="isExplicit"
-          title="DOES THE SONG CONTAIN EXPLICIT CONTENT?"
-          description={
+          title="Does the song contain explicit content?"
+          tooltipText={
             "Explicit content includes strong or discriminatory language, " +
             "or depictions of sex, violence or substance abuse."
           }
@@ -84,6 +84,7 @@ const AdvancedSongDetails: React.FC = () => {
             isOptional={ false }
             name="idType"
             label="ID TYPE"
+            tooltipText={ " " }
             placeholder="Select one"
             options={ [] }
           />
