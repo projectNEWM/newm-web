@@ -82,7 +82,7 @@ const Songs: FunctionComponent = () => {
   if (!songs.length && !songData.length && !isLoading) {
     return (
       <Typography sx={ { marginTop: 8, textAlign: "center" } }>
-        This artist doesn not have any minted songs yet.
+        This artist does not have any minted songs yet.
       </Typography>
     );
   }
