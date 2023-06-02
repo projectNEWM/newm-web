@@ -139,7 +139,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         </Button>
       </Stack>
 
-      <Stack mt={ 1.5 } flexDirection="row">
+      <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
         <Typography variant="subtitle2">
           For every additional collaborator who will receive royalties, the fee
           to complete the minting process will increase by 1.5 ADA.
