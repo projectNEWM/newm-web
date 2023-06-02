@@ -38,6 +38,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 1.25,
+        overflowY: "auto",
       } }
     >
       { props.mobileVersion && (
