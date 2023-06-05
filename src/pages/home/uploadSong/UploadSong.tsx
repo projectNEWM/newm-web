@@ -15,7 +15,7 @@ import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
-import SongInfo from "./SongInfo";
+import BasicSongDetails from "./BasicSongDetails";
 import AdvancedSongDetails from "./AdvancedSongDetails";
 
 const UploadSong: FunctionComponent = () => {
@@ -157,7 +157,7 @@ const UploadSong: FunctionComponent = () => {
           enableReinitialize={ true }
           routes={ [
             {
-              element: <SongInfo />,
+              element: <BasicSongDetails />,
               path: "",
               progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,

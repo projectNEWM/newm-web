@@ -24,7 +24,7 @@ import {
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
-const SongInfo: FunctionComponent = () => {
+const BasicSongDetails: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { wallet } = useConnectWallet();
@@ -66,14 +66,15 @@ const SongInfo: FunctionComponent = () => {
         sx={ {
           display: "flex",
           flexDirection: ["column", "column", "row"],
-          columnGap: [undefined, undefined, "20px"],
-          rowGap: ["16px", null, "12px"],
+          columnGap: [undefined, undefined, 1.5],
+          rowGap: [2, null, 3],
           maxWidth: [undefined, undefined, "700px"],
+          marginBottom: 3,
         } }
       >
         <Stack spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
-            MUSIC
+            SONG FILE
           </Typography>
 
           <UploadSongField name="audio" />
@@ -94,49 +95,47 @@ const SongInfo: FunctionComponent = () => {
       </Stack>
 
       <Stack
-        sx={ {
-          marginY: 5,
-          marginX: ["auto", "auto", "unset"],
-          maxWidth: ["340px", "340px", "700px"],
-        } }
-      >
-        <HorizontalLine />
-      </Stack>
-
-      <Stack
-        spacing={ 2.5 }
+        spacing={ 3 }
         sx={ {
           marginX: ["auto", "auto", "unset"],
           maxWidth: ["340px", "340px", "700px"],
         } }
       >
-        <TextInputField
-          isOptional={ false }
-          name="title"
-          label="SONG TITLE"
-          placeholder="Give your track a name..."
-          widthType="full"
-        />
-
         <Stack
           sx={ {
             display: "grid",
             gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
-            rowGap: ["16px", null, "12px"],
-            columnGap: [undefined, undefined, "20px"],
+            rowGap: [2, null, 3],
+            columnGap: [undefined, undefined, 1.5],
           } }
         >
+          <TextInputField
+            isOptional={ false }
+            name="title"
+            label="SONG TITLE"
+            placeholder="Give your track a name..."
+            widthType="full"
+          />
+
           <DropdownMultiSelectField
-            label="Genres"
+            label="GENRE"
             isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
             options={ genreOptions }
           />
 
+          <DropdownMultiSelectField
+            label="LANGUAGE"
+            name="language"
+            placeholder="Select all that apply"
+            /** TODO: add language options */
+            options={ [] }
+          />
+
           { /** TODO: get moods from back-end */ }
           <DropdownMultiSelectField
-            label="Moods"
+            label="MOOD"
             name="moods"
             placeholder="Select all that apply"
             options={ moodOptions }
@@ -145,22 +144,9 @@ const SongInfo: FunctionComponent = () => {
 
         <TextAreaField
           name="description"
-          label="SONG DESCRIPTION"
+          label="DESCRIPTION"
           placeholder="Tell us about your song"
         />
-
-        <SwitchInputField
-          name="isExplicit"
-          title="DOES THE SONG CONTAIN EXPLICIT CONTENT?"
-          description={
-            "Explicit content includes strong or discriminatory language, " +
-            "or depictions of sex, violence or substance abuse."
-          }
-        />
-
-        <Box py={ 2.5 }>
-          <HorizontalLine />
-        </Box>
 
         <Stack mt={ 5 } spacing={ 5 }>
           <Box>
@@ -274,4 +260,4 @@ const SongInfo: FunctionComponent = () => {
   );
 };
 
-export default SongInfo;
+export default BasicSongDetails;
