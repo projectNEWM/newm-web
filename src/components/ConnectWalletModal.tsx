@@ -3,15 +3,41 @@ import {
   setIsConnectWalletModalOpen,
   setToastMessage,
 } from "modules/ui";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  WalletModal,
+  // getWalletAddress,
+  useConnectWallet,
+} from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
+// import { useCreateMintSongPaymentMutation } from "modules/wallet";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { isConnectWalletModalOpen } = useSelector(selectUi);
+  const { wallet } = useConnectWallet();
+  // const [createMintSongPayment, { data }] = useCreateMintSongPaymentMutation();
+
+  useEffect(() => {
+    const getUtxos = async () => {
+      if (wallet) {
+        // const [utxos, address] = await Promise.all([
+        //   wallet.getUtxos(),
+        //   getWalletAddress(wallet),
+        // ]);
+        // console.log("utxos: ", utxos); // eslint-disable-line
+        // console.log("address: ", address); // eslint-disable-line
+        // createMintSongPayment({
+        //   changeAddress: address,
+        //   utxoCborHexList: utxos,
+        // });
+      }
+    };
+
+    getUtxos();
+  }, [wallet]);
 
   const handleConnect = () => {
     dispatch(

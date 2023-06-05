@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
 
 const api = createApi({
   reducerPath: "newmApi",
-  tagTypes: [Tags.Profile, Tags.Song, Tags.Collaboration],
+  tagTypes: [Tags.Profile, Tags.Song, Tags.Collaboration, Tags.Wallet],
   baseQuery: fetchBaseQueryWithReauth(baseQuery),
   endpoints: () => ({}),
 });
