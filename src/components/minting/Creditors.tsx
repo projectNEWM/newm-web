@@ -43,10 +43,12 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           <Stack
             key={ creditor.email }
             sx={ {
-              flexDirection: "row",
-              justifyContent: "space-between",
               alignItems: "center",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
               mt: 2,
+              rowGap: 2,
             } }
           >
             <Typography variant="subtitle1">{ creditor.email }</Typography>
