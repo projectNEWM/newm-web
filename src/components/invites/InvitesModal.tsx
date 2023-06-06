@@ -91,15 +91,17 @@ const InvitesModal: FunctionComponent = () => {
             rowGap={ 1 }
           >
             <Typography variant="subtitle1">{ subtitleText }</Typography>
-            <Button
-              color="partners"
-              onClick={ handleVerifyProfile }
-              sx={ { textTransform: "none" } }
-              variant="outlined"
-              width="compact"
-            >
-              Verify profile
-            </Button>
+            { !isVerified ? (
+              <Button
+                color="partners"
+                onClick={ handleVerifyProfile }
+                sx={ { textTransform: "none" } }
+                variant="outlined"
+                width="compact"
+              >
+                Verify profile
+              </Button>
+            ) : null }
           </Stack>
         </DialogContentText>
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
