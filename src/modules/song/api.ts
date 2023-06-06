@@ -7,6 +7,8 @@ import {
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
+  CreateMintSongPaymentRequest,
+  CreateMintSongPaymentResponse,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -429,6 +431,50 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    createMintSongPayment: build.mutation<
+      CreateMintSongPaymentResponse,
+      CreateMintSongPaymentRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `v1/songs/${songId}/mint/payment`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [Tags.Wallet],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while submitting your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getMintSongPayment: build.query<CreateMintSongPaymentResponse, void>({
+      query: () => ({
+        url: "v1/mint/payment",
+        method: "GET",
+      }),
+      providesTags: [Tags.Wallet],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
@@ -440,6 +486,8 @@ export const {
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,
+  useCreateMintSongPaymentMutation,
+  useGetMintSongPaymentQuery,
 } = extendedApi;
 
 export default extendedApi;

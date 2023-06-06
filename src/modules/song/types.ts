@@ -288,3 +288,15 @@ export interface ProcessStreamTokenAgreementRequest {
   accepted: boolean;
   songId: string;
 }
+
+export interface CreateMintSongPaymentRequest {
+  readonly songId: string;
+  readonly changeAddress: string;
+  readonly utxoCborHexList: ReadonlyArray<string>;
+}
+
+export type CreateMintSongPaymentResponse = any; // eslint-disable-line
+
+export interface GetMintSongPaymentResponse {
+  readonly cborHex: string;
+}

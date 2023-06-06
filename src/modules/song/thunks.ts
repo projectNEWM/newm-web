@@ -4,6 +4,10 @@ import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
+  enableWallet,
+  getWalletAddress,
+} from "@newm.io/cardano-dapp-wallet-connector";
+import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
@@ -124,14 +128,31 @@ export const uploadSong = createAsyncThunk(
 
         if ("error" in generateArtistAgreementResponse) return;
 
-        const processStreamTokenAgreementResponse = await dispatch(
-          songApi.endpoints.processStreamTokenAgreement.initiate({
-            songId,
-            accepted: body.consentsToContract,
-          })
-        );
+        // const processStreamTokenAgreementResponse = await dispatch(
+        //   songApi.endpoints.processStreamTokenAgreement.initiate({
+        //     songId,
+        //     accepted: body.consentsToContract,
+        //   })
+        // );
 
-        if ("error" in processStreamTokenAgreementResponse) return;
+        // if ("error" in processStreamTokenAgreementResponse) return;
+
+        // prompt for minting payment if uploader is only collaborator
+        if (body.owners.length === 1) {
+          const wallet = await enableWallet();
+          const changeAddress = await getWalletAddress(wallet);
+          const utxoCborHexList = await wallet.getUtxos();
+
+          const createPaymentResp = await dispatch(
+            songApi.endpoints.createMintSongPayment.initiate({
+              songId,
+              changeAddress,
+              utxoCborHexList,
+            })
+          );
+
+          console.log("resp: ", createPaymentResp); // eslint-disable-line
+        }
       }
 
       // navigate to library page to view new song
