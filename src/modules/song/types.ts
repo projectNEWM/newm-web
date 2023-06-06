@@ -15,6 +15,10 @@ export interface GetSongsRequest {
   phrase?: string;
 }
 
+export interface GetSongMintPaymentResponse {
+  cborHex: string;
+}
+
 export interface Owner {
   id?: string;
   email: string;
