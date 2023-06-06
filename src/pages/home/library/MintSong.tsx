@@ -173,34 +173,32 @@ const MintSong = () => {
     consentsToContract: Yup.bool().required("This field is required"),
   });
 
-  const handleSubmitStep = (values: FormValues) => {
+  const handleSubmitStep = async (values: FormValues) => {
     if (stepIndex === 0) {
       handleCompleteFirstStep();
     } else {
-      generateArtistAgreement({
-        body: {
-          songName: title,
-          companyName,
-          artistName,
-          stageName,
-          songId: id,
-          saved: true,
-        },
-        callback: () => patchSong({ id, ...values }),
-      });
-    }
-  };
-
-  const handleCompleteFirstStep = () => {
-    generateArtistAgreement({
-      body: {
+      await generateArtistAgreement({
         songName: title,
         companyName,
         artistName,
         stageName,
-      },
-      callback: () => setStepIndex(1),
+        songId: id,
+        saved: true,
+      });
+
+      patchSong({ id, ...values });
+    }
+  };
+
+  const handleCompleteFirstStep = async () => {
+    await generateArtistAgreement({
+      songName: title,
+      companyName,
+      artistName,
+      stageName,
     });
+
+    setStepIndex(1);
   };
 
   const handleVerifyProfile = () => {

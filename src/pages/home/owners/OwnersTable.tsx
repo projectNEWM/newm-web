@@ -59,6 +59,7 @@ export default function OwnersTable({
     offset: (page - 1) * rowsPerPage,
     limit: collaboratorsToRequest,
     phrase: query,
+    excludeMe: true,
   });
 
   const handlePageChange = (

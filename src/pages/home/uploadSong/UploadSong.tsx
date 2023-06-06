@@ -74,35 +74,37 @@ const UploadSong: FunctionComponent = () => {
   // Navigate to advanced details if minting, otherwise upload song
   const handleSongInfo = async (
     values: UploadSongRequest,
-    { setSubmitting }: FormikHelpers<FormikValues>
+    helpers: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
-      setSubmitting(false);
+      helpers.setSubmitting(false);
       navigate("advanced-details");
     } else {
-      handleSubmit(values);
+      await handleSubmit(values, helpers);
     }
   };
 
   // Prepare Artist Agreement for confirmation page
   const handleAdvancedDetails = async (
     values: UploadSongRequest,
-    { setSubmitting }: FormikHelpers<FormikValues>
+    helpers: FormikHelpers<FormikValues>
   ) => {
     await generateArtistAgreement({
-      body: {
-        songName: values.title,
-        companyName,
-        artistName,
-        stageName,
-      },
+      songName: values.title,
+      companyName,
+      artistName,
+      stageName,
     });
 
-    setSubmitting(false);
+    helpers.setSubmitting(false);
   };
 
-  const handleSubmit = (values: UploadSongRequest) => {
-    uploadSong(values);
+  const handleSubmit = async (
+    values: UploadSongRequest,
+    helpers: FormikHelpers<FormikValues>
+  ) => {
+    await uploadSong(values);
+    helpers.setSubmitting(false);
   };
 
   const validations = {

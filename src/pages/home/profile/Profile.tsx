@@ -30,7 +30,6 @@ import {
 } from "modules/session";
 import theme from "theme";
 import { setIsIdenfyModalOpen } from "modules/ui";
-import countries from "country-list";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
@@ -62,7 +61,7 @@ const Profile: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
 
-  const [updateProfile] = useUpdateProfileThunk();
+  const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
   const { data: songData = [] } = useGetSongsQuery({
     ownerIds: ["me"],
@@ -74,8 +73,6 @@ const Profile: FunctionComponent = () => {
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
   const isVerified = verificationStatus === Verified;
-
-  const countryOptions = countries.getNames();
 
   const handleVerificationSession = () => {
     dispatch(setIsIdenfyModalOpen(true));
@@ -131,7 +128,7 @@ const Profile: FunctionComponent = () => {
       updatedValues.companyName = "";
     }
 
-    updateProfile({ ...updatedValues });
+    updateProfile(updatedValues);
   };
 
   return (
@@ -175,7 +172,7 @@ const Profile: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({ dirty, isSubmitting, handleReset }) => {
+        { ({ dirty, handleReset }) => {
           return (
             <Form>
               <UploadImageField
@@ -248,13 +245,16 @@ const Profile: FunctionComponent = () => {
                         ) : null }
                       </Stack>
 
-                      <DropdownSelectField
-                        label="LOCATION"
-                        name="location"
-                        placeholder="Select your country of residence"
-                        options={ countryOptions }
-                        widthType="default"
-                      />
+                      { location ? (
+                        <TextInputField
+                          disabled={ true }
+                          isOptional={ false }
+                          label="LOCATION"
+                          name="location"
+                          readOnly={ true }
+                          type="text"
+                        />
+                      ) : null }
                     </Stack>
                   </Stack>
 
@@ -445,7 +445,7 @@ const Profile: FunctionComponent = () => {
 
                     <Button
                       disabled={ !dirty }
-                      isLoading={ isSubmitting }
+                      isLoading={ isLoading }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"
