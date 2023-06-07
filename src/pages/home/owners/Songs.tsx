@@ -15,8 +15,10 @@ import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import placeholderBackground from "assets/images/bg-img.png";
 
 const Songs: FunctionComponent = () => {
-  const { userId = "" } = useParams();
   const limit = 25;
+  // TODO: MVP When minting is implemented add mintingStatuses to useGetSongCountQuery & useGetSongsQuery params
+  //   const mintingStatuses = [MintingStatus.Minted];
+  const { userId = "" } = useParams();
   const [offset, setOffset] = useState(0);
   const [songs, setSongs] = useState<Song[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -31,7 +33,6 @@ const Songs: FunctionComponent = () => {
   const isWidthAboveMd =
     windowWidth && windowWidth > theme.breakpoints.values.md;
 
-  // TODO: Filter out unminted songs
   const { data: songData = [], isLoading } = useGetSongsQuery({
     ownerIds: [userId],
     offset,
@@ -77,6 +78,14 @@ const Songs: FunctionComponent = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, songData, totalCountOfSongs, isLoading]);
+
+  if (!songs.length && !songData.length && !isLoading) {
+    return (
+      <Typography sx={ { marginTop: 8, textAlign: "center" } }>
+        This artist does not have any minted songs yet.
+      </Typography>
+    );
+  }
 
   return (
     <Stack

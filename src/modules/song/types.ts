@@ -13,6 +13,7 @@ export interface GetSongsRequest {
   olderThan?: string;
   ownerIds?: string[];
   phrase?: string;
+  mintingStatuses?: MintingStatus[];
 }
 
 export interface Owner {
@@ -96,17 +97,18 @@ export interface AudioUploadUrlResponse {
   readonly fields: Record<string, string>;
 }
 
-export type MintingStatus =
-  | "Undistributed"
-  | "StreamTokenAgreementApproved"
-  | "MintingPaymentRequested"
-  | "MintingPaymentReceived"
-  | "ReadyToDistribute"
-  | "SubmittedForDistribution"
-  | "Distributed"
-  | "Declined"
-  | "Pending"
-  | "Minted";
+export enum MintingStatus {
+  Undistributed = "Undistributed",
+  StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
+  MintingPaymentRequested = "MintingPaymentRequested",
+  MintingPaymentReceived = "MintingPaymentReceived",
+  ReadyToDistribute = "ReadyToDistribute",
+  SubmittedForDistribution = "SubmittedForDistribution",
+  Distributed = "Distributed",
+  Declined = "Declined",
+  Pending = "Pending",
+  Minted = "Minted",
+}
 
 export enum MarketplaceStatus {
   Selling = "Selling",
@@ -170,6 +172,7 @@ export interface GetSongCountRequest {
   moods?: string[];
   olderThan?: string;
   newerThan?: string;
+  mintingStatuses?: MintingStatus[];
 }
 
 export interface GetSongCountResponse {
@@ -267,6 +270,7 @@ export interface GetCollaboratorsRequest {
   offset?: number;
   phrase?: string;
   songIds?: string[];
+  excludeMe?: boolean;
 }
 
 export type GetCollaboratorsResponse = Array<Collaborators>;
@@ -274,6 +278,7 @@ export type GetCollaboratorsResponse = Array<Collaborators>;
 export interface GetCollaboratorCountRequest {
   phrase?: string;
   songIds?: string[];
+  excludeMe?: boolean;
 }
 
 export interface GetCollaboratorCountResponse {
