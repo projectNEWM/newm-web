@@ -21,9 +21,13 @@ import { useDispatch } from "react-redux";
 
 interface InvitesTableProps {
   invites: Invite[];
+  disabled?: boolean;
 }
 
-const InvitesTable: FunctionComponent<InvitesTableProps> = ({ invites }) => {
+const InvitesTable: FunctionComponent<InvitesTableProps> = ({
+  invites,
+  disabled,
+}) => {
   const dispatch = useDispatch();
 
   const handleDecline = async (collaborationId: string) => {
@@ -154,13 +158,17 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({ invites }) => {
                     >
                       <IconButton
                         aria-label={ `Decline ${title} song collaboration` }
+                        disabled={ disabled }
                         onClick={ () => handleDecline(collaborationId) }
                         sx={ {
                           backgroundColor: theme.colors.red,
                           borderRadius: "8px",
-                          "&:hover": {
+                          "&:hover, &.Mui-disabled": {
                             backgroundColor: theme.colors.red,
                             opacity: 0.9,
+                          },
+                          "&.Mui-disabled": {
+                            opacity: 0.5,
                           },
                         } }
                       >
@@ -168,13 +176,17 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({ invites }) => {
                       </IconButton>
                       <IconButton
                         aria-label={ `Accept ${title} song collaboration` }
+                        disabled={ disabled }
                         onClick={ () => handleAccept(collaborationId) }
                         sx={ {
                           backgroundColor: theme.colors.green,
                           borderRadius: "8px",
-                          "&:hover": {
+                          "&:hover, &.Mui-disabled": {
                             backgroundColor: theme.colors.green,
                             opacity: 0.9,
+                          },
+                          "&.Mui-disabled": {
+                            opacity: 0.5,
                           },
                         } }
                       >

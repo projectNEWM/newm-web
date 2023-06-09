@@ -16,6 +16,7 @@ import {
   GetCollaboratorsResponse,
   GetSongCountRequest,
   GetSongCountResponse,
+  GetSongMintPaymentResponse,
   GetSongsRequest,
   GetSongsResponse,
   MarketplaceStatus,
@@ -113,6 +114,25 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching song count",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getSongMintPayment: build.query<GetSongMintPaymentResponse, string>({
+      query: (id) => ({
+        url: `v1/songs/${id}/mint/payment`,
+        method: "GET",
+      }),
+
+      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching song mint payment",
               severity: "error",
             })
           );
@@ -441,6 +461,7 @@ export const {
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,
+  useGetSongMintPaymentQuery,
 } = extendedApi;
 
 export default extendedApi;

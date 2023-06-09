@@ -141,22 +141,6 @@ const Songs: FunctionComponent = () => {
                   ) }
                 </IconButton>
               ) }
-              <Stack
-                sx={ {
-                  alignSelf: "start",
-                  background: "rgba(0, 0, 0, 0.4)",
-                  borderRadius: "6px",
-                  gridArea: "1 / 1 / 2 / 2",
-                  justifySelf: "end",
-                  margin: [0.5, 1],
-                  px: 1,
-                  py: 0.5,
-                } }
-              >
-                <Typography variant="h4" fontWeight={ 700 }>
-                  PRICE
-                </Typography>
-              </Stack>
             </Stack>
             <Typography variant="h4" fontWeight={ 700 } mt={ 0.5 }>
               { song.title }
