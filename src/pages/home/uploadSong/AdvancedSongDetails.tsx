@@ -1,11 +1,11 @@
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useWindowDimensions } from "common";
 import {
   DropdownMultiSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput } from "elements";
+import { Button, DatePickerInput, HorizontalLine } from "elements";
 import { useFormikContext } from "formik";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
@@ -13,19 +13,17 @@ import theme from "theme";
 const AdvancedSongDetails: React.FC = () => {
   const windowWidth = useWindowDimensions()?.width;
 
-  const { values, errors, touched, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
+  const { isSubmitting } = useFormikContext<UploadSongRequest>();
 
   return (
     <Stack>
       <Stack
-        sx={ {
-          marginX: ["auto", "auto", "unset"],
-          maxWidth: ["340px", "340px", "700px"],
-        } }
+        marginX={ ["auto", "auto", "unset"] }
+        maxWidth={ ["340px", "340px", "700px"] }
+        spacing={ 3 }
       >
         <SwitchInputField
-          name="isExplicit"
+          name="parentalAdvisory"
           title="Does the song contain explicit content?"
           tooltipText={
             "Explicit content includes strong or discriminatory language, " +
@@ -33,12 +31,10 @@ const AdvancedSongDetails: React.FC = () => {
           }
         />
         <Stack
-          sx={ {
-            display: "grid",
-            gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
-            rowGap: ["16px", null, "12px"],
-            columnGap: [undefined, undefined, "20px"],
-          } }
+          display="grid"
+          gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
+          rowGap={ [2, null, 3] }
+          columnGap={ [undefined, undefined, 1.5] }
         >
           <DatePickerInput
             name="scheduledDate"
@@ -54,7 +50,7 @@ const AdvancedSongDetails: React.FC = () => {
             }
           />
           <DatePickerInput
-            name="originalDate"
+            name="releaseDate"
             label="ORIGINAL RELEASE DATE"
             options={ [] }
             placeholder="Select a day"
@@ -65,7 +61,7 @@ const AdvancedSongDetails: React.FC = () => {
           />
           <TextInputField
             isOptional={ false }
-            name="copyright"
+            name="copyrights"
             label="COPYRIGHT"
             placeholder="Copyright holder"
             tooltipText={
@@ -82,20 +78,20 @@ const AdvancedSongDetails: React.FC = () => {
           />
           <DropdownMultiSelectField
             isOptional={ false }
-            name="idType"
+            name="barcodeType"
             label="ID TYPE"
             tooltipText={ " " }
             placeholder="Select one"
             options={ [] }
           />
           <TextInputField
-            name="idNumber"
+            name="barcodeNumber"
             label="ID NUMBER"
             placeholder="0000000000"
             tooltipText={ " " }
           />
           <TextInputField
-            name="ipi"
+            name="ipis"
             label="IPI"
             placeholder="000000000"
             tooltipText={ " " }
@@ -108,18 +104,21 @@ const AdvancedSongDetails: React.FC = () => {
           />
         </Stack>
 
-        <Button
-          sx={ { mt: 5 } }
-          type="submit"
-          isLoading={ isSubmitting }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
-        >
-          Next
-        </Button>
+        <Box>
+          <HorizontalLine mb={ 5 } />
+
+          <Button
+            type="submit"
+            isLoading={ isSubmitting }
+            width={
+              windowWidth && windowWidth > theme.breakpoints.values.md
+                ? "compact"
+                : "default"
+            }
+          >
+            Next
+          </Button>
+        </Box>
       </Stack>
     </Stack>
   );

@@ -61,7 +61,7 @@ const BasicSongDetails: FunctionComponent = () => {
   };
 
   return (
-    <Stack direction="column">
+    <Stack direction="column" spacing={ 5 }>
       <Stack
         sx={ {
           display: "flex",
@@ -237,24 +237,23 @@ const BasicSongDetails: FunctionComponent = () => {
           ) }
         </Stack>
 
-        <Box py={ 2.5 }>
-          <HorizontalLine />
-        </Box>
+        <Box>
+          <HorizontalLine mb={ 5 } />
 
-        { /** TODO: disable button if verify or wallet warnings visible */ }
-        <Button
-          sx={ { mt: 5 } }
-          type="submit"
-          disabled={ isSubmitDisabled }
-          isLoading={ isSubmitting }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
-        >
-          { values.isMinting ? "Next" : "Upload" }
-        </Button>
+          { /** TODO: disable button if verify or wallet warnings visible */ }
+          <Button
+            type="submit"
+            disabled={ isSubmitDisabled }
+            isLoading={ isSubmitting }
+            width={
+              windowWidth && windowWidth > theme.breakpoints.values.md
+                ? "compact"
+                : "default"
+            }
+          >
+            { values.isMinting ? "Next" : "Upload" }
+          </Button>
+        </Box>
       </Stack>
     </Stack>
   );
