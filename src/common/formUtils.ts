@@ -81,6 +81,9 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
+  coverArtUrl: Yup.mixed().required("This field is required"),
+  audio: Yup.mixed().required("This field is required"),
+  title: Yup.string().required("This field is required"),
 };
 
 /**

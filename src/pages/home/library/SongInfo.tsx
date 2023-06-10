@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
@@ -5,6 +6,7 @@ import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
   getUpdatedValues,
+  useScrollToError,
   useWindowDimensions,
 } from "common";
 import {
@@ -26,8 +28,13 @@ import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 const SongInfo = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const scrollToError = useScrollToError();
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
+
+  const coverArtUrlRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const genresRef = useRef<HTMLDivElement>(null);
 
   const { data: genreOptions = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
@@ -51,11 +58,12 @@ const SongInfo = () => {
   };
 
   const validationSchema = Yup.object({
+    coverArtUrl: commonYupValidation.coverArtUrl,
     description: Yup.string(),
     genres: commonYupValidation
       .genres(genreOptions)
-      .min(1, "At lease one genre is required"),
-    title: Yup.string(),
+      .min(1, "At least one genre is required"),
+    title: commonYupValidation.title,
   });
 
   /**
@@ -76,7 +84,13 @@ const SongInfo = () => {
         validateOnBlur={ false }
         validationSchema={ validationSchema }
       >
-        { ({ dirty, isSubmitting }) => {
+        { ({ dirty, errors, isSubmitting }) => {
+          scrollToError(errors, isSubmitting, [
+            { error: errors.coverArtUrl, ref: coverArtUrlRef },
+            { error: errors.title, ref: titleRef },
+            { error: errors.genres, ref: genresRef },
+          ]);
+
           return (
             <Form
               style={ {
@@ -93,6 +107,7 @@ const SongInfo = () => {
                   textAlign: "left",
                 } }
                 spacing={ 0.5 }
+                ref={ coverArtUrlRef }
               >
                 <Typography color="grey100" fontWeight={ 500 }>
                   SONG COVER ART
@@ -127,9 +142,11 @@ const SongInfo = () => {
                   label="SONG TITLE"
                   placeholder="Give your track a name..."
                   widthType="full"
+                  ref={ titleRef }
                 />
 
                 <Stack
+                  ref={ genresRef }
                   sx={ {
                     display: "grid",
                     gridTemplateColumns: [

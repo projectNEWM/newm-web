@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { FormikErrors } from "formik";
 import { AppDispatch, RootState } from "store";
 import { selectSession } from "modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
-import { WindowDimensions } from "./types";
+import { FieldOptions, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
 
@@ -84,3 +85,33 @@ export const useUserDevice = () => {
 
   return { isMobileOrTablet };
 };
+
+/**
+ * Scrolls to the first form field with an error in the given order.
+ *
+ * @returns {Function} Function to be called with Formik errors, isSubmitting state, and fields.
+ *
+ * @example
+ * const scrollOnError = useScrollToError();
+ * scrollOnError(errors, isSubmitting, fields);
+ * The `fields` parameter should be an array of field objects, each comprising an 'error' attribute for error messages
+ * and a 'ref' attribute pointing to the field's input element.
+ */
+export const useScrollToError =
+  () =>
+  (
+    errors: FormikErrors<unknown>,
+    isSubmitting: boolean,
+    fields: FieldOptions[]
+  ) => {
+    if (isSubmitting && Object.keys(errors).length) {
+      const errorField = fields.find(
+        (field) => field.error && field.ref.current
+      );
+
+      errorField?.ref.current?.scrollIntoView({
+        block: "center",
+        behavior: "smooth",
+      });
+    }
+  };
