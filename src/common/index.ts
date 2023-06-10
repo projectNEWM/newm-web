@@ -10,3 +10,4 @@ export * from "./fileUtils";
 export * from "./types";
 export * from "./urlUtils";
 export * from "./mockConstants";
+export * from "./errors";

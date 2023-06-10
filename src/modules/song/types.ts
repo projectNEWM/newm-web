@@ -300,8 +300,10 @@ export interface CreateMintSongPaymentRequest {
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
-export type CreateMintSongPaymentResponse = any; // eslint-disable-line
+export interface CborHexRequest {
+  readonly cborHex: string;
+}
 
-export interface GetMintSongPaymentResponse {
+export interface CborHexResponse {
   readonly cborHex: string;
 }

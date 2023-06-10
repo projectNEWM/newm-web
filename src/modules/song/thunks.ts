@@ -6,7 +6,10 @@ import { uploadToCloudinary } from "api/cloudinary/utils";
 import {
   enableWallet,
   getWalletAddress,
+  signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
+import { decode, encode } from "cbor-web";
+import { setToastMessage } from "modules/ui";
 import {
   Collaboration,
   CollaborationStatus,
@@ -128,20 +131,28 @@ export const uploadSong = createAsyncThunk(
 
         if ("error" in generateArtistAgreementResponse) return;
 
-        // const processStreamTokenAgreementResponse = await dispatch(
-        //   songApi.endpoints.processStreamTokenAgreement.initiate({
-        //     songId,
-        //     accepted: body.consentsToContract,
-        //   })
-        // );
+        const processStreamTokenAgreementResponse = await dispatch(
+          songApi.endpoints.processStreamTokenAgreement.initiate({
+            songId,
+            accepted: body.consentsToContract,
+          })
+        );
 
-        // if ("error" in processStreamTokenAgreementResponse) return;
+        if ("error" in processStreamTokenAgreementResponse) return;
 
-        // prompt for minting payment if uploader is only collaborator
+        // prompt for minting payment if uploader is only song owner
         if (body.owners.length === 1) {
           const wallet = await enableWallet();
+
+          const getPaymentResp = await dispatch(
+            songApi.endpoints.getMintSongPayment.initiate(songId)
+          );
+
+          if ("error" in getPaymentResp || !getPaymentResp.data) return;
+
+          const paymentHex = getPaymentResp.data.cborHex;
+          const utxoCborHexList = await wallet.getUtxos(paymentHex);
           const changeAddress = await getWalletAddress(wallet);
-          const utxoCborHexList = await wallet.getUtxos();
 
           const createPaymentResp = await dispatch(
             songApi.endpoints.createMintSongPayment.initiate({
@@ -151,14 +162,34 @@ export const uploadSong = createAsyncThunk(
             })
           );
 
-          console.log("resp: ", createPaymentResp); // eslint-disable-line
+          if ("error" in createPaymentResp || !createPaymentResp.data) return;
+
+          const tx = createPaymentResp.data.cborHex;
+          const signedTx = await signWalletTransaction(wallet, tx);
+          await wallet.submitTx(signedTx);
+
+          const txResp = await dispatch(
+            songApi.endpoints.submitMintSongPayment.initiate({
+              cborHex: signedTx,
+            })
+          );
+
+          if ("error" in txResp) return;
         }
       }
 
       // navigate to library page to view new song
       history.push("/home/library");
-    } catch (err) {
-      // do nothing, errors handled by endpoints
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
     }
   }
 );
