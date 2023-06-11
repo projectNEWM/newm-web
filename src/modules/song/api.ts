@@ -530,8 +530,6 @@ export const {
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,
-  useCreateMintSongPaymentMutation,
-  useGetMintSongPaymentQuery,
 } = extendedApi;
 
 export default extendedApi;

@@ -213,6 +213,19 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      if (body.title && body.artistName) {
+        await dispatch(
+          generateArtistAgreement({
+            artistName: body.artistName,
+            companyName: body.companyName,
+            saved: true,
+            songId: body.id,
+            songName: body.title,
+            stageName: body.stageName,
+          })
+        );
+      }
+
       if (body.isMinting) {
         const currentCollabsResp = await dispatch(
           songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
@@ -292,19 +305,6 @@ export const patchSong = createAsyncThunk(
 
         for (const collabResp of updateCollabResponses) {
           if ("error" in collabResp) return;
-        }
-
-        if (body.title && body.artistName) {
-          await dispatch(
-            generateArtistAgreement({
-              artistName: body.artistName,
-              companyName: body.companyName,
-              saved: true,
-              songId: body.id,
-              songName: body.title,
-              stageName: body.stageName,
-            })
-          );
         }
 
         const songResp = await dispatch(
