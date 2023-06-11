@@ -137,7 +137,7 @@ export const uploadSong = createAsyncThunk(
         if ("error" in processStreamTokenAgreementResponse) return;
 
         // prompt for minting payment if uploader is only song owner
-        if (body.owners.length === 1) {
+        if (collaborators.length === 1) {
           await submitMintSongPayment(songId, dispatch);
         }
       }
@@ -330,7 +330,7 @@ export const patchSong = createAsyncThunk(
 
         // TODO: determine what minting statuses indicate that the user has
         // not submitted a minting payment yet and still needs to do so.
-        if (body.owners?.length === 1) {
+        if (newCollabs.length === 1) {
           await submitMintSongPayment(body.id, dispatch);
         }
       }
