@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { CollaborationStatus, Featured } from "modules/song";
+import { Featured, getIsCollaboratorEditable } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -24,8 +24,7 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   return (
     <Box>
       { featured.map((featuredArtist) => {
-        const isEditable =
-          featuredArtist.status === CollaborationStatus.Editing;
+        const isEditable = getIsCollaboratorEditable(featuredArtist.status);
 
         return (
           <Stack

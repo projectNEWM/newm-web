@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { CollaborationStatus, Creditor } from "modules/song";
+import { Creditor, getIsCollaboratorEditable } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
@@ -37,7 +37,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
       </Stack>
 
       { creditors.map((creditor, idx) => {
-        const isEditable = creditor.status === CollaborationStatus.Editing;
+        const isEditable = getIsCollaboratorEditable(creditor.status);
 
         return (
           <Stack

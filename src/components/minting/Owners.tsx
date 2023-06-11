@@ -1,6 +1,10 @@
 import { Box, InputAdornment, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
-import { CollaborationStatus, Owner } from "modules/song";
+import {
+  CollaborationStatus,
+  Owner,
+  getIsCollaboratorEditable,
+} from "modules/song";
 import { FunctionComponent, ReactElement } from "react";
 import { TextInputField } from "components";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -45,7 +49,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
       </Stack>
 
       { owners.map((owner, idx) => {
-        const isEditable = owner.status === CollaborationStatus.Editing;
+        const isEditable = getIsCollaboratorEditable(owner.status);
         const statusContent = statusContentMap[owner.status];
 
         return (
