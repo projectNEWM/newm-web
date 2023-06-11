@@ -87,19 +87,6 @@ export const uploadSong = createAsyncThunk(
         body: formData,
       });
 
-      const generateArtistAgreementResponse = await dispatch(
-        generateArtistAgreement({
-          artistName: body.artistName,
-          companyName: body.companyName,
-          saved: true,
-          songId,
-          songName: body.title,
-          stageName: body.stageName,
-        })
-      );
-
-      if ("error" in generateArtistAgreementResponse) return;
-
       if (body.isMinting) {
         const collaborators = generateCollaborators(
           body.owners,
@@ -126,6 +113,19 @@ export const uploadSong = createAsyncThunk(
         for (const collabResp of collabResponses) {
           if ("error" in collabResp) return;
         }
+
+        const generateArtistAgreementResponse = await dispatch(
+          generateArtistAgreement({
+            artistName: body.artistName,
+            companyName: body.companyName,
+            saved: true,
+            songId,
+            songName: body.title,
+            stageName: body.stageName,
+          })
+        );
+
+        if ("error" in generateArtistAgreementResponse) return;
 
         const processStreamTokenAgreementResponse = await dispatch(
           songApi.endpoints.processStreamTokenAgreement.initiate({
@@ -292,6 +292,19 @@ export const patchSong = createAsyncThunk(
 
         for (const collabResp of updateCollabResponses) {
           if ("error" in collabResp) return;
+        }
+
+        if (body.title && body.artistName) {
+          await dispatch(
+            generateArtistAgreement({
+              artistName: body.artistName,
+              companyName: body.companyName,
+              saved: true,
+              songId: body.id,
+              songName: body.title,
+              stageName: body.stageName,
+            })
+          );
         }
 
         const songResp = await dispatch(

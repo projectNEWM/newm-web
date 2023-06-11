@@ -453,6 +453,27 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getMintSongPayment: build.query<CborHexResponse, string>({
+      query: (songId) => ({
+        url: `v1/songs/${songId}/mint/payment`,
+        method: "GET",
+        songId,
+      }),
+      providesTags: [Tags.Wallet],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     createMintSongPayment: build.mutation<
       CborHexResponse,
       CreateMintSongPaymentRequest
@@ -471,27 +492,6 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while submitting your payment",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getMintSongPayment: build.query<CborHexResponse, string>({
-      query: (songId) => ({
-        url: `v1/songs/${songId}/mint/payment`,
-        method: "GET",
-        songId,
-      }),
-      providesTags: [Tags.Wallet],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occured while fetching your payment",
               severity: "error",
             })
           );
