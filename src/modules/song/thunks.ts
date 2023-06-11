@@ -3,17 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import {
-  enableWallet,
-  getWalletAddress,
-  signWalletTransaction,
-} from "@newm.io/cardano-dapp-wallet-connector";
-import { decode, encode } from "cbor-web";
 import { setToastMessage } from "modules/ui";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
+  MintingStatus,
   PatchSongRequest,
   UploadSongRequest,
 } from "./types";
@@ -26,6 +21,7 @@ import {
   getCollaborationsToDelete,
   getCollaborationsToUpdate,
   mapCollaboratorsToCollaborations,
+  submitMintSongPayment,
 } from "./utils";
 
 /**
@@ -142,39 +138,7 @@ export const uploadSong = createAsyncThunk(
 
         // prompt for minting payment if uploader is only song owner
         if (body.owners.length === 1) {
-          const wallet = await enableWallet();
-
-          const getPaymentResp = await dispatch(
-            songApi.endpoints.getMintSongPayment.initiate(songId)
-          );
-
-          if ("error" in getPaymentResp || !getPaymentResp.data) return;
-
-          const paymentHex = getPaymentResp.data.cborHex;
-          const utxoCborHexList = await wallet.getUtxos(paymentHex);
-          const changeAddress = await getWalletAddress(wallet);
-
-          const createPaymentResp = await dispatch(
-            songApi.endpoints.createMintSongPayment.initiate({
-              songId,
-              changeAddress,
-              utxoCborHexList,
-            })
-          );
-
-          if ("error" in createPaymentResp || !createPaymentResp.data) return;
-
-          const tx = createPaymentResp.data.cborHex;
-          const signedTx = await signWalletTransaction(wallet, tx);
-          await wallet.submitTx(signedTx);
-
-          const txResp = await dispatch(
-            songApi.endpoints.submitMintSongPayment.initiate({
-              cborHex: signedTx,
-            })
-          );
-
-          if ("error" in txResp) return;
+          await submitMintSongPayment(songId, dispatch);
         }
       }
 
@@ -329,25 +293,59 @@ export const patchSong = createAsyncThunk(
         for (const collabResp of updateCollabResponses) {
           if ("error" in collabResp) return;
         }
-      }
 
-      if (body.title && body.artistName) {
-        await dispatch(
-          generateArtistAgreement({
-            artistName: body.artistName,
-            companyName: body.companyName,
-            saved: true,
-            songId: body.id,
-            songName: body.title,
-            stageName: body.stageName,
-          })
+        if (body.title && body.artistName) {
+          await dispatch(
+            generateArtistAgreement({
+              artistName: body.artistName,
+              companyName: body.companyName,
+              saved: true,
+              songId: body.id,
+              songName: body.title,
+              stageName: body.stageName,
+            })
+          );
+        }
+
+        const songResp = await dispatch(
+          songApi.endpoints.getSong.initiate(body.id)
         );
+
+        if ("error" in songResp || !songResp.data) return;
+
+        if (
+          body.consentsToContract &&
+          songResp.data.mintingStatus === MintingStatus.Undistributed
+        ) {
+          const processStreamTokenAgreementResponse = await dispatch(
+            songApi.endpoints.processStreamTokenAgreement.initiate({
+              songId: body.id,
+              accepted: body.consentsToContract,
+            })
+          );
+
+          if ("error" in processStreamTokenAgreementResponse) return;
+        }
+
+        // TODO: determine what minting statuses indicate that the user has
+        // not submitted a minting payment yet and still needs to do so.
+        if (body.owners?.length === 1) {
+          await submitMintSongPayment(body.id, dispatch);
+        }
       }
 
       // navigate to library page to view updated song
       history.push("/home/library");
-    } catch (err) {
-      // do nothing, errors handled by endpoints
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
     }
   }
 );

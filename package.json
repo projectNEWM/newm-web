@@ -13,7 +13,6 @@
     "@reduxjs/toolkit": "^1.7.2",
     "async-mutex": "^0.3.2",
     "buffer": "^6.0.3",
-    "cbor-web": "^9.0.0",
     "cloudinary-react": "^1.7.1",
     "cross-env": "^7.0.3",
     "formik": "^2.2.9",

@@ -1,6 +1,12 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { uniq } from "lodash";
 import {
+  enableWallet,
+  getWalletChangeAddress,
+  signWalletTransaction,
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "common";
+import {
   Collaboration,
   Collaborator,
   CreateCollaborationRequest,
@@ -207,4 +213,56 @@ export const createInvite = async (
     status: collaboration.status,
     title: songData.title,
   };
+};
+
+/**
+ * Allows the user to submit a payment to cover the cost of minting
+ * a song using their Cardano wallet.
+ *
+ * @param songId id of the song to submit a minting payment for
+ * @param dispatch thunk dispatch helper
+ */
+export const submitMintSongPayment = async (
+  songId: string,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+) => {
+  const wallet = await enableWallet();
+
+  const getPaymentResp = await dispatch(
+    songApi.endpoints.getMintSongPayment.initiate(songId)
+  );
+
+  if ("error" in getPaymentResp || !getPaymentResp.data) {
+    throw new SilentError();
+  }
+
+  const paymentHex = getPaymentResp.data.cborHex;
+  const utxoCborHexList = await wallet.getUtxos(paymentHex);
+  const changeAddress = await getWalletChangeAddress(wallet);
+
+  const createPaymentResp = await dispatch(
+    songApi.endpoints.createMintSongPayment.initiate({
+      songId,
+      changeAddress,
+      utxoCborHexList,
+    })
+  );
+
+  if ("error" in createPaymentResp || !createPaymentResp.data) {
+    throw new SilentError();
+  }
+
+  const tx = createPaymentResp.data.cborHex;
+  const signedTx = await signWalletTransaction(wallet, tx);
+  await wallet.submitTx(signedTx);
+
+  const txResp = await dispatch(
+    songApi.endpoints.submitMintSongPayment.initiate({
+      cborHex: signedTx,
+    })
+  );
+
+  if ("error" in txResp) {
+    throw new SilentError();
+  }
 };

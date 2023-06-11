@@ -76,8 +76,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     }
   );
 
-  console.log("song data: ", songData); // eslint-disable-line
-
   // Checks if any of the songs are missing a streamUrl
   useEffect(() => {
     const isAnySongStreamUrlMissing = songData.some((song) => !song.streamUrl);
