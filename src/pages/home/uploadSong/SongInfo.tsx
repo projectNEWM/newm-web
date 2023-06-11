@@ -74,7 +74,7 @@ const SongInfo: FunctionComponent = () => {
       { error: errors.genres, ref: genresRef },
       { error: errors.owners, ref: ownersRef },
     ]);
-  }, [errors, isSubmitting, scrollToError]);
+  }, [errors, isSubmitting]);
 
   return (
     <Stack direction="column">
