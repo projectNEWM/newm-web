@@ -8,6 +8,7 @@ import {
 import { SilentError } from "common";
 import {
   Collaboration,
+  CollaborationStatus,
   Collaborator,
   CreateCollaborationRequest,
   Creditor,
@@ -166,6 +167,15 @@ export const mapCollaboratorsToCollaborations = (
     credited: collaborator.isCredited,
     featured: collaborator.isFeatured,
   }));
+};
+
+export const getIsCollaboratorEditable = (status: CollaborationStatus) => {
+  const editableStatus = [
+    CollaborationStatus.Editing,
+    CollaborationStatus.Rejected,
+  ];
+
+  return editableStatus.includes(status);
 };
 
 /**
