@@ -72,6 +72,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 color="white"
                 sx={ { ml: 3 } }
                 variant="secondary"
+                disabled={ !isEditable }
                 width="icon"
                 onClick={ () => {
                   onDelete(creditor, creditors);

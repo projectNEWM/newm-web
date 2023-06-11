@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { Featured } from "modules/song";
+import { CollaborationStatus, Featured } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -23,31 +23,37 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
 
   return (
     <Box>
-      { featured.map((featuredArtist) => (
-        <Stack
-          key={ featuredArtist.email }
-          sx={ {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: 2,
-          } }
-        >
-          <Typography variant="subtitle1">{ featuredArtist.email }</Typography>
+      { featured.map((featuredArtist) => {
+        const isEditable =
+          featuredArtist.status === CollaborationStatus.Editing;
 
-          <Button
-            color="white"
-            sx={ { ml: 3 } }
-            variant="secondary"
-            width="icon"
-            onClick={ () => {
-              onDelete(featuredArtist, featured);
+        return (
+          <Stack
+            key={ featuredArtist.email }
+            sx={ {
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 2,
             } }
           >
-            <CloseIcon sx={ { color: theme.colors.white } } />
-          </Button>
-        </Stack>
-      )) }
+            <Typography variant="subtitle1">{ featuredArtist.email }</Typography>
+
+            <Button
+              color="white"
+              sx={ { ml: 3 } }
+              disabled={ !isEditable }
+              variant="secondary"
+              width="icon"
+              onClick={ () => {
+                onDelete(featuredArtist, featured);
+              } }
+            >
+              <CloseIcon sx={ { color: theme.colors.white } } />
+            </Button>
+          </Stack>
+        );
+      }) }
     </Box>
   );
 };

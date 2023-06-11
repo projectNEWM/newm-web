@@ -130,16 +130,7 @@ const MintSong = () => {
       ];
 
   // set initial featured artists
-  const initialFeatured = featured.length
-    ? featured
-    : [
-        {
-          email,
-          role,
-          isFeatured: true,
-          status: CollaborationStatus.Editing,
-        },
-      ];
+  const initialFeatured = featured.length ? featured : [];
 
   // Set collaborator content as visible if any have been added
   const isMinting = collabs.length > 0;

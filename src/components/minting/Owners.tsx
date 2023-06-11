@@ -98,7 +98,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
                 sx={ { ml: 3 } }
                 variant="secondary"
                 width="icon"
-                disabled={ owner.isCreator }
+                disabled={ owner.isCreator || !isEditable }
                 onClick={ () => {
                   onDelete(owner, owners);
                 } }
