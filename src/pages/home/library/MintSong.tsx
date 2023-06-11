@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { useScrollToError, useWindowDimensions } from "common";
+import { scrollToError, useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import {
@@ -39,7 +39,6 @@ const MintSong = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const scrollToError = useScrollToError();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
   const { id, title } = location.state as Song;

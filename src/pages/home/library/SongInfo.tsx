@@ -6,7 +6,7 @@ import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
   getUpdatedValues,
-  useScrollToError,
+  scrollToError,
   useWindowDimensions,
 } from "common";
 import {
@@ -28,7 +28,6 @@ import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 const SongInfo = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const scrollToError = useScrollToError();
   const windowWidth = useWindowDimensions()?.width;
   const { id = "" } = location.state as Song;
 

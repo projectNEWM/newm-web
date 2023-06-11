@@ -17,7 +17,7 @@ import {
 import {
   commonYupValidation,
   getUpdatedValues,
-  useScrollToError,
+  scrollToError,
   useWindowDimensions,
 } from "common";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
@@ -36,7 +36,6 @@ const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const scrollToError = useScrollToError();
 
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);

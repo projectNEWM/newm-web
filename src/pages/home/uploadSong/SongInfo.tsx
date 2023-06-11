@@ -13,7 +13,7 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { useScrollToError, useWindowDimensions } from "common";
+import { scrollToError, useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import {
@@ -28,7 +28,6 @@ const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { wallet } = useConnectWallet();
-  const scrollToError = useScrollToError();
 
   const audioRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
