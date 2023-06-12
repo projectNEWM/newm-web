@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import theme from "theme";
 import { Button } from "elements";
 import {
@@ -23,7 +24,6 @@ import {
   TableSkeleton,
 } from "components";
 import { useNavigate } from "react-router-dom";
-import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
@@ -260,7 +260,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     return navigate("edit-song", { state: { ...song } });
                   } }
                 >
-                  <EditPencilIcon />
+                  <EditIcon sx={ { color: theme.colors.music } } />
                 </Button>
               </TableCell>
             </TableRow>
@@ -273,7 +273,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             rowsPerPage={ rowsPerPage }
             lastRowOnPage={ lastRowOnPage }
             handlePageChange={ handlePageChange }
-            colSpan={ 3 }
+            colSpan={ 5 }
             rows="songs"
             cellStyles={ { paddingTop: "12px" } }
           />
