@@ -1,6 +1,6 @@
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useWindowDimensions } from "common";
+import { getUpdatedValues, useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import {
@@ -172,6 +172,8 @@ const MintSong = () => {
   });
 
   const handleSubmitStep = async (values: FormValues) => {
+    const updatedValues = getUpdatedValues(initialValues, values);
+
     if (stepIndex === 0) {
       handleCompleteFirstStep();
     } else {
@@ -184,7 +186,7 @@ const MintSong = () => {
         saved: true,
       });
 
-      patchSong({ id, ...values });
+      patchSong({ id, ...updatedValues });
     }
   };
 
@@ -200,7 +202,9 @@ const MintSong = () => {
   };
 
   const handleUpdateCollaborators = (values: FormikValues) => {
-    patchSong({ id, ...values });
+    const updatedValues = getUpdatedValues(initialValues, values);
+
+    patchSong({ id, ...updatedValues });
   };
 
   const handleVerifyProfile = () => {

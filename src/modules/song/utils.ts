@@ -80,6 +80,7 @@ export const generateCollaborators = (
       royaltyRate: collaborator.percentage,
       isCredited: !!collaborator.isCredited,
       isFeatured: !!collaborator.isFeatured,
+      isCreator: !!collaborator.isCreator,
     };
   });
 };
@@ -170,10 +171,18 @@ export const mapCollaboratorsToCollaborations = (
   }));
 };
 
-export const getIsCollaboratorEditable = (status: CollaborationStatus) => {
-  return [CollaborationStatus.Editing, CollaborationStatus.Rejected].includes(
-    status
-  );
+export const getIsCollaboratorEditable = (
+  collaborator: Owner | Creditor | Featured
+) => {
+  const status = collaborator.status;
+  const isCreator = "isCreator" in collaborator && !!collaborator.isCreator;
+
+  const isEditableStatus = [
+    CollaborationStatus.Editing,
+    CollaborationStatus.Rejected,
+  ].includes(status);
+
+  return isEditableStatus || isCreator;
 };
 
 export const getIsSongDeletable = (status: MintingStatus) => {

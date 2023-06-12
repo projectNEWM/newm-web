@@ -39,7 +39,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
       </Stack>
 
       { creditors.map((creditor, idx) => {
-        const isEditable = getIsCollaboratorEditable(creditor.status);
+        const isEditable = getIsCollaboratorEditable(creditor);
 
         return (
           <Stack

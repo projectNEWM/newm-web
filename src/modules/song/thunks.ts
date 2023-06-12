@@ -310,11 +310,7 @@ export const patchSong = createAsyncThunk(
 
         if ("error" in songResp || !songResp.data) return;
 
-        // approve minting agreement if hasn't been approved yet
-        if (
-          body.consentsToContract &&
-          songResp.data.mintingStatus === MintingStatus.Undistributed
-        ) {
+        if (body.consentsToContract) {
           const processStreamTokenAgreementResponse = await dispatch(
             songApi.endpoints.processStreamTokenAgreement.initiate({
               songId: body.id,

@@ -54,7 +54,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
       </Stack>
 
       { owners.map((owner, idx) => {
-        const isEditable = getIsCollaboratorEditable(owner.status);
+        const isEditable = getIsCollaboratorEditable(owner);
         const statusContent = statusContentMap[owner.status];
 
         return (

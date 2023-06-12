@@ -228,6 +228,7 @@ export const extendedApi = api.injectEndpoints({
         method: "PUT",
         body,
       }),
+      invalidatesTags: [Tags.Song, Tags.Collaboration],
 
       async onQueryStarted(_body, { dispatch, queryFulfilled }) {
         try {
