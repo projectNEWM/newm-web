@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
@@ -17,6 +17,7 @@ import {
 import {
   commonYupValidation,
   getUpdatedValues,
+  scrollToError,
   useWindowDimensions,
 } from "common";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
@@ -35,6 +36,13 @@ const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useDispatch();
+
+  const companyNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const roleRef = useRef<HTMLDivElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roleOptions = [] } = useGetRolesQuery();
@@ -172,7 +180,15 @@ const Profile: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({ dirty, handleReset }) => {
+        { ({ dirty, errors, handleReset, isSubmitting }) => {
+          scrollToError(errors, isSubmitting, [
+            { error: errors.nickname, ref: nicknameRef },
+            { error: errors.role, ref: roleRef },
+            { error: errors.firstName, ref: firstNameRef },
+            { error: errors.lastName, ref: lastNameRef },
+            { error: errors.companyName, ref: companyNameRef },
+          ]);
+
           return (
             <Form>
               <UploadImageField
@@ -264,12 +280,15 @@ const Profile: FunctionComponent = () => {
                         YOUR PUBLIC PROFILE
                       </Typography>
                       <TextInputField
+                        isOptional={ false }
                         label="STAGE NAME"
                         name="nickname"
                         placeholder="Stage name"
                         type="text"
+                        ref={ nicknameRef }
                       />
                       <Stack
+                        ref={ roleRef }
                         sx={ {
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
@@ -277,6 +296,7 @@ const Profile: FunctionComponent = () => {
                         } }
                       >
                         <DropdownSelectField
+                          isOptional={ false }
                           label="MAIN ROLE"
                           name="role"
                           options={ roleOptions }
@@ -351,16 +371,20 @@ const Profile: FunctionComponent = () => {
                         } }
                       >
                         <TextInputField
+                          isOptional={ false }
                           label="FIRST NAME"
                           name="firstName"
                           placeholder="First name"
                           type="text"
+                          ref={ firstNameRef }
                         />
                         <TextInputField
+                          isOptional={ false }
                           label="LAST NAME"
                           name="lastName"
                           placeholder="Last name"
                           type="text"
+                          ref={ lastNameRef }
                         />
                       </Stack>
                       <TextInputField
@@ -370,6 +394,7 @@ const Profile: FunctionComponent = () => {
                         name="email"
                         placeholder="john@mail.com"
                         type="email"
+                        ref={ emailRef }
                       />
                     </Stack>
                     <Stack rowGap={ 2 }>
@@ -408,6 +433,7 @@ const Profile: FunctionComponent = () => {
                             name="companyName"
                             placeholder="Your company name"
                             type="text"
+                            ref={ companyNameRef }
                           />
                         </Stack>
                       </SwitchInputField>

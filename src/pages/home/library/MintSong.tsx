@@ -1,6 +1,10 @@
+import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Formik } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { useWindowDimensions } from "common";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { scrollToError, useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import {
@@ -13,10 +17,7 @@ import {
   useGetCollaborationsQuery,
   usePatchSongThunk,
 } from "modules/song";
-import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
-import { Formik } from "formik";
-import { useDispatch } from "react-redux";
 import {
   VerificationStatus,
   emptyProfile,
@@ -25,7 +26,6 @@ import {
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -42,6 +42,9 @@ const MintSong = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
   const { id, title } = location.state as Song;
+
+  const ownersRef = useRef<HTMLDivElement>(null);
+  const consentsToContractRef = useRef<HTMLDivElement>(null);
 
   const {
     data: {
@@ -245,7 +248,14 @@ const MintSong = () => {
         validationSchema={ validationSchema }
         enableReinitialize={ true }
       >
-        { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
+        { ({
+          errors,
+          handleSubmit,
+          isSubmitting,
+          setFieldValue,
+          touched,
+          values,
+        }) => {
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
             setFieldValue("owners", values);
           };
@@ -257,6 +267,11 @@ const MintSong = () => {
           const handleChangeFeatured = (values: ReadonlyArray<Featured>) => {
             setFieldValue("featured", values);
           };
+
+          scrollToError(errors, isSubmitting, [
+            { error: errors.owners, ref: ownersRef },
+            { error: errors.consentsToContract, ref: consentsToContractRef },
+          ]);
 
           return (
             <>
@@ -288,7 +303,7 @@ const MintSong = () => {
                     </Box>
 
                     { !!touched.owners && !!errors.owners && (
-                      <Box mt={ 0.5 }>
+                      <Box mt={ 0.5 } ref={ ownersRef }>
                         <ErrorMessage>{ errors.owners as string }</ErrorMessage>
                       </Box>
                     ) }
@@ -390,7 +405,7 @@ const MintSong = () => {
 
               { stepIndex === 1 && (
                 <Stack>
-                  <Stack sx={ { my: 4, rowGap: 2 } }>
+                  <Stack sx={ { my: 4, rowGap: 2 } } ref={ consentsToContractRef }>
                     <Typography>ONE LAST THING</Typography>
                     <Typography variant="subtitle1">
                       You&apos;re almost ready to mint! To proceed please review
