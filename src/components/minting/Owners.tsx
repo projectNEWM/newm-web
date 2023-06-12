@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
 }
 
@@ -23,7 +24,11 @@ interface StatusContent {
 /**
  * Allows for displaying and updating owners when minting a song.
  */
-const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
+const Owners: FunctionComponent<OwnersProps> = ({
+  owners,
+  onDelete,
+  isDeleteDisabled = false,
+}) => {
   const theme = useTheme();
 
   const statusContentMap: Record<string, StatusContent> = {
@@ -102,7 +107,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
                 sx={ { ml: 3 } }
                 variant="secondary"
                 width="icon"
-                disabled={ owner.isCreator || !isEditable }
+                disabled={ owner.isCreator || isDeleteDisabled }
                 onClick={ () => {
                   onDelete(owner, owners);
                 } }

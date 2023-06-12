@@ -1,11 +1,12 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { Featured, getIsCollaboratorEditable } from "modules/song";
+import { Featured } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     featured: Featured,
     featuredArtists: ReadonlyArray<Featured>
@@ -18,14 +19,13 @@ interface FeaturedArtistsProps {
 const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   featured,
   onDelete,
+  isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
 
   return (
     <Box>
       { featured.map((featuredArtist) => {
-        const isEditable = getIsCollaboratorEditable(featuredArtist.status);
-
         return (
           <Stack
             key={ featuredArtist.email }
@@ -41,7 +41,7 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
             <Button
               color="white"
               sx={ { ml: 3 } }
-              disabled={ !isEditable }
+              disabled={ isDeleteDisabled }
               variant="secondary"
               width="icon"
               onClick={ () => {

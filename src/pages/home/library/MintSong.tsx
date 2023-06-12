@@ -7,15 +7,18 @@ import {
   CollaborationStatus,
   Creditor,
   Featured,
+  MintingStatus,
   Owner,
   Song,
+  emptySong,
   useGenerateArtistAgreementThunk,
   useGetCollaborationsQuery,
+  useGetSongQuery,
   usePatchSongThunk,
 } from "modules/song";
 import { useState } from "react";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
-import { Formik } from "formik";
+import { Formik, FormikValues } from "formik";
 import { useDispatch } from "react-redux";
 import {
   VerificationStatus,
@@ -58,6 +61,7 @@ const MintSong = () => {
   const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
     useGenerateArtistAgreementThunk();
 
+  const { data: { mintingStatus } = emptySong } = useGetSongQuery(id);
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: id });
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
@@ -66,6 +70,9 @@ const MintSong = () => {
   const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
   const artistName = `${firstName} ${lastName}`;
+
+  // some functionality is different if minting has already been initiated
+  const isMintingInitiated = mintingStatus !== MintingStatus.Undistributed;
 
   // get owners from collaborations array
   const owners: Array<Owner> = collabs
@@ -192,6 +199,10 @@ const MintSong = () => {
     setStepIndex(1);
   };
 
+  const handleUpdateCollaborators = (values: FormikValues) => {
+    patchSong({ id, ...values });
+  };
+
   const handleVerifyProfile = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
@@ -199,6 +210,10 @@ const MintSong = () => {
   const handleConnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
   };
+
+  const handleSubmitForm = isMintingInitiated
+    ? handleUpdateCollaborators
+    : handleSubmitStep;
 
   return (
     <Box sx={ { maxWidth: "700px" } }>
@@ -232,11 +247,17 @@ const MintSong = () => {
 
       <Formik
         initialValues={ initialValues }
-        onSubmit={ handleSubmitStep }
         validationSchema={ validationSchema }
         enableReinitialize={ true }
+        onSubmit={ handleSubmitForm }
       >
-        { ({ values, errors, touched, setFieldValue, handleSubmit }) => {
+        { ({ values, errors, touched, setFieldValue, handleSubmit, dirty }) => {
+          // if minting has been initiated, only show save button if
+          // collaborators have changed, otherwise only show if minting
+          const isStepOneButtonVisible = isMintingInitiated
+            ? dirty
+            : values.isMinting;
+
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
             setFieldValue("owners", values);
           };
@@ -258,6 +279,7 @@ const MintSong = () => {
                       <SwitchInputField
                         name="isMinting"
                         title="MINT SONG"
+                        disabled={ isMintingInitiated }
                         includeBorder={ false }
                         description={
                           "Minting a song will create an NFT that reflects " +
@@ -359,12 +381,11 @@ const MintSong = () => {
                       Cancel
                     </Button>
 
-                    { /** TODO: disable button if wallet warning is visible */ }
-                    { values.isMinting && (
+                    { isStepOneButtonVisible && (
                       <Button
                         onClick={ () => handleSubmit() }
                         isLoading={ isLoading }
-                        disabled={ !isVerified }
+                        disabled={ !isVerified || !wallet }
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
@@ -372,7 +393,7 @@ const MintSong = () => {
                             : "default"
                         }
                       >
-                        Next
+                        { isMintingInitiated ? "Update collaborators" : "Next" }
                       </Button>
                     ) }
                   </Stack>

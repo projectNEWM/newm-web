@@ -8,6 +8,7 @@ import { useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     creditor: Creditor,
     creditors: ReadonlyArray<Creditor>
@@ -20,6 +21,7 @@ interface CreditorsProps {
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
   onDelete,
+  isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
 
@@ -72,7 +74,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 color="white"
                 sx={ { ml: 3 } }
                 variant="secondary"
-                disabled={ !isEditable }
+                disabled={ isDeleteDisabled }
                 width="icon"
                 onClick={ () => {
                   onDelete(creditor, creditors);
