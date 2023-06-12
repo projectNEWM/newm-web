@@ -3,18 +3,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import {
-  Creditor,
-  Featured,
-  MintingStatus,
-  Owner,
-  Song,
-  emptySong,
-  useGetSongQuery,
-} from "modules/song";
+import { Creditor, Featured, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
-import { useLocation } from "react-router-dom";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -24,15 +15,18 @@ interface FormValues {
   readonly featured: ReadonlyArray<Featured>;
 }
 
-type FormContentProps = FormikProps<FormValues>;
-
 interface SelectCoOwnersProps {
   readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
   readonly featured: ReadonlyArray<Featured>;
+  readonly isAddDeleteDisabled?: boolean;
   readonly onChangeOwners: (newOwners: ReadonlyArray<Owner>) => void;
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
   readonly onChangeFeatured: (newFeatured: ReadonlyArray<Featured>) => void;
+}
+
+interface FormContentProps extends FormikProps<FormValues> {
+  readonly isAddDeleteDisabled?: boolean;
 }
 
 /**
@@ -45,6 +39,7 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
   onChangeOwners,
   onChangeCreditors,
   onChangeFeatured,
+  isAddDeleteDisabled = false,
 }) => {
   const initialValues = {
     owners,
@@ -60,7 +55,12 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
 
   return (
     <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
-      { (formikProps) => <FormContent { ...formikProps } /> }
+      { (formikProps) => (
+        <FormContent
+          { ...formikProps }
+          isAddDeleteDisabled={ isAddDeleteDisabled }
+        />
+      ) }
     </Formik>
   );
 };
@@ -69,13 +69,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   values,
   setFieldValue,
   handleSubmit,
+  isAddDeleteDisabled,
 }) => {
-  const location = useLocation();
-  const { id } = location.state as Song;
-  const { data: { mintingStatus } = emptySong } = useGetSongQuery(id);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const isAddDeleteDisabled = mintingStatus !== MintingStatus.Undistributed;
 
   /**
    * Call onChange callbacks when form values change.

@@ -235,11 +235,17 @@ const MintSong = () => {
             }
           >
             <AlertTitle sx={ { color: theme.colors.baseBlue, fontWeight: 600 } }>
-              These details cannot be changed after minting.
+              { isMintingInitiated
+                ? "Collaborators can't be added or removed after " +
+                  "initiating minting"
+                : "These details cannot be changed after minting." }
             </AlertTitle>
             <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
-              Please review all details carefully before moving forward with the
-              minting process.
+              { isMintingInitiated
+                ? "If you need to remove or add a collaborator, please " +
+                  "delete and re-upload the song."
+                : "Please review all details carefully before moving forward " +
+                  "with the minting process." }
             </Typography>
           </Alert>
         </Box>
@@ -293,6 +299,7 @@ const MintSong = () => {
                           owners={ values.owners }
                           creditors={ values.creditors }
                           featured={ values.featured }
+                          isAddDeleteDisabled={ isMintingInitiated }
                           onChangeOwners={ handleChangeOwners }
                           onChangeCreditors={ handleChangeCreditors }
                           onChangeFeatured={ handleChangeFeatured }

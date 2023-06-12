@@ -14,6 +14,7 @@ import {
   Creditor,
   Featured,
   Invite,
+  MintingStatus,
   Owner,
 } from "./types";
 import { extendedApi as songApi } from "./api";
@@ -170,12 +171,17 @@ export const mapCollaboratorsToCollaborations = (
 };
 
 export const getIsCollaboratorEditable = (status: CollaborationStatus) => {
-  const editableStatus = [
-    CollaborationStatus.Editing,
-    CollaborationStatus.Rejected,
-  ];
+  return [CollaborationStatus.Editing, CollaborationStatus.Rejected].includes(
+    status
+  );
+};
 
-  return editableStatus.includes(status);
+export const getIsSongDeletable = (status: MintingStatus) => {
+  return [
+    MintingStatus.Undistributed,
+    MintingStatus.StreamTokenAgreementApproved,
+    MintingStatus.MintingPaymentRequested,
+  ].includes(status);
 };
 
 /**
@@ -223,6 +229,23 @@ export const createInvite = async (
     status: collaboration.status,
     title: songData.title,
   };
+};
+
+/**
+ * Converts milliseconds into a song format (m:ss).
+ *
+ * @param {number} milliseconds - The time in milliseconds.
+ *
+ * @returns {string} The time in 'm:ss' format.
+ */
+export const convertMillisecondsToSongFormat = (
+  milliseconds: number
+): string => {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 };
 
 /**

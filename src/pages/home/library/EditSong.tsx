@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
-import { Song, useDeleteSongThunk } from "modules/song";
+import { Song, getIsSongDeletable, useDeleteSongThunk } from "modules/song";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
 import DeleteSongModal from "./DeleteSongModal";
@@ -88,6 +88,7 @@ const EditSong = () => {
               color="white"
               variant="outlined"
               width="icon"
+              disabled={ !getIsSongDeletable(mintingStatus) }
               sx={ { marginLeft: "auto" } }
               onClick={ () => {
                 setIsDeleteModalActive(true);
@@ -95,6 +96,7 @@ const EditSong = () => {
             >
               <DeleteIcon fontSize="small" sx={ { color: "white" } } />
             </Button>
+
             { isDeleteModalActive && (
               <DeleteSongModal
                 primaryAction={ () => {
