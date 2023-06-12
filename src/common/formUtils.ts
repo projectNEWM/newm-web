@@ -1,5 +1,6 @@
 import * as Yup from "yup";
-import { FormikValues } from "formik";
+import { FormikErrors, FormikValues } from "formik";
+import { FieldOptions } from "./types";
 
 /**
  * Password regex, it must contain the following:
@@ -81,6 +82,9 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
+  coverArtUrl: Yup.mixed().required("This field is required"),
+  audio: Yup.mixed().required("This field is required"),
+  title: Yup.string().required("This field is required"),
 };
 
 /**
@@ -106,4 +110,35 @@ export const getUpdatedValues = (
   });
 
   return updatedValues as any; // eslint-disable-line
+};
+
+/**
+ * Scrolls to the first form field with an error in the given order.
+ *
+ * @param {FormikErrors<unknown>} errors - Formik errors object.
+ * @param {boolean} isSubmitting - Formik isSubmitting state, true if the form is currently being submitted.
+ * @param {FieldOptions[]} fields - An array of FieldOptions objects.
+ * Each FieldOptions object should have an 'error' property,
+ * which is the error message for that field, and a 'ref' property, which is a ref for that field's input element.
+ *
+ * @example
+ * scrollToError(errors, isSubmitting, fields);
+ *
+ * @typedef {Object} FieldOptions
+ * @property {string|undefined} error - The error message for this field.
+ * @property {React.RefObject<HTMLInputElement>} ref - A ref for this field's input element.
+ */
+export const scrollToError = (
+  errors: FormikErrors<unknown>,
+  isSubmitting: boolean,
+  fields: FieldOptions[]
+) => {
+  if (isSubmitting && Object.keys(errors).length) {
+    const errorField = fields.find((field) => field.error && field.ref.current);
+
+    errorField?.ref.current?.scrollIntoView({
+      block: "center",
+      behavior: "smooth",
+    });
+  }
 };

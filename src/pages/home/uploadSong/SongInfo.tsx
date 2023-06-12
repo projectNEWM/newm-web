@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
@@ -13,7 +13,7 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { useWindowDimensions } from "common";
+import { scrollToError, useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import {
@@ -28,6 +28,12 @@ const SongInfo: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { wallet } = useConnectWallet();
+
+  const audioRef = useRef<HTMLDivElement>(null);
+  const coverArtUrlRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const genresRef = useRef<HTMLDivElement>(null);
+  const ownersRef = useRef<HTMLDivElement>(null);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
   const { data: genreOptions = [] } = useGetGenresQuery();
@@ -60,6 +66,16 @@ const SongInfo: FunctionComponent = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
 
+  useEffect(() => {
+    scrollToError(errors, isSubmitting, [
+      { error: errors.audio, ref: audioRef },
+      { error: errors.coverArtUrl, ref: coverArtUrlRef },
+      { error: errors.title, ref: titleRef },
+      { error: errors.genres, ref: genresRef },
+      { error: errors.owners, ref: ownersRef },
+    ]);
+  }, [errors, isSubmitting]);
+
   return (
     <Stack direction="column">
       <Stack
@@ -71,7 +87,7 @@ const SongInfo: FunctionComponent = () => {
           maxWidth: [undefined, undefined, "700px"],
         } }
       >
-        <Stack spacing={ 0.5 } width="100%">
+        <Stack ref={ audioRef } spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             MUSIC
           </Typography>
@@ -79,7 +95,7 @@ const SongInfo: FunctionComponent = () => {
           <UploadSongField name="audio" />
         </Stack>
 
-        <Stack spacing={ 0.5 } width="100%">
+        <Stack ref={ coverArtUrlRef } spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
@@ -114,11 +130,13 @@ const SongInfo: FunctionComponent = () => {
           isOptional={ false }
           name="title"
           label="SONG TITLE"
+          ref={ titleRef }
           placeholder="Give your track a name..."
           widthType="full"
         />
 
         <Stack
+          ref={ genresRef }
           sx={ {
             display: "grid",
             gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
@@ -165,6 +183,7 @@ const SongInfo: FunctionComponent = () => {
         <Stack mt={ 5 } spacing={ 5 }>
           <Box>
             <Box
+              ref={ ownersRef }
               sx={ {
                 backgroundColor: theme.colors.grey600,
                 border: `2px solid ${theme.colors.grey400}`,
