@@ -204,7 +204,7 @@ export const getCollaboratorStatusContent = (status: CollaborationStatus) => {
       icon: <AccessTimeIcon style={ { color: theme.colors.yellow } } />,
     },
     [CollaborationStatus.Rejected]: {
-      tooltip: "Collaborator rejected the proposed ownership amount.",
+      tooltip: "Collaborator rejected the collaboration request.",
       icon: <CloseIcon style={ { color: theme.colors.red } } />,
     },
   };
