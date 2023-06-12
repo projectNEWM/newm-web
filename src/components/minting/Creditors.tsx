@@ -1,6 +1,10 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import { Creditor, getIsCollaboratorEditable } from "modules/song";
+import { Button, Tooltip, Typography } from "elements";
+import {
+  Creditor,
+  getCollaboratorStatusContent,
+  getIsCollaboratorEditable,
+} from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
@@ -24,7 +28,6 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
   isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
-
   const { data: roles = [] } = useGetRolesQuery();
 
   return (
@@ -40,6 +43,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
       { creditors.map((creditor, idx) => {
         const isEditable = getIsCollaboratorEditable(creditor);
+        const statusContent = getCollaboratorStatusContent(creditor.status);
 
         return (
           <Stack
@@ -53,7 +57,15 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
               rowGap: 2,
             } }
           >
-            <Typography variant="subtitle1">{ creditor.email }</Typography>
+            <Stack direction="row" gap={ 1 } alignItems="center">
+              { statusContent && (
+                <Tooltip title={ statusContent.tooltip }>
+                  { statusContent.icon }
+                </Tooltip>
+              ) }
+
+              <Typography variant="subtitle1">{ creditor.email }</Typography>
+            </Stack>
 
             <Stack direction="row" alignItems="center">
               { isEditable ? (

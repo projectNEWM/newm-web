@@ -460,8 +460,6 @@ export const extendedApi = api.injectEndpoints({
         method: "GET",
         songId,
       }),
-      providesTags: [Tags.Wallet],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -484,7 +482,6 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: [Tags.Wallet],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -505,7 +502,7 @@ export const extendedApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: [Tags.Wallet],
+      invalidatesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {

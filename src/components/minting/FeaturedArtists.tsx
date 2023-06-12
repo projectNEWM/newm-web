@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import { Featured } from "modules/song";
+import { Button, Tooltip, Typography } from "elements";
+import { Featured, getCollaboratorStatusContent } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -26,6 +26,10 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   return (
     <Box>
       { featured.map((featuredArtist) => {
+        const statusContent = getCollaboratorStatusContent(
+          featuredArtist.status
+        );
+
         return (
           <Stack
             key={ featuredArtist.email }
@@ -36,7 +40,17 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
               mt: 2,
             } }
           >
-            <Typography variant="subtitle1">{ featuredArtist.email }</Typography>
+            <Stack direction="row" gap={ 1 } alignItems="center">
+              { statusContent && (
+                <Tooltip title={ statusContent.tooltip }>
+                  { statusContent.icon }
+                </Tooltip>
+              ) }
+
+              <Typography variant="subtitle1">
+                { featuredArtist.email }
+              </Typography>
+            </Stack>
 
             <Button
               color="white"

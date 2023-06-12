@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface SongState {
   artistAgreement: string;
 }
@@ -310,4 +312,9 @@ export interface CborHexRequest {
 
 export interface CborHexResponse {
   readonly cborHex: string;
+}
+
+export interface CollaboratorStatusContent {
+  readonly tooltip: string;
+  readonly icon: ReactElement;
 }

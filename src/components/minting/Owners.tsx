@@ -1,24 +1,18 @@
 import { Box, InputAdornment, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
 import {
-  CollaborationStatus,
   Owner,
+  getCollaboratorStatusContent,
   getIsCollaboratorEditable,
 } from "modules/song";
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent } from "react";
 import { TextInputField } from "components";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
-}
-
-interface StatusContent {
-  readonly tooltip: string;
-  readonly icon: ReactElement;
 }
 
 /**
@@ -30,17 +24,6 @@ const Owners: FunctionComponent<OwnersProps> = ({
   isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
-
-  const statusContentMap: Record<string, StatusContent> = {
-    [CollaborationStatus.Waiting]: {
-      tooltip: "Waiting on acceptance from collaborator.",
-      icon: <AccessTimeIcon style={ { color: theme.colors.yellow } } />,
-    },
-    [CollaborationStatus.Rejected]: {
-      tooltip: "Collaborator rejected the proposed ownership amount.",
-      icon: <CloseIcon style={ { color: theme.colors.red } } />,
-    },
-  };
 
   return (
     <Box>
@@ -55,7 +38,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
 
       { owners.map((owner, idx) => {
         const isEditable = getIsCollaboratorEditable(owner);
-        const statusContent = statusContentMap[owner.status];
+        const statusContent = getCollaboratorStatusContent(owner.status);
 
         return (
           <Stack

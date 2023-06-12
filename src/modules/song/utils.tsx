@@ -6,10 +6,14 @@ import {
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { SilentError } from "common";
+import theme from "theme";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Collaboration,
   CollaborationStatus,
   Collaborator,
+  CollaboratorStatusContent,
   CreateCollaborationRequest,
   Creditor,
   Featured,
@@ -191,6 +195,21 @@ export const getIsSongDeletable = (status: MintingStatus) => {
     MintingStatus.StreamTokenAgreementApproved,
     MintingStatus.MintingPaymentRequested,
   ].includes(status);
+};
+
+export const getCollaboratorStatusContent = (status: CollaborationStatus) => {
+  const statusContentMap: Record<string, CollaboratorStatusContent> = {
+    [CollaborationStatus.Waiting]: {
+      tooltip: "Waiting on acceptance from collaborator.",
+      icon: <AccessTimeIcon style={ { color: theme.colors.yellow } } />,
+    },
+    [CollaborationStatus.Rejected]: {
+      tooltip: "Collaborator rejected the proposed ownership amount.",
+      icon: <CloseIcon style={ { color: theme.colors.red } } />,
+    },
+  };
+
+  return statusContentMap[status];
 };
 
 /**
