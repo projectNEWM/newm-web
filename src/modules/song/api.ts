@@ -174,13 +174,6 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-
-          dispatch(
-            setToastMessage({
-              message: "Updated song information",
-              severity: "success",
-            })
-          );
         } catch (error) {
           dispatch(
             setToastMessage({

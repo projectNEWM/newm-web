@@ -326,6 +326,13 @@ export const patchSong = createAsyncThunk(
         }
       }
 
+      dispatch(
+        setToastMessage({
+          message: "Updated song information",
+          severity: "success",
+        })
+      );
+
       // navigate to library page to view updated song
       history.push("/home/library");
     } catch (error) {
