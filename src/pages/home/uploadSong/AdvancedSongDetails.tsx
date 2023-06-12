@@ -1,11 +1,12 @@
-import { Box, Stack } from "@mui/material";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { Box, IconButton, Stack } from "@mui/material";
 import { useWindowDimensions } from "common";
 import {
   DropdownMultiSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput, HorizontalLine } from "elements";
+import { Button, DatePickerInput, HorizontalLine, Typography } from "elements";
 import { useFormikContext } from "formik";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
@@ -75,6 +76,22 @@ const AdvancedSongDetails: React.FC = () => {
             label="ISRC"
             placeholder="AA-AAA-00-00000"
             tooltipText={ " " }
+            endAdornment={
+              <IconButton
+                sx={ {
+                  borderRadius: 0,
+                  borderLeftWidth: theme.inputField.borderWidth,
+                  borderStyle: "solid",
+                  borderColor: theme.colors.grey400,
+                  padding: theme.inputField.padding,
+                  color: theme.colors.music,
+                  backgroundColor: theme.colors.black,
+                } }
+              >
+                { <AutoAwesomeIcon /> }
+                <Typography paddingLeft={ 1 }>{ "Generate" }</Typography>
+              </IconButton>
+            }
           />
           <DropdownMultiSelectField
             isOptional={ false }

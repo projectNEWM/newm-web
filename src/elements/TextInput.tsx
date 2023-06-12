@@ -32,6 +32,7 @@ const StyledRootElement = styled.div`
 `;
 
 const StyledInputElement = styled.input`
+  width: 100%;
   display: flex;
   flex-grow: 1;
   background: transparent;
@@ -162,7 +163,6 @@ export const TextInput: ForwardRefRenderFunction<
       <Box
         display="flex"
         flexDirection="row"
-        justifyContent="space-between"
         alignItems="center"
         onMouseEnter={ () => setIsHovered(true) }
         onMouseLeave={ () => setIsHovered(false) }
@@ -179,6 +179,7 @@ export const TextInput: ForwardRefRenderFunction<
           overflow: "hidden",
           background: theme.colors.grey500,
         } }
+        maxWidth={ theme.inputField.maxWidth }
       >
         <StyledRootElement>
           { startAdornment }
