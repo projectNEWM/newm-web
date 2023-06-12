@@ -246,8 +246,8 @@ const MintSong = () => {
             </AlertTitle>
             <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
               { isMintingInitiated
-                ? "If you need to remove or add a collaborator, please " +
-                  "delete and re-upload the song."
+                ? "If you need to add or remove a collaborator, please " +
+                  "contact support."
                 : "Please review all details carefully before moving forward " +
                   "with the minting process." }
             </Typography>
