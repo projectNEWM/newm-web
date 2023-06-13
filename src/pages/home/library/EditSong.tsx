@@ -51,9 +51,6 @@ const EditSong = () => {
     id: songId,
   } = location.state as Song;
 
-  const isMinted = mintingStatus === "Distributed";
-  const isPending = mintingStatus === "Pending";
-
   const colorMap: ColorMap = {
     0: "music",
     1: "crypto",
@@ -82,33 +79,32 @@ const EditSong = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
-        { !(isMinted || isPending) && (
-          <>
-            <Button
-              color="white"
-              variant="outlined"
-              width="icon"
-              disabled={ !getIsSongDeletable(mintingStatus) }
-              sx={ { marginLeft: "auto" } }
-              onClick={ () => {
-                setIsDeleteModalActive(true);
-              } }
-            >
-              <DeleteIcon fontSize="small" sx={ { color: "white" } } />
-            </Button>
 
-            { isDeleteModalActive && (
-              <DeleteSongModal
-                primaryAction={ () => {
-                  deleteSong({ songId });
-                } }
-                secondaryAction={ () => {
-                  setIsDeleteModalActive(false);
-                } }
-              />
-            ) }
-          </>
-        ) }
+        <>
+          <Button
+            color="white"
+            variant="outlined"
+            width="icon"
+            disabled={ !getIsSongDeletable(mintingStatus) }
+            sx={ { marginLeft: "auto" } }
+            onClick={ () => {
+              setIsDeleteModalActive(true);
+            } }
+          >
+            <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+          </Button>
+
+          { isDeleteModalActive && (
+            <DeleteSongModal
+              primaryAction={ () => {
+                deleteSong({ songId });
+              } }
+              secondaryAction={ () => {
+                setIsDeleteModalActive(false);
+              } }
+            />
+          ) }
+        </>
       </Stack>
 
       <Stack sx={ { borderBottom: 1, borderColor: theme.colors.grey300, mt: 4 } }>
