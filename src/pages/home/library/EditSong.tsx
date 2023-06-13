@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
-import { Song, useDeleteSongThunk } from "modules/song";
+import { Song, getIsSongDeletable, useDeleteSongThunk } from "modules/song";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
 import DeleteSongModal from "./DeleteSongModal";
@@ -51,9 +51,6 @@ const EditSong = () => {
     id: songId,
   } = location.state as Song;
 
-  const isMinted = mintingStatus === "Distributed";
-  const isPending = mintingStatus === "Pending";
-
   const colorMap: ColorMap = {
     0: "music",
     1: "crypto",
@@ -82,31 +79,32 @@ const EditSong = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
-        { !(isMinted || isPending) && (
-          <>
-            <Button
-              color="white"
-              variant="outlined"
-              width="icon"
-              sx={ { marginLeft: "auto" } }
-              onClick={ () => {
-                setIsDeleteModalActive(true);
+
+        <>
+          <Button
+            color="white"
+            variant="outlined"
+            width="icon"
+            disabled={ !getIsSongDeletable(mintingStatus) }
+            sx={ { marginLeft: "auto" } }
+            onClick={ () => {
+              setIsDeleteModalActive(true);
+            } }
+          >
+            <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+          </Button>
+
+          { isDeleteModalActive && (
+            <DeleteSongModal
+              primaryAction={ () => {
+                deleteSong({ songId });
               } }
-            >
-              <DeleteIcon fontSize="small" sx={ { color: "white" } } />
-            </Button>
-            { isDeleteModalActive && (
-              <DeleteSongModal
-                primaryAction={ () => {
-                  deleteSong({ songId });
-                } }
-                secondaryAction={ () => {
-                  setIsDeleteModalActive(false);
-                } }
-              />
-            ) }
-          </>
-        ) }
+              secondaryAction={ () => {
+                setIsDeleteModalActive(false);
+              } }
+            />
+          ) }
+        </>
       </Stack>
 
       <Stack sx={ { borderBottom: 1, borderColor: theme.colors.grey300, mt: 4 } }>

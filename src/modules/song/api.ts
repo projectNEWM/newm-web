@@ -4,9 +4,12 @@ import { EmptyResponse } from "common";
 import {
   AudioUploadUrlRequest,
   AudioUploadUrlResponse,
+  CborHexRequest,
+  CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
+  CreateMintSongPaymentRequest,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -16,7 +19,6 @@ import {
   GetCollaboratorsResponse,
   GetSongCountRequest,
   GetSongCountResponse,
-  GetSongMintPaymentResponse,
   GetSongsRequest,
   GetSongsResponse,
   MarketplaceStatus,
@@ -120,25 +122,6 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getSongMintPayment: build.query<GetSongMintPaymentResponse, string>({
-      query: (id) => ({
-        url: `v1/songs/${id}/mint/payment`,
-        method: "GET",
-      }),
-
-      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occured while fetching song mint payment",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
     uploadSong: build.mutation<UploadSongResponse, UploadSongRequest>({
       query: (body) => ({
         url: "v1/songs",
@@ -171,13 +154,6 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-
-          dispatch(
-            setToastMessage({
-              message: "Updated song information",
-              severity: "success",
-            })
-          );
         } catch (error) {
           dispatch(
             setToastMessage({
@@ -225,6 +201,7 @@ export const extendedApi = api.injectEndpoints({
         method: "PUT",
         body,
       }),
+      invalidatesTags: [Tags.Song, Tags.Collaboration],
 
       async onQueryStarted(_body, { dispatch, queryFulfilled }) {
         try {
@@ -450,6 +427,69 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getMintSongPayment: build.query<CborHexResponse, string>({
+      query: (songId) => ({
+        url: `v1/songs/${songId}/mint/payment`,
+        method: "GET",
+        songId,
+      }),
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    createMintSongPayment: build.mutation<
+      CborHexResponse,
+      CreateMintSongPaymentRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `v1/songs/${songId}/mint/payment`,
+        method: "POST",
+        body,
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while submitting your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    submitMintSongPayment: build.mutation<void, CborHexRequest>({
+      query: (body) => ({
+        url: "/v1/cardano/submitTransaction",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [Tags.Song],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
@@ -461,7 +501,6 @@ export const {
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,
-  useGetSongMintPaymentQuery,
 } = extendedApi;
 
 export default extendedApi;

@@ -15,15 +15,18 @@ interface FormValues {
   readonly featured: ReadonlyArray<Featured>;
 }
 
-type FormContentProps = FormikProps<FormValues>;
-
 interface SelectCoOwnersProps {
   readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
   readonly featured: ReadonlyArray<Featured>;
+  readonly isAddDeleteDisabled?: boolean;
   readonly onChangeOwners: (newOwners: ReadonlyArray<Owner>) => void;
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
   readonly onChangeFeatured: (newFeatured: ReadonlyArray<Featured>) => void;
+}
+
+interface FormContentProps extends FormikProps<FormValues> {
+  readonly isAddDeleteDisabled?: boolean;
 }
 
 /**
@@ -36,6 +39,7 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
   onChangeOwners,
   onChangeCreditors,
   onChangeFeatured,
+  isAddDeleteDisabled = false,
 }) => {
   const initialValues = {
     owners,
@@ -51,7 +55,12 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
 
   return (
     <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
-      { (formikProps) => <FormContent { ...formikProps } /> }
+      { (formikProps) => (
+        <FormContent
+          { ...formikProps }
+          isAddDeleteDisabled={ isAddDeleteDisabled }
+        />
+      ) }
     </Formik>
   );
 };
@@ -60,6 +69,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   values,
   setFieldValue,
   handleSubmit,
+  isAddDeleteDisabled,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -78,6 +88,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Owners
             owners={ values.owners }
+            isDeleteDisabled={ isAddDeleteDisabled }
             onDelete={ ({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
               setFieldValue("owners", newOwners);
@@ -92,6 +103,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Creditors
             creditors={ values.creditors }
+            isDeleteDisabled={ isAddDeleteDisabled }
             onDelete={ ({ email }, creditors) => {
               const newCreditors = creditors.filter(
                 (creditor) => creditor.email !== email
@@ -113,6 +125,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <FeaturedArtists
             featured={ values.featured }
+            isDeleteDisabled={ isAddDeleteDisabled }
             onDelete={ ({ email }, featured) => {
               const newFeaturedArtists = featured.filter(
                 (featured) => featured.email !== email
@@ -124,44 +137,46 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         </>
       ) }
 
-      <HorizontalLine sx={ { mt: 5, mb: 2.5 } } />
+      { !isAddDeleteDisabled && (
+        <Stack>
+          <HorizontalLine sx={ { mt: 5, mb: 2.5 } } />
 
-      <Stack>
-        <Button
-          color="white"
-          variant="outlined"
-          width="full"
-          onClick={ () => {
-            setIsModalOpen(true);
-          } }
-        >
-          Add new owner
-        </Button>
-      </Stack>
+          <Button
+            color="white"
+            variant="outlined"
+            width="full"
+            onClick={ () => {
+              setIsModalOpen(true);
+            } }
+          >
+            Add new owner
+          </Button>
 
-      <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
-        <Typography variant="subtitle2">
-          For every additional collaborator who will receive royalties, the fee
-          to complete the minting process will increase by 1.5 ADA.
-        </Typography>
-        <Tooltip
-          title={
-            "This cost is increased with each additional collaborator because " +
-            "this ADA needs to travel with each portion of stream tokens in order " +
-            "to complete the split, which is an added extra cost for each transaction."
-          }
-        >
-          <IconButton sx={ { padding: 0 } }>
-            <HelpIcon
-              sx={ {
-                color: theme.colors.grey100,
-                height: "18px",
-                width: "18px",
-              } }
-            />
-          </IconButton>
-        </Tooltip>
-      </Stack>
+          <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
+            <Typography variant="subtitle2">
+              For every additional collaborator who will receive royalties, the
+              fee to complete the minting process will increase by 1.5 ADA.
+            </Typography>
+            <Tooltip
+              title={
+                "This cost is increased with each additional collaborator because " +
+                "this ADA needs to travel with each portion of stream tokens in order " +
+                "to complete the split, which is an added extra cost for each transaction."
+              }
+            >
+              <IconButton sx={ { padding: 0 } }>
+                <HelpIcon
+                  sx={ {
+                    color: theme.colors.grey100,
+                    height: "18px",
+                    width: "18px",
+                  } }
+                />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        </Stack>
+      ) }
 
       <AddOwnerModal
         open={ isModalOpen }

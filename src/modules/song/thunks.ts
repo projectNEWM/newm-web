@@ -3,10 +3,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
+import { setToastMessage } from "modules/ui";
+import { sessionApi } from "modules/session";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
+  MintingStatus,
   PatchSongRequest,
   UploadSongRequest,
 } from "./types";
@@ -19,6 +22,7 @@ import {
   getCollaborationsToDelete,
   getCollaborationsToUpdate,
   mapCollaboratorsToCollaborations,
+  submitMintSongPayment,
 } from "./utils";
 
 /**
@@ -132,12 +136,22 @@ export const uploadSong = createAsyncThunk(
         );
 
         if ("error" in processStreamTokenAgreementResponse) return;
+
+        await submitMintSongPayment(songId, dispatch);
       }
 
       // navigate to library page to view new song
       history.push("/home/library");
-    } catch (err) {
-      // do nothing, errors handled by endpoints
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
     }
   }
 );
@@ -277,25 +291,67 @@ export const patchSong = createAsyncThunk(
         for (const collabResp of updateCollabResponses) {
           if ("error" in collabResp) return;
         }
-      }
 
-      if (body.title && body.artistName) {
+        const songResp = await dispatch(
+          songApi.endpoints.getSong.initiate(body.id)
+        );
+
+        if ("error" in songResp || !songResp.data) return;
+
+        const profileResp = await dispatch(
+          sessionApi.endpoints.getProfile.initiate()
+        );
+
+        if ("error" in profileResp || !profileResp.data) return;
+
+        // if body.isMinting is present and true, then the song is being
+        // minted for the first time, save the artist agreement.
         await dispatch(
           generateArtistAgreement({
-            artistName: body.artistName,
-            companyName: body.companyName,
+            artistName: `${profileResp.data.firstName} ${profileResp.data.lastName}`,
+            companyName: profileResp.data.companyName,
             saved: true,
-            songId: body.id,
-            songName: body.title,
-            stageName: body.stageName,
+            songId: songResp.data.id,
+            songName: songResp.data.title,
+            stageName: profileResp.data.nickname,
           })
         );
+
+        if (body.consentsToContract) {
+          const processStreamTokenAgreementResponse = await dispatch(
+            songApi.endpoints.processStreamTokenAgreement.initiate({
+              songId: body.id,
+              accepted: body.consentsToContract,
+            })
+          );
+
+          if ("error" in processStreamTokenAgreementResponse) return;
+        }
+
+        if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
+          await submitMintSongPayment(body.id, dispatch);
+        }
       }
+
+      dispatch(
+        setToastMessage({
+          message: "Updated song information",
+          severity: "success",
+        })
+      );
 
       // navigate to library page to view updated song
       history.push("/home/library");
-    } catch (err) {
-      // do nothing, errors handled by endpoints
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
     }
   }
 );

@@ -39,7 +39,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
           justifyContent: "space-between",
         } }
       >
-        <Stack>
+        <Stack gap={ 0.75 } pr={ 4 }>
           <Typography pr={ 1 }>{ title }</Typography>
 
           <Typography pr={ 1 } variant="subtitle2">

@@ -1,11 +1,12 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import { Featured } from "modules/song";
+import { Button, Tooltip, Typography } from "elements";
+import { Featured, getCollaboratorStatusContent } from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     featured: Featured,
     featuredArtists: ReadonlyArray<Featured>
@@ -18,36 +19,54 @@ interface FeaturedArtistsProps {
 const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   featured,
   onDelete,
+  isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
 
   return (
     <Box>
-      { featured.map((featuredArtist) => (
-        <Stack
-          key={ featuredArtist.email }
-          sx={ {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: 2,
-          } }
-        >
-          <Typography variant="subtitle1">{ featuredArtist.email }</Typography>
+      { featured.map((featuredArtist) => {
+        const statusContent = getCollaboratorStatusContent(
+          featuredArtist.status
+        );
 
-          <Button
-            color="white"
-            sx={ { ml: 3 } }
-            variant="secondary"
-            width="icon"
-            onClick={ () => {
-              onDelete(featuredArtist, featured);
+        return (
+          <Stack
+            key={ featuredArtist.email }
+            sx={ {
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 2,
             } }
           >
-            <CloseIcon sx={ { color: theme.colors.white } } />
-          </Button>
-        </Stack>
-      )) }
+            <Stack direction="row" gap={ 1 } alignItems="center">
+              { statusContent && (
+                <Tooltip title={ statusContent.tooltip }>
+                  { statusContent.icon }
+                </Tooltip>
+              ) }
+
+              <Typography variant="subtitle1">
+                { featuredArtist.email }
+              </Typography>
+            </Stack>
+
+            <Button
+              color="white"
+              sx={ { ml: 3 } }
+              disabled={ isDeleteDisabled }
+              variant="secondary"
+              width="icon"
+              onClick={ () => {
+                onDelete(featuredArtist, featured);
+              } }
+            >
+              <CloseIcon sx={ { color: theme.colors.white } } />
+            </Button>
+          </Stack>
+        );
+      }) }
     </Box>
   );
 };
