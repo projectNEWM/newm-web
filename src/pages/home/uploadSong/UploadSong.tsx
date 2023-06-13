@@ -108,12 +108,12 @@ const UploadSong: FunctionComponent = () => {
   };
 
   const validations = {
-    coverArtUrl: Yup.mixed().required("This field is required"),
-    audio: Yup.mixed().required("This field is required"),
-    title: Yup.string().required("This field is required"),
+    coverArtUrl: commonYupValidation.coverArtUrl,
+    audio: commonYupValidation.audio,
+    title: commonYupValidation.title,
     genres: commonYupValidation
       .genres(genreOptions)
-      .min(1, "At lease one genre is required"),
+      .min(1, "At least one genre is required"),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()

@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Stack,
 } from "@mui/material";
 import { Button, Typography } from "elements";
 import theme from "theme";
@@ -14,9 +15,20 @@ import {
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
 } from "modules/song";
-import { selectUi, setIsInvitesModalOpen } from "modules/ui";
-import { selectSession } from "modules/session";
+import {
+  selectUi,
+  setIsIdenfyModalOpen,
+  setIsInvitesModalOpen,
+} from "modules/ui";
+import {
+  VerificationStatus,
+  emptyProfile,
+  selectSession,
+  useGetProfileQuery,
+} from "modules/session";
 import InvitesTable from "./InvitesTable";
+
+const { Verified } = VerificationStatus;
 
 const InvitesModal: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -30,7 +42,19 @@ const InvitesModal: FunctionComponent = () => {
     },
     { skip: !isLoggedIn }
   );
+
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
+  const isVerified = verificationStatus === Verified;
+
+  const subtitleText = isVerified
+    ? "You need to take action on these pending invitations."
+    : "You need to verify your account to accept these pending invitations.";
+
+  const handleVerifyProfile = () => {
+    dispatch(setIsIdenfyModalOpen(true));
+  };
 
   useEffect(() => {
     if (isLoggedIn) fetchInvites();
@@ -59,12 +83,29 @@ const InvitesModal: FunctionComponent = () => {
         <DialogContentText
           sx={ { backgroundColor: theme.colors.grey500, px: 3 } }
         >
-          <Typography variant="subtitle1">
-            You need to take action on these pending invitations.
-          </Typography>
+          <Stack
+            alignItems={ [null, null, "center"] }
+            columnGap={ 1 }
+            flexDirection={ [null, null, "row"] }
+            justifyContent="space-between"
+            rowGap={ 1 }
+          >
+            <Typography variant="subtitle1">{ subtitleText }</Typography>
+            { !isVerified ? (
+              <Button
+                color="partners"
+                onClick={ handleVerifyProfile }
+                sx={ { textTransform: "none" } }
+                variant="outlined"
+                width="compact"
+              >
+                Verify profile
+              </Button>
+            ) : null }
+          </Stack>
         </DialogContentText>
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
-          <InvitesTable invites={ invites } />
+          <InvitesTable invites={ invites } disabled={ !isVerified } />
         </DialogContent>
         <DialogActions sx={ { backgroundColor: theme.colors.grey600, px: 3 } }>
           <Button

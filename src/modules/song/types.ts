@@ -16,6 +16,10 @@ export interface GetSongsRequest {
   mintingStatuses?: MintingStatus[];
 }
 
+export interface GetSongMintPaymentResponse {
+  cborHex: string;
+}
+
 export interface Owner {
   id?: string;
   email: string;
