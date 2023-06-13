@@ -99,6 +99,7 @@ const BasicSongDetails: FunctionComponent = () => {
         sx={ {
           marginX: ["auto", "auto", "unset"],
           maxWidth: ["340px", "340px", "700px"],
+          alignSelf: ["center", "center", "unset"],
         } }
       >
         <Stack
@@ -148,7 +149,12 @@ const BasicSongDetails: FunctionComponent = () => {
           placeholder="Tell us about your song"
         />
 
-        <Stack mt={ 5 } spacing={ 5 }>
+        <Stack
+          mt={ 5 }
+          spacing={ 5 }
+          display="flex"
+          flexDirection={ ["column", "column", "row"] }
+        >
           <Box>
             <Box
               sx={ {

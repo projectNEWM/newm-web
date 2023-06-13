@@ -67,9 +67,12 @@ const FormProgressStepper = ({
     <Box
       sx={ {
         display: "flex",
+        flexDirection: ["column", "column", "row"],
         maxWidth: [undefined, undefined, "700px"],
         gap: 0.5,
         mb: 5,
+        justifyContent: "center",
+        alignItems: "center",
       } }
     >
       { stepTitles.map((stepTitle, index) => {
@@ -77,9 +80,19 @@ const FormProgressStepper = ({
         const stepColor = statusColor(activeStep, index);
 
         return (
-          <StepBox key={ index } boxColor={ stepColor } boxTitle={ stepTitle }>
+          <StepBox
+            key={ index }
+            boxColor={ stepColor }
+            boxTitle={ stepTitle }
+            justifyContent={ ["center", "center", "flex-start"] }
+          >
             <Box
-              sx={ { display: "flex", flexDirection: "row", gap: 1.5, pl: 1.75 } }
+              sx={ {
+                display: "flex",
+                flexDirection: "row",
+                gap: 1.5,
+                pl: 1.75,
+              } }
             >
               { isStepCompleted ? (
                 <CheckCircleOutline />

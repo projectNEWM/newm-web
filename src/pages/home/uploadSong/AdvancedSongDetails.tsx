@@ -89,7 +89,12 @@ const AdvancedSongDetails: React.FC = () => {
                 } }
               >
                 { <AutoAwesomeIcon /> }
-                <Typography paddingLeft={ 1 }>{ "Generate" }</Typography>
+                <Typography
+                  display={ ["none", "block", "block"] }
+                  paddingLeft={ 1 }
+                >
+                  { "Generate" }
+                </Typography>
               </IconButton>
             }
           />

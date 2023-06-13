@@ -19,7 +19,7 @@ const ConfirmAgreement: FunctionComponent = () => {
   };
 
   return (
-    <Box maxWidth={ "500px" }>
+    <Box maxWidth={ "500px" } marginX={ ["auto", "auto", "unset"] }>
       <Stack direction="column" spacing={ 1 } mb={ 5 }>
         <Typography fontWeight={ 700 }>ONE LAST THING</Typography>
 
