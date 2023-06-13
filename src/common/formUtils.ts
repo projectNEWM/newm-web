@@ -80,7 +80,7 @@ export const commonYupValidation = {
     ),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("newPassword")],
-    "Passwords must match"
+    "Must match new password"
   ),
   coverArtUrl: Yup.mixed().required("This field is required"),
   audio: Yup.mixed().required("This field is required"),

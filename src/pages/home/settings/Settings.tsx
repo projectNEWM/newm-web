@@ -21,9 +21,11 @@ import DeleteAccountDialog from "./DeleteAccountDialog";
 const Settings: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
 
-  const { data: { oauthType } = emptyProfile } = useGetProfileQuery();
-  const isLoginUsernameAndPassword = !oauthType;
-
+  const {
+    data: { oauthType } = emptyProfile,
+    isLoading: isGetUserProfileLoading,
+  } = useGetProfileQuery();
+  const isSocialLogin = !!oauthType;
   const [changePassword, { isLoading }] = useChangePasswordThunk();
 
   const initialValues: ChangePasswordRequest = {
@@ -32,22 +34,47 @@ const Settings: FunctionComponent = () => {
     confirmPassword: "",
   };
 
-  const validationSchema = Yup.object({
-    currentPassword: Yup.string().required("Current password is required"),
-    newPassword: commonYupValidation.newPassword.when("currentPassword", {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string()
-        .required("New password is required")
-        .notOneOf(
-          [Yup.ref("currentPassword")],
-          "New password cannot be the same as the current password"
-        ),
-    }),
-    confirmPassword: commonYupValidation.confirmPassword.when("newPassword", {
+  /**
+   * If there is a current password, the new password is required and it can't be the same as the current password.
+   */
+  const newPassword = commonYupValidation.newPassword.when("currentPassword", {
+    is: (currentValue: string) => currentValue,
+    then: Yup.string()
+      .required("New password is required")
+      .notOneOf(
+        [Yup.ref("currentPassword")],
+        "New password cannot be the same as the current password"
+      ),
+  });
+
+  /**
+   * If there is a new password, the confirmation password is required and it has to match the new password.
+   */
+  const confirmPassword = commonYupValidation.confirmPassword.when(
+    "newPassword",
+    {
       is: (currentValue: string) => currentValue,
       then: Yup.string().required("Must match new password"),
-    }),
-  });
+    }
+  );
+
+  /**
+   * Defines the validation schema based on the user's login method.
+   * If the user is logged in using social login, only the new password and the confirmation password are required.
+   * If the user logged in using email and password, the current password is also required.
+   */
+  const validationSchema = isSocialLogin
+    ? Yup.object({
+        newPassword: commonYupValidation.newPassword.required(
+          "New password is required"
+        ),
+        confirmPassword,
+      })
+    : Yup.object({
+        currentPassword: Yup.string().required("Current password is required"),
+        newPassword,
+        confirmPassword,
+      });
 
   /**
    * Update profile data with modifications made.
@@ -106,46 +133,40 @@ const Settings: FunctionComponent = () => {
                 } }
               >
                 <Stack rowGap={ 10 }>
-                  { isLoginUsernameAndPassword ? (
-                    <Stack rowGap={ 2 }>
-                      <Typography variant="h4" fontWeight={ 700 }>
-                        CHANGE PASSWORD
-                      </Typography>
+                  <Stack rowGap={ 2 }>
+                    <Typography variant="h4" fontWeight={ 700 }>
+                      CHANGE PASSWORD
+                    </Typography>
+                    { isSocialLogin || isGetUserProfileLoading ? null : (
                       <PasswordInputField
                         label="CURRENT PASSWORD"
                         name="currentPassword"
                         placeholder="Password"
                         showEndAdornment={ showEndAdornment }
                       />
-                      <Stack
-                        sx={ {
-                          flexDirection: { xs: "column", lg: "row" },
-                          justifyContent: "space-between",
-                          rowGap: 2,
-                        } }
-                      >
-                        <PasswordInputField
-                          label="NEW PASSWORD"
-                          name="newPassword"
-                          placeholder="New password"
-                          showEndAdornment={ showEndAdornment }
-                        />
-                        <PasswordInputField
-                          label="RETYPE NEW PASSWORD"
-                          name="confirmPassword"
-                          placeholder="New password"
-                          showEndAdornment={ showEndAdornment }
-                        />
-                      </Stack>
+                    ) }
+
+                    <Stack
+                      sx={ {
+                        flexDirection: { xs: "column", lg: "row" },
+                        justifyContent: "space-between",
+                        rowGap: 2,
+                      } }
+                    >
+                      <PasswordInputField
+                        label="NEW PASSWORD"
+                        name="newPassword"
+                        placeholder="New password"
+                        showEndAdornment={ showEndAdornment }
+                      />
+                      <PasswordInputField
+                        label="RETYPE NEW PASSWORD"
+                        name="confirmPassword"
+                        placeholder="New password"
+                        showEndAdornment={ showEndAdornment }
+                      />
                     </Stack>
-                  ) : (
-                    <Stack rowGap={ 1 }>
-                      <Typography variant="h4">CHANGE PASSWORD</Typography>
-                      <Typography variant="subtitle1">
-                        This account uses { oauthType } for authentication.
-                      </Typography>
-                    </Stack>
-                  ) }
+                  </Stack>
                   <Stack justifyContent="space-between" rowGap={ 2 }>
                     <Stack rowGap={ 0.5 }>
                       <Typography variant="h4" fontWeight={ 700 }>
@@ -169,6 +190,7 @@ const Settings: FunctionComponent = () => {
                       color={ theme.colors.grey100 }
                       variant="subtitle1"
                       underline="none"
+                      sx={ { alignSelf: ["center", "center", "flex-start"] } }
                     >
                       Terms of Service
                     </Link>
@@ -180,42 +202,40 @@ const Settings: FunctionComponent = () => {
                     mt: 5,
                   } }
                 />
-                { isLoginUsernameAndPassword ? (
-                  <Stack
-                    sx={ {
-                      columnGap: 2,
-                      flexDirection: { sx: "null", lg: "row" },
-                      mt: 5,
-                      rowGap: 2,
-                    } }
+                <Stack
+                  sx={ {
+                    columnGap: 2,
+                    flexDirection: { sx: "null", lg: "row" },
+                    mt: 5,
+                    rowGap: 2,
+                  } }
+                >
+                  <Button
+                    disabled={ !dirty }
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.lg
+                        ? "compact"
+                        : "default"
+                    }
+                    variant="secondary"
+                    color="music"
+                    onClick={ handleReset }
                   >
-                    <Button
-                      disabled={ !dirty }
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.lg
-                          ? "compact"
-                          : "default"
-                      }
-                      variant="secondary"
-                      color="music"
-                      onClick={ handleReset }
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      disabled={ !dirty }
-                      isLoading={ isLoading }
-                      type="submit"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.lg
-                          ? "compact"
-                          : "default"
-                      }
-                    >
-                      Save
-                    </Button>
-                  </Stack>
-                ) : null }
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={ !dirty }
+                    isLoading={ isLoading }
+                    type="submit"
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.lg
+                        ? "compact"
+                        : "default"
+                    }
+                  >
+                    Save
+                  </Button>
+                </Stack>
               </Box>
             </Form>
           );
