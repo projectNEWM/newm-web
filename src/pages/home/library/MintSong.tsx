@@ -1,20 +1,23 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Formik } from "formik";
+import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
+import { getUpdatedValues, scrollToError, useWindowDimensions } from "common";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { scrollToError, useWindowDimensions } from "common";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import {
   CollaborationStatus,
   Creditor,
   Featured,
+  MintingStatus,
   Owner,
   Song,
+  emptySong,
   useGenerateArtistAgreementThunk,
   useGetCollaborationsQuery,
+  useGetSongQuery,
   usePatchSongThunk,
 } from "modules/song";
 import { ConfirmContract, ErrorMessage, SwitchInputField } from "components";
@@ -61,6 +64,7 @@ const MintSong = () => {
   const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
     useGenerateArtistAgreementThunk();
 
+  const { data: { mintingStatus } = emptySong } = useGetSongQuery(id);
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: id });
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
@@ -69,6 +73,9 @@ const MintSong = () => {
   const isLoading = isSongLoading || isArtistAgreementLoading;
   const isVerified = verificationStatus === VerificationStatus.Verified;
   const artistName = `${firstName} ${lastName}`;
+
+  // some functionality is different if minting has already been initiated
+  const isMintingInitiated = mintingStatus !== MintingStatus.Undistributed;
 
   // get owners from collaborations array
   const owners: Array<Owner> = collabs
@@ -133,16 +140,7 @@ const MintSong = () => {
       ];
 
   // set initial featured artists
-  const initialFeatured = featured.length
-    ? featured
-    : [
-        {
-          email,
-          role,
-          isFeatured: true,
-          status: CollaborationStatus.Editing,
-        },
-      ];
+  const initialFeatured = featured.length ? featured : [];
 
   // Set collaborator content as visible if any have been added
   const isMinting = collabs.length > 0;
@@ -177,6 +175,8 @@ const MintSong = () => {
   });
 
   const handleSubmitStep = async (values: FormValues) => {
+    const updatedValues = getUpdatedValues(initialValues, values);
+
     if (stepIndex === 0) {
       handleCompleteFirstStep();
     } else {
@@ -189,7 +189,7 @@ const MintSong = () => {
         saved: true,
       });
 
-      patchSong({ id, ...values });
+      patchSong({ id, ...updatedValues });
     }
   };
 
@@ -204,6 +204,12 @@ const MintSong = () => {
     setStepIndex(1);
   };
 
+  const handleUpdateCollaborators = (values: FormikValues) => {
+    const updatedValues = getUpdatedValues(initialValues, values);
+
+    patchSong({ id, ...updatedValues });
+  };
+
   const handleVerifyProfile = () => {
     dispatch(setIsIdenfyModalOpen(true));
   };
@@ -211,6 +217,10 @@ const MintSong = () => {
   const handleConnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
   };
+
+  const handleSubmitForm = isMintingInitiated
+    ? handleUpdateCollaborators
+    : handleSubmitStep;
 
   return (
     <Box sx={ { maxWidth: "700px" } }>
@@ -232,11 +242,17 @@ const MintSong = () => {
             }
           >
             <AlertTitle sx={ { color: theme.colors.baseBlue, fontWeight: 600 } }>
-              These details cannot be changed after minting.
+              { isMintingInitiated
+                ? "Collaborators can't be added or removed after " +
+                  "initiating minting"
+                : "These details cannot be changed after minting." }
             </AlertTitle>
             <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
-              Please review all details carefully before moving forward with the
-              minting process.
+              { isMintingInitiated
+                ? "If you need to add or remove a collaborator, please " +
+                  "contact support."
+                : "Please review all details carefully before moving forward " +
+                  "with the minting process." }
             </Typography>
           </Alert>
         </Box>
@@ -244,9 +260,9 @@ const MintSong = () => {
 
       <Formik
         initialValues={ initialValues }
-        onSubmit={ handleSubmitStep }
         validationSchema={ validationSchema }
         enableReinitialize={ true }
+        onSubmit={ handleSubmitForm }
       >
         { ({
           errors,
@@ -255,7 +271,14 @@ const MintSong = () => {
           setFieldValue,
           touched,
           values,
+          dirty,
         }) => {
+          // if minting has been initiated, only show save button if
+          // collaborators have changed, otherwise only show if minting
+          const isStepOneButtonVisible = isMintingInitiated
+            ? dirty
+            : values.isMinting;
+
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
             setFieldValue("owners", values);
           };
@@ -282,6 +305,7 @@ const MintSong = () => {
                       <SwitchInputField
                         name="isMinting"
                         title="MINT SONG"
+                        disabled={ isMintingInitiated }
                         includeBorder={ false }
                         description={
                           "Minting a song will create an NFT that reflects " +
@@ -295,6 +319,7 @@ const MintSong = () => {
                           owners={ values.owners }
                           creditors={ values.creditors }
                           featured={ values.featured }
+                          isAddDeleteDisabled={ isMintingInitiated }
                           onChangeOwners={ handleChangeOwners }
                           onChangeCreditors={ handleChangeCreditors }
                           onChangeFeatured={ handleChangeFeatured }
@@ -383,12 +408,11 @@ const MintSong = () => {
                       Cancel
                     </Button>
 
-                    { /** TODO: disable button if wallet warning is visible */ }
-                    { values.isMinting && (
+                    { isStepOneButtonVisible && (
                       <Button
                         onClick={ () => handleSubmit() }
                         isLoading={ isLoading }
-                        disabled={ !isVerified }
+                        disabled={ !isVerified || !wallet }
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
@@ -396,7 +420,7 @@ const MintSong = () => {
                             : "default"
                         }
                       >
-                        Next
+                        { isMintingInitiated ? "Update collaborators" : "Next" }
                       </Button>
                     ) }
                   </Stack>

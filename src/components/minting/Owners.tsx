@@ -1,37 +1,29 @@
 import { Box, InputAdornment, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
-import { CollaborationStatus, Owner } from "modules/song";
-import { FunctionComponent, ReactElement } from "react";
+import {
+  Owner,
+  getCollaboratorStatusContent,
+  getIsCollaboratorEditable,
+} from "modules/song";
+import { FunctionComponent } from "react";
 import { TextInputField } from "components";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CloseIcon from "@mui/icons-material/Close";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
-}
-
-interface StatusContent {
-  readonly tooltip: string;
-  readonly icon: ReactElement;
 }
 
 /**
  * Allows for displaying and updating owners when minting a song.
  */
-const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
+const Owners: FunctionComponent<OwnersProps> = ({
+  owners,
+  onDelete,
+  isDeleteDisabled = false,
+}) => {
   const theme = useTheme();
-
-  const statusContentMap: Record<string, StatusContent> = {
-    [CollaborationStatus.Waiting]: {
-      tooltip: "Waiting on acceptance from collaborator.",
-      icon: <AccessTimeIcon style={ { color: theme.colors.yellow } } />,
-    },
-    [CollaborationStatus.Rejected]: {
-      tooltip: "Collaborator rejected the proposed ownership amount.",
-      icon: <CloseIcon style={ { color: theme.colors.red } } />,
-    },
-  };
 
   return (
     <Box>
@@ -45,8 +37,8 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
       </Stack>
 
       { owners.map((owner, idx) => {
-        const isEditable = owner.status === CollaborationStatus.Editing;
-        const statusContent = statusContentMap[owner.status];
+        const isEditable = getIsCollaboratorEditable(owner);
+        const statusContent = getCollaboratorStatusContent(owner.status);
 
         return (
           <Stack
@@ -98,7 +90,7 @@ const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete }) => {
                 sx={ { ml: 3 } }
                 variant="secondary"
                 width="icon"
-                disabled={ owner.isCreator }
+                disabled={ owner.isCreator || isDeleteDisabled }
                 onClick={ () => {
                   onDelete(owner, owners);
                 } }

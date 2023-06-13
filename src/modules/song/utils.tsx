@@ -1,12 +1,24 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { uniq } from "lodash";
 import {
+  enableWallet,
+  getWalletChangeAddress,
+  signWalletTransaction,
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "common";
+import theme from "theme";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CloseIcon from "@mui/icons-material/Close";
+import {
   Collaboration,
+  CollaborationStatus,
   Collaborator,
+  CollaboratorStatusContent,
   CreateCollaborationRequest,
   Creditor,
   Featured,
   Invite,
+  MintingStatus,
   Owner,
 } from "./types";
 import { extendedApi as songApi } from "./api";
@@ -72,6 +84,7 @@ export const generateCollaborators = (
       royaltyRate: collaborator.percentage,
       isCredited: !!collaborator.isCredited,
       isFeatured: !!collaborator.isFeatured,
+      isCreator: !!collaborator.isCreator,
     };
   });
 };
@@ -162,6 +175,43 @@ export const mapCollaboratorsToCollaborations = (
   }));
 };
 
+export const getIsCollaboratorEditable = (
+  collaborator: Owner | Creditor | Featured
+) => {
+  const status = collaborator.status;
+  const isCreator = "isCreator" in collaborator && !!collaborator.isCreator;
+
+  const isEditableStatus = [
+    CollaborationStatus.Editing,
+    CollaborationStatus.Rejected,
+  ].includes(status);
+
+  return isEditableStatus || isCreator;
+};
+
+export const getIsSongDeletable = (status: MintingStatus) => {
+  return [
+    MintingStatus.Undistributed,
+    MintingStatus.StreamTokenAgreementApproved,
+    MintingStatus.MintingPaymentRequested,
+  ].includes(status);
+};
+
+export const getCollaboratorStatusContent = (status: CollaborationStatus) => {
+  const statusContentMap: Record<string, CollaboratorStatusContent> = {
+    [CollaborationStatus.Waiting]: {
+      tooltip: "Waiting on acceptance from collaborator.",
+      icon: <AccessTimeIcon style={ { color: theme.colors.yellow } } />,
+    },
+    [CollaborationStatus.Rejected]: {
+      tooltip: "Collaborator rejected the collaboration request.",
+      icon: <CloseIcon style={ { color: theme.colors.red } } />,
+    },
+  };
+
+  return statusContentMap[status];
+};
+
 /**
  * Creates an Invite object from a Collaboration object.
  *
@@ -207,4 +257,73 @@ export const createInvite = async (
     status: collaboration.status,
     title: songData.title,
   };
+};
+
+/**
+ * Converts milliseconds into a song format (m:ss).
+ *
+ * @param {number} milliseconds - The time in milliseconds.
+ *
+ * @returns {string} The time in 'm:ss' format.
+ */
+export const convertMillisecondsToSongFormat = (
+  milliseconds: number
+): string => {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
+
+/**
+ * Allows the user to submit a payment to cover the cost of minting
+ * a song using their Cardano wallet.
+ *
+ * @param songId id of the song to submit a minting payment for
+ * @param dispatch thunk dispatch helper
+ */
+export const submitMintSongPayment = async (
+  songId: string,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+) => {
+  const wallet = await enableWallet();
+
+  const getPaymentResp = await dispatch(
+    songApi.endpoints.getMintSongPayment.initiate(songId)
+  );
+
+  if ("error" in getPaymentResp || !getPaymentResp.data) {
+    throw new SilentError();
+  }
+
+  const paymentHex = getPaymentResp.data.cborHex;
+  const utxoCborHexList = await wallet.getUtxos(paymentHex);
+  const changeAddress = await getWalletChangeAddress(wallet);
+
+  const createPaymentResp = await dispatch(
+    songApi.endpoints.createMintSongPayment.initiate({
+      songId,
+      changeAddress,
+      utxoCborHexList,
+    })
+  );
+
+  if ("error" in createPaymentResp || !createPaymentResp.data) {
+    throw new SilentError();
+  }
+
+  const tx = createPaymentResp.data.cborHex;
+  const signedTx = await signWalletTransaction(wallet, tx);
+  await wallet.submitTx(signedTx);
+
+  const txResp = await dispatch(
+    songApi.endpoints.submitMintSongPayment.initiate({
+      cborHex: signedTx,
+    })
+  );
+
+  if ("error" in txResp) {
+    throw new SilentError();
+  }
 };

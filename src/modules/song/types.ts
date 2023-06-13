@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface SongState {
   artistAgreement: string;
 }
@@ -14,10 +16,6 @@ export interface GetSongsRequest {
   ownerIds?: string[];
   phrase?: string;
   mintingStatuses?: MintingStatus[];
-}
-
-export interface GetSongMintPaymentResponse {
-  cborHex: string;
 }
 
 export interface Owner {
@@ -296,4 +294,23 @@ export interface ReplyCollaborationRequest {
 export interface ProcessStreamTokenAgreementRequest {
   accepted: boolean;
   songId: string;
+}
+
+export interface CreateMintSongPaymentRequest {
+  readonly songId: string;
+  readonly changeAddress: string;
+  readonly utxoCborHexList: ReadonlyArray<string>;
+}
+
+export interface CborHexRequest {
+  readonly cborHex: string;
+}
+
+export interface CborHexResponse {
+  readonly cborHex: string;
+}
+
+export interface CollaboratorStatusContent {
+  readonly tooltip: string;
+  readonly icon: ReactElement;
 }

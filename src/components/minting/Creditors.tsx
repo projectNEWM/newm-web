@@ -1,6 +1,10 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import { CollaborationStatus, Creditor } from "modules/song";
+import { Button, Tooltip, Typography } from "elements";
+import {
+  Creditor,
+  getCollaboratorStatusContent,
+  getIsCollaboratorEditable,
+} from "modules/song";
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
@@ -8,6 +12,7 @@ import { useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
+  readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     creditor: Creditor,
     creditors: ReadonlyArray<Creditor>
@@ -20,9 +25,9 @@ interface CreditorsProps {
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
   onDelete,
+  isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
-
   const { data: roles = [] } = useGetRolesQuery();
 
   return (
@@ -37,7 +42,8 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
       </Stack>
 
       { creditors.map((creditor, idx) => {
-        const isEditable = creditor.status === CollaborationStatus.Editing;
+        const isEditable = getIsCollaboratorEditable(creditor);
+        const statusContent = getCollaboratorStatusContent(creditor.status);
 
         return (
           <Stack
@@ -51,7 +57,15 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
               rowGap: 2,
             } }
           >
-            <Typography variant="subtitle1">{ creditor.email }</Typography>
+            <Stack direction="row" gap={ 1 } alignItems="center">
+              { statusContent && (
+                <Tooltip title={ statusContent.tooltip }>
+                  { statusContent.icon }
+                </Tooltip>
+              ) }
+
+              <Typography variant="subtitle1">{ creditor.email }</Typography>
+            </Stack>
 
             <Stack direction="row" alignItems="center">
               { isEditable ? (
@@ -72,6 +86,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 color="white"
                 sx={ { ml: 3 } }
                 variant="secondary"
+                disabled={ isDeleteDisabled }
                 width="icon"
                 onClick={ () => {
                   onDelete(creditor, creditors);
