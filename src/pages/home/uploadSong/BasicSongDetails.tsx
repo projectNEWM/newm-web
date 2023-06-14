@@ -164,12 +164,7 @@ const BasicSongDetails: FunctionComponent = () => {
           placeholder="Tell us about your song"
         />
 
-        <Stack
-          mt={ 5 }
-          spacing={ 5 }
-          display="flex"
-          flexDirection={ ["column", "column", "row"] }
-        >
+        <Stack mt={ 5 } spacing={ 5 }>
           <Box>
             <Box
               ref={ ownersRef }

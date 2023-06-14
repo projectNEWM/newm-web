@@ -1,10 +1,9 @@
 import { CheckCircleOutline } from "@mui/icons-material";
-import { Box, Theme, styled } from "@mui/material";
-import { Typography } from "elements";
+import { Box, Typography, styled } from "@mui/material";
 import theme from "theme";
 
 interface StepBoxProps {
-  readonly boxColor: keyof Theme["colors"];
+  readonly boxColor: string;
   readonly boxTitle: string;
 }
 
@@ -18,21 +17,21 @@ const statusColor = (activeStep: number, currentIndex: number) => {
   const isStepActive = activeStep === currentIndex + 1;
 
   if (isStepCompleted) {
-    return "green";
+    return theme.colors.green;
   } else if (isStepActive) {
-    return "music";
+    return theme.colors.music;
   } else {
-    return "grey400";
+    return theme.colors.grey400;
   }
 };
 
 const StepBox = styled(Box)<StepBoxProps>`
   flex-grow: 1;
-  color: ${(props) => theme.colors[props.boxColor]};
+  color: ${(props) => props.boxColor};
   background-color: ${theme.colors.black};
-  border-bottom: 3px solid ${(props) => theme.colors[props.boxColor]};
-  height: 59px;
-  width: 232px;
+  border-bottom: 3px solid ${(props) => props.boxColor};
+  min-height: 60px;
+  min-width: 232px;
   display: flex;
   align-items: center;
 `;
@@ -65,15 +64,13 @@ const FormProgressStepper = ({
 }: FormStepperGridProps) => {
   return (
     <Box
-      sx={ {
-        display: "flex",
-        flexDirection: ["column", "column", "row"],
-        maxWidth: [undefined, undefined, "700px"],
-        gap: 0.5,
-        mb: 5,
-        justifyContent: "center",
-        alignItems: "center",
-      } }
+      display="flex"
+      flexDirection={ ["column", "column", "row"] }
+      maxWidth={ [undefined, undefined, "700px"] }
+      gap={ 0.5 }
+      mb={ 5 }
+      justifyContent="center"
+      alignItems="center"
     >
       { stepTitles.map((stepTitle, index) => {
         const isStepCompleted = activeStep > index + 1;
@@ -86,14 +83,7 @@ const FormProgressStepper = ({
             boxTitle={ stepTitle }
             justifyContent={ ["center", "center", "flex-start"] }
           >
-            <Box
-              sx={ {
-                display: "flex",
-                flexDirection: "row",
-                gap: 1.5,
-                pl: 1.75,
-              } }
-            >
+            <Box display="flex" flexDirection="row" gap={ 1.5 } pl={ 1.75 }>
               { isStepCompleted ? (
                 <CheckCircleOutline />
               ) : (
@@ -102,11 +92,9 @@ const FormProgressStepper = ({
               <Typography
                 variant="subtitle2"
                 color={ stepColor }
-                sx={ {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                } }
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
                 { stepTitle }
               </Typography>

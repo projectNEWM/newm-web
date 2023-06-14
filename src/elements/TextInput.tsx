@@ -36,7 +36,7 @@ const StyledInputElement = styled.input`
   display: flex;
   flex-grow: 1;
   background: transparent;
-  color: white;
+  color-scheme: dark;
   border-width: 0;
   font-family: ${theme.inputField.fontFamily};
   font-size: ${theme.inputField.fontSize};
