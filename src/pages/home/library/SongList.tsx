@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import theme from "theme";
 import { Button } from "elements";
+import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import {
+  Song,
   convertMillisecondsToSongFormat,
-  getResizedAlbumCoverImageUrl,
-  useWindowDimensions,
-} from "common";
-import { Song, useGetSongsQuery, useHlsJs } from "modules/song";
+  useGetSongsQuery,
+  useHlsJs,
+} from "modules/song";
 import {
   SongStreamPlaybackIcon,
   TableCell,
