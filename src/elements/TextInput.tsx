@@ -63,6 +63,11 @@ const StyledInputElement = styled.input`
   &: [type=number] {
     -moz-appearance: textfield;
   }
+
+  /* Change date "placeholder" text color to match other fields*/
+  &[type="date"]:not([value*="-"])::-webkit-datetime-edit {
+    color: ${theme.colors.grey100};
+  }
 `;
 
 export const TextInput: ForwardRefRenderFunction<
