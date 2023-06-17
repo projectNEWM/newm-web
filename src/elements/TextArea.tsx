@@ -157,6 +157,7 @@ export const TextArea: ForwardRefRenderFunction<
             onBlur={ handleBlur }
             disabled={ disabled }
             ref={ ref }
+            rows={ 1 }
           />
 
           { endAdornment }

@@ -1,11 +1,19 @@
-import { Switch, Typography } from "elements";
-import { Stack, SwitchProps, SxProps, useTheme } from "@mui/material";
+import { Switch, Tooltip, Typography } from "elements";
+import {
+  IconButton,
+  Stack,
+  SwitchProps,
+  SxProps,
+  useTheme,
+} from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
+import HelpIcon from "@mui/icons-material/Help";
 
 export interface SwitchInputProps extends SwitchProps {
   readonly title: string;
-  readonly description: string;
+  readonly description?: string;
   readonly includeBorder?: boolean;
+  readonly tooltipText?: string;
   readonly children?: ReactNode;
 }
 
@@ -16,6 +24,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   title,
   description,
   includeBorder = true,
+  tooltipText = "",
   children,
   ...props
 }) => {
@@ -39,14 +48,37 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
           justifyContent: "space-between",
         } }
       >
-        <Stack gap={ 0.75 } pr={ 4 }>
-          <Typography pr={ 1 }>{ title }</Typography>
+        <Stack pr={ [0, 0, 4] }>
+          <Stack display="flex" flexDirection="row">
+            <Typography
+              pr={ 1 }
+              color="white"
+              variant={ description ? "body1" : "subtitle1" }
+            >
+              { title }
+            </Typography>
 
-          <Typography pr={ 1 } variant="subtitle2">
-            { description }
-          </Typography>
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: [1, 1, 0] } }>
+                  <HelpIcon
+                    sx={ {
+                      color: theme.colors.grey100,
+                      height: "18px",
+                      width: "18px",
+                    } }
+                  />
+                </IconButton>
+              </Tooltip>
+            ) }
+          </Stack>
+
+          { !!description && (
+            <Typography pt={ 0.75 } pr={ 1 } variant="subtitle2">
+              { description }
+            </Typography>
+          ) }
         </Stack>
-
         <Switch { ...props } />
       </Stack>
       { props.checked ? children : null }

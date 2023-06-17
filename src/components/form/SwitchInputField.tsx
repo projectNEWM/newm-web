@@ -6,8 +6,9 @@ import SwitchInput from "elements/SwitchInput";
 interface SwitchInputFieldProps extends SwitchProps {
   readonly name: string;
   readonly title: string;
-  readonly description: string;
+  readonly description?: string;
   readonly includeBorder?: boolean;
+  readonly tooltipText?: string;
   readonly children?: ReactNode;
 }
 
