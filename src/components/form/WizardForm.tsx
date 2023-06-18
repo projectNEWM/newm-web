@@ -9,6 +9,7 @@ import {
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { removeTrailingSlash } from "common";
 import * as Yup from "yup";
+import { FormProgressStepper } from "components";
 
 interface FormRoute {
   /** route corresponding to the step */
@@ -24,12 +25,17 @@ interface FormRoute {
     values: any, // eslint-disable-line
     helpers: FormikHelpers<FormikValues>
   ) => void;
+  /** The route title for the progress stepper */
+  readonly progressStepTitle?: string;
 }
 
 // eslint-disable-next-line
 interface WizardFormProps extends FormikConfig<any> {
   readonly rootPath?: string;
   readonly routes: ReadonlyArray<FormRoute>;
+
+  /** Display progress stepper at top of page */
+  readonly isProgressStepperVisible?: boolean;
 }
 
 /**
@@ -42,6 +48,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   routes,
   onSubmit,
   rootPath = "",
+  isProgressStepperVisible,
   ...formikProps
 }) => {
   const location = useLocation();
@@ -108,6 +115,14 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     >
       { () => (
         <Form style={ { height: "100%" } }>
+          { isProgressStepperVisible && (
+            <FormProgressStepper
+              activeStep={ currentIndex + 1 }
+              stepTitles={
+                routes.map((route) => route.progressStepTitle) as string[]
+              }
+            />
+          ) }
           <Routes>
             { routes.map(({ path, element }) => (
               <Route key={ path } path={ path } element={ element } />

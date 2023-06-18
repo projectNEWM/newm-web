@@ -15,7 +15,8 @@ import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
-import SongInfo from "./SongInfo";
+import BasicSongDetails from "./BasicSongDetails";
+import AdvancedSongDetails from "./AdvancedSongDetails";
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -70,24 +71,32 @@ const UploadSong: FunctionComponent = () => {
     stageName,
   };
 
+  // Navigate to advanced details if minting, otherwise upload song
   const handleSongInfo = async (
     values: UploadSongRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
-      await generateArtistAgreement({
-        songName: values.title,
-        companyName,
-        artistName,
-        stageName,
-      });
-
       helpers.setSubmitting(false);
-      navigate("confirm");
+      navigate("advanced-details");
     } else {
       await handleSubmit(values, helpers);
-      helpers.setSubmitting(false);
     }
+  };
+
+  // Prepare Artist Agreement for confirmation page
+  const handleAdvancedDetails = async (
+    values: UploadSongRequest,
+    helpers: FormikHelpers<FormikValues>
+  ) => {
+    await generateArtistAgreement({
+      songName: values.title,
+      companyName,
+      artistName,
+      stageName,
+    });
+
+    helpers.setSubmitting(false);
   };
 
   const handleSubmit = async (
@@ -145,12 +154,14 @@ const UploadSong: FunctionComponent = () => {
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
           rootPath="home/upload-song"
+          isProgressStepperVisible={ true }
           validateOnMount={ true }
           enableReinitialize={ true }
           routes={ [
             {
-              element: <SongInfo />,
+              element: <BasicSongDetails />,
               path: "",
+              progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
@@ -162,8 +173,15 @@ const UploadSong: FunctionComponent = () => {
               }),
             },
             {
+              element: <AdvancedSongDetails />,
+              onSubmitStep: handleAdvancedDetails,
+              path: "advanced-details",
+              progressStepTitle: "Advanced details",
+            },
+            {
               element: <ConfirmAgreement />,
               path: "confirm",
+              progressStepTitle: "Distribute & Mint",
               validationSchema: Yup.object().shape({
                 consentsToContract: validations.consentsToContract,
               }),

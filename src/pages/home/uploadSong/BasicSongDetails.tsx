@@ -24,15 +24,14 @@ import {
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
-const SongInfo: FunctionComponent = () => {
+const BasicSongDetails: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { wallet } = useConnectWallet();
 
   const audioRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const genresRef = useRef<HTMLDivElement>(null);
+  const songDetailsRef = useRef<HTMLDivElement>(null);
   const ownersRef = useRef<HTMLDivElement>(null);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
@@ -70,26 +69,26 @@ const SongInfo: FunctionComponent = () => {
     scrollToError(errors, isSubmitting, [
       { error: errors.audio, ref: audioRef },
       { error: errors.coverArtUrl, ref: coverArtUrlRef },
-      { error: errors.title, ref: titleRef },
-      { error: errors.genres, ref: genresRef },
+      { error: errors.title || errors.genres, ref: songDetailsRef },
       { error: errors.owners, ref: ownersRef },
     ]);
   }, [errors, isSubmitting]);
 
   return (
-    <Stack direction="column">
+    <Stack direction="column" spacing={ 5 }>
       <Stack
         sx={ {
           display: "flex",
           flexDirection: ["column", "column", "row"],
-          columnGap: [undefined, undefined, "20px"],
-          rowGap: ["16px", null, "12px"],
+          columnGap: [undefined, undefined, 1.5],
+          rowGap: [2, null, 3],
           maxWidth: [undefined, undefined, "700px"],
+          marginBottom: 3,
         } }
       >
         <Stack ref={ audioRef } spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
-            MUSIC
+            SONG FILE
           </Typography>
 
           <UploadSongField name="audio" />
@@ -110,51 +109,49 @@ const SongInfo: FunctionComponent = () => {
       </Stack>
 
       <Stack
-        sx={ {
-          marginY: 5,
-          marginX: ["auto", "auto", "unset"],
-          maxWidth: ["340px", "340px", "700px"],
-        } }
-      >
-        <HorizontalLine />
-      </Stack>
-
-      <Stack
-        spacing={ 2.5 }
+        spacing={ 3 }
         sx={ {
           marginX: ["auto", "auto", "unset"],
           maxWidth: ["340px", "340px", "700px"],
+          alignSelf: ["center", "center", "unset"],
         } }
       >
-        <TextInputField
-          isOptional={ false }
-          name="title"
-          label="SONG TITLE"
-          ref={ titleRef }
-          placeholder="Give your track a name..."
-          widthType="full"
-        />
-
         <Stack
-          ref={ genresRef }
+          ref={ songDetailsRef }
           sx={ {
             display: "grid",
             gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
-            rowGap: ["16px", null, "12px"],
-            columnGap: [undefined, undefined, "20px"],
+            rowGap: [2, null, 3],
+            columnGap: [undefined, undefined, 1.5],
           } }
         >
+          <TextInputField
+            isOptional={ false }
+            name="title"
+            label="SONG TITLE"
+            placeholder="Give your track a name..."
+            widthType="full"
+          />
+
           <DropdownMultiSelectField
-            label="Genres"
+            label="GENRE"
             isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
             options={ genreOptions }
           />
 
+          <DropdownMultiSelectField
+            label="LANGUAGE"
+            name="language"
+            placeholder="Select all that apply"
+            /** TODO: add language options */
+            options={ [] }
+          />
+
           { /** TODO: get moods from back-end */ }
           <DropdownMultiSelectField
-            label="Moods"
+            label="MOOD"
             name="moods"
             placeholder="Select all that apply"
             options={ moodOptions }
@@ -163,22 +160,9 @@ const SongInfo: FunctionComponent = () => {
 
         <TextAreaField
           name="description"
-          label="SONG DESCRIPTION"
+          label="DESCRIPTION"
           placeholder="Tell us about your song"
         />
-
-        <SwitchInputField
-          name="isExplicit"
-          title="DOES THE SONG CONTAIN EXPLICIT CONTENT?"
-          description={
-            "Explicit content includes strong or discriminatory language, " +
-            "or depictions of sex, violence or substance abuse."
-          }
-        />
-
-        <Box py={ 2.5 }>
-          <HorizontalLine />
-        </Box>
 
         <Stack mt={ 5 } spacing={ 5 }>
           <Box>
@@ -270,27 +254,26 @@ const SongInfo: FunctionComponent = () => {
           ) }
         </Stack>
 
-        <Box py={ 2.5 }>
-          <HorizontalLine />
-        </Box>
+        <Box>
+          <HorizontalLine mb={ 5 } />
 
-        { /** TODO: disable button if verify or wallet warnings visible */ }
-        <Button
-          sx={ { mt: 5 } }
-          type="submit"
-          disabled={ isSubmitDisabled }
-          isLoading={ isSubmitting }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
-        >
-          { values.isMinting ? "Next" : "Upload" }
-        </Button>
+          { /** TODO: disable button if verify or wallet warnings visible */ }
+          <Button
+            type="submit"
+            disabled={ isSubmitDisabled }
+            isLoading={ isSubmitting }
+            width={
+              windowWidth && windowWidth > theme.breakpoints.values.md
+                ? "compact"
+                : "default"
+            }
+          >
+            { values.isMinting ? "Next" : "Upload" }
+          </Button>
+        </Box>
       </Stack>
     </Stack>
   );
 };
 
-export default SongInfo;
+export default BasicSongDetails;
