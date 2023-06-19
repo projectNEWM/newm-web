@@ -1,18 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
-import { prepareNewmAuthHeader } from "common/apiUtils";
 import { setToastMessage } from "modules/ui";
 import {
   GenerateArtistAgreementBody,
   GenerateArtistAgreementResponse,
 } from "./types";
+import { baseQuery as newmBaseQuery } from "../newm/api";
+import { fetchBaseQueryWithReauth, prepareAuthHeader } from "../newm/utils";
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: baseUrls.lambda,
+  prepareHeaders: prepareAuthHeader,
+});
 
 const api = createApi({
   reducerPath: "lambdaApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseUrls.lambda,
-    prepareHeaders: prepareNewmAuthHeader,
-  }),
+  baseQuery: fetchBaseQueryWithReauth(baseQuery, newmBaseQuery),
   endpoints: (build) => ({
     generateArtistAgreement: build.mutation<
       GenerateArtistAgreementResponse,
@@ -27,7 +30,7 @@ const api = createApi({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching your artist agreement",
