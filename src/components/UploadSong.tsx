@@ -31,7 +31,7 @@ interface UploadSongProps {
 }
 
 interface SongProgressOverlayProps {
-  readonly progress: string;
+  readonly progress: number;
   readonly isPlaying: boolean;
 }
 
@@ -50,10 +50,9 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
 
   const [isHovering, setIsHovering] = useState(false);
   const [song, setSong] = useState<Howl | null>(null);
-  const [songProgress, setSongProgress] = useState<string>("0%");
+  const [songProgress, setSongProgress] = useState<number>(0);
+  const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
   const visualizerRef = useRef<HTMLCanvasElement>(null);
-
-  const isSongPlaying = !!song?.playing();
 
   const handlePlaySong: MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -67,6 +66,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     if (!song) return;
 
     song.stop();
+    setSongProgress(0); // don't wait for interval to update progress bar
   };
 
   const handleDrop = useCallback(
@@ -112,7 +112,13 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       if (!file) return;
 
       const binary = (await getFileBinary(file)) as string;
-      const howler = new Howl({ src: binary });
+      const howler = new Howl({
+        src: binary,
+        onplay: () => setIsSongPlaying(true),
+        onend: () => setIsSongPlaying(false),
+        onstop: () => setIsSongPlaying(false),
+      });
+
       setSong(howler);
     };
 
@@ -125,14 +131,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   useEffect(() => {
     const getSongProgress = () => {
       if (!song) {
-        return "0%";
+        return 0;
       }
 
       const songDuration = song.duration();
       const songPosition = song.seek();
-      const songProgress = songPosition / songDuration;
-
-      return songProgress * 100 + "%";
+      return songPosition / songDuration;
     };
 
     const interval = setInterval(() => {
@@ -209,7 +213,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       alignItems="center"
                       sx={ {
                         "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, 0.35)",
+                          backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
                       } }
                     >
@@ -226,7 +230,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       alignItems="center"
                       sx={ {
                         "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, 0.35)",
+                          backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
                       } }
                     >
@@ -280,13 +284,15 @@ const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({
 }) => {
   const theme = useTheme();
 
+  const progressPercentage = progress * 100 + "%";
+
   return (
     <Box
       position="absolute"
       top={ 0 }
       bottom={ 0 }
       left={ 0 }
-      width={ progress }
+      width={ progressPercentage }
       marginLeft="2px"
       zIndex={ -10 }
       sx={ {
