@@ -27,7 +27,7 @@ const api = createApi({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occured while fetching your artist agreement",
