@@ -2,19 +2,22 @@ import { Pagination, PaginationProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "theme";
 
-const grey100 = theme.colors.grey100;
-
 const StyledPagination = styled(Pagination)<PaginationProps>({
-  color: grey100,
+  color: theme.colors.grey100,
 
   "& .MuiPaginationItem-root": {
-    color: grey100,
+    minHeight: "38px",
+    minWidth: "42px",
+    color: theme.colors.grey100,
     borderRadius: "0px",
-    border: `1px solid ${grey100}`,
+    border: `1px solid ${theme.colors.grey400}`,
     margin: "0px",
+    "&:hover": {
+      background: theme.colors.grey400,
+    },
   },
   "& .MuiPaginationItem-previousNext > svg": {
-    color: grey100,
+    color: theme.colors.grey100,
   },
   "& .MuiPaginationItem-previousNext": {
     borderRadius: "0px 6px 6px 0px",
@@ -28,9 +31,12 @@ const StyledPagination = styled(Pagination)<PaginationProps>({
     paddingBottom: "4px",
   },
 
-  "& .Mui-selected": {
+  "& .MuiPaginationItem-root.Mui-selected": {
     color: "white",
-    background: theme.colors.grey400,
+    backgroundColor: theme.colors.grey400,
+    "&:hover": {
+      background: theme.colors.grey400,
+    },
   },
 });
 
