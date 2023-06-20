@@ -43,7 +43,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       .required()
       .test(
         "at-least-one-true",
-        "Rights, credits or featured must be true",
+        "Please enter valid featured artist, rights, or credits",
         (item, testContext) =>
           item ||
           testContext.parent.isRightsOwner ||
