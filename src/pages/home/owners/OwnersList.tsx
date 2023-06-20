@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import {
   CollaborationStatus,
@@ -10,12 +9,13 @@ import {
 import { selectUi, setIsInvitesModalOpen } from "modules/ui";
 import { Button, Typography } from "elements";
 import { SearchBox } from "components";
+import { useAppDispatch, useAppSelector } from "common";
 import OwnersTable from "./OwnersTable";
 
 const OwnersList: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [query, setQuery] = useState("");
-  const { isInvitesModalOpen } = useSelector(selectUi);
+  const { isInvitesModalOpen } = useAppSelector(selectUi);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     inbound: true,

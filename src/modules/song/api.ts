@@ -19,6 +19,8 @@ import {
   GetCollaboratorsResponse,
   GetSongCountRequest,
   GetSongCountResponse,
+  GetSongStreamData,
+  GetSongStreamResponse,
   GetSongsRequest,
   GetSongsResponse,
   MarketplaceStatus,
@@ -74,6 +76,34 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occured while fetching song info",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getSongStream: build.query<GetSongStreamResponse, Song>({
+      query: (song) => ({
+        url: `v1/songs/${song.id}/stream`,
+        method: "GET",
+      }),
+      providesTags: [Tags.Song],
+
+      // transform the response to add the song to make it easy to couple the song with the stream info
+      transformResponse: (value: GetSongStreamData, _meta: GetSongStreamData, song: Song): GetSongStreamResponse => {
+        return {
+          song: song,
+          streamData: value,
+        };
+      },
+
+      async onQueryStarted(song, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching stream info",
               severity: "error",
             })
           );
@@ -501,6 +531,7 @@ export const {
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongsQuery,
+  useGetSongStreamQuery,
 } = extendedApi;
 
 export default extendedApi;

@@ -2,17 +2,16 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { FormikHelpers, FormikValues } from "formik";
-import { useDispatch } from "react-redux";
 import theme from "theme";
 import { ResponsiveNEWMLogo, WizardForm } from "components";
-import { commonYupValidation } from "common";
+import { commonYupValidation, useAppDispatch } from "common";
 import { resetPassword, sendVerificationEmail } from "modules/session";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
 
 const ForgotPassword: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const initialValues = {
     email: "",

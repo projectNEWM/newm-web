@@ -1,23 +1,27 @@
+import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
 import Cookies from "js-cookie";
+import { RootState } from "store";
 import { Mutex } from "async-mutex";
-import { logOut, receiveRefreshToken } from "modules/session";
+import { NewmAuthResponse, logOut, receiveRefreshToken } from "modules/session";
 
 const mutex = new Mutex();
 
 /**
- * Wraps a base query with functionality to refresh the access token
- * if it is no longer valid and retry the request. Utilizes Mutex to prevent
- * simultaneous calls to refresh the token.
+ * Wraps a base query with functionality to refresh the access token if it is
+ * no longer valid and retry the request. Can be passed an optional alternate
+ * baseQuery for the refresh token API call. Utilizes Mutex to prevent
+ * additional API calls while refreshing the token.
  */
 export const fetchBaseQueryWithReauth = (
-  baseQuery: BaseQueryFn<
+  baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
+  refreshBaseQuery?: BaseQueryFn<
     string | FetchArgs,
-    any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    unknown,
     FetchBaseQueryError
   >
 ): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
@@ -53,9 +57,11 @@ export const fetchBaseQueryWithReauth = (
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
 
+        const baseQueryForRefresh = refreshBaseQuery || baseQuery;
+
         try {
           // get new access and refresh token
-          const refreshResult = await baseQuery(
+          const refreshResult = await baseQueryForRefresh(
             {
               url: "/v1/auth/refresh",
               headers: { Authorization: `Bearer ${refreshToken}` },
@@ -65,7 +71,8 @@ export const fetchBaseQueryWithReauth = (
           );
 
           if (refreshResult.data) {
-            api.dispatch(receiveRefreshToken(refreshResult.data));
+            const authResponse = refreshResult.data as NewmAuthResponse;
+            api.dispatch(receiveRefreshToken(authResponse));
 
             result = await makeRequestWithRefreshedAccessToken();
           } else {
@@ -82,4 +89,22 @@ export const fetchBaseQueryWithReauth = (
 
     return result;
   };
+};
+
+export const prepareAuthHeader = (
+  headers: Headers,
+  {
+    getState,
+  }: Pick<BaseQueryApi, "type" | "getState" | "extra" | "endpoint" | "forced">
+) => {
+  const state = getState() as RootState;
+  const { isLoggedIn } = state.session;
+  const accessToken = Cookies.get("accessToken");
+  const hasAuthHeader = !!headers.get("Authorization");
+
+  if (isLoggedIn && accessToken && !hasAuthHeader) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  return headers;
 };

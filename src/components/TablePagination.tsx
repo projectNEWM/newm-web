@@ -1,5 +1,6 @@
 import {
   Box,
+  PaginationItem,
   SxProps,
   TableCell,
   TableCellProps,
@@ -8,6 +9,8 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import React from "react";
 import theme from "theme";
 import StyledPagination from "./styled/StyledPagination";
@@ -49,6 +52,7 @@ const TablePagination = ({
               display: "flex",
               justifyContent: { xs: "center", sm: "space-between" },
               alignItems: "center",
+              mt: 0.5,
             } }
           >
             <Typography
@@ -68,6 +72,12 @@ const TablePagination = ({
               page={ page }
               count={ Math.ceil(numberOfRows / rowsPerPage) }
               onChange={ handlePageChange }
+              renderItem={ (item) => (
+                <PaginationItem
+                  slots={ { previous: ArrowLeftIcon, next: ArrowRightIcon } }
+                  { ...item }
+                />
+              ) }
             />
           </Box>
         </StyledTableCell>

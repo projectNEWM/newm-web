@@ -3,8 +3,8 @@ import { Typography } from "elements";
 import { Formik, FormikProps } from "formik";
 import { selectSong } from "modules/song";
 import { FunctionComponent, useEffect } from "react";
-import { useSelector } from "react-redux";
 import agreementPreview from "assets/images/artist-agreement-preview.jpg";
+import { useAppSelector } from "common";
 import ViewPDF from "../ViewPDF";
 import CheckboxField from "../form/CheckboxField";
 
@@ -65,7 +65,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   setFieldValue,
   handleSubmit,
 }) => {
-  const { artistAgreement } = useSelector(selectSong);
+  const { artistAgreement } = useAppSelector(selectSong);
 
   /**
    * Call onConfirm callback when form values change.

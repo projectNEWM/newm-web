@@ -33,6 +33,42 @@ const includesGenres = (
   return !hasInvalidGenre;
 };
 
+const createAudioBuffer = async (value: File) => {
+  const audioContext = new (window.AudioContext || window.AudioContext)();
+  const arrayBuffer = await value.arrayBuffer();
+
+  return audioContext.decodeAudioData(arrayBuffer);
+};
+
+const createAsyncAudioTest = (
+  testFn: (audioBuffer: AudioBuffer) => boolean
+) => {
+  return async (value: File) => {
+    if (!value) return false;
+
+    const audioBuffer = await createAudioBuffer(value);
+
+    return testFn(audioBuffer);
+  };
+};
+
+const isFileSizeValid = (value: File) => {
+  if (!value) return false;
+
+  const fileSizeInMB = value.size / (1024 * 1024);
+  const fileSizeInGB = value.size / (1024 * 1024 * 1024);
+
+  return (
+    fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
+    fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
+  );
+};
+
+const AUDIO_MIN_FILE_SIZE_MB = 1;
+const AUDIO_MAX_FILE_SIZE_GB = 1;
+const AUDIO_MIN_DURATION_SEC = 30;
+const AUDIO_MIN_SAMPLING_RATE_KHZ = 44.1;
+
 export const commonYupValidation = {
   email: Yup.string()
     .email("Please enter a vaild email")
@@ -83,8 +119,25 @@ export const commonYupValidation = {
     "Passwords must match"
   ),
   coverArtUrl: Yup.mixed().required("This field is required"),
-  audio: Yup.mixed().required("This field is required"),
   title: Yup.string().required("This field is required"),
+  audio: Yup.mixed()
+    .required("This field is required")
+    .test({
+      message: `The file size must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and ${AUDIO_MAX_FILE_SIZE_GB}GB.`,
+      test: isFileSizeValid,
+    })
+    .test({
+      message: `Must be at least ${AUDIO_MIN_DURATION_SEC} seconds.`,
+      test: createAsyncAudioTest(
+        (value) => value.duration >= AUDIO_MIN_DURATION_SEC
+      ),
+    })
+    .test({
+      message: `Must have at least ${AUDIO_MIN_SAMPLING_RATE_KHZ}kHz of sampling rate.`,
+      test: createAsyncAudioTest(
+        (value) => value.sampleRate / 1000 >= AUDIO_MIN_SAMPLING_RATE_KHZ
+      ),
+    }),
 };
 
 /**

@@ -6,6 +6,16 @@ export interface SongState {
 
 export type GetSongsResponse = Array<Song>;
 
+export interface GetSongStreamResponse {
+  readonly song: Song;
+  readonly streamData: GetSongStreamData;
+}
+
+export interface GetSongStreamData {
+  readonly url: string;
+  readonly cookies: Record<string, string>;
+}
+
 export interface GetSongsRequest {
   genres?: string[];
   ids?: string[];

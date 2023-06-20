@@ -8,12 +8,14 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import theme from "theme";
 import { Button } from "elements";
 import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import {
   Song,
   convertMillisecondsToSongFormat,
+  useFetchSongStreamThunk,
   useGetSongsQuery,
   useHlsJs,
 } from "modules/song";
@@ -24,7 +26,6 @@ import {
   TableSkeleton,
 } from "components";
 import { useNavigate } from "react-router-dom";
-import EditPencilIcon from "assets/images/EditPencilIcon";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
@@ -33,6 +34,15 @@ interface SongListProps {
   rowHeight?: number;
   totalCountOfSongs: number;
   query: string;
+}
+
+interface PlayerState {
+  readonly currentPlayingSongId?: string;
+  readonly loadingSongId?: string;
+  readonly isReadyToPlay: boolean;
+  readonly song?: Song;
+  readonly url?: string;
+  readonly cookies?: Record<string, string>;
 }
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
@@ -45,8 +55,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const viewportHeight = useWindowDimensions()?.height;
   const [rowsPerPage, setRowsPerPage] = useState(1);
   let songsToRequest = rowsPerPage;
-  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
+  const [playerState, setPlayerState] = useState<PlayerState>({
+    isReadyToPlay: false,
+  });
   const [page, setPage] = useState(1);
+  const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
 
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
   const totalPagesCount = Math.ceil(totalCountOfSongs / rowsPerPage);
@@ -86,9 +99,27 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const hlsJsParams = useMemo(
     () => ({
-      onPlaySong: ({ id }: Song) => setCurrentPlayingSongId(id),
-      onStopSong: () => setCurrentPlayingSongId(undefined),
-      onSongEnded: () => setCurrentPlayingSongId(undefined),
+      onPlaySong: ({ id }: Song) => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: id,
+        }));
+      },
+      onStopSong: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: undefined,
+        }));
+      },
+      onSongEnded: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: undefined,
+        }));
+      },
     }),
     []
   );
@@ -99,12 +130,55 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
    * Plays and/or stops the song depending on if it's currently playing or not.
    */
   const handleSongPlayPause = (song: Song) => {
-    const isSongPlaying = !!currentPlayingSongId;
-    const isNewSong = song.id !== currentPlayingSongId;
+    const isSongPlaying = playerState.currentPlayingSongId;
+    const isNewSong = song.id !== playerState.currentPlayingSongId;
 
     if (isSongPlaying) stopSong(song);
-    if (isNewSong) playSong(song);
+    if (isNewSong) {
+      setPlayerState((prevState) => ({
+        ...prevState,
+        loadingSongId: song.id,
+      }));
+      fetchStreamData(song);
+    }
   };
+
+  // handles the stream metadata response when loading a song
+  useEffect(() => {
+    if (fetchStreamDataResp.isLoading) {
+      return;
+    }
+
+    if (
+      fetchStreamDataResp.data &&
+      playerState.loadingSongId === fetchStreamDataResp.data.song.id
+    ) {
+      setPlayerState((prevState) => ({
+        ...prevState,
+        url: fetchStreamDataResp.data?.streamData.url,
+        cookies: fetchStreamDataResp.data?.streamData.cookies,
+        song: fetchStreamDataResp.data?.song,
+        isReadyToPlay: true,
+      }));
+    }
+  }, [
+    playerState.loadingSongId,
+    fetchStreamDataResp.isLoading,
+    fetchStreamDataResp.data,
+    playSong,
+  ]);
+
+  // when a songs stream information is ready - play the song
+  useEffect(() => {
+    if (playerState.isReadyToPlay && playerState.song) {
+      playSong(playerState.song);
+    }
+  }, [
+    playerState.song,
+    playerState.loadingSongId,
+    playerState.isReadyToPlay,
+    playSong,
+  ]);
 
   /**
    * Play song and ensure the event doesn't bubble up to the row
@@ -131,13 +205,13 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
     const isSongFound = !!songData?.find((song) => {
-      return song.id === currentPlayingSongId;
+      return song.id === playerState.currentPlayingSongId;
     });
 
     if (!isSongFound) {
       stopSong();
     }
-  }, [songData, currentPlayingSongId, stopSong]);
+  }, [playerState.currentPlayingSongId, songData, stopSong]);
 
   // sets the # of rows per page depending on viewport height
   useEffect(() => {
@@ -197,7 +271,9 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     } }
                   >
                     <SongStreamPlaybackIcon
-                      isSongPlaying={ song.id === currentPlayingSongId }
+                      isSongPlaying={
+                        song.id === playerState.currentPlayingSongId
+                      }
                       isSongUploaded={ !!song.streamUrl }
                     />
                   </IconButton>
@@ -261,7 +337,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     return navigate("edit-song", { state: { ...song } });
                   } }
                 >
-                  <EditPencilIcon />
+                  <EditIcon sx={ { color: theme.colors.music } } />
                 </Button>
               </TableCell>
             </TableRow>
@@ -274,7 +350,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             rowsPerPage={ rowsPerPage }
             lastRowOnPage={ lastRowOnPage }
             handlePageChange={ handlePageChange }
-            colSpan={ 3 }
+            colSpan={ 5 }
             rows="songs"
             cellStyles={ { paddingTop: "12px" } }
           />

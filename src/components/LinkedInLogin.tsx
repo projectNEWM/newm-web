@@ -7,16 +7,16 @@
 import { FunctionComponent, ReactNode } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { extendedApi as sessionApi } from "modules/session";
-import { useDispatch } from "react-redux";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "elements";
+import { useAppDispatch } from "common";
 
 interface Props {
   readonly children?: ReactNode;
 }
 
 const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const redirectUri = `${window.location.origin}/linkedin`;
 

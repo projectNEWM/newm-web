@@ -1,13 +1,13 @@
 import { FunctionComponent, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues, useFormikContext } from "formik";
 import { Button, GradientTypography, Typography } from "elements";
 import { TextInputField } from "components";
 import { sendVerificationEmail } from "modules/session";
+import { useAppDispatch } from "common";
 
 const VerifyEmail: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
   const {

@@ -2,9 +2,8 @@ import * as Yup from "yup";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
 import { WizardForm } from "components";
-import { commonYupValidation } from "common";
+import { commonYupValidation, useAppDispatch } from "common";
 import { createAccount, sendVerificationEmail } from "modules/session";
 import Verification from "./Verification";
 import Welcome from "./Welcome";
@@ -18,7 +17,7 @@ interface AccountValues {
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const initialValues: AccountValues = {
     email: "",
     newPassword: "",

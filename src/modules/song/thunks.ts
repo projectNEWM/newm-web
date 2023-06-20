@@ -1,4 +1,4 @@
-import { asThunkHook } from "common";
+import { asThunkHook } from "common/reduxUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
@@ -11,6 +11,7 @@ import {
   DeleteSongRequest,
   MintingStatus,
   PatchSongRequest,
+  Song,
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
@@ -156,6 +157,31 @@ export const uploadSong = createAsyncThunk(
   }
 );
 
+export const fetchSongStream = createAsyncThunk(
+  "song/streamSong",
+  async (song: Song, { dispatch }) => {
+    try {
+      // get stream info for song
+      const audioStreamResp = await dispatch(
+        songApi.endpoints.getSongStream.initiate(song)
+      );
+
+      if ("error" in audioStreamResp) return;
+
+      return audioStreamResp.data;
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
+    }
+  }
+);
 /**
  * Generates an artist agreement and then navigates
  * to the confirmation screen.
@@ -410,6 +436,8 @@ export const fetchInvites = createAsyncThunk(
 );
 
 export const useUploadSongThunk = asThunkHook(uploadSong);
+
+export const useFetchSongStreamThunk = asThunkHook(fetchSongStream);
 
 export const useFetchInvitesThunk = asThunkHook(fetchInvites);
 
