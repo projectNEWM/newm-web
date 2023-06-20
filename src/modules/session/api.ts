@@ -85,7 +85,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
       },
@@ -102,7 +102,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
       },
@@ -119,7 +119,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(receiveSuccessfullAuthentication(data));
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
       },
@@ -135,7 +135,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "There was an error fetching your profile data",
@@ -155,7 +155,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "There was an error fetching requested profile",
@@ -177,7 +177,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "There was an error updating your profile",
@@ -198,7 +198,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while sending the verification email",
@@ -219,7 +219,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while creating your account",
@@ -240,7 +240,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while deleting your account",
@@ -261,7 +261,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while resetting your password",
@@ -282,7 +282,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while changing your password",
@@ -302,7 +302,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch ({ error }) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message:
