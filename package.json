@@ -17,7 +17,7 @@
     "cross-env": "^7.0.3",
     "formik": "^2.2.9",
     "hls.js": "^1.4.1-0.canary.9072",
-    "js-cookie": "^3.0.1",
+    "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
