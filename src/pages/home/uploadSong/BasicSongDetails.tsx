@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
@@ -13,7 +12,7 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { scrollToError, useWindowDimensions } from "common";
+import { scrollToError, useAppDispatch, useWindowDimensions } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import {
@@ -26,7 +25,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const BasicSongDetails: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
 
   const audioRef = useRef<HTMLDivElement>(null);

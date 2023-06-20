@@ -1,16 +1,16 @@
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress, Stack } from "@mui/material";
 import Cookies from "js-cookie";
 import { Modal } from "components";
 import { getIdenfyAuthToken } from "modules/session";
 import theme from "theme";
 import { selectUi, setIsIdenfyModalOpen } from "modules/ui";
+import { useAppDispatch, useAppSelector } from "common";
 
 const IdenfyModal: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { isIdenfyModalOpen: isOpen } = useSelector(selectUi);
+  const { isIdenfyModalOpen: isOpen } = useAppSelector(selectUi);
 
   const [idenfyAuthToken, setIdenfyAuthToken] = useState(
     Cookies.get("idenfyAuthToken")

@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Dialog,
   DialogActions,
@@ -26,14 +25,15 @@ import {
   selectSession,
   useGetProfileQuery,
 } from "modules/session";
+import { useAppDispatch, useAppSelector } from "common";
 import InvitesTable from "./InvitesTable";
 
 const { Verified } = VerificationStatus;
 
 const InvitesModal: FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const { isInvitesModalOpen } = useSelector(selectUi);
-  const { isLoggedIn } = useSelector(selectSession);
+  const dispatch = useAppDispatch();
+  const { isInvitesModalOpen } = useAppSelector(selectUi);
+  const { isLoggedIn } = useAppSelector(selectSession);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
   const { data: collaborations = [] } = useGetCollaborationsQuery(
     {

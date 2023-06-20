@@ -1,9 +1,9 @@
+import { asThunkHook } from "common/reduxUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import { asThunkHook } from "common";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,

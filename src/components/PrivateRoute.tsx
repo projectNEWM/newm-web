@@ -1,14 +1,14 @@
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import { Navigate, useLocation } from "react-router-dom";
+import { useAppSelector } from "common";
 
 type PrivateRouteProps = {
   children: JSX.Element;
 };
 
 const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({ children }) => {
-  const { isLoggedIn } = useSelector(selectSession);
+  const { isLoggedIn } = useAppSelector(selectSession);
   const location = useLocation();
 
   return isLoggedIn ? (

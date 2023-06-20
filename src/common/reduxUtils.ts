@@ -1,15 +1,10 @@
-import { AsyncThunk, AsyncThunkAction } from "@reduxjs/toolkit";
+import type { AsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { useCallback, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "./hooks";
 
 interface UseWrappedThunkResponse<Returned> {
   readonly isLoading: boolean;
   readonly data?: Returned;
-}
-
-export interface AsyncThunkActionWithPayload<Returned, Arg>
-  extends AsyncThunkAction<Returned, Arg, Record<string, unknown>> {
-  payload: Returned;
 }
 
 /**
@@ -27,9 +22,9 @@ export const asThunkHook = <Returned, Arg>(
     (arg: Arg) => void,
     UseWrappedThunkResponse<Returned>
   ] => {
-    const resultRef = useRef<AsyncThunkActionWithPayload<Returned, Arg>>();
+    const resultRef = useRef<PayloadAction<Returned>>();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
 
     const callHook = useCallback(
@@ -37,7 +32,7 @@ export const asThunkHook = <Returned, Arg>(
         setIsLoading(true);
         resultRef.current = (await dispatch(
           thunk(arg)
-        )) as AsyncThunkActionWithPayload<Returned, Arg>;
+        )) as PayloadAction<Returned>;
         setIsLoading(false);
       },
       [dispatch, setIsLoading]

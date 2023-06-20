@@ -5,19 +5,19 @@
 import { extendedApi as sessionApi } from "modules/session";
 import { setToastMessage } from "modules/ui";
 import { FunctionComponent, ReactNode } from "react";
-import { useDispatch } from "react-redux";
 import FacebookLoginHelper, {
   LoginResponse,
 } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "elements";
+import { useAppDispatch } from "common";
 
 interface Props {
   readonly children?: ReactNode;
 }
 
 const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {
     const accessToken = resp?.accessToken;

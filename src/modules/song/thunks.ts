@@ -1,4 +1,4 @@
-import { asThunkHook } from "common";
+import { asThunkHook } from "common/reduxUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";

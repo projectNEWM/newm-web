@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "store";
 import { selectSession } from "modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
 import { WindowDimensions } from "./types";
+import type { AppDispatch, RootState } from "../store";
 
 const hasWindow = typeof window !== "undefined";
 
@@ -33,8 +33,14 @@ export const useWindowDimensions = (): WindowDimensions | undefined => {
   return windowDimensions;
 };
 
+/**
+ * Use instead of useDispatch to ensure dispatch is typed correctly
+ */
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
+/**
+ * Use instead of useSelector to ensure it is typed correctly
+ */
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 /**
@@ -43,7 +49,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
  */
 
 export const useAuthenticatedRedirect = () => {
-  const { isLoggedIn } = useSelector(selectSession);
+  const { isLoggedIn } = useAppSelector(selectSession);
 
   const navigate = useNavigate();
   const location = useLocation();
