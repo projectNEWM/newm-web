@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { clearToastMessage, selectUi } from "modules/ui";
 import { Alert, Snackbar, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "assets/images/CheckCircle";
 import CloseCircleFill from "assets/images/CloseCircleFill";
+import { useAppDispatch, useAppSelector } from "common";
 
 const Toast = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const {
     toast: { heading, message, severity },
-  } = useSelector(selectUi);
+  } = useAppSelector(selectUi);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

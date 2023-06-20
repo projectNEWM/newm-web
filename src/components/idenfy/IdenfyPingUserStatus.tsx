@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { setToastMessage } from "modules/ui";
 import Cookies from "js-cookie";
 import {
@@ -11,17 +10,18 @@ import {
   startVerificationTimer,
   useGetProfileQuery,
 } from "modules/session";
+import { useAppDispatch, useAppSelector } from "common";
 
 const IdenfyModal: FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector(selectSession);
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector(selectSession);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
     undefined,
     { skip: !isLoggedIn }
   );
 
-  const { verificationPingStartedAt } = useSelector(selectSession);
+  const { verificationPingStartedAt } = useAppSelector(selectSession);
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 

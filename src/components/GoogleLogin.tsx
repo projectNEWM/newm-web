@@ -5,17 +5,17 @@
 import { extendedApi as sessionApi } from "modules/session";
 import { setToastMessage } from "modules/ui";
 import { FunctionComponent, ReactNode } from "react";
-import { useDispatch } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button } from "elements";
+import { useAppDispatch } from "common";
 
 interface Props {
   readonly children?: ReactNode;
 }
 
 const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogin = useGoogleLogin({
     onSuccess: ({ access_token: accessToken }) => {

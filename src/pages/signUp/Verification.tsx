@@ -3,11 +3,11 @@ import { Button, GradientTypography, Typography } from "elements";
 import { ResponsiveNEWMLogo, TextInputField } from "components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { sendVerificationEmail } from "modules/session";
+import { useAppDispatch } from "common";
 
 const Verification: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
   const { isValid, values } = useFormikContext<FormikValues>();

@@ -4,14 +4,14 @@ import {
   setToastMessage,
 } from "modules/ui";
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "common";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const { isConnectWalletModalOpen } = useSelector(selectUi);
+  const dispatch = useAppDispatch();
+  const { isConnectWalletModalOpen } = useAppSelector(selectUi);
 
   const handleConnect = () => {
     dispatch(

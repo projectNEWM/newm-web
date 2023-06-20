@@ -28,13 +28,13 @@ export const reducer = combineReducers({
 const store = configureStore({
   devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
-    const baseMiddleware = [
-      ...getDefaultMiddleware(),
+    const baseMiddleware = getDefaultMiddleware().prepend(
       newmApi.middleware,
       lambdaApi.middleware,
-      cloudinaryApi.middleware,
-    ];
-    return enableReduxLogging ? baseMiddleware.concat(logger) : baseMiddleware;
+      cloudinaryApi.middleware
+    );
+
+    return enableReduxLogging ? baseMiddleware.prepend(logger) : baseMiddleware;
   },
   reducer,
 });

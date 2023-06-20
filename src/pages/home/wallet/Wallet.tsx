@@ -3,14 +3,14 @@ import { Box, Container } from "@mui/material";
 import { Button, Typography } from "elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { setIsConnectWalletModalOpen } from "modules/ui";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "common";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
 import Transactions from "./TransactionsList";
 
 const Wallet: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
 
   return (

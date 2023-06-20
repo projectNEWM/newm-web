@@ -1,9 +1,13 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { getUpdatedValues, scrollToError, useWindowDimensions } from "common";
+import {
+  getUpdatedValues,
+  scrollToError,
+  useAppDispatch,
+  useWindowDimensions,
+} from "common";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
@@ -39,7 +43,7 @@ interface FormValues {
 }
 
 const MintSong = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;

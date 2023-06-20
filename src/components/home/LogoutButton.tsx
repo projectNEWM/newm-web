@@ -1,17 +1,17 @@
 import { FunctionComponent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { logOut, selectSession } from "modules/session";
 import { Button, Typography } from "elements";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAppDispatch, useAppSelector } from "common";
 
 const LogoutButton: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(logOut());
   };
 
-  const { isLoggedIn } = useSelector(selectSession);
+  const { isLoggedIn } = useAppSelector(selectSession);
 
   return isLoggedIn ? (
     <Button variant="outlined" onClick={ handleLogout } width="compact">

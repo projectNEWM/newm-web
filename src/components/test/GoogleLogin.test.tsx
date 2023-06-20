@@ -10,10 +10,10 @@ interface UseGoogleLoginParams {
   readonly onSuccess: ({ access_token }: OnSuccessParams) => void;
 }
 
-// mock useDispatch so that it doesn't actually fire any Redux functionality
-jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"),
-  useDispatch: () => jest.fn(),
+// mock useAppDispatch so that it doesn't actually fire any Redux functionality
+jest.mock("common", () => ({
+  ...jest.requireActual("common"),
+  useAppDispatch: () => jest.fn(),
 }));
 
 jest.spyOn(extendedApi.endpoints.googleLogin, "initiate");

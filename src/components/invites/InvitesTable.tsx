@@ -10,11 +10,10 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { getResizedAlbumCoverImageUrl } from "common";
+import { getResizedAlbumCoverImageUrl, useAppDispatch } from "common";
 import { TableCell, TableHeadCell } from "components";
 import theme from "theme";
 import { Invite, convertMillisecondsToSongFormat, songApi } from "modules/song";
-import { useDispatch } from "react-redux";
 
 interface InvitesTableProps {
   invites: Invite[];
@@ -25,7 +24,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
   invites,
   disabled,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDecline = async (collaborationId: string) => {
     dispatch(

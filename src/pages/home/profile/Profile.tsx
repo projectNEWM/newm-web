@@ -1,5 +1,4 @@
 import { FunctionComponent, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { Box, Container, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -18,6 +17,7 @@ import {
   commonYupValidation,
   getUpdatedValues,
   scrollToError,
+  useAppDispatch,
   useWindowDimensions,
 } from "common";
 import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
@@ -35,7 +35,7 @@ import { setIsIdenfyModalOpen } from "modules/ui";
 const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
