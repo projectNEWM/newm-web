@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
-import { prepareNewmAuthHeader } from "common/apiUtils";
+import { fetchBaseQueryWithReauth, prepareAuthHeader } from "./utils";
 import { Tags } from "./types";
-import { fetchBaseQueryWithReauth } from "./utils";
 
-const baseQuery = fetchBaseQuery({
+export const baseQuery = fetchBaseQuery({
   baseUrl: baseUrls.newm,
-  prepareHeaders: prepareNewmAuthHeader,
+  prepareHeaders: prepareAuthHeader,
 });
 
 const api = createApi({
