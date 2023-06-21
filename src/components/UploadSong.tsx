@@ -102,7 +102,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     onDrop: handleDrop,
     multiple: false,
     accept: {
-      audio: [".flac", ".fla", ".wav"],
+      audio: [".flac", ".wav"],
     },
   });
 
@@ -274,7 +274,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             <IconMessage
               icon={ <AddSongIcon /> }
               message="Drag and drop or browse your song"
-              subtitle=".flac, .fla, .wav"
+              subtitle=".flac, .wav"
             />
           </DashedOutline>
         ) }
