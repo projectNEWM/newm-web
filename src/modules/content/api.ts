@@ -1,11 +1,12 @@
-import api from "api";
+import api, { Tags } from "api";
 import { setToastMessage } from "modules/ui";
-import { GetSongGenresResponse } from "./types";
+import { GetSongGenresResponse, GetSongRolesResponse } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getGenres: build.query<GetSongGenresResponse, void>({
       query: () => "v1/distribution/genres",
+      providesTags: [Tags.Genres],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -20,8 +21,9 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getRoles: build.query<Array<string>, void>({
-      query: () => "contents/predefined-roles.json",
+    getRoles: build.query<GetSongRolesResponse, void>({
+      query: () => "v1/distribution/roles",
+      providesTags: [Tags.Roles],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {

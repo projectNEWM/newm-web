@@ -4,3 +4,10 @@ export interface Genre {
 }
 
 export type GetSongGenresResponse = Genre[];
+
+export interface Role {
+  genre_id: number;
+  name: string;
+}
+
+export type GetSongRolesResponse = Role[];
