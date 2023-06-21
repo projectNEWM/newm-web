@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
-import { useGetGenresQuery } from "modules/content";
+import { extractGenreNames, useGetGenresQuery } from "modules/content";
 
 const SelectGenre: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
+  const genreNames = extractGenreNames(genres);
 
   return (
     <AddProfileInformation
@@ -11,7 +12,7 @@ const SelectGenre: FunctionComponent = () => {
       helperText="Type or select a genre"
       placeholder="genre"
       prompt="What's your music genre?"
-      tags={ genres }
+      tags={ genreNames }
     />
   );
 };

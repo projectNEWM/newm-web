@@ -20,7 +20,11 @@ import {
   useAppDispatch,
   useWindowDimensions,
 } from "common";
-import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import {
+  extractGenreNames,
+  useGetGenresQuery,
+  useGetRolesQuery,
+} from "modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -46,7 +50,8 @@ const Profile: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roleOptions = [] } = useGetRolesQuery();
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genres = [] } = useGetGenresQuery();
+  const genreNames = extractGenreNames(genres);
 
   const {
     data: {
@@ -118,7 +123,7 @@ const Profile: FunctionComponent = () => {
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roleOptions),
-    genre: commonYupValidation.genre(genreOptions),
+    genre: commonYupValidation.genre(genreNames),
     twitterUrl: Yup.string().url("Please enter a valid url"),
     websiteUrl: Yup.string().url("Please enter a valid url"),
   });

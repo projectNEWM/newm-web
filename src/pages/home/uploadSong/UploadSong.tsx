@@ -3,7 +3,7 @@ import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
 import { FormikHelpers, FormikValues } from "formik";
-import { useGetGenresQuery } from "modules/content";
+import { extractGenreNames, useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
@@ -21,7 +21,7 @@ import AdvancedSongDetails from "./AdvancedSongDetails";
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
 
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genres = [] } = useGetGenresQuery();
   const {
     data: {
       companyName = "",
@@ -107,12 +107,14 @@ const UploadSong: FunctionComponent = () => {
     helpers.setSubmitting(false);
   };
 
+  const genreNames = extractGenreNames(genres);
+
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
     genres: commonYupValidation
-      .genres(genreOptions)
+      .genres(genreNames)
       .min(1, "At least one genre is required"),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,

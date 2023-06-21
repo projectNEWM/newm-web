@@ -1,7 +1,11 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
+import {
+  extractGenreNames,
+  useGetGenresQuery,
+  useGetMoodsQuery,
+} from "modules/content";
 import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
@@ -34,8 +38,9 @@ const BasicSongDetails: FunctionComponent = () => {
   const ownersRef = useRef<HTMLDivElement>(null);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
+  const genreNames = extractGenreNames(genres);
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -137,7 +142,7 @@ const BasicSongDetails: FunctionComponent = () => {
             isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
-            options={ genreOptions }
+            options={ genreNames }
           />
 
           <DropdownMultiSelectField

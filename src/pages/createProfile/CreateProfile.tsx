@@ -7,7 +7,11 @@ import {
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import * as Yup from "yup";
-import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import {
+  extractGenreNames,
+  useGetGenresQuery,
+  useGetRolesQuery,
+} from "modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -30,13 +34,15 @@ const CreateProfile: FunctionComponent = () => {
     genre: "",
   };
 
+  const genreNames = extractGenreNames(genres);
+
   /**
    * Yup validations for all form fields.
    */
   const validations = {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.role(genres).required("Genre is required"),
+    genre: commonYupValidation.role(genreNames).required("Genre is required"),
   };
 
   /**

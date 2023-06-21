@@ -23,7 +23,11 @@ import {
   useGetSongQuery,
   usePatchSongThunk,
 } from "modules/song";
-import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
+import {
+  extractGenreNames,
+  useGetGenresQuery,
+  useGetMoodsQuery,
+} from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
@@ -56,11 +60,13 @@ const SongInfo = () => {
     title,
   };
 
+  const genreNames = extractGenreNames(genreOptions);
+
   const validationSchema = Yup.object({
     coverArtUrl: commonYupValidation.coverArtUrl,
     description: Yup.string(),
     genres: commonYupValidation
-      .genres(genreOptions)
+      .genres(genreNames)
       .min(1, "At least one genre is required"),
     title: commonYupValidation.title,
   });
@@ -162,7 +168,7 @@ const SongInfo = () => {
                     isOptional={ false }
                     name="genres"
                     placeholder="Select all that apply"
-                    options={ genreOptions }
+                    options={ genreNames }
                   />
 
                   <DropdownMultiSelectField

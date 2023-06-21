@@ -1,10 +1,11 @@
 import api from "api";
 import { setToastMessage } from "modules/ui";
+import { GetSongGenresResponse } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getGenres: build.query<Array<string>, void>({
-      query: () => "contents/predefined-genres.json",
+    getGenres: build.query<GetSongGenresResponse, void>({
+      query: () => "v1/distribution/genres",
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -12,7 +13,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (err) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching moods",
+              message: "An error occurred while fetching genres",
               severity: "error",
             })
           );
@@ -28,7 +29,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (err) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching moods",
+              message: "An error occurred while fetching roles",
               severity: "error",
             })
           );
