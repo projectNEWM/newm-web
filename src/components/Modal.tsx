@@ -35,7 +35,7 @@ const Modal: FunctionComponent<ModalProps> = ({
 
   return (
     <MuiModal open={ isOpen } sx={ { m: 2, mt: 1, mb: 10 } }>
-      <>
+      <Box display="flex" flex={ 1 } flexDirection="column">
         <Box display="flex" justifyContent="flex-end" mb={ 1 }>
           <CloseIcon
             sx={ {
@@ -48,7 +48,7 @@ const Modal: FunctionComponent<ModalProps> = ({
         </Box>
 
         { children }
-      </>
+      </Box>
     </MuiModal>
   );
 };

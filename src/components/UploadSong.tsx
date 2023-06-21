@@ -66,7 +66,6 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     if (!song) return;
 
     song.stop();
-    setSongProgress(0); // don't wait for interval to update progress bar
   };
 
   const handleDrop = useCallback(
@@ -85,6 +84,9 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
 
         onChange(firstFile);
         onError("");
+
+        // stop current song if it's playing
+        if (song?.playing()) song.stop();
       } catch (error) {
         if (error instanceof Error) {
           onError(error.message);
@@ -93,7 +95,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         onBlur();
       }
     },
-    [onChange, onBlur, onError]
+    [onChange, onBlur, onError, song]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -115,8 +117,14 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       const howler = new Howl({
         src: binary,
         onplay: () => setIsSongPlaying(true),
-        onend: () => setIsSongPlaying(false),
-        onstop: () => setIsSongPlaying(false),
+        onend: () => {
+          setIsSongPlaying(false);
+          setSongProgress(0);
+        },
+        onstop: () => {
+          setIsSongPlaying(false);
+          setSongProgress(0);
+        },
       });
 
       setSong(howler);

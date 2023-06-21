@@ -102,7 +102,9 @@ const BasicSongDetails: FunctionComponent = () => {
             rootSx={ { width: "100%", alignSelf: "center" } }
             name="coverArtUrl"
             emptyMessage="Drag and drop or browse your image"
+            changeImageButtonText="Change cover"
             minDimensions={ { width: 2048, height: 2048 } }
+            isMultiButtonLayout
           />
         </Stack>
       </Stack>
