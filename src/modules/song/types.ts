@@ -13,7 +13,6 @@ export interface GetSongStreamResponse {
 
 export interface GetSongStreamData {
   readonly url: string;
-  readonly cookies: Record<string, string>;
 }
 
 export interface GetSongsRequest {

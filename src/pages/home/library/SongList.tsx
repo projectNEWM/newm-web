@@ -42,7 +42,6 @@ interface PlayerState {
   readonly isReadyToPlay: boolean;
   readonly song?: Song;
   readonly url?: string;
-  readonly cookies?: Record<string, string>;
 }
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
@@ -156,7 +155,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       setPlayerState((prevState) => ({
         ...prevState,
         url: fetchStreamDataResp.data?.streamData.url,
-        cookies: fetchStreamDataResp.data?.streamData.cookies,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
