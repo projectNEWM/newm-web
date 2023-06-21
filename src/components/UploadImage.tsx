@@ -169,7 +169,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         >
           <img
             src={ typeof file === "string" ? file : file?.preview }
-            style={ { maxHeight: "72vh" } }
+            style={ { maxHeight: "72vh", maxWidth: "100%" } }
             alt="cover preview"
           />
 
