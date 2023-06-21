@@ -1,14 +1,24 @@
-import { BoxProps, Stack } from "@mui/material";
-import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { Box, BoxProps, Stack } from "@mui/material";
+import {
+  FunctionComponent,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { validateImageDimensions } from "common";
 import { SxProps, useTheme } from "@mui/material/styles";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
 import CheckCircleIcon from "assets/images/CheckCircle";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import PictureInPictureIcon from "@mui/icons-material/PictureInPictureAlt";
+import { Button } from "elements";
 import SolidOutline from "./styled/SolidOutline";
 import DashedOutline from "./styled/DashedOutline";
 import IconMessage from "./IconMessage";
 import ErrorMessage from "./styled/ErrorMessage";
+import Modal from "./Modal";
 
 export interface FileWithPreview extends File {
   readonly preview: string;
@@ -28,8 +38,10 @@ export interface UploadImageProps {
   readonly emptyMessage?: string;
   readonly replaceMessage?: string;
   readonly errorMessage?: string;
+  readonly changeImageButtonText?: string;
   readonly isSuccessIconDisplayed?: boolean;
   readonly isMinimumSizeDisplayed?: boolean;
+  readonly isMultiButtonLayout?: boolean;
   readonly rootSx?: SxProps;
   readonly contentSx?: SxProps;
 }
@@ -53,14 +65,17 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   minDimensions,
   errorMessageLocation = "outside",
   minimumSizeLabel = "Minimum size",
+  changeImageButtonText = "Change image",
   isSuccessIconDisplayed = true,
   isMinimumSizeDisplayed = true,
+  isMultiButtonLayout = false,
   rootSx = {},
   contentSx = {},
 }) => {
   const theme = useTheme();
 
   const [isHovering, setIsHovering] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDrop = useCallback(
     async (
@@ -100,11 +115,21 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     [minDimensions, onChange, onBlur, onError]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const handleOpenPreview: MouseEventHandler = (event) => {
+    event.stopPropagation();
+    setIsModalOpen(true);
+  };
+
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
     accept: { "image/*": [".png", ".jpeg", ".jpg", ".webp"] },
   });
+
+  const handleChangeImage = () => {
+    open();
+    setIsModalOpen(false);
+  };
 
   /**
    * Revokes the data uri when the component unmounts
@@ -131,62 +156,134 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       : undefined;
 
   return (
-    <Stack
-      { ...getRootProps() }
-      gap={ 1 }
-      sx={ {
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: theme.inputField.maxWidth,
-        cursor: "pointer",
-        borderRadius: "4px",
-        ...rootSx,
-      } }
-    >
-      <input { ...getInputProps() } />
-
-      { file ? (
-        <ImagePreview
-          onMouseEnter={ () => setIsHovering(true) }
-          onMouseLeave={ () => setIsHovering(false) }
-          imageUrl={ (file.preview || file) as string }
-          sx={ { height: 100, ...contentSx } }
+    <>
+      <Modal isOpen={ isModalOpen } onClose={ () => setIsModalOpen(false) }>
+        <Stack
+          flex={ 1 }
+          mx={ 3 }
+          padding={ 3 }
+          gap={ 3 }
+          alignSelf="center"
+          flexDirection="column"
+          sx={ { backgroundColor: theme.colors.grey600 } }
         >
-          { isHovering || isDragActive ? (
+          <img
+            src={ typeof file === "string" ? file : file?.preview }
+            style={ { maxHeight: "72vh" } }
+            alt="cover preview"
+          />
+
+          <Stack direction="row" gap={ 2 } justifyContent="flex-end">
+            <Button
+              width="compact"
+              variant="secondary"
+              color="music"
+              onClick={ handleChangeImage }
+            >
+              { changeImageButtonText }
+            </Button>
+
+            <Button width="compact" onClick={ () => setIsModalOpen(false) }>
+              Done
+            </Button>
+          </Stack>
+        </Stack>
+      </Modal>
+
+      <Stack
+        { ...getRootProps() }
+        gap={ 1 }
+        sx={ {
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: theme.inputField.maxWidth,
+          cursor: "pointer",
+          borderRadius: "4px",
+          ...rootSx,
+        } }
+      >
+        <input { ...getInputProps() } />
+
+        { file ? (
+          <ImagePreview
+            onMouseEnter={ () => setIsHovering(true) }
+            onMouseLeave={ () => setIsHovering(false) }
+            imageUrl={ (file.preview || file) as string }
+            sx={ { height: 100, ...contentSx } }
+          >
+            { !isMultiButtonLayout && (isHovering || isDragActive) ? (
+              <IconMessage
+                icon={ <AddImageIcon /> }
+                message={ replaceMessage }
+                errorMessage={ internalErrorMessage }
+              />
+            ) : isHovering ? (
+              <Box display="flex" justifyContent="space-between" flex={ 1 }>
+                <Box
+                  display="flex"
+                  flex={ 1 }
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={ {
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.4)",
+                    },
+                  } }
+                >
+                  <IconMessage
+                    icon={ <ChangeCircleIcon /> }
+                    message="Change cover"
+                  />
+                </Box>
+
+                <Box
+                  display="flex"
+                  flex={ 1 }
+                  justifyContent="center"
+                  alignItems="center"
+                  onClick={ handleOpenPreview }
+                  sx={ {
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.4)",
+                    },
+                  } }
+                >
+                  <IconMessage
+                    icon={ <PictureInPictureIcon /> }
+                    message="Preview"
+                  />
+                </Box>
+              </Box>
+            ) : isSuccessIconDisplayed ? (
+              <IconMessage
+                icon={ <CheckCircleIcon /> }
+                message={ file.name }
+                errorMessage={ internalErrorMessage }
+              />
+            ) : null }
+          </ImagePreview>
+        ) : (
+          <DashedOutline
+            sx={ { display: "flex", flexGrow: 1, height: 100, ...contentSx } }
+          >
             <IconMessage
               icon={ <AddImageIcon /> }
-              message={ replaceMessage }
+              message={ emptyMessage }
+              subtitle={
+                isMinimumSizeDisplayed && minDimensions
+                  ? `${minimumSizeLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
+                  : undefined
+              }
               errorMessage={ internalErrorMessage }
             />
-          ) : isSuccessIconDisplayed ? (
-            <IconMessage
-              icon={ <CheckCircleIcon /> }
-              message={ file.name }
-              errorMessage={ internalErrorMessage }
-            />
-          ) : null }
-        </ImagePreview>
-      ) : (
-        <DashedOutline
-          sx={ { display: "flex", flexGrow: 1, height: 100, ...contentSx } }
-        >
-          <IconMessage
-            icon={ <AddImageIcon /> }
-            message={ emptyMessage }
-            subtitle={
-              isMinimumSizeDisplayed && minDimensions
-                ? `${minimumSizeLabel}: ${minDimensions.width}px x ${minDimensions.height}px`
-                : undefined
-            }
-            errorMessage={ internalErrorMessage }
-          />
-        </DashedOutline>
-      ) }
+          </DashedOutline>
+        ) }
 
-      { !!externalErrorMessage && (
-        <ErrorMessage align="center">{ externalErrorMessage }</ErrorMessage>
-      ) }
-    </Stack>
+        { !!externalErrorMessage && (
+          <ErrorMessage align="center">{ externalErrorMessage }</ErrorMessage>
+        ) }
+      </Stack>
+    </>
   );
 };
 
@@ -206,7 +303,7 @@ const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
       sx={ {
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "stretch",
         flexGrow: 1,
         background: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`,
         backgroundSize: "cover",

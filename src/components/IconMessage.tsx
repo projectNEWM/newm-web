@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, MouseEventHandler } from "react";
 import { Stack } from "@mui/material";
 import { Typography } from "elements";
 import ErrorMessage from "./styled/ErrorMessage";
@@ -8,6 +8,7 @@ interface IconMessageProps {
   readonly message?: string;
   readonly subtitle?: string;
   readonly errorMessage?: string;
+  readonly onClick?: MouseEventHandler;
 }
 
 /**
@@ -18,10 +19,12 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   message,
   subtitle,
   errorMessage,
+  onClick,
 }) => (
   <Stack
     spacing={ message || subtitle || errorMessage ? 1 : 0 }
     direction="column"
+    onClick={ onClick }
     sx={ { flexGrow: 1, justifyContent: "center", alignItems: "center" } }
   >
     { icon }
