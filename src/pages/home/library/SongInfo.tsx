@@ -114,6 +114,7 @@ const SongInfo = () => {
 
                 <UploadImageField
                   name="coverArtUrl"
+                  changeImageButtonText="Change cover"
                   emptyMessage="Drag and drop or browse your image"
                   minDimensions={ { width: 2048, height: 2048 } }
                   isMultiButtonLayout={ true }

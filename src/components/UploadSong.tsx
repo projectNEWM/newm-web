@@ -187,7 +187,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                 ref={ visualizerRef }
                 blob={ file }
                 width={ 338 }
-                height={ 80 }
+                height={ 90 }
                 barWidth={ 1 }
                 gap={ 0 }
                 barColor={ theme.colors.grey100 }
@@ -204,7 +204,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                 width="100%"
                 height="100%"
                 justifyContent="center"
-                alignItems="center"
+                alignItems="stretch"
                 zIndex={ 10 }
               >
                 <SongProgressOverlay
@@ -213,7 +213,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                 />
 
                 { isHovering ? (
-                  <Box display="flex" justifyContent="space-between" flex={ 1 }>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flex={ 1 }
+                    mx="2px"
+                  >
                     <Box
                       display="flex"
                       flex={ 1 }
@@ -236,6 +241,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       flex={ 1 }
                       justifyContent="center"
                       alignItems="center"
+                      onClick={ isSongPlaying ? handleStopSong : handlePlaySong }
                       sx={ {
                         "&:hover": {
                           backgroundColor: "rgba(0, 0, 0, 0.4)",
@@ -243,16 +249,11 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       } }
                     >
                       { isSongPlaying ? (
-                        <IconMessage
-                          icon={ <StopIcon /> }
-                          message="Stop song"
-                          onClick={ handleStopSong }
-                        />
+                        <IconMessage icon={ <StopIcon /> } message="Stop song" />
                       ) : (
                         <IconMessage
                           icon={ <PlayArrowIcon /> }
                           message="Play song"
-                          onClick={ handlePlaySong }
                         />
                       ) }
                     </Box>

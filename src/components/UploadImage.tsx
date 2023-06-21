@@ -168,7 +168,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           sx={ { backgroundColor: theme.colors.grey600 } }
         >
           <img
-            src={ file?.preview }
+            src={ typeof file === "string" ? file : file?.preview }
             style={ { maxHeight: "72vh" } }
             alt="cover preview"
           />
@@ -241,6 +241,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                   flex={ 1 }
                   justifyContent="center"
                   alignItems="center"
+                  onClick={ handleOpenPreview }
                   sx={ {
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.4)",
@@ -250,7 +251,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                   <IconMessage
                     icon={ <PictureInPictureIcon /> }
                     message="Preview"
-                    onClick={ handleOpenPreview }
                   />
                 </Box>
               </Box>
