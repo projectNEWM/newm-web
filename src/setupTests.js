@@ -13,3 +13,8 @@ jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
     getSupportedWallets: jest.fn(),
   })),
 }));
+
+jest.mock("react-audio-visualize", () => ({
+  ...jest.requireActual("react-audio-visualize"),
+  AudioVisualizer: jest.fn(),
+}));

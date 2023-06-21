@@ -1,6 +1,11 @@
 import { mockFile, renderWithContext } from "common";
 import UploadSong from "../UploadSong";
 
+jest.mock("common", () => ({
+  ...jest.requireActual("common"),
+  getFileBinary: jest.fn(),
+}));
+
 describe("<UploadSong>", () => {
   describe("when a file is present", () => {
     it("displays the filename", () => {

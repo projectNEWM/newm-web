@@ -7,20 +7,14 @@ import {
 import { WizardForm } from "components";
 import { commonYupValidation } from "common";
 import * as Yup from "yup";
-import {
-  extractGenreNames,
-  useGetGenresQuery,
-  useGetRolesQuery,
-} from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
-import SelectGenre from "./SelectGenre";
 import Complete from "./Complete";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
-  const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
@@ -31,10 +25,7 @@ const CreateProfile: FunctionComponent = () => {
   const initialValues: Partial<ProfileFormValues> = {
     nickname: "",
     role: "",
-    genre: "",
   };
-
-  const genreNames = extractGenreNames(genres);
 
   /**
    * Yup validations for all form fields.
@@ -42,7 +33,6 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    genre: commonYupValidation.role(genreNames).required("Genre is required"),
   };
 
   /**
@@ -90,19 +80,11 @@ const CreateProfile: FunctionComponent = () => {
               }),
             },
             {
-              path: "what-is-your-genre",
-              element: <SelectGenre />,
-              validationSchema: Yup.object().shape({
-                genre: validations.genre,
-              }),
-            },
-            {
               path: "complete",
               element: <Complete />,
               validationSchema: Yup.object().shape({
                 nickname: validations.nickname,
                 role: validations.role,
-                genre: validations.genre,
               }),
             },
           ] }
