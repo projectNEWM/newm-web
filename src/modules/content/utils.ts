@@ -1,7 +1,15 @@
-import { GetSongGenresResponse, GetSongRolesResponse } from "./types";
+import { Extractable } from "./types";
 
-export const extractGenreNames = (genres: GetSongGenresResponse): string[] =>
-  genres.map((genre) => genre.name);
-
-export const extractRoleNames = (roles: GetSongRolesResponse): string[] =>
-  roles.map((role) => role.name);
+/**
+ * Extracts the 'name' property from an array of items.
+ * Each item is expected to have a 'name' property of type string.
+ *
+ * @param {T[]} items - An array of items to extract names from.
+ * @return {string[]} An array of extracted names.
+ *
+ * @template T
+ * @typedef {object} T
+ * @property {string} name
+ */
+export const extractNames = <T extends Extractable>(items: T[]): string[] =>
+  items.map((item) => item.name);

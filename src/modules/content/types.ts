@@ -1,13 +1,18 @@
-export interface Genre {
-  genre_id: number;
+export type Extractable = {
   name: string;
-}
+};
 
-export type GetSongGenresResponse = Genre[];
+export interface Genre {
+  readonly genre_id: number;
+  readonly name: string;
+}
 
 export interface Role {
-  genre_id: number;
-  name: string;
+  readonly role_id: number;
+  readonly name: string;
 }
 
-export type GetSongRolesResponse = Role[];
+export interface Language {
+  readonly language_id: number;
+  readonly name: string;
+}

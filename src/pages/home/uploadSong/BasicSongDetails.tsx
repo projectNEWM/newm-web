@@ -2,8 +2,11 @@ import { FunctionComponent, useEffect, useRef } from "react";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import {
-  extractGenreNames,
+  Genre,
+  Language,
+  extractNames,
   useGetGenresQuery,
+  useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "modules/content";
 import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
@@ -40,7 +43,10 @@ const BasicSongDetails: FunctionComponent = () => {
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
-  const genreNames = extractGenreNames(genres);
+  const { data: languages = [] } = useGetLanguagesQuery();
+
+  const genreOptions = extractNames<Genre>(genres);
+  const languageOptions = extractNames<Language>(languages);
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -144,18 +150,16 @@ const BasicSongDetails: FunctionComponent = () => {
             isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
-            options={ genreNames }
+            options={ genreOptions }
           />
 
           <DropdownMultiSelectField
             label="LANGUAGE"
             name="language"
             placeholder="Select all that apply"
-            /** TODO: add language options */
-            options={ [] }
+            options={ languageOptions }
           />
 
-          { /** TODO: get moods from back-end */ }
           <DropdownMultiSelectField
             label="MOOD"
             name="moods"

@@ -24,7 +24,8 @@ import {
   usePatchSongThunk,
 } from "modules/song";
 import {
-  extractGenreNames,
+  Genre,
+  extractNames,
   useGetGenresQuery,
   useGetMoodsQuery,
 } from "modules/content";
@@ -39,7 +40,7 @@ const SongInfo = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const genresRef = useRef<HTMLDivElement>(null);
 
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genresData = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const [patchSong] = usePatchSongThunk();
   const {
@@ -60,13 +61,13 @@ const SongInfo = () => {
     title,
   };
 
-  const genreNames = extractGenreNames(genreOptions);
+  const genreOptions = extractNames<Genre>(genresData);
 
   const validationSchema = Yup.object({
     coverArtUrl: commonYupValidation.coverArtUrl,
     description: Yup.string(),
     genres: commonYupValidation
-      .genres(genreNames)
+      .genres(genreOptions)
       .min(1, "At least one genre is required"),
     title: commonYupValidation.title,
   });
@@ -170,7 +171,7 @@ const SongInfo = () => {
                     isOptional={ false }
                     name="genres"
                     placeholder="Select all that apply"
-                    options={ genreNames }
+                    options={ genreOptions }
                   />
 
                   <DropdownMultiSelectField

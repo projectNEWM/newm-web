@@ -13,6 +13,7 @@ const api = createApi({
   tagTypes: [
     Tags.Collaboration,
     Tags.Genres,
+    Tags.Languages,
     Tags.Profile,
     Tags.Roles,
     Tags.Song,

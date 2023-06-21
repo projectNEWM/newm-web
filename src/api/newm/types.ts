@@ -1,7 +1,8 @@
 export enum Tags {
-  Profile = "Profile",
-  Song = "Song",
   Collaboration = "Collaboration",
   Genres = "Genres",
+  Languages = "Languages",
+  Profile = "Profile",
   Roles = "Roles",
+  Song = "Song",
 }

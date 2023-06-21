@@ -1,17 +1,17 @@
 import api, { Tags } from "api";
 import { setToastMessage } from "modules/ui";
-import { GetSongGenresResponse, GetSongRolesResponse } from "./types";
+import { Genre, Language, Role } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getGenres: build.query<GetSongGenresResponse, void>({
+    getGenres: build.query<Genre[], void>({
       query: () => "v1/distribution/genres",
       providesTags: [Tags.Genres],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching genres",
@@ -21,14 +21,14 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getRoles: build.query<GetSongRolesResponse, void>({
+    getRoles: build.query<Role[], void>({
       query: () => "v1/distribution/roles",
       providesTags: [Tags.Roles],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching roles",
@@ -44,7 +44,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching moods",
@@ -54,10 +54,31 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getLanguages: build.query<Language[], void>({
+      query: () => "v1/distribution/languages",
+      providesTags: [Tags.Languages],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching languages",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetGenresQuery, useGetRolesQuery, useGetMoodsQuery } =
-  extendedApi;
+export const {
+  useGetGenresQuery,
+  useGetLanguagesQuery,
+  useGetMoodsQuery,
+  useGetRolesQuery,
+} = extendedApi;
 
 export default extendedApi;

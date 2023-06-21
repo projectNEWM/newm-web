@@ -8,7 +8,7 @@ import {
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
-import { extractRoleNames, useGetRolesQuery } from "modules/content";
+import { Role, extractNames, useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
@@ -29,7 +29,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 }) => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const roleNames = extractRoleNames(roles);
+  const roleOptions = extractNames<Role>(roles);
 
   return (
     <Box>
@@ -73,7 +73,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 <DropdownSelectField
                   isOptional={ false }
                   name={ `creditors[${idx}].role` }
-                  options={ roleNames }
+                  options={ roleOptions }
                   placeholder="Select role"
                   widthType="full"
                 />
