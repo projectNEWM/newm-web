@@ -7,10 +7,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import theme from "theme";
 import { useGetCollaboratorsQuery } from "modules/song";
-import { Typography } from "elements";
 import { useWindowDimensions } from "common";
 import {
   TableCell,
@@ -19,6 +19,7 @@ import {
   TableSkeleton,
 } from "components";
 import { history } from "common/history";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoOwnersYet from "./NoOwnersYet";
 
 interface OwnersTableProps {
@@ -176,7 +177,19 @@ export default function OwnersTable({
                         alt="Profile"
                       />
                     ) : (
-                      <Stack sx={ { height: "40px", width: "40px" } }></Stack>
+                      <Stack direction="row" gap={ 1 } alignItems="center">
+                        <AccountCircleIcon
+                          sx={ {
+                            color: theme.colors.grey200,
+                            fontSize: "46px",
+                            marginLeft: "-2px",
+                          } }
+                        />
+
+                        <Typography fontWeight={ 400 } fontStyle="italic">
+                          Waiting on account creation
+                        </Typography>
+                      </Stack>
                     ) }
                     { firstName && lastName ? `${firstName} ${lastName}` : null }
                   </Stack>
