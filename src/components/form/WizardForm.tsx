@@ -24,7 +24,7 @@ interface FormRoute {
   readonly onSubmitStep?: (
     values: any, // eslint-disable-line
     helpers: FormikHelpers<FormikValues>
-  ) => void;
+  ) => void | Promise<void>;
   /** The route title for the progress stepper */
   readonly progressStepTitle?: string;
 }
@@ -85,7 +85,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
    * Calls `onSubmitStep` if present. If this is the last route, it submits
    * the form, otherwise, it navigates if `navigateOnSubmitStep` is not false.
    */
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormikValues,
     helpers: FormikHelpers<FormikValues>
   ) => {
@@ -94,11 +94,11 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     const shouldNavigate = currentRoute.navigateOnSubmitStep ?? true;
 
     if (currentRoute.onSubmitStep) {
-      currentRoute.onSubmitStep(values, helpers);
+      await currentRoute.onSubmitStep(values, helpers);
     }
 
     if (isLastRoute) {
-      onSubmit(values, helpers);
+      await onSubmit(values, helpers);
       return;
     }
 
