@@ -19,7 +19,7 @@ export const asThunkHook = <Returned, Arg>(
   thunk: AsyncThunk<Returned, Arg, Record<string, unknown>>
 ) => {
   const useWrappedThunk = (): readonly [
-    (arg: Arg) => void,
+    (arg: Arg) => Promise<void>,
     UseWrappedThunkResponse<Returned>
   ] => {
     const resultRef = useRef<PayloadAction<Returned>>();
