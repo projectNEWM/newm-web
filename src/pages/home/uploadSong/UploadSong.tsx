@@ -1,9 +1,12 @@
+import { FunctionComponent } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
-import { commonYupValidation } from "common";
+import { FormikHelpers, FormikValues } from "formik";
+import { commonYupValidation, extractProperty } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
-import { FormikHelpers, FormikValues } from "formik";
-import { useGetGenresQuery } from "modules/content";
+import { Genre, useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
@@ -11,9 +14,6 @@ import {
   useGenerateArtistAgreementThunk,
   useUploadSongThunk,
 } from "modules/song";
-import { FunctionComponent } from "react";
-import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import ConfirmAgreement from "./ConfirmAgreement";
 import BasicSongDetails from "./BasicSongDetails";
 import AdvancedSongDetails from "./AdvancedSongDetails";
@@ -21,7 +21,7 @@ import AdvancedSongDetails from "./AdvancedSongDetails";
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
 
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genres = [] } = useGetGenresQuery();
   const {
     data: {
       companyName = "",
@@ -106,6 +106,8 @@ const UploadSong: FunctionComponent = () => {
     await uploadSong(values);
     helpers.setSubmitting(false);
   };
+
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,

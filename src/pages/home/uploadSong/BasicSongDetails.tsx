@@ -1,7 +1,13 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
+import {
+  Genre,
+  Language,
+  useGetGenresQuery,
+  useGetLanguagesQuery,
+  useGetMoodsQuery,
+} from "modules/content";
 import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
@@ -12,7 +18,12 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { scrollToError, useAppDispatch, useWindowDimensions } from "common";
+import {
+  extractProperty,
+  scrollToError,
+  useAppDispatch,
+  useWindowDimensions,
+} from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import {
@@ -34,8 +45,15 @@ const BasicSongDetails: FunctionComponent = () => {
   const ownersRef = useRef<HTMLDivElement>(null);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
+  const { data: languages = [] } = useGetLanguagesQuery();
+
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
+  const languageOptions = extractProperty<Language, "language_name">(
+    languages,
+    "language_name"
+  );
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -146,11 +164,9 @@ const BasicSongDetails: FunctionComponent = () => {
             label="LANGUAGE"
             name="language"
             placeholder="Select all that apply"
-            /** TODO: add language options */
-            options={ [] }
+            options={ languageOptions }
           />
 
-          { /** TODO: get moods from back-end */ }
           <DropdownMultiSelectField
             label="MOOD"
             name="moods"

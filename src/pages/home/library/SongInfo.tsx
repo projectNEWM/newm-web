@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
+  extractProperty,
   getUpdatedValues,
   scrollToError,
   useWindowDimensions,
@@ -23,7 +24,7 @@ import {
   useGetSongQuery,
   usePatchSongThunk,
 } from "modules/song";
-import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
+import { Genre, useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();
@@ -35,7 +36,7 @@ const SongInfo = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const genresRef = useRef<HTMLDivElement>(null);
 
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: genresData = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const [patchSong] = usePatchSongThunk();
   const {
@@ -55,6 +56,8 @@ const SongInfo = () => {
     moods,
     title,
   };
+
+  const genreOptions = extractProperty<Genre, "name">(genresData, "name");
 
   const validationSchema = Yup.object({
     coverArtUrl: commonYupValidation.coverArtUrl,

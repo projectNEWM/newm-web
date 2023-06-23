@@ -46,7 +46,7 @@ const ConfirmAgreement: FunctionComponent = () => {
               : "default"
           }
         >
-          Upload & Request Minting
+          Distribute & Mint
         </Button>
       </Box>
     </Box>

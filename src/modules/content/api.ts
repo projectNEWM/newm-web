@@ -1,34 +1,37 @@
-import api from "api";
+import api, { Tags } from "api";
 import { setToastMessage } from "modules/ui";
+import { Genre, Language, Role } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getGenres: build.query<Array<string>, void>({
-      query: () => "contents/predefined-genres.json",
+    getGenres: build.query<Genre[], void>({
+      query: () => "v1/distribution/genres",
+      providesTags: [Tags.Genres],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching moods",
+              message: "An error occurred while fetching genres",
               severity: "error",
             })
           );
         }
       },
     }),
-    getRoles: build.query<Array<string>, void>({
-      query: () => "contents/predefined-roles.json",
+    getRoles: build.query<Role[], void>({
+      query: () => "v1/distribution/roles",
+      providesTags: [Tags.Roles],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching moods",
+              message: "An error occurred while fetching roles",
               severity: "error",
             })
           );
@@ -41,7 +44,7 @@ export const extendedApi = api.injectEndpoints({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (err) {
+        } catch (error) {
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching moods",
@@ -51,10 +54,31 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getLanguages: build.query<Language[], void>({
+      query: () => "v1/distribution/languages",
+      providesTags: [Tags.Languages],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching languages",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetGenresQuery, useGetRolesQuery, useGetMoodsQuery } =
-  extendedApi;
+export const {
+  useGetGenresQuery,
+  useGetLanguagesQuery,
+  useGetMoodsQuery,
+  useGetRolesQuery,
+} = extendedApi;
 
 export default extendedApi;

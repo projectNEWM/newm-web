@@ -1,14 +1,15 @@
+import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
+import { extractProperty } from "common";
 import {
   Creditor,
   getCollaboratorStatusContent,
   getIsCollaboratorEditable,
 } from "modules/song";
-import { FunctionComponent } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
-import { useGetRolesQuery } from "modules/content";
+import { Role, useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
@@ -29,6 +30,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 }) => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
+  const roleOptions = extractProperty<Role, "name">(roles, "name");
 
   return (
     <Box>
@@ -72,7 +74,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 <DropdownSelectField
                   isOptional={ false }
                   name={ `creditors[${idx}].role` }
-                  options={ roles }
+                  options={ roleOptions }
                   placeholder="Select role"
                   widthType="full"
                 />

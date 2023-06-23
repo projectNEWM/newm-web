@@ -15,12 +15,18 @@ import {
 } from "components";
 import {
   commonYupValidation,
+  extractProperty,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
   useWindowDimensions,
 } from "common";
-import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import {
+  Genre,
+  Role,
+  useGetGenresQuery,
+  useGetRolesQuery,
+} from "modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -45,8 +51,10 @@ const Profile: FunctionComponent = () => {
   const roleRef = useRef<HTMLDivElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
-  const { data: roleOptions = [] } = useGetRolesQuery();
-  const { data: genreOptions = [] } = useGetGenresQuery();
+  const { data: roles = [] } = useGetRolesQuery();
+  const { data: genres = [] } = useGetGenresQuery();
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
+  const roleOptions = extractProperty<Role, "name">(roles, "name");
 
   const {
     data: {
