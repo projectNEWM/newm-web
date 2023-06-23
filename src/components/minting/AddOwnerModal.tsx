@@ -8,9 +8,9 @@ import {
   SwitchInputField,
   TextInputField,
 } from "components";
-import { commonYupValidation } from "common";
+import { commonYupValidation, extractProperty } from "common";
 import theme from "theme";
-import { Role, extractProperty, useGetRolesQuery } from "modules/content";
+import { Role, useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {

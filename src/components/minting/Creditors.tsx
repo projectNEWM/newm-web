@@ -1,14 +1,15 @@
+import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
+import { extractProperty } from "common";
 import {
   Creditor,
   getCollaboratorStatusContent,
   getIsCollaboratorEditable,
 } from "modules/song";
-import { FunctionComponent } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import DropdownSelectField from "components/form/DropdownSelectField";
-import { Role, extractProperty, useGetRolesQuery } from "modules/content";
+import { Role, useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;

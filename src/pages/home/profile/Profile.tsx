@@ -15,6 +15,7 @@ import {
 } from "components";
 import {
   commonYupValidation,
+  extractProperty,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
@@ -23,7 +24,6 @@ import {
 import {
   Genre,
   Role,
-  extractProperty,
   useGetGenresQuery,
   useGetRolesQuery,
 } from "modules/content";

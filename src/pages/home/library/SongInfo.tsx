@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
+  extractProperty,
   getUpdatedValues,
   scrollToError,
   useWindowDimensions,
@@ -23,12 +24,7 @@ import {
   useGetSongQuery,
   usePatchSongThunk,
 } from "modules/song";
-import {
-  Genre,
-  extractProperty,
-  useGetGenresQuery,
-  useGetMoodsQuery,
-} from "modules/content";
+import { Genre, useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 const SongInfo = () => {
   const location = useLocation();

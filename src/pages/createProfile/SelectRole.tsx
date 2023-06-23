@@ -1,7 +1,8 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
+import { extractProperty } from "common";
 import { FormikValues, useFormikContext } from "formik";
-import { Role, extractProperty, useGetRolesQuery } from "modules/content";
+import { Role, useGetRolesQuery } from "modules/content";
 
 const SelectRole: FunctionComponent = () => {
   const { data: roles = [] } = useGetRolesQuery();

@@ -4,7 +4,6 @@ import { Box, Stack, useTheme } from "@mui/material";
 import {
   Genre,
   Language,
-  extractProperty,
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
@@ -19,7 +18,12 @@ import {
   UploadImageField,
   UploadSongField,
 } from "components";
-import { scrollToError, useAppDispatch, useWindowDimensions } from "common";
+import {
+  extractProperty,
+  scrollToError,
+  useAppDispatch,
+  useWindowDimensions,
+} from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
 import {

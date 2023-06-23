@@ -5,9 +5,9 @@ import {
   useUpdateInitialProfileThunk,
 } from "modules/session";
 import { WizardForm } from "components";
-import { commonYupValidation } from "common";
+import { commonYupValidation, extractProperty } from "common";
 import * as Yup from "yup";
-import { Role, extractProperty, useGetRolesQuery } from "modules/content";
+import { Role, useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
