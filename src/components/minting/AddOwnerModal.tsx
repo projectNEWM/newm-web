@@ -10,7 +10,7 @@ import {
 } from "components";
 import { commonYupValidation } from "common";
 import theme from "theme";
-import { Role, extractNames, useGetRolesQuery } from "modules/content";
+import { Role, extractProperty, useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
@@ -27,7 +27,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   onSubmit,
 }) => {
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = extractNames<Role>(roles);
+  const roleOptions = extractProperty<Role, "name">(roles, "name");
 
   const initialValues = {
     email: "",

@@ -1,7 +1,3 @@
-export type Extractable = {
-  name: string;
-};
-
 export interface Genre {
   readonly genre_id: number;
   readonly name: string;
@@ -13,6 +9,6 @@ export interface Role {
 }
 
 export interface Language {
-  readonly language_id: number;
-  readonly name: string;
+  readonly language_code: string;
+  readonly language_name: string;
 }

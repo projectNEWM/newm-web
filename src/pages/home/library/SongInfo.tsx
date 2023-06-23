@@ -25,7 +25,7 @@ import {
 } from "modules/song";
 import {
   Genre,
-  extractNames,
+  extractProperty,
   useGetGenresQuery,
   useGetMoodsQuery,
 } from "modules/content";
@@ -61,7 +61,7 @@ const SongInfo = () => {
     title,
   };
 
-  const genreOptions = extractNames<Genre>(genresData);
+  const genreOptions = extractProperty<Genre, "name">(genresData, "name");
 
   const validationSchema = Yup.object({
     coverArtUrl: commonYupValidation.coverArtUrl,

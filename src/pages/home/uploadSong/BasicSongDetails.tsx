@@ -4,7 +4,7 @@ import { Box, Stack, useTheme } from "@mui/material";
 import {
   Genre,
   Language,
-  extractNames,
+  extractProperty,
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
@@ -45,8 +45,11 @@ const BasicSongDetails: FunctionComponent = () => {
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
 
-  const genreOptions = extractNames<Genre>(genres);
-  const languageOptions = extractNames<Language>(languages);
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
+  const languageOptions = extractProperty<Language, "language_name">(
+    languages,
+    "language_name"
+  );
 
   const windowWidth = useWindowDimensions()?.width;
 

@@ -3,7 +3,7 @@ import { commonYupValidation } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
 import { FormikHelpers, FormikValues } from "formik";
-import { Genre, extractNames, useGetGenresQuery } from "modules/content";
+import { Genre, extractProperty, useGetGenresQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
@@ -107,7 +107,7 @@ const UploadSong: FunctionComponent = () => {
     helpers.setSubmitting(false);
   };
 
-  const genreOptions = extractNames<Genre>(genres);
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,

@@ -10,6 +10,7 @@ const NoResultsText = styled.span`
   padding: 12px 12px;
   position: absolute;
   width: 100%;
+  z-index: 1;
 `;
 
 export default NoResultsText;

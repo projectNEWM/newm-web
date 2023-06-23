@@ -23,7 +23,7 @@ import {
 import {
   Genre,
   Role,
-  extractNames,
+  extractProperty,
   useGetGenresQuery,
   useGetRolesQuery,
 } from "modules/content";
@@ -53,8 +53,8 @@ const Profile: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
   const { data: genres = [] } = useGetGenresQuery();
-  const genreOptions = extractNames<Genre>(genres);
-  const roleOptions = extractNames<Role>(roles);
+  const genreOptions = extractProperty<Genre, "name">(genres, "name");
+  const roleOptions = extractProperty<Role, "name">(roles, "name");
 
   const {
     data: {
