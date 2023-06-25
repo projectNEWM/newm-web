@@ -5,7 +5,10 @@ import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
 export const sendVerificationEmail = (email: string) => {
-  return sessionApi.endpoints.sendVerificationEmail.initiate({ email });
+  return sessionApi.endpoints.sendVerificationEmail.initiate(
+    { email },
+    { forceRefetch: true }
+  );
 };
 
 export const handleSuccessfulAuthentication = (

@@ -11,6 +11,7 @@ import {
 import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
+  DropdownSelectField,
   ErrorMessage,
   SwitchInputField,
   TextAreaField,
@@ -160,11 +161,11 @@ const BasicSongDetails: FunctionComponent = () => {
             options={ genreOptions }
           />
 
-          <DropdownMultiSelectField
+          <DropdownSelectField
             label="LANGUAGE"
             name="language"
-            placeholder="Select all that apply"
             options={ languageOptions }
+            placeholder="Select a language"
           />
 
           <DropdownMultiSelectField
