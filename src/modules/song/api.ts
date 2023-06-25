@@ -26,11 +26,11 @@ import {
   MarketplaceStatus,
   MintingStatus,
   PatchSongRequest,
+  PostSongRequest,
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
   Song,
   UpdateCollaborationRequest,
-  UploadSongRequest,
   UploadSongResponse,
 } from "./types";
 
@@ -90,7 +90,11 @@ export const extendedApi = api.injectEndpoints({
       providesTags: [Tags.Song],
 
       // transform the response to add the song to make it easy to couple the song with the stream info
-      transformResponse: (value: GetSongStreamData, _meta: GetSongStreamData, song: Song): GetSongStreamResponse => {
+      transformResponse: (
+        value: GetSongStreamData,
+        _meta: GetSongStreamData,
+        song: Song
+      ): GetSongStreamResponse => {
         return {
           song: song,
           streamData: value,
@@ -152,7 +156,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    uploadSong: build.mutation<UploadSongResponse, UploadSongRequest>({
+    uploadSong: build.mutation<UploadSongResponse, PostSongRequest>({
       query: (body) => ({
         url: "v1/songs",
         method: "POST",

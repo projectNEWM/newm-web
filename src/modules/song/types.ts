@@ -61,13 +61,33 @@ export interface Collaborator {
   readonly isFeatured: boolean;
 }
 
-export interface UploadSongRequest {
-  readonly coverArtUrl?: string | File; // eslint-disable-line
-  readonly audio?: any; // eslint-disable-line
+/**
+ * PostSong as stored in the NEWM API.
+ */
+export interface PostSongRequest {
   readonly title: string;
   readonly genres: ReadonlyArray<string>;
   readonly moods?: ReadonlyArray<string>;
-  readonly description: string;
+  readonly coverArtUrl?: string;
+  readonly lyricsUrl?: string;
+  readonly description?: string;
+  readonly album?: string;
+  readonly track?: number;
+  readonly language?: string;
+  readonly copyrights?: string;
+  readonly parentalAdvisory?: string;
+  readonly barcodeType?: string;
+  readonly barcodeNumber?: string;
+  readonly isrc?: string;
+  readonly iswc?: string;
+  readonly ipis?: ReadonlyArray<string>;
+  readonly releaseDate?: string;
+}
+
+export interface UploadSongRequest
+  extends Omit<PostSongRequest, "coverArtUrl"> {
+  readonly coverArtUrl?: string | File;
+  readonly audio?: any; // eslint-disable-line
   readonly isExplicit: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;

@@ -50,8 +50,23 @@ export const uploadSong = createAsyncThunk(
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
-          ...body,
+          title: body.title,
+          genres: body.genres,
+          moods: body.moods,
           coverArtUrl,
+          lyricsUrl: body.lyricsUrl,
+          description: body.description,
+          album: body.album,
+          track: body.track,
+          language: body.language,
+          copyrights: body.copyrights,
+          parentalAdvisory: body.parentalAdvisory,
+          barcodeType: body.barcodeType,
+          barcodeNumber: body.barcodeNumber,
+          isrc: body.isrc,
+          iswc: body.iswc,
+          ipis: body.ipis,
+          releaseDate: body.releaseDate,
         })
       );
 
