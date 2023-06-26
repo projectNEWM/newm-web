@@ -47,6 +47,21 @@ export const uploadSong = createAsyncThunk(
         dispatch
       );
 
+      // Backend expects "Non-Explicit" for clean songs, any value for explicit
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
+
+      // combination of all IPI values for the song if present
+      let ipis;
+
+      if (body.ipis) {
+        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+      } else {
+        ipis = body.userIpi ? [body.userIpi] : undefined;
+      }
+
+      // if barcodeNumber isn't present, barcodeType shouldn't be provided
+      const barcodeType = body.barcodeNumber ? body.barcodeType : undefined;
+
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
@@ -60,12 +75,12 @@ export const uploadSong = createAsyncThunk(
           track: body.track,
           language: body.language,
           copyrights: body.copyrights,
-          parentalAdvisory: body.parentalAdvisory,
-          barcodeType: body.barcodeType,
+          parentalAdvisory,
+          barcodeType,
           barcodeNumber: body.barcodeNumber,
           isrc: body.isrc,
           iswc: body.iswc,
-          ipis: body.ipis,
+          ipis,
           releaseDate: body.releaseDate,
         })
       );

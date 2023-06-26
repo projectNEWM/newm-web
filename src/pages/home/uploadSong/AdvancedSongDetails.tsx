@@ -2,7 +2,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { Box, IconButton, Stack } from "@mui/material";
 import { useWindowDimensions } from "common";
 import {
-  DropdownMultiSelectField,
+  DropdownSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
@@ -23,7 +23,7 @@ const AdvancedSongDetails: React.FC = () => {
       spacing={ 3 }
     >
       <SwitchInputField
-        name="parentalAdvisory"
+        name="isExplicit"
         title="Does the song contain explicit content?"
         tooltipText={
           "Explicit content includes strong or discriminatory language, " +
@@ -39,8 +39,6 @@ const AdvancedSongDetails: React.FC = () => {
         <DatePickerInput
           name="scheduledDate"
           label="SCHEDULE RELEASE DATE"
-          options={ [] }
-          isOptional={ false }
           placeholder="Select a day"
           tooltipText={
             "When selecting a date to release your song on our " +
@@ -52,7 +50,6 @@ const AdvancedSongDetails: React.FC = () => {
         <DatePickerInput
           name="releaseDate"
           label="ORIGINAL RELEASE DATE"
-          options={ [] }
           placeholder="Select a day"
           tooltipText={
             "If your song has already been launched on other platforms you " +
@@ -60,7 +57,6 @@ const AdvancedSongDetails: React.FC = () => {
           }
         />
         <TextInputField
-          isOptional={ false }
           name="copyrights"
           label="COPYRIGHT"
           placeholder="Copyright holder"
@@ -70,7 +66,6 @@ const AdvancedSongDetails: React.FC = () => {
           }
         />
         <TextInputField
-          isOptional={ false }
           name="isrc"
           label="ISRC"
           placeholder="AA-AAA-00-00000"
@@ -94,13 +89,12 @@ const AdvancedSongDetails: React.FC = () => {
             </IconButton>
           }
         />
-        <DropdownMultiSelectField
-          isOptional={ false }
+        <DropdownSelectField
           name="barcodeType"
           label="ID TYPE"
           tooltipText={ " " }
           placeholder="Select one"
-          options={ [] }
+          options={ ["UPC", "EAN"] }
         />
         <TextInputField
           name="barcodeNumber"
@@ -109,7 +103,7 @@ const AdvancedSongDetails: React.FC = () => {
           tooltipText={ " " }
         />
         <TextInputField
-          name="ipis"
+          name="userIpi"
           label="IPI"
           placeholder="000000000"
           tooltipText={ " " }

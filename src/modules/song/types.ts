@@ -97,6 +97,7 @@ export interface UploadSongRequest
   readonly companyName: string;
   readonly artistName: string;
   readonly stageName: string;
+  readonly userIpi?: string;
 }
 
 export interface UploadSongResponse {
@@ -162,7 +163,7 @@ export interface Song {
   readonly parentalAdvisory?: string;
   readonly isrc?: string;
   readonly iswc?: string;
-  readonly ipis?: string;
+  readonly ipis?: ReadonlyArray<string>;
   readonly releaseDate?: string;
   readonly duration?: number;
   readonly streamUrl?: string;
