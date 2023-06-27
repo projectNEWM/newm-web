@@ -74,7 +74,7 @@ export const useHlsJs = ({
 
     const hls = new Hls({ 
       debug: !isProd,
-      xhrSetup: (xhr, url) => {
+      xhrSetup: (xhr) => {
         xhr.withCredentials = true;
       }
     });
