@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
 import { FieldOptions } from "./types";
-
-/**
- * Password regex, it must contain the following:
- * 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number.
- */
-const passwordRequirementRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+import {
+  REGEX_ALPHANUMERIC,
+  REGEX_HYPHENS,
+  REGEX_ONLY_ALPHABETS_AND_SPACES,
+  REGEX_PASSWORD_REQUIREMENTS,
+} from "./regex";
 
 /**
  * Returns true if all genres are included in the genre options array
@@ -102,7 +102,7 @@ export const commonYupValidation = {
     ),
   nickname: Yup.string()
     .required("Stage name is required")
-    .matches(/^[aA-zZ\s]+$/, "Please only use letters"),
+    .matches(REGEX_ONLY_ALPHABETS_AND_SPACES, "Please only use letters"),
   password: Yup.string().required("Password is required"),
   newPassword: Yup.string()
     .test(
@@ -111,7 +111,7 @@ export const commonYupValidation = {
       (password) => (password ? password === password.trim() : true)
     )
     .matches(
-      passwordRequirementRegex,
+      REGEX_PASSWORD_REQUIREMENTS,
       "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
     ),
   confirmPassword: Yup.string().oneOf(
@@ -194,4 +194,42 @@ export const scrollToError = (
       behavior: "smooth",
     });
   }
+};
+
+/**
+ * Removes hyphens and non-alphanumeric characters.
+ * Limits length to 12 characters.
+ * Converts all characters to uppercase.
+ * Adds hyphens at specific intervals (after the 2nd, 5th, and 8th characters).
+ *
+ * @param rawValue - The raw ISRC value to be cleaned and formatted.
+ * @returns The cleaned and formatted ISRC value.
+ */
+export const formatIsrc = (rawValue: string): string => {
+  let cleanedValue = rawValue
+    .replace(REGEX_HYPHENS, "")
+    .replace(REGEX_ALPHANUMERIC, "");
+
+  if (cleanedValue.length > 12) {
+    cleanedValue = cleanedValue.substring(0, 12);
+  }
+
+  let formattedIsrc = cleanedValue.toUpperCase();
+
+  if (formattedIsrc.length > 2) {
+    formattedIsrc =
+      formattedIsrc.substring(0, 2) + "-" + formattedIsrc.substring(2);
+  }
+
+  if (formattedIsrc.length > 6) {
+    formattedIsrc =
+      formattedIsrc.substring(0, 6) + "-" + formattedIsrc.substring(6);
+  }
+
+  if (formattedIsrc.length > 9) {
+    formattedIsrc =
+      formattedIsrc.substring(0, 9) + "-" + formattedIsrc.substring(9);
+  }
+
+  return formattedIsrc;
 };

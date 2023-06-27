@@ -1,20 +1,29 @@
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { Box, IconButton, Stack } from "@mui/material";
-import { useWindowDimensions } from "common";
+import { ChangeEvent, useState } from "react";
+import { useFormikContext } from "formik";
+import { Box, Stack } from "@mui/material";
+import { formatIsrc, useWindowDimensions } from "common";
 import {
   DropdownMultiSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput, HorizontalLine, Typography } from "elements";
-import { useFormikContext } from "formik";
+import { Button, DatePickerInput, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
 
-const AdvancedSongDetails: React.FC = () => {
+const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
 
-  const { isSubmitting } = useFormikContext<UploadSongRequest>();
+  const [isrcValue, setIsrcValue] = useState("");
+
+  const { isSubmitting, setFieldValue } = useFormikContext<UploadSongRequest>();
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatIsrc(event.target.value);
+
+    setIsrcValue(formattedValue);
+    setFieldValue("isrc", formattedValue);
+  };
 
   return (
     <Stack
@@ -75,24 +84,8 @@ const AdvancedSongDetails: React.FC = () => {
           label="ISRC"
           placeholder="AA-AAA-00-00000"
           tooltipText={ " " }
-          endAdornment={
-            <IconButton
-              sx={ {
-                borderRadius: 0,
-                borderLeftWidth: theme.inputField.borderWidth,
-                borderStyle: "solid",
-                borderColor: theme.colors.grey400,
-                padding: theme.inputField.padding,
-                color: theme.colors.music,
-                backgroundColor: theme.colors.black,
-              } }
-            >
-              { <AutoAwesomeIcon /> }
-              <Typography display={ ["none", "block", "block"] } paddingLeft={ 1 }>
-                { "Generate" }
-              </Typography>
-            </IconButton>
-          }
+          value={ isrcValue }
+          onChange={ handleChange }
         />
         <DropdownMultiSelectField
           isOptional={ false }
