@@ -60,10 +60,7 @@ const AdvancedSongDetails: React.FC = () => {
           name="copyrights"
           label="COPYRIGHT"
           placeholder="Copyright holder"
-          tooltipText={
-            "If your song has already been launched on other platforms you " +
-            "may input the release date here, but it is not required."
-          }
+          tooltipText={ "" }
         />
         <TextInputField
           name="isrc"
