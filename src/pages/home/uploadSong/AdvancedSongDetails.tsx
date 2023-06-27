@@ -1,7 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { formatIsrc, useWindowDimensions } from "common";
+import { formatIsrc, scrollToError, useWindowDimensions } from "common";
 import {
   DropdownMultiSelectField,
   SwitchInputField,
@@ -13,10 +13,12 @@ import theme from "theme";
 
 const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
+  const isrcRef = useRef<HTMLInputElement>(null);
 
   const [isrcValue, setIsrcValue] = useState("");
 
-  const { isSubmitting, setFieldValue } = useFormikContext<UploadSongRequest>();
+  const { isSubmitting, setFieldValue, errors } =
+    useFormikContext<UploadSongRequest>();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatIsrc(event.target.value);
@@ -24,6 +26,10 @@ const AdvancedSongDetails = () => {
     setIsrcValue(formattedValue);
     setFieldValue("isrc", formattedValue);
   };
+
+  useEffect(() => {
+    scrollToError(errors, isSubmitting, [{ error: errors.isrc, ref: isrcRef }]);
+  }, [errors, isSubmitting]);
 
   return (
     <Stack
@@ -86,6 +92,7 @@ const AdvancedSongDetails = () => {
           tooltipText={ " " }
           value={ isrcValue }
           onChange={ handleChange }
+          ref={ isrcRef }
         />
         <DropdownMultiSelectField
           isOptional={ false }
