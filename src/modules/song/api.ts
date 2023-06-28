@@ -86,6 +86,7 @@ export const extendedApi = api.injectEndpoints({
       query: (song) => ({
         url: `v1/songs/${song.id}/stream`,
         method: "GET",
+        credentials: "include",
       }),
       providesTags: [Tags.Song],
 
