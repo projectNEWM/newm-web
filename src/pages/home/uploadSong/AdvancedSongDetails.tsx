@@ -37,7 +37,7 @@ const AdvancedSongDetails: React.FC = () => {
         columnGap={ [undefined, undefined, 1.5] }
       >
         <DatePickerInput
-          name="scheduledDate"
+          name="releaseDate"
           label="SCHEDULE RELEASE DATE"
           placeholder="Select a day"
           tooltipText={
@@ -48,7 +48,7 @@ const AdvancedSongDetails: React.FC = () => {
           }
         />
         <DatePickerInput
-          name="releaseDate"
+          name="originalDate"
           label="ORIGINAL RELEASE DATE"
           placeholder="Select a day"
           tooltipText={
