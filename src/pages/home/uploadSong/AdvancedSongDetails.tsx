@@ -1,7 +1,7 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { createRef, useEffect } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { formatIsrc, scrollToError, useWindowDimensions } from "common";
+import { scrollToError, useWindowDimensions } from "common";
 import {
   DropdownMultiSelectField,
   SwitchInputField,
@@ -13,23 +13,14 @@ import theme from "theme";
 
 const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
-  const isrcRef = useRef<HTMLInputElement>(null);
-
-  const [isrcValue, setIsrcValue] = useState("");
+  const isrcRef = createRef<HTMLInputElement>();
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = formatIsrc(event.target.value);
-
-    setIsrcValue(formattedValue);
-    setFieldValue("isrc", formattedValue);
-  };
-
   useEffect(() => {
     scrollToError(errors, isSubmitting, [{ error: errors.isrc, ref: isrcRef }]);
-  }, [errors, isSubmitting]);
+  }, [errors, isSubmitting, isrcRef]);
 
   return (
     <Stack
@@ -86,13 +77,16 @@ const AdvancedSongDetails = () => {
         />
         <TextInputField
           isOptional={ false }
-          name="isrc"
           label="ISRC"
+          mask="aa-***-99-99999"
+          maskChar={ null }
+          name="isrc"
           placeholder="AA-AAA-00-00000"
-          tooltipText={ " " }
-          value={ isrcValue }
-          onChange={ handleChange }
           ref={ isrcRef }
+          tooltipText={ " " }
+          onChange={ (event) =>
+            setFieldValue("isrc", event.target.value.toUpperCase())
+          }
         />
         <DropdownMultiSelectField
           isOptional={ false }

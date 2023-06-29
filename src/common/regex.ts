@@ -6,16 +6,6 @@ export const REGEX_PASSWORD_REQUIREMENTS =
   /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 /**
- * Detect hyphens.
- */
-export const REGEX_HYPHENS = /-/g;
-
-/**
- * Retain only alphanumeric characters from a string.
- */
-export const REGEX_ALPHANUMERIC = /[^a-zA-Z0-9]/g;
-
-/**
  * Regular expression for ISRC (International Standard Recording Code) format.
  * This pattern expects two uppercase alphabetic characters followed by
  * three alphanumeric characters, two digits, and finally five digits.

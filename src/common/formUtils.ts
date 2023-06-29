@@ -2,8 +2,6 @@ import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
 import { FieldOptions } from "./types";
 import {
-  REGEX_ALPHANUMERIC,
-  REGEX_HYPHENS,
   REGEX_ONLY_ALPHABETS_AND_SPACES,
   REGEX_PASSWORD_REQUIREMENTS,
 } from "./regex";
@@ -194,42 +192,4 @@ export const scrollToError = (
       behavior: "smooth",
     });
   }
-};
-
-/**
- * Removes hyphens and non-alphanumeric characters.
- * Limits length to 12 characters.
- * Converts all characters to uppercase.
- * Adds hyphens at specific intervals (after the 2nd, 5th, and 8th characters).
- *
- * @param rawValue - The raw ISRC value to be cleaned and formatted.
- * @returns The cleaned and formatted ISRC value.
- */
-export const formatIsrc = (rawValue: string): string => {
-  let cleanedValue = rawValue
-    .replace(REGEX_HYPHENS, "")
-    .replace(REGEX_ALPHANUMERIC, "");
-
-  if (cleanedValue.length > 12) {
-    cleanedValue = cleanedValue.substring(0, 12);
-  }
-
-  let formattedIsrc = cleanedValue.toUpperCase();
-
-  if (formattedIsrc.length > 2) {
-    formattedIsrc =
-      formattedIsrc.substring(0, 2) + "-" + formattedIsrc.substring(2);
-  }
-
-  if (formattedIsrc.length > 6) {
-    formattedIsrc =
-      formattedIsrc.substring(0, 6) + "-" + formattedIsrc.substring(6);
-  }
-
-  if (formattedIsrc.length > 9) {
-    formattedIsrc =
-      formattedIsrc.substring(0, 9) + "-" + formattedIsrc.substring(9);
-  }
-
-  return formattedIsrc;
 };
