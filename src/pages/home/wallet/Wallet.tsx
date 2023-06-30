@@ -53,7 +53,7 @@ const Wallet: FunctionComponent = () => {
           </Button>
         ) }
       </Box>
-      <UnclaimedRoyalties unclaimedRoyalties={ 5.35 } />
+      <UnclaimedRoyalties unclaimedRoyalties={ 0 } />
       <TabbedContainer
         sx={ { pt: 5 } }
         label1="PORTFOLIO"
