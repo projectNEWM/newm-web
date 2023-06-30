@@ -169,15 +169,8 @@ export const getUpdatedValues = (
  * @param {FormikErrors<unknown>} errors - Formik errors object.
  * @param {boolean} isSubmitting - Formik isSubmitting state, true if the form is currently being submitted.
  * @param {FieldOptions[]} fields - An array of FieldOptions objects.
- * Each FieldOptions object should have an 'error' property,
- * which is the error message for that field, and a 'ref' property, which is a ref for that field's input element.
- *
- * @example
- * scrollToError(errors, isSubmitting, fields);
- *
- * @typedef {Object} FieldOptions
- * @property {string|undefined} error - The error message for this field.
- * @property {React.RefObject<HTMLInputElement>} ref - A ref for this field's input element.
+ * Each FieldOptions object should have an 'error' property, which is the error message for that field.
+ * An 'element' property, which is the actual HTML element for that field's input element.
  */
 export const scrollToError = (
   errors: FormikErrors<unknown>,
@@ -185,9 +178,9 @@ export const scrollToError = (
   fields: FieldOptions[]
 ) => {
   if (isSubmitting && Object.keys(errors).length) {
-    const errorField = fields.find((field) => field.error && field.ref.current);
+    const errorField = fields.find((field) => field.error && field.element);
 
-    errorField?.ref.current?.scrollIntoView({
+    errorField?.element?.scrollIntoView({
       block: "center",
       behavior: "smooth",
     });

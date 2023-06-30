@@ -105,6 +105,7 @@ export const TextInput: ForwardRefRenderFunction<
   const [isFocused, setIsFocused] = useState(false);
 
   const InputElement = mask ? StyledMaskedInput : StyledInput;
+  const maskedProps = mask ? { mask, maskChar, inputRef: ref } : {};
 
   /**
    * Calls any onFocus prop being passed and then updates local state
@@ -205,9 +206,8 @@ export const TextInput: ForwardRefRenderFunction<
 
           <InputElement
             { ...rest }
+            { ...maskedProps }
             disabled={ disabled }
-            mask={ mask }
-            maskChar={ maskChar }
             onBlur={ handleBlur }
             onFocus={ handleFocus }
             ref={ ref }

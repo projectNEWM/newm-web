@@ -1,4 +1,4 @@
-import { createRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
 import { scrollToError, useWindowDimensions } from "common";
@@ -13,13 +13,19 @@ import theme from "theme";
 
 const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
-  const isrcRef = createRef<HTMLInputElement>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isrcRef = useRef<any>(null);
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
 
   useEffect(() => {
-    scrollToError(errors, isSubmitting, [{ error: errors.isrc, ref: isrcRef }]);
+    scrollToError(errors, isSubmitting, [
+      {
+        error: errors.isrc,
+        element: isrcRef.current?.getInputDOMNode(),
+      },
+    ]);
   }, [errors, isSubmitting, isrcRef]);
 
   return (
