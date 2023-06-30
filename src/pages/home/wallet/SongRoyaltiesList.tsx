@@ -82,7 +82,6 @@ export default function SongRoyaltiesList({
         <TableContainer
           sx={ {
             maxWidth: TABLE_WIDTH,
-            paddingRight: { xs: 0, md: 5.5 },
           } }
         >
           <Table size="small" aria-label="Song List">
@@ -112,8 +111,8 @@ export default function SongRoyaltiesList({
                       <img
                         style={ {
                           borderRadius: "50%",
-                          width: "32px",
-                          height: "32px",
+                          width: "40px",
+                          height: "40px",
                         } }
                         src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
                         alt="Album cover"
@@ -121,14 +120,11 @@ export default function SongRoyaltiesList({
                       <Box
                         sx={ {
                           paddingLeft: "12px",
-                          overflow: "scroll",
                           whiteSpace: "nowrap",
                           maxWidth: { xs: "200px", sm: "unset" },
                         } }
                       >
-                        <Typography fontSize={ 12 } fontWeight={ 500 }>
-                          { row.title }
-                        </Typography>
+                        <Typography fontWeight={ 500 }>{ row.title }</Typography>
                       </Box>
                     </Box>
                   </StyledTableCell>
