@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Button, Typography } from "elements";
+import currency from "currency.js";
 import theme from "theme";
 
 interface UnclaimedRoyaltiesProps {
@@ -41,13 +42,15 @@ export const UnclaimedRoyalties = ({
           </Box>
         </Typography>
         <Typography fontSize="28px" fontWeight={ 700 }>
-          ${ unclaimedRoyalties }
+          { currency(unclaimedRoyalties).format() }
         </Typography>
       </Box>
+
       <Button
         color="white"
         variant="outlined"
         width="compact"
+        disabled={ unclaimedRoyalties === 0 }
         sx={ { alignSelf: "center" } }
       >
         CLAIM ROYALTIES

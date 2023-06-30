@@ -51,16 +51,16 @@ const TransactionsList: FunctionComponent = () => {
   return isSuccess && !isLoading ? (
     <Box
       ref={ listRef }
-      overflow="scroll"
       maxHeight={ listHeight && listHeight - 20 }
       maxWidth={ maxListWidth }
+      pl={ 2 }
     >
       { transactionsByDate.map((transactions, idx) => (
         <Box key={ idx }>
           <Typography
             fontWeight={ 600 }
             fontSize={ 12 }
-            sx={ { pb: 1, pt: 4 } }
+            sx={ { pb: 1.25, pt: 3.75 } }
             align="left"
           >
             { transactions[0].date.slice(4, 10).toUpperCase() }

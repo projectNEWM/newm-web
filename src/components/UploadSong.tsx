@@ -68,6 +68,15 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     song.stop();
   };
 
+  /**
+   * Stop playing song when component umounts
+   */
+  useEffect(() => {
+    return () => {
+      song?.stop();
+    };
+  }, [song]);
+
   const handleDrop = useCallback(
     async (
       acceptedFiles: ReadonlyArray<File>,
