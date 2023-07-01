@@ -190,11 +190,11 @@ const Profile: FunctionComponent = () => {
       >
         { ({ dirty, errors, handleReset, isSubmitting }) => {
           scrollToError(errors, isSubmitting, [
-            { error: errors.nickname, ref: nicknameRef },
-            { error: errors.role, ref: roleRef },
-            { error: errors.firstName, ref: firstNameRef },
-            { error: errors.lastName, ref: lastNameRef },
-            { error: errors.companyName, ref: companyNameRef },
+            { error: errors.nickname, element: nicknameRef.current },
+            { error: errors.role, element: roleRef.current },
+            { error: errors.firstName, element: firstNameRef.current },
+            { error: errors.lastName, element: lastNameRef.current },
+            { error: errors.companyName, element: companyNameRef.current },
           ]);
 
           return (

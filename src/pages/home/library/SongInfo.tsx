@@ -88,9 +88,9 @@ const SongInfo = () => {
       >
         { ({ dirty, errors, isSubmitting }) => {
           scrollToError(errors, isSubmitting, [
-            { error: errors.coverArtUrl, ref: coverArtUrlRef },
-            { error: errors.title, ref: titleRef },
-            { error: errors.genres, ref: genresRef },
+            { error: errors.coverArtUrl, element: coverArtUrlRef.current },
+            { error: errors.title, element: titleRef.current },
+            { error: errors.genres, element: genresRef.current },
           ]);
 
           return (

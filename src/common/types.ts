@@ -1,4 +1,4 @@
-import { ReactElement, RefObject } from "react";
+import { ReactElement } from "react";
 import { RootState } from "store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
@@ -35,5 +35,5 @@ export type WidthType = "default" | "full";
 
 export interface FieldOptions {
   error: unknown;
-  ref: RefObject<HTMLDivElement | HTMLInputElement>;
+  element: HTMLDivElement | HTMLInputElement | null;
 }

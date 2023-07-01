@@ -9,5 +9,6 @@ export * from "./fileUtils";
 export * from "./urlUtils";
 export * from "./mockConstants";
 export * from "./reduxUtils";
+export * from "./regex";
 export * from "./errors";
 export * from "./types";
