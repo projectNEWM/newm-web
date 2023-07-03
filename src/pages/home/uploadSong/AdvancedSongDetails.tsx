@@ -1,20 +1,32 @@
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { Box, IconButton, Stack } from "@mui/material";
-import { useWindowDimensions } from "common";
+import { useEffect, useRef } from "react";
+import { useFormikContext } from "formik";
+import { Box, Stack } from "@mui/material";
+import { scrollToError, useWindowDimensions } from "common";
 import {
   DropdownSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput, HorizontalLine, Typography } from "elements";
-import { useFormikContext } from "formik";
+import { Button, DatePickerInput, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
 
-const AdvancedSongDetails: React.FC = () => {
+const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isrcRef = useRef<any>(null);
 
-  const { isSubmitting } = useFormikContext<UploadSongRequest>();
+  const { isSubmitting, setFieldValue, errors } =
+    useFormikContext<UploadSongRequest>();
+
+  useEffect(() => {
+    scrollToError(errors, isSubmitting, [
+      {
+        error: errors.isrc,
+        element: isrcRef.current?.getInputDOMNode(),
+      },
+    ]);
+  }, [errors, isSubmitting, isrcRef]);
 
   return (
     <Stack
@@ -37,6 +49,7 @@ const AdvancedSongDetails: React.FC = () => {
         columnGap={ [undefined, undefined, 1.5] }
       >
         <DatePickerInput
+          isOptional={ false }
           name="releaseDate"
           label="SCHEDULE RELEASE DATE"
           placeholder="Select a day"
@@ -57,33 +70,23 @@ const AdvancedSongDetails: React.FC = () => {
           }
         />
         <TextInputField
+          isOptional={ false }
           name="copyrights"
           label="COPYRIGHT"
           placeholder="Copyright holder"
           tooltipText={ "" }
         />
         <TextInputField
-          name="isrc"
+          isOptional={ false }
           label="ISRC"
+          mask="aa-***-99-99999"
+          maskChar={ null }
+          name="isrc"
           placeholder="AA-AAA-00-00000"
+          ref={ isrcRef }
           tooltipText={ " " }
-          endAdornment={
-            <IconButton
-              sx={ {
-                borderRadius: 0,
-                borderLeftWidth: theme.inputField.borderWidth,
-                borderStyle: "solid",
-                borderColor: theme.colors.grey400,
-                padding: theme.inputField.padding,
-                color: theme.colors.music,
-                backgroundColor: theme.colors.black,
-              } }
-            >
-              { <AutoAwesomeIcon /> }
-              <Typography display={ ["none", "block", "block"] } paddingLeft={ 1 }>
-                { "Generate" }
-              </Typography>
-            </IconButton>
+          onChange={ (event) =>
+            setFieldValue("isrc", event.target.value.toUpperCase())
           }
         />
         <DropdownSelectField

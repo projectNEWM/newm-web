@@ -3,10 +3,19 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
-import { commonYupValidation, extractProperty } from "common";
+import {
+  REGEX_ISRC_FORMAT,
+  commonYupValidation,
+  extractProperty,
+} from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
-import { Genre, useGetGenresQuery } from "modules/content";
+import {
+  Genre,
+  Language,
+  useGetGenresQuery,
+  useGetLanguagesQuery,
+} from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
@@ -32,6 +41,12 @@ const UploadSong: FunctionComponent = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
+  const { data: languages = [] } = useGetLanguagesQuery();
+  const languageCodes = extractProperty<Language, "language_code">(
+    languages,
+    "language_code"
+  );
+
   const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
 
@@ -143,6 +158,14 @@ const UploadSong: FunctionComponent = () => {
         }),
     }),
     consentsToContract: Yup.bool().required("This field is required"),
+    isrc: Yup.string()
+      .matches(REGEX_ISRC_FORMAT, "This is not a valid ISRC format")
+      .test("is-valid-country-code", "The country code is invalid", (value) => {
+        if (!value) return true;
+
+        const countryCode = value.substring(0, 2).toLowerCase();
+        return languageCodes.includes(countryCode);
+      }),
   };
 
   return (
@@ -188,6 +211,9 @@ const UploadSong: FunctionComponent = () => {
               onSubmitStep: handleAdvancedDetails,
               path: "advanced-details",
               progressStepTitle: "Advanced details",
+              validationSchema: Yup.object({
+                isrc: validations.isrc,
+              }),
             },
             {
               element: <ConfirmAgreement />,

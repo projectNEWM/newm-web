@@ -296,8 +296,11 @@ const MintSong = () => {
           };
 
           scrollToError(errors, isSubmitting, [
-            { error: errors.owners, ref: ownersRef },
-            { error: errors.consentsToContract, ref: consentsToContractRef },
+            { error: errors.owners, element: ownersRef.current },
+            {
+              error: errors.consentsToContract,
+              element: consentsToContractRef.current,
+            },
           ]);
 
           return (

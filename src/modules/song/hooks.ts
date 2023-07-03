@@ -72,7 +72,12 @@ export const useHlsJs = ({
   const playSongWithHlsJs = (song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
-    const hls = new Hls({ debug: !isProd });
+    const hls = new Hls({ 
+      debug: !isProd,
+      xhrSetup: (xhr) => {
+        xhr.withCredentials = true;
+      }
+    });
     hls.loadSource(song.streamUrl);
     hls.attachMedia(videoRef.current);
     videoRef.current.play();

@@ -85,10 +85,10 @@ const BasicSongDetails: FunctionComponent = () => {
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
-      { error: errors.audio, ref: audioRef },
-      { error: errors.coverArtUrl, ref: coverArtUrlRef },
-      { error: errors.title || errors.genres, ref: songDetailsRef },
-      { error: errors.owners, ref: ownersRef },
+      { error: errors.audio, element: audioRef.current },
+      { error: errors.coverArtUrl, element: coverArtUrlRef.current },
+      { error: errors.title || errors.genres, element: songDetailsRef.current },
+      { error: errors.owners, element: ownersRef.current },
     ]);
   }, [errors, isSubmitting]);
 

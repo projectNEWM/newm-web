@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
+import InputMask from "react-input-mask";
 import styled from "styled-components";
 import theme from "theme";
 import { ErrorMessage } from "components";
@@ -22,6 +23,8 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly label?: string;
   readonly startAdornment?: JSX.Element;
   readonly widthType?: WidthType;
+  readonly mask?: string | Array<string | RegExp>;
+  readonly maskChar?: string | null;
 }
 
 const StyledRootElement = styled.div`
@@ -31,7 +34,7 @@ const StyledRootElement = styled.div`
   flex-grow: 1;
 `;
 
-const StyledInputElement = styled.input`
+const inputStyles = `
   width: 100%;
   display: flex;
   flex-grow: 1;
@@ -70,19 +73,28 @@ const StyledInputElement = styled.input`
   }
 `;
 
+const StyledInput = styled.input`
+  ${inputStyles}
+`;
+const StyledMaskedInput = styled(InputMask)`
+  ${inputStyles}
+`;
+
 export const TextInput: ForwardRefRenderFunction<
   HTMLInputElement,
   TextInputProps
 > = (
   {
-    errorMessage,
-    label,
-    onFocus,
-    onBlur,
-    startAdornment,
-    endAdornment,
     disabled = false,
+    endAdornment,
+    errorMessage,
     isOptional = true,
+    label,
+    mask,
+    maskChar,
+    onBlur,
+    onFocus,
+    startAdornment,
     tooltipText = "",
     widthType = "default",
     ...rest
@@ -91,6 +103,9 @@ export const TextInput: ForwardRefRenderFunction<
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+  const InputElement = mask ? StyledMaskedInput : StyledInput;
+  const maskedProps = mask ? { mask, maskChar, inputRef: ref } : {};
 
   /**
    * Calls any onFocus prop being passed and then updates local state
@@ -189,11 +204,12 @@ export const TextInput: ForwardRefRenderFunction<
         <StyledRootElement>
           { startAdornment }
 
-          <StyledInputElement
+          <InputElement
             { ...rest }
-            onFocus={ handleFocus }
-            onBlur={ handleBlur }
+            { ...maskedProps }
             disabled={ disabled }
+            onBlur={ handleBlur }
+            onFocus={ handleFocus }
             ref={ ref }
           />
 
