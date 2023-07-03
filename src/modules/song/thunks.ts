@@ -60,19 +60,16 @@ export const uploadSong = createAsyncThunk(
       }
 
       // Convert barcodeType to the value expected by the API
-      const barcodeTypeConvertedValue = () => {
-        if (body.barcodeType === "UPC") {
-          return "Upc";
-        } else if (body.barcodeType === "EAN") {
-          return "Ean";
-        }
-        return undefined;
+      const barcodeTypeMapping: { [key: string]: string | undefined } = {
+        UPC: "Upc",
+        EAN: "Ean",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
-      const barcodeType = body.barcodeNumber
-        ? barcodeTypeConvertedValue()
-        : undefined;
+      const barcodeType =
+        body.barcodeNumber && body.barcodeType
+          ? barcodeTypeMapping[body.barcodeType]
+          : undefined;
 
       // create the song in the NEWM API
       const songResp = await dispatch(
