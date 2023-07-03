@@ -47,6 +47,30 @@ export const uploadSong = createAsyncThunk(
         dispatch
       );
 
+      // Backend expects "Non-Explicit" for clean songs, any value for explicit
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
+
+      // combination of all IPI values for the song if present
+      let ipis;
+
+      if (body.ipis) {
+        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+      } else {
+        ipis = body.userIpi ? [body.userIpi] : undefined;
+      }
+
+      // Convert barcodeType to the value expected by the API
+      const barcodeTypeMapping: { [key: string]: string | undefined } = {
+        UPC: "Upc",
+        EAN: "Ean",
+      };
+
+      // if barcodeNumber isn't present, barcodeType shouldn't be provided
+      const barcodeType =
+        body.barcodeNumber && body.barcodeType
+          ? barcodeTypeMapping[body.barcodeType]
+          : undefined;
+
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
@@ -59,14 +83,14 @@ export const uploadSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          copyrights: body.copyrights,
-          parentalAdvisory: body.parentalAdvisory,
-          barcodeType: body.barcodeType,
-          barcodeNumber: body.barcodeNumber,
-          isrc: body.isrc,
-          iswc: body.iswc,
-          ipis: body.ipis,
-          releaseDate: body.releaseDate,
+          copyrights: body.copyrights || undefined,
+          parentalAdvisory,
+          barcodeType,
+          barcodeNumber: body.barcodeNumber || undefined,
+          isrc: body.isrc || undefined,
+          iswc: body.iswc || undefined,
+          ipis,
+          releaseDate: body.releaseDate || undefined,
         })
       );
 

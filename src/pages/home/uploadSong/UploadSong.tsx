@@ -59,6 +59,9 @@ const UploadSong: FunctionComponent = () => {
     genres: [],
     moods: [],
     description: "",
+    copyrights: undefined,
+    isrc: undefined,
+    releaseDate: undefined,
     isExplicit: false,
     isMinting: false,
     owners: [

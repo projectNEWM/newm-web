@@ -4,7 +4,6 @@ import TextInput, { TextInputProps } from "./TextInput";
 interface DateTimePickerProps extends TextInputProps {
   name: string;
   label: string;
-  options: string[];
 }
 
 const DatePickerInput = ({ name, ...otherProps }: DateTimePickerProps) => {

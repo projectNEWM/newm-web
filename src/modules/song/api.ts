@@ -56,7 +56,7 @@ export const emptySong: Song = {
   parentalAdvisory: "",
   isrc: "",
   iswc: "",
-  ipis: "",
+  ipis: [],
   releaseDate: "",
 };
 

@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
 import { scrollToError, useWindowDimensions } from "common";
 import {
-  DropdownMultiSelectField,
+  DropdownSelectField,
   SwitchInputField,
   TextInputField,
 } from "components";
@@ -35,7 +35,7 @@ const AdvancedSongDetails = () => {
       spacing={ 3 }
     >
       <SwitchInputField
-        name="parentalAdvisory"
+        name="isExplicit"
         title="Does the song contain explicit content?"
         tooltipText={
           "Explicit content includes strong or discriminatory language, " +
@@ -49,10 +49,9 @@ const AdvancedSongDetails = () => {
         columnGap={ [undefined, undefined, 1.5] }
       >
         <DatePickerInput
-          name="scheduledDate"
-          label="SCHEDULE RELEASE DATE"
-          options={ [] }
           isOptional={ false }
+          name="releaseDate"
+          label="SCHEDULE RELEASE DATE"
           placeholder="Select a day"
           tooltipText={
             "When selecting a date to release your song on our " +
@@ -62,9 +61,8 @@ const AdvancedSongDetails = () => {
           }
         />
         <DatePickerInput
-          name="releaseDate"
+          name="originalDate"
           label="ORIGINAL RELEASE DATE"
-          options={ [] }
           placeholder="Select a day"
           tooltipText={
             "If your song has already been launched on other platforms you " +
@@ -76,10 +74,7 @@ const AdvancedSongDetails = () => {
           name="copyrights"
           label="COPYRIGHT"
           placeholder="Copyright holder"
-          tooltipText={
-            "If your song has already been launched on other platforms you " +
-            "may input the release date here, but it is not required."
-          }
+          tooltipText={ "" }
         />
         <TextInputField
           isOptional={ false }
@@ -94,13 +89,12 @@ const AdvancedSongDetails = () => {
             setFieldValue("isrc", event.target.value.toUpperCase())
           }
         />
-        <DropdownMultiSelectField
-          isOptional={ false }
+        <DropdownSelectField
           name="barcodeType"
           label="ID TYPE"
           tooltipText={ " " }
           placeholder="Select one"
-          options={ [] }
+          options={ ["UPC", "EAN"] }
         />
         <TextInputField
           name="barcodeNumber"
@@ -109,7 +103,7 @@ const AdvancedSongDetails = () => {
           tooltipText={ " " }
         />
         <TextInputField
-          name="ipis"
+          name="userIpi"
           label="IPI"
           placeholder="000000000"
           tooltipText={ " " }
