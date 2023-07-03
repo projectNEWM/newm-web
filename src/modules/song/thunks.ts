@@ -83,14 +83,14 @@ export const uploadSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          copyrights: body.copyrights,
+          copyrights: body.copyrights || undefined,
           parentalAdvisory,
           barcodeType,
-          barcodeNumber: body.barcodeNumber,
-          isrc: body.isrc,
-          iswc: body.iswc,
+          barcodeNumber: body.barcodeNumber || undefined,
+          isrc: body.isrc || undefined,
+          iswc: body.iswc || undefined,
           ipis,
-          releaseDate: body.releaseDate,
+          releaseDate: body.releaseDate || undefined,
         })
       );
 
