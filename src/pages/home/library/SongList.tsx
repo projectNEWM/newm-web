@@ -332,7 +332,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                   width="icon"
                   onClick={ (e) => {
                     e.stopPropagation();
-                    return navigate("edit-song", { state: { ...song } });
+                    navigate(`edit-song/${song.id}`);
                   } }
                 >
                   <EditIcon sx={ { color: theme.colors.music } } />
