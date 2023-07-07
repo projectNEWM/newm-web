@@ -101,9 +101,7 @@ const EditSong = () => {
           { isDeleteModalActive && (
             <DeleteSongModal
               primaryAction={ () => {
-                if (songId) {
-                  deleteSong({ songId });
-                }
+                deleteSong({ songId });
               } }
               secondaryAction={ () => {
                 setIsDeleteModalActive(false);

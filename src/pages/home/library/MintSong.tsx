@@ -41,12 +41,16 @@ interface FormValues {
   readonly consentsToContract: boolean;
 }
 
+interface RouteParams {
+  readonly songId: string;
+}
+
 const MintSong = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
-  const { songId } = useParams();
+  const { songId } = useParams<"songId">() as RouteParams;
 
   const ownersRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);
@@ -62,10 +66,8 @@ const MintSong = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const { data: { title, mintingStatus } = emptySong } = useGetSongQuery(
-    songId || "",
-    { skip: !songId }
-  );
+  const { data: { title, mintingStatus } = emptySong } =
+    useGetSongQuery(songId);
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: songId });
 
   const [patchSong, { isLoading: isSongLoading }] = usePatchSongThunk();
