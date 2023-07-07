@@ -13,9 +13,6 @@ const sessionSlice = createSlice({
   initialState,
   name: "session",
   reducers: {
-    setIsLoggedIn: (state, { payload }) => {
-      state.isLoggedIn = payload;
-    },
     receiveRefreshToken: handleSuccessfulAuthentication,
     receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
     startVerificationTimer: (state) => {
@@ -23,6 +20,9 @@ const sessionSlice = createSlice({
     },
     removeVerificationTimer: (state) => {
       state.verificationPingStartedAt = undefined;
+    },
+    setIsLoggedIn: (state, { payload }) => {
+      state.isLoggedIn = payload;
     },
   },
 });
