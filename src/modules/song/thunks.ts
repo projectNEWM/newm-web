@@ -405,7 +405,7 @@ export const patchSong = createAsyncThunk(
         })
       );
 
-      // navigate to library page to view updated song
+      // navigate to updated song page
       history.push(`/home/library/edit-song/${body.id}`);
     } catch (error) {
       // non-endpoint related error occur, show toast
