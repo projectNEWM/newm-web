@@ -75,9 +75,6 @@ const SongInfo = () => {
     patchSong({ id: songId, ...updatedValues });
   };
 
-  // TODO: add "Not found" content when song is not fetched using songId param
-  if (!title) return null;
-
   return (
     <Box sx={ { mt: 5 } }>
       <Formik

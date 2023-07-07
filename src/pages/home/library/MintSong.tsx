@@ -229,9 +229,6 @@ const MintSong = () => {
     ? handleUpdateCollaborators
     : handleSubmitStep;
 
-  // TODO: add "Not found" content when song is not fetched using songId param
-  if (!title) return null;
-
   return (
     <Box sx={ { maxWidth: "700px" } }>
       { showWarning && (
