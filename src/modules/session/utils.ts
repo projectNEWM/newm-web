@@ -25,11 +25,3 @@ export const handleSuccessfulAuthentication = (
 
   state.isLoggedIn = true;
 };
-
-export const handleLogout = (state: SessionState) => {
-  Cookies.remove("accessToken");
-  Cookies.remove("refreshToken");
-  Cookies.remove("idenfyAuthToken");
-
-  state.isLoggedIn = false;
-};

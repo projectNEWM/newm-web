@@ -1,7 +1,9 @@
 import { isProd } from "buildParams";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import Hls from "hls.js";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import { Song, UseHlsJsParams, UseHlsJsResult } from "./types";
+import { emptySong, useGetSongQuery } from "./api";
 
 /**
  * Hook to abstract hls.js functionality.
@@ -72,11 +74,11 @@ export const useHlsJs = ({
   const playSongWithHlsJs = (song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
-    const hls = new Hls({ 
+    const hls = new Hls({
       debug: !isProd,
       xhrSetup: (xhr) => {
         xhr.withCredentials = true;
-      }
+      },
     });
     hls.loadSource(song.streamUrl);
     hls.attachMedia(videoRef.current);
@@ -144,4 +146,11 @@ export const useHlsJs = ({
   }, [stopSong, handleSongEnded]);
 
   return result;
+};
+
+export const useHasSongAccess = (songId: string): boolean => {
+  const { data: { id: userId } = emptyProfile } = useGetProfileQuery();
+  const { data: { ownerId } = emptySong, isLoading } = useGetSongQuery(songId);
+
+  return isLoading || userId === ownerId;
 };

@@ -11,7 +11,10 @@ import {
   getIsSongDeletable,
   useDeleteSongThunk,
   useGetSongQuery,
+  useHasSongAccess,
 } from "modules/song";
+import { setToastMessage } from "modules/ui";
+import { useDispatch } from "react-redux";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
 import DeleteSongModal from "./DeleteSongModal";
@@ -46,13 +49,15 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
 
 const EditSong = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { songId } = useParams<"songId">() as RouteParams;
 
+  const hasAccess = useHasSongAccess(songId);
   const [deleteSong] = useDeleteSongThunk();
 
   const [tab, setTab] = useState(0);
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
-  const { data: { coverArtUrl, title, mintingStatus } = emptySong } =
+  const { data: { coverArtUrl, title, mintingStatus } = emptySong, error } =
     useGetSongQuery(songId);
 
   const colorMap: ColorMap = {
@@ -64,6 +69,18 @@ const EditSong = () => {
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
   };
+
+  // TODO: show "Not found" content if not available for user
+  if (error || !hasAccess) {
+    navigate("/home/library");
+
+    dispatch(
+      setToastMessage({
+        message: "Error fetching song data",
+        severity: "error",
+      })
+    );
+  }
 
   return (
     <>

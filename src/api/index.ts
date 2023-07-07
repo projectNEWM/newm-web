@@ -1,4 +1,6 @@
+// TODO: export NEWM API as newmApi
 export { default } from "./newm/api";
+
 export * from "./newm/types";
 export { default as cloudinaryApi } from "./cloudinary/api";
 export * from "./cloudinary/types";

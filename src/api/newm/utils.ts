@@ -7,7 +7,11 @@ import {
 import Cookies from "js-cookie";
 import { RootState } from "store";
 import { Mutex } from "async-mutex";
-import { NewmAuthResponse, logOut, receiveRefreshToken } from "modules/session";
+import {
+  NewmAuthResponse,
+  handleLogout,
+  receiveRefreshToken,
+} from "modules/session";
 
 const mutex = new Mutex();
 
@@ -76,7 +80,7 @@ export const fetchBaseQueryWithReauth = (
 
             result = await makeRequestWithRefreshedAccessToken();
           } else {
-            api.dispatch(logOut());
+            api.dispatch(handleLogout());
           }
         } finally {
           release();
