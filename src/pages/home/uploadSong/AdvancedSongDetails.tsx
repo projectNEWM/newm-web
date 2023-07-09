@@ -17,7 +17,7 @@ const AdvancedSongDetails = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
 
-  const { data: { companyName = "", firstName = "" } = emptyProfile } =
+  const { data: { companyName = "", nickname = "" } = emptyProfile } =
     useGetProfileQuery();
 
   const { isSubmitting, setFieldValue, errors, values } =
@@ -78,7 +78,7 @@ const AdvancedSongDetails = () => {
           name="copyrights"
           label="COPYRIGHT"
           placeholder={ `ex. © ${new Date().getFullYear()} ${
-            companyName ? companyName : firstName
+            companyName ? companyName : nickname
           }` }
           tooltipText={ "" }
         />
