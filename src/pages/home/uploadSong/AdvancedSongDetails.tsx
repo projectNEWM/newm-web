@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { scrollToError, useWindowDimensions } from "common";
+import { NONE_OPTION, scrollToError, useWindowDimensions } from "common";
 import {
   DropdownSelectField,
   SwitchInputField,
@@ -9,6 +9,7 @@ import {
 } from "components";
 import { Button, DatePickerInput, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import theme from "theme";
 
 const AdvancedSongDetails = () => {
@@ -16,7 +17,10 @@ const AdvancedSongDetails = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
 
-  const { isSubmitting, setFieldValue, errors } =
+  const { data: { companyName = "", firstName = "" } = emptyProfile } =
+    useGetProfileQuery();
+
+  const { isSubmitting, setFieldValue, errors, values } =
     useFormikContext<UploadSongRequest>();
 
   useEffect(() => {
@@ -73,11 +77,13 @@ const AdvancedSongDetails = () => {
           isOptional={ false }
           name="copyrights"
           label="COPYRIGHT"
-          placeholder="Copyright holder"
+          placeholder={ `ex. © ${new Date().getFullYear()} ${
+            companyName ? companyName : firstName
+          }` }
           tooltipText={ "" }
         />
         <TextInputField
-          isOptional={ false }
+          isOptional={ values.isrc ? false : true }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }
@@ -91,14 +97,19 @@ const AdvancedSongDetails = () => {
         />
         <DropdownSelectField
           name="barcodeType"
-          label="ID TYPE"
+          label="BARCODE TYPE"
           tooltipText={ " " }
           placeholder="Select one"
-          options={ ["UPC", "EAN"] }
+          options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
         />
         <TextInputField
+          isOptional={
+            !!values.barcodeType && values.barcodeType !== NONE_OPTION
+              ? false
+              : true
+          }
           name="barcodeNumber"
-          label="ID NUMBER"
+          label="BARCODE NUMBER"
           placeholder="0000000000"
           tooltipText={ " " }
         />

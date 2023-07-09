@@ -63,6 +63,7 @@ export const uploadSong = createAsyncThunk(
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
         UPC: "Upc",
         EAN: "Ean",
+        JAN: "Jan",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
