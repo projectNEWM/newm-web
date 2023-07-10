@@ -149,8 +149,10 @@ export const useHlsJs = ({
 };
 
 export const useHasSongAccess = (songId: string): boolean => {
-  const { data: { id: userId } = emptyProfile } = useGetProfileQuery();
-  const { data: { ownerId } = emptySong, isLoading } = useGetSongQuery(songId);
+  const { data: { id: userId } = emptyProfile, isLoading: isProfileLoading } =
+    useGetProfileQuery();
+  const { data: { ownerId } = emptySong, isLoading: isSongLoading } =
+    useGetSongQuery(songId);
 
-  return isLoading || userId === ownerId;
+  return isProfileLoading || isSongLoading || userId === ownerId;
 };
