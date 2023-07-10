@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
 import {
+  NONE_OPTION,
   REGEX_ISRC_FORMAT,
   commonYupValidation,
   extractProperty,
@@ -87,6 +88,8 @@ const UploadSong: FunctionComponent = () => {
     companyName,
     artistName,
     stageName,
+    barcodeNumber: undefined,
+    barcodeType: undefined,
   };
 
   // Navigate to advanced details if minting, otherwise upload song
@@ -160,6 +163,14 @@ const UploadSong: FunctionComponent = () => {
         const countryCode = value.substring(0, 2).toLowerCase();
         return languageCodes.includes(countryCode);
       }),
+    barcodeType: Yup.string(),
+    barcodeNumber: Yup.string().when("barcodeType", {
+      is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
+      then: Yup.string().required(
+        "Barcode number is required when barcode type is selected"
+      ),
+      otherwise: Yup.string(),
+    }),
   };
 
   return (
@@ -207,6 +218,8 @@ const UploadSong: FunctionComponent = () => {
               progressStepTitle: "Advanced details",
               validationSchema: Yup.object({
                 isrc: validations.isrc,
+                barcodeType: validations.barcodeType,
+                barcodeNumber: validations.barcodeNumber,
               }),
             },
             {

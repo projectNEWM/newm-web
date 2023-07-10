@@ -37,3 +37,8 @@ export interface FieldOptions {
   error: unknown;
   element: HTMLDivElement | HTMLInputElement | null;
 }
+
+export interface ImageDimension {
+  width: number;
+  height: number;
+}

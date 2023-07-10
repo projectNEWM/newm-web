@@ -1,6 +1,7 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Genre,
   Language,
@@ -33,7 +34,6 @@ import {
   useGetProfileQuery,
 } from "modules/session";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const BasicSongDetails: FunctionComponent = () => {
   const theme = useTheme();
@@ -63,9 +63,7 @@ const BasicSongDetails: FunctionComponent = () => {
   const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
 
-  // TODO: Also disable submit if minting and wallet is not connected, once
-  // connecting wallet has been implemented. Allow for now for testing purposes.
-  const isSubmitDisabled = values.isMinting && !isVerified;
+  const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -245,7 +243,6 @@ const BasicSongDetails: FunctionComponent = () => {
             </Alert>
           ) }
 
-          { /** TODO: hide if wallet is already connected */ }
           { values.isMinting && !wallet && (
             <Alert
               sx={ { py: 2.5 } }
@@ -275,7 +272,6 @@ const BasicSongDetails: FunctionComponent = () => {
         <Box>
           <HorizontalLine mb={ 5 } />
 
-          { /** TODO: disable button if verify or wallet warnings visible */ }
           <Button
             type="submit"
             disabled={ isSubmitDisabled }

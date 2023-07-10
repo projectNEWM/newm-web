@@ -43,7 +43,10 @@ const InvitesModal: FunctionComponent = () => {
     { skip: !isLoggedIn }
   );
 
-  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    { skip: !isLoggedIn }
+  );
 
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
   const isVerified = verificationStatus === Verified;
