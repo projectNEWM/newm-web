@@ -63,6 +63,7 @@ export const uploadSong = createAsyncThunk(
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
         UPC: "Upc",
         EAN: "Ean",
+        JAN: "Jan",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
@@ -404,9 +405,6 @@ export const patchSong = createAsyncThunk(
           severity: "success",
         })
       );
-
-      // navigate to library page to view updated song
-      history.push("/home/library");
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {

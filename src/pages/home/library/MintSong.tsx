@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   getUpdatedValues,
   scrollToError,
@@ -17,7 +17,6 @@ import {
   Featured,
   MintingStatus,
   Owner,
-  Song,
   emptySong,
   useGenerateArtistAgreementThunk,
   useGetCollaborationsQuery,
@@ -42,13 +41,16 @@ interface FormValues {
   readonly consentsToContract: boolean;
 }
 
+interface RouteParams {
+  readonly songId: string;
+}
+
 const MintSong = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
-  const { id, title } = location.state as Song;
+  const { songId } = useParams<"songId">() as RouteParams;
 
   const ownersRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);
@@ -64,12 +66,13 @@ const MintSong = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
+  const { data: { title, mintingStatus } = emptySong } =
+    useGetSongQuery(songId);
+  const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: songId });
+
   const [patchSong, { isLoading: isSongLoading }] = usePatchSongThunk();
   const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
     useGenerateArtistAgreementThunk();
-
-  const { data: { mintingStatus } = emptySong } = useGetSongQuery(id);
-  const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: id });
 
   const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
@@ -189,11 +192,11 @@ const MintSong = () => {
         companyName,
         artistName,
         stageName,
-        songId: id,
+        songId,
         saved: true,
       });
 
-      patchSong({ id, ...updatedValues });
+      patchSong({ id: songId, ...updatedValues });
     }
   };
 
@@ -211,7 +214,7 @@ const MintSong = () => {
   const handleUpdateCollaborators = (values: FormikValues) => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
-    patchSong({ id, ...updatedValues });
+    patchSong({ id: songId, ...updatedValues });
   };
 
   const handleVerifyProfile = () => {

@@ -7,14 +7,14 @@ import { useAppDispatch, useAppSelector } from "common";
 const LogoutButton: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
+  const { isLoggedIn } = useAppSelector(selectSession);
+
   const handleLogout = () => {
     dispatch(logOut());
   };
 
-  const { isLoggedIn } = useAppSelector(selectSession);
-
   return isLoggedIn ? (
-    <Button variant="outlined" onClick={ handleLogout } width="compact">
+    <Button variant="outlined" width="compact" onClick={ handleLogout }>
       <LogoutIcon sx={ { mr: 1 } } /> <Typography>Log out</Typography>
     </Button>
   ) : null;

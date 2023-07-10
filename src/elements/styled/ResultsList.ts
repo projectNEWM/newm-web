@@ -17,6 +17,7 @@ const ResultsList = styled.ul`
   li {
     cursor: pointer;
     padding: 12px 12px;
+    min-height: 44px;
 
     &.Mui-focused {
       background-color: ${theme.colors.grey400};

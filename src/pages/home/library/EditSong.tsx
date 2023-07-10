@@ -2,11 +2,19 @@ import { Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ReactNode, SyntheticEvent, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import theme from "theme";
 import { Button } from "elements";
 import { ProfileImage } from "components";
-import { Song, getIsSongDeletable, useDeleteSongThunk } from "modules/song";
+import {
+  emptySong,
+  getIsSongDeletable,
+  useDeleteSongThunk,
+  useGetSongQuery,
+  useHasSongAccess,
+} from "modules/song";
+import { setToastMessage } from "modules/ui";
+import { useDispatch } from "react-redux";
 import SongInfo from "./SongInfo";
 import MintSong from "./MintSong";
 import DeleteSongModal from "./DeleteSongModal";
@@ -15,6 +23,10 @@ interface TabPanelProps {
   children: ReactNode;
   index: number;
   value: number;
+}
+
+interface RouteParams {
+  readonly songId: string;
 }
 
 interface ColorMap {
@@ -36,20 +48,17 @@ const TabPanel = ({ children, value, index }: TabPanelProps) => {
 };
 
 const EditSong = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { songId } = useParams<"songId">() as RouteParams;
 
+  const hasAccess = useHasSongAccess(songId);
   const [deleteSong] = useDeleteSongThunk();
 
   const [tab, setTab] = useState(0);
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
-
-  const {
-    coverArtUrl = "",
-    title = "",
-    mintingStatus,
-    id: songId,
-  } = location.state as Song;
+  const { data: { coverArtUrl, title, mintingStatus } = emptySong, error } =
+    useGetSongQuery(songId);
 
   const colorMap: ColorMap = {
     0: "music",
@@ -60,6 +69,18 @@ const EditSong = () => {
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
   };
+
+  // TODO: show "Not found" content if not available for user
+  if (error || !hasAccess) {
+    navigate("/home/library");
+
+    dispatch(
+      setToastMessage({
+        message: "Error fetching song data",
+        severity: "error",
+      })
+    );
+  }
 
   return (
     <>

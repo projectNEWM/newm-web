@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
-import { FieldOptions } from "./types";
+import { FieldOptions, ImageDimension } from "./types";
 import {
   REGEX_ONLY_ALPHABETS_AND_SPACES,
   REGEX_PASSWORD_REQUIREMENTS,
@@ -62,6 +62,37 @@ const isFileSizeValid = (value: File) => {
   );
 };
 
+/**
+ * Gets the dimensions of an image.
+ * @param {File} file - The image file.
+ * @returns {Promise<ImageDimension>} A promise that resolves to the dimensions of the image.
+ * The promise is rejected if the image fails to load.
+ */
+const getDimensions = (file: File): Promise<ImageDimension> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({ height: img.height, width: img.width });
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = () => reject("Failed to load image");
+    img.src = URL.createObjectURL(file);
+  });
+};
+
+/**
+ * Checks if the aspect ratio of an image is 1:1.
+ * @param {File | null} value - The image file, or null if no file is provided.
+ * @returns {boolean} True if the image is square and false otherwise.
+ */
+const isAspectRatioOneToOne = async (value: File | null) => {
+  if (!value) return false;
+
+  const { width, height } = await getDimensions(value);
+
+  return width === height;
+};
+
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
 const AUDIO_MIN_DURATION_SEC = 30;
@@ -116,7 +147,10 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
-  coverArtUrl: Yup.mixed().required("This field is required"),
+  coverArtUrl: Yup.mixed().required("This field is required").test({
+    message: "Image must be 1:1 aspect ratio",
+    test: isAspectRatioOneToOne,
+  }),
   title: Yup.string().required("This field is required"),
   audio: Yup.mixed()
     .required("This field is required")
@@ -186,3 +220,5 @@ export const scrollToError = (
     });
   }
 };
+
+export const NONE_OPTION = "None";

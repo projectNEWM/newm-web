@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
@@ -18,27 +18,25 @@ import {
 } from "components";
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import {
-  Song,
-  emptySong,
-  useGetSongQuery,
-  usePatchSongThunk,
-} from "modules/song";
+import { emptySong, useGetSongQuery, usePatchSongThunk } from "modules/song";
 import { Genre, useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
+interface RouteParams {
+  readonly songId: string;
+}
+
 const SongInfo = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { id = "" } = location.state as Song;
+  const { songId } = useParams<"songId">() as RouteParams;
 
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const genresRef = useRef<HTMLDivElement>(null);
 
+  const [patchSong] = usePatchSongThunk();
   const { data: genresData = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
-  const [patchSong] = usePatchSongThunk();
   const {
     data: {
       title,
@@ -47,7 +45,7 @@ const SongInfo = () => {
       genres = [],
       moods = [],
     } = emptySong,
-  } = useGetSongQuery(id);
+  } = useGetSongQuery(songId);
 
   const initialValues = {
     coverArtUrl,
@@ -74,7 +72,7 @@ const SongInfo = () => {
   const handleSubmit = (values: FormikValues) => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
-    patchSong({ id, ...updatedValues });
+    patchSong({ id: songId, ...updatedValues });
   };
 
   return (

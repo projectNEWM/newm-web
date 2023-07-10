@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { scrollToError, useWindowDimensions } from "common";
+import { NONE_OPTION, scrollToError, useWindowDimensions } from "common";
 import {
   DropdownSelectField,
   SwitchInputField,
@@ -70,14 +70,12 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
-          isOptional={ false }
           name="copyrights"
           label="COPYRIGHT"
-          placeholder="Copyright holder"
+          placeholder={ `${new Date().getFullYear()} Example` }
           tooltipText={ "" }
         />
         <TextInputField
-          isOptional={ false }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }
@@ -91,14 +89,14 @@ const AdvancedSongDetails = () => {
         />
         <DropdownSelectField
           name="barcodeType"
-          label="ID TYPE"
+          label="BARCODE TYPE"
           tooltipText={ " " }
           placeholder="Select one"
-          options={ ["UPC", "EAN"] }
+          options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
         />
         <TextInputField
           name="barcodeNumber"
-          label="ID NUMBER"
+          label="BARCODE NUMBER"
           placeholder="0000000000"
           tooltipText={ " " }
         />
