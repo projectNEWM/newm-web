@@ -404,9 +404,6 @@ export const patchSong = createAsyncThunk(
           severity: "success",
         })
       );
-
-      // navigate to library page to view updated song
-      history.push("/home/library");
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {

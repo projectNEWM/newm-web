@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { SessionState } from "./types";
-import { handleLogout, handleSuccessfulAuthentication } from "./utils";
+import { handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
@@ -15,18 +15,20 @@ const sessionSlice = createSlice({
   reducers: {
     receiveRefreshToken: handleSuccessfulAuthentication,
     receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
-    logOut: handleLogout,
     startVerificationTimer: (state) => {
       state.verificationPingStartedAt = new Date().getTime();
     },
     removeVerificationTimer: (state) => {
       state.verificationPingStartedAt = undefined;
     },
+    setIsLoggedIn: (state, { payload }) => {
+      state.isLoggedIn = payload;
+    },
   },
 });
 
 export const {
-  logOut,
+  setIsLoggedIn,
   receiveRefreshToken,
   receiveSuccessfullAuthentication,
   startVerificationTimer,

@@ -18,7 +18,7 @@ const Library: FunctionComponent = () => (
   >
     <Routes>
       <Route path="/" element={ <Discography /> } />
-      <Route path="edit-song" element={ <EditSong /> } />
+      <Route path="edit-song/:songId" element={ <EditSong /> } />
 
       <Route path="*" element={ <Navigate to="/home/library" replace /> } />
     </Routes>

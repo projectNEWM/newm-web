@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
+import api, { cloudinaryApi, lambdaApi } from "api";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
@@ -12,7 +13,7 @@ import {
   ProfileFormValues,
   ResetPasswordRequest,
 } from "./types";
-import { logOut } from "./slice";
+import { setIsLoggedIn } from "./slice";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -286,6 +287,23 @@ export const handleSocialLoginError = createAsyncThunk(
         severity: "error",
       })
     );
+  }
+);
+
+export const logOut = createAsyncThunk(
+  "session/logOut",
+  async (_, { dispatch }) => {
+    // remove cookies
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("idenfyAuthToken");
+
+    // reset RTKQuery cache
+    dispatch(api.util.resetApiState());
+    dispatch(cloudinaryApi.util.resetApiState());
+    dispatch(lambdaApi.util.resetApiState());
+
+    dispatch(setIsLoggedIn(false));
   }
 );
 
