@@ -7,6 +7,7 @@ import { FunctionComponent } from "react";
 import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common";
+import { updateWalletAddress } from "modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
@@ -14,6 +15,8 @@ const ConnectWalletModal: FunctionComponent = () => {
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
 
   const handleConnect = () => {
+    dispatch(updateWalletAddress());
+
     dispatch(
       setToastMessage({
         message: "Wallet successfully connected",
