@@ -182,7 +182,7 @@ export const deleteAccount = createAsyncThunk(
       return;
     }
 
-    dispatch(handleLogout());
+    dispatch(logOut());
 
     dispatch(
       setToastMessage({
@@ -290,8 +290,8 @@ export const handleSocialLoginError = createAsyncThunk(
   }
 );
 
-export const handleLogout = createAsyncThunk(
-  "session/handleLogout",
+export const logOut = createAsyncThunk(
+  "session/logOut",
   async (_, { dispatch }) => {
     // remove cookies
     Cookies.remove("accessToken");
