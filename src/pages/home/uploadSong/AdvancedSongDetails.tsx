@@ -9,7 +9,6 @@ import {
 } from "components";
 import { Button, DatePickerInput, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
 import theme from "theme";
 
 const AdvancedSongDetails = () => {
@@ -17,10 +16,7 @@ const AdvancedSongDetails = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
 
-  const { data: { companyName = "", nickname = "" } = emptyProfile } =
-    useGetProfileQuery();
-
-  const { isSubmitting, setFieldValue, errors, values } =
+  const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
 
   useEffect(() => {
@@ -74,16 +70,12 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
-          isOptional={ false }
           name="copyrights"
           label="COPYRIGHT"
-          placeholder={ `ex. © ${new Date().getFullYear()} ${
-            companyName ? companyName : nickname
-          }` }
+          placeholder={ `${new Date().getFullYear()} Example` }
           tooltipText={ "" }
         />
         <TextInputField
-          isOptional={ values.isrc ? false : true }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }
@@ -103,11 +95,6 @@ const AdvancedSongDetails = () => {
           options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
         />
         <TextInputField
-          isOptional={
-            !!values.barcodeType && values.barcodeType !== NONE_OPTION
-              ? false
-              : true
-          }
           name="barcodeNumber"
           label="BARCODE NUMBER"
           placeholder="0000000000"
