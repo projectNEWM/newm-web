@@ -15,6 +15,8 @@ const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
+  const originalDateRef = useRef<HTMLInputElement | null>(null);
+  const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
@@ -24,6 +26,14 @@ const AdvancedSongDetails = () => {
       {
         error: errors.isrc,
         element: isrcRef.current?.getInputDOMNode(),
+      },
+      {
+        error: errors.originalDate,
+        element: originalDateRef.current,
+      },
+      {
+        error: errors.barcodeNumber,
+        element: barcodeNumberRef.current,
       },
     ]);
   }, [errors, isSubmitting, isrcRef]);
@@ -66,6 +76,7 @@ const AdvancedSongDetails = () => {
           label="ORIGINAL RELEASE DATE"
           type="date"
           placeholder="Select a day"
+          ref={ originalDateRef }
           tooltipText={
             "If your song has already been launched on other platforms you " +
             "may input the release date here, but it is not required."
@@ -101,6 +112,7 @@ const AdvancedSongDetails = () => {
           name="barcodeNumber"
           label="BARCODE NUMBER"
           placeholder="0000000000"
+          ref={ barcodeNumberRef }
           tooltipText={ " " }
         />
         <TextInputField
