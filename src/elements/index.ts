@@ -9,7 +9,6 @@ export { default as DropdownSelect } from "./DropdownSelect";
 export * from "./DropdownSelect";
 export { default as DropdownMultiSelect } from "./DropdownMultiSelect";
 export * from "./DropdownSelect";
-export { default as DatePickerInput } from "./DatePickerInput";
 export { default as GradientTextInput } from "./GradientTextInput";
 export { default as GradientTypography } from "./styled/GradientTypography";
 export * from "./GradientTextInput";

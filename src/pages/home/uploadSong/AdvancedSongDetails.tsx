@@ -7,7 +7,7 @@ import {
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput, HorizontalLine } from "elements";
+import { Button, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
 
@@ -48,11 +48,12 @@ const AdvancedSongDetails = () => {
         rowGap={ [2, null, 3] }
         columnGap={ [undefined, undefined, 1.5] }
       >
-        <DatePickerInput
+        <TextInputField
           isOptional={ false }
-          name="releaseDate"
           label="SCHEDULE RELEASE DATE"
+          name="releaseDate"
           placeholder="Select a day"
+          type="date"
           tooltipText={
             "When selecting a date to release your song on our " +
             "platform, please remember to factor in approval form any " +
@@ -60,14 +61,16 @@ const AdvancedSongDetails = () => {
             "which can take up to 15 days."
           }
         />
-        <DatePickerInput
+        <TextInputField
           name="originalDate"
           label="ORIGINAL RELEASE DATE"
+          type="date"
           placeholder="Select a day"
           tooltipText={
             "If your song has already been launched on other platforms you " +
             "may input the release date here, but it is not required."
           }
+          max={ new Date().toISOString().split("T")[0] }
         />
         <TextInputField
           name="copyrights"

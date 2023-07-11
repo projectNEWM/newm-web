@@ -82,6 +82,7 @@ export interface PostSongRequest {
   readonly iswc?: string;
   readonly ipis?: ReadonlyArray<string>;
   readonly releaseDate?: string;
+  readonly originalDate?: string;
 }
 
 export interface UploadSongRequest
