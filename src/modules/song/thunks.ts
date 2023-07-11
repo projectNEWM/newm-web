@@ -94,7 +94,7 @@ export const uploadSong = createAsyncThunk(
           iswc: body.iswc || undefined,
           ipis,
           releaseDate: body.releaseDate || undefined,
-          originalDate: body.originalDate || undefined,
+          publicationDate: body.publicationDate || undefined,
         })
       );
 

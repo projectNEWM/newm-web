@@ -15,7 +15,7 @@ const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
-  const originalDateRef = useRef<HTMLInputElement | null>(null);
+  const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors } =
@@ -28,8 +28,8 @@ const AdvancedSongDetails = () => {
         element: isrcRef.current?.getInputDOMNode(),
       },
       {
-        error: errors.originalDate,
-        element: originalDateRef.current,
+        error: errors.publicationDate,
+        element: publicationDateRef.current,
       },
       {
         error: errors.barcodeNumber,
@@ -66,17 +66,17 @@ const AdvancedSongDetails = () => {
           type="date"
           tooltipText={
             "When selecting a date to release your song on our " +
-            "platform, please remember to factor in approval form any " +
+            "platform, please remember to factor in approval from any " +
             "contributors/featured artists as well as mint processing time " +
             "which can take up to 15 days."
           }
         />
         <TextInputField
-          name="originalDate"
-          label="ORIGINAL RELEASE DATE"
+          name="publicationDate"
+          label="ORIGINAL PUBLICATION DATE"
           type="date"
           placeholder="Select a day"
-          ref={ originalDateRef }
+          ref={ publicationDateRef }
           tooltipText={
             "If your song has already been launched on other platforms you " +
             "may input the release date here, but it is not required."

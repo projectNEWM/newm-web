@@ -90,7 +90,7 @@ const UploadSong: FunctionComponent = () => {
     stageName,
     barcodeNumber: undefined,
     barcodeType: undefined,
-    originalDate: undefined,
+    publicationDate: undefined,
   };
 
   // Navigate to advanced details if minting, otherwise upload song
@@ -172,7 +172,7 @@ const UploadSong: FunctionComponent = () => {
       ),
       otherwise: Yup.string(),
     }),
-    originalDate: Yup.date().max(new Date(), "Cannot be a future date"),
+    publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
   };
 
   return (
@@ -222,7 +222,7 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                originalDate: validations.originalDate,
+                publicationDate: validations.publicationDate,
               }),
             },
             {
