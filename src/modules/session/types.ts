@@ -10,13 +10,14 @@ export interface Profile {
   readonly email: string;
   readonly firstName?: string;
   readonly lastName?: string;
-  readonly nickname: string;
+  readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly bannerUrl?: string;
   readonly location?: string;
   readonly role: string;
   readonly genre?: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
+  readonly walletAddress?: string;
   readonly biography?: string;
   readonly websiteUrl?: string;
   readonly twitterUrl?: string;
@@ -66,11 +67,15 @@ export interface ProfileFormValues
     | "bannerUrl"
     | "companyLogoUrl"
     | "companyIpRights"
+    | "email"
+    | "role"
   > {
   readonly pictureUrl?: string | File;
   readonly bannerUrl?: string | File;
   readonly companyIpRights?: boolean;
   readonly companyLogoUrl?: string | File;
+  readonly email?: string;
+  readonly role?: string;
 }
 
 export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
