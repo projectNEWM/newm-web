@@ -105,6 +105,18 @@ const InvitesModal: FunctionComponent = () => {
             <Typography variant="subtitle1">{ subtitleText }</Typography>
 
             <Stack direction="row" gap={ 3 }>
+              { !isVerified && (
+                <Button
+                  color="yellow"
+                  onClick={ handleVerifyProfile }
+                  sx={ { textTransform: "none" } }
+                  variant="outlined"
+                  width="compact"
+                >
+                  Verify profile
+                </Button>
+              ) }
+
               { isWalletAddressRequired && (
                 <Button
                   color="yellow"
@@ -116,25 +128,15 @@ const InvitesModal: FunctionComponent = () => {
                   Connect wallet
                 </Button>
               ) }
-
-              { !isVerified && (
-                <Button
-                  color="partners"
-                  onClick={ handleVerifyProfile }
-                  sx={ { textTransform: "none" } }
-                  variant="outlined"
-                  width="compact"
-                >
-                  Verify profile
-                </Button>
-              ) }
             </Stack>
           </Stack>
         </DialogContentText>
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
           <InvitesTable invites={ invites } disabled={ isAcceptButtonDisabled } />
         </DialogContent>
-        <DialogActions sx={ { backgroundColor: theme.colors.grey600, px: 3 } }>
+        <DialogActions
+          sx={ { backgroundColor: theme.colors.grey600, px: 3, py: 2 } }
+        >
           <Button
             color="music"
             onClick={ () => dispatch(setIsInvitesModalOpen(false)) }
