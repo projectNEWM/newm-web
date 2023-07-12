@@ -327,6 +327,7 @@ const Profile: FunctionComponent = () => {
                           name="genre"
                           tooltipText="Your genre is determined by the songs you upload."
                           type="text"
+                          placeholder="Not yet defined"
                         />
                       </Stack>
                       <TextAreaField
