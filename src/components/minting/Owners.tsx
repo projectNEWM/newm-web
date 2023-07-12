@@ -1,4 +1,10 @@
-import { Box, InputAdornment, Stack, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  Stack,
+  useTheme,
+} from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
 import {
   Owner,
@@ -8,6 +14,7 @@ import {
 import { FunctionComponent } from "react";
 import { TextInputField } from "components";
 import CloseIcon from "@mui/icons-material/Close";
+import HelpIcon from "@mui/icons-material/Help";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
@@ -28,9 +35,29 @@ const Owners: FunctionComponent<OwnersProps> = ({
   return (
     <Box>
       <Stack flexDirection="row" justifyContent="space-between">
-        <Typography color="grey100" variant="h5">
-          MASTER OWNERS
-        </Typography>
+        <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
+          <Typography color="grey100" variant="h5">
+            IP RIGHTS HOLDERS
+          </Typography>
+
+          <Tooltip
+            title={
+              "Do you hold the streaming royalty rights to this song? If so, " +
+              "what percentage?"
+            }
+          >
+            <IconButton sx={ { padding: 0 } }>
+              <HelpIcon
+                sx={ {
+                  color: theme.colors.grey100,
+                  height: "18px",
+                  width: "18px",
+                } }
+              />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+
         <Typography color="grey100" variant="h5">
           SHARES
         </Typography>
