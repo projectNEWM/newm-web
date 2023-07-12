@@ -65,7 +65,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
             <TableHeadCell>SONG NAME</TableHeadCell>
             <TableHeadCell>UPLOADED BY</TableHeadCell>
             <TableHeadCell>YOUR ROLE</TableHeadCell>
-            <TableHeadCell sx={ { textAlign: "end" } }>LENGTH</TableHeadCell>
+            <TableHeadCell>LENGTH</TableHeadCell>
             <TableHeadCell>SHARE</TableHeadCell>
             <TableHeadCell sx={ { textAlign: "end" } }>ACTION</TableHeadCell>
           </TableRow>
@@ -139,7 +139,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                   </Stack>
                 </TableCell>
                 <TableCell>{ role }</TableCell>
-                <TableCell sx={ { textAlign: "end" } }>
+                <TableCell>
                   { duration
                     ? convertMillisecondsToSongFormat(duration)
                     : "--:--" }
