@@ -1,11 +1,11 @@
 import { FunctionComponent, useRef } from "react";
-import { Box, Container, IconButton, Stack } from "@mui/material";
+import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useGetSongsQuery } from "modules/song";
-import { Button, HorizontalLine, Tooltip, Typography } from "elements";
+import { Button, HorizontalLine, Tooltip } from "elements";
 import {
   DropdownSelectField,
   SwitchInputField,
@@ -173,7 +173,17 @@ const Profile: FunctionComponent = () => {
               { isUnverified ? "Verify your profile" : "Pending Verification" }
             </Button>
 
-            <Tooltip title="Verification process takes about 20 minutes.">
+            <Tooltip
+              title={
+                <>
+                  <Typography variant="body1">Why Verify?</Typography>
+                  <Typography variant="subtitle1">
+                    In order to mint songs and collect royalties, you must
+                    complete the profile verification process.
+                  </Typography>
+                </>
+              }
+            >
               <IconButton>
                 <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
