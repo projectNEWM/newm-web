@@ -7,7 +7,7 @@ import {
   SwitchInputField,
   TextInputField,
 } from "components";
-import { Button, DatePickerInput, HorizontalLine } from "elements";
+import { Button, HorizontalLine } from "elements";
 import { UploadSongRequest } from "modules/song";
 import theme from "theme";
 
@@ -15,6 +15,8 @@ const AdvancedSongDetails = () => {
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
+  const publicationDateRef = useRef<HTMLInputElement | null>(null);
+  const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
@@ -24,6 +26,14 @@ const AdvancedSongDetails = () => {
       {
         error: errors.isrc,
         element: isrcRef.current?.getInputDOMNode(),
+      },
+      {
+        error: errors.publicationDate,
+        element: publicationDateRef.current,
+      },
+      {
+        error: errors.barcodeNumber,
+        element: barcodeNumberRef.current,
       },
     ]);
   }, [errors, isSubmitting, isrcRef]);
@@ -48,26 +58,30 @@ const AdvancedSongDetails = () => {
         rowGap={ [2, null, 3] }
         columnGap={ [undefined, undefined, 1.5] }
       >
-        <DatePickerInput
+        <TextInputField
           isOptional={ false }
-          name="releaseDate"
           label="SCHEDULE RELEASE DATE"
+          name="releaseDate"
           placeholder="Select a day"
+          type="date"
           tooltipText={
             "When selecting a date to release your song on our " +
-            "platform, please remember to factor in approval form any " +
+            "platform, please remember to factor in approval from any " +
             "contributors/featured artists as well as mint processing time " +
             "which can take up to 15 days."
           }
         />
-        <DatePickerInput
-          name="originalDate"
-          label="ORIGINAL RELEASE DATE"
+        <TextInputField
+          name="publicationDate"
+          label="ORIGINAL PUBLICATION DATE"
+          type="date"
           placeholder="Select a day"
+          ref={ publicationDateRef }
           tooltipText={
             "If your song has already been launched on other platforms you " +
             "may input the release date here, but it is not required."
           }
+          max={ new Date().toISOString().split("T")[0] }
         />
         <TextInputField
           name="copyrights"
@@ -98,6 +112,7 @@ const AdvancedSongDetails = () => {
           name="barcodeNumber"
           label="BARCODE NUMBER"
           placeholder="0000000000"
+          ref={ barcodeNumberRef }
           tooltipText={ " " }
         />
         <TextInputField

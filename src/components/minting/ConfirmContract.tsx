@@ -1,10 +1,12 @@
-import { Box, Stack } from "@mui/material";
-import { Typography } from "elements";
+import { Box, IconButton, Stack } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import { HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
 import { selectSong } from "modules/song";
 import { FunctionComponent, useEffect } from "react";
 import agreementPreview from "assets/images/artist-agreement-preview.jpg";
 import { useAppSelector } from "common";
+import theme from "theme";
 import ViewPDF from "../ViewPDF";
 import CheckboxField from "../form/CheckboxField";
 
@@ -18,6 +20,7 @@ interface FormValues {
   readonly hasViewedAgreement: boolean;
   readonly isCreator: boolean;
   readonly agreesToContract: boolean;
+  readonly agreesToDistribution: boolean;
 }
 
 type FormContentProps = FormikProps<FormValues> &
@@ -35,10 +38,15 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
     hasViewedAgreement: false,
     isCreator: false,
     agreesToContract: false,
+    agreesToDistribution: false,
   };
 
   const handleChange = (values: FormValues) => {
-    if (values.isCreator && values.agreesToContract) {
+    if (
+      values.isCreator &&
+      values.agreesToContract &&
+      values.agreesToDistribution
+    ) {
       onConfirm(true);
     } else {
       onConfirm(false);
@@ -114,9 +122,41 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             disabled={ !values.hasViewedAgreement }
           />
           <span style={ { opacity: values.hasViewedAgreement ? 1 : 0.5 } }>
-            I have read and agree to this contract.
+            I have read the contract and agree to its Terms and Conditions.
           </span>
         </Typography>
+
+        <Typography variant="subtitle1" color="white" fontSize={ 12 }>
+          <CheckboxField
+            name="agreesToDistribution"
+            sx={ { marginRight: 1.5 } }
+          />
+          <span>
+            By selecting &lsquo;Distribute & Mint&rsquo; you agree to distribute
+            this song to all current and future available stores.
+          </span>
+        </Typography>
+
+        <HorizontalLine style={ { marginTop: "24px" } } />
+
+        <Stack direction="row" columnGap={ 0.5 }>
+          <Typography variant="subtitle1" color="white" fontSize={ 12 }>
+            The minting process has a fee of <strong>~₳7.30</strong> and may
+            take 3-15 days to complete.
+          </Typography>
+
+          <Tooltip title={ " " }>
+            <IconButton sx={ { padding: 0 } }>
+              <HelpIcon
+                sx={ {
+                  color: theme.colors.grey100,
+                  height: "18px",
+                  width: "18px",
+                } }
+              />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
     </Box>
   );

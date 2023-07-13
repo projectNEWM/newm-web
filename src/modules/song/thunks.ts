@@ -35,6 +35,8 @@ import {
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
+    let songId = "";
+
     try {
       // downsize if necessary
       const uploadParams = {
@@ -92,12 +94,13 @@ export const uploadSong = createAsyncThunk(
           iswc: body.iswc || undefined,
           ipis,
           releaseDate: body.releaseDate || undefined,
+          publicationDate: body.publicationDate || undefined,
         })
       );
 
       if ("error" in songResp) return;
 
-      const { songId } = songResp.data;
+      songId = songResp.data.songId;
 
       // get signed upload url for AWS
       const audioUploadUrlResp = await dispatch(
@@ -184,6 +187,15 @@ export const uploadSong = createAsyncThunk(
       // navigate to library page to view new song
       history.push("/home/library");
     } catch (error) {
+      // if songId is present, delete the song
+      if (songId) {
+        try {
+          await dispatch(songApi.endpoints.deleteSong.initiate({ songId }));
+        } catch (error) {
+          // do nothing
+        }
+      }
+
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
         dispatch(
