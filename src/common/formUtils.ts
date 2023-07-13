@@ -96,7 +96,6 @@ const isAspectRatioOneToOne = async (value: File | null) => {
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
 const AUDIO_MIN_DURATION_SEC = 30;
-const AUDIO_MIN_SAMPLING_RATE_KHZ = 44.1;
 
 export const commonYupValidation = {
   email: Yup.string()
@@ -111,24 +110,23 @@ export const commonYupValidation = {
   role: (roles: string[]) =>
     Yup.string()
       .required("Role is required")
-      .test(
-        "is-role",
-        "You need to type or select one of the ones below",
-        (role) => (role ? roles.includes(role) : false)
+      .test("is-role", "You need to type or select one", (role) =>
+        role ? roles.includes(role) : false
       ),
   genre: (genreOptions: string[]) =>
     Yup.string().test(
       "is-genre",
-      "You need to type or select one of the ones below",
+      "Select a valid genre",
       // validate that genre is valid, but only if one is present
       (genre) => (genre ? genreOptions.includes(genre) : true)
     ),
   genres: (genreOptions: string[]) =>
-    Yup.array(Yup.string()).test(
-      "is-genres",
-      "You need to select one or more of the genres below",
-      (genre) => includesGenres(genreOptions, genre)
-    ),
+    Yup.array(Yup.string())
+      .test("is-genres", "Select a valid genre", (genre) =>
+        includesGenres(genreOptions, genre)
+      )
+      .min(1, "At least one genre is required")
+      .max(5, "Maximum of 5 genres allowed"),
   nickname: Yup.string()
     .required("Stage name is required")
     .matches(REGEX_ONLY_ALPHABETS_AND_SPACES, "Please only use letters"),
@@ -162,12 +160,6 @@ export const commonYupValidation = {
       message: `Must be at least ${AUDIO_MIN_DURATION_SEC} seconds.`,
       test: createAsyncAudioTest(
         (value) => value.duration >= AUDIO_MIN_DURATION_SEC
-      ),
-    })
-    .test({
-      message: `Must have at least ${AUDIO_MIN_SAMPLING_RATE_KHZ}kHz of sampling rate.`,
-      test: createAsyncAudioTest(
-        (value) => value.sampleRate / 1000 >= AUDIO_MIN_SAMPLING_RATE_KHZ
       ),
     }),
 };
