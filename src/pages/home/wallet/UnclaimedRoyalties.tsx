@@ -1,7 +1,8 @@
-import { Box } from "@mui/material";
-import { Button, Typography } from "elements";
+import { Box, IconButton, Stack } from "@mui/material";
+import { Button, Tooltip, Typography } from "elements";
 import currency from "currency.js";
 import theme from "theme";
+import HelpIcon from "@mui/icons-material/Help";
 
 interface UnclaimedRoyaltiesProps {
   unclaimedRoyalties: number;
@@ -30,17 +31,24 @@ export const UnclaimedRoyalties = ({
           paddingRight: [1, "unset"],
         } }
       >
-        <Typography color="grey100" fontSize={ 12 }>
-          UNCLAIMED{ " " }
-          <Box
-            component="span"
-            sx={ {
-              display: ["none", "inline"],
-            } }
+        <Stack direction="row" alignItems="center" gap={ 1 }>
+          <Typography color="grey100" fontSize={ 12 }>
+            ROYALTIES ACCRUED SO FAR
+          </Typography>
+
+          <Tooltip
+            title={
+              "These are the royalties you have accrued since minting " +
+              "your song(s). All royalties will be available to claim " +
+              "following the launch of the Stream Token Marketplace."
+            }
           >
-            ROYALTIES
-          </Box>
-        </Typography>
+            <IconButton sx={ { padding: 0 } }>
+              <HelpIcon sx={ { color: theme.colors.grey100 } } />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+
         <Typography fontSize="28px" fontWeight={ 700 }>
           { currency(unclaimedRoyalties).format() }
         </Typography>
@@ -53,7 +61,7 @@ export const UnclaimedRoyalties = ({
         disabled={ unclaimedRoyalties === 0 }
         sx={ { alignSelf: "center" } }
       >
-        CLAIM ROYALTIES
+        Claim now
       </Button>
     </Box>
   );
