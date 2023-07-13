@@ -3,7 +3,7 @@ import { useWindowDimensions } from "common";
 import { Box } from "@mui/material";
 import SkeletonTable from "components/skeletons/TableSkeleton";
 import theme from "theme";
-import { useGetSongsQuery } from "modules/song";
+import { SortOrder, useGetSongsQuery } from "modules/song";
 import SongRoyaltiesList from "./SongRoyaltiesList";
 
 const Portfolio: FunctionComponent = () => {
@@ -23,6 +23,7 @@ const Portfolio: FunctionComponent = () => {
     ownerIds: ["me"],
     offset: pageIdx * skeletonRows,
     limit: skeletonRows,
+    sortOrder: SortOrder.Desc,
   });
 
   useEffect(() => {

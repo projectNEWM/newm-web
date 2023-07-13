@@ -15,6 +15,7 @@ import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import {
   MintingStatus as MintingStatusType,
   Song,
+  SortOrder,
   convertMillisecondsToSongFormat,
   useFetchSongStreamThunk,
   useGetSongsQuery,
@@ -95,6 +96,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       offset: (page - 1) * rowsPerPage,
       limit: songsToRequest,
       phrase: query,
+      sortOrder: SortOrder.Desc,
     },
     {
       pollingInterval: currentPollingInterval,

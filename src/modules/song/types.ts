@@ -15,16 +15,22 @@ export interface GetSongStreamData {
   readonly url: string;
 }
 
+export enum SortOrder {
+  Asc = "asc",
+  Desc = "desc",
+}
+
 export interface GetSongsRequest {
-  genres?: string[];
-  ids?: string[];
-  limit?: number;
-  newerThan?: string;
-  offset?: number;
-  olderThan?: string;
-  ownerIds?: string[];
-  phrase?: string;
-  mintingStatuses?: MintingStatus[];
+  readonly genres?: string[];
+  readonly ids?: string[];
+  readonly limit?: number;
+  readonly newerThan?: string;
+  readonly offset?: number;
+  readonly olderThan?: string;
+  readonly ownerIds?: string[];
+  readonly phrase?: string;
+  readonly sortOrder?: SortOrder;
+  readonly mintingStatuses?: MintingStatus[];
 }
 
 export interface Owner {
@@ -224,6 +230,7 @@ export interface GetCollaborationsRequest {
   readonly limit?: number;
   readonly ids?: string;
   readonly songIds?: string;
+  readonly sortOrder?: SortOrder;
   readonly emails?: string;
   readonly olderThan?: string;
   readonly newerThan?: string;
@@ -299,11 +306,12 @@ export interface Collaborators {
 }
 
 export interface GetCollaboratorsRequest {
-  limit?: number;
-  offset?: number;
-  phrase?: string;
-  songIds?: string[];
-  excludeMe?: boolean;
+  readonly excludeMe?: boolean;
+  readonly limit?: number;
+  readonly offset?: number;
+  readonly phrase?: string;
+  readonly songIds?: string[];
+  readonly sortOrder?: SortOrder;
 }
 
 export type GetCollaboratorsResponse = Array<Collaborators>;
