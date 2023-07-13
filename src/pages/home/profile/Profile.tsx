@@ -176,8 +176,8 @@ const Profile: FunctionComponent = () => {
             <Tooltip
               title={
                 <>
-                  <Typography variant="body1">Why Verify?</Typography>
-                  <Typography variant="subtitle1">
+                  <Typography>Why Verify?</Typography>
+                  <Typography fontWeight={ 500 }>
                     In order to mint songs and collect royalties, you must
                     complete the profile verification process.
                   </Typography>
