@@ -327,3 +327,14 @@ export const submitMintSongPayment = async (
     throw new SilentError();
   }
 };
+
+/**
+ * Returns true if an invite includes ownership of a song.
+ * @param invites array of invites for the user
+ * @returns true if any of invites contains an ownership amount greater than 0
+ */
+export const getHasOwnershipInvite = (
+  invites: ReadonlyArray<Invite>
+): boolean => {
+  return !!invites.find((inv) => !!inv.royaltyRate);
+};

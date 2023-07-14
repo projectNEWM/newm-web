@@ -11,11 +11,13 @@ import { Button, Typography } from "elements";
 import theme from "theme";
 import {
   CollaborationStatus,
+  getHasOwnershipInvite,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
 } from "modules/song";
 import {
   selectUi,
+  setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
 } from "modules/ui";
@@ -43,17 +45,24 @@ const InvitesModal: FunctionComponent = () => {
     { skip: !isLoggedIn }
   );
 
-  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
-    undefined,
-    { skip: !isLoggedIn }
-  );
+  const { data: { verificationStatus, walletAddress } = emptyProfile } =
+    useGetProfileQuery(undefined, { skip: !isLoggedIn });
 
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
   const isVerified = verificationStatus === Verified;
+  const hasOwnershipInvite = getHasOwnershipInvite(invites);
+  const isWalletAddressRequired = hasOwnershipInvite && !walletAddress;
+  const isAcceptButtonDisabled = !isVerified || isWalletAddressRequired;
 
-  const subtitleText = isVerified
-    ? "You need to take action on these pending invitations."
-    : "You need to verify your account to accept these pending invitations.";
+  const subtitleText = !isVerified
+    ? "You need to verify your account to accept these pending invitations."
+    : isWalletAddressRequired
+    ? "You need to connect your wallet to accept these pending invitations."
+    : "You need to take action on these pending invitations.";
+
+  const handleConnectWallet = () => {
+    dispatch(setIsConnectWalletModalOpen(true));
+  };
 
   const handleVerifyProfile = () => {
     dispatch(setIsIdenfyModalOpen(true));
@@ -91,26 +100,43 @@ const InvitesModal: FunctionComponent = () => {
             columnGap={ 1 }
             flexDirection={ [null, null, "row"] }
             justifyContent="space-between"
-            rowGap={ 1 }
+            rowGap={ 2 }
           >
             <Typography variant="subtitle1">{ subtitleText }</Typography>
-            { !isVerified ? (
-              <Button
-                color="partners"
-                onClick={ handleVerifyProfile }
-                sx={ { textTransform: "none" } }
-                variant="outlined"
-                width="compact"
-              >
-                Verify profile
-              </Button>
-            ) : null }
+
+            <Stack direction="row" gap={ 3 }>
+              { !isVerified && (
+                <Button
+                  color="yellow"
+                  onClick={ handleVerifyProfile }
+                  sx={ { textTransform: "none" } }
+                  variant="outlined"
+                  width="compact"
+                >
+                  Verify profile
+                </Button>
+              ) }
+
+              { isWalletAddressRequired && (
+                <Button
+                  color="yellow"
+                  onClick={ handleConnectWallet }
+                  sx={ { textTransform: "none" } }
+                  variant="outlined"
+                  width="compact"
+                >
+                  Connect wallet
+                </Button>
+              ) }
+            </Stack>
           </Stack>
         </DialogContentText>
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
-          <InvitesTable invites={ invites } disabled={ !isVerified } />
+          <InvitesTable invites={ invites } disabled={ isAcceptButtonDisabled } />
         </DialogContent>
-        <DialogActions sx={ { backgroundColor: theme.colors.grey600, px: 3 } }>
+        <DialogActions
+          sx={ { backgroundColor: theme.colors.grey600, px: 3, py: 2 } }
+        >
           <Button
             color="music"
             onClick={ () => dispatch(setIsInvitesModalOpen(false)) }
