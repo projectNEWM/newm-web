@@ -8,6 +8,7 @@ import {
   IdenfySuccessSession,
   PrivateRoute,
   Toast,
+  UploadSongProgressModal,
 } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
@@ -41,6 +42,7 @@ const App = () => {
             <IdenfyModal />
             <ConnectWalletModal />
             <InvitesModal />
+            <UploadSongProgressModal />
 
             <Background>
               <BrowserRouter history={ history }>

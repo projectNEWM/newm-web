@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { selectSession } from "modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -89,4 +89,24 @@ export const useUserDevice = () => {
   }, []);
 
   return { isMobileOrTablet };
+};
+
+/**
+ * Used to store a value from the previous render.
+ *
+ * @example
+ * const exampleValue = useExampleValue;
+ * const prevExampleValue = usePrevious(exampleValue);
+ *
+ * @param value the previous value to reference
+ * @returns the value from the previous render
+ */
+export const usePrevious = <T>(value: T) => {
+  const ref = useRef(value);
+
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return ref.current;
 };
