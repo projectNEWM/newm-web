@@ -10,17 +10,13 @@ import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import ProgressBar from "./ProgressBar";
 
-interface Props {
-  readonly disclaimer?: string;
-}
-
-const ProgressBarModal: FunctionComponent<Props> = ({ disclaimer }) => {
+const ProgressBarModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
 
   const {
     isProgressBarModalOpen,
-    progressBarModal: { progress, message, animationSeconds },
+    progressBarModal: { progress, message, disclaimer, animationSeconds },
   } = useSelector(selectUi);
 
   const handleClose = () => {

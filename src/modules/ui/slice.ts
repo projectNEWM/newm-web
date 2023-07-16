@@ -10,6 +10,7 @@ const initialState: UIState = {
   progressBarModal: {
     progress: 0,
     message: "",
+    disclaimer: "",
     animationSeconds: 0,
   },
   isProgressBarModalOpen: false,
@@ -34,6 +35,7 @@ const uiSlice = createSlice({
       state.progressBarModal = {
         progress: 0,
         message: "",
+        disclaimer: "",
         animationSeconds: 0,
       };
     },

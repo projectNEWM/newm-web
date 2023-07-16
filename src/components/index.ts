@@ -49,7 +49,6 @@ export { default as UploadImageField } from "./form/UploadImageField";
 export { default as UploadSong } from "./UploadSong";
 export * from "./UploadSong";
 export { default as UploadSongField } from "./form/UploadSongField";
-export { default as UploadSongProgressModal } from "./UploadSongProgressModal";
 export { default as TableDropdownSelect } from "./TableDropdownSelect";
 export { default as ViewPDF } from "./ViewPDF";
 export { default as WizardForm } from "./form/WizardForm";

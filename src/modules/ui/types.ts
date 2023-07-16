@@ -7,6 +7,7 @@ export interface UIState {
   progressBarModal: {
     progress: number;
     message: string;
+    disclaimer: string;
     animationSeconds: number;
   };
   isProgressBarModalOpen: boolean;

@@ -42,14 +42,18 @@ export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
     let songId = "";
+    const progressDisclaimer =
+      "Please do not refresh the page or navigate away while the " +
+      "upload is in progress.";
 
     try {
       dispatch(setIsProgressBarModalOpen(true));
       dispatch(
         setProgressBarModal({
           progress: body.isMinting ? 40 : 65,
-          animationSeconds: 25,
           message: "Uploading song image...",
+          disclaimer: progressDisclaimer,
+          animationSeconds: 25,
         })
       );
 
@@ -119,6 +123,7 @@ export const uploadSong = createAsyncThunk(
         setProgressBarModal({
           progress: body.isMinting ? 75 : 95,
           message: "Uploading song audio...",
+          disclaimer: progressDisclaimer,
           animationSeconds: 10,
         })
       );
@@ -186,6 +191,7 @@ export const uploadSong = createAsyncThunk(
           setProgressBarModal({
             progress: 85,
             message: "Processing artist agreement...",
+            disclaimer: progressDisclaimer,
             animationSeconds: 4,
           })
         );
@@ -218,6 +224,7 @@ export const uploadSong = createAsyncThunk(
             message:
               "Requesting minting payment. " +
               "Please sign transaction when prompted.",
+            disclaimer: progressDisclaimer,
             animationSeconds: 6,
           })
         );
@@ -233,6 +240,7 @@ export const uploadSong = createAsyncThunk(
             ? "Requesting minting payment. " +
               "Please sign transaction when prompted."
             : "Uploading song audio...",
+          disclaimer: progressDisclaimer,
           animationSeconds: 0.25,
         })
       );
