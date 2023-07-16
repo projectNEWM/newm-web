@@ -2,9 +2,9 @@ import { Box, useTheme } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface Props {
-  /** Number between 1 and 100 representing the target progress percentage */
+  /* Number between 1 and 100 representing the target progress percentage */
   readonly progress: number;
-  /** Amount of seconds that animation should last */
+  /* Amount of seconds that animation should last */
   readonly animationSeconds?: number;
 }
 
