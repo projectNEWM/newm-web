@@ -136,7 +136,7 @@ const UploadSong: FunctionComponent = () => {
    * TODO: remove this when form values are persisted on refresh
    */
   useEffect(() => {
-    navigate("/home/upload-song", { replace: true });
+    // navigate("/home/upload-song", { replace: true });
     // useNavigate doesn't return memoized function, including it
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.

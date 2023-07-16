@@ -98,43 +98,51 @@ const FormContent: FunctionComponent<FormContentProps> = ({
       </Stack>
 
       <Stack direction="column" mt={ 3 } spacing={ 2 }>
-        <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-          <CheckboxField name="isCreator" sx={ { marginRight: 1.5 } } />
+        <CheckboxField
+          name="isCreator"
+          label={
+            isCoCreator ? (
+              <Typography variant="subtitle1" color="white" fontSize={ 12 }>
+                I confirm that I am the primary creator of{ " " }
+                <strong>{ songTitle }</strong> and all mentioned collaborators are
+                accurate.
+              </Typography>
+            ) : (
+              <Typography variant="subtitle1" color="white" fontSize={ 12 }>
+                I confirm that I am the exclusive creator of{ " " }
+                <strong>{ songTitle }.</strong>
+              </Typography>
+            )
+          }
+        />
 
-          { isCoCreator ? (
-            <span>
-              I confirm that I am the primary creator of{ " " }
-              <strong>{ songTitle }</strong> and all mentioned collaborators are
-              accurate.
-            </span>
-          ) : (
-            <span>
-              I confirm that I am the exclusive creator of{ " " }
-              <strong>{ songTitle }.</strong>
-            </span>
-          ) }
-        </Typography>
-
-        <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-          <CheckboxField
-            name="agreesToContract"
-            sx={ { marginRight: 1.5 } }
-            disabled={ !values.hasViewedAgreement }
-          />
-          <span style={ { opacity: values.hasViewedAgreement ? 1 : 0.5 } }>
-            I have read the contract and agree to its Terms and Conditions.
-          </span>
-        </Typography>
+        <CheckboxField
+          name="agreesToContract"
+          disabled={ !values.hasViewedAgreement }
+          label={
+            <Typography
+              variant="subtitle1"
+              sx={ {
+                color: "white",
+                fontSize: 12,
+                opacity: values.hasViewedAgreement ? 1 : 0.5,
+              } }
+            >
+              I have read the contract and agree to its Terms and Conditions.
+            </Typography>
+          }
+        />
 
         <Typography variant="subtitle1" color="white" fontSize={ 12 }>
           <CheckboxField
             name="agreesToDistribution"
-            sx={ { marginRight: 1.5 } }
+            label={
+              <Typography variant="subtitle1" color="white" fontSize={ 12 }>
+                By selecting &lsquo;Distribute & Mint&rsquo; you agree to
+                distribute this song to all current and future available stores.
+              </Typography>
+            }
           />
-          <span>
-            By selecting &lsquo;Distribute & Mint&rsquo; you agree to distribute
-            this song to all current and future available stores.
-          </span>
         </Typography>
 
         <HorizontalLine style={ { marginTop: "24px" } } />
