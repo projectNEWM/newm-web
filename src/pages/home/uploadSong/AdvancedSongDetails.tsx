@@ -8,7 +8,10 @@ import {
   TextInputField,
 } from "components";
 import { Button, HorizontalLine } from "elements";
-import { UploadSongRequest } from "modules/song";
+import {
+  UploadSongRequest,
+  useGetEarliestReleaseDateQuery,
+} from "modules/song";
 import theme from "theme";
 
 const AdvancedSongDetails = () => {
@@ -17,19 +20,27 @@ const AdvancedSongDetails = () => {
   const isrcRef = useRef<any>(null);
   const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
+  const releaseDateRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
 
+  const { data: { date: earliestReleaseDate } = {} } =
+    useGetEarliestReleaseDateQuery();
+
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
       {
-        error: errors.isrc,
-        element: isrcRef.current?.getInputDOMNode(),
+        error: errors.releaseDate,
+        element: releaseDateRef.current,
       },
       {
         error: errors.publicationDate,
         element: publicationDateRef.current,
+      },
+      {
+        error: errors.isrc,
+        element: isrcRef.current?.getInputDOMNode(),
       },
       {
         error: errors.barcodeNumber,
@@ -61,8 +72,10 @@ const AdvancedSongDetails = () => {
         <TextInputField
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
+          min={ earliestReleaseDate }
           name="releaseDate"
           placeholder="Select a day"
+          ref={ releaseDateRef }
           type="date"
           tooltipText={
             "When selecting a date to release your song on our " +

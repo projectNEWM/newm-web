@@ -162,6 +162,20 @@ export const commonYupValidation = {
         (value) => value.duration >= AUDIO_MIN_DURATION_SEC
       ),
     }),
+  releaseDate: (releaseDate: string | undefined) => {
+    // If releaseDate is provided, use it.
+    // Otherwise, use a date 11 days from now.
+    const minReleaseDate = releaseDate
+      ? new Date(releaseDate)
+      : new Date(Date.now() + 11 * 24 * 60 * 60 * 1000);
+
+    return Yup.date().min(
+      minReleaseDate,
+      `Release date must be on or after ${
+        minReleaseDate.toISOString().split("T")[0]
+      }`
+    );
+  },
 };
 
 /**
