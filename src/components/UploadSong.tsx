@@ -111,7 +111,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     onDrop: handleDrop,
     multiple: false,
     accept: {
-      "audio/*": [".flac", ".wav"],
+      "audio/flac": [".flac"],
+      "audio/wav": [".wav"],
     },
   });
 
