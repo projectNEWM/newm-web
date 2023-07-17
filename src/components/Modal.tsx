@@ -11,6 +11,7 @@ interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
   readonly isOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly onClose: (event: React.SyntheticEvent<any> | Event) => void;
+  readonly isCloseButtonVisible?: boolean;
 }
 
 /**
@@ -19,6 +20,7 @@ interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
 const Modal: FunctionComponent<ModalProps> = ({
   isOpen = false,
   onClose,
+  isCloseButtonVisible = true,
   children,
 }) => {
   const theme = useTheme();
@@ -36,16 +38,18 @@ const Modal: FunctionComponent<ModalProps> = ({
   return (
     <MuiModal open={ isOpen } sx={ { m: 2, mt: 1, mb: 10 } }>
       <Box display="flex" flex={ 1 } flexDirection="column" height="100%">
-        <Box display="flex" justifyContent="flex-end" mb={ 1 }>
-          <CloseIcon
-            sx={ {
-              color: theme.colors.white,
-              cursor: "pointer",
-              fontSize: 42,
-            } }
-            onClick={ onClose }
-          />
-        </Box>
+        { isCloseButtonVisible && (
+          <Box display="flex" justifyContent="flex-end" mb={ 1 }>
+            <CloseIcon
+              sx={ {
+                color: theme.colors.white,
+                cursor: "pointer",
+                fontSize: 42,
+              } }
+              onClick={ onClose }
+            />
+          </Box>
+        ) }
 
         { children }
       </Box>

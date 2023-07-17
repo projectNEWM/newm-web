@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UIState } from "./types";
 
 const initialState: UIState = {
@@ -7,6 +7,13 @@ const initialState: UIState = {
     message: "",
     severity: "error",
   },
+  progressBarModal: {
+    progress: 0,
+    message: "",
+    disclaimer: "",
+    animationSeconds: 0,
+  },
+  isProgressBarModalOpen: false,
   isIdenfyModalOpen: false,
   isConnectWalletModalOpen: false,
   isInvitesModalOpen: false,
@@ -21,18 +28,36 @@ const uiSlice = createSlice({
       state.toast.message = "";
       state.toast.severity = "error";
     },
-    setToastMessage: (state, { payload }) => {
-      state.toast.heading = payload.heading;
-      state.toast.message = payload.message;
-      state.toast.severity = payload.severity;
+    setToastMessage: (state, { payload }: PayloadAction<UIState["toast"]>) => {
+      state.toast = payload;
     },
-    setIsIdenfyModalOpen: (state, { payload }) => {
+    clearProgressBarModal: (state) => {
+      state.progressBarModal = {
+        progress: 0,
+        message: "",
+        disclaimer: "",
+        animationSeconds: 0,
+      };
+    },
+    setProgressBarModal: (
+      state,
+      { payload }: PayloadAction<UIState["progressBarModal"]>
+    ) => {
+      state.progressBarModal = payload;
+    },
+    setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
+      state.isProgressBarModalOpen = payload;
+    },
+    setIsIdenfyModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isIdenfyModalOpen = payload;
     },
-    setIsConnectWalletModalOpen: (state, { payload }) => {
+    setIsConnectWalletModalOpen: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
       state.isConnectWalletModalOpen = payload;
     },
-    setIsInvitesModalOpen: (state, { payload }) => {
+    setIsInvitesModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isInvitesModalOpen = payload;
     },
   },
@@ -41,6 +66,9 @@ const uiSlice = createSlice({
 export const {
   clearToastMessage,
   setToastMessage,
+  setProgressBarModal,
+  clearProgressBarModal,
+  setIsProgressBarModalOpen,
   setIsIdenfyModalOpen,
   setIsConnectWalletModalOpen,
   setIsInvitesModalOpen,

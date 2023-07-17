@@ -3,8 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GenerateArtistAgreementBody, lambdaApi } from "api";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import { setToastMessage } from "modules/ui";
+import {
+  clearProgressBarModal,
+  setIsProgressBarModalOpen,
+  setProgressBarModal,
+  setToastMessage,
+} from "modules/ui";
 import { sessionApi } from "modules/session";
+import { sleep } from "common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -36,8 +42,21 @@ export const uploadSong = createAsyncThunk(
   "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
     let songId = "";
+    const progressDisclaimer =
+      "Please do not refresh the page or navigate away while the " +
+      "upload is in progress.";
 
     try {
+      dispatch(setIsProgressBarModalOpen(true));
+      dispatch(
+        setProgressBarModal({
+          progress: body.isMinting ? 40 : 65,
+          message: "Uploading song image...",
+          disclaimer: progressDisclaimer,
+          animationSeconds: 25,
+        })
+      );
+
       // downsize if necessary
       const uploadParams = {
         eager: "c_fit,w_5000,h_5000",
@@ -100,6 +119,15 @@ export const uploadSong = createAsyncThunk(
 
       if ("error" in songResp) return;
 
+      dispatch(
+        setProgressBarModal({
+          progress: body.isMinting ? 75 : 95,
+          message: "Uploading song audio...",
+          disclaimer: progressDisclaimer,
+          animationSeconds: 10,
+        })
+      );
+
       songId = songResp.data.songId;
 
       // get signed upload url for AWS
@@ -159,6 +187,15 @@ export const uploadSong = createAsyncThunk(
           if ("error" in collabResp) return;
         }
 
+        dispatch(
+          setProgressBarModal({
+            progress: 85,
+            message: "Processing artist agreement...",
+            disclaimer: progressDisclaimer,
+            animationSeconds: 4,
+          })
+        );
+
         const generateArtistAgreementResponse = await dispatch(
           generateArtistAgreement({
             artistName: body.artistName,
@@ -181,8 +218,33 @@ export const uploadSong = createAsyncThunk(
 
         if ("error" in processStreamTokenAgreementResponse) return;
 
+        dispatch(
+          setProgressBarModal({
+            progress: 95,
+            message:
+              "Requesting minting payment. " +
+              "Please sign transaction when prompted.",
+            disclaimer: progressDisclaimer,
+            animationSeconds: 6,
+          })
+        );
+
         await submitMintSongPayment(songId, dispatch);
       }
+
+      // display most recent status and allow progress animation to complete
+      dispatch(
+        setProgressBarModal({
+          progress: 100,
+          message: body.isMinting
+            ? "Requesting minting payment. " +
+              "Please sign transaction when prompted."
+            : "Uploading song audio...",
+          disclaimer: progressDisclaimer,
+          animationSeconds: 0.25,
+        })
+      );
+      await sleep(250);
 
       // navigate to library page to view new song
       history.push("/home/library");
@@ -205,6 +267,9 @@ export const uploadSong = createAsyncThunk(
           })
         );
       }
+    } finally {
+      dispatch(setIsProgressBarModalOpen(false));
+      dispatch(clearProgressBarModal());
     }
   }
 );

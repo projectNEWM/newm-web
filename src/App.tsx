@@ -7,6 +7,7 @@ import {
   IdenfyPingUserStatus,
   IdenfySuccessSession,
   PrivateRoute,
+  ProgressBarModal,
   Toast,
 } from "components";
 import Login from "pages/login";
@@ -41,6 +42,7 @@ const App = () => {
             <IdenfyModal />
             <ConnectWalletModal />
             <InvitesModal />
+            <ProgressBarModal />
 
             <Background>
               <BrowserRouter history={ history }>
