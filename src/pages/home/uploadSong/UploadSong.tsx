@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
@@ -129,6 +129,19 @@ const UploadSong: FunctionComponent = () => {
     helpers.setSubmitting(false);
   };
 
+  /**
+   * Ensure user is returned to first step on refresh since form
+   * contents are not persisted.
+   *
+   * TODO: remove this when form values are persisted on refresh
+   */
+  useEffect(() => {
+    navigate("/home/upload-song", { replace: true });
+    // useNavigate doesn't return memoized function, including it
+    // as dependency will run this when navigation occurs. Exclude
+    // to only run on mount.
+    // eslint-disable-next-line
+  }, []);
   const genreOptions = extractProperty<Genre, "name">(genres, "name");
 
   const validations = {
