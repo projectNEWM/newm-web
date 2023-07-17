@@ -123,7 +123,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop: handleDrop,
     multiple: false,
-    accept: { "image/*": [".png", ".jpeg", ".jpg", ".webp"] },
+    accept: {
+      "image/png": [".png"],
+      "image/webp": [".webp"],
+      "image/jpg": [".jpg", ".jpeg"],
+    },
   });
 
   const handleChangeImage = () => {
