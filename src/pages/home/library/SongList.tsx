@@ -13,7 +13,9 @@ import theme from "theme";
 import { Button } from "elements";
 import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
 import {
+  MintingStatus as MintingStatusType,
   Song,
+  SortOrder,
   convertMillisecondsToSongFormat,
   useFetchSongStreamThunk,
   useGetSongsQuery,
@@ -44,6 +46,16 @@ interface PlayerState {
   readonly url?: string;
 }
 
+const POLLING_INTERVALS = {
+  MISSING_STREAM_URL: 5000,
+  PROCESS_INCOMPLETE: 60000,
+};
+
+const finalStepMintingStatus = [
+  MintingStatusType.Declined,
+  MintingStatusType.Minted,
+];
+
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const navigate = useNavigate();
   const headerHeight = 245;
@@ -70,7 +82,9 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
   }
 
-  const [isStreamUrlMissing, setIsStreamUrlMissing] = useState(true);
+  const [currentPollingInterval, setPollingInterval] = useState<
+    number | undefined
+  >();
 
   const {
     data: songData = [],
@@ -82,18 +96,25 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       offset: (page - 1) * rowsPerPage,
       limit: songsToRequest,
       phrase: query,
+      sortOrder: SortOrder.Desc,
     },
     {
-      // Refetch songs every minute if the streamUrl is missing for any song
-      pollingInterval: isStreamUrlMissing ? 5000 : undefined,
+      pollingInterval: currentPollingInterval,
     }
   );
 
   // Checks if any of the songs are missing a streamUrl
   useEffect(() => {
-    const isAnySongStreamUrlMissing = songData.some((song) => !song.streamUrl);
+    const isStreamUrlMissing = songData.some((song) => !song.streamUrl);
+    const isMintingProcessIncomplete = songData.some(
+      (song) => !finalStepMintingStatus.includes(song.mintingStatus)
+    );
 
-    setIsStreamUrlMissing(isAnySongStreamUrlMissing);
+    if (isStreamUrlMissing) {
+      setPollingInterval(POLLING_INTERVALS.MISSING_STREAM_URL);
+    } else if (isMintingProcessIncomplete) {
+      setPollingInterval(POLLING_INTERVALS.PROCESS_INCOMPLETE);
+    }
   }, [songData]);
 
   const hlsJsParams = useMemo(

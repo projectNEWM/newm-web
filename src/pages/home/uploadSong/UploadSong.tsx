@@ -148,9 +148,7 @@ const UploadSong: FunctionComponent = () => {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
-    genres: commonYupValidation
-      .genres(genreOptions)
-      .min(1, "At least one genre is required"),
+    genres: commonYupValidation.genres(genreOptions),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()

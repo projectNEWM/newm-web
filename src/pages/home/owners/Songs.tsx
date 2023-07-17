@@ -5,6 +5,7 @@ import { IconButton, Stack } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import {
   Song,
+  SortOrder,
   useGetSongCountQuery,
   useGetSongsQuery,
   useHlsJs,
@@ -37,6 +38,7 @@ const Songs: FunctionComponent = () => {
     ownerIds: [userId],
     offset,
     limit,
+    sortOrder: SortOrder.Desc,
   });
 
   const [ref, inView] = useInView({
