@@ -22,6 +22,7 @@ import {
   CollaborationStatus,
   UploadSongRequest,
   useGenerateArtistAgreementThunk,
+  useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "modules/song";
 import ConfirmAgreement from "./ConfirmAgreement";
@@ -47,6 +48,8 @@ const UploadSong: FunctionComponent = () => {
     languages,
     "language_code"
   );
+  const { data: { date: earliestReleaseDate } = {} } =
+    useGetEarliestReleaseDateQuery();
 
   const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
@@ -173,6 +176,7 @@ const UploadSong: FunctionComponent = () => {
       otherwise: Yup.string(),
     }),
     publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
+    releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
   };
 
   return (
@@ -223,6 +227,7 @@ const UploadSong: FunctionComponent = () => {
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
                 publicationDate: validations.publicationDate,
+                releaseDate: validations.releaseDate,
               }),
             },
             {

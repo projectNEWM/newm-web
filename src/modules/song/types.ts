@@ -345,3 +345,7 @@ export interface CollaboratorStatusContent {
   readonly tooltip: string;
   readonly icon: ReactElement;
 }
+
+export interface GetEarliestReleaseDateResponse {
+  readonly date: string;
+}

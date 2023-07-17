@@ -17,6 +17,7 @@ import {
   GetCollaboratorCountResponse,
   GetCollaboratorsRequest,
   GetCollaboratorsResponse,
+  GetEarliestReleaseDateResponse,
   GetSongCountRequest,
   GetSongCountResponse,
   GetSongStreamData,
@@ -525,18 +526,38 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    getEarliestReleaseDate: build.query<GetEarliestReleaseDateResponse, void>({
+      query: () => ({
+        url: "/v1/distribution/earliest-release-date",
+        method: "GET",
+      }),
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occured while fetching earliest release date",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
   }),
 });
 
 export const {
-  useGetCollaborationsQuery,
   useDeleteCollaborationMutation,
+  useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
   useGetCollaboratorsQuery,
+  useGetEarliestReleaseDateQuery,
   useGetSongCountQuery,
   useGetSongQuery,
-  useGetSongsQuery,
   useGetSongStreamQuery,
+  useGetSongsQuery,
 } = extendedApi;
 
 export default extendedApi;
