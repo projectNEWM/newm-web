@@ -30,7 +30,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "Artist Portal updated. View at https://newm-artist-portal.web.app"
+              "text": "Artist Portal updated. View at https://artist.garage.newm.io"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
