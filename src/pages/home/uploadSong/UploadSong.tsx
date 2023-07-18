@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
 import {
+  MAX_CHARACTER_COUNT,
   NONE_OPTION,
   REGEX_ISRC_FORMAT,
   commonYupValidation,
@@ -151,6 +152,7 @@ const UploadSong: FunctionComponent = () => {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
+    description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
@@ -179,15 +181,24 @@ const UploadSong: FunctionComponent = () => {
         return languageCodes.includes(countryCode);
       }),
     barcodeType: Yup.string(),
-    barcodeNumber: Yup.string().when("barcodeType", {
-      is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
-      then: Yup.string().required(
-        "Barcode number is required when barcode type is selected"
-      ),
-      otherwise: Yup.string(),
-    }),
+    barcodeNumber: Yup.string()
+      .max(
+        MAX_CHARACTER_COUNT,
+        `Must be ${MAX_CHARACTER_COUNT} characters or less`
+      )
+      .when("barcodeType", {
+        is: (barcodeType: string) =>
+          !!barcodeType && barcodeType !== NONE_OPTION,
+        then: Yup.string().required(
+          "Barcode number is required when barcode type is selected"
+        ),
+        otherwise: Yup.string(),
+      }),
     publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
+    copyrights: commonYupValidation.copyrights,
+    userIpi: commonYupValidation.userIpi,
+    iswc: commonYupValidation.iswc,
   };
 
   return (
@@ -226,6 +237,7 @@ const UploadSong: FunctionComponent = () => {
                 title: validations.title,
                 genres: validations.genres,
                 owners: validations.owners,
+                description: validations.description,
               }),
             },
             {
@@ -237,8 +249,11 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
+                copyrights: validations.copyrights,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
+                userIpi: validations.userIpi,
+                iswc: validations.iswc,
               }),
             },
             {

@@ -21,6 +21,9 @@ const AdvancedSongDetails = () => {
   const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
   const releaseDateRef = useRef<HTMLInputElement | null>(null);
+  const copyrightsRef = useRef<HTMLInputElement | null>(null);
+  const userIpiRef = useRef<HTMLInputElement | null>(null);
+  const iswcRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors } =
     useFormikContext<UploadSongRequest>();
@@ -39,12 +42,24 @@ const AdvancedSongDetails = () => {
         element: publicationDateRef.current,
       },
       {
+        error: errors.copyrights,
+        element: copyrightsRef.current,
+      },
+      {
         error: errors.isrc,
         element: isrcRef.current?.getInputDOMNode(),
       },
       {
         error: errors.barcodeNumber,
         element: barcodeNumberRef.current,
+      },
+      {
+        error: errors.userIpi,
+        element: userIpiRef.current,
+      },
+      {
+        error: errors.iswc,
+        element: iswcRef.current,
       },
     ]);
   }, [errors, isSubmitting, isrcRef]);
@@ -100,6 +115,7 @@ const AdvancedSongDetails = () => {
           name="copyrights"
           label="COPYRIGHT"
           placeholder={ `${new Date().getFullYear()} Example` }
+          ref={ copyrightsRef }
           tooltipText={ "" }
         />
         <TextInputField
@@ -132,12 +148,14 @@ const AdvancedSongDetails = () => {
           name="userIpi"
           label="IPI"
           placeholder="000000000"
+          ref={ userIpiRef }
           tooltipText={ " " }
         />
         <TextInputField
           name="iswc"
           label="ISWC"
           placeholder="T 000000000 0"
+          ref={ iswcRef }
           tooltipText={ " " }
         />
       </Stack>

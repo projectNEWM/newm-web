@@ -6,6 +6,9 @@ import {
   REGEX_PASSWORD_REQUIREMENTS,
 } from "./regex";
 
+export const MAX_CHARACTER_COUNT = 64;
+export const MAX_CHARACTER_COUNT_LONG = 250;
+
 /**
  * Returns true if all genres are included in the genre options array
  *
@@ -149,7 +152,16 @@ export const commonYupValidation = {
     message: "Image must be 1:1 aspect ratio",
     test: isAspectRatioOneToOne,
   }),
-  title: Yup.string().required("This field is required"),
+  title: Yup.string()
+    .required("This field is required")
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
+    ),
+  description: Yup.string().max(
+    MAX_CHARACTER_COUNT_LONG,
+    `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
+  ),
   audio: Yup.mixed()
     .required("This field is required")
     .test({
@@ -176,6 +188,18 @@ export const commonYupValidation = {
       }`
     );
   },
+  copyrights: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
+  userIpi: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
+  iswc: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
 };
 
 /**

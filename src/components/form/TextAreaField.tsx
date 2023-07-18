@@ -3,7 +3,7 @@ import { Field, FieldProps } from "formik";
 import { TextArea, TextAreaProps } from "elements";
 
 const TextAreaField: ForwardRefRenderFunction<
-  HTMLInputElement,
+  HTMLTextAreaElement,
   TextAreaProps
 > = (props, ref) => {
   return (
