@@ -116,7 +116,7 @@ const SongInfo = () => {
                   name="coverArtUrl"
                   changeImageButtonText="Change cover"
                   emptyMessage="Drag and drop or browse your image"
-                  minDimensions={ { width: 2048, height: 2048 } }
+                  minDimensions={ { width: 1400, height: 1400 } }
                   isMultiButtonLayout={ true }
                 />
               </Stack>

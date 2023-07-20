@@ -75,7 +75,7 @@ export const getResizedAlbumCoverImageUrl = (
   }
 
   const transformation = url.includes("upload/c_fit,w_5000,h_5000")
-    ? "upload/c_fit,w_5000,h_5000"
+    ? "upload/c_limit,w_4000,h_4000"
     : "upload/";
 
   return url.replace(
