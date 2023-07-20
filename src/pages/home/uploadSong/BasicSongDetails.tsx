@@ -125,7 +125,7 @@ const BasicSongDetails: FunctionComponent = () => {
             name="coverArtUrl"
             emptyMessage="Drag and drop or browse your image"
             changeImageButtonText="Change cover"
-            minDimensions={ { width: 2048, height: 2048 } }
+            minDimensions={ { width: 1400, height: 1400 } }
             isMultiButtonLayout
           />
         </Stack>
