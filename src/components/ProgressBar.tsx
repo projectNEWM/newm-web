@@ -17,12 +17,10 @@ const ProgressBar: FunctionComponent<Props> = ({
   const animatedProgressPercentage = animatedProgress + "%";
 
   /**
-   * Update progress using timeout to ensure it animates from 0.
+   * Update progress to ensure it animates from zero
    */
   useEffect(() => {
-    setTimeout(() => {
-      setAnimatedProgress(progress);
-    }, 0);
+    setAnimatedProgress(progress);
   }, [progress]);
 
   return (
