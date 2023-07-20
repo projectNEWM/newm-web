@@ -131,7 +131,7 @@ const isAspectRatioOneToOne = async (value: File | null) => {
 
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
-const AUDIO_MIN_DURATION_SEC = 30;
+const AUDIO_MIN_DURATION_SEC = 60;
 
 export const commonYupValidation = {
   email: Yup.string()
