@@ -44,6 +44,7 @@ const BasicSongDetails: FunctionComponent = () => {
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
   const songDetailsRef = useRef<HTMLDivElement>(null);
   const ownersRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
   const { data: genres = [] } = useGetGenresQuery();
@@ -86,6 +87,10 @@ const BasicSongDetails: FunctionComponent = () => {
       { error: errors.audio, element: audioRef.current },
       { error: errors.coverArtUrl, element: coverArtUrlRef.current },
       { error: errors.title || errors.genres, element: songDetailsRef.current },
+      {
+        error: errors.description,
+        element: descriptionRef.current,
+      },
       { error: errors.owners, element: ownersRef.current },
     ]);
   }, [errors, isSubmitting]);
@@ -175,9 +180,10 @@ const BasicSongDetails: FunctionComponent = () => {
         </Stack>
 
         <TextAreaField
-          name="description"
           label="DESCRIPTION"
+          name="description"
           placeholder="Tell us about your song"
+          ref={ descriptionRef }
         />
 
         <Stack mt={ 5 } spacing={ 5 }>

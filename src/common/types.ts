@@ -35,10 +35,21 @@ export type WidthType = "default" | "full";
 
 export interface FieldOptions {
   error: unknown;
-  element: HTMLDivElement | HTMLInputElement | null;
+  element: HTMLDivElement | HTMLInputElement | HTMLTextAreaElement | null;
 }
 
 export interface ImageDimension {
   width: number;
   height: number;
+}
+
+export enum BarcodeType {
+  UPC = "UPC",
+  EAN = "EAN",
+  JAN = "JAN",
+}
+
+export interface BarcodeConfig {
+  regEx: RegExp;
+  message: string;
 }

@@ -1,10 +1,23 @@
 import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
-import { FieldOptions, ImageDimension } from "./types";
 import {
+  BarcodeConfig,
+  BarcodeType,
+  FieldOptions,
+  ImageDimension,
+} from "./types";
+import {
+  REGEX_12_DIGITS_OR_LESS,
+  REGEX_13_DIGITS_OR_LESS,
+  REGEX_9_TO_11_DIGITS,
+  REGEX_ISWC_FORMAT,
+  REGEX_JAN_FORMAT,
   REGEX_ONLY_ALPHABETS_AND_SPACES,
   REGEX_PASSWORD_REQUIREMENTS,
 } from "./regex";
+
+export const MAX_CHARACTER_COUNT = 64;
+export const MAX_CHARACTER_COUNT_LONG = 250;
 
 /**
  * Returns true if all genres are included in the genre options array
@@ -60,6 +73,29 @@ const isFileSizeValid = (value: File) => {
     fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
     fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
   );
+};
+
+const BARCODE_CONFIG: Record<BarcodeType | "DEFAULT", BarcodeConfig> = {
+  [BarcodeType.UPC]: {
+    regEx: REGEX_12_DIGITS_OR_LESS,
+    message: "UPC barcode must have 12 digits or less",
+  },
+  [BarcodeType.EAN]: {
+    regEx: REGEX_13_DIGITS_OR_LESS,
+    message: "EAN barcode must have 13 digits or less",
+  },
+  [BarcodeType.JAN]: {
+    regEx: REGEX_JAN_FORMAT,
+    message: "JAN barcode must have 13 digits or less and start with 45 or 49",
+  },
+  DEFAULT: {
+    regEx: REGEX_13_DIGITS_OR_LESS,
+    message: "Barcode must be 13 digits or less",
+  },
+};
+
+export const getBarcodeRegex = (barcodeType: BarcodeType): BarcodeConfig => {
+  return BARCODE_CONFIG[barcodeType] || BARCODE_CONFIG.DEFAULT;
 };
 
 /**
@@ -149,7 +185,16 @@ export const commonYupValidation = {
     message: "Image must be 1:1 aspect ratio",
     test: isAspectRatioOneToOne,
   }),
-  title: Yup.string().required("This field is required"),
+  title: Yup.string()
+    .required("This field is required")
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
+    ),
+  description: Yup.string().max(
+    MAX_CHARACTER_COUNT_LONG,
+    `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
+  ),
   audio: Yup.mixed()
     .required("This field is required")
     .test({
@@ -176,6 +221,18 @@ export const commonYupValidation = {
       }`
     );
   },
+  copyrights: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
+  userIpi: Yup.string().matches(
+    REGEX_9_TO_11_DIGITS,
+    "Field should contain 9 to 11 digits"
+  ),
+  iswc: Yup.string().matches(
+    REGEX_ISWC_FORMAT,
+    "Must be in the format T-000000000-0"
+  ),
 };
 
 /**

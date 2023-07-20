@@ -8,6 +8,7 @@ import {
   REGEX_ISRC_FORMAT,
   commonYupValidation,
   extractProperty,
+  getBarcodeRegex,
 } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
@@ -151,6 +152,7 @@ const UploadSong: FunctionComponent = () => {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
+    description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
@@ -181,13 +183,21 @@ const UploadSong: FunctionComponent = () => {
     barcodeType: Yup.string(),
     barcodeNumber: Yup.string().when("barcodeType", {
       is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
-      then: Yup.string().required(
-        "Barcode number is required when barcode type is selected"
-      ),
+      then: Yup.string()
+        .test("barcodeNumberTest", function (value = "") {
+          const { barcodeType } = this.parent;
+          const { regEx, message } = getBarcodeRegex(barcodeType);
+
+          return regEx.test(value) ? true : this.createError({ message });
+        })
+        .required("Barcode number is required when barcode type is selected"),
       otherwise: Yup.string(),
     }),
     publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
+    copyrights: commonYupValidation.copyrights,
+    userIpi: commonYupValidation.userIpi,
+    iswc: commonYupValidation.iswc,
   };
 
   return (
@@ -226,6 +236,7 @@ const UploadSong: FunctionComponent = () => {
                 title: validations.title,
                 genres: validations.genres,
                 owners: validations.owners,
+                description: validations.description,
               }),
             },
             {
@@ -237,8 +248,11 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
+                copyrights: validations.copyrights,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
+                userIpi: validations.userIpi,
+                iswc: validations.iswc,
               }),
             },
             {

@@ -2,7 +2,7 @@ import {
   FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
-  InputHTMLAttributes,
+  TextareaHTMLAttributes,
   forwardRef,
   useState,
 } from "react";
@@ -12,7 +12,8 @@ import theme from "theme";
 import { ErrorMessage } from "components";
 import { WidthType } from "common";
 
-export interface TextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextAreaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   readonly label?: string;
   readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
@@ -50,7 +51,7 @@ const StyledTextAreaElement = styled.textarea`
 `;
 
 export const TextArea: ForwardRefRenderFunction<
-  HTMLInputElement,
+  HTMLTextAreaElement,
   TextAreaProps
 > = (
   {
@@ -65,7 +66,7 @@ export const TextArea: ForwardRefRenderFunction<
     widthType = "default",
     ...rest
   },
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLTextAreaElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -73,7 +74,7 @@ export const TextArea: ForwardRefRenderFunction<
   /**
    * Calls any onFocus prop being passed and then updates local state
    */
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (event: FocusEvent<HTMLTextAreaElement>) => {
     if (onFocus) {
       onFocus(event);
     }
@@ -84,7 +85,7 @@ export const TextArea: ForwardRefRenderFunction<
   /**
    * Calls any onBlur prop being passed and then updates local state
    */
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
     if (onBlur) {
       onBlur(event);
     }
@@ -152,12 +153,12 @@ export const TextArea: ForwardRefRenderFunction<
           { startAdornment }
 
           <StyledTextAreaElement
-            { ...rest }
+            rows={ 2 }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
             disabled={ disabled }
             ref={ ref }
-            rows={ 1 }
+            { ...rest }
           />
 
           { endAdornment }
