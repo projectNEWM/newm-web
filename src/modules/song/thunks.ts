@@ -10,7 +10,7 @@ import {
   setToastMessage,
 } from "modules/ui";
 import { sessionApi } from "modules/session";
-import { sleep } from "common";
+import { SilentError, sleep } from "common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -117,7 +117,7 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ("error" in songResp) return;
+      if ("error" in songResp) throw new SilentError();
 
       dispatch(
         setProgressBarModal({
@@ -138,7 +138,7 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ("error" in audioUploadUrlResp) return;
+      if ("error" in audioUploadUrlResp) throw new SilentError();
 
       const { url: uploadUrl, fields } = audioUploadUrlResp.data;
 
@@ -184,7 +184,7 @@ export const uploadSong = createAsyncThunk(
         );
 
         for (const collabResp of collabResponses) {
-          if ("error" in collabResp) return;
+          if ("error" in collabResp) throw new SilentError();
         }
 
         dispatch(
@@ -207,7 +207,7 @@ export const uploadSong = createAsyncThunk(
           })
         );
 
-        if ("error" in generateArtistAgreementResponse) return;
+        if ("error" in generateArtistAgreementResponse) throw new SilentError();
 
         const processStreamTokenAgreementResponse = await dispatch(
           songApi.endpoints.processStreamTokenAgreement.initiate({
@@ -216,7 +216,9 @@ export const uploadSong = createAsyncThunk(
           })
         );
 
-        if ("error" in processStreamTokenAgreementResponse) return;
+        if ("error" in processStreamTokenAgreementResponse) {
+          throw new SilentError();
+        }
 
         dispatch(
           setProgressBarModal({
@@ -299,6 +301,7 @@ export const fetchSongStream = createAsyncThunk(
     }
   }
 );
+
 /**
  * Generates an artist agreement and then navigates
  * to the confirmation screen.
