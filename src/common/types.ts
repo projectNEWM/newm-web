@@ -42,3 +42,14 @@ export interface ImageDimension {
   width: number;
   height: number;
 }
+
+export enum BarcodeType {
+  UPC = "UPC",
+  EAN = "EAN",
+  JAN = "JAN",
+}
+
+export interface BarcodeConfig {
+  regEx: RegExp;
+  message: string;
+}

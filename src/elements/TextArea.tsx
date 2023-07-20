@@ -153,7 +153,7 @@ export const TextArea: ForwardRefRenderFunction<
           { startAdornment }
 
           <StyledTextAreaElement
-            rows={ 3 }
+            rows={ 2 }
             onFocus={ handleFocus }
             onBlur={ handleBlur }
             disabled={ disabled }

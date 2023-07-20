@@ -25,7 +25,7 @@ const AdvancedSongDetails = () => {
   const userIpiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
-  const { isSubmitting, setFieldValue, errors } =
+  const { isSubmitting, setFieldValue, errors, values } =
     useFormikContext<UploadSongRequest>();
 
   const { data: { date: earliestReleaseDate } = {} } =
@@ -138,6 +138,7 @@ const AdvancedSongDetails = () => {
           options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
         />
         <TextInputField
+          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
           name="barcodeNumber"
           label="BARCODE NUMBER"
           placeholder="0000000000"
@@ -145,16 +146,19 @@ const AdvancedSongDetails = () => {
           tooltipText={ " " }
         />
         <TextInputField
-          name="userIpi"
           label="IPI"
+          name="userIpi"
           placeholder="000000000"
           ref={ userIpiRef }
           tooltipText={ " " }
+          type="number"
         />
         <TextInputField
-          name="iswc"
           label="ISWC"
-          placeholder="T 000000000 0"
+          mask="T-999999999-9"
+          maskChar={ null }
+          name="iswc"
+          placeholder="T-000000000-0"
           ref={ iswcRef }
           tooltipText={ " " }
         />

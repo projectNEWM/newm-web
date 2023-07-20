@@ -4,11 +4,11 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
 import {
-  MAX_CHARACTER_COUNT,
   NONE_OPTION,
   REGEX_ISRC_FORMAT,
   commonYupValidation,
   extractProperty,
+  getBarcodeRegex,
 } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
@@ -181,19 +181,18 @@ const UploadSong: FunctionComponent = () => {
         return languageCodes.includes(countryCode);
       }),
     barcodeType: Yup.string(),
-    barcodeNumber: Yup.string()
-      .max(
-        MAX_CHARACTER_COUNT,
-        `Must be ${MAX_CHARACTER_COUNT} characters or less`
-      )
-      .when("barcodeType", {
-        is: (barcodeType: string) =>
-          !!barcodeType && barcodeType !== NONE_OPTION,
-        then: Yup.string().required(
-          "Barcode number is required when barcode type is selected"
-        ),
-        otherwise: Yup.string(),
-      }),
+    barcodeNumber: Yup.string().when("barcodeType", {
+      is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
+      then: Yup.string()
+        .test("barcodeNumberTest", function (value = "") {
+          const { barcodeType } = this.parent;
+          const { regEx, message } = getBarcodeRegex(barcodeType);
+
+          return regEx.test(value) ? true : this.createError({ message });
+        })
+        .required("Barcode number is required when barcode type is selected"),
+      otherwise: Yup.string(),
+    }),
     publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
     copyrights: commonYupValidation.copyrights,
