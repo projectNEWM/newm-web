@@ -99,9 +99,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       } catch (error) {
         if (error instanceof Error) {
           onError(error.message);
+          onBlur();
         }
-      } finally {
-        onBlur();
       }
     },
     [onChange, onBlur, onError, song]

@@ -1,7 +1,9 @@
 import {
+  FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
+  SyntheticEvent,
   forwardRef,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
@@ -19,7 +21,11 @@ export interface DropdownMultiSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
-  readonly handleChange?: (newValue: ReadonlyArray<string>) => void;
+  readonly handleChange?: (
+    event: SyntheticEvent,
+    newValue: ReadonlyArray<string>
+  ) => void;
+  readonly handleBlur: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly label?: string;
   readonly name: string;
   readonly tooltipText?: string;
@@ -44,6 +50,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     placeholder = "Select all that apply",
     value,
     handleChange,
+    handleBlur,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -66,7 +73,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     value,
     onChange: (event, newValue) => {
       if (handleChange) {
-        handleChange(newValue);
+        handleChange(event, newValue);
       }
     },
   });
@@ -86,6 +93,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
+  const inputProps = getInputProps();
 
   return (
     <Box sx={ { position: "relative" } }>
@@ -94,7 +102,11 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
           <TextInput
             ref={ ref }
             { ...rest }
-            { ...getInputProps() }
+            { ...inputProps }
+            onBlur={ (event: FocusEvent<HTMLInputElement, Element>) => {
+              if (inputProps.onBlur) inputProps.onBlur(event);
+              handleBlur(event);
+            } }
             style={ {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",

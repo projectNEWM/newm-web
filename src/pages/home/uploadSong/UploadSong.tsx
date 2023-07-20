@@ -216,7 +216,6 @@ const UploadSong: FunctionComponent = () => {
 
       <Box pt={ 5 } pb={ 7 }>
         <WizardForm
-          validateOnBlur={ false }
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
           rootPath="home/upload-song"

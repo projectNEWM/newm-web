@@ -1,4 +1,4 @@
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { ForwardRefRenderFunction, SyntheticEvent, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
 import { DropdownMultiSelect, DropdownSelectProps } from "elements";
 
@@ -12,9 +12,10 @@ const DropdownMultiSelectField: ForwardRefRenderFunction<
         { ...field }
         { ...props }
         errorMessage={ meta.touched ? meta.error : "" }
-        handleChange={ (value: ReadonlyArray<string>) => {
+        handleChange={ (event: SyntheticEvent, value: ReadonlyArray<string>) => {
           form.setFieldValue(field.name, value);
         } }
+        handleBlur={ form.handleBlur }
         ref={ ref }
       />
     ) }
