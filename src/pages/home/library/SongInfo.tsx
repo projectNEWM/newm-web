@@ -81,7 +81,6 @@ const SongInfo = () => {
         enableReinitialize={ true }
         initialValues={ initialValues }
         onSubmit={ handleSubmit }
-        validateOnBlur={ false }
         validationSchema={ validationSchema }
       >
         { ({ dirty, errors, isSubmitting }) => {
