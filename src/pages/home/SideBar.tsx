@@ -25,7 +25,8 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 ) => {
   const theme = useTheme();
 
-  const { data: profile = emptyProfile } = useGetProfileQuery();
+  const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
+    useGetProfileQuery();
 
   return (
     <Box
@@ -56,16 +57,16 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
-          { !!profile.pictureUrl && (
+          { !!pictureUrl && (
             <ProfileImage
-              src={ profile.pictureUrl }
+              src={ pictureUrl }
               aria-label="profile image"
               referrerPolicy="no-referrer"
             />
           ) }
 
           <Typography variant="h4" fontWeight={ 700 } align="center">
-            { profile.nickname }
+            { nickname ? nickname : firstName + " " + lastName }
           </Typography>
         </Stack>
 
