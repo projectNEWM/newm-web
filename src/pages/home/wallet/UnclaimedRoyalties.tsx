@@ -53,16 +53,19 @@ export const UnclaimedRoyalties = ({
           { currency(unclaimedRoyalties).format() }
         </Typography>
       </Box>
-
-      <Button
-        color="white"
-        variant="outlined"
-        width="compact"
-        disabled={ unclaimedRoyalties === 0 }
-        sx={ { alignSelf: "center" } }
-      >
-        Claim now
-      </Button>
+      <Tooltip title={ "Feature coming soon" }>
+        <Box sx={ { alignSelf: "center" } }>
+          <Button
+            color="white"
+            variant="outlined"
+            width="compact"
+            disabled={ unclaimedRoyalties === 0 }
+            sx={ { alignSelf: "center" } }
+          >
+            Claim now
+          </Button>
+        </Box>
+      </Tooltip>
     </Box>
   );
 };
