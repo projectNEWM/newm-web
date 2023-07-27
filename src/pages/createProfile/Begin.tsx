@@ -11,7 +11,7 @@ const Begin: FunctionComponent = () => {
   useEffect(() => {
     // briefly display page and then navigate to profile form
     setTimeout(() => {
-      navigate("/create-profile/what-should-we-call-you");
+      navigate("/create-profile/what-is-your-first-name");
     }, 2400);
   }, [navigate]);
 
