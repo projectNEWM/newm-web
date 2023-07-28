@@ -89,25 +89,25 @@ const Owners: FunctionComponent<OwnersProps> = ({
 
             <Stack flexDirection="row" alignItems="center">
               { isEditable ? (
-                <TextInputField
-                  name={ `owners[${idx}].percentage` }
-                  aria-label="Ownership percentage"
-                  max={ 100 }
-                  min={ 0 }
-                  placeholder="%"
-                  type="number"
-                  endAdornment={
-                    <InputAdornment
-                      position="start"
-                      sx={ {
-                        color: theme.colors.white,
-                        mr: 1,
-                      } }
-                    >
-                      <Typography>%</Typography>
-                    </InputAdornment>
-                  }
-                />
+                <Stack maxWidth="108px">
+                  <TextInputField
+                    name={ `owners[${idx}].percentage` }
+                    aria-label="Ownership percentage"
+                    placeholder="%"
+                    type="number"
+                    endAdornment={
+                      <InputAdornment
+                        position="start"
+                        sx={ {
+                          color: theme.colors.white,
+                          mr: 1,
+                        } }
+                      >
+                        <Typography>%</Typography>
+                      </InputAdornment>
+                    }
+                  />
+                </Stack>
               ) : (
                 <Typography>{ owner.percentage }%</Typography>
               ) }

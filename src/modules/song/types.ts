@@ -172,6 +172,7 @@ export interface Song {
   readonly iswc?: string;
   readonly ipis?: ReadonlyArray<string>;
   readonly releaseDate?: string;
+  readonly publicationDate?: string;
   readonly duration?: number;
   readonly streamUrl?: string;
   readonly nftPolicyId?: string;

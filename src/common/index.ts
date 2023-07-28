@@ -13,3 +13,4 @@ export * from "./reduxUtils";
 export * from "./regex";
 export * from "./errors";
 export * from "./types";
+export * from "./miscUtils";

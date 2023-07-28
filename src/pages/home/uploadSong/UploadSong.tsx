@@ -154,10 +154,18 @@ const UploadSong: FunctionComponent = () => {
     title: commonYupValidation.title,
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
+    moods: commonYupValidation.moods,
     owners: Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
       then: Yup.array()
         .min(1, "At least one owner is required when minting")
+        .test({
+          message: "Owner percentages must be between 00.01% and 100%",
+          test: (owners = []) =>
+            owners.every(
+              ({ percentage = 0 }) => percentage >= 0.01 && percentage <= 100
+            ),
+        })
         .test({
           message: "100% ownership must be distributed",
           test: (owners) => {
@@ -234,6 +242,7 @@ const UploadSong: FunctionComponent = () => {
                 audio: validations.audio,
                 title: validations.title,
                 genres: validations.genres,
+                moods: validations.moods,
                 owners: validations.owners,
                 description: validations.description,
               }),
