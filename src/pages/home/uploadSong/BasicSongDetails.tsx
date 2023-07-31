@@ -86,7 +86,10 @@ const BasicSongDetails: FunctionComponent = () => {
     scrollToError(errors, isSubmitting, [
       { error: errors.audio, element: audioRef.current },
       { error: errors.coverArtUrl, element: coverArtUrlRef.current },
-      { error: errors.title || errors.genres, element: songDetailsRef.current },
+      {
+        error: errors.title || errors.genres || errors.moods,
+        element: songDetailsRef.current,
+      },
       {
         error: errors.description,
         element: descriptionRef.current,
@@ -174,8 +177,8 @@ const BasicSongDetails: FunctionComponent = () => {
           <DropdownMultiSelectField
             label="MOOD"
             name="moods"
-            placeholder="Select all that apply"
             options={ moodOptions }
+            placeholder="Select all that apply"
           />
         </Stack>
 

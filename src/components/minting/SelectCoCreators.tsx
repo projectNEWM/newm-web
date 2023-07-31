@@ -6,6 +6,7 @@ import { Formik, FormikProps } from "formik";
 import { Creditor, Featured, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
+import { COLLABORATOR_FEE_IN_ADA } from "common";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -152,19 +153,17 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             Add new owner
           </Button>
 
-          <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
-            <Typography variant="subtitle2">
-              For every additional collaborator who will receive royalties, the
-              fee to complete the minting process will increase by 1.5 ADA.
-            </Typography>
+          <Typography variant="subtitle2" mt={ 1.5 } mr={ 2 }>
+            { `For every additional artist who will receive royalties, the
+              fee to complete the minting process will increase by ~₳${COLLABORATOR_FEE_IN_ADA}.` }
             <Tooltip
               title={
-                "This cost is increased with each additional collaborator because " +
+                "This cost is increased with each additional artist because " +
                 "this ADA needs to travel with each portion of stream tokens in order " +
                 "to complete the split, which is an added extra cost for each transaction."
               }
             >
-              <IconButton sx={ { padding: 0 } }>
+              <IconButton sx={ { padding: 0, ml: 0.5 } }>
                 <HelpIcon
                   sx={ {
                     color: theme.colors.grey100,
@@ -174,7 +173,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 />
               </IconButton>
             </Tooltip>
-          </Stack>
+          </Typography>
         </Stack>
       ) }
 
