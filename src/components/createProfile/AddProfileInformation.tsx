@@ -26,34 +26,27 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   tags,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { isValid, handleSubmit } = useFormikContext();
+  const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
   const { isMobileOrTablet } = useUserDevice();
   const windowWidth = useWindowDimensions()?.width;
-
-  // TODO: When the field is touched or focused the form submits causing
-  // the optional field to submit and route on load within WizardForms. The
-  // required fields just show their validation error. This is probably because
-  // the field is being validated on mount.
 
   /**
    * Validate the field on mount (setting the blur status to false validates
    * the field and leaves it unblurred so that the error isn't shown).
    */
-  // useEffect(() => {
-  //   setFieldTouched(fieldName, false);
-  // }, [setFieldTouched, fieldName]);
+  useEffect(() => {
+    setFieldTouched(fieldName, false);
+  }, [setFieldTouched, fieldName]);
   /**
    * Focus the field on mount.
    */
-  // useEffect(() => {
-  //   inputRef.current?.focus();
-  //   console.log(inputRef.current);
+  useEffect(() => {
+    inputRef.current?.focus();
 
-  //   return () => {
-  //     console.log("input ref cleared");
-  //     inputRef.current = null;
-  //   };
-  // }, [inputRef]);
+    return () => {
+      inputRef.current = null;
+    };
+  }, [inputRef]);
 
   /**
    * Add an event listener to submit the form when enter is pressed.
@@ -64,6 +57,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
       if (event.key === "Enter") {
+        event.preventDefault();
         handleSubmit();
       }
     };
