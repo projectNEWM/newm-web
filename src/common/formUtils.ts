@@ -132,6 +132,7 @@ const isAspectRatioOneToOne = async (value: File | null) => {
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
 const AUDIO_MIN_DURATION_SEC = 60;
+const COVERT_ART_MAX_FILE_SIZE_MB = 10;
 
 export const commonYupValidation = {
   email: Yup.string()
@@ -182,10 +183,19 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
-  coverArtUrl: Yup.mixed().required("This field is required").test({
-    message: "Image must be 1:1 aspect ratio",
-    test: isAspectRatioOneToOne,
-  }),
+  coverArtUrl: Yup.mixed()
+    .required("This field is required")
+    .test({
+      message: "Image must be 1:1 aspect ratio",
+      test: isAspectRatioOneToOne,
+    })
+    .test({
+      message: `Image must be less than or equal to ${COVERT_ART_MAX_FILE_SIZE_MB} MB`,
+      test: (value) => {
+        if (!value) return true;
+        return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
+      },
+    }),
   title: Yup.string()
     .required("This field is required")
     .max(
