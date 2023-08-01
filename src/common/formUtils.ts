@@ -186,14 +186,27 @@ export const commonYupValidation = {
   coverArtUrl: Yup.mixed()
     .required("This field is required")
     .test({
-      message: "Image must be 1:1 aspect ratio",
-      test: isAspectRatioOneToOne,
-    })
-    .test({
       message: `Image must be less than or equal to ${COVERT_ART_MAX_FILE_SIZE_MB} MB`,
       test: (value) => {
-        if (!value) return true;
-        return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
+        if (typeof value === "string") return true;
+
+        if (value instanceof File) {
+          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
+        }
+
+        return true;
+      },
+    })
+    .test({
+      message: "Image must be 1:1 aspect ratio",
+      test: (value) => {
+        if (typeof value === "string") return true;
+
+        if (value instanceof File) {
+          return isAspectRatioOneToOne(value);
+        }
+
+        return true;
       },
     }),
   title: Yup.string()
