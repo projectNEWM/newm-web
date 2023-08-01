@@ -59,6 +59,7 @@ export const emptySong: Song = {
   iswc: "",
   ipis: [],
   releaseDate: "",
+  publicationDate: "",
 };
 
 export const extendedApi = api.injectEndpoints({

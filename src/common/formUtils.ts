@@ -162,6 +162,7 @@ export const commonYupValidation = {
       )
       .min(1, "At least one genre is required")
       .max(5, "Maximum of 5 genres allowed"),
+  moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
   nickname: Yup.string().max(
     MAX_CHARACTER_COUNT,
     `Must be ${MAX_CHARACTER_COUNT} characters or less`
@@ -214,12 +215,14 @@ export const commonYupValidation = {
       ? new Date(releaseDate)
       : new Date(Date.now() + 11 * 24 * 60 * 60 * 1000);
 
-    return Yup.date().min(
-      minReleaseDate,
-      `Release date must be on or after ${
-        minReleaseDate.toISOString().split("T")[0]
-      }`
-    );
+    return Yup.date()
+      .required("This field is required")
+      .min(
+        minReleaseDate,
+        `Release date must be on or after ${
+          minReleaseDate.toISOString().split("T")[0]
+        }`
+      );
   },
   copyrights: Yup.string().max(
     MAX_CHARACTER_COUNT,
