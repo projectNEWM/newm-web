@@ -3,7 +3,8 @@ import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { Modal } from "components";
 import { useAppDispatch, useAppSelector } from "common";
 import { selectUi, setIsWalletEnvMismatchModalOpen } from "modules/ui";
-import { useIsWalletEnvMismatch } from "modules/session";
+import { getIsWalletEnvMismatch } from "modules/session";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 /**
  * Prompts a user to select the correct wallet environment to
@@ -12,18 +13,26 @@ import { useIsWalletEnvMismatch } from "modules/session";
 const WalletEnvMismatchModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const { wallet } = useConnectWallet();
   const { isWalletEnvMismatchModalOpen } = useAppSelector(selectUi);
-  const isEnvMismatch = useIsWalletEnvMismatch();
 
   const handleClose = () => {
     dispatch(setIsWalletEnvMismatchModalOpen(false));
   };
 
   useEffect(() => {
-    if (isEnvMismatch) {
-      dispatch(setIsWalletEnvMismatchModalOpen(true));
-    }
-  }, [isEnvMismatch, dispatch]);
+    const handleOpen = async () => {
+      if (!wallet) return;
+
+      const isEnvMismatch = await getIsWalletEnvMismatch(wallet);
+
+      if (isEnvMismatch) {
+        dispatch(setIsWalletEnvMismatchModalOpen(true));
+      }
+    };
+
+    handleOpen();
+  }, [dispatch, wallet]);
 
   return (
     <Modal isOpen={ isWalletEnvMismatchModalOpen } onClose={ handleClose }>

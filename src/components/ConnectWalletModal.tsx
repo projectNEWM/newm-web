@@ -15,25 +15,25 @@ import { useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common";
 import {
   emptyProfile,
+  getIsWalletEnvMismatch,
   selectSession,
   updateProfile,
   useGetProfileQuery,
-  useIsWalletEnvMismatch,
 } from "modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
-  const isEnvMismatch = useIsWalletEnvMismatch();
   const { isLoggedIn } = useAppSelector(selectSession);
   const { wallet } = useConnectWallet();
-  const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
-    undefined,
-    { skip: !isLoggedIn }
-  );
+  const { data: { walletAddress: savedWalletAddress } = emptyProfile } =
+    useGetProfileQuery(undefined, { skip: !isLoggedIn });
 
   const handleConnect = async () => {
+    if (!wallet) return;
+
+    const isEnvMismatch = await getIsWalletEnvMismatch(wallet);
     const newWalletAddress = await getWalletAddress(wallet);
 
     // Notify the user if their connected wallet is for the incorrect env
@@ -42,12 +42,13 @@ const ConnectWalletModal: FunctionComponent = () => {
       return;
     }
 
-    // If the user already has a saved address, prompt them before
-    // overwriting it, if not, then save an address to their profile
-    if (walletAddress && walletAddress !== newWalletAddress) {
-      dispatch(setIsUpdateWalletAddressModalOpen(true));
-    } else {
+    // If the user doesn't have a saved address, update their profile.
+    // Otherwise, if the address from the recently connected wallet is
+    // different, prompt them before overwriting it.
+    if (!savedWalletAddress) {
       dispatch(updateProfile({ walletAddress: newWalletAddress }));
+    } else if (savedWalletAddress !== newWalletAddress) {
+      dispatch(setIsUpdateWalletAddressModalOpen(true));
     }
 
     dispatch(
