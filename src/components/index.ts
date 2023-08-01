@@ -9,7 +9,7 @@ export { default as DashedOutline } from "./styled/DashedOutline";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as DropdownMultiSelectField } from "./form/DropdownMultiSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";
-export { default as EnvMismatchModal } from "./envMismatch/EnvMismatchModal";
+export { default as WalletEnvMismatchModal } from "./WalletEnvMismatchModal";
 export { default as FacebookLogin } from "./FacebookLogin";
 export { default as FilteredTagsField } from "./form/FilteredTagsField";
 export { default as FormProgressStepper } from "./form/FormProgressStepper";

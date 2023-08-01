@@ -3,21 +3,27 @@ import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { Button } from "elements";
-import { updateWalletAddress } from "modules/session";
 import { useAppDispatch } from "common";
+import {
+  getWalletAddress,
+  useConnectWallet,
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { updateProfile } from "modules/session";
 import Modal from "./Modal";
 
 const UpdateWalletAddressModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const { wallet } = useConnectWallet();
   const { isUpdateWalletAddressModalOpen } = useSelector(selectUi);
 
   const handleClose = () => {
     dispatch(setIsUpdateWalletAddressModalOpen(false));
   };
 
-  const handleConfirm = () => {
-    dispatch(updateWalletAddress());
+  const handleConfirm = async () => {
+    const walletAddress = await getWalletAddress(wallet);
+    dispatch(updateProfile({ walletAddress }));
     dispatch(setIsUpdateWalletAddressModalOpen(false));
   };
 

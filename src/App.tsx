@@ -3,7 +3,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import {
   Background,
   ConnectWalletModal,
-  EnvMismatchModal,
   IdenfyFailSession,
   IdenfyModal,
   IdenfyPingUserStatus,
@@ -13,6 +12,7 @@ import {
   ProgressBarModal,
   Toast,
   UpdateWalletAddressModal,
+  WalletEnvMismatchModal,
 } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
@@ -46,7 +46,7 @@ const App = () => {
             <InvitesModal />
             <ProgressBarModal />
             <UpdateWalletAddressModal />
-            <EnvMismatchModal />
+            <WalletEnvMismatchModal />
 
             <Background>
               <BrowserRouter history={ history }>

@@ -1,28 +1,32 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { Modal } from "components";
-
-interface Props {
-  readonly isOpen: boolean;
-  readonly onClose: () => void;
-}
+import { useAppDispatch, useAppSelector } from "common";
+import { selectUi, setIsWalletEnvMismatchModalOpen } from "modules/ui";
+import { useIsWalletEnvMismatch } from "modules/session";
 
 /**
  * Prompts a user to select the correct wallet environment to
  * match the application environment and then refresh the page.
  */
-const WalletEnvMismatchModal: FunctionComponent<Props> = ({
-  isOpen,
-  onClose,
-}) => {
+const WalletEnvMismatchModal: FunctionComponent = () => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const { isWalletEnvMismatchModalOpen } = useAppSelector(selectUi);
+  const isEnvMismatch = useIsWalletEnvMismatch();
 
   const handleClose = () => {
-    onClose();
+    dispatch(setIsWalletEnvMismatchModalOpen(false));
   };
 
+  useEffect(() => {
+    if (isEnvMismatch) {
+      dispatch(setIsWalletEnvMismatchModalOpen(true));
+    }
+  }, [isEnvMismatch, dispatch]);
+
   return (
-    <Modal isOpen={ isOpen } onClose={ handleClose }>
+    <Modal isOpen={ isWalletEnvMismatchModalOpen } onClose={ handleClose }>
       <Box display="flex" flex={ 1 } justifyContent="center" alignItems="center">
         <Stack
           gap={ 2 }

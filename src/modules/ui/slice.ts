@@ -18,6 +18,7 @@ const initialState: UIState = {
   isConnectWalletModalOpen: false,
   isInvitesModalOpen: false,
   isUpdateWalletAddressModalOpen: false,
+  isWalletEnvMismatchModalOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -67,6 +68,12 @@ const uiSlice = createSlice({
     ) => {
       state.isUpdateWalletAddressModalOpen = payload;
     },
+    setIsWalletEnvMismatchModalOpen: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isWalletEnvMismatchModalOpen = payload;
+    },
   },
 });
 
@@ -80,6 +87,7 @@ export const {
   setIsConnectWalletModalOpen,
   setIsInvitesModalOpen,
   setIsUpdateWalletAddressModalOpen,
+  setIsWalletEnvMismatchModalOpen,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

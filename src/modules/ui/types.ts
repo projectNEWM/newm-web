@@ -15,4 +15,5 @@ export interface UIState {
   isConnectWalletModalOpen: boolean;
   isInvitesModalOpen: boolean;
   isUpdateWalletAddressModalOpen: boolean;
+  isWalletEnvMismatchModalOpen: boolean;
 }

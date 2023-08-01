@@ -2,16 +2,21 @@ import {
   selectUi,
   setIsConnectWalletModalOpen,
   setIsUpdateWalletAddressModalOpen,
+  setIsWalletEnvMismatchModalOpen,
   setToastMessage,
 } from "modules/ui";
 import { FunctionComponent } from "react";
-import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  WalletModal,
+  getWalletAddress,
+  useConnectWallet,
+} from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common";
 import {
   emptyProfile,
   selectSession,
-  updateWalletAddress,
+  updateProfile,
   useGetProfileQuery,
   useIsWalletEnvMismatch,
 } from "modules/session";
@@ -22,18 +27,27 @@ const ConnectWalletModal: FunctionComponent = () => {
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
   const isEnvMismatch = useIsWalletEnvMismatch();
   const { isLoggedIn } = useAppSelector(selectSession);
+  const { wallet } = useConnectWallet();
   const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
     undefined,
     { skip: !isLoggedIn }
   );
 
-  const handleConnect = () => {
-    if (!isEnvMismatch) {
-      if (walletAddress) {
-        dispatch(setIsUpdateWalletAddressModalOpen(true));
-      } else {
-        dispatch(updateWalletAddress());
-      }
+  const handleConnect = async () => {
+    const newWalletAddress = await getWalletAddress(wallet);
+
+    // Notify the user if their connected wallet is for the incorrect env
+    if (isEnvMismatch) {
+      dispatch(setIsWalletEnvMismatchModalOpen(true));
+      return;
+    }
+
+    // If the user already has a saved address, prompt them before
+    // overwriting it, if not, then save an address to their profile
+    if (walletAddress && walletAddress !== newWalletAddress) {
+      dispatch(setIsUpdateWalletAddressModalOpen(true));
+    } else {
+      dispatch(updateProfile({ walletAddress: newWalletAddress }));
     }
 
     dispatch(
