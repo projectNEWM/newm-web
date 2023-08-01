@@ -2,13 +2,17 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import {
   Background,
+  ConnectWalletModal,
+  EnvMismatchModal,
   IdenfyFailSession,
   IdenfyModal,
   IdenfyPingUserStatus,
   IdenfySuccessSession,
+  InvitesModal,
   PrivateRoute,
   ProgressBarModal,
   Toast,
+  UpdateWalletAddressModal,
 } from "components";
 import Login from "pages/login";
 import Home from "pages/home";
@@ -23,8 +27,6 @@ import BrowserRouter from "common/BrowserRouter";
 import { history } from "common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import ConnectWalletModal from "components/ConnectWalletModal";
-import InvitesModal from "components/invites/InvitesModal";
 import store, { persistor } from "./store";
 import "./App.css";
 
@@ -43,6 +45,8 @@ const App = () => {
             <ConnectWalletModal />
             <InvitesModal />
             <ProgressBarModal />
+            <UpdateWalletAddressModal />
+            <EnvMismatchModal />
 
             <Background>
               <BrowserRouter history={ history }>

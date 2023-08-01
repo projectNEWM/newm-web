@@ -1,21 +1,40 @@
 import {
   selectUi,
   setIsConnectWalletModalOpen,
+  setIsUpdateWalletAddressModalOpen,
   setToastMessage,
 } from "modules/ui";
 import { FunctionComponent } from "react";
 import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common";
-import { updateWalletAddress } from "modules/session";
+import {
+  emptyProfile,
+  selectSession,
+  updateWalletAddress,
+  useGetProfileQuery,
+  useIsWalletEnvMismatch,
+} from "modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
+  const isEnvMismatch = useIsWalletEnvMismatch();
+  const { isLoggedIn } = useAppSelector(selectSession);
+  const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    { skip: !isLoggedIn }
+  );
 
   const handleConnect = () => {
-    dispatch(updateWalletAddress());
+    if (!isEnvMismatch) {
+      if (walletAddress) {
+        dispatch(setIsUpdateWalletAddressModalOpen(true));
+      } else {
+        dispatch(updateWalletAddress());
+      }
+    }
 
     dispatch(
       setToastMessage({
