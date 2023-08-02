@@ -6,6 +6,7 @@ export { default as Creditors } from "./minting/Creditors";
 export { default as ConfirmContract } from "./minting/ConfirmContract";
 export { default as ConnectWalletModal } from "./ConnectWalletModal";
 export { default as DashedOutline } from "./styled/DashedOutline";
+export { default as DisconnectWalletButton } from "./DisconnectWalletButton";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";
 export { default as DropdownMultiSelectField } from "./form/DropdownMultiSelectField";
 export { default as ErrorMessage } from "./styled/ErrorMessage";

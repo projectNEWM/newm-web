@@ -8,7 +8,7 @@
     "@greatsumini/react-facebook-login": "^3.2.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.13.5",
-    "@newm.io/cardano-dapp-wallet-connector": "^0.2.46",
+    "@newm.io/cardano-dapp-wallet-connector": "^0.2.47",
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^1.7.2",
     "async-mutex": "^0.3.2",
