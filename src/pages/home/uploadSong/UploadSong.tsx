@@ -167,6 +167,13 @@ const UploadSong: FunctionComponent = () => {
             ),
         })
         .test({
+          message: "Percentages should not exceed 2 decimal places",
+          test: (owners = []) =>
+            owners.every(({ percentage = 0 }) =>
+              /^\d+(\.\d{1,2})?$/.test(percentage.toString())
+            ),
+        })
+        .test({
           message: "100% ownership must be distributed",
           test: (owners) => {
             if (!owners) return false;
