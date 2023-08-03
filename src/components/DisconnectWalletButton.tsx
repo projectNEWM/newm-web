@@ -15,11 +15,13 @@ import {
 } from "modules/session";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { setIsConnectWalletModalOpen } from "modules/ui";
+import { selectWallet, setWalletBalance } from "modules/wallet";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector(selectSession);
+  const { balance } = useAppSelector(selectWallet);
   const { wallet, getBalance } = useConnectWallet();
   const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
     undefined,
@@ -28,13 +30,9 @@ const DisconnectWalletButton: FunctionComponent = () => {
 
   const parentRef = useRef<HTMLDivElement>(null);
   const [parentHeight, setParentHeight] = useState(0);
-  const [balance, setBalance] = useState<number>();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
-  const roundedBalance = balance
-    ? currency(balance, { symbol: "" }).format()
-    : undefined;
   const truncatedAddress = walletAddress ? walletAddress.slice(0, 16) : "";
   const ellipsedAddress = walletAddress
     ? walletAddress.slice(0, 16) + "..." + walletAddress.slice(-12)
@@ -70,9 +68,12 @@ const DisconnectWalletButton: FunctionComponent = () => {
    */
   useEffect(() => {
     if (wallet) {
-      getBalance(setBalance);
+      getBalance((value) => {
+        const adaBalance = currency(value, { symbol: "" }).format();
+        dispatch(setWalletBalance(adaBalance));
+      });
     }
-  }, [wallet, getBalance]);
+  }, [wallet, getBalance, dispatch]);
 
   /**
    * Resets the successfully copied icon after it appears.
@@ -125,7 +126,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
         } }
       >
         <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-          <Typography>{ roundedBalance } ₳</Typography>
+          <Typography>{ balance } ₳</Typography>
           <Typography sx={ { display: ["none", "none", "flex"] } }>|</Typography>
           <Typography>{ truncatedAddress }</Typography>
         </Stack>
