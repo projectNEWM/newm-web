@@ -1,3 +1,4 @@
 export interface WalletState {
-  readonly balance?: string;
+  readonly walletAddress?: string;
+  readonly walletBalance?: string;
 }

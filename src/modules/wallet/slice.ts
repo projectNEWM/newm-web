@@ -2,19 +2,23 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { WalletState } from "./types";
 
 const initialState: WalletState = {
-  balance: undefined,
+  walletAddress: undefined,
+  walletBalance: undefined,
 };
 
 const walletSlice = createSlice({
   initialState,
   name: "wallet",
   reducers: {
+    setWalletAddress: (state, action: PayloadAction<string>) => {
+      state.walletAddress = action.payload;
+    },
     setWalletBalance: (state, action: PayloadAction<string>) => {
-      state.balance = action.payload;
+      state.walletBalance = action.payload;
     },
   },
 });
 
-export const { setWalletBalance } = walletSlice.actions;
+export const { setWalletBalance, setWalletAddress } = walletSlice.actions;
 
 export default walletSlice.reducer;

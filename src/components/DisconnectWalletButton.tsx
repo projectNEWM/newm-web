@@ -8,25 +8,19 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
-import {
-  emptyProfile,
-  selectSession,
-  useGetProfileQuery,
-} from "modules/session";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { setIsConnectWalletModalOpen } from "modules/ui";
-import { selectWallet, setWalletBalance } from "modules/wallet";
+import {
+  selectWallet,
+  setWalletAddress,
+  setWalletBalance,
+} from "modules/wallet";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector(selectSession);
-  const { balance } = useAppSelector(selectWallet);
-  const { wallet, getBalance } = useConnectWallet();
-  const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
-    undefined,
-    { skip: !isLoggedIn }
-  );
+  const { walletAddress, walletBalance } = useAppSelector(selectWallet);
+  const { wallet, getBalance, getAddress } = useConnectWallet();
 
   const parentRef = useRef<HTMLDivElement>(null);
   const [parentHeight, setParentHeight] = useState(0);
@@ -64,7 +58,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   };
 
   /**
-   * Gets the ADA balance from the wallet.
+   * Gets the ADA balance from the wallet and updates the Redux state.
    */
   useEffect(() => {
     if (wallet) {
@@ -74,6 +68,17 @@ const DisconnectWalletButton: FunctionComponent = () => {
       });
     }
   }, [wallet, getBalance, dispatch]);
+
+  /**
+   * Gets an address from the wallet and updates the Redux state.
+   */
+  useEffect(() => {
+    if (wallet) {
+      getAddress((value) => {
+        dispatch(setWalletAddress(value));
+      });
+    }
+  }, [wallet, getAddress, dispatch]);
 
   /**
    * Resets the successfully copied icon after it appears.
@@ -126,7 +131,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
         } }
       >
         <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-          <Typography>{ balance } ₳</Typography>
+          <Typography>{ walletBalance } ₳</Typography>
           <Typography sx={ { display: ["none", "none", "flex"] } }>|</Typography>
           <Typography>{ truncatedAddress }</Typography>
         </Stack>
