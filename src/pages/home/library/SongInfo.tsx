@@ -5,9 +5,9 @@ import { useNavigate, useParams } from "react-router";
 import { Form, Formik, FormikValues } from "formik";
 import {
   commonYupValidation,
-  extractProperty,
   getUpdatedValues,
   scrollToError,
+  useExtractProperty,
   useWindowDimensions,
 } from "common";
 import {
@@ -19,7 +19,7 @@ import {
 import { Button, HorizontalLine, Typography } from "elements";
 import theme from "theme";
 import { emptySong, useGetSongQuery, usePatchSongThunk } from "modules/song";
-import { Genre, useGetGenresQuery, useGetMoodsQuery } from "modules/content";
+import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
 
 interface RouteParams {
   readonly songId: string;
@@ -55,7 +55,7 @@ const SongInfo = () => {
     title,
   };
 
-  const genreOptions = extractProperty<Genre, "name">(genresData, "name");
+  const genreOptions = useExtractProperty(genresData, "name");
 
   const validationSchema = Yup.object({
     coverArtUrl: commonYupValidation.coverArtUrl,

@@ -2,17 +2,19 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
-import { extractProperty } from "common";
+import { useExtractProperty } from "common";
 import {
   Creditor,
+  MintingStatus,
   getCollaboratorStatusContent,
-  getIsCollaboratorEditable,
+  getIsCreditorEditable,
 } from "modules/song";
 import DropdownSelectField from "components/form/DropdownSelectField";
-import { Role, useGetRolesQuery } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
+  readonly songMintingStatus: MintingStatus;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     creditor: Creditor,
@@ -26,11 +28,12 @@ interface CreditorsProps {
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
   onDelete,
+  songMintingStatus,
   isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = extractProperty<Role, "name">(roles, "name");
+  const roleOptions = useExtractProperty(roles, "name");
 
   return (
     <Box>
@@ -44,7 +47,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
       </Stack>
 
       { creditors.map((creditor, idx) => {
-        const isEditable = getIsCollaboratorEditable(creditor);
+        const isEditable = getIsCreditorEditable(songMintingStatus, creditor);
         const statusContent = getCollaboratorStatusContent(creditor.status);
 
         return (

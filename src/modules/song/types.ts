@@ -141,6 +141,7 @@ export enum MintingStatus {
   StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
   MintingPaymentRequested = "MintingPaymentRequested",
   MintingPaymentReceived = "MintingPaymentReceived",
+  AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
   ReadyToDistribute = "ReadyToDistribute",
   SubmittedForDistribution = "SubmittedForDistribution",
   Distributed = "Distributed",

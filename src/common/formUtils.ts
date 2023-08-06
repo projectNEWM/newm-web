@@ -33,15 +33,15 @@ const includesGenres = (
   if (!genres) return true;
 
   // return false if a genre is found to not be included in genreOptions
-  const hasInvalidGenre = !!genres.find((genre) => {
+  const hasValidGenre = !!genres.find((genre) => {
     // return as invalid if genre is undefined (see above note)
-    if (!genre) return true;
+    if (!genre) return false;
 
-    return !genreOptions.includes(genre);
+    return genreOptions.includes(genre);
   });
 
   // return true if all genres were valid
-  return !hasInvalidGenre;
+  return hasValidGenre;
 };
 
 const createAudioBuffer = async (value: File) => {
