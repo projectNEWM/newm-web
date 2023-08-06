@@ -32,15 +32,15 @@ const includesGenres = (
   // don't validate that genres array is present, this is validated separately
   if (!genres) return true;
 
-  // return false if a genre is found to not be included in genreOptions
+  // return true if a genre is found to be included in genreOptions
   const hasValidGenre = !!genres.find((genre) => {
-    // return as invalid if genre is undefined (see above note)
-    if (!genre) return false;
+    // ignore undefined genre (see above note)
+    if (!genre) return true;
 
     return genreOptions.includes(genre);
   });
 
-  // return true if all genres were valid
+  // return true if all genre is valid
   return hasValidGenre;
 };
 

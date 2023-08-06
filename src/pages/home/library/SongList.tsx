@@ -261,11 +261,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     return <NoSongsYet />;
   }
 
-  console.log(
-    "statuses; ",
-    songData.map((song) => song.mintingStatus)
-  );
-
   return songData?.length ? (
     <TableContainer>
       <Table size="small" aria-label="Song List">

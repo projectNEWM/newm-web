@@ -228,6 +228,7 @@ const UploadSong: FunctionComponent = () => {
           rootPath="home/upload-song"
           isProgressStepperVisible={ true }
           enableReinitialize={ true }
+          validateOnBlur={ false }
           routes={ [
             {
               element: <BasicSongDetails />,
