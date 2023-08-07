@@ -7,7 +7,7 @@ import {
 import { WizardForm } from "components";
 import { commonYupValidation, useExtractProperty } from "common";
 import * as Yup from "yup";
-import { Role, useGetRolesQuery } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
