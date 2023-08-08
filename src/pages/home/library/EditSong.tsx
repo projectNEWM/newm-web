@@ -102,7 +102,10 @@ const EditSong: FunctionComponent = () => {
       isRightsOwner: collaboration.royaltyRate
         ? collaboration.royaltyRate > 0
         : false,
-      percentage: collaboration.royaltyRate || 0,
+      percentage:
+        collaboration.royaltyRate !== undefined
+          ? +collaboration.royaltyRate
+          : 0,
       role: collaboration.role,
       status: collaboration.status,
       isCreator: "isCreator" in collaboration && !!collaboration.isCreator,
