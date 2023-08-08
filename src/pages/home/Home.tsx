@@ -24,7 +24,7 @@ const Home: FunctionComponent = () => {
   return (
     <Box
       sx={ {
-        backgroundColor: theme.colors.grey700,
+        backgroundColor: theme.colors.black,
         display: "flex",
         flexGrow: 1,
       } }
