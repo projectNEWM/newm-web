@@ -39,7 +39,13 @@ import {
 } from "modules/session";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
 
-const BasicSongDetails: FunctionComponent = () => {
+interface BasicDonDetailsProps {
+  readonly isInEditMode?: boolean;
+}
+
+const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
+  isInEditMode,
+}) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
@@ -62,10 +68,11 @@ const BasicSongDetails: FunctionComponent = () => {
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue, isSubmitting } =
+  const { values, errors, touched, setFieldValue, isSubmitting, dirty } =
     useFormikContext<UploadSongRequest>();
 
-  const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
+  const isSubmitDisabled =
+    (values.isMinting && (!wallet || !isVerified)) || !(dirty && isInEditMode);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -293,7 +300,7 @@ const BasicSongDetails: FunctionComponent = () => {
                 : "default"
             }
           >
-            { values.isMinting ? "Next" : "Upload" }
+            { values.isMinting ? "Next" : isInEditMode ? "Save" : "Upload" }
           </Button>
         </Box>
       </Stack>

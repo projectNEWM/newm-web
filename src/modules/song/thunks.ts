@@ -10,7 +10,7 @@ import {
   setToastMessage,
 } from "modules/ui";
 import { sessionApi } from "modules/session";
-import { SilentError, sleep } from "common";
+import { SilentError, isCloudinaryUrl, sleep } from "common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -332,9 +332,9 @@ export const patchSong = createAsyncThunk(
   "song/patchSong",
   async (body: PatchSongRequest, { dispatch }) => {
     try {
-      let coverArtUrl;
+      let coverArtUrl: string | undefined;
 
-      if (body.coverArtUrl) {
+      if (body.coverArtUrl instanceof File) {
         // downsize if necessary
         const uploadParams = {
           eager: "c_limit,w_4000,h_4000",
@@ -345,6 +345,8 @@ export const patchSong = createAsyncThunk(
           uploadParams,
           dispatch
         );
+      } else if (isCloudinaryUrl(body.coverArtUrl || "")) {
+        coverArtUrl = body.coverArtUrl;
       }
 
       // patch song information
@@ -485,6 +487,11 @@ export const patchSong = createAsyncThunk(
           severity: "success",
         })
       );
+
+      await sleep(250);
+
+      // navigate to library page to view new song
+      history.push("/home/library");
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
