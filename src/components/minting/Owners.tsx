@@ -7,9 +7,10 @@ import {
 } from "@mui/material";
 import { Button, Tooltip, Typography } from "elements";
 import {
+  MintingStatus,
   Owner,
   getCollaboratorStatusContent,
-  getIsCollaboratorEditable,
+  getIsOwnerEditable,
 } from "modules/song";
 import { FunctionComponent } from "react";
 import { TextInputField } from "components";
@@ -18,6 +19,7 @@ import HelpIcon from "@mui/icons-material/Help";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
+  readonly songMintingStatus: MintingStatus;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
 }
@@ -28,6 +30,7 @@ interface OwnersProps {
 const Owners: FunctionComponent<OwnersProps> = ({
   owners,
   onDelete,
+  songMintingStatus,
   isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
@@ -64,7 +67,11 @@ const Owners: FunctionComponent<OwnersProps> = ({
       </Stack>
 
       { owners.map((owner, idx) => {
-        const isEditable = getIsCollaboratorEditable(owner);
+        const isEditable = getIsOwnerEditable(
+          songMintingStatus,
+          owner,
+          owners.length
+        );
         const statusContent = getCollaboratorStatusContent(owner.status);
 
         return (

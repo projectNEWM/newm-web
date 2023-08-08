@@ -13,17 +13,16 @@ interface MintingStatusProps {
 export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
   mintingStatus,
 }) => {
-  const pendingStatus = [
-    "StreamTokenAgreementApproved",
-    "MintingPaymentReceived",
-    "ReadyToDistribute",
-    "SubmittedForDistribution",
-    "Distributed",
-    "Pending",
-  ];
-  const isPending = pendingStatus.includes(mintingStatus);
+  const isPending = [
+    MintingStatusType.StreamTokenAgreementApproved,
+    MintingStatusType.MintingPaymentReceived,
+    MintingStatusType.ReadyToDistribute,
+    MintingStatusType.SubmittedForDistribution,
+    MintingStatusType.Distributed,
+    MintingStatusType.Pending,
+  ].includes(mintingStatus);
 
-  if (mintingStatus === "Distributed") {
+  if (mintingStatus === MintingStatusType.Distributed) {
     return (
       <IconStatus
         icon={ <Check fontSize="medium" sx={ { color: theme.colors.green } } /> }
@@ -38,19 +37,27 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
         status="Pending"
       />
     );
-  } else if (mintingStatus === "Declined") {
-    return (
-      <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Declined" />
-    );
-  } else if (mintingStatus === "MintingPaymentRequested") {
+  } else if (mintingStatus === MintingStatusType.AwaitingCollaboratorApproval) {
     return (
       <IconStatus
         icon={ <TimeCircleLine /> }
         iconColor="yellow"
-        status="Minting Payment Requested"
+        status="Pending collaborator approval"
       />
     );
-  } else if (mintingStatus === "Undistributed") {
+  } else if (mintingStatus === MintingStatusType.Declined) {
+    return (
+      <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Declined" />
+    );
+  } else if (mintingStatus === MintingStatusType.MintingPaymentRequested) {
+    return (
+      <IconStatus
+        icon={ <TimeCircleLine /> }
+        iconColor="yellow"
+        status="Minting payment requested"
+      />
+    );
+  } else if (mintingStatus === MintingStatusType.Undistributed) {
     return (
       <IconStatus
         icon={ <Close fontSize="medium" sx={ { color: theme.colors.grey200 } } /> }

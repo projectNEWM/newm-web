@@ -51,7 +51,7 @@ const POLLING_INTERVALS = {
   PROCESS_INCOMPLETE: 60000,
 };
 
-const finalStepMintingStatus = [
+const FINAL_STEP_MINTING_PROCESS = [
   MintingStatusType.Declined,
   MintingStatusType.Minted,
 ];
@@ -107,7 +107,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   useEffect(() => {
     const isStreamUrlMissing = songData.some((song) => !song.streamUrl);
     const isMintingProcessIncomplete = songData.some(
-      (song) => !finalStepMintingStatus.includes(song.mintingStatus)
+      (song) => !FINAL_STEP_MINTING_PROCESS.includes(song.mintingStatus)
     );
 
     if (isStreamUrlMissing) {

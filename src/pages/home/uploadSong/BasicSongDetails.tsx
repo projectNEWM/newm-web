@@ -3,13 +3,17 @@ import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
-  Genre,
-  Language,
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "modules/content";
-import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
+import {
+  Creditor,
+  Featured,
+  MintingStatus,
+  Owner,
+  UploadSongRequest,
+} from "modules/song";
 import {
   DropdownMultiSelectField,
   DropdownSelectField,
@@ -21,9 +25,9 @@ import {
   UploadSongField,
 } from "components";
 import {
-  extractProperty,
   scrollToError,
   useAppDispatch,
+  useExtractProperty,
   useWindowDimensions,
 } from "common";
 import SelectCoCeators from "components/minting/SelectCoCreators";
@@ -51,11 +55,8 @@ const BasicSongDetails: FunctionComponent = () => {
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
 
-  const genreOptions = extractProperty<Genre, "name">(genres, "name");
-  const languageOptions = extractProperty<Language, "language_name">(
-    languages,
-    "language_name"
-  );
+  const genreOptions = useExtractProperty(genres, "name");
+  const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -218,6 +219,7 @@ const BasicSongDetails: FunctionComponent = () => {
                   onChangeOwners={ handleChangeOwners }
                   onChangeCreditors={ handleChangeCreditors }
                   onChangeFeatured={ handleChangeFeatured }
+                  songMintingStatus={ MintingStatus.Undistributed }
                 />
               ) }
             </Box>
