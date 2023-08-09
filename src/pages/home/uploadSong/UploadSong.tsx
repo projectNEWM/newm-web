@@ -3,13 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
-import {
-  NONE_OPTION,
-  REGEX_ISRC_FORMAT,
-  commonYupValidation,
-  getBarcodeRegex,
-  useExtractProperty,
-} from "common";
+import { commonYupValidation, useExtractProperty } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
 import { useGetGenresQuery, useGetLanguagesQuery } from "modules/content";
@@ -56,7 +50,7 @@ const UploadSong: FunctionComponent = () => {
     genres: [],
     moods: [],
     description: "",
-    copyrights: undefined,
+    copyright: undefined,
     isrc: undefined,
     releaseDate: undefined,
     isExplicit: false,
@@ -147,62 +141,14 @@ const UploadSong: FunctionComponent = () => {
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
     moods: commonYupValidation.moods,
-    owners: Yup.array().when("isMinting", {
-      is: (value: boolean) => !!value,
-      then: Yup.array()
-        .min(1, "At least one owner is required when minting")
-        .test({
-          message: "Owner percentages must be between 00.01% and 100%",
-          test: (owners = []) =>
-            owners.every(
-              ({ percentage = 0 }) => percentage >= 0.01 && percentage <= 100
-            ),
-        })
-        .test({
-          message: "Percentages should not exceed 2 decimal places",
-          test: (owners = []) =>
-            owners.every(({ percentage = 0 }) =>
-              /^\d+(\.\d{1,2})?$/.test(percentage.toString())
-            ),
-        })
-        .test({
-          message: "100% ownership must be distributed",
-          test: (owners) => {
-            if (!owners) return false;
-
-            const percentageSum = owners.reduce((sum, owner) => {
-              return sum + owner.percentage;
-            }, 0);
-
-            return percentageSum === 100;
-          },
-        }),
-    }),
-    consentsToContract: Yup.bool().required("This field is required"),
-    isrc: Yup.string()
-      .matches(REGEX_ISRC_FORMAT, "This is not a valid ISRC format")
-      .test("is-valid-country-code", "The country code is invalid", (value) => {
-        if (!value) return true;
-
-        const countryCode = value.substring(0, 2).toLowerCase();
-        return languageCodes.includes(countryCode);
-      }),
-    barcodeType: Yup.string(),
-    barcodeNumber: Yup.string().when("barcodeType", {
-      is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
-      then: Yup.string()
-        .test("barcodeNumberTest", function (value = "") {
-          const { barcodeType } = this.parent;
-          const { regEx, message } = getBarcodeRegex(barcodeType);
-
-          return regEx.test(value) ? true : this.createError({ message });
-        })
-        .required("Barcode number is required when barcode type is selected"),
-      otherwise: Yup.string(),
-    }),
-    publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
+    owners: commonYupValidation.owners,
+    consentsToContract: commonYupValidation.consentsToContract,
+    isrc: commonYupValidation.isrc(languageCodes),
+    barcodeType: commonYupValidation.barcodeType,
+    barcodeNumber: commonYupValidation.barcodeNumber,
+    publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyrights: commonYupValidation.copyrights,
+    copyright: commonYupValidation.copyright,
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,
   };
@@ -255,7 +201,7 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                copyrights: validations.copyrights,
+                copyright: validations.copyright,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
                 userIpi: validations.userIpi,

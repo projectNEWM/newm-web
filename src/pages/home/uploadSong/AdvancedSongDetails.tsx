@@ -21,7 +21,7 @@ const AdvancedSongDetails = () => {
   const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
   const releaseDateRef = useRef<HTMLInputElement | null>(null);
-  const copyrightsRef = useRef<HTMLInputElement | null>(null);
+  const copyrightRef = useRef<HTMLInputElement | null>(null);
   const userIpiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
@@ -42,8 +42,8 @@ const AdvancedSongDetails = () => {
         element: publicationDateRef.current,
       },
       {
-        error: errors.copyrights,
-        element: copyrightsRef.current,
+        error: errors.copyright,
+        element: copyrightRef.current,
       },
       {
         error: errors.isrc,
@@ -112,10 +112,10 @@ const AdvancedSongDetails = () => {
           max={ new Date().toISOString().split("T")[0] }
         />
         <TextInputField
-          name="copyrights"
+          name="copyright"
           label="COPYRIGHT"
           placeholder={ `${new Date().getFullYear()} Example` }
-          ref={ copyrightsRef }
+          ref={ copyrightRef }
           tooltipText={ "" }
         />
         <TextInputField

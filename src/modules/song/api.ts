@@ -53,7 +53,7 @@ export const emptySong: Song = {
   lyricsUrl: "",
   album: "",
   language: "",
-  copyrights: "",
+  copyright: "",
   parentalAdvisory: "",
   isrc: "",
   iswc: "",

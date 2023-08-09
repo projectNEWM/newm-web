@@ -80,7 +80,7 @@ export interface PostSongRequest {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyrights?: string;
+  readonly copyright?: string;
   readonly parentalAdvisory?: string;
   readonly barcodeType?: string;
   readonly barcodeNumber?: string;
@@ -167,7 +167,7 @@ export interface Song {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyrights?: string;
+  readonly copyright?: string;
   readonly parentalAdvisory?: string;
   readonly isrc?: string;
   readonly iswc?: string;
@@ -180,6 +180,8 @@ export interface Song {
   readonly nftName?: string;
   readonly mintingStatus: MintingStatus;
   readonly marketplaceStatus: MarketplaceStatus;
+  readonly barcodeType?: string;
+  readonly barcodeNumber?: string;
 }
 
 export interface Artist {

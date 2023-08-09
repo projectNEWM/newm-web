@@ -105,7 +105,7 @@ export const uploadSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          copyrights: body.copyrights || undefined,
+          copyright: body.copyright || undefined,
           parentalAdvisory,
           barcodeType,
           barcodeNumber: body.barcodeNumber || undefined,
@@ -349,11 +349,53 @@ export const patchSong = createAsyncThunk(
         coverArtUrl = body.coverArtUrl;
       }
 
+      // Backend expects "Non-Explicit" for clean songs, any value for explicit
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
+
+      // combination of all IPI values for the song if present
+      let ipis;
+
+      if (body.ipis) {
+        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+      } else {
+        ipis = body.userIpi ? [body.userIpi] : undefined;
+      }
+
+      // Convert barcodeType to the value expected by the API
+      const barcodeTypeMapping: { [key: string]: string | undefined } = {
+        UPC: "Upc",
+        EAN: "Ean",
+        JAN: "Jan",
+      };
+
+      // if barcodeNumber isn't present, barcodeType shouldn't be provided
+      const barcodeType =
+        body.barcodeNumber && body.barcodeType
+          ? barcodeTypeMapping[body.barcodeType]
+          : undefined;
+
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
-          ...body,
-          ...{ coverArtUrl },
+          id: body.id,
+          title: body.title,
+          genres: body.genres,
+          moods: body.moods,
+          lyricsUrl: body.lyricsUrl,
+          description: body.description,
+          album: body.album,
+          track: body.track,
+          language: body.language,
+          copyright: body.copyright || undefined,
+          parentalAdvisory,
+          barcodeType,
+          barcodeNumber: body.barcodeNumber || undefined,
+          isrc: body.isrc || undefined,
+          iswc: body.iswc || undefined,
+          ipis,
+          releaseDate: body.releaseDate || undefined,
+          publicationDate: body.publicationDate || undefined,
+          coverArtUrl,
         })
       );
 
