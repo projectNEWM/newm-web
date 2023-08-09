@@ -12,7 +12,6 @@ import {
   REGEX_9_TO_11_DIGITS,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
-  REGEX_ONLY_ALPHABETS_AND_SPACES,
   REGEX_PASSWORD_REQUIREMENTS,
 } from "./regex";
 
@@ -165,9 +164,10 @@ export const commonYupValidation = {
       .min(1, "At least one genre is required")
       .max(5, "Maximum of 5 genres allowed"),
   moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
-  nickname: Yup.string()
-    .required("Stage name is required")
-    .matches(REGEX_ONLY_ALPHABETS_AND_SPACES, "Please only use letters"),
+  nickname: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
   password: Yup.string().required("Password is required"),
   newPassword: Yup.string()
     .test(

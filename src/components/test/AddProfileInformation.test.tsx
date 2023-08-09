@@ -42,6 +42,7 @@ describe("<AddProfileInformation />", () => {
               isValid: true,
               setFieldTouched: jest.fn(),
               handleSubmit: jest.fn(),
+              values: { example: "" },
             } as any)
         );
 

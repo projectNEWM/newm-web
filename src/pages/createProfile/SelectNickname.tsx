@@ -6,7 +6,8 @@ const SelectNickname: FunctionComponent = () => {
     <AddProfileInformation
       fieldName="nickname"
       placeholder="nickname"
-      prompt="What should we call you?"
+      prompt="Do you want to add a stage name?"
+      subText="AKA the name your fans know and love."
     />
   );
 };

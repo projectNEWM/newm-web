@@ -43,7 +43,6 @@ const Profile: FunctionComponent = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-  const nicknameRef = useRef<HTMLInputElement>(null);
   const roleRef = useRef<HTMLDivElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
@@ -199,7 +198,6 @@ const Profile: FunctionComponent = () => {
       >
         { ({ dirty, errors, handleReset, isSubmitting }) => {
           scrollToError(errors, isSubmitting, [
-            { error: errors.nickname, element: nicknameRef.current },
             { error: errors.role, element: roleRef.current },
             { error: errors.firstName, element: firstNameRef.current },
             { error: errors.lastName, element: lastNameRef.current },
@@ -271,7 +269,11 @@ const Profile: FunctionComponent = () => {
                         gap={ 2 }
                       >
                         <Typography variant="h3" fontWeight="700">
-                          { nickname?.toUpperCase() }
+                          { nickname
+                            ? nickname?.toUpperCase()
+                            : firstName?.toUpperCase() +
+                              " " +
+                              lastName?.toUpperCase() }
                         </Typography>
                         { isVerified ? (
                           <CheckCircleIcon color="success" />
@@ -297,12 +299,10 @@ const Profile: FunctionComponent = () => {
                         YOUR PUBLIC PROFILE
                       </Typography>
                       <TextInputField
-                        isOptional={ false }
                         label="STAGE NAME"
                         name="nickname"
                         placeholder="Stage name"
                         type="text"
-                        ref={ nicknameRef }
                       />
                       <Stack
                         ref={ roleRef }

@@ -8,8 +8,8 @@ export interface Profile {
   readonly oauthType: string;
   readonly oauthId: string;
   readonly email: string;
-  readonly firstName?: string;
-  readonly lastName?: string;
+  readonly firstName: string;
+  readonly lastName: string;
   readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly bannerUrl?: string;
@@ -69,6 +69,8 @@ export interface ProfileFormValues
     | "companyIpRights"
     | "email"
     | "role"
+    | "firstName"
+    | "lastName"
   > {
   readonly pictureUrl?: string | File;
   readonly bannerUrl?: string | File;
@@ -76,6 +78,8 @@ export interface ProfileFormValues
   readonly companyLogoUrl?: string | File;
   readonly email?: string;
   readonly role?: string;
+  readonly firstName?: string;
+  readonly lastName?: string;
 }
 
 export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {

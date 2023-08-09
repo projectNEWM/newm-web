@@ -1,20 +1,20 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { useFormikContext } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import {
   FilteredTagsField,
   GradientTextInputField,
   ResponsiveNEWMLogo,
 } from "components";
 import { useUserDevice, useWindowDimensions } from "common";
-import theme from "theme";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
   readonly helperText?: string;
   readonly placeholder?: string;
   readonly prompt: string;
+  readonly subText?: string;
   readonly tags?: ReadonlyArray<string>;
 }
 
@@ -23,12 +23,24 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   helperText = "",
   placeholder,
   prompt,
+  subText,
   tags,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { isValid, setFieldTouched, handleSubmit } = useFormikContext();
+  const skipButtonRef = useRef<HTMLButtonElement | null>(null);
+  const { isValid, setFieldTouched, handleSubmit, values } =
+    useFormikContext<FormikValues>();
   const { isMobileOrTablet } = useUserDevice();
   const windowWidth = useWindowDimensions()?.width;
+  const theme = useTheme();
+
+  const isSkipButtonVisible = isValid && !values[fieldName];
+
+  const centerButtonOffset =
+    isSkipButtonVisible && skipButtonRef.current
+      ? skipButtonRef.current?.offsetWidth +
+        Number(theme.spacing(2).slice(0, -2))
+      : null;
 
   /**
    * Validate the field on mount (setting the blur status to false validates
@@ -37,6 +49,12 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   useEffect(() => {
     setFieldTouched(fieldName, false);
   }, [setFieldTouched, fieldName]);
+  /**
+   * Focus the field on mount.
+   */
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
 
   /**
    * Add an event listener to submit the form when enter is pressed.
@@ -47,21 +65,17 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
       if (event.key === "Enter") {
+        event.preventDefault();
         handleSubmit();
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [handleSubmit]);
-
-  /**
-   * Focus the field on mount.
-   */
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [inputRef]);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -70,6 +84,9 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       </Box>
       <Typography variant="h1" sx={ { textAlign: "center" } }>
         { prompt }
+      </Typography>
+      <Typography variant="subtitle1" sx={ { textAlign: "center" } }>
+        { subText }
       </Typography>
 
       <GradientTextInputField
@@ -88,21 +105,54 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
               display: "flex",
               flexDirection: "column",
               mt: 2,
+              width: "100%",
             } }
           >
-            <Button
-              disabled={ !isValid }
-              sx={ { mb: 1 } }
-              type="submit"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
-              }
+            <Stack
+              sx={ {
+                display: ["flex", "flex", "block"],
+                flexDirection: ["column", "column", "row"],
+                gap: 2,
+                alignItems: "center",
+                mb: 1,
+                width: "100%",
+              } }
             >
-              Next
-            </Button>
+              { isSkipButtonVisible && (
+                <Button
+                  ref={ skipButtonRef }
+                  color="music"
+                  sx={ {
+                    mb: 1,
+                    position: ["relative", "relative", "absolute"],
+                  } }
+                  onClick={ () => handleSubmit() }
+                  variant="secondary"
+                  width={
+                    windowWidth && windowWidth > theme.breakpoints.values.md
+                      ? "compact"
+                      : "default"
+                  }
+                >
+                  Skip
+                </Button>
+              ) }
 
+              <Button
+                disabled={ !isValid }
+                sx={ {
+                  left: [null, null, centerButtonOffset],
+                } }
+                type="submit"
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
+              >
+                Next
+              </Button>
+            </Stack>
             <Typography
               variant="h5"
               color="grey100"

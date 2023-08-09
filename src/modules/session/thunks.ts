@@ -132,8 +132,8 @@ export const getInitialData = createAsyncThunk(
       return;
     }
 
-    if (!profileResponse?.data?.nickname) {
-      history.push("/create-profile/what-should-we-call-you");
+    if (!profileResponse?.data?.firstName) {
+      history.push("/create-profile/what-is-your-first-name");
     }
   }
 );

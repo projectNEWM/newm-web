@@ -12,6 +12,8 @@ import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
 import Complete from "./Complete";
+import AddFirstName from "./AddFirstName";
+import AddLastName from "./AddLastName";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
@@ -23,9 +25,10 @@ const CreateProfile: FunctionComponent = () => {
   /**
    * Initial form values.
    */
-  const initialValues: Partial<ProfileFormValues> = {
-    nickname: "",
+  const initialValues: ProfileFormValues = {
     role: "",
+    firstName: "",
+    lastName: "",
   };
 
   /**
@@ -34,6 +37,8 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roleOptions),
+    firstName: commonYupValidation.firstName,
+    lastName: commonYupValidation.lastName,
   };
 
   /**
@@ -67,6 +72,20 @@ const CreateProfile: FunctionComponent = () => {
               element: <Begin />,
             },
             {
+              path: "what-is-your-first-name",
+              element: <AddFirstName />,
+              validationSchema: Yup.object().shape({
+                firstName: validations.firstName,
+              }),
+            },
+            {
+              path: "what-is-your-last-name",
+              element: <AddLastName />,
+              validationSchema: Yup.object().shape({
+                lastName: validations.lastName,
+              }),
+            },
+            {
               path: "what-should-we-call-you",
               element: <SelectNickname />,
               validationSchema: Yup.object().shape({
@@ -83,10 +102,6 @@ const CreateProfile: FunctionComponent = () => {
             {
               path: "complete",
               element: <Complete />,
-              validationSchema: Yup.object().shape({
-                nickname: validations.nickname,
-                role: validations.role,
-              }),
             },
           ] }
         />

@@ -45,8 +45,14 @@ const InvitesModal: FunctionComponent = () => {
     { skip: !isLoggedIn }
   );
 
-  const { data: { verificationStatus, walletAddress } = emptyProfile } =
-    useGetProfileQuery(undefined, { skip: !isLoggedIn });
+  const {
+    data: {
+      firstName,
+      lastName,
+      verificationStatus,
+      walletAddress,
+    } = emptyProfile,
+  } = useGetProfileQuery(undefined, { skip: !isLoggedIn });
 
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
   const isVerified = verificationStatus === Verified;
@@ -69,8 +75,8 @@ const InvitesModal: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) fetchInvites();
-  }, [dispatch, isLoggedIn, fetchInvites, collaborations]);
+    if (isLoggedIn && firstName && lastName) fetchInvites();
+  }, [dispatch, isLoggedIn, fetchInvites, collaborations, firstName, lastName]);
 
   useEffect(() => {
     if (invites.length > 0 && isFirstTimeModalOpen) {

@@ -1,12 +1,17 @@
 import { FunctionComponent } from "react";
 import { AddProfileInformation } from "components";
 import { useExtractProperty } from "common";
-import { FormikValues, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { useGetRolesQuery } from "modules/content";
+import { ProfileFormValues } from "modules/session";
 
 const SelectRole: FunctionComponent = () => {
   const { data: roles = [] } = useGetRolesQuery();
-  const { values } = useFormikContext();
+
+  const {
+    values: { firstName, nickname },
+  } = useFormikContext<ProfileFormValues>();
+
   const roleOptions = useExtractProperty(roles, "name");
 
   return (
@@ -14,7 +19,7 @@ const SelectRole: FunctionComponent = () => {
       fieldName="role"
       helperText="Type or select a role"
       placeholder="role"
-      prompt={ `What is your main role, ${(values as FormikValues).nickname}?` }
+      prompt={ `What's your main role, ${nickname ? nickname : firstName}?` }
       tags={ roleOptions }
     />
   );

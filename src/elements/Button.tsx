@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { ForwardRefRenderFunction, forwardRef } from "react";
 import {
   CircularProgress,
   Button as MUIButton,
@@ -38,17 +38,20 @@ export type ButtonProps = CommonProps & ConditionalProps;
  * See https://mui.com/material-ui/api/button/ for extra props.
  * Native `button` and `a` element attributes are also available to use.
  */
-const Button: FunctionComponent<ButtonProps> = ({
-  children,
-  color = "white",
-  gradient = "music",
-  disabled = false,
-  isLoading = false,
-  variant = "primary",
-  width = "default",
-  sx,
-  ...rest
-}) => {
+const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+  {
+    children,
+    color = "white",
+    gradient = "music",
+    disabled = false,
+    isLoading = false,
+    variant = "primary",
+    width = "default",
+    sx,
+    ...rest
+  },
+  ref
+) => {
   const widthStyles = {
     compact: {
       maxWidth: "max-content",
@@ -116,6 +119,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         ...sx,
       } }
       { ...rest }
+      ref={ ref }
     >
       { isLoading ? (
         <CircularProgress
@@ -133,4 +137,4 @@ const Button: FunctionComponent<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default forwardRef(Button);
