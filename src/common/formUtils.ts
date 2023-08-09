@@ -31,16 +31,16 @@ const includesGenres = (
   // don't validate that genres array is present, this is validated separately
   if (!genres) return true;
 
-  // return false if a genre is found to not be included in genreOptions
-  const hasInvalidGenre = !!genres.find((genre) => {
-    // return as invalid if genre is undefined (see above note)
+  // return true if a genre is found to be included in genreOptions
+  const hasValidGenre = !!genres.find((genre) => {
+    // ignore undefined genre (see above note)
     if (!genre) return true;
 
-    return !genreOptions.includes(genre);
+    return genreOptions.includes(genre);
   });
 
-  // return true if all genres were valid
-  return !hasInvalidGenre;
+  // return true if all genre is valid
+  return hasValidGenre;
 };
 
 const createAudioBuffer = async (value: File) => {
@@ -131,6 +131,7 @@ const isAspectRatioOneToOne = async (value: File | null) => {
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
 const AUDIO_MIN_DURATION_SEC = 60;
+const COVERT_ART_MAX_FILE_SIZE_MB = 10;
 
 export const commonYupValidation = {
   email: Yup.string()
@@ -182,10 +183,32 @@ export const commonYupValidation = {
     [Yup.ref("newPassword")],
     "Passwords must match"
   ),
-  coverArtUrl: Yup.mixed().required("This field is required").test({
-    message: "Image must be 1:1 aspect ratio",
-    test: isAspectRatioOneToOne,
-  }),
+  coverArtUrl: Yup.mixed()
+    .required("This field is required")
+    .test({
+      message: `Image must be less than or equal to ${COVERT_ART_MAX_FILE_SIZE_MB} MB`,
+      test: (value) => {
+        if (typeof value === "string") return true;
+
+        if (value instanceof File) {
+          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
+        }
+
+        return true;
+      },
+    })
+    .test({
+      message: "Image must be 1:1 aspect ratio",
+      test: (value) => {
+        if (typeof value === "string") return true;
+
+        if (value instanceof File) {
+          return isAspectRatioOneToOne(value);
+        }
+
+        return true;
+      },
+    }),
   title: Yup.string()
     .required("This field is required")
     .max(

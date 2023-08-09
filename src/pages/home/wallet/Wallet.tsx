@@ -4,6 +4,7 @@ import { Button, Typography } from "elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { setIsConnectWalletModalOpen } from "modules/ui";
 import { useAppDispatch } from "common";
+import { DisconnectWalletButton } from "components";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
@@ -14,33 +15,22 @@ const Wallet: FunctionComponent = () => {
   const { wallet } = useConnectWallet();
 
   return (
-    <Container
-      maxWidth={ false }
-      sx={ {
-        textAlign: ["center", "initial"],
-      } }
-    >
+    <Container maxWidth={ false }>
       <Box ml={ [null, null, 3] }>
         <Box
           sx={ {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            mb: 5,
           } }
         >
-          <Typography variant="h3" fontWeight={ 800 } mb={ 5 }>
+          <Typography variant="h3" fontWeight={ 800 }>
             WALLET
           </Typography>
 
           { wallet ? (
-            <Button
-              sx={ { mr: [0, 4.75], mb: 5 } }
-              width="compact"
-              variant="outlined"
-              onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
-            >
-              Disconnect Wallet
-            </Button>
+            <DisconnectWalletButton />
           ) : (
             <Button
               sx={ { mr: [0, 4.75], mb: 5 } }
@@ -52,6 +42,7 @@ const Wallet: FunctionComponent = () => {
             </Button>
           ) }
         </Box>
+
         <UnclaimedRoyalties unclaimedRoyalties={ 0 } />
         <TabbedContainer
           sx={ { pt: 5 } }

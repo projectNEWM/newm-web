@@ -4,10 +4,6 @@ import Cookies from "js-cookie";
 import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
-import {
-  enableWallet,
-  getWalletAddress,
-} from "@newm.io/cardano-dapp-wallet-connector";
 import api, { cloudinaryApi, lambdaApi } from "api";
 import { extendedApi as sessionApi } from "./api";
 import {
@@ -291,30 +287,6 @@ export const handleSocialLoginError = createAsyncThunk(
         severity: "error",
       })
     );
-  }
-);
-
-/**
- * Gets a wallet address for the user and updates their
- * profile information with it.
- */
-export const updateWalletAddress = createAsyncThunk(
-  "session/updateWalletAddress",
-  async (_, { dispatch }) => {
-    try {
-      const wallet = await enableWallet();
-      const walletAddress = await getWalletAddress(wallet);
-      dispatch(updateProfile({ walletAddress }));
-    } catch (error) {
-      if (error instanceof Error) {
-        dispatch(
-          setToastMessage({
-            message: "Error updating your wallet address",
-            severity: "error",
-          })
-        );
-      }
-    }
   }
 );
 

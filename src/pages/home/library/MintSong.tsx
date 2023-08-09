@@ -333,6 +333,7 @@ const MintSong = () => {
                           onChangeOwners={ handleChangeOwners }
                           onChangeCreditors={ handleChangeCreditors }
                           onChangeFeatured={ handleChangeFeatured }
+                          songMintingStatus={ mintingStatus }
                         />
                       ) }
                     </Box>

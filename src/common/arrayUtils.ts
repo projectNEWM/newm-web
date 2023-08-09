@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 /**
  * Extracts the specified property from an array of items.
  * Each item is expected to have the specified property of type string.
@@ -14,3 +16,15 @@ export const extractProperty = <T, K extends keyof T>(
   items: T[],
   property: K
 ): T[K][] => items.map((item) => item[property]);
+
+export const useExtractProperty = <T, K extends keyof T>(
+  items: T[],
+  property: K
+): T[K][] => {
+  const memoized = useMemo(
+    () => extractProperty(items, property),
+    [items, property]
+  );
+
+  return memoized;
+};

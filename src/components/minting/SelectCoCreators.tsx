@@ -3,10 +3,10 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Featured, Owner } from "modules/song";
+import { Creditor, Featured, MintingStatus, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
-import { COLLABORATOR_FEE_IN_ADA } from "common";
+import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "common";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -16,30 +16,33 @@ interface FormValues {
   readonly featured: ReadonlyArray<Featured>;
 }
 
-interface SelectCoOwnersProps {
+interface SelectCoCreatorsProps {
   readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
   readonly featured: ReadonlyArray<Featured>;
-  readonly isAddDeleteDisabled?: boolean;
   readonly onChangeOwners: (newOwners: ReadonlyArray<Owner>) => void;
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
   readonly onChangeFeatured: (newFeatured: ReadonlyArray<Featured>) => void;
+  readonly songMintingStatus: MintingStatus;
+  readonly isAddDeleteDisabled?: boolean;
 }
 
 interface FormContentProps extends FormikProps<FormValues> {
+  readonly songMintingStatus: MintingStatus;
   readonly isAddDeleteDisabled?: boolean;
 }
 
 /**
  * Add, update, and remove owners and creditors when minting a song.
  */
-const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
+const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
   owners,
   creditors,
   featured,
   onChangeOwners,
   onChangeCreditors,
   onChangeFeatured,
+  songMintingStatus,
   isAddDeleteDisabled = false,
 }) => {
   const initialValues = {
@@ -59,6 +62,7 @@ const SelectCoCeators: FunctionComponent<SelectCoOwnersProps> = ({
       { (formikProps) => (
         <FormContent
           { ...formikProps }
+          songMintingStatus={ songMintingStatus }
           isAddDeleteDisabled={ isAddDeleteDisabled }
         />
       ) }
@@ -70,16 +74,20 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   values,
   setFieldValue,
   handleSubmit,
+  songMintingStatus,
   isAddDeleteDisabled,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const prevValues = usePrevious(values);
 
   /**
    * Call onChange callbacks when form values change.
    */
   useEffect(() => {
-    handleSubmit();
-  }, [values, handleSubmit]);
+    if (JSON.stringify(values) !== JSON.stringify(prevValues)) {
+      handleSubmit();
+    }
+  }, [values, prevValues, handleSubmit]);
 
   return (
     <Stack px={ 2 } pb={ 2 }>
@@ -90,6 +98,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           <Owners
             owners={ values.owners }
             isDeleteDisabled={ isAddDeleteDisabled }
+            songMintingStatus={ songMintingStatus }
             onDelete={ ({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
               setFieldValue("owners", newOwners);
@@ -105,6 +114,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           <Creditors
             creditors={ values.creditors }
             isDeleteDisabled={ isAddDeleteDisabled }
+            songMintingStatus={ songMintingStatus }
             onDelete={ ({ email }, creditors) => {
               const newCreditors = creditors.filter(
                 (creditor) => creditor.email !== email

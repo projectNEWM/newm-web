@@ -1,21 +1,55 @@
 import {
   selectUi,
   setIsConnectWalletModalOpen,
+  setIsUpdateWalletAddressModalOpen,
+  setIsWalletEnvMismatchModalOpen,
   setToastMessage,
 } from "modules/ui";
 import { FunctionComponent } from "react";
-import { WalletModal } from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  WalletModal,
+  getWalletAddress,
+  useConnectWallet,
+} from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "common";
-import { updateWalletAddress } from "modules/session";
+import {
+  emptyProfile,
+  getIsWalletEnvMismatch,
+  selectSession,
+  updateProfile,
+  useGetProfileQuery,
+} from "modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
+  const { isLoggedIn } = useAppSelector(selectSession);
+  const { wallet } = useConnectWallet();
+  const { data: { walletAddress: savedWalletAddress } = emptyProfile } =
+    useGetProfileQuery(undefined, { skip: !isLoggedIn });
 
-  const handleConnect = () => {
-    dispatch(updateWalletAddress());
+  const handleConnect = async () => {
+    if (!wallet) return;
+
+    const isEnvMismatch = await getIsWalletEnvMismatch(wallet);
+    const newWalletAddress = await getWalletAddress(wallet);
+
+    // Notify the user if their connected wallet is for the incorrect env
+    if (isEnvMismatch) {
+      dispatch(setIsWalletEnvMismatchModalOpen(true));
+      return;
+    }
+
+    // If the user doesn't have a saved address, update their profile.
+    // Otherwise, if the address from the recently connected wallet is
+    // different, prompt them before overwriting it.
+    if (!savedWalletAddress) {
+      dispatch(updateProfile({ walletAddress: newWalletAddress }));
+    } else if (savedWalletAddress !== newWalletAddress) {
+      dispatch(setIsUpdateWalletAddressModalOpen(true));
+    }
 
     dispatch(
       setToastMessage({

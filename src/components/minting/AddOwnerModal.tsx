@@ -8,9 +8,9 @@ import {
   SwitchInputField,
   TextInputField,
 } from "components";
-import { commonYupValidation, extractProperty } from "common";
+import { commonYupValidation, useExtractProperty } from "common";
 import theme from "theme";
-import { Role, useGetRolesQuery } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
@@ -27,7 +27,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   onSubmit,
 }) => {
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = extractProperty<Role, "name">(roles, "name");
+  const roleOptions = useExtractProperty(roles, "name");
 
   const initialValues = {
     email: "",

@@ -7,17 +7,12 @@ import {
   NONE_OPTION,
   REGEX_ISRC_FORMAT,
   commonYupValidation,
-  extractProperty,
   getBarcodeRegex,
+  useExtractProperty,
 } from "common";
 import { WizardForm } from "components";
 import { Typography } from "elements";
-import {
-  Genre,
-  Language,
-  useGetGenresQuery,
-  useGetLanguagesQuery,
-} from "modules/content";
+import { useGetGenresQuery, useGetLanguagesQuery } from "modules/content";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
@@ -45,10 +40,7 @@ const UploadSong: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = extractProperty<Language, "language_code">(
-    languages,
-    "language_code"
-  );
+  const languageCodes = useExtractProperty(languages, "language_code");
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery();
 
@@ -146,7 +138,7 @@ const UploadSong: FunctionComponent = () => {
     // to only run on mount.
     // eslint-disable-next-line
   }, []);
-  const genreOptions = extractProperty<Genre, "name">(genres, "name");
+  const genreOptions = useExtractProperty(genres, "name");
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
@@ -164,6 +156,13 @@ const UploadSong: FunctionComponent = () => {
           test: (owners = []) =>
             owners.every(
               ({ percentage = 0 }) => percentage >= 0.01 && percentage <= 100
+            ),
+        })
+        .test({
+          message: "Percentages should not exceed 2 decimal places",
+          test: (owners = []) =>
+            owners.every(({ percentage = 0 }) =>
+              /^\d+(\.\d{1,2})?$/.test(percentage.toString())
             ),
         })
         .test({
@@ -228,8 +227,8 @@ const UploadSong: FunctionComponent = () => {
           onSubmit={ handleSubmit }
           rootPath="home/upload-song"
           isProgressStepperVisible={ true }
-          validateOnMount={ true }
           enableReinitialize={ true }
+          validateOnBlur={ false }
           routes={ [
             {
               element: <BasicSongDetails />,
