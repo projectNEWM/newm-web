@@ -68,11 +68,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue, isSubmitting, dirty } =
+  const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
 
-  const isSubmitDisabled =
-    (values.isMinting && (!wallet || !isVerified)) || !(dirty && isInEditMode);
+  const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
