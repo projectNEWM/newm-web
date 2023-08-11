@@ -28,7 +28,7 @@ const statusColor = (activeStep: number, currentIndex: number) => {
 const StepBox = styled(Box)<StepBoxProps>`
   flex-grow: 1;
   color: ${(props) => props.boxColor};
-  background-color: ${theme.colors.black};
+  background-color: ${theme.colors.grey700};
   border-bottom: 3px solid ${(props) => props.boxColor};
   min-height: 60px;
   min-width: 232px;

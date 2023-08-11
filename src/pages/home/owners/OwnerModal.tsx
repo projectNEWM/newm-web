@@ -25,7 +25,6 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
       onClose={ onClose }
       sx={ {
         ".MuiDialog-paper": {
-          backgroundColor: theme.colors.black,
           padding: 3,
           rowGap: 2.5,
         },

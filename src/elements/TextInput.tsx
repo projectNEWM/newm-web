@@ -38,7 +38,7 @@ const inputStyles = `
   width: 100%;
   display: flex;
   flex-grow: 1;
-  background: transparent;
+  background: ${theme.colors.grey600};
   color-scheme: dark;
   border-width: 0;
   font-family: ${theme.inputField.fontFamily};

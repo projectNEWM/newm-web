@@ -61,11 +61,6 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       fullWidth
       onClose={ onClose }
       open={ open }
-      sx={ {
-        "& .MuiPaper-root": {
-          backgroundColor: theme.colors.grey600,
-        },
-      } }
     >
       <Formik
         initialValues={ initialValues }

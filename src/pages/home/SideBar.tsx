@@ -30,11 +30,12 @@ export const SideBar: FunctionComponent<SideBarProps> = (
   return (
     <Box
       sx={ {
+        background: theme.colors.black,
+        borderRight: `2px solid ${theme.colors.grey600}`,
         display: "flex",
         height: "100%",
         width: theme.spacing(28.75),
         minWidth: theme.spacing(28.75),
-        background: theme.colors.black,
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 1.25,

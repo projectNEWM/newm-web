@@ -32,7 +32,7 @@ const StyledRootElement = styled.div`
 const StyledTextAreaElement = styled.textarea`
   display: flex;
   flex-grow: 1;
-  background: transparent;
+  background: ${theme.colors.grey600};
   color: white;
   border-width: 0;
   font-family: ${theme.inputField.fontFamily};
@@ -177,7 +177,7 @@ const getBorderColor = (
   isFocused: boolean
 ) => {
   if (isDisabled) {
-    return theme.colors.grey400;
+    return theme.colors.grey500;
   }
 
   if (hasError) {
@@ -188,7 +188,7 @@ const getBorderColor = (
     return theme.colors.white;
   }
 
-  return theme.colors.grey400;
+  return theme.colors.grey500;
 };
 
 export default forwardRef(TextArea);
