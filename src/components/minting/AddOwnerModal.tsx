@@ -9,7 +9,6 @@ import {
   TextInputField,
 } from "components";
 import { commonYupValidation, useExtractProperty } from "common";
-import theme from "theme";
 import { useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
