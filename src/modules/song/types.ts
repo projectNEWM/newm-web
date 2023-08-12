@@ -117,6 +117,14 @@ export interface DeleteSongRequest {
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
   readonly id: string;
+  readonly shouldRedirect?: boolean;
+}
+
+export interface UpdateCollaborationsRequest {
+  readonly id: string;
+  readonly owners: ReadonlyArray<Owner>;
+  readonly creditors: ReadonlyArray<Creditor>;
+  readonly featured: ReadonlyArray<Featured>;
 }
 
 export interface CloudinarySignatureResponse {

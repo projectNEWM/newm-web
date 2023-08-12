@@ -18,6 +18,7 @@ import {
   MintingStatus,
   PatchSongRequest,
   Song,
+  UpdateCollaborationsRequest,
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
@@ -401,87 +402,22 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      if (
+        body.owners?.length ||
+        body.creditors?.length ||
+        body.featured?.length
+      ) {
+        await dispatch(
+          updateCollaborations({
+            id: body.id,
+            owners: body.owners || [],
+            creditors: body.creditors || [],
+            featured: body.featured || [],
+          })
+        );
+      }
+
       if (body.isMinting) {
-        const currentCollabsResp = await dispatch(
-          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
-        );
-
-        if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
-
-        const newCollaborators = generateCollaborators(
-          body.owners || [],
-          body.creditors || [],
-          body.featured || []
-        );
-        const newCollabs = mapCollaboratorsToCollaborations(
-          body.id,
-          newCollaborators
-        );
-
-        const collabsToDelete = getCollaborationsToDelete(
-          currentCollabsResp.data,
-          newCollabs
-        );
-        const collabsToUpdate = getCollaborationsToUpdate(
-          currentCollabsResp.data,
-          newCollabs
-        );
-        const collabsToCreate = getCollaborationsToCreate(
-          currentCollabsResp.data,
-          newCollabs
-        );
-
-        const createCollabResponses = await Promise.all(
-          collabsToCreate.map((collaboration) => {
-            return dispatch(
-              songApi.endpoints.createCollaboration.initiate({
-                songId: body.id,
-                email: collaboration.email,
-                role: collaboration.role,
-                royaltyRate: collaboration.royaltyRate,
-                credited: collaboration.credited,
-                featured: collaboration.featured,
-              })
-            );
-          })
-        );
-
-        for (const collabResp of createCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
-        const deleteCollabResponses = await Promise.all(
-          collabsToDelete.map((collaborationId) => {
-            return dispatch(
-              songApi.endpoints.deleteCollaboration.initiate(collaborationId)
-            );
-          })
-        );
-
-        for (const collabResp of deleteCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
-        const updateCollabResponses = await Promise.all(
-          collabsToUpdate.map((collaboration) => {
-            return dispatch(
-              songApi.endpoints.updateCollaboration.initiate({
-                collaborationId: collaboration.id,
-                songId: body.id,
-                email: collaboration.email,
-                role: collaboration.role,
-                royaltyRate: collaboration.royaltyRate,
-                credited: collaboration.credited,
-                featured: collaboration.featured,
-              })
-            );
-          })
-        );
-
-        for (const collabResp of updateCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
         const songResp = await dispatch(
           songApi.endpoints.getSong.initiate(body.id)
         );
@@ -516,24 +452,26 @@ export const patchSong = createAsyncThunk(
           );
 
           if ("error" in processStreamTokenAgreementResponse) return;
-        }
 
-        if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
-          await submitMintSongPayment(body.id, dispatch);
+          if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
+            await submitMintSongPayment(body.id, dispatch);
+          }
         }
       }
 
-      dispatch(
-        setToastMessage({
-          message: "Updated song information",
-          severity: "success",
-        })
-      );
+      if (body.shouldRedirect) {
+        dispatch(
+          setToastMessage({
+            message: "Updated song information",
+            severity: "success",
+          })
+        );
 
-      await sleep(250);
+        await sleep(250);
 
-      // navigate to library page to view new song
-      history.push("/home/library");
+        // navigate to library page to view new song
+        history.push("/home/library");
+      }
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
@@ -598,6 +536,98 @@ export const fetchInvites = createAsyncThunk(
     const collaborators = await Promise.all(collaboratorsPromises);
 
     return collaborators;
+  }
+);
+
+export const updateCollaborations = createAsyncThunk(
+  "collaboration/updateCollaborations",
+  async (body: UpdateCollaborationsRequest, { dispatch }) => {
+    try {
+      const currentCollabsResp = await dispatch(
+        songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
+      );
+
+      if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
+
+      const newCollaborators = generateCollaborators(
+        body.owners || [],
+        body.creditors || [],
+        body.featured || []
+      );
+
+      const newCollabs = mapCollaboratorsToCollaborations(
+        body.id,
+        newCollaborators
+      );
+
+      const collabsToDelete = getCollaborationsToDelete(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const collabsToUpdate = getCollaborationsToUpdate(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const collabsToCreate = getCollaborationsToCreate(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const createCollabResponses = await Promise.all(
+        collabsToCreate.map((collaboration) => {
+          return dispatch(
+            songApi.endpoints.createCollaboration.initiate({
+              songId: body.id,
+              email: collaboration.email,
+              role: collaboration.role,
+              royaltyRate: collaboration.royaltyRate,
+              credited: collaboration.credited,
+              featured: collaboration.featured,
+            })
+          );
+        })
+      );
+
+      for (const collabResp of createCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+
+      const deleteCollabResponses = await Promise.all(
+        collabsToDelete.map((collaborationId) => {
+          return dispatch(
+            songApi.endpoints.deleteCollaboration.initiate(collaborationId)
+          );
+        })
+      );
+
+      for (const collabResp of deleteCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+
+      const updateCollabResponses = await Promise.all(
+        collabsToUpdate.map((collaboration) => {
+          return dispatch(
+            songApi.endpoints.updateCollaboration.initiate({
+              collaborationId: collaboration.id,
+              songId: body.id,
+              email: collaboration.email,
+              role: collaboration.role,
+              royaltyRate: collaboration.royaltyRate,
+              credited: collaboration.credited,
+              featured: collaboration.featured,
+            })
+          );
+        })
+      );
+
+      for (const collabResp of updateCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+    } catch (error) {
+      // do nothing, endpoint errors handled by endpoints
+    }
   }
 );
 

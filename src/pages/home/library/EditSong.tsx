@@ -10,11 +10,11 @@ import { Button } from "elements";
 import { ProfileImage, WizardForm } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
+  CollaborationStatus,
   PatchSongRequest,
   emptySong,
   getIsSongDeletable,
   useDeleteSongThunk,
-  useGenerateArtistAgreementThunk,
   useGetCollaborationsQuery,
   useGetEarliestReleaseDateQuery,
   useGetSongQuery,
@@ -50,6 +50,8 @@ const EditSong: FunctionComponent = () => {
       firstName = "",
       lastName = "",
       nickname: stageName = "",
+      email,
+      role,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -69,7 +71,6 @@ const EditSong: FunctionComponent = () => {
   const artistName = `${firstName} ${lastName}`;
 
   const [deleteSong] = useDeleteSongThunk();
-  const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
 
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const {
@@ -145,8 +146,30 @@ const EditSong: FunctionComponent = () => {
     isExplicit: parentalAdvisory === "Explicit",
     isMinting: false,
     language,
-    owners,
-    creditors,
+    owners:
+      owners.length > 0
+        ? owners
+        : [
+            {
+              email,
+              isCreator: true,
+              isRightsOwner: true,
+              percentage: 100,
+              role,
+              status: CollaborationStatus.Editing,
+            },
+          ],
+    creditors:
+      creditors.length > 0
+        ? creditors
+        : [
+            {
+              email,
+              role,
+              isCredited: true,
+              status: CollaborationStatus.Editing,
+            },
+          ],
     featured,
     consentsToContract: false,
     companyName,
@@ -175,7 +198,7 @@ const EditSong: FunctionComponent = () => {
     values: PatchSongRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
-    await patchSong(values);
+    await patchSong({ ...values, shouldRedirect: true });
     helpers.setSubmitting(false);
   };
 
@@ -185,7 +208,13 @@ const EditSong: FunctionComponent = () => {
     helpers: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
+      await patchSong({
+        ...values,
+        isMinting: false,
+      });
+
       helpers.setSubmitting(false);
+
       navigate("advanced-details");
     } else {
       await handleSubmit(values, helpers);
@@ -197,16 +226,12 @@ const EditSong: FunctionComponent = () => {
     values: PatchSongRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
-    if (values.title) {
-      await generateArtistAgreement({
-        songName: values.title,
-        companyName,
-        artistName,
-        stageName,
-      });
+    await patchSong({
+      ...values,
+      isMinting: true,
+    });
 
-      helpers.setSubmitting(false);
-    }
+    helpers.setSubmitting(false);
   };
 
   /**
