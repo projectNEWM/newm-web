@@ -1,4 +1,5 @@
 import { FunctionComponent, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
@@ -18,6 +19,8 @@ import {
   DropdownMultiSelectField,
   DropdownSelectField,
   ErrorMessage,
+  PlaySong,
+  SolidOutline,
   SwitchInputField,
   TextAreaField,
   TextInputField,
@@ -60,6 +63,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
+  const { songId } = useParams<"songId">();
 
   const genreOptions = useExtractProperty(genres, "name");
   const languageOptions = useExtractProperty(languages, "language_name");
@@ -118,11 +122,32 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
         } }
       >
         <Stack ref={ audioRef } spacing={ 0.5 } width="100%">
-          <Typography color="grey100" fontWeight={ 500 }>
-            SONG FILE
-          </Typography>
+          { isInEditMode ? (
+            <>
+              <Typography color="grey100" fontWeight={ 500 }>
+                SONG
+              </Typography>
 
-          <UploadSongField name="audio" />
+              <SolidOutline
+                sx={ {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexGrow: 1,
+                } }
+              >
+                <PlaySong id={ songId || "" } />
+              </SolidOutline>
+            </>
+          ) : (
+            <>
+              <Typography color="grey100" fontWeight={ 500 }>
+                SONG FILE
+              </Typography>
+
+              <UploadSongField name="audio" />
+            </>
+          ) }
         </Stack>
 
         <Stack ref={ coverArtUrlRef } spacing={ 0.5 } width="100%">

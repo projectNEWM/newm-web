@@ -135,7 +135,6 @@ const EditSong: FunctionComponent = () => {
   const initialValues: PatchSongRequest = {
     id: songId,
     coverArtUrl,
-    audio: undefined,
     title,
     genres: songGenres,
     moods,
@@ -252,7 +251,6 @@ const EditSong: FunctionComponent = () => {
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
-    audio: commonYupValidation.audio,
     title: commonYupValidation.title,
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
@@ -331,7 +329,6 @@ const EditSong: FunctionComponent = () => {
               onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
-                audio: validations.audio,
                 title: validations.title,
                 genres: validations.genres,
                 moods: validations.moods,
