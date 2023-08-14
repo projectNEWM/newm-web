@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
 import { DialogActions, DialogContentText, DialogProps } from "@mui/material";
 import { Button, Dialog, HorizontalLine, Typography } from "elements";
-import theme from "theme";
 
 interface OwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
@@ -25,7 +24,6 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
       onClose={ onClose }
       sx={ {
         ".MuiDialog-paper": {
-          backgroundColor: theme.colors.black,
           padding: 3,
           rowGap: 2.5,
         },

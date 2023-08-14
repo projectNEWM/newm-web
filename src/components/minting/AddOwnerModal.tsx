@@ -9,7 +9,6 @@ import {
   TextInputField,
 } from "components";
 import { commonYupValidation, useExtractProperty } from "common";
-import theme from "theme";
 import { useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
@@ -61,11 +60,6 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       fullWidth
       onClose={ onClose }
       open={ open }
-      sx={ {
-        "& .MuiPaper-root": {
-          backgroundColor: theme.colors.grey600,
-        },
-      } }
     >
       <Formik
         initialValues={ initialValues }

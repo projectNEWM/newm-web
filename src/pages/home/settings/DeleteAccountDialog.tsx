@@ -51,7 +51,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
       <Button onClick={ handleOpenDialog } variant="secondary" color="magazine">
         Delete account
       </Button>
-      <Dialog open={ isModalOpen }>
+      <Dialog open={ isModalOpen } onClose={ handleCloseDialog }>
         <Formik
           initialValues={ initialValues }
           onSubmit={ handleSubmit }
