@@ -12,7 +12,7 @@ interface PlaySongProps {
 const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
 
-  const { data: song } = useGetSongQuery(id);
+  const { data: song, isLoading } = useGetSongQuery(id);
 
   const hlsJsParams = useMemo(
     () => ({
@@ -24,6 +24,8 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   );
 
   const { playSong, stopSong } = useHlsJs(hlsJsParams);
+
+  if (isLoading) return null;
 
   return song ? (
     <>
