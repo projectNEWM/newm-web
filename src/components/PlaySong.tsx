@@ -2,7 +2,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { FunctionComponent, useMemo, useState } from "react";
 import { useGetSongQuery, useHlsJs } from "modules/song";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import IconMessage from "./IconMessage";
 
 interface PlaySongProps {
@@ -28,7 +28,7 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   if (isLoading) return null;
 
   return song ? (
-    <>
+    <Stack sx={ { cursor: "pointer", width: "100%", height: "100%" } }>
       { isSongPlaying ? (
         <IconMessage
           icon={ <StopIcon /> }
@@ -42,7 +42,7 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
           onClick={ () => playSong(song) }
         />
       ) }
-    </>
+    </Stack>
   ) : (
     <Typography>Unable to play song</Typography>
   );
