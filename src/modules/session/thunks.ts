@@ -5,11 +5,14 @@ import { setToastMessage } from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import api, { cloudinaryApi, lambdaApi } from "api";
+import { disconnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
   DeleteAccountRequest,
+  LinkedInLoginRequest,
+  LoginRequest,
   ProfileFormValues,
   ResetPasswordRequest,
 } from "./types";
@@ -113,28 +116,74 @@ export const updateInitialProfile = createAsyncThunk(
       return;
     }
 
-    history.push("/home");
+    history.push("/home/profile");
   }
 );
 
 /**
- * Fetch inital data. If no profile information is present,
- * navigate to the beginning of the edit profile form.
+ * Logs in and navigates to the library page.
  */
-export const getInitialData = createAsyncThunk(
-  "session/getInitialData",
-  async (_, { dispatch }) => {
-    const profileResponse = await dispatch(
-      sessionApi.endpoints.getProfile.initiate()
+export const login = createAsyncThunk(
+  "session/login",
+  async (body: LoginRequest, { dispatch }) => {
+    const loginResponse = await dispatch(
+      sessionApi.endpoints.login.initiate(body)
     );
 
-    if ("error" in profileResponse) {
-      return;
-    }
+    if ("error" in loginResponse) return;
 
-    if (!profileResponse?.data?.firstName) {
-      history.push("/create-profile/what-is-your-first-name");
-    }
+    history.push("/home/library");
+  }
+);
+
+/**
+ * Logs in using Google and navigates to the library page.
+ */
+export const googleLogin = createAsyncThunk(
+  "session/googleLogin",
+  async (accessToken: string, { dispatch }) => {
+    const loginResponse = dispatch(
+      sessionApi.endpoints.googleLogin.initiate({ accessToken })
+    );
+
+    if ("error" in loginResponse) return;
+
+    history.push("/home/library");
+  }
+);
+
+/**
+ * Logs in using Facebook and navigates to the library page.
+ */
+export const facebookLogin = createAsyncThunk(
+  "session/facebookLogin",
+  async (accessToken: string, { dispatch }) => {
+    const loginResponse = dispatch(
+      sessionApi.endpoints.facebookLogin.initiate({ accessToken })
+    );
+
+    if ("error" in loginResponse) return;
+
+    history.push("/home/library");
+  }
+);
+
+/**
+ * Logs in using LinkedIn and navigates to the library page.
+ */
+export const linkedInLogin = createAsyncThunk(
+  "session/linkedInLogin",
+  async ({ code, redirectUri }: LinkedInLoginRequest, { dispatch }) => {
+    const loginResponse = dispatch(
+      sessionApi.endpoints.linkedInLogin.initiate({
+        code,
+        redirectUri,
+      })
+    );
+
+    if ("error" in loginResponse) return;
+
+    history.push("/home/library");
   }
 );
 
@@ -293,6 +342,9 @@ export const handleSocialLoginError = createAsyncThunk(
 export const logOut = createAsyncThunk(
   "session/logOut",
   async (_, { dispatch }) => {
+    // disconnect wallet
+    disconnectWallet();
+
     // remove cookies
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
@@ -307,12 +359,11 @@ export const logOut = createAsyncThunk(
   }
 );
 
-export const useGetInitialData = asThunkHook(getInitialData);
-
+export const useLoginThunk = asThunkHook(login);
+export const useGoogleLoginThunk = asThunkHook(googleLogin);
+export const useFacebookLoginThunk = asThunkHook(facebookLogin);
+export const useLinkedInLoginThunk = asThunkHook(linkedInLogin);
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
-
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);
-
 export const useChangePasswordThunk = asThunkHook(changePassword);
-
 export const useDeleteAccountThunk = asThunkHook(deleteAccount);

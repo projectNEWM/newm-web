@@ -2,7 +2,7 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import { extendedApi as sessionApi } from "modules/session";
+import { useFacebookLoginThunk } from "modules/session";
 import { setToastMessage } from "modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import FacebookLoginHelper, {
@@ -18,6 +18,7 @@ interface Props {
 
 const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
+  const [logIn] = useFacebookLoginThunk();
 
   const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {
     const accessToken = resp?.accessToken;
@@ -34,7 +35,7 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
       return;
     }
 
-    dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
+    logIn(accessToken);
   };
 
   return (

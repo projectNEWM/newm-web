@@ -6,17 +6,16 @@
 
 import { FunctionComponent, ReactNode } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
-import { extendedApi as sessionApi } from "modules/session";
+import { useLinkedInLoginThunk } from "modules/session";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "elements";
-import { useAppDispatch } from "common";
 
 interface Props {
   readonly children?: ReactNode;
 }
 
 const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
-  const dispatch = useAppDispatch();
+  const [logIn] = useLinkedInLoginThunk();
 
   const redirectUri = `${window.location.origin}/linkedin`;
 
@@ -25,12 +24,7 @@ const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
     redirectUri,
     scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {
-      dispatch(
-        sessionApi.endpoints.linkedInLogin.initiate({
-          code,
-          redirectUri,
-        })
-      );
+      logIn({ code, redirectUri });
     },
   });
 

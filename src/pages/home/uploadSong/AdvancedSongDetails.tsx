@@ -13,8 +13,11 @@ import {
   useGetEarliestReleaseDateQuery,
 } from "modules/song";
 import theme from "theme";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 
 const AdvancedSongDetails = () => {
+  const { data: { firstName } = emptyProfile } = useGetProfileQuery();
+
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
@@ -29,7 +32,10 @@ const AdvancedSongDetails = () => {
     useFormikContext<UploadSongRequest>();
 
   const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery();
+    useGetEarliestReleaseDateQuery(undefined, {
+      // endpoint throws error if user hasn't added first name
+      skip: !firstName,
+    });
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [

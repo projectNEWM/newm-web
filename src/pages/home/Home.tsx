@@ -1,7 +1,6 @@
 import { Box, IconButton } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useGetInitialData } from "modules/session";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SideBar from "./SideBar";
@@ -16,8 +15,6 @@ const Home: FunctionComponent = () => {
   const drawerWidth = 240;
 
   const theme = useTheme();
-
-  useGetInitialData();
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 

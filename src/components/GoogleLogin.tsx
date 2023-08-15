@@ -2,7 +2,7 @@
  * Logs the user into the app using the Google Auth API.
  */
 
-import { extendedApi as sessionApi } from "modules/session";
+import { useGoogleLoginThunk } from "modules/session";
 import { setToastMessage } from "modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -16,6 +16,7 @@ interface Props {
 
 const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
+  const [logIn] = useGoogleLoginThunk();
 
   const handleLogin = useGoogleLogin({
     onSuccess: ({ access_token: accessToken }) => {
@@ -29,7 +30,7 @@ const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
         );
       }
 
-      dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
+      logIn(accessToken);
     },
   });
 

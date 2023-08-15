@@ -45,7 +45,7 @@ const Complete: FunctionComponent = () => {
         <Typography color="grey200" fontWeight={ 500 }>
           By proceeding forward you agree to&nbsp;
           <Link fontWeight={ 500 } color="grey200" to="#">
-            projectNEWM&apos;s Terms of Service
+            NEWM&apos;s Terms of Service
           </Link>
         </Typography>
       </Box>

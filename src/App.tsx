@@ -27,6 +27,7 @@ import BrowserRouter from "common/BrowserRouter";
 import { history } from "common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import OnboardingRedirect from "components/OnboardingRedirect";
 import store, { persistor } from "./store";
 import "./App.css";
 
@@ -50,6 +51,8 @@ const App = () => {
 
             <Background>
               <BrowserRouter history={ history }>
+                <OnboardingRedirect />
+
                 <Routes>
                   <Route path="/" element={ <Navigate to="home" replace /> } />
 

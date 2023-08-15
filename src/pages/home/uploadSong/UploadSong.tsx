@@ -42,7 +42,10 @@ const UploadSong: FunctionComponent = () => {
   const { data: languages = [] } = useGetLanguagesQuery();
   const languageCodes = useExtractProperty(languages, "language_code");
   const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery();
+    useGetEarliestReleaseDateQuery(undefined, {
+      // endpoint throws error if user hasn't added first name
+      skip: !firstName,
+    });
 
   const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
