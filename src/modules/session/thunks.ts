@@ -132,7 +132,7 @@ export const login = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/library");
+    history.push("/home/upload-song");
   }
 );
 
@@ -148,7 +148,7 @@ export const googleLogin = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/library");
+    history.push("/home/upload-song");
   }
 );
 
@@ -164,7 +164,7 @@ export const facebookLogin = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/library");
+    history.push("/home/upload-song");
   }
 );
 
@@ -183,7 +183,7 @@ export const linkedInLogin = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/library");
+    history.push("/home/upload-song");
   }
 );
 
