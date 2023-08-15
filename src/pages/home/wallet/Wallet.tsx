@@ -6,9 +6,7 @@ import { setIsConnectWalletModalOpen } from "modules/ui";
 import { useAppDispatch } from "common";
 import { DisconnectWalletButton } from "components";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
-import TabbedContainer from "./TabbedContainer";
 import Portfolio from "./Portfolio";
-import Transactions from "./TransactionsList";
 
 const Wallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -44,13 +42,10 @@ const Wallet: FunctionComponent = () => {
         </Box>
 
         <UnclaimedRoyalties unclaimedRoyalties={ 0 } />
-        <TabbedContainer
-          sx={ { pt: 5 } }
-          label1="PORTFOLIO"
-          label2="TRANSACTIONS"
-          Component1={ Portfolio }
-          Component2={ Transactions }
-        />
+
+        <Box mt={ 2.5 }>
+          <Portfolio />
+        </Box>
       </Box>
     </Container>
   );
