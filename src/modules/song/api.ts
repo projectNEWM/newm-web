@@ -53,7 +53,7 @@ export const emptySong: Song = {
   lyricsUrl: "",
   album: "",
   language: "",
-  copyrights: "",
+  copyright: "",
   parentalAdvisory: "",
   isrc: "",
   iswc: "",
@@ -194,7 +194,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while uploading your song",
+              message: "An error occured while updating your song",
               severity: "error",
             })
           );

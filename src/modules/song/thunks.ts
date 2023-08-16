@@ -10,7 +10,7 @@ import {
   setToastMessage,
 } from "modules/ui";
 import { sessionApi } from "modules/session";
-import { SilentError, sleep } from "common";
+import { SilentError, isCloudinaryUrl, sleep } from "common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -18,6 +18,7 @@ import {
   MintingStatus,
   PatchSongRequest,
   Song,
+  UpdateCollaborationsRequest,
   UploadSongRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
@@ -105,7 +106,7 @@ export const uploadSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          copyrights: body.copyrights || undefined,
+          copyright: body.copyright || undefined,
           parentalAdvisory,
           barcodeType,
           barcodeNumber: body.barcodeNumber || undefined,
@@ -332,9 +333,9 @@ export const patchSong = createAsyncThunk(
   "song/patchSong",
   async (body: PatchSongRequest, { dispatch }) => {
     try {
-      let coverArtUrl;
+      let coverArtUrl: string | undefined;
 
-      if (body.coverArtUrl) {
+      if (body.coverArtUrl instanceof File) {
         // downsize if necessary
         const uploadParams = {
           eager: "c_limit,w_4000,h_4000",
@@ -345,99 +346,78 @@ export const patchSong = createAsyncThunk(
           uploadParams,
           dispatch
         );
+      } else if (isCloudinaryUrl(body.coverArtUrl || "")) {
+        coverArtUrl = body.coverArtUrl;
       }
+
+      // Backend expects "Non-Explicit" for clean songs, any value for explicit
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
+
+      // combination of all IPI values for the song if present
+      let ipis;
+
+      if (body.ipis) {
+        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+      } else {
+        ipis = body.userIpi ? [body.userIpi] : undefined;
+      }
+
+      // Convert barcodeType to the value expected by the API
+      const barcodeTypeMapping: { [key: string]: string | undefined } = {
+        UPC: "Upc",
+        EAN: "Ean",
+        JAN: "Jan",
+      };
+
+      // if barcodeNumber isn't present, barcodeType shouldn't be provided
+      const barcodeType =
+        body.barcodeNumber && body.barcodeType
+          ? barcodeTypeMapping[body.barcodeType]
+          : undefined;
 
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
-          ...body,
-          ...{ coverArtUrl },
+          id: body.id,
+          title: body.title,
+          genres: body.genres,
+          moods: body.moods,
+          lyricsUrl: body.lyricsUrl,
+          description: body.description,
+          album: body.album,
+          track: body.track,
+          language: body.language,
+          copyright: body.copyright || undefined,
+          parentalAdvisory,
+          barcodeType,
+          barcodeNumber: body.barcodeNumber || undefined,
+          isrc: body.isrc || undefined,
+          iswc: body.iswc || undefined,
+          ipis,
+          releaseDate: body.releaseDate || undefined,
+          publicationDate: body.publicationDate || undefined,
+          coverArtUrl,
         })
       );
 
       if ("error" in patchSongResp) return;
 
+      if (
+        body.owners?.length ||
+        body.creditors?.length ||
+        body.featured?.length
+      ) {
+        await dispatch(
+          updateCollaborations({
+            id: body.id,
+            owners: body.owners || [],
+            creditors: body.creditors || [],
+            featured: body.featured || [],
+          })
+        );
+      }
+
       if (body.isMinting) {
-        const currentCollabsResp = await dispatch(
-          songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
-        );
-
-        if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
-
-        const newCollaborators = generateCollaborators(
-          body.owners || [],
-          body.creditors || [],
-          body.featured || []
-        );
-        const newCollabs = mapCollaboratorsToCollaborations(
-          body.id,
-          newCollaborators
-        );
-
-        const collabsToDelete = getCollaborationsToDelete(
-          currentCollabsResp.data,
-          newCollabs
-        );
-        const collabsToUpdate = getCollaborationsToUpdate(
-          currentCollabsResp.data,
-          newCollabs
-        );
-        const collabsToCreate = getCollaborationsToCreate(
-          currentCollabsResp.data,
-          newCollabs
-        );
-
-        const createCollabResponses = await Promise.all(
-          collabsToCreate.map((collaboration) => {
-            return dispatch(
-              songApi.endpoints.createCollaboration.initiate({
-                songId: body.id,
-                email: collaboration.email,
-                role: collaboration.role,
-                royaltyRate: collaboration.royaltyRate,
-                credited: collaboration.credited,
-                featured: collaboration.featured,
-              })
-            );
-          })
-        );
-
-        for (const collabResp of createCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
-        const deleteCollabResponses = await Promise.all(
-          collabsToDelete.map((collaborationId) => {
-            return dispatch(
-              songApi.endpoints.deleteCollaboration.initiate(collaborationId)
-            );
-          })
-        );
-
-        for (const collabResp of deleteCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
-        const updateCollabResponses = await Promise.all(
-          collabsToUpdate.map((collaboration) => {
-            return dispatch(
-              songApi.endpoints.updateCollaboration.initiate({
-                collaborationId: collaboration.id,
-                songId: body.id,
-                email: collaboration.email,
-                role: collaboration.role,
-                royaltyRate: collaboration.royaltyRate,
-                credited: collaboration.credited,
-                featured: collaboration.featured,
-              })
-            );
-          })
-        );
-
-        for (const collabResp of updateCollabResponses) {
-          if ("error" in collabResp) return;
-        }
-
         const songResp = await dispatch(
           songApi.endpoints.getSong.initiate(body.id)
         );
@@ -472,19 +452,26 @@ export const patchSong = createAsyncThunk(
           );
 
           if ("error" in processStreamTokenAgreementResponse) return;
-        }
 
-        if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
-          await submitMintSongPayment(body.id, dispatch);
+          if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
+            await submitMintSongPayment(body.id, dispatch);
+          }
         }
       }
 
-      dispatch(
-        setToastMessage({
-          message: "Updated song information",
-          severity: "success",
-        })
-      );
+      if (body.shouldRedirect) {
+        dispatch(
+          setToastMessage({
+            message: "Updated song information",
+            severity: "success",
+          })
+        );
+
+        await sleep(250);
+
+        // navigate to library page to view new song
+        history.push("/home/library");
+      }
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
@@ -549,6 +536,98 @@ export const fetchInvites = createAsyncThunk(
     const collaborators = await Promise.all(collaboratorsPromises);
 
     return collaborators;
+  }
+);
+
+export const updateCollaborations = createAsyncThunk(
+  "collaboration/updateCollaborations",
+  async (body: UpdateCollaborationsRequest, { dispatch }) => {
+    try {
+      const currentCollabsResp = await dispatch(
+        songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
+      );
+
+      if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
+
+      const newCollaborators = generateCollaborators(
+        body.owners || [],
+        body.creditors || [],
+        body.featured || []
+      );
+
+      const newCollabs = mapCollaboratorsToCollaborations(
+        body.id,
+        newCollaborators
+      );
+
+      const collabsToDelete = getCollaborationsToDelete(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const collabsToUpdate = getCollaborationsToUpdate(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const collabsToCreate = getCollaborationsToCreate(
+        currentCollabsResp.data,
+        newCollabs
+      );
+
+      const createCollabResponses = await Promise.all(
+        collabsToCreate.map((collaboration) => {
+          return dispatch(
+            songApi.endpoints.createCollaboration.initiate({
+              songId: body.id,
+              email: collaboration.email,
+              role: collaboration.role,
+              royaltyRate: collaboration.royaltyRate,
+              credited: collaboration.credited,
+              featured: collaboration.featured,
+            })
+          );
+        })
+      );
+
+      for (const collabResp of createCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+
+      const deleteCollabResponses = await Promise.all(
+        collabsToDelete.map((collaborationId) => {
+          return dispatch(
+            songApi.endpoints.deleteCollaboration.initiate(collaborationId)
+          );
+        })
+      );
+
+      for (const collabResp of deleteCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+
+      const updateCollabResponses = await Promise.all(
+        collabsToUpdate.map((collaboration) => {
+          return dispatch(
+            songApi.endpoints.updateCollaboration.initiate({
+              collaborationId: collaboration.id,
+              songId: body.id,
+              email: collaboration.email,
+              role: collaboration.role,
+              royaltyRate: collaboration.royaltyRate,
+              credited: collaboration.credited,
+              featured: collaboration.featured,
+            })
+          );
+        })
+      );
+
+      for (const collabResp of updateCollabResponses) {
+        if ("error" in collabResp) return;
+      }
+    } catch (error) {
+      // do nothing, endpoint errors handled by endpoints
+    }
   }
 );
 

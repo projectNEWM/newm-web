@@ -46,6 +46,10 @@ export const getFileBinary = async (
   });
 };
 
+export const isCloudinaryUrl = (url: string) => {
+  return url.split("/")[2] === "res.cloudinary.com";
+};
+
 interface ResizeOptions {
   height: number;
   width: number;
@@ -68,9 +72,7 @@ export const getResizedAlbumCoverImageUrl = (
     return "";
   }
 
-  const isCloudinaryUrl = url.split("/")[2] === "res.cloudinary.com";
-
-  if (!isCloudinaryUrl) {
+  if (!isCloudinaryUrl(url)) {
     return url;
   }
 

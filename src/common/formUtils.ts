@@ -10,6 +10,7 @@ import {
   REGEX_12_DIGITS_OR_LESS,
   REGEX_13_DIGITS_OR_LESS,
   REGEX_9_TO_11_DIGITS,
+  REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
   REGEX_PASSWORD_REQUIREMENTS,
@@ -247,7 +248,7 @@ export const commonYupValidation = {
         }`
       );
   },
-  copyrights: Yup.string().max(
+  copyright: Yup.string().max(
     MAX_CHARACTER_COUNT,
     `Must be ${MAX_CHARACTER_COUNT} characters or less`
   ),
@@ -259,6 +260,61 @@ export const commonYupValidation = {
     REGEX_ISWC_FORMAT,
     "Must be in the format T-000000000-0"
   ),
+  consentsToContract: Yup.bool().required("This field is required"),
+  publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
+  owners: Yup.array().when("isMinting", {
+    is: (value: boolean) => !!value,
+    then: Yup.array()
+      .min(1, "At least one owner is required when minting")
+      .test({
+        message: "Owner percentages must be between 00.01% and 100%",
+        test: (owners = []) =>
+          owners.every(
+            ({ percentage = 0 }) => percentage >= 0.01 && percentage <= 100
+          ),
+      })
+      .test({
+        message: "Percentages should not exceed 2 decimal places",
+        test: (owners = []) =>
+          owners.every(({ percentage = 0 }) =>
+            /^\d+(\.\d{1,2})?$/.test(percentage.toString())
+          ),
+      })
+      .test({
+        message: "100% ownership must be distributed",
+        test: (owners) => {
+          if (!owners) return false;
+
+          const percentageSum = owners.reduce((sum, owner) => {
+            return sum + owner.percentage;
+          }, 0);
+
+          return percentageSum === 100;
+        },
+      }),
+  }),
+  barcodeType: Yup.string(),
+  barcodeNumber: Yup.string().when("barcodeType", {
+    is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
+    then: Yup.string()
+      .test("barcodeNumberTest", function (value = "") {
+        const { barcodeType } = this.parent;
+        const { regEx, message } = getBarcodeRegex(barcodeType);
+
+        return regEx.test(value) ? true : this.createError({ message });
+      })
+      .required("Barcode number is required when barcode type is selected"),
+    otherwise: Yup.string(),
+  }),
+  isrc: (languageCodes: string[]) =>
+    Yup.string()
+      .matches(REGEX_ISRC_FORMAT, "This is not a valid ISRC format")
+      .test("is-valid-country-code", "The country code is invalid", (value) => {
+        if (!value) return true;
+
+        const countryCode = value.substring(0, 2).toLowerCase();
+        return languageCodes.includes(countryCode);
+      }),
 };
 
 /**

@@ -1,4 +1,5 @@
 import { FunctionComponent, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
@@ -18,6 +19,8 @@ import {
   DropdownMultiSelectField,
   DropdownSelectField,
   ErrorMessage,
+  PlaySong,
+  SolidOutline,
   SwitchInputField,
   TextAreaField,
   TextInputField,
@@ -39,7 +42,13 @@ import {
 } from "modules/session";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
 
-const BasicSongDetails: FunctionComponent = () => {
+interface BasicDonDetailsProps {
+  readonly isInEditMode?: boolean;
+}
+
+const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
+  isInEditMode,
+}) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
@@ -54,6 +63,7 @@ const BasicSongDetails: FunctionComponent = () => {
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
+  const { songId } = useParams<"songId">();
 
   const genreOptions = useExtractProperty(genres, "name");
   const languageOptions = useExtractProperty(languages, "language_name");
@@ -112,11 +122,32 @@ const BasicSongDetails: FunctionComponent = () => {
         } }
       >
         <Stack ref={ audioRef } spacing={ 0.5 } width="100%">
-          <Typography color="grey100" fontWeight={ 500 }>
-            SONG FILE
-          </Typography>
+          { isInEditMode ? (
+            <>
+              <Typography color="grey100" fontWeight={ 500 }>
+                SONG
+              </Typography>
 
-          <UploadSongField name="audio" />
+              <SolidOutline
+                sx={ {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexGrow: 1,
+                } }
+              >
+                <PlaySong id={ songId || "" } />
+              </SolidOutline>
+            </>
+          ) : (
+            <>
+              <Typography color="grey100" fontWeight={ 500 }>
+                SONG FILE
+              </Typography>
+
+              <UploadSongField name="audio" />
+            </>
+          ) }
         </Stack>
 
         <Stack ref={ coverArtUrlRef } spacing={ 0.5 } width="100%">
@@ -293,7 +324,7 @@ const BasicSongDetails: FunctionComponent = () => {
                 : "default"
             }
           >
-            { values.isMinting ? "Next" : "Upload" }
+            { values.isMinting ? "Next" : isInEditMode ? "Save" : "Upload" }
           </Button>
         </Box>
       </Stack>

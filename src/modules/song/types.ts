@@ -80,7 +80,7 @@ export interface PostSongRequest {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyrights?: string;
+  readonly copyright?: string;
   readonly parentalAdvisory?: string;
   readonly barcodeType?: string;
   readonly barcodeNumber?: string;
@@ -117,6 +117,14 @@ export interface DeleteSongRequest {
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
   readonly id: string;
+  readonly shouldRedirect?: boolean;
+}
+
+export interface UpdateCollaborationsRequest {
+  readonly id: string;
+  readonly owners: ReadonlyArray<Owner>;
+  readonly creditors: ReadonlyArray<Creditor>;
+  readonly featured: ReadonlyArray<Featured>;
 }
 
 export interface CloudinarySignatureResponse {
@@ -167,7 +175,7 @@ export interface Song {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyrights?: string;
+  readonly copyright?: string;
   readonly parentalAdvisory?: string;
   readonly isrc?: string;
   readonly iswc?: string;
@@ -180,6 +188,8 @@ export interface Song {
   readonly nftName?: string;
   readonly mintingStatus: MintingStatus;
   readonly marketplaceStatus: MarketplaceStatus;
+  readonly barcodeType?: string;
+  readonly barcodeNumber?: string;
 }
 
 export interface Artist {
