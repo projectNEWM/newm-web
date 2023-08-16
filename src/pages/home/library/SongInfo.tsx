@@ -297,10 +297,6 @@ const SongInfo = () => {
                   tooltipText={ " " }
                 />
               </Stack>
-
-              <Stack>
-                <HorizontalLine my={ 2 } />
-              </Stack>
             </Stack>
           </Stack>
         ) }
