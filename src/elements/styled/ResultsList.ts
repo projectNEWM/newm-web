@@ -1,5 +1,6 @@
+import styled, { css } from "styled-components";
+import { DropdownMultiSelectProps } from "elements/DropdownMultiSelect";
 import theme from "theme";
-import styled from "styled-components";
 
 const ResultsList = styled.ul`
   background-color: ${theme.colors.grey500};
@@ -13,6 +14,11 @@ const ResultsList = styled.ul`
   position: absolute;
   width: 100%;
   z-index: 10;
+  ${({ widthType }: DropdownMultiSelectProps) =>
+    widthType !== "full" &&
+    css`
+      max-width: ${theme.inputField.maxWidth};
+    `}
 
   li {
     cursor: pointer;
