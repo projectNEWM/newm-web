@@ -1,246 +1,309 @@
-import { useRef } from "react";
-import * as Yup from "yup";
 import { Box, Stack } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
-import { Form, Formik, FormikValues } from "formik";
+import { useParams } from "react-router";
+import { useWindowDimensions } from "common";
 import {
-  commonYupValidation,
-  getUpdatedValues,
-  scrollToError,
-  useExtractProperty,
-  useWindowDimensions,
-} from "common";
-import {
-  DropdownMultiSelectField,
+  PlaySong,
+  SolidOutline,
+  SwitchInputField,
   TextAreaField,
   TextInputField,
   UploadImageField,
 } from "components";
-import { Button, HorizontalLine, Typography } from "elements";
+import { HorizontalLine, Typography } from "elements";
 import theme from "theme";
-import { emptySong, useGetSongQuery, usePatchSongThunk } from "modules/song";
-import { useGetGenresQuery, useGetMoodsQuery } from "modules/content";
-
-interface RouteParams {
-  readonly songId: string;
-}
+import { emptySong, useGetSongQuery } from "modules/song";
+import { Formik } from "formik";
+import { SongRouteParams } from "./types";
 
 const SongInfo = () => {
-  const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { songId } = useParams<"songId">() as RouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const coverArtUrlRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const genresRef = useRef<HTMLDivElement>(null);
-
-  const [patchSong] = usePatchSongThunk();
-  const { data: genresData = [] } = useGetGenresQuery();
-  const { data: moodOptions = [] } = useGetMoodsQuery();
   const {
     data: {
       title,
+      genres: songGenres,
+      moods,
       coverArtUrl,
       description,
-      genres = [],
-      moods = [],
+      language,
+      parentalAdvisory,
+      releaseDate,
+      publicationDate,
+      copyright,
+      barcodeNumber,
+      barcodeType,
+      isrc,
+      iswc,
+      ipis,
     } = emptySong,
   } = useGetSongQuery(songId);
 
   const initialValues = {
+    id: songId,
     coverArtUrl,
-    description,
-    genres,
-    moods,
     title,
-  };
-
-  const genreOptions = useExtractProperty(genresData, "name");
-
-  const validationSchema = Yup.object({
-    coverArtUrl: commonYupValidation.coverArtUrl,
-    description: Yup.string(),
-    genres: commonYupValidation
-      .genres(genreOptions)
-      .min(1, "At least one genre is required"),
-    title: commonYupValidation.title,
-  });
-
-  /**
-   * Update profile data with modifications made.
-   */
-  const handleSubmit = (values: FormikValues) => {
-    const updatedValues = getUpdatedValues(initialValues, values);
-
-    patchSong({ id: songId, ...updatedValues });
+    genres: songGenres,
+    moods,
+    description,
+    copyright,
+    isrc,
+    releaseDate,
+    isExplicit: parentalAdvisory === "Explicit",
+    isMinting: false,
+    language,
+    consentsToContract: false,
+    barcodeNumber,
+    barcodeType,
+    publicationDate,
+    iswc,
+    userIpi: ipis?.join(", "),
   };
 
   return (
-    <Box sx={ { mt: 5 } }>
+    <Box
+      sx={ {
+        mt: 5,
+        textAlign:
+          windowWidth && windowWidth > theme.breakpoints.values.md
+            ? "left"
+            : "center",
+        maxWidth: [
+          theme.inputField.maxWidth,
+          theme.inputField.maxWidth,
+          "700px",
+        ],
+      } }
+    >
       <Formik
-        enableReinitialize={ true }
         initialValues={ initialValues }
-        onSubmit={ handleSubmit }
-        validationSchema={ validationSchema }
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onSubmit={ () => {} }
+        enableReinitialize={ true }
       >
-        { ({ dirty, errors, isSubmitting }) => {
-          scrollToError(errors, isSubmitting, [
-            { error: errors.coverArtUrl, element: coverArtUrlRef.current },
-            { error: errors.title, element: titleRef.current },
-            { error: errors.genres, element: genresRef.current },
-          ]);
-
-          return (
-            <Form
-              style={ {
-                textAlign:
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "left"
-                    : "center",
+        { ({ values }) => (
+          <Stack direction="column" spacing={ 5 }>
+            <Typography variant="h4" fontWeight="700">
+              Basic Details
+            </Typography>
+            <Stack
+              sx={ {
+                display: "flex",
+                flexDirection: ["column", "column", "row"],
+                columnGap: [undefined, undefined, 1.5],
+                rowGap: [2, null, 3],
+                maxWidth: [undefined, undefined, "700px"],
+                marginBottom: 3,
+                alignItems: ["center", "center", "unset"],
               } }
             >
               <Stack
-                sx={ {
-                  m: ["0 auto", undefined, "0"],
-                  maxWidth: theme.inputField.maxWidth,
-                  textAlign: "left",
-                } }
+                maxWidth={ theme.inputField.maxWidth }
                 spacing={ 0.5 }
-                ref={ coverArtUrlRef }
+                width="100%"
+              >
+                <Typography color="grey100" fontWeight={ 500 }>
+                  SONG
+                </Typography>
+
+                <SolidOutline
+                  sx={ {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexGrow: 1,
+                    height: "100px",
+                  } }
+                >
+                  <PlaySong id={ songId || "" } />
+                </SolidOutline>
+              </Stack>
+
+              <Stack
+                maxWidth={ theme.inputField.maxWidth }
+                spacing={ 0.5 }
+                width="100%"
               >
                 <Typography color="grey100" fontWeight={ 500 }>
                   SONG COVER ART
                 </Typography>
 
                 <UploadImageField
+                  rootSx={ { width: "100%", alignSelf: "center" } }
                   name="coverArtUrl"
-                  changeImageButtonText="Change cover"
-                  emptyMessage="Drag and drop or browse your image"
-                  minDimensions={ { width: 1400, height: 1400 } }
+                  emptyMessage="Loading..."
                   isMultiButtonLayout={ true }
+                  allowImageChange={ false }
                 />
               </Stack>
+            </Stack>
+            <Stack
+              spacing={ 3 }
+              sx={ {
+                marginX: ["auto", "auto", "unset"],
+                maxWidth: [
+                  theme.inputField.maxWidth,
+                  theme.inputField.maxWidth,
+                  "700px",
+                ],
+                alignSelf: ["center", "center", "unset"],
+                width: "100%",
+              } }
+            >
               <Stack
                 sx={ {
-                  marginY: 5,
-                  marginX: ["auto", "auto", "unset"],
-                  maxWidth: ["340px", "340px", "700px"],
-                } }
-              >
-                <HorizontalLine />
-              </Stack>
-
-              <Stack
-                spacing={ 2.5 }
-                sx={ {
-                  marginX: ["auto", "auto", "unset"],
-                  maxWidth: ["340px", "340px", "700px"],
+                  display: "grid",
+                  gridTemplateColumns: [
+                    "repeat(1, 1fr)",
+                    null,
+                    "repeat(2, 1fr)",
+                  ],
+                  rowGap: [2, null, 3],
+                  columnGap: [undefined, undefined, 1.5],
                 } }
               >
                 <TextInputField
+                  disabled={ true }
                   isOptional={ false }
-                  name="title"
                   label="SONG TITLE"
-                  placeholder="Give your track a name..."
+                  name="title"
+                  title={ values.title || "" }
                   widthType="full"
-                  ref={ titleRef }
                 />
 
-                <Stack
-                  ref={ genresRef }
-                  sx={ {
-                    display: "grid",
-                    gridTemplateColumns: [
-                      "repeat(1, 1fr)",
-                      null,
-                      "repeat(2, 1fr)",
-                    ],
-                    rowGap: ["16px", null, "12px"],
-                    columnGap: [undefined, undefined, "20px"],
-                  } }
-                >
-                  <DropdownMultiSelectField
-                    label="Genres"
-                    isOptional={ false }
-                    name="genres"
-                    placeholder="Select all that apply"
-                    options={ genreOptions }
-                  />
+                <TextInputField
+                  disabled={ true }
+                  isOptional={ false }
+                  label="GENRE"
+                  name="genres"
+                  title={ values.genres?.join(", ") || "" }
+                />
 
-                  <DropdownMultiSelectField
-                    label="Moods"
-                    name="moods"
-                    placeholder="Select all that apply"
-                    options={ moodOptions }
-                  />
-                </Stack>
+                <TextInputField
+                  disabled={ true }
+                  label="LANGUAGE"
+                  name="language"
+                />
+
+                <TextInputField
+                  disabled={ true }
+                  label="MOOD"
+                  name="moods"
+                  title={ values.moods?.join(", ") || "" }
+                />
               </Stack>
 
+              <TextAreaField
+                disabled={ true }
+                label="DESCRIPTION"
+                name="description"
+                title={ values.description || "" }
+              />
+
+              <Stack>
+                <HorizontalLine my={ 2 } />
+              </Stack>
+            </Stack>
+            <Typography variant="h4" fontWeight="700">
+              Advanced Details
+            </Typography>
+            <Stack
+              marginX={ ["auto", "auto", "unset"] }
+              maxWidth={ [
+                theme.inputField.maxWidth,
+                theme.inputField.maxWidth,
+                "700px",
+              ] }
+              spacing={ 3 }
+            >
+              <SwitchInputField
+                disabled={ true }
+                name="isExplicit"
+                title="Does the song contain explicit content?"
+                tooltipText={
+                  "Explicit content includes strong or discriminatory language, " +
+                  "or depictions of sex, violence or substance abuse."
+                }
+              />
               <Stack
-                sx={ {
-                  marginTop: 2.5,
-                  marginX: ["auto", "auto", "unset"],
-                  maxWidth: ["340px", "340px", "700px"],
-                } }
+                display="grid"
+                gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
+                rowGap={ [2, null, 3] }
+                columnGap={ [undefined, undefined, 1.5] }
               >
-                <TextAreaField
-                  name="description"
-                  label="SONG DESCRIPTION"
-                  placeholder="Description"
-                  widthType={
-                    windowWidth && windowWidth > theme.breakpoints.values.md
-                      ? "full"
-                      : "default"
+                <TextInputField
+                  disabled={ true }
+                  isOptional={ false }
+                  label="SCHEDULE RELEASE DATE"
+                  name="releaseDate"
+                  type="date"
+                  tooltipText={
+                    "When selecting a date to release your song on our " +
+                    "platform, please remember to factor in approval from any " +
+                    "contributors/featured artists as well as mint processing time " +
+                    "which can take up to 15 days."
                   }
                 />
+                <TextInputField
+                  disabled={ true }
+                  name="publicationDate"
+                  label="ORIGINAL PUBLICATION DATE"
+                  type="date"
+                  tooltipText={
+                    "If your song has already been launched on other platforms you " +
+                    "may input the release date here, but it is not required."
+                  }
+                />
+                <TextInputField
+                  disabled={ true }
+                  name="copyright"
+                  label="COPYRIGHT"
+                  tooltipText={ "" }
+                  title={ values.copyright || "" }
+                />
+                <TextInputField
+                  disabled={ true }
+                  label="ISRC"
+                  mask="aa-***-99-99999"
+                  maskChar={ null }
+                  name="isrc"
+                  tooltipText={ " " }
+                />
+                <TextInputField
+                  disabled={ true }
+                  name="barcodeType"
+                  label="BARCODE TYPE"
+                  tooltipText={ " " }
+                />
+                <TextInputField
+                  disabled={ true }
+                  name="barcodeNumber"
+                  label="BARCODE NUMBER"
+                  tooltipText={ " " }
+                />
+                <TextInputField
+                  disabled={ true }
+                  label="IPI"
+                  name="userIpi"
+                  tooltipText={ " " }
+                  type="number"
+                />
+                <TextInputField
+                  disabled={ true }
+                  label="ISWC"
+                  mask="T-999999999-9"
+                  maskChar={ null }
+                  name="iswc"
+                  tooltipText={ " " }
+                />
               </Stack>
 
-              <Stack
-                sx={ {
-                  marginY: 5,
-                  marginX: ["auto", "auto", "unset"],
-                  maxWidth: ["340px", "340px", "700px"],
-                } }
-              >
-                <HorizontalLine />
-                <Stack
-                  sx={ {
-                    columnGap: 2,
-                    flexDirection: [null, null, "row"],
-                    mt: 5,
-                    rowGap: 2,
-                  } }
-                >
-                  <Button
-                    color="music"
-                    onClick={ () => navigate(-1) }
-                    variant="secondary"
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.md
-                        ? "compact"
-                        : "default"
-                    }
-                  >
-                    Cancel
-                  </Button>
-
-                  <Button
-                    sx={ { display: dirty ? "inline-flex" : "none" } }
-                    isLoading={ isSubmitting }
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.md
-                        ? "compact"
-                        : "default"
-                    }
-                    type="submit"
-                  >
-                    Save
-                  </Button>
-                </Stack>
+              <Stack>
+                <HorizontalLine my={ 2 } />
               </Stack>
-            </Form>
-          );
-        } }
+            </Stack>
+          </Stack>
+        ) }
       </Formik>
     </Box>
   );

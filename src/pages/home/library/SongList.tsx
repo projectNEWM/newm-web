@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import theme from "theme";
 import { Button } from "elements";
 import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
@@ -266,101 +267,116 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       <Table size="small" aria-label="Song List">
         <TableHead />
         <TableBody>
-          { songData.map((song) => (
-            <TableRow
-              onClick={ () => handleSongPlayPause(song) }
-              key={ song.id }
-              sx={ {
-                cursor: "pointer",
-                WebkitTapHighlightColor: "transparent",
-                "&:hover, &:focus": {
-                  background: theme.colors.activeBackground,
-                },
-              } }
-            >
-              <TableCell>
-                <Box sx={ { display: "flex", alignItems: "center" } }>
-                  <IconButton
-                    onClick={ handlePressPlayButton(song) }
-                    sx={ {
-                      marginRight: [2, 4],
-                      marginLeft: [0, 1],
-                      height: "40px",
-                      width: "40px",
-                    } }
-                  >
-                    <SongStreamPlaybackIcon
-                      isSongPlaying={
-                        song.id === playerState.currentPlayingSongId
-                      }
-                      isSongUploaded={ !!song.streamUrl }
+          { songData.map((song) => {
+            const hasStartedMintingProcess =
+              song.mintingStatus !== MintingStatusType.Undistributed;
+
+            return (
+              <TableRow
+                onClick={ () => handleSongPlayPause(song) }
+                key={ song.id }
+                sx={ {
+                  cursor: "pointer",
+                  WebkitTapHighlightColor: "transparent",
+                  "&:hover, &:focus": {
+                    background: theme.colors.activeBackground,
+                  },
+                } }
+              >
+                <TableCell>
+                  <Box sx={ { display: "flex", alignItems: "center" } }>
+                    <IconButton
+                      onClick={ handlePressPlayButton(song) }
+                      sx={ {
+                        marginRight: [2, 4],
+                        marginLeft: [0, 1],
+                        height: "40px",
+                        width: "40px",
+                      } }
+                    >
+                      <SongStreamPlaybackIcon
+                        isSongPlaying={
+                          song.id === playerState.currentPlayingSongId
+                        }
+                        isSongUploaded={ !!song.streamUrl }
+                      />
+                    </IconButton>
+                    <img
+                      style={ {
+                        borderRadius: "4px",
+                        width: "40px",
+                        height: "40px",
+                      } }
+                      src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
+                      alt="Album cover"
                     />
-                  </IconButton>
-                  <img
-                    style={ {
-                      borderRadius: "4px",
-                      width: "40px",
-                      height: "40px",
-                    } }
-                    src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
-                    alt="Album cover"
-                  />
+                    <Box
+                      sx={ {
+                        fontWeight: "500",
+                        paddingLeft: "12px",
+                        overflow: "auto",
+                        whiteSpace: "nowrap",
+                        maxWidth: { xs: "110px", sm: "none" },
+                      } }
+                    >
+                      { song.title }
+                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
                   <Box
                     sx={ {
-                      fontWeight: "500",
-                      paddingLeft: "12px",
-                      overflow: "auto",
-                      whiteSpace: "nowrap",
-                      maxWidth: { xs: "110px", sm: "none" },
+                      display: "flex",
+                      alignItems: "center",
                     } }
                   >
-                    { song.title }
+                    <MintingStatus mintingStatus={ song.mintingStatus } />
                   </Box>
-                </Box>
-              </TableCell>
-              <TableCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
-                <Box
+                </TableCell>
+                <TableCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
+                  { song.genres.join(", ") }
+                </TableCell>
+                <TableCell
                   sx={ {
-                    display: "flex",
-                    alignItems: "center",
+                    textAlign: "end",
+                    display: { xs: "none", md: "table-cell" },
                   } }
                 >
-                  <MintingStatus mintingStatus={ song.mintingStatus } />
-                </Box>
-              </TableCell>
-              <TableCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-                { song.genres.join(", ") }
-              </TableCell>
-              <TableCell
-                sx={ {
-                  textAlign: "end",
-                  display: { xs: "none", md: "table-cell" },
-                } }
-              >
-                { song.duration
-                  ? convertMillisecondsToSongFormat(song.duration)
-                  : "--:--" }
-              </TableCell>
-              <TableCell
-                sx={ {
-                  paddingLeft: [0, 1],
-                  paddingRight: [1, 3],
-                  width: "0",
-                } }
-              >
-                <Button
-                  variant="secondary"
-                  width="icon"
-                  onClick={ (e) => {
-                    e.stopPropagation();
-                    navigate(`edit-song/${song.id}`);
+                  { song.duration
+                    ? convertMillisecondsToSongFormat(song.duration)
+                    : "--:--" }
+                </TableCell>
+                <TableCell
+                  sx={ {
+                    paddingLeft: [0, 1],
+                    paddingRight: [1, 3],
+                    width: "0",
                   } }
                 >
-                  <EditIcon sx={ { color: theme.colors.music } } />
-                </Button>
-              </TableCell>
-            </TableRow>
-          )) }
+                  <Button
+                    variant="secondary"
+                    width="icon"
+                    onClick={ (e) => {
+                      e.stopPropagation();
+                      navigate(
+                        `${
+                          hasStartedMintingProcess
+                            ? "view-details"
+                            : "edit-song"
+                        }/${song.id}`
+                      );
+                    } }
+                  >
+                    { hasStartedMintingProcess ? (
+                      <VisibilityIcon sx={ { color: theme.colors.music } } />
+                    ) : (
+                      <EditIcon sx={ { color: theme.colors.music } } />
+                    ) }
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          }) }
         </TableBody>
         { totalCountOfSongs > songData.length && (
           <TablePagination
