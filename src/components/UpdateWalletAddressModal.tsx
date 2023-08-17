@@ -8,14 +8,35 @@ import {
   getWalletAddress,
   useConnectWallet,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { updateProfile } from "modules/session";
+import {
+  emptyProfile,
+  selectSession,
+  updateProfile,
+  useGetProfileQuery,
+} from "modules/session";
 import Modal from "./Modal";
 
 const UpdateWalletAddressModal: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
+  const { isLoggedIn } = useSelector(selectSession);
   const { isUpdateWalletAddressModalOpen } = useSelector(selectUi);
+  const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    {
+      skip: !isLoggedIn,
+    }
+  );
+
+  const message = walletAddress
+    ? "You already have a wallet address saved to your profile. Would you " +
+      "like to overwrite it with an address from your currently connected " +
+      "wallet?"
+    : "You have not saved an address to your profile yet. The address saved " +
+      "to your profile is where you will receive any song tokens and " +
+      "royalties. Would you like to save an address from your currently " +
+      "connected wallet now?";
 
   const handleClose = () => {
     dispatch(setIsUpdateWalletAddressModalOpen(false));
@@ -43,11 +64,7 @@ const UpdateWalletAddressModal: FunctionComponent = () => {
             maxWidth: "85%",
           } }
         >
-          <Typography>
-            You already have a wallet address saved to your profile. Would you
-            like to update it with an address from the recently connected
-            wallet?
-          </Typography>
+          <Typography>{ message }</Typography>
 
           <Stack direction="row" gap={ 2 } justifyContent="flex-end">
             <Button

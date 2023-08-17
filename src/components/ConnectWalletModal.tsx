@@ -17,7 +17,6 @@ import {
   emptyProfile,
   getIsWalletEnvMismatch,
   selectSession,
-  updateProfile,
   useGetProfileQuery,
 } from "modules/session";
 
@@ -42,12 +41,10 @@ const ConnectWalletModal: FunctionComponent = () => {
       return;
     }
 
-    // If the user doesn't have a saved address, update their profile.
-    // Otherwise, if the address from the recently connected wallet is
-    // different, prompt them before overwriting it.
-    if (!savedWalletAddress) {
-      dispatch(updateProfile({ walletAddress: newWalletAddress }));
-    } else if (savedWalletAddress !== newWalletAddress) {
+    // If the user doesn't have a saved address, or if the address from
+    // the recently connected wallet is different than the currently saved
+    // address, prompt them before overwriting it.
+    if (!savedWalletAddress || savedWalletAddress !== newWalletAddress) {
       dispatch(setIsUpdateWalletAddressModalOpen(true));
     }
 

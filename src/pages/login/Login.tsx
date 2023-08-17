@@ -13,11 +13,11 @@ import {
   TextInputField,
 } from "components";
 import * as Yup from "yup";
-import { useLoginMutation } from "modules/session";
+import { useLoginThunk } from "modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginThunk();
   const [maskPassword, setMaskPassword] = useState(true);
 
   const validationSchema = Yup.object({
