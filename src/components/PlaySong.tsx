@@ -27,7 +27,7 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
 
   if (isLoading) return null;
 
-  return song ? (
+  return song?.streamUrl ? (
     <Stack sx={ { cursor: "pointer", width: "100%", height: "100%" } }>
       { isSongPlaying ? (
         <IconMessage

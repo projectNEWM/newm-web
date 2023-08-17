@@ -139,7 +139,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             label={
               <Typography variant="subtitle1" color="white" fontSize={ 12 }>
                 By selecting &lsquo;Distribute & Mint&rsquo; you agree to
-                distribute this song to all current and future available stores.
+                distribute this song to all current and future available stores
+                including digital downloads.
               </Typography>
             }
           />

@@ -41,6 +41,7 @@ import {
   useGetProfileQuery,
 } from "modules/session";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import { SongRouteParams } from "../library/types";
 
 interface BasicDonDetailsProps {
   readonly isInEditMode?: boolean;
@@ -63,7 +64,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const { songId } = useParams<"songId">();
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const genreOptions = useExtractProperty(genres, "name");
   const languageOptions = useExtractProperty(languages, "language_name");
@@ -119,9 +120,15 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           rowGap: [2, null, 3],
           maxWidth: [undefined, undefined, "700px"],
           marginBottom: 3,
+          alignItems: ["center", "center", "unset"],
         } }
       >
-        <Stack ref={ audioRef } spacing={ 0.5 } width="100%">
+        <Stack
+          ref={ audioRef }
+          spacing={ 0.5 }
+          width="100%"
+          maxWidth={ theme.inputField.maxWidth }
+        >
           { isInEditMode ? (
             <>
               <Typography color="grey100" fontWeight={ 500 }>
@@ -134,9 +141,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   justifyContent: "center",
                   alignItems: "center",
                   flexGrow: 1,
+                  height: "100px",
                 } }
               >
-                <PlaySong id={ songId || "" } />
+                <PlaySong id={ songId } />
               </SolidOutline>
             </>
           ) : (
@@ -150,7 +158,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           ) }
         </Stack>
 
-        <Stack ref={ coverArtUrlRef } spacing={ 0.5 } width="100%">
+        <Stack
+          maxWidth={ theme.inputField.maxWidth }
+          ref={ coverArtUrlRef }
+          spacing={ 0.5 }
+          width="100%"
+        >
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
@@ -170,7 +183,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
         spacing={ 3 }
         sx={ {
           marginX: ["auto", "auto", "unset"],
-          maxWidth: ["340px", "340px", "700px"],
+          maxWidth: [
+            theme.inputField.maxWidth,
+            theme.inputField.maxWidth,
+            "700px",
+          ],
           alignSelf: ["center", "center", "unset"],
         } }
       >

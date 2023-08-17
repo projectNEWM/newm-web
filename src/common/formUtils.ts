@@ -179,11 +179,17 @@ export const commonYupValidation = {
     .matches(
       REGEX_PASSWORD_REQUIREMENTS,
       "Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number"
+    )
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
     ),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("newPassword")],
-    "Passwords must match"
-  ),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("newPassword")], "Passwords must match")
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
+    ),
   coverArtUrl: Yup.mixed()
     .required("This field is required")
     .test({

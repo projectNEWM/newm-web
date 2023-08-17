@@ -44,6 +44,7 @@ export interface UploadImageProps {
   readonly isMultiButtonLayout?: boolean;
   readonly rootSx?: SxProps;
   readonly contentSx?: SxProps;
+  readonly allowImageChange?: boolean;
 }
 
 interface ImagePreviewProps extends BoxProps {
@@ -71,6 +72,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   isMultiButtonLayout = false,
   rootSx = {},
   contentSx = {},
+  allowImageChange = true,
 }) => {
   const theme = useTheme();
 
@@ -121,7 +123,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   };
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
-    onDrop: handleDrop,
+    onDrop: allowImageChange ? handleDrop : undefined,
     multiple: false,
     accept: {
       "image/png": [".png"],
@@ -178,14 +180,16 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           />
 
           <Stack direction="row" gap={ 2 } justifyContent="flex-end">
-            <Button
-              width="compact"
-              variant="secondary"
-              color="music"
-              onClick={ handleChangeImage }
-            >
-              { changeImageButtonText }
-            </Button>
+            { allowImageChange ? (
+              <Button
+                width="compact"
+                variant="secondary"
+                color="music"
+                onClick={ handleChangeImage }
+              >
+                { changeImageButtonText }
+              </Button>
+            ) : null }
 
             <Button width="compact" onClick={ () => setIsModalOpen(false) }>
               Done
@@ -223,22 +227,24 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
               />
             ) : isHovering ? (
               <Box display="flex" justifyContent="space-between" flex={ 1 }>
-                <Box
-                  display="flex"
-                  flex={ 1 }
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={ {
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.4)",
-                    },
-                  } }
-                >
-                  <IconMessage
-                    icon={ <ChangeCircleIcon /> }
-                    message="Change cover"
-                  />
-                </Box>
+                { allowImageChange ? (
+                  <Box
+                    display="flex"
+                    flex={ 1 }
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={ {
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.4)",
+                      },
+                    } }
+                  >
+                    <IconMessage
+                      icon={ <ChangeCircleIcon /> }
+                      message="Change cover"
+                    />
+                  </Box>
+                ) : null }
 
                 <Box
                   display="flex"

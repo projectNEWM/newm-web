@@ -14,6 +14,7 @@ import {
   UploadImageField,
 } from "components";
 import {
+  MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
   commonYupValidation,
   getUpdatedValues,
@@ -115,7 +116,12 @@ const Profile: FunctionComponent = () => {
     ),
     companyName: Yup.string().when("companyIpRights", {
       is: true,
-      then: Yup.string().required("Company name is required"),
+      then: Yup.string()
+        .max(
+          MAX_CHARACTER_COUNT,
+          `Must be ${MAX_CHARACTER_COUNT} characters or less`
+        )
+        .required("Company name is required"),
       otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,

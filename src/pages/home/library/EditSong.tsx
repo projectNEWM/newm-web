@@ -11,6 +11,7 @@ import { ProfileImage, WizardForm } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
 import {
   CollaborationStatus,
+  MintingStatus,
   PatchSongRequest,
   emptySong,
   getIsSongDeletable,
@@ -33,15 +34,12 @@ import AdvancedSongDetails from "pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "pages/home/uploadSong/ConfirmAgreement";
 import DeleteSongModal from "./DeleteSongModal";
-
-interface RouteParams {
-  readonly songId: string;
-}
+import { SongRouteParams } from "./types";
 
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { songId } = useParams<"songId">() as RouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const { data: genres = [] } = useGetGenresQuery();
   const {
@@ -93,6 +91,7 @@ const EditSong: FunctionComponent = () => {
       ipis,
     } = emptySong,
     error,
+    isLoading,
   } = useGetSongQuery(songId);
 
   const owners = collaborations
@@ -191,6 +190,14 @@ const EditSong: FunctionComponent = () => {
         severity: "error",
       })
     );
+  }
+
+  /**
+   * Redirect if user manually navigates
+   * to edit page after minting process started.
+   */
+  if (!isLoading && mintingStatus !== MintingStatus.Undistributed) {
+    navigate(`/home/library/view-details/${songId}`, { replace: true });
   }
 
   const handleSubmit = async (

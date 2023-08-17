@@ -32,6 +32,7 @@ import {
 import SelectCoCeators from "components/minting/SelectCoCreators";
 import * as Yup from "yup";
 import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import { SongRouteParams } from "./types";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -41,16 +42,12 @@ interface FormValues {
   readonly consentsToContract: boolean;
 }
 
-interface RouteParams {
-  readonly songId: string;
-}
-
 const MintSong = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
-  const { songId } = useParams<"songId">() as RouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const ownersRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);

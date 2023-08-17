@@ -1,5 +1,6 @@
 import theme from "theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { DropdownMultiSelectProps } from "elements/DropdownMultiSelect";
 
 const NoResultsText = styled.span`
   background-color: ${theme.colors.grey500};
@@ -11,6 +12,12 @@ const NoResultsText = styled.span`
   position: absolute;
   width: 100%;
   z-index: 1;
+
+  ${({ widthType }: DropdownMultiSelectProps) =>
+    widthType !== "full" &&
+    css`
+      max-width: ${theme.inputField.maxWidth};
+    `}
 `;
 
 export default NoResultsText;
