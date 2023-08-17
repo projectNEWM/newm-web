@@ -118,6 +118,8 @@ const ViewDetails: FunctionComponent = () => {
           sx={ {
             ".MuiButtonBase-root.MuiTab-root": {
               minWidth: "auto",
+              textTransform: "none",
+              ...theme.typography.subtitle2,
             },
             ".MuiTabs-flexContainer": {
               gap: 4,
