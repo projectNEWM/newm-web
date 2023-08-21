@@ -131,35 +131,20 @@ export const uploadSong = createAsyncThunk(
 
       songId = songResp.data.songId;
 
-      // get signed upload url for AWS
-      const audioUploadUrlResp = await dispatch(
-        songApi.endpoints.getAudioUploadUrl.initiate({
+      const uploadSongAudioResponse = await dispatch(
+        songApi.endpoints.uploadSongAudio.initiate({
           songId,
-          fileName: body.audio.name,
+          audio: body.audio,
         })
       );
 
-      if ("error" in audioUploadUrlResp) throw new SilentError();
+      if ("error" in uploadSongAudioResponse) {
+        if (body.isMinting) {
+          history.push("/home/upload-song");
+        }
 
-      const { url: uploadUrl, fields } = audioUploadUrlResp.data;
-
-      // build a form with AWS presigned fields and upload audio to AWS
-      // song audioUrl will be updated after it's transcoded
-      const formData = new FormData();
-      for (const key in fields) {
-        formData.append(key, fields[key]);
+        return;
       }
-      const headers = new Headers({
-        ContentDisposition: `filename=${body.audio.name}`,
-      });
-
-      formData.append("file", body.audio);
-
-      await fetch(uploadUrl, {
-        method: "POST",
-        headers: Object.assign({}, headers),
-        body: formData,
-      });
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(

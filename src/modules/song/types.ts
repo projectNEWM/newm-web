@@ -111,6 +111,19 @@ export interface UploadSongResponse {
   readonly songId: string;
 }
 
+export interface UploadSongAudioRequest {
+  readonly songId: string;
+  readonly audio: File;
+}
+
+export interface UploadSongAudioResponse {
+  readonly url: string;
+  readonly mimeType: string;
+  readonly fileSize: number;
+  readonly duration: number;
+  readonly sampleRate: number;
+}
+
 export interface DeleteSongRequest {
   readonly songId: string;
 }
@@ -132,16 +145,6 @@ export interface CloudinarySignatureResponse {
   readonly timestamp: number;
   readonly cloudName: string;
   readonly apiKey: string;
-}
-
-export interface AudioUploadUrlRequest {
-  readonly songId: string;
-  readonly fileName: string;
-}
-
-export interface AudioUploadUrlResponse {
-  readonly url: string;
-  readonly fields: Record<string, string>;
 }
 
 export enum MintingStatus {
@@ -369,3 +372,14 @@ export interface CollaboratorStatusContent {
 export interface GetEarliestReleaseDateResponse {
   readonly date: string;
 }
+
+export type CustomError = {
+  error: {
+    data: {
+      code: number;
+      cause: string;
+      description: string;
+    };
+  };
+  status: number;
+};
