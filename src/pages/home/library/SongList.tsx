@@ -10,9 +10,15 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import CloseIcon from "@mui/icons-material/Close";
 import theme from "theme";
-import { Button } from "elements";
-import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
+import { Button, Tooltip } from "elements";
+import {
+  NEWM_SUPPORT_EMAIL,
+  getResizedAlbumCoverImageUrl,
+  isMoreThanThresholdSecondsLater,
+  useWindowDimensions,
+} from "common";
 import {
   MintingStatus as MintingStatusType,
   Song,
@@ -218,6 +224,18 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     stopSong();
   };
 
+  const handleEmailSupport = (event: MouseEvent, songId: string) => {
+    event.stopPropagation();
+
+    const mailtoLink =
+      `mailto:${NEWM_SUPPORT_EMAIL}` +
+      "?subject=Support Request" +
+      "&body=" +
+      encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
+
+    window.location.href = mailtoLink;
+  };
+
   useEffect(() => {
     setPage(1);
   }, [query]);
@@ -271,36 +289,65 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             const hasStartedMintingProcess =
               song.mintingStatus !== MintingStatusType.Undistributed;
 
+            const isSongStale =
+              isMoreThanThresholdSecondsLater(song.createdAt, 1200) &&
+              !song.streamUrl;
+
             return (
               <TableRow
-                onClick={ () => handleSongPlayPause(song) }
+                onClick={
+                  isSongStale ? undefined : () => handleSongPlayPause(song)
+                }
                 key={ song.id }
-                sx={ {
-                  cursor: "pointer",
-                  WebkitTapHighlightColor: "transparent",
-                  "&:hover, &:focus": {
-                    background: theme.colors.activeBackground,
-                  },
-                } }
+                sx={
+                  isSongStale
+                    ? undefined
+                    : {
+                        cursor: "pointer",
+                        WebkitTapHighlightColor: "transparent",
+                        "&:hover, &:focus": {
+                          background: theme.colors.activeBackground,
+                        },
+                      }
+                }
               >
                 <TableCell>
                   <Box sx={ { display: "flex", alignItems: "center" } }>
-                    <IconButton
-                      onClick={ handlePressPlayButton(song) }
-                      sx={ {
-                        marginRight: [2, 4],
-                        marginLeft: [0, 1],
-                        height: "40px",
-                        width: "40px",
-                      } }
-                    >
-                      <SongStreamPlaybackIcon
-                        isSongPlaying={
-                          song.id === playerState.currentPlayingSongId
+                    { isSongStale ? (
+                      <Tooltip
+                        title={
+                          "The file couldn't be uploaded. Please try again, " +
+                          `or reach out to ${NEWM_SUPPORT_EMAIL} for further assistance.`
                         }
-                        isSongUploaded={ !!song.streamUrl }
-                      />
-                    </IconButton>
+                      >
+                        <CloseIcon
+                          sx={ {
+                            marginRight: [2, 4],
+                            marginLeft: [0, 1],
+                            height: "24px",
+                            width: "40px",
+                          } }
+                          color="error"
+                        />
+                      </Tooltip>
+                    ) : (
+                      <IconButton
+                        onClick={ handlePressPlayButton(song) }
+                        sx={ {
+                          marginRight: [2, 4],
+                          marginLeft: [0, 1],
+                          height: "40px",
+                          width: "40px",
+                        } }
+                      >
+                        <SongStreamPlaybackIcon
+                          isSongPlaying={
+                            song.id === playerState.currentPlayingSongId
+                          }
+                          isSongUploaded={ !!song.streamUrl }
+                        />
+                      </IconButton>
+                    ) }
                     <img
                       style={ {
                         borderRadius: "4px",
@@ -351,28 +398,39 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     paddingLeft: [0, 1],
                     paddingRight: [1, 3],
                     width: "0",
+                    textAlign: "end",
                   } }
                 >
-                  <Button
-                    variant="secondary"
-                    width="icon"
-                    onClick={ (e) => {
-                      e.stopPropagation();
-                      navigate(
-                        `${
-                          hasStartedMintingProcess
-                            ? "view-details"
-                            : "edit-song"
-                        }/${song.id}`
-                      );
-                    } }
-                  >
-                    { hasStartedMintingProcess ? (
-                      <VisibilityIcon sx={ { color: theme.colors.music } } />
-                    ) : (
-                      <EditIcon sx={ { color: theme.colors.music } } />
-                    ) }
-                  </Button>
+                  { isSongStale ? (
+                    <Button
+                      variant="secondary"
+                      color="music"
+                      onClick={ (event) => handleEmailSupport(event, song.id) }
+                    >
+                      Support
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="secondary"
+                      width="icon"
+                      onClick={ (e) => {
+                        e.stopPropagation();
+                        navigate(
+                          `${
+                            hasStartedMintingProcess
+                              ? "view-details"
+                              : "edit-song"
+                          }/${song.id}`
+                        );
+                      } }
+                    >
+                      { hasStartedMintingProcess ? (
+                        <VisibilityIcon sx={ { color: theme.colors.music } } />
+                      ) : (
+                        <EditIcon sx={ { color: theme.colors.music } } />
+                      ) }
+                    </Button>
+                  ) }
                 </TableCell>
               </TableRow>
             );

@@ -207,6 +207,7 @@ export const extendedApi = api.injectEndpoints({
 
           dispatch(
             setToastMessage({
+              heading: "Bad audio file",
               message,
               severity: "error",
             })
@@ -236,30 +237,33 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     deleteSong: build.mutation<void, DeleteSongRequest>({
-      query: ({ songId, ...params }) => ({
+      query: ({ songId }) => ({
         url: `v1/songs/${songId}`,
         method: "DELETE",
-        params,
       }),
       invalidatesTags: [Tags.Song],
 
-      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ showToast = true }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
 
-          dispatch(
-            setToastMessage({
-              message: "Successfully deleted song",
-              severity: "success",
-            })
-          );
+          if (showToast) {
+            dispatch(
+              setToastMessage({
+                message: "Successfully deleted song",
+                severity: "success",
+              })
+            );
+          }
         } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occured while deleting your song",
-              severity: "error",
-            })
-          );
+          if (showToast) {
+            dispatch(
+              setToastMessage({
+                message: "An error occured while deleting your song",
+                severity: "error",
+              })
+            );
+          }
         }
       },
     }),

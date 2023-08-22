@@ -139,6 +139,14 @@ export const uploadSong = createAsyncThunk(
       );
 
       if ("error" in uploadSongAudioResponse) {
+        try {
+          await dispatch(
+            songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
+          );
+        } catch (error) {
+          // let api handle error
+        }
+
         if (body.isMinting) {
           history.push("/home/upload-song");
         }
@@ -240,7 +248,9 @@ export const uploadSong = createAsyncThunk(
       // if songId is present, delete the song
       if (songId) {
         try {
-          await dispatch(songApi.endpoints.deleteSong.initiate({ songId }));
+          await dispatch(
+            songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
+          );
         } catch (error) {
           // do nothing
         }

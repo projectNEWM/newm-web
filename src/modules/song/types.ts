@@ -126,6 +126,7 @@ export interface UploadSongAudioResponse {
 
 export interface DeleteSongRequest {
   readonly songId: string;
+  readonly showToast?: boolean;
 }
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
