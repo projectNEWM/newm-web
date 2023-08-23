@@ -92,7 +92,7 @@ const SignUp: FunctionComponent = () => {
         <HorizontalLine />
       </Stack>
 
-      <Stack my={ 3 } spacing={ 2 } width="100%" alignItems="center">
+      <Stack my={ 3 } spacing={ 2 } width="100%" alignItems="center" pb={ 8 }>
         <GoogleLogin>Join with Google</GoogleLogin>
         <FacebookLogin>Join with Facebook</FacebookLogin>
         <LinkedInLogin>Join with Linkedin</LinkedInLogin>
