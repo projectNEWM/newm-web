@@ -1,4 +1,5 @@
 export const COLLABORATOR_FEE_IN_ADA = 1.3;
+export const MINTING_FEE_IN_ADA = 6;
 export const NEWM_SUPPORT_EMAIL = "support@newm.io";
 
 /**

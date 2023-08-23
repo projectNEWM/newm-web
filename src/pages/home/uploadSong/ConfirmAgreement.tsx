@@ -28,6 +28,7 @@ const ConfirmAgreement: FunctionComponent = () => {
         songTitle={ values.title }
         isCoCreator={ values.owners.length > 1 }
         onConfirm={ handleConsentToContract }
+        totalOwners={ values.owners.length }
       />
 
       <Box mt={ 6 }>
