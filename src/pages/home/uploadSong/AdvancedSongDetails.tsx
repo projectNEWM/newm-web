@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { NONE_OPTION, scrollToError, useWindowDimensions } from "common";
+import {
+  MIN_DISTRIBUTION_TIME,
+  NONE_OPTION,
+  scrollToError,
+  useWindowDimensions,
+} from "common";
 import {
   DropdownSelectField,
   SwitchInputField,
@@ -93,7 +98,9 @@ const AdvancedSongDetails = () => {
         <TextInputField
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
-          min={ earliestReleaseDate }
+          min={
+            earliestReleaseDate ? earliestReleaseDate : MIN_DISTRIBUTION_TIME
+          }
           name="releaseDate"
           placeholder="Select a day"
           ref={ releaseDateRef }
