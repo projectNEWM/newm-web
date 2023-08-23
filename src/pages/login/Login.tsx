@@ -124,7 +124,7 @@ const Login: FunctionComponent = () => {
         <HorizontalLine />
       </Stack>
 
-      <Stack my={ 2 } spacing={ 2 } width="100%" alignItems="center">
+      <Stack my={ 2 } spacing={ 2 } width="100%" alignItems="center" pb={ 8 }>
         <GoogleLogin>Continue with Google</GoogleLogin>
         <FacebookLogin>Continue with Facebook</FacebookLogin>
         <LinkedInLogin>Continue with Linkedin</LinkedInLogin>
