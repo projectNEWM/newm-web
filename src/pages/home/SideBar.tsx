@@ -14,7 +14,11 @@ import EmailIcon from "@mui/icons-material/Email";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { NEWM_SUPPORT_EMAIL } from "common";
+import {
+  NEWM_ARTIST_PORTAL_FAQ_URL,
+  NEWM_ARTIST_PORTAL_TELEGRAM_URL,
+  NEWM_SUPPORT_EMAIL,
+} from "common";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -142,13 +146,13 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
               label="FAQ"
-              href="http://newm.io/artists-faq"
+              href={ NEWM_ARTIST_PORTAL_FAQ_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
               label="ASK THE COMMUNITY"
-              href="http://t.me/NEWMartists"
+              href={ NEWM_ARTIST_PORTAL_TELEGRAM_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }

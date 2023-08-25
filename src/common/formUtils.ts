@@ -19,6 +19,7 @@ import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
   MIN_DISTRIBUTION_TIME,
+  NONE_OPTION,
 } from "./constants";
 
 /**
@@ -374,5 +375,3 @@ export const scrollToError = (
     });
   }
 };
-
-export const NONE_OPTION = "None";
