@@ -138,21 +138,8 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ("error" in uploadSongAudioResponse) {
-        try {
-          await dispatch(
-            songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
-          );
-        } catch (error) {
-          // let api handle error
-        }
-
-        if (body.isMinting) {
-          history.push("/home/upload-song");
-        }
-
-        return;
-      }
+      if ("error" in uploadSongAudioResponse)
+        throw new SilentError("uploadSongAudioResponseError");
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(
@@ -256,14 +243,24 @@ export const uploadSong = createAsyncThunk(
         }
       }
 
-      // non-endpoint related error occur, show toast
       if (error instanceof Error) {
-        dispatch(
-          setToastMessage({
-            message: error.message,
-            severity: "error",
-          })
-        );
+        const isUploadSongAudioError =
+          error.message === "uploadSongAudioResponseError";
+
+        if (isUploadSongAudioError && body.isMinting) {
+          history.push("/home/upload-song");
+          return;
+        }
+
+        // non-endpoint related error occur, show toast
+        if (!isUploadSongAudioError) {
+          dispatch(
+            setToastMessage({
+              message: error.message,
+              severity: "error",
+            })
+          );
+        }
       }
     } finally {
       dispatch(setIsProgressBarModalOpen(false));
