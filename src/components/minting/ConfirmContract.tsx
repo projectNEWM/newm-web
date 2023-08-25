@@ -5,7 +5,11 @@ import { Formik, FormikProps } from "formik";
 import { selectSong } from "modules/song";
 import { FunctionComponent, useEffect } from "react";
 import agreementPreview from "assets/images/artist-agreement-preview.jpg";
-import { useAppSelector } from "common";
+import {
+  COLLABORATOR_FEE_IN_ADA,
+  MINTING_FEE_IN_ADA,
+  useAppSelector,
+} from "common";
 import theme from "theme";
 import ViewPDF from "../ViewPDF";
 import CheckboxField from "../form/CheckboxField";
@@ -14,6 +18,7 @@ interface ConfirmContractProps {
   readonly songTitle: string;
   readonly isCoCreator?: boolean;
   readonly onConfirm: (value: boolean) => void;
+  readonly totalOwners: number;
 }
 
 interface FormValues {
@@ -33,6 +38,7 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
   songTitle,
   isCoCreator = false,
   onConfirm,
+  totalOwners,
 }) => {
   const initialValues: FormValues = {
     hasViewedAgreement: false,
@@ -59,6 +65,7 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
         <FormContent
           songTitle={ songTitle }
           isCoCreator={ isCoCreator }
+          totalOwners={ totalOwners }
           { ...formikProps }
         />
       ) }
@@ -72,8 +79,12 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   values,
   setFieldValue,
   handleSubmit,
+  totalOwners,
 }) => {
   const { artistAgreement } = useAppSelector(selectSong);
+  const TotalFeeToMint = parseFloat(
+    (MINTING_FEE_IN_ADA + totalOwners * COLLABORATOR_FEE_IN_ADA).toFixed(2)
+  );
 
   /**
    * Call onConfirm callback when form values change.
@@ -150,8 +161,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
         <Stack direction="row" columnGap={ 0.5 }>
           <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-            The minting process has a fee of <strong>~₳7.30</strong> and may
-            take 3-15 days to complete.
+            The minting process has a fee of{ " " }
+            <strong>{ `~₳${TotalFeeToMint}` }</strong> and may take 3-15 days to
+            complete.
           </Typography>
 
           <Tooltip title={ " " }>

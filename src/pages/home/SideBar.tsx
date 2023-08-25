@@ -14,6 +14,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { NEWM_SUPPORT_EMAIL } from "common";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -153,7 +154,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               icon={ <EmailIcon sx={ { fontSize: "18px" } } /> }
               label="SUPPORT"
-              href="mailto: support@newm.io"
+              href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }
             />
           </Stack>
         </Box>

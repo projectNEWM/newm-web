@@ -66,7 +66,7 @@ const Verification: FunctionComponent = () => {
         </Stack>
       </Box>
 
-      <Box mb={ 4 } mt={ 2 }>
+      <Box pb={ 4 } mt={ 2 }>
         { showResendLink ? (
           <Typography color="grey100" fontWeight={ 500 }>
             Didn&apos;t receive an email?

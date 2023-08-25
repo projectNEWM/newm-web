@@ -451,6 +451,7 @@ const MintSong = () => {
                     onConfirm={ (value: boolean) =>
                       setFieldValue("consentsToContract", value)
                     }
+                    totalOwners={ values.owners.length }
                   />
 
                   <HorizontalLine sx={ { my: 5 } } />

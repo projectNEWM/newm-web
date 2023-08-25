@@ -9,12 +9,13 @@ const Library: FunctionComponent = () => (
   <Container
     maxWidth={ false }
     sx={ {
-      marginX: [null, null, 3],
+      mx: [null, null, 3],
       display: "flex",
       flexDirection: "column",
       flexGrow: 1,
       flexWrap: "nowrap",
       width: "auto",
+      pb: 8,
     } }
   >
     <Routes>

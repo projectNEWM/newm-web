@@ -2,14 +2,13 @@ import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
 import { EmptyResponse } from "common";
 import {
-  AudioUploadUrlRequest,
-  AudioUploadUrlResponse,
   CborHexRequest,
   CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
   CreateMintSongPaymentRequest,
+  CustomError,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -32,6 +31,8 @@ import {
   ReplyCollaborationRequest,
   Song,
   UpdateCollaborationRequest,
+  UploadSongAudioRequest,
+  UploadSongAudioResponse,
   UploadSongResponse,
 } from "./types";
 
@@ -180,6 +181,40 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
+    uploadSongAudio: build.mutation<
+      UploadSongAudioResponse,
+      UploadSongAudioRequest
+    >({
+      query: ({ songId, ...body }) => ({
+        url: `v1/songs/${songId}/audio`,
+        method: "POST",
+        body: body.audio,
+      }),
+      invalidatesTags: [Tags.Song],
+
+      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          let message =
+            "There was a problem with your audio file, contact support";
+
+          const customError = error as CustomError;
+
+          if (customError.error?.data?.cause) {
+            message = customError.error.data.cause;
+          }
+
+          dispatch(
+            setToastMessage({
+              heading: "Bad audio file",
+              message,
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     patchSong: build.mutation<void, PatchSongRequest>({
       query: ({ id, ...body }) => ({
         url: `v1/songs/${id}`,
@@ -202,30 +237,33 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     deleteSong: build.mutation<void, DeleteSongRequest>({
-      query: ({ songId, ...params }) => ({
+      query: ({ songId }) => ({
         url: `v1/songs/${songId}`,
         method: "DELETE",
-        params,
       }),
       invalidatesTags: [Tags.Song],
 
-      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ showToast = true }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
 
-          dispatch(
-            setToastMessage({
-              message: "Successfully deleted song",
-              severity: "success",
-            })
-          );
+          if (showToast) {
+            dispatch(
+              setToastMessage({
+                message: "Successfully deleted song",
+                severity: "success",
+              })
+            );
+          }
         } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occured while deleting your song",
-              severity: "error",
-            })
-          );
+          if (showToast) {
+            dispatch(
+              setToastMessage({
+                message: "An error occured while deleting your song",
+                severity: "error",
+              })
+            );
+          }
         }
       },
     }),
@@ -270,29 +308,6 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error while uploading your image",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getAudioUploadUrl: build.mutation<
-      AudioUploadUrlResponse,
-      AudioUploadUrlRequest
-    >({
-      query: ({ songId, ...body }) => ({
-        url: `/v1/songs/${songId}/upload`,
-        method: "POST",
-        body,
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error while uploading your song",
               severity: "error",
             })
           );
