@@ -494,7 +494,6 @@ const Profile: FunctionComponent = () => {
                     </Button>
 
                     <Button
-                      disabled={ !dirty }
                       isLoading={ isLoading }
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md

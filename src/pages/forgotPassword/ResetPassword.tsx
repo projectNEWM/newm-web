@@ -8,7 +8,6 @@ const ResetPassword: FunctionComponent = () => {
   const theme = useTheme();
   const [maskPassword, setMaskPassword] = useState(true);
   const {
-    isValid,
     values: { confirmPassword, newPassword },
   } = useFormikContext<FormikValues>();
 
@@ -54,9 +53,7 @@ const ResetPassword: FunctionComponent = () => {
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }
         />
-        <Button type="submit" disabled={ !isValid }>
-          Confirm
-        </Button>
+        <Button type="submit">Confirm</Button>
       </Stack>
     </Box>
   );

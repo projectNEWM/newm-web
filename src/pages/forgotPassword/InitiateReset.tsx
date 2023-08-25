@@ -1,12 +1,10 @@
 import { FunctionComponent } from "react";
 import { Button, Typography } from "elements";
 import { TextInputField } from "components";
-import { useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
 
 const InitiateReset: FunctionComponent = () => {
   const theme = useTheme();
-  const { isValid } = useFormikContext();
 
   return (
     <Box
@@ -36,9 +34,7 @@ const InitiateReset: FunctionComponent = () => {
           placeholder="Your email"
           type="text"
         />
-        <Button disabled={ !isValid } type="submit">
-          Reset password
-        </Button>
+        <Button type="submit">Reset password</Button>
       </Stack>
     </Box>
   );

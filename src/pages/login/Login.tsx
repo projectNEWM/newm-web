@@ -70,7 +70,7 @@ const Login: FunctionComponent = () => {
         onSubmit={ handleLogin }
         validationSchema={ validationSchema }
       >
-        { ({ isValid, values: { password } }) => (
+        { ({ values: { password } }) => (
           <Form style={ { textAlign: "center", width: "100%" } }>
             <Stack
               display="inline-flex"
@@ -94,7 +94,7 @@ const Login: FunctionComponent = () => {
                 showEndAdornment={ !!password }
               />
 
-              <Button disabled={ !isValid || isLoading } type="submit">
+              <Button disabled={ isLoading } type="submit">
                 Log In
               </Button>
               <Link
