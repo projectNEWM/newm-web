@@ -42,6 +42,13 @@ const AdvancedSongDetails = () => {
       skip: !firstName,
     });
 
+  // Minimum date for schedule release date picker when no earliest release date
+  const minDistributionDate = new Date(
+    Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000
+  )
+    .toISOString()
+    .split("T")[0];
+
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
       {
@@ -98,9 +105,7 @@ const AdvancedSongDetails = () => {
         <TextInputField
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
-          min={
-            earliestReleaseDate ? earliestReleaseDate : MIN_DISTRIBUTION_TIME
-          }
+          min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
           name="releaseDate"
           placeholder="Select a day"
           ref={ releaseDateRef }
