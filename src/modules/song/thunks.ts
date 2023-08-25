@@ -131,35 +131,15 @@ export const uploadSong = createAsyncThunk(
 
       songId = songResp.data.songId;
 
-      // get signed upload url for AWS
-      const audioUploadUrlResp = await dispatch(
-        songApi.endpoints.getAudioUploadUrl.initiate({
+      const uploadSongAudioResponse = await dispatch(
+        songApi.endpoints.uploadSongAudio.initiate({
           songId,
-          fileName: body.audio.name,
+          audio: body.audio,
         })
       );
 
-      if ("error" in audioUploadUrlResp) throw new SilentError();
-
-      const { url: uploadUrl, fields } = audioUploadUrlResp.data;
-
-      // build a form with AWS presigned fields and upload audio to AWS
-      // song audioUrl will be updated after it's transcoded
-      const formData = new FormData();
-      for (const key in fields) {
-        formData.append(key, fields[key]);
-      }
-      const headers = new Headers({
-        ContentDisposition: `filename=${body.audio.name}`,
-      });
-
-      formData.append("file", body.audio);
-
-      await fetch(uploadUrl, {
-        method: "POST",
-        headers: Object.assign({}, headers),
-        body: formData,
-      });
+      if ("error" in uploadSongAudioResponse)
+        throw new SilentError("uploadSongAudioResponseError");
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(
@@ -255,20 +235,32 @@ export const uploadSong = createAsyncThunk(
       // if songId is present, delete the song
       if (songId) {
         try {
-          await dispatch(songApi.endpoints.deleteSong.initiate({ songId }));
+          await dispatch(
+            songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
+          );
         } catch (error) {
           // do nothing
         }
       }
 
-      // non-endpoint related error occur, show toast
       if (error instanceof Error) {
-        dispatch(
-          setToastMessage({
-            message: error.message,
-            severity: "error",
-          })
-        );
+        const isUploadSongAudioError =
+          error.message === "uploadSongAudioResponseError";
+
+        if (isUploadSongAudioError && body.isMinting) {
+          history.push("/home/upload-song");
+          return;
+        }
+
+        // non-endpoint related error occur, show toast
+        if (!isUploadSongAudioError) {
+          dispatch(
+            setToastMessage({
+              message: error.message,
+              severity: "error",
+            })
+          );
+        }
       }
     } finally {
       dispatch(setIsProgressBarModalOpen(false));

@@ -10,6 +10,10 @@ const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
   const windowWidth = useWindowDimensions()?.width;
   const maxListWidth = 700;
+  const SKELETON_PADDING = 200;
+  const ROW_HEIGHT = 50;
+  const DEFAULT_ROWS = 10;
+  const MIN_ROWS = 1;
   const skeletonRef = useRef<HTMLDivElement>();
   const skeletonYPos = skeletonRef.current?.offsetTop || 0;
   const [skeletonRows, setSkeletonRows] = useState<number>(10);
@@ -28,15 +32,20 @@ const Portfolio: FunctionComponent = () => {
 
   useEffect(() => {
     const rowsToRender = windowHeight
-      ? Math.floor((windowHeight - skeletonYPos - 200) / 50)
-      : 10;
+      ? Math.max(
+          Math.floor(
+            (windowHeight - skeletonYPos - SKELETON_PADDING) / ROW_HEIGHT
+          ),
+          MIN_ROWS
+        )
+      : DEFAULT_ROWS;
 
     setSkeletonRows(rowsToRender);
     setRowsPerPage(rowsToRender);
   }, [windowHeight, skeletonYPos]);
 
   return (
-    <Box ref={ skeletonRef } paddingTop={ 2 }>
+    <Box ref={ skeletonRef } pt={ 2 } pb={ 8 }>
       { isLoading ? (
         <SkeletonTable
           cols={
