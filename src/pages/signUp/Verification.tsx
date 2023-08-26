@@ -10,7 +10,7 @@ const Verification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const [showResendLink, setShowResendLink] = useState(true);
-  const { isValid, values } = useFormikContext<FormikValues>();
+  const { values } = useFormikContext<FormikValues>();
 
   const handleEmailResend = () => {
     setShowResendLink(false);
@@ -60,9 +60,7 @@ const Verification: FunctionComponent = () => {
             placeholder="Verification Code"
             type="text"
           />
-          <Button type="submit" disabled={ !isValid }>
-            Enter
-          </Button>
+          <Button type="submit">Enter</Button>
         </Stack>
       </Box>
 

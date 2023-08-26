@@ -139,7 +139,6 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
               ) }
 
               <Button
-                disabled={ !isValid }
                 sx={ {
                   left: [null, null, centerButtonOffset],
                 } }

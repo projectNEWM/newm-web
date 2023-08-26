@@ -15,7 +15,7 @@ import {
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
-  const { isValid, values } = useFormikContext();
+  const { values } = useFormikContext();
   const { newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
   const showEndAdornment = !!(newPassword || confirmPassword);
@@ -74,9 +74,7 @@ const SignUp: FunctionComponent = () => {
           placeholder="Confirm password"
           showEndAdornment={ showEndAdornment }
         />
-        <Button disabled={ !isValid } type="submit">
-          Create account
-        </Button>
+        <Button type="submit">Create account</Button>
       </Stack>
 
       <Stack
