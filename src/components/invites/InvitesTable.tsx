@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import {
   IconButton,
   Stack,
@@ -11,9 +11,14 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { getResizedAlbumCoverImageUrl, useAppDispatch } from "common";
-import { TableCell, TableHeadCell } from "components";
+import { PlaySongAdvanced, TableCell, TableHeadCell } from "components";
 import theme from "theme";
-import { Invite, convertMillisecondsToSongFormat, songApi } from "modules/song";
+import {
+  Invite,
+  convertMillisecondsToSongFormat,
+  songApi,
+  useGetCollaborationsQuery,
+} from "modules/song";
 
 interface InvitesTableProps {
   invites: Invite[];
@@ -25,6 +30,15 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
   disabled,
 }) => {
   const dispatch = useAppDispatch();
+  const [playingSongId, setPlayingSongId] = useState<string | null>(null);
+
+  const collaborationIds = invites.map(
+    ({ collaborationId }) => collaborationId
+  );
+
+  const { data: collaborations = [] } = useGetCollaborationsQuery({
+    ids: collaborationIds,
+  });
 
   const handleDecline = async (collaborationId: string) => {
     dispatch(
@@ -43,6 +57,21 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
       })
     );
   };
+
+  /**
+   * An object mapping collaboration IDs to song IDs.
+   *
+   * @example
+   * [{ id: 'collab1', songId: 'song1' }, { id: 'collab2', songId: 'song2' }]
+   * the result object will be:
+   * { collab1: 'song1', collab2: 'song2' }
+   *
+   */
+  const songIdsByCollaborationId: Record<string, string> =
+    collaborations.reduce((acc: { [key: string]: string }, collaboration) => {
+      acc[collaboration.id] = collaboration.songId;
+      return acc;
+    }, {});
 
   return (
     <TableContainer
@@ -95,18 +124,30 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                     } }
                   >
                     { coverArtUrl ? (
-                      <img
-                        style={ {
-                          borderRadius: "4px",
-                          width: "40px",
-                          height: "40px",
-                        } }
-                        src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
-                          width: 50,
-                          height: 50,
-                        }) }
-                        alt="Song cover"
-                      />
+                      <Stack display="grid">
+                        <img
+                          style={ {
+                            borderRadius: "4px",
+                            gridColumnStart: 1,
+                            gridRowStart: 1,
+                            height: "40px",
+                            width: "40px",
+                          } }
+                          src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
+                            width: 50,
+                            height: 50,
+                          }) }
+                          alt="Song cover"
+                        />
+                        { songIdsByCollaborationId[collaborationId] ? (
+                          <PlaySongAdvanced
+                            contentSx={ { gridRowStart: 1, gridColumnStart: 1 } }
+                            id={ songIdsByCollaborationId[collaborationId] }
+                            setPlayingSongId={ setPlayingSongId }
+                            playingSongId={ playingSongId }
+                          />
+                        ) : null }
+                      </Stack>
                     ) : (
                       <Stack sx={ { height: "40px", width: "40px" } }></Stack>
                     ) }
