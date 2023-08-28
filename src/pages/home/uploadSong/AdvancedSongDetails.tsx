@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Stack } from "@mui/material";
-import { NONE_OPTION, scrollToError, useWindowDimensions } from "common";
+import {
+  MIN_DISTRIBUTION_TIME,
+  NONE_OPTION,
+  scrollToError,
+  useWindowDimensions,
+} from "common";
 import {
   DropdownSelectField,
   SwitchInputField,
@@ -36,6 +41,13 @@ const AdvancedSongDetails = () => {
       // endpoint throws error if user hasn't added first name
       skip: !firstName,
     });
+
+  // Minimum date for schedule release date picker when no earliest release date
+  const minDistributionDate = new Date(
+    Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000
+  )
+    .toISOString()
+    .split("T")[0];
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
@@ -93,7 +105,7 @@ const AdvancedSongDetails = () => {
         <TextInputField
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
-          min={ earliestReleaseDate }
+          min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
           name="releaseDate"
           placeholder="Select a day"
           ref={ releaseDateRef }

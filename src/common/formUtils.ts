@@ -15,9 +15,12 @@ import {
   REGEX_JAN_FORMAT,
   REGEX_PASSWORD_REQUIREMENTS,
 } from "./regex";
-
-export const MAX_CHARACTER_COUNT = 64;
-export const MAX_CHARACTER_COUNT_LONG = 250;
+import {
+  MAX_CHARACTER_COUNT,
+  MAX_CHARACTER_COUNT_LONG,
+  MIN_DISTRIBUTION_TIME,
+  NONE_OPTION,
+} from "./constants";
 
 /**
  * Returns true if all genres are included in the genre options array
@@ -240,15 +243,16 @@ export const commonYupValidation = {
     }),
   releaseDate: (releaseDate: string | undefined) => {
     // If releaseDate is provided, use it.
-    // Otherwise, use a date 11 days from now.
+    // Otherwise, use the minimum time for EVEARA to distribute from now.
     const minReleaseDate = releaseDate
       ? new Date(releaseDate)
-      : new Date(Date.now() + 11 * 24 * 60 * 60 * 1000);
+      : new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000);
 
+    // Yup min validation is not inclusive, subtract 1 day from release date.
     return Yup.date()
       .required("This field is required")
       .min(
-        minReleaseDate,
+        new Date(minReleaseDate.getTime() - 24 * 60 * 60 * 1000),
         `Release date must be on or after ${
           minReleaseDate.toISOString().split("T")[0]
         }`
@@ -371,5 +375,3 @@ export const scrollToError = (
     });
   }
 };
-
-export const NONE_OPTION = "None";
