@@ -244,7 +244,7 @@ export enum CollaborationStatus {
 export interface GetCollaborationsRequest {
   readonly offset?: number;
   readonly limit?: number;
-  readonly ids?: string;
+  readonly ids?: string[];
   readonly songIds?: string;
   readonly sortOrder?: SortOrder;
   readonly emails?: string;
