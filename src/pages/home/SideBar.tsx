@@ -31,7 +31,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
   props: SideBarProps
 ) => {
   const theme = useTheme();
-  const iconSize = "18px";
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
@@ -82,7 +81,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarNavLink
             onClick={ () => props.setMobileOpen(false) }
-            icon={ <UploadIcon sx={ { fontSize: iconSize } } /> }
+            Icon={ UploadIcon }
             label="UPLOAD A SONG"
             to="/home/upload-song"
           />
@@ -94,14 +93,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <LibraryIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ LibraryIcon }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <CollaboratorsIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ CollaboratorsIcon }
               label="COLLABORATORS"
               to="/home/collaborators"
             />
@@ -114,7 +113,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <WalletIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ WalletIcon }
               label="WALLET"
               to="/home/wallet"
             />
@@ -127,14 +126,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <ProfileIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ ProfileIcon }
               label="PROFILE"
               to="/home/profile"
             />
 
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <SettingsIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ SettingsIcon }
               label="SETTINGS"
               to="/home/settings"
             />
@@ -147,19 +146,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <FaqIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ FaqIcon }
               label="FAQ"
               href={ NEWM_ARTIST_PORTAL_FAQ_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <AskCommunityIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ AskCommunityIcon }
               label="ASK THE COMMUNITY"
               href={ NEWM_ARTIST_PORTAL_TELEGRAM_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <SupportIcon sx={ { fontSize: iconSize } } /> }
+              Icon={ SupportIcon }
               label="SUPPORT"
               href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }
             />

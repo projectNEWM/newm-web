@@ -1,6 +1,6 @@
 import { CSSProperties, FunctionComponent, ReactNode } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, SvgIconProps } from "@mui/material";
 import theme from "theme";
 
 interface ButtonProps {
@@ -23,7 +23,7 @@ type WrapperProps = LinkProps | ButtonProps | AnchorProps;
 
 interface SideBarNavLinkProps {
   readonly label: string;
-  readonly icon: JSX.Element;
+  readonly Icon: React.ComponentType<SvgIconProps>;
   readonly to?: string;
   readonly href?: string;
   readonly onClick?: VoidFunction;
@@ -45,7 +45,7 @@ const Wrapper: FunctionComponent<WrapperProps> = ({ children, ...props }) => {
 
 const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   label,
-  icon,
+  Icon,
   to,
   href,
   onClick,
@@ -92,7 +92,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
         } }
         data-testid="navStyled"
       >
-        { icon }
+        <Icon sx={ { fontSize: "18px" } } />
         <span>{ label }</span>
       </Stack>
     </Wrapper>
