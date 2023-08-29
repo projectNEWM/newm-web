@@ -67,7 +67,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
     >
       <Stack
         direction="row"
-        spacing={ 2.5 }
+        spacing={ 2 }
         sx={ {
           fontSize: "12px",
           lineHeight: "15px",

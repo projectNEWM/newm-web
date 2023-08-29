@@ -183,7 +183,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
 interface ResponsiveSideBarProps {
   isMobileOpen: boolean;
-  drawerWidth: number;
   setMobileOpen: (field: boolean) => void;
 }
 
@@ -208,7 +207,6 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           "& .MuiDrawer-paper": {
             overflow: props.isMobileOpen ? "visible" : "hidden",
             boxSizing: "border-box",
-            width: props.drawerWidth,
           },
         } }
       >
@@ -230,7 +228,6 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: props.drawerWidth,
           },
         } }
         open
