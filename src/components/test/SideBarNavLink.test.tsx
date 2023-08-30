@@ -1,12 +1,18 @@
 import { renderWithContext } from "common";
 import * as routerUtils from "react-router-dom";
-import UploadIcon from "assets/images/UploadIcon";
+import { Upload as UploadIcon } from "@mui/icons-material";
 import theme from "theme";
 import SideBarNavLink from "../home/SideBarNavLink";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useMatch: jest.fn(),
+}));
+
+// Mock MUI icon component
+jest.mock("@mui/icons-material", () => ({
+  ...jest.requireActual("@mui/icons-material"),
+  Upload: jest.fn(),
 }));
 
 const mockMatch = {
@@ -22,7 +28,7 @@ describe("<SideBarNavLink>", () => {
       jest.spyOn(routerUtils, "useMatch").mockImplementation(() => mockMatch);
 
       const { getByTestId } = renderWithContext(
-        <SideBarNavLink label="Example" icon={ <UploadIcon /> } to="/example" />
+        <SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />
       );
 
       expect(getByTestId("navStyled")).toHaveStyle(
@@ -36,7 +42,7 @@ describe("<SideBarNavLink>", () => {
       jest.spyOn(routerUtils, "useMatch").mockImplementation(() => null);
 
       const { getByTestId } = renderWithContext(
-        <SideBarNavLink label="Example" icon={ <UploadIcon /> } to="/example" />
+        <SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />
       );
 
       expect(getByTestId("navStyled")).toHaveStyle("background: transparent;");

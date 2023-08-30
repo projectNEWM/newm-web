@@ -12,7 +12,7 @@ import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
 
 const Home: FunctionComponent = () => {
-  const drawerWidth = 240;
+  const drawerWidth = 230;
 
   const theme = useTheme();
 
@@ -26,11 +26,7 @@ const Home: FunctionComponent = () => {
         flexGrow: 1,
       } }
     >
-      <SideBar
-        isMobileOpen={ isMobileOpen }
-        setMobileOpen={ setMobileOpen }
-        drawerWidth={ drawerWidth }
-      />
+      <SideBar isMobileOpen={ isMobileOpen } setMobileOpen={ setMobileOpen } />
 
       <Box
         component="main"

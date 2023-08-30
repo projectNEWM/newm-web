@@ -3,17 +3,19 @@ import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import { ProfileImage, SideBarHeader, SideBarNavLink } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
-import UploadIcon from "assets/images/UploadIcon";
-import FoldersIcon from "assets/images/FoldersIcon";
-import PeopleIcon from "assets/images/PeopleIcon";
-import WalletIcon from "assets/images/WalletIcon";
-import StarIcon from "assets/images/StarIcon";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import EmailIcon from "@mui/icons-material/Email";
-import LiveHelpIcon from "@mui/icons-material/LiveHelp";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import SettingsIcon from "@mui/icons-material/Settings";
+import {
+  Telegram as AskCommunityIcon,
+  PeopleAlt as CollaboratorsIcon,
+  LiveHelp as FaqIcon,
+  FolderCopy as LibraryIcon,
+  MenuOpen as MenuOpenIcon,
+  Star as ProfileIcon,
+  Settings as SettingsIcon,
+  Email as SupportIcon,
+  FileUploadOutlined as UploadIcon,
+  AccountBalanceWalletRounded as WalletIcon,
+} from "@mui/icons-material";
 import {
   NEWM_ARTIST_PORTAL_FAQ_URL,
   NEWM_ARTIST_PORTAL_TELEGRAM_URL,
@@ -79,7 +81,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         <Box mt={ 4 } mb={ 3 } width="100%">
           <SideBarNavLink
             onClick={ () => props.setMobileOpen(false) }
-            icon={ <UploadIcon /> }
+            Icon={ UploadIcon }
             label="UPLOAD A SONG"
             to="/home/upload-song"
           />
@@ -91,14 +93,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <FoldersIcon /> }
+              Icon={ LibraryIcon }
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <PeopleIcon /> }
+              Icon={ CollaboratorsIcon }
               label="COLLABORATORS"
               to="/home/collaborators"
             />
@@ -111,7 +113,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <WalletIcon /> }
+              Icon={ WalletIcon }
               label="WALLET"
               to="/home/wallet"
             />
@@ -124,14 +126,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <StarIcon /> }
+              Icon={ ProfileIcon }
               label="PROFILE"
               to="/home/profile"
             />
 
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <SettingsIcon sx={ { fontSize: "18px" } } /> }
+              Icon={ SettingsIcon }
               label="SETTINGS"
               to="/home/settings"
             />
@@ -144,19 +146,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <LiveHelpIcon sx={ { fontSize: "18px" } } /> }
+              Icon={ FaqIcon }
               label="FAQ"
               href={ NEWM_ARTIST_PORTAL_FAQ_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <TelegramIcon sx={ { fontSize: "18px" } } /> }
+              Icon={ AskCommunityIcon }
               label="ASK THE COMMUNITY"
               href={ NEWM_ARTIST_PORTAL_TELEGRAM_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
-              icon={ <EmailIcon sx={ { fontSize: "18px" } } /> }
+              Icon={ SupportIcon }
               label="SUPPORT"
               href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }
             />
@@ -180,7 +182,6 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
 interface ResponsiveSideBarProps {
   isMobileOpen: boolean;
-  drawerWidth: number;
   setMobileOpen: (field: boolean) => void;
 }
 
@@ -205,7 +206,6 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           "& .MuiDrawer-paper": {
             overflow: props.isMobileOpen ? "visible" : "hidden",
             boxSizing: "border-box",
-            width: props.drawerWidth,
           },
         } }
       >
@@ -227,7 +227,6 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           display: { xs: "none", md: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: props.drawerWidth,
           },
         } }
         open
