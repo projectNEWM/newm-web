@@ -27,7 +27,11 @@ import {
   selectSession,
   useGetProfileQuery,
 } from "modules/session";
-import { useAppDispatch, useAppSelector } from "common";
+import {
+  SKIP_FETCH_INVITE_PATH_LIST,
+  useAppDispatch,
+  useAppSelector,
+} from "common";
 import InvitesTable from "./InvitesTable";
 
 const { Verified } = VerificationStatus;
@@ -37,12 +41,17 @@ const InvitesModal: FunctionComponent = () => {
   const { isInvitesModalOpen } = useAppSelector(selectUi);
   const { isLoggedIn } = useAppSelector(selectSession);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
+
+  const shouldSkipFetch =
+    !isLoggedIn ||
+    SKIP_FETCH_INVITE_PATH_LIST.includes(window.location.pathname);
+
   const { data: collaborations = [] } = useGetCollaborationsQuery(
     {
       inbound: true,
       statuses: [CollaborationStatus.Waiting],
     },
-    { skip: !isLoggedIn }
+    { skip: shouldSkipFetch }
   );
 
   const {
@@ -52,7 +61,7 @@ const InvitesModal: FunctionComponent = () => {
       verificationStatus,
       walletAddress,
     } = emptyProfile,
-  } = useGetProfileQuery(undefined, { skip: !isLoggedIn });
+  } = useGetProfileQuery(undefined, { skip: shouldSkipFetch });
 
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
   const isVerified = verificationStatus === Verified;

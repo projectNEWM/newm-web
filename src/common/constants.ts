@@ -28,3 +28,11 @@ export const MIN_DISTRIBUTION_TIME = 11;
  * None option for dropdowns
  */
 export const NONE_OPTION = "None";
+
+/**
+ * Skip fetching invites in this list of paths
+ */
+export const SKIP_FETCH_INVITE_PATH_LIST = [
+  "/idenfy-success-session",
+  "/idenfy-fail-session",
+];
