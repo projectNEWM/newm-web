@@ -55,7 +55,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
       <IconStatus
         icon={ <TimeCircleLine /> }
         iconColor="yellow"
-        status="Minting Payment Processing"
+        status="Minting Payment Submitted"
       />
     );
   } else if (mintingStatus === MintingStatusType.Undistributed) {
