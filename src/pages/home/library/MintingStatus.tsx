@@ -15,6 +15,7 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
 }) => {
   const isPending = [
     MintingStatusType.StreamTokenAgreementApproved,
+    MintingStatusType.MintingPaymentRequested,
     MintingStatusType.MintingPaymentReceived,
     MintingStatusType.ReadyToDistribute,
     MintingStatusType.SubmittedForDistribution,
@@ -42,19 +43,19 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
       <IconStatus
         icon={ <TimeCircleLine /> }
         iconColor="yellow"
-        status="Pending collaborator approval"
+        status="Pending Collaborator Approval"
       />
     );
   } else if (mintingStatus === MintingStatusType.Declined) {
     return (
       <IconStatus icon={ <InfoCircleLine /> } iconColor="red" status="Declined" />
     );
-  } else if (mintingStatus === MintingStatusType.MintingPaymentRequested) {
+  } else if (mintingStatus === MintingStatusType.MintingPaymentSubmitted) {
     return (
       <IconStatus
         icon={ <TimeCircleLine /> }
         iconColor="yellow"
-        status="Minting payment requested"
+        status="Minting Payment Processing"
       />
     );
   } else if (mintingStatus === MintingStatusType.Undistributed) {

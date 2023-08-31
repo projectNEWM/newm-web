@@ -354,6 +354,7 @@ export const submitMintSongPayment = async (
 
   const txResp = await dispatch(
     songApi.endpoints.submitMintSongPayment.initiate({
+      songId,
       cborHex: signedTx,
     })
   );
