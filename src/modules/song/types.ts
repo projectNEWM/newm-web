@@ -152,6 +152,7 @@ export enum MintingStatus {
   Undistributed = "Undistributed",
   StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
   MintingPaymentRequested = "MintingPaymentRequested",
+  MintingPaymentSubmitted = "MintingPaymentSubmitted",
   MintingPaymentReceived = "MintingPaymentReceived",
   AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
   ReadyToDistribute = "ReadyToDistribute",
@@ -357,7 +358,8 @@ export interface CreateMintSongPaymentRequest {
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
-export interface CborHexRequest {
+export interface SubmitTransactionRequest {
+  readonly songId: string;
   readonly cborHex: string;
 }
 

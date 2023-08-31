@@ -2,7 +2,6 @@ import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
 import { EmptyResponse } from "common";
 import {
-  CborHexRequest,
   CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
@@ -30,6 +29,7 @@ import {
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
   Song,
+  SubmitTransactionRequest,
   UpdateCollaborationRequest,
   UploadSongAudioRequest,
   UploadSongAudioResponse,
@@ -521,7 +521,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    submitMintSongPayment: build.mutation<void, CborHexRequest>({
+    submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       query: (body) => ({
         url: "/v1/cardano/submitTransaction",
         method: "POST",
