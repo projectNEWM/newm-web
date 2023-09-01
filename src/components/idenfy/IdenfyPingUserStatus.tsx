@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { setToastMessage } from "modules/ui";
 import Cookies from "js-cookie";
 import {
@@ -6,7 +6,6 @@ import {
   emptyProfile,
   removeVerificationTimer,
   selectSession,
-  extendedApi as sessionApi,
   startVerificationTimer,
   useGetProfileQuery,
 } from "modules/session";
@@ -16,9 +15,13 @@ const IdenfyModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector(selectSession);
 
+  const [currentPollingInterval, setPollingInterval] = useState<
+    number | undefined
+  >();
+
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
     undefined,
-    { skip: !isLoggedIn }
+    { skip: !isLoggedIn, pollingInterval: currentPollingInterval }
   );
 
   const { verificationPingStartedAt } = useAppSelector(selectSession);
@@ -67,7 +70,7 @@ const IdenfyModal: FunctionComponent = () => {
   }, [dispatch, isVerified, verificationPingStartedAt]);
 
   /**
-   * Requests profile information at 1 minute interval on success page.
+   * Sets fetch profile information polling interval at 20 seconds interval on success page.
    * Clears interval when it has been more than 20 minutes or user is verified.
    */
   useEffect(() => {
@@ -75,15 +78,12 @@ const IdenfyModal: FunctionComponent = () => {
       const TWENTY_MINUTES = 20 * 60 * 1000;
       const pingExpiry = verificationPingStartedAt + TWENTY_MINUTES;
       const hasExceededAllowedTime = verificationPingStartedAt > pingExpiry;
-      const verificationStatusInterval = setInterval(() => {
-        dispatch(sessionApi.endpoints.getProfile.initiate());
-      }, 60000);
+
+      setPollingInterval(20000);
 
       if (hasExceededAllowedTime || isVerified) {
-        clearInterval(verificationStatusInterval);
+        setPollingInterval(undefined);
       }
-
-      return () => clearInterval(verificationStatusInterval);
     }
   }, [dispatch, isVerified, verificationPingStartedAt]);
 
