@@ -63,7 +63,7 @@ const EditSong: FunctionComponent = () => {
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery();
 
-  const [patchSong] = usePatchSongThunk();
+  const [patchSong, { isLoading: isPatchSongLoading }] = usePatchSongThunk();
 
   const hasAccess = useHasSongAccess(songId);
   const artistName = `${firstName} ${lastName}`;
@@ -91,7 +91,7 @@ const EditSong: FunctionComponent = () => {
       ipis,
     } = emptySong,
     error,
-    isLoading,
+    isLoading: isGetSongLoading,
   } = useGetSongQuery(songId);
 
   const owners = collaborations
@@ -192,6 +192,8 @@ const EditSong: FunctionComponent = () => {
     );
   }
 
+  const isLoading = isPatchSongLoading || isGetSongLoading;
+
   /**
    * Redirect if user manually navigates
    * to edit page after minting process started.
@@ -201,43 +203,33 @@ const EditSong: FunctionComponent = () => {
   }
 
   const handleSubmit = async (
+    step: "basic-details" | "advanced-details" | "confirm",
     values: PatchSongRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
-    await patchSong({ ...values, shouldRedirect: true });
-    helpers.setSubmitting(false);
-  };
-
-  // Navigate to advanced details if minting, otherwise upload song
-  const handleSongInfo = async (
-    values: PatchSongRequest,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
-    if (values.isMinting) {
-      await patchSong({
-        ...values,
-        isMinting: false,
-      });
-
-      helpers.setSubmitting(false);
-
-      navigate("advanced-details");
-    } else {
-      await handleSubmit(values, helpers);
-    }
-  };
-
-  // Prepare Artist Agreement for confirmation page
-  const handleAdvancedDetails = async (
-    values: PatchSongRequest,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
-    await patchSong({
+    const patchValues = {
       ...values,
-      isMinting: true,
-    });
+      isMinting: false,
+      shouldRedirect: false,
+    };
+
+    if (step === "basic-details") {
+      patchValues.isMinting = !values.isMinting;
+      patchValues.shouldRedirect = !values.isMinting;
+    } else if (step === "advanced-details") {
+      patchValues.isMinting = true;
+    } else if (step === "confirm") {
+      patchValues.isMinting = true;
+      patchValues.shouldRedirect = true;
+    }
+
+    await patchSong(patchValues);
 
     helpers.setSubmitting(false);
+
+    if (step === "basic-details" && values.isMinting) {
+      navigate("advanced-details");
+    }
   };
 
   /**
@@ -322,7 +314,9 @@ const EditSong: FunctionComponent = () => {
       <Box pt={ 5 } pb={ 7 }>
         <WizardForm
           initialValues={ initialValues }
-          onSubmit={ handleSubmit }
+          onSubmit={ (values, helpers) =>
+            handleSubmit("confirm", values, helpers)
+          }
           rootPath={ `home/library/edit-song/${songId}` }
           isProgressStepperVisible={ true }
           validateOnMount={ true }
@@ -333,7 +327,8 @@ const EditSong: FunctionComponent = () => {
               path: "",
               progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,
-              onSubmitStep: handleSongInfo,
+              onSubmitStep: (values, helpers) =>
+                handleSubmit("basic-details", values, helpers),
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 title: validations.title,
@@ -345,7 +340,8 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: <AdvancedSongDetails />,
-              onSubmitStep: handleAdvancedDetails,
+              onSubmitStep: (values, helpers) =>
+                handleSubmit("advanced-details", values, helpers),
               path: "advanced-details",
               progressStepTitle: "Advanced details",
               validationSchema: Yup.object({

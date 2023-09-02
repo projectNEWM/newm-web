@@ -445,9 +445,7 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
-            await submitMintSongPayment(body.id, dispatch);
-          }
+          await submitMintSongPayment(body.id, dispatch);
         }
       }
 
