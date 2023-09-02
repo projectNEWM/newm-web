@@ -15,7 +15,6 @@ import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
-  MintingStatus,
   PatchSongRequest,
   Song,
   UpdateCollaborationsRequest,
