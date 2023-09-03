@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
 } from "common";
 import {
+  CopyrightInputField,
   DropdownSelectField,
   SwitchInputField,
   TextInputField,
@@ -29,7 +30,8 @@ const AdvancedSongDetails = () => {
   const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
   const releaseDateRef = useRef<HTMLInputElement | null>(null);
-  const copyrightRef = useRef<HTMLInputElement | null>(null);
+  const compositionCopyrightRef = useRef<HTMLDivElement | null>(null);
+  const phonographicCopyrightRef = useRef<HTMLDivElement | null>(null);
   const userIpiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
@@ -60,8 +62,20 @@ const AdvancedSongDetails = () => {
         element: publicationDateRef.current,
       },
       {
-        error: errors.copyright,
-        element: copyrightRef.current,
+        error: errors.compositionCopyrightYear,
+        element: compositionCopyrightRef.current,
+      },
+      {
+        error: errors.compositionCopyrightOwner,
+        element: compositionCopyrightRef.current,
+      },
+      {
+        error: errors.phonographicCopyrightYear,
+        element: phonographicCopyrightRef.current,
+      },
+      {
+        error: errors.phonographicCopyrightOwner,
+        element: phonographicCopyrightRef.current,
       },
       {
         error: errors.isrc,
@@ -129,12 +143,20 @@ const AdvancedSongDetails = () => {
           }
           max={ new Date().toISOString().split("T")[0] }
         />
-        <TextInputField
-          name="copyright"
-          label="COPYRIGHT"
-          placeholder={ `${new Date().getFullYear()} Example` }
-          ref={ copyrightRef }
-          tooltipText={ "" }
+        <CopyrightInputField
+          ref={ compositionCopyrightRef }
+          label="COMPOSITION COPYRIGHT"
+          yearFieldName="compositionCopyrightYear"
+          ownerFieldName="compositionCopyrightOwner"
+          copyrightType="composition"
+        />
+        <CopyrightInputField
+          ref={ phonographicCopyrightRef }
+          label="PHONOGRAPHIC COPYRIGHT"
+          yearFieldName="phonographicCopyrightYear"
+          ownerFieldName="phonographicCopyrightOwner"
+          copyrightType="phonographic"
+          isOptional={ false }
         />
         <TextInputField
           label="ISRC"

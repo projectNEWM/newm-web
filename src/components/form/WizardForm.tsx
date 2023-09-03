@@ -103,6 +103,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     }
 
     if (shouldNavigate) {
+      helpers.setTouched({}, false);
       goForward();
     }
   };
@@ -123,6 +124,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
               }
             />
           ) }
+
           <Routes>
             { routes.map(({ path, element }) => (
               <Route key={ path } path={ path } element={ element } />

@@ -5,6 +5,7 @@ export { default as Background } from "./Background";
 export { default as Creditors } from "./minting/Creditors";
 export { default as ConfirmContract } from "./minting/ConfirmContract";
 export { default as ConnectWalletModal } from "./ConnectWalletModal";
+export { default as CopyrightInputField } from "./form/CopyrightInputField";
 export { default as DashedOutline } from "./styled/DashedOutline";
 export { default as DisconnectWalletButton } from "./DisconnectWalletButton";
 export { default as DropdownSelectField } from "./form/DropdownSelectField";

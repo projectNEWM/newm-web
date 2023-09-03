@@ -80,7 +80,10 @@ export interface PostSongRequest {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyright?: string;
+  readonly compositionCopyrightYear?: string;
+  readonly compositionCopyrightOwner?: string;
+  readonly phonographicCopyrightYear?: string;
+  readonly phonographicCopyrightOwner?: string;
   readonly parentalAdvisory?: string;
   readonly barcodeType?: string;
   readonly barcodeNumber?: string;
@@ -180,7 +183,10 @@ export interface Song {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly copyright?: string;
+  readonly compositionCopyrightYear?: string;
+  readonly compositionCopyrightOwner?: string;
+  readonly phonographicCopyrightYear: string;
+  readonly phonographicCopyrightOwner: string;
   readonly parentalAdvisory?: string;
   readonly isrc?: string;
   readonly iswc?: string;

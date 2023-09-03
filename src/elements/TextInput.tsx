@@ -25,6 +25,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly widthType?: WidthType;
   readonly mask?: string | Array<string | RegExp>;
   readonly maskChar?: string | null;
+  readonly shouldDisplayErrorMessage?: boolean;
 }
 
 const StyledRootElement = styled.div`
@@ -97,6 +98,7 @@ export const TextInput: ForwardRefRenderFunction<
     startAdornment,
     tooltipText = "",
     widthType = "default",
+    shouldDisplayErrorMessage = true,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -217,7 +219,9 @@ export const TextInput: ForwardRefRenderFunction<
         </StyledRootElement>
       </Box>
 
-      { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
+      { !!errorMessage && shouldDisplayErrorMessage && (
+        <ErrorMessage>{ errorMessage }</ErrorMessage>
+      ) }
     </Stack>
   );
 };

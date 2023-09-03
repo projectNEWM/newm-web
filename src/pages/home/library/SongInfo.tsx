@@ -2,6 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router";
 import { useWindowDimensions } from "common";
 import {
+  CopyrightInputField,
   PlaySong,
   SolidOutline,
   SwitchInputField,
@@ -30,7 +31,10 @@ const SongInfo = () => {
       parentalAdvisory,
       releaseDate,
       publicationDate,
-      copyright,
+      compositionCopyrightYear,
+      compositionCopyrightOwner,
+      phonographicCopyrightYear,
+      phonographicCopyrightOwner,
       barcodeNumber,
       barcodeType,
       isrc,
@@ -46,7 +50,10 @@ const SongInfo = () => {
     genres: songGenres,
     moods,
     description,
-    copyright,
+    compositionCopyrightYear,
+    compositionCopyrightOwner,
+    phonographicCopyrightYear,
+    phonographicCopyrightOwner,
     isrc,
     releaseDate,
     isExplicit: parentalAdvisory === "Explicit",
@@ -254,12 +261,22 @@ const SongInfo = () => {
                     "may input the release date here, but it is not required."
                   }
                 />
-                <TextInputField
+                <CopyrightInputField
                   disabled={ true }
-                  name="copyright"
-                  label="COPYRIGHT"
-                  tooltipText={ "" }
-                  title={ values.copyright || "" }
+                  label="COMPOSITION COPYRIGHT"
+                  yearFieldName="compositionCopyrightYear"
+                  ownerFieldName="compositionCopyrightOwner"
+                  copyrightType="composition"
+                  placeholder=""
+                />
+                <CopyrightInputField
+                  disabled={ true }
+                  label="PHONOGRAPHIC COPYRIGHT"
+                  yearFieldName="phonographicCopyrightYear"
+                  ownerFieldName="phonographicCopyrightOwner"
+                  copyrightType="phonographic"
+                  isOptional={ false }
+                  placeholder=""
                 />
                 <TextInputField
                   disabled={ true }

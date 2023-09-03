@@ -53,7 +53,10 @@ const UploadSong: FunctionComponent = () => {
     genres: [],
     moods: [],
     description: "",
-    copyright: undefined,
+    compositionCopyrightYear: undefined,
+    compositionCopyrightOwner: undefined,
+    phonographicCopyrightYear: undefined,
+    phonographicCopyrightOwner: undefined,
     isrc: undefined,
     releaseDate: undefined,
     isExplicit: false,
@@ -93,7 +96,6 @@ const UploadSong: FunctionComponent = () => {
   ) => {
     if (values.isMinting) {
       helpers.setSubmitting(false);
-      navigate("advanced-details");
     } else {
       await handleSubmit(values, helpers);
     }
@@ -151,7 +153,14 @@ const UploadSong: FunctionComponent = () => {
     barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyright: commonYupValidation.copyright,
+    compositionCopyrightYear: commonYupValidation.year,
+    compositionCopyrightOwner: commonYupValidation.copyright,
+    phonographicCopyrightYear: commonYupValidation.year.required(
+      "This field is required"
+    ),
+    phonographicCopyrightOwner: commonYupValidation.copyright.required(
+      "This field is required"
+    ),
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,
   };
@@ -177,13 +186,11 @@ const UploadSong: FunctionComponent = () => {
           rootPath="home/upload-song"
           isProgressStepperVisible={ true }
           enableReinitialize={ true }
-          validateOnBlur={ false }
           routes={ [
             {
               element: <BasicSongDetails />,
               path: "",
               progressStepTitle: "Basic details",
-              navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
@@ -204,7 +211,13 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                copyright: validations.copyright,
+                compositionCopyrightYear: validations.compositionCopyrightYear,
+                compositionCopyrightOwner:
+                  validations.compositionCopyrightOwner,
+                phonographicCopyrightYear:
+                  validations.phonographicCopyrightYear,
+                phonographicCopyrightOwner:
+                  validations.phonographicCopyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
                 userIpi: validations.userIpi,
