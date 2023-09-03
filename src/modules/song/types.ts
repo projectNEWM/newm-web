@@ -183,8 +183,8 @@ export interface Song {
   readonly album?: string;
   readonly track?: number;
   readonly language?: string;
-  readonly compositionCopyrightYear?: string;
-  readonly compositionCopyrightOwner?: string;
+  readonly compositionCopyrightYear: string;
+  readonly compositionCopyrightOwner: string;
   readonly phonographicCopyrightYear: string;
   readonly phonographicCopyrightOwner: string;
   readonly parentalAdvisory?: string;
