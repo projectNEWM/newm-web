@@ -1,6 +1,7 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { TextInput, TextInputProps } from "elements";
+import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { TextInput, TextInputProps, Tooltip } from "elements";
 import { ForwardRefRenderFunction, forwardRef } from "react";
+import HelpIcon from "@mui/icons-material/Help";
 import {
   Field,
   FieldProps,
@@ -26,6 +27,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
     endAdornment,
     yearFieldName,
     ownerFieldName,
+    tooltipText,
     copyrightType = "composition",
     isOptional = true,
     ...rest
@@ -54,7 +56,23 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
             opacity: rest.disabled ? 0.5 : 1,
           } }
         >
-          { label }
+          <Stack direction="row" spacing="4px">
+            <Box>{ label }</Box>
+
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: 0 } }>
+                  <HelpIcon
+                    sx={ {
+                      color: theme.colors.grey100,
+                      height: "18px",
+                      width: "18px",
+                    } }
+                  />
+                </IconButton>
+              </Tooltip>
+            ) }
+          </Stack>
         </Typography>
 
         { isOptional && (
@@ -91,7 +109,6 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
                 mask="9999"
                 maskChar={ null }
                 placeholder={ new Date().getFullYear().toString() }
-                tooltipText={ "" }
                 isOptional={ false }
                 shouldDisplayErrorMessage={ false }
                 { ...field }

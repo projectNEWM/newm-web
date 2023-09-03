@@ -144,19 +144,28 @@ const AdvancedSongDetails = () => {
           max={ new Date().toISOString().split("T")[0] }
         />
         <CopyrightInputField
+          ref={ phonographicCopyrightRef }
+          label="SOUND RECORDING COPYRIGHT"
+          yearFieldName="phonographicCopyrightYear"
+          ownerFieldName="phonographicCopyrightOwner"
+          copyrightType="phonographic"
+          tooltipText={
+            "This copyright is for the physical and digital property of the " +
+            "recording artist or recording label that produced the song."
+          }
+          isOptional={ false }
+        />
+        <CopyrightInputField
           ref={ compositionCopyrightRef }
           label="COMPOSITION COPYRIGHT"
           yearFieldName="compositionCopyrightYear"
           ownerFieldName="compositionCopyrightOwner"
           copyrightType="composition"
-        />
-        <CopyrightInputField
-          ref={ phonographicCopyrightRef }
-          label="PHONOGRAPHIC COPYRIGHT"
-          yearFieldName="phonographicCopyrightYear"
-          ownerFieldName="phonographicCopyrightOwner"
-          copyrightType="phonographic"
           isOptional={ false }
+          tooltipText={
+            "This copyright is for the song composition and includes aspects " +
+            "like the lyrics, melody, rhythm, and harmony."
+          }
         />
         <TextInputField
           label="ISRC"

@@ -263,20 +263,31 @@ const SongInfo = () => {
                 />
                 <CopyrightInputField
                   disabled={ true }
-                  label="COMPOSITION COPYRIGHT"
-                  yearFieldName="compositionCopyrightYear"
-                  ownerFieldName="compositionCopyrightOwner"
-                  copyrightType="composition"
-                  placeholder=""
-                />
-                <CopyrightInputField
-                  disabled={ true }
-                  label="PHONOGRAPHIC COPYRIGHT"
+                  label="SOUND RECORDING COPYRIGHT"
                   yearFieldName="phonographicCopyrightYear"
                   ownerFieldName="phonographicCopyrightOwner"
                   copyrightType="phonographic"
                   isOptional={ false }
                   placeholder=""
+                  tooltipText={
+                    "This copyright is for the physical and digital property " +
+                    "of the recording artist or recording label that " +
+                    "produced the song."
+                  }
+                />
+                <CopyrightInputField
+                  disabled={ true }
+                  label="COMPOSITION COPYRIGHT"
+                  yearFieldName="compositionCopyrightYear"
+                  ownerFieldName="compositionCopyrightOwner"
+                  copyrightType="composition"
+                  isOptional={ false }
+                  placeholder=""
+                  tooltipText={
+                    "This copyright is for the song composition and " +
+                    "includes aspects like the lyrics, melody, rhythm, " +
+                    "and harmony."
+                  }
                 />
                 <TextInputField
                   disabled={ true }

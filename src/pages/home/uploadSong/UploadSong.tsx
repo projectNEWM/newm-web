@@ -153,14 +153,8 @@ const UploadSong: FunctionComponent = () => {
     barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    compositionCopyrightYear: commonYupValidation.year,
-    compositionCopyrightOwner: commonYupValidation.copyright,
-    phonographicCopyrightYear: commonYupValidation.year.required(
-      "This field is required"
-    ),
-    phonographicCopyrightOwner: commonYupValidation.copyright.required(
-      "This field is required"
-    ),
+    copyrightYear: commonYupValidation.year,
+    copyrightOwner: commonYupValidation.copyright,
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,
   };
@@ -211,13 +205,10 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                compositionCopyrightYear: validations.compositionCopyrightYear,
-                compositionCopyrightOwner:
-                  validations.compositionCopyrightOwner,
-                phonographicCopyrightYear:
-                  validations.phonographicCopyrightYear,
-                phonographicCopyrightOwner:
-                  validations.phonographicCopyrightOwner,
+                compositionCopyrightYear: validations.copyrightYear,
+                compositionCopyrightOwner: validations.copyrightOwner,
+                phonographicCopyrightYear: validations.copyrightYear,
+                phonographicCopyrightOwner: validations.copyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
                 userIpi: validations.userIpi,
