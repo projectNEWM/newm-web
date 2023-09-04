@@ -3,7 +3,6 @@ import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
 import {
   MIN_DISTRIBUTION_TIME,
-  NEWM_SUPPORT_EMAIL,
   NONE_OPTION,
   scrollToError,
   useWindowDimensions,
@@ -164,11 +163,7 @@ const AdvancedSongDetails = () => {
               >
                 copyright requirements
               </Link>{ " " }
-              in our FAQ and contact{ " " }
-              <Link href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }>
-                support@newm.io
-              </Link>{ " " }
-              to proceed.
+              in our FAQ.
             </span>
           }
         />
@@ -193,11 +188,7 @@ const AdvancedSongDetails = () => {
               >
                 copyright requirements
               </Link>{ " " }
-              in our FAQ and contact{ " " }
-              <Link href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }>
-                support@newm.io
-              </Link>{ " " }
-              to proceed.
+              in our FAQ.
             </span>
           }
         />
