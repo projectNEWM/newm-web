@@ -3,6 +3,7 @@ import {
   ForwardRefRenderFunction,
   ForwardedRef,
   InputHTMLAttributes,
+  ReactNode,
   forwardRef,
   useState,
 } from "react";
@@ -19,7 +20,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
   readonly isOptional?: boolean;
-  readonly tooltipText?: string;
+  readonly tooltipText?: ReactNode;
   readonly label?: string;
   readonly startAdornment?: JSX.Element;
   readonly widthType?: WidthType;

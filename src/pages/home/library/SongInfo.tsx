@@ -270,9 +270,10 @@ const SongInfo = () => {
                   isOptional={ false }
                   placeholder=""
                   tooltipText={
-                    "This copyright is for the physical and digital property " +
-                    "of the recording artist or recording label that " +
-                    "produced the song."
+                    "The copyright in a sound recording covers the " +
+                    "recording itself (it does not cover the music " +
+                    "or lyrics of the song). It is typically owned by " +
+                    "the artist and/or record label."
                   }
                 />
                 <CopyrightInputField
@@ -284,9 +285,10 @@ const SongInfo = () => {
                   isOptional={ false }
                   placeholder=""
                   tooltipText={
-                    "This copyright is for the song composition and " +
-                    "includes aspects like the lyrics, melody, rhythm, " +
-                    "and harmony."
+                    "The copyright for a musical composition covers the " +
+                    "music and lyrics of a song (not the recorded " +
+                    "performance). It is typically owned by the songwriter " +
+                    "and/or music publisher."
                   }
                 />
                 <TextInputField

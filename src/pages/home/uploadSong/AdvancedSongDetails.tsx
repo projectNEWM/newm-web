@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
-import { Box, Stack } from "@mui/material";
+import { Box, Link, Stack } from "@mui/material";
 import {
   MIN_DISTRIBUTION_TIME,
+  NEWM_SUPPORT_EMAIL,
   NONE_OPTION,
   scrollToError,
   useWindowDimensions,
@@ -149,12 +150,29 @@ const AdvancedSongDetails = () => {
           yearFieldName="phonographicCopyrightYear"
           ownerFieldName="phonographicCopyrightOwner"
           copyrightType="phonographic"
-          tooltipText={
-            "This copyright is for the physical and digital property of the " +
-            "recording artist or recording label that produced the song."
-          }
           isOptional={ false }
+          tooltipText={
+            <span>
+              The copyright in a sound recording covers the recording itself (it
+              does not cover the music or lyrics of the song). It is typically
+              owned by the artist and/or record label. If you are not the
+              copyright holder of the sound recording, please review{ " " }
+              <Link
+                href="https://newm.io/artists-faq"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                copyright requirements
+              </Link>{ " " }
+              in our FAQ and contact{ " " }
+              <Link href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }>
+                support@newm.io
+              </Link>{ " " }
+              to proceed.
+            </span>
+          }
         />
+
         <CopyrightInputField
           ref={ compositionCopyrightRef }
           label="COMPOSITION COPYRIGHT"
@@ -163,8 +181,24 @@ const AdvancedSongDetails = () => {
           copyrightType="composition"
           isOptional={ false }
           tooltipText={
-            "This copyright is for the song composition and includes aspects " +
-            "like the lyrics, melody, rhythm, and harmony."
+            <span>
+              The copyright for a musical composition covers the music and
+              lyrics of a song (not the recorded performance). It is typically
+              owned by the songwriter and/or music publisher. If you are not the
+              copyright holder of the song composition, please review{ " " }
+              <Link
+                href="https://newm.io/artists-faq"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                copyright requirements
+              </Link>{ " " }
+              in our FAQ and contact{ " " }
+              <Link href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }>
+                support@newm.io
+              </Link>{ " " }
+              to proceed.
+            </span>
           }
         />
         <TextInputField
