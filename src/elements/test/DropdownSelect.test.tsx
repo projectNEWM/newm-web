@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/await-async-events */
 import { screen } from "@testing-library/react";
 import { renderWithContext } from "common";
 import "@testing-library/jest-dom";

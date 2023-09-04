@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/await-async-events */
 import { screen } from "@testing-library/react";
 import { renderWithContext, withFormik } from "common";
 import * as Formik from "formik";
@@ -12,7 +13,7 @@ describe("<PasswordInputField>", () => {
         isValid: false,
         setFieldTouched: jest.fn(),
         handleSubmit: jest.fn(),
-      } as any)
+      } as never)
   );
 
   const renderComponent = (propOverrides = {}) => {
@@ -73,11 +74,11 @@ describe("<PasswordInputField>", () => {
     const maskIcon = screen.getByTestId("VisibilityIcon");
 
     expect(maskIcon).toBeInTheDocument();
-    expect(mockHandlePressEndAdornment).not.toBeCalled();
+    expect(mockHandlePressEndAdornment).not.toHaveBeenCalled();
 
     userEvent.click(maskIcon);
 
     expect(maskIcon).toBeInTheDocument();
-    expect(mockHandlePressEndAdornment).toBeCalled();
+    expect(mockHandlePressEndAdornment).toHaveBeenCalled();
   });
 });
