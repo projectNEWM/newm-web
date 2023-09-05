@@ -2,6 +2,7 @@ import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router";
 import { useWindowDimensions } from "common";
 import {
+  CopyrightInputField,
   PlaySong,
   SolidOutline,
   SwitchInputField,
@@ -30,7 +31,10 @@ const SongInfo = () => {
       parentalAdvisory,
       releaseDate,
       publicationDate,
-      copyright,
+      compositionCopyrightYear,
+      compositionCopyrightOwner,
+      phonographicCopyrightYear,
+      phonographicCopyrightOwner,
       barcodeNumber,
       barcodeType,
       isrc,
@@ -46,7 +50,10 @@ const SongInfo = () => {
     genres: songGenres,
     moods,
     description,
-    copyright,
+    compositionCopyrightYear,
+    compositionCopyrightOwner,
+    phonographicCopyrightYear,
+    phonographicCopyrightOwner,
     isrc,
     releaseDate,
     isExplicit: parentalAdvisory === "Explicit",
@@ -254,12 +261,35 @@ const SongInfo = () => {
                     "may input the release date here, but it is not required."
                   }
                 />
-                <TextInputField
+                <CopyrightInputField
                   disabled={ true }
-                  name="copyright"
-                  label="COPYRIGHT"
-                  tooltipText={ "" }
-                  title={ values.copyright || "" }
+                  label="SOUND RECORDING COPYRIGHT"
+                  yearFieldName="phonographicCopyrightYear"
+                  ownerFieldName="phonographicCopyrightOwner"
+                  copyrightType="phonographic"
+                  isOptional={ false }
+                  placeholder=""
+                  tooltipText={
+                    "The copyright in a sound recording covers the " +
+                    "recording itself (it does not cover the music " +
+                    "or lyrics of the song). It is typically owned by " +
+                    "the artist and/or record label."
+                  }
+                />
+                <CopyrightInputField
+                  disabled={ true }
+                  label="COMPOSITION COPYRIGHT"
+                  yearFieldName="compositionCopyrightYear"
+                  ownerFieldName="compositionCopyrightOwner"
+                  copyrightType="composition"
+                  isOptional={ false }
+                  placeholder=""
+                  tooltipText={
+                    "The copyright for a musical composition covers the " +
+                    "music and lyrics of a song (not the recorded " +
+                    "performance). It is typically owned by the songwriter " +
+                    "and/or music publisher."
+                  }
                 />
                 <TextInputField
                   disabled={ true }

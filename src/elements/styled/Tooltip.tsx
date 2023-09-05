@@ -23,6 +23,12 @@ const Tooltip = styled(({ className, ...props }: TooltipProps) => (
     fontSize: "14px",
     padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
   },
+  [`& .${tooltipClasses.tooltip}`]: {
+    a: {
+      color: theme.colors.music,
+      textDecoration: "none",
+    },
+  },
 }));
 
 export default Tooltip;

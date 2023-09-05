@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
-import { Box, Stack } from "@mui/material";
+import { Box, Link, Stack } from "@mui/material";
 import {
   MIN_DISTRIBUTION_TIME,
+  NEWM_ARTIST_PORTAL_FAQ_URL,
   NONE_OPTION,
   scrollToError,
   useWindowDimensions,
 } from "common";
 import {
+  CopyrightInputField,
   DropdownSelectField,
   SwitchInputField,
   TextInputField,
@@ -29,7 +31,8 @@ const AdvancedSongDetails = () => {
   const publicationDateRef = useRef<HTMLInputElement | null>(null);
   const barcodeNumberRef = useRef<HTMLInputElement | null>(null);
   const releaseDateRef = useRef<HTMLInputElement | null>(null);
-  const copyrightRef = useRef<HTMLInputElement | null>(null);
+  const compositionCopyrightRef = useRef<HTMLDivElement | null>(null);
+  const phonographicCopyrightRef = useRef<HTMLDivElement | null>(null);
   const userIpiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
@@ -60,8 +63,20 @@ const AdvancedSongDetails = () => {
         element: publicationDateRef.current,
       },
       {
-        error: errors.copyright,
-        element: copyrightRef.current,
+        error: errors.compositionCopyrightYear,
+        element: compositionCopyrightRef.current,
+      },
+      {
+        error: errors.compositionCopyrightOwner,
+        element: compositionCopyrightRef.current,
+      },
+      {
+        error: errors.phonographicCopyrightYear,
+        element: phonographicCopyrightRef.current,
+      },
+      {
+        error: errors.phonographicCopyrightOwner,
+        element: phonographicCopyrightRef.current,
       },
       {
         error: errors.isrc,
@@ -129,12 +144,54 @@ const AdvancedSongDetails = () => {
           }
           max={ new Date().toISOString().split("T")[0] }
         />
-        <TextInputField
-          name="copyright"
-          label="COPYRIGHT"
-          placeholder={ `${new Date().getFullYear()} Example` }
-          ref={ copyrightRef }
-          tooltipText={ "" }
+        <CopyrightInputField
+          ref={ phonographicCopyrightRef }
+          label="SOUND RECORDING COPYRIGHT"
+          yearFieldName="phonographicCopyrightYear"
+          ownerFieldName="phonographicCopyrightOwner"
+          copyrightType="phonographic"
+          isOptional={ false }
+          tooltipText={
+            <span>
+              The copyright in a sound recording covers the recording itself (it
+              does not cover the music or lyrics of the song). It is typically
+              owned by the artist and/or record label. If you are not the
+              copyright holder of the sound recording, please review{ " " }
+              <Link
+                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                copyright requirements
+              </Link>{ " " }
+              in our FAQ.
+            </span>
+          }
+        />
+
+        <CopyrightInputField
+          ref={ compositionCopyrightRef }
+          label="COMPOSITION COPYRIGHT"
+          yearFieldName="compositionCopyrightYear"
+          ownerFieldName="compositionCopyrightOwner"
+          copyrightType="composition"
+          isOptional={ false }
+          tooltipText={
+            <span>
+              The copyright for a musical composition covers the music and
+              lyrics of a song (not the recorded performance). It is typically
+              owned by the songwriter and/or music publisher. If you are not the
+              copyright holder of the song composition, please review{ " " }
+              <Link
+                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                copyright requirements
+              </Link>{ " " }
+              in our FAQ.
+            </span>
+          }
         />
         <TextInputField
           label="ISRC"

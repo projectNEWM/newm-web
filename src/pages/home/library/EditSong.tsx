@@ -83,7 +83,10 @@ const EditSong: FunctionComponent = () => {
       mintingStatus,
       releaseDate,
       publicationDate,
-      copyright,
+      compositionCopyrightYear,
+      compositionCopyrightOwner,
+      phonographicCopyrightYear,
+      phonographicCopyrightOwner,
       barcodeNumber,
       barcodeType,
       isrc,
@@ -138,7 +141,10 @@ const EditSong: FunctionComponent = () => {
     genres: songGenres,
     moods,
     description,
-    copyright,
+    compositionCopyrightYear,
+    compositionCopyrightOwner,
+    phonographicCopyrightYear,
+    phonographicCopyrightOwner,
     isrc,
     releaseDate,
     isExplicit: parentalAdvisory === "Explicit",
@@ -220,7 +226,6 @@ const EditSong: FunctionComponent = () => {
       });
 
       helpers.setSubmitting(false);
-
       navigate("advanced-details");
     } else {
       await handleSubmit(values, helpers);
@@ -269,7 +274,8 @@ const EditSong: FunctionComponent = () => {
     barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyright: commonYupValidation.copyright,
+    copyrightYear: commonYupValidation.year.required("This field is required"),
+    copyrightOwner: commonYupValidation.copyright,
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,
   };
@@ -352,7 +358,10 @@ const EditSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                copyright: validations.copyright,
+                compositionCopyrightYear: validations.copyrightYear,
+                compositionCopyrightOwner: validations.copyrightOwner,
+                phonographicCopyrightYear: validations.copyrightYear,
+                phonographicCopyrightOwner: validations.copyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
                 userIpi: validations.userIpi,
