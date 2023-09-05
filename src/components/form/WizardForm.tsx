@@ -102,8 +102,10 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
       return;
     }
 
+    // reset touched fields before navigating to next step
+    helpers.setTouched({}, false);
+
     if (shouldNavigate) {
-      helpers.setTouched({}, false);
       goForward();
     }
   };

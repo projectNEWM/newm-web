@@ -96,6 +96,7 @@ const UploadSong: FunctionComponent = () => {
   ) => {
     if (values.isMinting) {
       helpers.setSubmitting(false);
+      navigate("advanced-details");
     } else {
       await handleSubmit(values, helpers);
     }
@@ -186,6 +187,7 @@ const UploadSong: FunctionComponent = () => {
               path: "",
               progressStepTitle: "Basic details",
               onSubmitStep: handleSongInfo,
+              navigateOnSubmitStep: false,
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 audio: validations.audio,

@@ -3,6 +3,7 @@ import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
 import {
   MIN_DISTRIBUTION_TIME,
+  NEWM_ARTIST_PORTAL_FAQ_URL,
   NONE_OPTION,
   scrollToError,
   useWindowDimensions,
@@ -157,7 +158,7 @@ const AdvancedSongDetails = () => {
               owned by the artist and/or record label. If you are not the
               copyright holder of the sound recording, please review{ " " }
               <Link
-                href="https://newm.io/artists-faq"
+                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -182,7 +183,7 @@ const AdvancedSongDetails = () => {
               owned by the songwriter and/or music publisher. If you are not the
               copyright holder of the song composition, please review{ " " }
               <Link
-                href="https://newm.io/artists-faq"
+                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >
