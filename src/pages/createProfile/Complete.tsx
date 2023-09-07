@@ -1,7 +1,8 @@
 import { FunctionComponent } from "react";
-import { Box, useTheme } from "@mui/material";
-import { Button, GradientTypography, Link, Typography } from "elements";
+import { Box, Link, useTheme } from "@mui/material";
+import { Button, GradientTypography, Typography } from "elements";
 import { ResponsiveNEWMLogo } from "components";
+import { NEWM_ARTIST_PORTAL_TERMS_OF_SERVICE_URL } from "common";
 
 const Complete: FunctionComponent = () => {
   const theme = useTheme();
@@ -36,17 +37,26 @@ const Complete: FunctionComponent = () => {
       </div>
       <Box alignItems="center" display="flex" flexDirection="column" mb={ 4 }>
         <Button
-          sx={ { mb: [null, null, 2], mt: [2, 2, null], order: ["2", "2", "0"] } }
+          sx={ { mb: [null, null, 3], mt: [2, 2, null], order: ["2", "2", "0"] } }
           type="submit"
         >
           Enter NEWM
         </Button>
 
-        <Typography color="grey200" fontWeight={ 500 }>
-          By proceeding forward you agree to&nbsp;
-          <Link fontWeight={ 500 } color="grey200" to="#">
-            NEWM&apos;s Terms of Service
+        <Typography color="grey200" variant="subtitle1">
+          By clicking &apos;Enter NEWM&apos;, you agree to
+          <br />
+          NEWM&apos;s{ " " }
+          <Link
+            color={ theme.colors.grey200 }
+            href={ NEWM_ARTIST_PORTAL_TERMS_OF_SERVICE_URL }
+            target="_blank"
+            rel="noopener"
+            variant="subtitle1"
+          >
+            Privacy Policy & Terms of Service
           </Link>
+          .
         </Typography>
       </Box>
     </Box>
