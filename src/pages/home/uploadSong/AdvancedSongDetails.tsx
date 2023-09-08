@@ -145,31 +145,6 @@ const AdvancedSongDetails = () => {
           max={ new Date().toISOString().split("T")[0] }
         />
         <CopyrightInputField
-          ref={ phonographicCopyrightRef }
-          label="SOUND RECORDING COPYRIGHT"
-          yearFieldName="phonographicCopyrightYear"
-          ownerFieldName="phonographicCopyrightOwner"
-          copyrightType="phonographic"
-          isOptional={ false }
-          tooltipText={
-            <span>
-              The copyright in a sound recording covers the recording itself (it
-              does not cover the music or lyrics of the song). It is typically
-              owned by the artist and/or record label. If you are not the
-              copyright holder of the sound recording, please review{ " " }
-              <Link
-                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                copyright requirements
-              </Link>{ " " }
-              in our FAQ.
-            </span>
-          }
-        />
-
-        <CopyrightInputField
           ref={ compositionCopyrightRef }
           label="COMPOSITION COPYRIGHT"
           yearFieldName="compositionCopyrightYear"
@@ -193,6 +168,56 @@ const AdvancedSongDetails = () => {
             </span>
           }
         />
+        <CopyrightInputField
+          ref={ phonographicCopyrightRef }
+          label="SOUND RECORDING COPYRIGHT"
+          yearFieldName="phonographicCopyrightYear"
+          ownerFieldName="phonographicCopyrightOwner"
+          copyrightType="phonographic"
+          isOptional={ false }
+          tooltipText={
+            <span>
+              The copyright in a sound recording covers the recording itself (it
+              does not cover the music or lyrics of the song). It is typically
+              owned by the artist and/or record label. If you are not the
+              copyright holder of the sound recording, please review{ " " }
+              <Link
+                href={ NEWM_ARTIST_PORTAL_FAQ_URL }
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                copyright requirements
+              </Link>{ " " }
+              in our FAQ.
+            </span>
+          }
+        />
+        <DropdownSelectField
+          name="barcodeType"
+          label="RELEASE CODE TYPE"
+          tooltipText={
+            "If you already have a UPC or JAN code for this release, you can " +
+            "select it as the code type here. Otherwise, select EAN as " +
+            "the code type and enter the code number in the next field if " +
+            "you have one, or if not, one will be generated for you."
+          }
+          placeholder="Select one"
+          options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
+        />
+        <TextInputField
+          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
+          name="barcodeNumber"
+          label="RELEASE CODE NUMBER"
+          placeholder="0000000000"
+          ref={ barcodeNumberRef }
+          tooltipText={
+            "A release code number is a unique code that identifies your " +
+            "release. If you do not already have one, leave this field " +
+            "blank, select EAN as Release Code type in the previous " +
+            "field, and an EAN release code number will be generated for " +
+            "you in this field."
+          }
+        />
         <TextInputField
           label="ISRC"
           mask="aa-***-99-99999"
@@ -200,32 +225,26 @@ const AdvancedSongDetails = () => {
           name="isrc"
           placeholder="AA-AAA-00-00000"
           ref={ isrcRef }
-          tooltipText={ " " }
+          tooltipText={
+            "An ISRC is a unique code that identifies this specific " +
+            "recording. If you do not already have one, leave this field " +
+            "blank, and one will be generated for you."
+          }
           onChange={ (event) =>
             setFieldValue("isrc", event.target.value.toUpperCase())
           }
-        />
-        <DropdownSelectField
-          name="barcodeType"
-          label="BARCODE TYPE"
-          tooltipText={ " " }
-          placeholder="Select one"
-          options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
-        />
-        <TextInputField
-          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
-          name="barcodeNumber"
-          label="BARCODE NUMBER"
-          placeholder="0000000000"
-          ref={ barcodeNumberRef }
-          tooltipText={ " " }
         />
         <TextInputField
           label="IPI"
           name="userIpi"
           placeholder="000000000"
           ref={ userIpiRef }
-          tooltipText={ " " }
+          tooltipText={
+            "An IPI is a unique code assigned to songwriters, composers, " +
+            "and music publishers. This information is optional; if you do " +
+            "not already have an IPI or choose not to obtain one, leave " +
+            "this field blank."
+          }
           type="number"
         />
         <TextInputField
@@ -235,7 +254,13 @@ const AdvancedSongDetails = () => {
           name="iswc"
           placeholder="T-000000000-0"
           ref={ iswcRef }
-          tooltipText={ " " }
+          tooltipText={
+            "An ISWC is the unique identification code of your song " +
+            "(unlike ISRC which is linked to  the specific recording). " +
+            "This information is optional; if you do not already have an " +
+            "ISWC or choose not to obtain one, whether this is an original " +
+            "song or a cover, leave this field blank."
+          }
         />
       </Stack>
 

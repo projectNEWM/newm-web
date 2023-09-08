@@ -263,21 +263,6 @@ const SongInfo = () => {
                 />
                 <CopyrightInputField
                   disabled={ true }
-                  label="SOUND RECORDING COPYRIGHT"
-                  yearFieldName="phonographicCopyrightYear"
-                  ownerFieldName="phonographicCopyrightOwner"
-                  copyrightType="phonographic"
-                  isOptional={ false }
-                  placeholder=""
-                  tooltipText={
-                    "The copyright in a sound recording covers the " +
-                    "recording itself (it does not cover the music " +
-                    "or lyrics of the song). It is typically owned by " +
-                    "the artist and/or record label."
-                  }
-                />
-                <CopyrightInputField
-                  disabled={ true }
                   label="COMPOSITION COPYRIGHT"
                   yearFieldName="compositionCopyrightYear"
                   ownerFieldName="compositionCopyrightOwner"
@@ -291,31 +276,54 @@ const SongInfo = () => {
                     "and/or music publisher."
                   }
                 />
+                <CopyrightInputField
+                  disabled={ true }
+                  label="SOUND RECORDING COPYRIGHT"
+                  yearFieldName="phonographicCopyrightYear"
+                  ownerFieldName="phonographicCopyrightOwner"
+                  copyrightType="phonographic"
+                  isOptional={ false }
+                  placeholder=""
+                  tooltipText={
+                    "The copyright in a sound recording covers the " +
+                    "recording itself (it does not cover the music " +
+                    "or lyrics of the song). It is typically owned by " +
+                    "the artist and/or record label."
+                  }
+                />
+                <TextInputField
+                  disabled={ true }
+                  name="barcodeType"
+                  label="RELEASE CODE TYPE"
+                />
+                <TextInputField
+                  disabled={ true }
+                  name="barcodeNumber"
+                  label="RELEASE CODE NUMBER"
+                  tooltipText={
+                    "A release code number is a unique code that identifies " +
+                    "your release."
+                  }
+                />
                 <TextInputField
                   disabled={ true }
                   label="ISRC"
                   mask="aa-***-99-99999"
                   maskChar={ null }
                   name="isrc"
-                  tooltipText={ " " }
-                />
-                <TextInputField
-                  disabled={ true }
-                  name="barcodeType"
-                  label="BARCODE TYPE"
-                  tooltipText={ " " }
-                />
-                <TextInputField
-                  disabled={ true }
-                  name="barcodeNumber"
-                  label="BARCODE NUMBER"
-                  tooltipText={ " " }
+                  tooltipText={
+                    "An ISRC is a unique code that identifies this specific " +
+                    "recording."
+                  }
                 />
                 <TextInputField
                   disabled={ true }
                   label="IPI"
                   name="userIpi"
-                  tooltipText={ " " }
+                  tooltipText={
+                    "An IPI is a unique code assigned to songwriters, " +
+                    "composers, and music publishers."
+                  }
                   type="number"
                 />
                 <TextInputField
@@ -324,7 +332,10 @@ const SongInfo = () => {
                   mask="T-999999999-9"
                   maskChar={ null }
                   name="iswc"
-                  tooltipText={ " " }
+                  tooltipText={
+                    "An ISWC is the unique identification code of your song " +
+                    "(unlike ISRC which is linked to  the specific recording)."
+                  }
                 />
               </Stack>
             </Stack>
