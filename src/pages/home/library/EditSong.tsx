@@ -214,7 +214,6 @@ const EditSong: FunctionComponent = () => {
     };
 
     if (step === "basic-details") {
-      patchValues.isMinting = !values.isMinting;
       patchValues.shouldRedirect = !values.isMinting;
     } else if (step === "advanced-details") {
       patchValues.isMinting = true;
