@@ -1,39 +1,23 @@
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent } from "react";
+import { IconButton, Stack, SxProps } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
-import { IconButton, Stack, SxProps } from "@mui/material";
-import { useGetSongQuery, useHlsJs } from "modules/song";
+import { Song } from "modules/song";
 
 interface PlaySongAdvancedProps {
-  readonly id: string;
-  readonly setPlayingSongId: (id: string | null) => void;
   readonly contentSx?: SxProps;
-  readonly playingSongId?: string | null;
+  readonly isPlaying: boolean;
+  readonly onPlayPause: (song: Song) => void;
+  readonly song: Song | undefined;
 }
 
 const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({
   contentSx,
-  id,
-  playingSongId,
-  setPlayingSongId,
+  isPlaying,
+  onPlayPause,
+  song,
 }) => {
-  const isSongPlaying = id === playingSongId;
-  const { data: song, isLoading } = useGetSongQuery(id, { skip: !id });
-
-  const hlsJsParams = useMemo(
-    () => ({
-      onPlaySong: () => setPlayingSongId(id),
-      onStopSong: () => setPlayingSongId(null),
-      onSongEnded: () => setPlayingSongId(null),
-    }),
-    [id, setPlayingSongId]
-  );
-
-  const { playSong, stopSong } = useHlsJs(hlsJsParams);
-
-  if (isLoading || !song?.streamUrl) return null;
-
-  return (
+  return song ? (
     <Stack
       sx={ {
         alignItems: "center",
@@ -41,14 +25,11 @@ const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({
         ...contentSx,
       } }
     >
-      <IconButton
-        color="inherit"
-        onClick={ () => (isSongPlaying ? stopSong(song) : playSong(song)) }
-      >
-        { isSongPlaying ? <StopIcon /> : <PlayArrowIcon /> }
+      <IconButton color="inherit" onClick={ () => onPlayPause(song) }>
+        { isPlaying ? <StopIcon /> : <PlayArrowIcon /> }
       </IconButton>
     </Stack>
-  );
+  ) : null;
 };
 
 export default PlaySongAdvanced;

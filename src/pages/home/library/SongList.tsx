@@ -15,6 +15,7 @@ import theme from "theme";
 import { Button, Tooltip } from "elements";
 import {
   NEWM_SUPPORT_EMAIL,
+  PlayerState,
   getResizedAlbumCoverImageUrl,
   isMoreThanThresholdSecondsLater,
   useWindowDimensions,
@@ -43,14 +44,6 @@ interface SongListProps {
   rowHeight?: number;
   totalCountOfSongs: number;
   query: string;
-}
-
-interface PlayerState {
-  readonly currentPlayingSongId?: string;
-  readonly loadingSongId?: string;
-  readonly isReadyToPlay: boolean;
-  readonly song?: Song;
-  readonly url?: string;
 }
 
 const POLLING_INTERVALS = {
