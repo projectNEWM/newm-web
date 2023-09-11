@@ -12,6 +12,7 @@
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^1.7.2",
     "async-mutex": "^0.3.2",
+    "axios": "^1.5.0",
     "buffer": "^6.0.3",
     "cloudinary-react": "^1.7.1",
     "cross-env": "^7.0.3",

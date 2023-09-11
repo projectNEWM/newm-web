@@ -5,7 +5,7 @@ import { Genre, Language, Role } from "./types";
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getGenres: build.query<Genre[], void>({
-      query: () => "v1/distribution/genres",
+      query: () => ({ url: "v1/distribution/genres", method: "GET" }),
       providesTags: [Tags.Genres],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -22,7 +22,7 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getRoles: build.query<Role[], void>({
-      query: () => "v1/distribution/roles",
+      query: () => ({ url: "v1/distribution/roles", method: "GET" }),
       providesTags: [Tags.Roles],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -39,7 +39,7 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getMoods: build.query<Array<string>, void>({
-      query: () => "contents/predefined-moods.json",
+      query: () => ({ url: "contents/predefined-moods.json", method: "GET" }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -55,7 +55,7 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getLanguages: build.query<Language[], void>({
-      query: () => "v1/distribution/languages",
+      query: () => ({ url: "v1/distribution/languages", method: "GET" }),
       providesTags: [Tags.Languages],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {

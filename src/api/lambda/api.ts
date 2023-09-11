@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
 import { setToastMessage } from "modules/ui";
 import {
@@ -6,9 +6,13 @@ import {
   GenerateArtistAgreementResponse,
 } from "./types";
 import { baseQuery as newmBaseQuery } from "../newm/api";
-import { fetchBaseQueryWithReauth, prepareAuthHeader } from "../newm/utils";
+import {
+  axiosBaseQuery,
+  fetchBaseQueryWithReauth,
+  prepareAuthHeader,
+} from "../utils";
 
-const baseQuery = fetchBaseQuery({
+const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.lambda,
   prepareHeaders: prepareAuthHeader,
 });
