@@ -17,7 +17,7 @@ const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({
   onPlayPause,
   song,
 }) => {
-  return song ? (
+  return song && song.streamUrl ? (
     <Stack
       sx={ {
         alignItems: "center",
