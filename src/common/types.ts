@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { RootState } from "store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
+import { Song } from "modules/song";
 
 export interface EmptyResponse {
   readonly data: null;
@@ -52,4 +53,12 @@ export enum BarcodeType {
 export interface BarcodeConfig {
   regEx: RegExp;
   message: string;
+}
+
+export interface PlayerState {
+  readonly currentPlayingSongId?: string;
+  readonly loadingSongId?: string;
+  readonly isReadyToPlay: boolean;
+  readonly song?: Song;
+  readonly url?: string;
 }
