@@ -53,7 +53,10 @@ const UploadSong: FunctionComponent = () => {
     genres: [],
     moods: [],
     description: "",
-    copyright: undefined,
+    compositionCopyrightYear: undefined,
+    compositionCopyrightOwner: undefined,
+    phonographicCopyrightYear: undefined,
+    phonographicCopyrightOwner: undefined,
     isrc: undefined,
     releaseDate: undefined,
     isExplicit: false,
@@ -151,7 +154,8 @@ const UploadSong: FunctionComponent = () => {
     barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyright: commonYupValidation.copyright,
+    copyrightYear: commonYupValidation.year.required("This field is required"),
+    copyrightOwner: commonYupValidation.copyright,
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,
   };
@@ -177,14 +181,13 @@ const UploadSong: FunctionComponent = () => {
           rootPath="home/upload-song"
           isProgressStepperVisible={ true }
           enableReinitialize={ true }
-          validateOnBlur={ false }
           routes={ [
             {
               element: <BasicSongDetails />,
               path: "",
               progressStepTitle: "Basic details",
-              navigateOnSubmitStep: false,
               onSubmitStep: handleSongInfo,
+              navigateOnSubmitStep: false,
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 audio: validations.audio,
@@ -204,7 +207,10 @@ const UploadSong: FunctionComponent = () => {
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                copyright: validations.copyright,
+                compositionCopyrightYear: validations.copyrightYear,
+                compositionCopyrightOwner: validations.copyrightOwner,
+                phonographicCopyrightYear: validations.copyrightYear,
+                phonographicCopyrightOwner: validations.copyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
                 userIpi: validations.userIpi,
