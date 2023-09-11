@@ -107,6 +107,11 @@
     "storybook": "^7.0.5",
     "typescript": "^5.1.3"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
+  },
   "eslintConfig": {
     "overrides": [
       {
