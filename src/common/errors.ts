@@ -9,3 +9,11 @@ export class SilentError extends Error {
     this.name = "SilentError";
   }
 }
+
+export class UploadSongError extends SilentError {
+  constructor(message?: string) {
+    super(message);
+
+    this.name = "UploadSongError";
+  }
+}

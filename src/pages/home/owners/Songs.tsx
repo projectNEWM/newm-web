@@ -6,13 +6,18 @@ import { PlayArrow, Stop } from "@mui/icons-material";
 import {
   Song,
   SortOrder,
+  useFetchSongStreamThunk,
   useGetSongCountQuery,
   useGetSongsQuery,
   useHlsJs,
 } from "modules/song";
 import { Typography } from "elements";
 import theme from "theme";
-import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
+import {
+  PlayerState,
+  getResizedAlbumCoverImageUrl,
+  useWindowDimensions,
+} from "common";
 import placeholderBackground from "assets/images/bg-img.png";
 
 const Songs: FunctionComponent = () => {
@@ -24,7 +29,10 @@ const Songs: FunctionComponent = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  const [currentPlayingSongId, setCurrentPlayingSongId] = useState<string>();
+  const [playerState, setPlayerState] = useState<PlayerState>({
+    isReadyToPlay: false,
+  });
+  const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
@@ -47,9 +55,27 @@ const Songs: FunctionComponent = () => {
 
   const hlsJsParams = useMemo(
     () => ({
-      onPlaySong: ({ id }: Song) => setCurrentPlayingSongId(id),
-      onStopSong: () => setCurrentPlayingSongId(undefined),
-      onSongEnded: () => setCurrentPlayingSongId(undefined),
+      onPlaySong: ({ id }: Song) => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: id,
+        }));
+      },
+      onStopSong: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: undefined,
+        }));
+      },
+      onSongEnded: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          isReadyToPlay: false,
+          currentPlayingSongId: undefined,
+        }));
+      },
     }),
     []
   );
@@ -60,11 +86,17 @@ const Songs: FunctionComponent = () => {
    * Plays and/or stops the song depending on if it's currently playing or not.
    */
   const handleSongPlayPause = (song: Song) => {
-    const isSongPlaying = !!currentPlayingSongId;
-    const isNewSong = song.id !== currentPlayingSongId;
+    const isSongPlaying = playerState.currentPlayingSongId;
+    const isNewSong = song.id !== playerState.currentPlayingSongId;
 
     if (isSongPlaying) stopSong(song);
-    if (isNewSong) playSong(song);
+    if (isNewSong) {
+      setPlayerState((prevState) => ({
+        ...prevState,
+        loadingSongId: song.id,
+      }));
+      fetchStreamData(song);
+    }
   };
 
   /**
@@ -80,6 +112,42 @@ const Songs: FunctionComponent = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, songData, totalCountOfSongs, isLoading]);
+
+  // handles the stream metadata response when loading a song
+  useEffect(() => {
+    if (fetchStreamDataResp.isLoading) {
+      return;
+    }
+
+    if (
+      fetchStreamDataResp.data &&
+      playerState.loadingSongId === fetchStreamDataResp.data.song.id
+    ) {
+      setPlayerState((prevState) => ({
+        ...prevState,
+        url: fetchStreamDataResp.data?.streamData.url,
+        song: fetchStreamDataResp.data?.song,
+        isReadyToPlay: true,
+      }));
+    }
+  }, [
+    playerState.loadingSongId,
+    fetchStreamDataResp.isLoading,
+    fetchStreamDataResp.data,
+    playSong,
+  ]);
+
+  // when a songs stream information is ready - play the song
+  useEffect(() => {
+    if (playerState.isReadyToPlay && playerState.song) {
+      playSong(playerState.song);
+    }
+  }, [
+    playerState.song,
+    playerState.loadingSongId,
+    playerState.isReadyToPlay,
+    playSong,
+  ]);
 
   if (!songs.length && !songData.length && !isLoading) {
     return (
@@ -134,7 +202,7 @@ const Songs: FunctionComponent = () => {
                     backgroundColor: "rgba(0, 0, 0, 0.3)",
                   } }
                 >
-                  { song.id === currentPlayingSongId ? (
+                  { song.id === playerState.currentPlayingSongId ? (
                     <Stop sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
                   ) : (
                     <PlayArrow

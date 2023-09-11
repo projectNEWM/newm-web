@@ -10,14 +10,13 @@ import {
   setToastMessage,
 } from "modules/ui";
 import { sessionApi } from "modules/session";
-import { SilentError, isCloudinaryUrl, sleep } from "common";
+import { SilentError, UploadSongError, isCloudinaryUrl, sleep } from "common";
 import { AxiosProgressEvent } from "axios";
 import { handleUploadProgress } from "modules/ui/utils";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
-  MintingStatus,
   PatchSongRequest,
   Song,
   UpdateCollaborationsRequest,
@@ -157,8 +156,7 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ("error" in uploadSongAudioResponse)
-        throw new SilentError("uploadSongAudioResponseError");
+      if ("error" in uploadSongAudioResponse) throw new UploadSongError();
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(
@@ -251,9 +249,24 @@ export const uploadSong = createAsyncThunk(
       // navigate to library page to view new song
       history.push("/home/library");
     } catch (error) {
-      // if songId is present, delete the song
+      // delete song and collaborators if they exist
       if (songId) {
         try {
+          if (
+            body.owners?.length ||
+            body.creditors?.length ||
+            body.featured?.length
+          ) {
+            await dispatch(
+              updateCollaborations({
+                id: songId,
+                owners: [],
+                creditors: [],
+                featured: [],
+              })
+            );
+          }
+
           await dispatch(
             songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
           );
@@ -262,24 +275,17 @@ export const uploadSong = createAsyncThunk(
         }
       }
 
-      if (error instanceof Error) {
-        const isUploadSongAudioError =
-          error.message === "uploadSongAudioResponseError";
+      if (error instanceof UploadSongError) {
+        history.push("/home/upload-song");
+      }
 
-        if (isUploadSongAudioError && body.isMinting) {
-          history.push("/home/upload-song");
-          return;
-        }
-
-        // non-endpoint related error occur, show toast
-        if (!isUploadSongAudioError) {
-          dispatch(
-            setToastMessage({
-              message: error.message,
-              severity: "error",
-            })
-          );
-        }
+      if (error instanceof Error && !(error instanceof SilentError)) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
       }
     } finally {
       dispatch(setIsProgressBarModalOpen(false));
@@ -467,9 +473,7 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          if (songResp.data.mintingStatus === MintingStatus.Undistributed) {
-            await submitMintSongPayment(body.id, dispatch);
-          }
+          await submitMintSongPayment(body.id, dispatch);
         }
       }
 
