@@ -1,3 +1,5 @@
+import { OnUploadProgress } from "api/types";
+
 export interface CloudinaryUploadOptions {
   readonly eager?: string;
 }
@@ -7,6 +9,7 @@ export interface CloudinaryUploadParams extends CloudinaryUploadOptions {
   readonly file: string | ArrayBuffer | null;
   readonly signature: string;
   readonly timestamp: number;
+  readonly onUploadProgress?: OnUploadProgress;
 }
 
 export interface CloudinaryUploadResponse {

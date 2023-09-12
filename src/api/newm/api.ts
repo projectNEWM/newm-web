@@ -1,9 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseUrls } from "buildParams";
-import { fetchBaseQueryWithReauth, prepareAuthHeader } from "./utils";
 import { Tags } from "./types";
+import {
+  axiosBaseQuery,
+  fetchBaseQueryWithReauth,
+  prepareAuthHeader,
+} from "../utils";
 
-export const baseQuery = fetchBaseQuery({
+export const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.newm,
   prepareHeaders: prepareAuthHeader,
 });

@@ -2,6 +2,7 @@ import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { cloudinaryApi } from "api";
 import { getFileBinary } from "common";
 import { songApi } from "modules/song";
+import { OnUploadProgress } from "api/types";
 import { CloudinaryUploadOptions } from "./types";
 
 /**
@@ -11,7 +12,8 @@ import { CloudinaryUploadOptions } from "./types";
 export const uploadToCloudinary = async (
   image: File,
   params: CloudinaryUploadOptions,
-  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>,
+  onUploadProgress?: OnUploadProgress
 ): Promise<string> => {
   // TODO: Delete previously saved image from cloudinary after successfully updating it.
 
@@ -35,6 +37,7 @@ export const uploadToCloudinary = async (
       file: imageBinaryStr,
       signature,
       timestamp,
+      onUploadProgress,
     })
   );
 

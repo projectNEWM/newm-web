@@ -188,10 +188,11 @@ export const extendedApi = api.injectEndpoints({
       UploadSongAudioResponse,
       UploadSongAudioRequest
     >({
-      query: ({ songId, ...body }) => ({
+      query: ({ onUploadProgress, songId, ...body }) => ({
         url: `v1/songs/${songId}/audio`,
         method: "POST",
         body: body.audio,
+        onUploadProgress,
       }),
       invalidatesTags: [Tags.Song],
 

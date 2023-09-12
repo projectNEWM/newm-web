@@ -11,6 +11,8 @@ import {
 } from "modules/ui";
 import { sessionApi } from "modules/session";
 import { SilentError, UploadSongError, isCloudinaryUrl, sleep } from "common";
+import { AxiosProgressEvent } from "axios";
+import { handleUploadProgress } from "modules/ui/utils";
 import {
   Collaboration,
   CollaborationStatus,
@@ -48,14 +50,20 @@ export const uploadSong = createAsyncThunk(
 
     try {
       dispatch(setIsProgressBarModalOpen(true));
-      dispatch(
-        setProgressBarModal({
-          progress: body.isMinting ? 40 : 65,
+
+      // set upload status bar position from HTTP upload event progress
+      const onUploadImageProgress = ({ progress }: AxiosProgressEvent) => {
+        const totalIncrement = body.isMinting ? 25 : 45;
+
+        handleUploadProgress({
+          progress,
+          baseProgress: 0,
+          totalIncrement,
           message: "Uploading song image...",
           disclaimer: progressDisclaimer,
-          animationSeconds: 25,
-        })
-      );
+          dispatch,
+        });
+      };
 
       // downsize if necessary
       const uploadParams = {
@@ -65,7 +73,8 @@ export const uploadSong = createAsyncThunk(
       const coverArtUrl = await uploadToCloudinary(
         body.coverArtUrl as File,
         uploadParams,
-        dispatch
+        dispatch,
+        onUploadImageProgress
       );
 
       // Backend expects "Non-Explicit" for clean songs, any value for explicit
@@ -122,21 +131,28 @@ export const uploadSong = createAsyncThunk(
 
       if ("error" in songResp) throw new SilentError();
 
-      dispatch(
-        setProgressBarModal({
-          progress: body.isMinting ? 75 : 95,
+      songId = songResp.data.songId;
+
+      // set upload status bar position from HTTP upload event progress
+      const onUploadSongProgress = ({ progress }: AxiosProgressEvent) => {
+        const baseProgress = body.isMinting ? 25 : 45;
+        const totalIncrement = body.isMinting ? 50 : 50;
+
+        handleUploadProgress({
+          progress,
+          baseProgress,
+          totalIncrement,
           message: "Uploading song audio...",
           disclaimer: progressDisclaimer,
-          animationSeconds: 10,
-        })
-      );
-
-      songId = songResp.data.songId;
+          dispatch,
+        });
+      };
 
       const uploadSongAudioResponse = await dispatch(
         songApi.endpoints.uploadSongAudio.initiate({
           songId,
           audio: body.audio,
+          onUploadProgress: onUploadSongProgress,
         })
       );
 

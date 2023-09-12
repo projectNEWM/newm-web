@@ -1,3 +1,4 @@
+import { OnUploadProgress } from "api/types";
 import { ReactElement } from "react";
 
 export interface SongState {
@@ -117,6 +118,7 @@ export interface UploadSongResponse {
 export interface UploadSongAudioRequest {
   readonly songId: string;
   readonly audio: File;
+  readonly onUploadProgress?: OnUploadProgress;
 }
 
 export interface UploadSongAudioResponse {

@@ -1,3 +1,5 @@
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+
 export interface UIState {
   toast: {
     heading?: string;
@@ -16,4 +18,13 @@ export interface UIState {
   isInvitesModalOpen: boolean;
   isUpdateWalletAddressModalOpen: boolean;
   isWalletEnvMismatchModalOpen: boolean;
+}
+
+export interface UploadProgressParams {
+  readonly progress?: number;
+  readonly baseProgress: number;
+  readonly totalIncrement: number;
+  readonly message: string;
+  readonly disclaimer: string;
+  readonly dispatch: ThunkDispatch<unknown, unknown, AnyAction>;
 }
