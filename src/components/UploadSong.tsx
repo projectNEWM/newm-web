@@ -25,9 +25,10 @@ import SolidOutline from "./styled/SolidOutline";
 interface UploadSongProps {
   readonly file?: File;
   readonly onChange: (file: File) => void;
-  readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;
   readonly errorMessage?: string;
+  readonly isValidationTriggered: boolean;
+  readonly resetValidationTrigger: VoidFunction;
 }
 
 interface SongProgressOverlayProps {
@@ -42,9 +43,10 @@ interface SongProgressOverlayProps {
 const UploadSong: FunctionComponent<UploadSongProps> = ({
   file,
   onChange,
-  onError,
   onBlur,
   errorMessage,
+  isValidationTriggered,
+  resetValidationTrigger,
 }) => {
   const theme = useTheme();
 
@@ -52,7 +54,30 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const [song, setSong] = useState<Howl | null>(null);
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
+  const [customErrorMessage, setCustomErrorMessage] = useState<string>("");
   const visualizerRef = useRef<HTMLCanvasElement>(null);
+
+  const AUDIO_MIN_DURATION_SEC = 60;
+
+  const AUDIO_MIN_FILE_SIZE_MB = 1;
+  const AUDIO_MAX_FILE_SIZE_GB = 1;
+
+  const createAudioBuffer = async (value: File) => {
+    const audioContext = new (window.AudioContext || window.AudioContext)();
+    const arrayBuffer = await value.arrayBuffer();
+
+    return audioContext.decodeAudioData(arrayBuffer);
+  };
+
+  const isFileSizeValid = (value: File) => {
+    const fileSizeInMB = value.size / (1024 * 1024);
+    const fileSizeInGB = value.size / (1024 * 1024 * 1024);
+
+    return (
+      fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
+      fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
+    );
+  };
 
   const handlePlaySong: MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -83,28 +108,58 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       fileRejections: ReadonlyArray<FileRejection>
     ) => {
       try {
-        fileRejections.forEach((rejection) => {
-          rejection.errors.forEach((error) => {
-            throw new Error(error.message);
-          });
-        });
+        // Check if the file type is valid
+        if (fileRejections.length > 0) {
+          throw new Error("File type must be .flac or .wav");
+        }
 
         const firstFile = acceptedFiles[0];
 
+        // Check if the file size is valid
+        const isValidFileSize = isFileSizeValid(firstFile);
+
+        if (!isValidFileSize) {
+          throw new Error(
+            `Must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and` +
+              ` ${AUDIO_MAX_FILE_SIZE_GB}GB`
+          );
+        }
+
+        // Check if the file duration is less than AUDIO_MIN_DURATION
+        const isAudioDurationValid = async (value: File) => {
+          const audioBuffer = await createAudioBuffer(value);
+
+          return audioBuffer.duration >= AUDIO_MIN_DURATION_SEC;
+        };
+
+        const isValidAudioDuration = await isAudioDurationValid(firstFile);
+
+        if (!isValidAudioDuration) {
+          throw new Error(`Must be at least ${AUDIO_MIN_DURATION_SEC} seconds`);
+        }
+
         onChange(firstFile);
-        onError("");
+        setCustomErrorMessage("");
+        resetValidationTrigger();
 
         // stop current song if it's playing
         if (song?.playing()) song.stop();
       } catch (error) {
         if (error instanceof Error) {
-          onError(error.message);
+          setCustomErrorMessage(error.message);
+          resetValidationTrigger();
           onBlur();
         }
       }
     },
-    [onChange, onBlur, onError, song]
+    [onChange, song, resetValidationTrigger, onBlur]
   );
+
+  useEffect(() => {
+    if (isValidationTriggered) {
+      setCustomErrorMessage("");
+    }
+  }, [isValidationTriggered]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
@@ -289,7 +344,10 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         ) }
       </Box>
 
-      { !!errorMessage && (
+      { customErrorMessage && (
+        <ErrorMessage align="center">{ customErrorMessage }</ErrorMessage>
+      ) }
+      { errorMessage && !customErrorMessage && (
         <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
       ) }
     </Stack>

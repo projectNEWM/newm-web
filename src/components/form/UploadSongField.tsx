@@ -1,5 +1,5 @@
-import { FunctionComponent } from "react";
-import { Field, FieldProps } from "formik";
+import { FunctionComponent, useEffect, useState } from "react";
+import { Field, FieldProps, useFormikContext } from "formik";
 import UploadSong from "../UploadSong";
 
 interface UploadSongFieldProps {
@@ -7,6 +7,17 @@ interface UploadSongFieldProps {
 }
 
 const UploadSongField: FunctionComponent<UploadSongFieldProps> = ({ name }) => {
+  //isValidationTriggered is used to work between required and custom errors
+  const [isValidationTriggered, setIsValidationTriggered] = useState(false);
+
+  const form = useFormikContext();
+
+  useEffect(() => {
+    if (!isValidationTriggered && (form.isSubmitting || form.isValidating)) {
+      setIsValidationTriggered(true);
+    }
+  }, [form.isSubmitting, form.isValidating, isValidationTriggered]);
+
   return (
     <Field name={ name }>
       { ({ form, field, meta }: FieldProps) => {
@@ -14,9 +25,10 @@ const UploadSongField: FunctionComponent<UploadSongFieldProps> = ({ name }) => {
           <UploadSong
             file={ field.value }
             onChange={ (file) => form.setFieldValue(field.name, file) }
-            onError={ (error: string) => form.setFieldError(field.name, error) }
             onBlur={ () => form.setFieldTouched(field.name) }
             errorMessage={ meta.touched ? meta.error : undefined }
+            isValidationTriggered={ isValidationTriggered }
+            resetValidationTrigger={ () => setIsValidationTriggered(false) }
           />
         );
       } }

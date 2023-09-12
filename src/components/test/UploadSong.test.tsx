@@ -9,16 +9,17 @@ jest.mock("common", () => ({
 describe("<UploadSong>", () => {
   describe("when a file is present", () => {
     it("displays the filename", () => {
-      const { queryByText } = renderWithContext(
+      const { getByText } = renderWithContext(
         <UploadSong
           file={ mockFile }
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
-          onError={ jest.fn() }
+          isValidationTriggered={ false }
+          resetValidationTrigger={ jest.fn() }
         />
       );
 
-      expect(queryByText(mockFile.name)).toBeTruthy();
+      expect(getByText(mockFile.name)).toBeTruthy();
     });
   });
 
@@ -28,7 +29,8 @@ describe("<UploadSong>", () => {
         <UploadSong
           onChange={ jest.fn() }
           onBlur={ jest.fn() }
-          onError={ jest.fn() }
+          isValidationTriggered={ false }
+          resetValidationTrigger={ jest.fn() }
         />
       );
 

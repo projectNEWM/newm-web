@@ -47,37 +47,6 @@ const includesGenres = (
   return hasValidGenre;
 };
 
-const createAudioBuffer = async (value: File) => {
-  const audioContext = new (window.AudioContext || window.AudioContext)();
-  const arrayBuffer = await value.arrayBuffer();
-
-  return audioContext.decodeAudioData(arrayBuffer);
-};
-
-const createAsyncAudioTest = (
-  testFn: (audioBuffer: AudioBuffer) => boolean
-) => {
-  return async (value: File) => {
-    if (!value) return false;
-
-    const audioBuffer = await createAudioBuffer(value);
-
-    return testFn(audioBuffer);
-  };
-};
-
-const isFileSizeValid = (value: File) => {
-  if (!value) return false;
-
-  const fileSizeInMB = value.size / (1024 * 1024);
-  const fileSizeInGB = value.size / (1024 * 1024 * 1024);
-
-  return (
-    fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
-    fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
-  );
-};
-
 const BARCODE_CONFIG: Record<BarcodeType | "DEFAULT", BarcodeConfig> = {
   [BarcodeType.UPC]: {
     regEx: REGEX_12_DIGITS_OR_LESS,
@@ -132,9 +101,6 @@ const isAspectRatioOneToOne = async (value: File | null) => {
   return width === height;
 };
 
-const AUDIO_MIN_FILE_SIZE_MB = 1;
-const AUDIO_MAX_FILE_SIZE_GB = 1;
-const AUDIO_MIN_DURATION_SEC = 60;
 const COVERT_ART_MAX_FILE_SIZE_MB = 10;
 
 export const commonYupValidation = {
@@ -229,18 +195,7 @@ export const commonYupValidation = {
     MAX_CHARACTER_COUNT_LONG,
     `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
   ),
-  audio: Yup.mixed()
-    .required("This field is required")
-    .test({
-      message: `The file size must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and ${AUDIO_MAX_FILE_SIZE_GB}GB.`,
-      test: isFileSizeValid,
-    })
-    .test({
-      message: `Must be at least ${AUDIO_MIN_DURATION_SEC} seconds.`,
-      test: createAsyncAudioTest(
-        (value) => value.duration >= AUDIO_MIN_DURATION_SEC
-      ),
-    }),
+  audio: Yup.mixed().required("This field is required"),
   releaseDate: (releaseDate: string | undefined) => {
     // If releaseDate is provided, use it.
     // Otherwise, use the minimum time for EVEARA to distribute from now.
