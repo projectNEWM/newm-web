@@ -167,7 +167,7 @@ export const commonYupValidation = {
         if (typeof value === "string") return true;
 
         if (value instanceof File) {
-          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
+          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1000 * 1000;
         }
 
         return true;

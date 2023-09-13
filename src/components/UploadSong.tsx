@@ -66,8 +66,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   };
 
   const isFileSizeValid = (value: File) => {
-    const fileSizeInMB = value.size / (1024 * 1024);
-    const fileSizeInGB = value.size / (1024 * 1024 * 1024);
+    const fileSizeInMB = value.size / (1000 * 1000);
+    const fileSizeInGB = value.size / (1000 * 1000 * 1000);
 
     return (
       fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
@@ -153,7 +153,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         }
       }
     },
-    [onChange, song, onBlur]
+    [onChange, onError, song, onBlur]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
