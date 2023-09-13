@@ -12,10 +12,9 @@ describe("<UploadSong>", () => {
       const { getByText } = renderWithContext(
         <UploadSong
           file={ mockFile }
-          onChange={ jest.fn() }
           onBlur={ jest.fn() }
-          isValidationTriggered={ false }
-          resetValidationTrigger={ jest.fn() }
+          onChange={ jest.fn() }
+          onError={ jest.fn() }
         />
       );
 
@@ -27,10 +26,9 @@ describe("<UploadSong>", () => {
     it("displays instructions to upload a song", () => {
       const { getByText } = renderWithContext(
         <UploadSong
-          onChange={ jest.fn() }
           onBlur={ jest.fn() }
-          isValidationTriggered={ false }
-          resetValidationTrigger={ jest.fn() }
+          onChange={ jest.fn() }
+          onError={ jest.fn() }
         />
       );
 

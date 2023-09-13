@@ -23,12 +23,11 @@ import ErrorMessage from "./styled/ErrorMessage";
 import SolidOutline from "./styled/SolidOutline";
 
 interface UploadSongProps {
+  readonly errorMessage?: string;
   readonly file?: File;
   readonly onChange: (file: File) => void;
   readonly onBlur: VoidFunction;
-  readonly errorMessage?: string;
-  readonly isValidationTriggered: boolean;
-  readonly resetValidationTrigger: VoidFunction;
+  readonly onError: (message: string) => void;
 }
 
 interface SongProgressOverlayProps {
@@ -36,17 +35,20 @@ interface SongProgressOverlayProps {
   readonly isPlaying: boolean;
 }
 
+const AUDIO_MIN_DURATION_SEC = 60;
+const AUDIO_MIN_FILE_SIZE_MB = 1;
+const AUDIO_MAX_FILE_SIZE_GB = 1;
+
 /**
  * Allows a user to upload a song by either clicking the area to
  * open the file browser or dropping it onto it.
  */
 const UploadSong: FunctionComponent<UploadSongProps> = ({
+  errorMessage,
   file,
   onChange,
   onBlur,
-  errorMessage,
-  isValidationTriggered,
-  resetValidationTrigger,
+  onError,
 }) => {
   const theme = useTheme();
 
@@ -54,13 +56,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const [song, setSong] = useState<Howl | null>(null);
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
-  const [customErrorMessage, setCustomErrorMessage] = useState<string>("");
   const visualizerRef = useRef<HTMLCanvasElement>(null);
-
-  const AUDIO_MIN_DURATION_SEC = 60;
-
-  const AUDIO_MIN_FILE_SIZE_MB = 1;
-  const AUDIO_MAX_FILE_SIZE_GB = 1;
 
   const createAudioBuffer = async (value: File) => {
     const audioContext = new (window.AudioContext || window.AudioContext)();
@@ -102,16 +98,23 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     };
   }, [song]);
 
+  // file validation hosted in component to prevent constant Yup validation
   const handleDrop = useCallback(
     async (
       acceptedFiles: ReadonlyArray<File>,
       fileRejections: ReadonlyArray<FileRejection>
     ) => {
       try {
-        // Check if the file type is valid
-        if (fileRejections.length > 0) {
-          throw new Error("File type must be .flac or .wav");
-        }
+        // Check if the file type is valid or display other file errors
+        fileRejections.forEach((rejection) => {
+          rejection.errors.forEach((error) => {
+            if (error.code === "file-invalid-type") {
+              throw new Error("File type must be .flac or .wav");
+            } else {
+              throw new Error(error.message);
+            }
+          });
+        });
 
         const firstFile = acceptedFiles[0];
 
@@ -139,27 +142,19 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         }
 
         onChange(firstFile);
-        setCustomErrorMessage("");
-        resetValidationTrigger();
+        onError("");
 
         // stop current song if it's playing
         if (song?.playing()) song.stop();
       } catch (error) {
         if (error instanceof Error) {
-          setCustomErrorMessage(error.message);
-          resetValidationTrigger();
+          onError(error.message);
           onBlur();
         }
       }
     },
-    [onChange, song, resetValidationTrigger, onBlur]
+    [onChange, song, onBlur]
   );
-
-  useEffect(() => {
-    if (isValidationTriggered) {
-      setCustomErrorMessage("");
-    }
-  }, [isValidationTriggered]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
@@ -344,12 +339,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         ) }
       </Box>
 
-      { customErrorMessage && (
-        <ErrorMessage align="center">{ customErrorMessage }</ErrorMessage>
-      ) }
-      { errorMessage && !customErrorMessage && (
-        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
-      ) }
+      <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
     </Stack>
   );
 };
