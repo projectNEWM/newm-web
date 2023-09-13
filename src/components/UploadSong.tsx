@@ -35,6 +35,10 @@ interface SongProgressOverlayProps {
   readonly isPlaying: boolean;
 }
 
+const AUDIO_MIN_DURATION_SEC = 60;
+const AUDIO_MIN_FILE_SIZE_MB = 1;
+const AUDIO_MAX_FILE_SIZE_GB = 1;
+
 /**
  * Allows a user to upload a song by either clicking the area to
  * open the file browser or dropping it onto it.
@@ -68,6 +72,23 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     song.stop();
   };
 
+  const createAudioBuffer = async (value: File) => {
+    const audioContext = new (window.AudioContext || window.AudioContext)();
+    const arrayBuffer = await value.arrayBuffer();
+
+    return audioContext.decodeAudioData(arrayBuffer);
+  };
+
+  const isFileSizeValid = (value: File) => {
+    const fileSizeInMB = value.size / (1024 * 1024);
+    const fileSizeInGB = value.size / (1024 * 1024 * 1024);
+
+    return (
+      fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
+      fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
+    );
+  };
+
   /**
    * Stop playing song when component umounts
    */
@@ -90,6 +111,27 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         });
 
         const firstFile = acceptedFiles[0];
+
+        // Check if the file size is valid
+        const isValidFileSize = isFileSizeValid(firstFile);
+        if (!isValidFileSize) {
+          throw new Error(
+            `Must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and` +
+              ` ${AUDIO_MAX_FILE_SIZE_GB}GB`
+          );
+        }
+
+        // Check if the file duration is less than AUDIO_MIN_DURATION
+        const isAudioDurationValid = async (value: File) => {
+          const audioBuffer = await createAudioBuffer(value);
+          return audioBuffer.duration >= AUDIO_MIN_DURATION_SEC;
+        };
+
+        const isValidAudioDuration = await isAudioDurationValid(firstFile);
+
+        if (!isValidAudioDuration) {
+          throw new Error(`Must be at least ${AUDIO_MIN_DURATION_SEC} seconds`);
+        }
 
         onChange(firstFile);
         onError("");

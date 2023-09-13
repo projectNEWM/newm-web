@@ -142,7 +142,7 @@ const UploadSong: FunctionComponent = () => {
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
-    audio: commonYupValidation.audio,
+    audio: Yup.mixed().required("This field is required"),
     title: commonYupValidation.title,
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genreOptions),
