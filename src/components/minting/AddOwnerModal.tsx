@@ -98,7 +98,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <SwitchInputField
                 name="isRightsOwner"
-                title="ROYALTY SHARES"
+                title="ROYALTY SPLITS"
                 description="Should this person receive a percentage of royalties generated?"
               />
 
