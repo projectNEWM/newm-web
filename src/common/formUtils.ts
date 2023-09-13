@@ -1,11 +1,6 @@
 import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
-import {
-  BarcodeConfig,
-  BarcodeType,
-  FieldOptions,
-  ImageDimension,
-} from "./types";
+import { BarcodeConfig, BarcodeType, FieldOptions } from "./types";
 import {
   REGEX_12_DIGITS_OR_LESS,
   REGEX_13_DIGITS_OR_LESS,
@@ -70,39 +65,6 @@ export const getBarcodeRegex = (barcodeType: BarcodeType): BarcodeConfig => {
   return BARCODE_CONFIG[barcodeType] || BARCODE_CONFIG.DEFAULT;
 };
 
-/**
- * Gets the dimensions of an image.
- * @param {File} file - The image file.
- * @returns {Promise<ImageDimension>} A promise that resolves to the dimensions of the image.
- * The promise is rejected if the image fails to load.
- */
-const getDimensions = (file: File): Promise<ImageDimension> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => {
-      resolve({ height: img.height, width: img.width });
-      URL.revokeObjectURL(img.src);
-    };
-    img.onerror = () => reject("Failed to load image");
-    img.src = URL.createObjectURL(file);
-  });
-};
-
-/**
- * Checks if the aspect ratio of an image is 1:1.
- * @param {File | null} value - The image file, or null if no file is provided.
- * @returns {boolean} True if the image is square and false otherwise.
- */
-const isAspectRatioOneToOne = async (value: File | null) => {
-  if (!value) return false;
-
-  const { width, height } = await getDimensions(value);
-
-  return width === height;
-};
-
-const COVERT_ART_MAX_FILE_SIZE_MB = 10;
-
 export const commonYupValidation = {
   email: Yup.string()
     .email("Please enter a vaild email")
@@ -159,32 +121,7 @@ export const commonYupValidation = {
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`
     ),
-  coverArtUrl: Yup.mixed()
-    .required("This field is required")
-    .test({
-      message: `Image must be less than or equal to ${COVERT_ART_MAX_FILE_SIZE_MB} MB`,
-      test: (value) => {
-        if (typeof value === "string") return true;
-
-        if (value instanceof File) {
-          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1000 * 1000;
-        }
-
-        return true;
-      },
-    })
-    .test({
-      message: "Image must be 1:1 aspect ratio",
-      test: (value) => {
-        if (typeof value === "string") return true;
-
-        if (value instanceof File) {
-          return isAspectRatioOneToOne(value);
-        }
-
-        return true;
-      },
-    }),
+  coverArtUrl: Yup.mixed().required("This field is required"),
   title: Yup.string()
     .required("This field is required")
     .max(

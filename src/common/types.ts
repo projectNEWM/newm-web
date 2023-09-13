@@ -38,11 +38,6 @@ export interface FieldOptions {
   element: HTMLDivElement | HTMLInputElement | HTMLTextAreaElement | null;
 }
 
-export interface ImageDimension {
-  width: number;
-  height: number;
-}
-
 export enum BarcodeType {
   UPC = "UPC",
   EAN = "EAN",

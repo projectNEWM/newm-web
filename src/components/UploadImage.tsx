@@ -6,7 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { validateImageDimensions } from "common";
+import {
+  validateAspectRatioOneToOne,
+  validateMinImageDimensions,
+} from "common";
 import { SxProps, useTheme } from "@mui/material/styles";
 import { FileRejection, useDropzone } from "react-dropzone";
 import AddImageIcon from "assets/images/AddImage";
@@ -25,26 +28,28 @@ export interface FileWithPreview extends File {
 }
 
 export interface UploadImageProps {
+  readonly allowImageChange?: boolean;
+  readonly changeImageButtonText?: string;
+  readonly contentSx?: SxProps;
+  readonly emptyMessage?: string;
+  readonly errorMessage?: string;
+  readonly errorMessageLocation?: "inside" | "outside";
   readonly file?: FileWithPreview;
-  readonly onChange: (file: FileWithPreview) => void;
-  readonly onError: (message: string) => void;
-  readonly onBlur: VoidFunction;
+  readonly isAspectRatioOneToOne?: boolean;
+  readonly isMinimumSizeDisplayed?: boolean;
+  readonly isMultiButtonLayout?: boolean;
+  readonly isSuccessIconDisplayed?: boolean;
+  readonly maxFileSizeMB?: number;
   readonly minDimensions?: {
     readonly width: number;
     readonly height: number;
   };
-  readonly errorMessageLocation?: "inside" | "outside";
   readonly minimumSizeLabel?: string;
-  readonly emptyMessage?: string;
+  readonly onBlur: VoidFunction;
+  readonly onChange: (file: FileWithPreview) => void;
+  readonly onError: (message: string) => void;
   readonly replaceMessage?: string;
-  readonly errorMessage?: string;
-  readonly changeImageButtonText?: string;
-  readonly isSuccessIconDisplayed?: boolean;
-  readonly isMinimumSizeDisplayed?: boolean;
-  readonly isMultiButtonLayout?: boolean;
   readonly rootSx?: SxProps;
-  readonly contentSx?: SxProps;
-  readonly allowImageChange?: boolean;
 }
 
 interface ImagePreviewProps extends BoxProps {
@@ -56,23 +61,25 @@ interface ImagePreviewProps extends BoxProps {
  * open the file browser or dropping a file onto it.
  */
 const UploadImage: FunctionComponent<UploadImageProps> = ({
-  file,
-  onChange,
-  onBlur,
-  onError,
-  emptyMessage = "Drag & drop to upload or browse",
-  replaceMessage = "Upload a new image",
-  errorMessage,
-  minDimensions,
-  errorMessageLocation = "outside",
-  minimumSizeLabel = "Minimum size",
+  allowImageChange = true,
   changeImageButtonText = "Change image",
-  isSuccessIconDisplayed = true,
+  contentSx = {},
+  emptyMessage = "Drag & drop to upload or browse",
+  errorMessage,
+  errorMessageLocation = "outside",
+  file,
+  isAspectRatioOneToOne = false,
   isMinimumSizeDisplayed = true,
   isMultiButtonLayout = false,
+  isSuccessIconDisplayed = true,
+  maxFileSizeMB,
+  minDimensions,
+  minimumSizeLabel = "Minimum size",
+  onBlur,
+  onChange,
+  onError,
+  replaceMessage = "Upload a new image",
   rootSx = {},
-  contentSx = {},
-  allowImageChange = true,
 }) => {
   const theme = useTheme();
 
@@ -92,12 +99,23 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         });
 
         const firstFile = acceptedFiles[0];
+
+        if (maxFileSizeMB && firstFile.size > maxFileSizeMB * 1000 * 1000) {
+          throw new Error(
+            `Image must be less than or equal to ${maxFileSizeMB}MB`
+          );
+        }
+
         const fileWithPreview = Object.assign(firstFile, {
           preview: URL.createObjectURL(firstFile),
         });
 
+        if (isAspectRatioOneToOne) {
+          await validateAspectRatioOneToOne(fileWithPreview.preview);
+        }
+
         if (minDimensions) {
-          await validateImageDimensions({
+          await validateMinImageDimensions({
             imageUrl: fileWithPreview.preview,
             minWidth: minDimensions.width,
             minHeight: minDimensions.height,
@@ -114,7 +132,14 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         onBlur();
       }
     },
-    [minDimensions, onChange, onBlur, onError]
+    [
+      maxFileSizeMB,
+      isAspectRatioOneToOne,
+      minDimensions,
+      onChange,
+      onError,
+      onBlur,
+    ]
   );
 
   const handleOpenPreview: MouseEventHandler = (event) => {
