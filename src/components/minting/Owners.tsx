@@ -62,7 +62,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
         </Stack>
 
         <Typography color="grey100" variant="h5">
-          SHARES
+          SPLITS
         </Typography>
       </Stack>
 

@@ -208,7 +208,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
             <TableHeadCell>UPLOADED BY</TableHeadCell>
             <TableHeadCell>YOUR ROLE</TableHeadCell>
             <TableHeadCell>LENGTH</TableHeadCell>
-            <TableHeadCell>SHARE</TableHeadCell>
+            <TableHeadCell>SPLIT</TableHeadCell>
             <TableHeadCell sx={ { textAlign: "end" } }>ACTION</TableHeadCell>
           </TableRow>
         </TableHead>
