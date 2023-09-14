@@ -12,11 +12,11 @@ const UploadSongField: FunctionComponent<UploadSongFieldProps> = ({ name }) => {
       { ({ form, field, meta }: FieldProps) => {
         return (
           <UploadSong
-            file={ field.value }
-            onChange={ (file) => form.setFieldValue(field.name, file) }
-            onError={ (error: string) => form.setFieldError(field.name, error) }
-            onBlur={ () => form.setFieldTouched(field.name) }
             errorMessage={ meta.touched ? meta.error : undefined }
+            file={ field.value }
+            onBlur={ () => form.setFieldTouched(field.name, true, false) }
+            onChange={ (file) => form.setFieldValue(field.name, file) }
+            onError={ (error) => form.setFieldError(field.name, error) }
           />
         );
       } }

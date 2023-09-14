@@ -1,11 +1,6 @@
 import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
-import {
-  BarcodeConfig,
-  BarcodeType,
-  FieldOptions,
-  ImageDimension,
-} from "./types";
+import { BarcodeConfig, BarcodeType, FieldOptions } from "./types";
 import {
   REGEX_12_DIGITS_OR_LESS,
   REGEX_13_DIGITS_OR_LESS,
@@ -47,37 +42,6 @@ const includesGenres = (
   return hasValidGenre;
 };
 
-const createAudioBuffer = async (value: File) => {
-  const audioContext = new (window.AudioContext || window.AudioContext)();
-  const arrayBuffer = await value.arrayBuffer();
-
-  return audioContext.decodeAudioData(arrayBuffer);
-};
-
-const createAsyncAudioTest = (
-  testFn: (audioBuffer: AudioBuffer) => boolean
-) => {
-  return async (value: File) => {
-    if (!value) return false;
-
-    const audioBuffer = await createAudioBuffer(value);
-
-    return testFn(audioBuffer);
-  };
-};
-
-const isFileSizeValid = (value: File) => {
-  if (!value) return false;
-
-  const fileSizeInMB = value.size / (1024 * 1024);
-  const fileSizeInGB = value.size / (1024 * 1024 * 1024);
-
-  return (
-    fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
-    fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
-  );
-};
-
 const BARCODE_CONFIG: Record<BarcodeType | "DEFAULT", BarcodeConfig> = {
   [BarcodeType.UPC]: {
     regEx: REGEX_12_DIGITS_OR_LESS,
@@ -100,42 +64,6 @@ const BARCODE_CONFIG: Record<BarcodeType | "DEFAULT", BarcodeConfig> = {
 export const getBarcodeRegex = (barcodeType: BarcodeType): BarcodeConfig => {
   return BARCODE_CONFIG[barcodeType] || BARCODE_CONFIG.DEFAULT;
 };
-
-/**
- * Gets the dimensions of an image.
- * @param {File} file - The image file.
- * @returns {Promise<ImageDimension>} A promise that resolves to the dimensions of the image.
- * The promise is rejected if the image fails to load.
- */
-const getDimensions = (file: File): Promise<ImageDimension> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => {
-      resolve({ height: img.height, width: img.width });
-      URL.revokeObjectURL(img.src);
-    };
-    img.onerror = () => reject("Failed to load image");
-    img.src = URL.createObjectURL(file);
-  });
-};
-
-/**
- * Checks if the aspect ratio of an image is 1:1.
- * @param {File | null} value - The image file, or null if no file is provided.
- * @returns {boolean} True if the image is square and false otherwise.
- */
-const isAspectRatioOneToOne = async (value: File | null) => {
-  if (!value) return false;
-
-  const { width, height } = await getDimensions(value);
-
-  return width === height;
-};
-
-const AUDIO_MIN_FILE_SIZE_MB = 1;
-const AUDIO_MAX_FILE_SIZE_GB = 1;
-const AUDIO_MIN_DURATION_SEC = 60;
-const COVERT_ART_MAX_FILE_SIZE_MB = 10;
 
 export const commonYupValidation = {
   email: Yup.string()
@@ -193,32 +121,7 @@ export const commonYupValidation = {
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`
     ),
-  coverArtUrl: Yup.mixed()
-    .required("This field is required")
-    .test({
-      message: `Image must be less than or equal to ${COVERT_ART_MAX_FILE_SIZE_MB} MB`,
-      test: (value) => {
-        if (typeof value === "string") return true;
-
-        if (value instanceof File) {
-          return value.size <= COVERT_ART_MAX_FILE_SIZE_MB * 1024 * 1024;
-        }
-
-        return true;
-      },
-    })
-    .test({
-      message: "Image must be 1:1 aspect ratio",
-      test: (value) => {
-        if (typeof value === "string") return true;
-
-        if (value instanceof File) {
-          return isAspectRatioOneToOne(value);
-        }
-
-        return true;
-      },
-    }),
+  coverArtUrl: Yup.mixed().required("This field is required"),
   title: Yup.string()
     .required("This field is required")
     .max(
@@ -229,18 +132,7 @@ export const commonYupValidation = {
     MAX_CHARACTER_COUNT_LONG,
     `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
   ),
-  audio: Yup.mixed()
-    .required("This field is required")
-    .test({
-      message: `The file size must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and ${AUDIO_MAX_FILE_SIZE_GB}GB.`,
-      test: isFileSizeValid,
-    })
-    .test({
-      message: `Must be at least ${AUDIO_MIN_DURATION_SEC} seconds.`,
-      test: createAsyncAudioTest(
-        (value) => value.duration >= AUDIO_MIN_DURATION_SEC
-      ),
-    }),
+  audio: Yup.mixed().required("This field is required"),
   releaseDate: (releaseDate: string | undefined) => {
     // If releaseDate is provided, use it.
     // Otherwise, use the minimum time for EVEARA to distribute from now.

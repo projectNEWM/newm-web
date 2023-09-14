@@ -9,16 +9,16 @@ jest.mock("common", () => ({
 describe("<UploadSong>", () => {
   describe("when a file is present", () => {
     it("displays the filename", () => {
-      const { queryByText } = renderWithContext(
+      const { getByText } = renderWithContext(
         <UploadSong
           file={ mockFile }
-          onChange={ jest.fn() }
           onBlur={ jest.fn() }
+          onChange={ jest.fn() }
           onError={ jest.fn() }
         />
       );
 
-      expect(queryByText(mockFile.name)).toBeTruthy();
+      expect(getByText(mockFile.name)).toBeTruthy();
     });
   });
 
@@ -26,8 +26,8 @@ describe("<UploadSong>", () => {
     it("displays instructions to upload a song", () => {
       const { getByText } = renderWithContext(
         <UploadSong
-          onChange={ jest.fn() }
           onBlur={ jest.fn() }
+          onChange={ jest.fn() }
           onError={ jest.fn() }
         />
       );

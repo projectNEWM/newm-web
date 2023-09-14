@@ -23,11 +23,11 @@ import ErrorMessage from "./styled/ErrorMessage";
 import SolidOutline from "./styled/SolidOutline";
 
 interface UploadSongProps {
+  readonly errorMessage?: string;
   readonly file?: File;
   readonly onChange: (file: File) => void;
-  readonly onError: (message: string) => void;
   readonly onBlur: VoidFunction;
-  readonly errorMessage?: string;
+  readonly onError: (message: string) => void;
 }
 
 interface SongProgressOverlayProps {
@@ -35,16 +35,20 @@ interface SongProgressOverlayProps {
   readonly isPlaying: boolean;
 }
 
+const AUDIO_MIN_DURATION_SEC = 60;
+const AUDIO_MIN_FILE_SIZE_MB = 1;
+const AUDIO_MAX_FILE_SIZE_GB = 1;
+
 /**
  * Allows a user to upload a song by either clicking the area to
  * open the file browser or dropping it onto it.
  */
 const UploadSong: FunctionComponent<UploadSongProps> = ({
+  errorMessage,
   file,
   onChange,
-  onError,
   onBlur,
-  errorMessage,
+  onError,
 }) => {
   const theme = useTheme();
 
@@ -53,6 +57,23 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
   const visualizerRef = useRef<HTMLCanvasElement>(null);
+
+  const createAudioBuffer = async (value: File) => {
+    const audioContext = new (window.AudioContext || window.AudioContext)();
+    const arrayBuffer = await value.arrayBuffer();
+
+    return audioContext.decodeAudioData(arrayBuffer);
+  };
+
+  const isFileSizeValid = (value: File) => {
+    const fileSizeInMB = value.size / (1000 * 1000);
+    const fileSizeInGB = value.size / (1000 * 1000 * 1000);
+
+    return (
+      fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
+      fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
+    );
+  };
 
   const handlePlaySong: MouseEventHandler = (event) => {
     event.stopPropagation();
@@ -77,19 +98,48 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     };
   }, [song]);
 
+  // file validation hosted in component to prevent constant Yup validation
   const handleDrop = useCallback(
     async (
       acceptedFiles: ReadonlyArray<File>,
       fileRejections: ReadonlyArray<FileRejection>
     ) => {
       try {
+        // Check if the file type is valid or display other file errors
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
-            throw new Error(error.message);
+            if (error.code === "file-invalid-type") {
+              throw new Error("File type must be .flac or .wav");
+            } else {
+              throw new Error(error.message);
+            }
           });
         });
 
         const firstFile = acceptedFiles[0];
+
+        // Check if the file size is valid
+        const isValidFileSize = isFileSizeValid(firstFile);
+
+        if (!isValidFileSize) {
+          throw new Error(
+            `Must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and` +
+              ` ${AUDIO_MAX_FILE_SIZE_GB}GB`
+          );
+        }
+
+        // Check if the file duration is less than AUDIO_MIN_DURATION
+        const isAudioDurationValid = async (value: File) => {
+          const audioBuffer = await createAudioBuffer(value);
+
+          return audioBuffer.duration >= AUDIO_MIN_DURATION_SEC;
+        };
+
+        const isValidAudioDuration = await isAudioDurationValid(firstFile);
+
+        if (!isValidAudioDuration) {
+          throw new Error(`Must be at least ${AUDIO_MIN_DURATION_SEC} seconds`);
+        }
 
         onChange(firstFile);
         onError("");
@@ -99,11 +149,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       } catch (error) {
         if (error instanceof Error) {
           onError(error.message);
-          onBlur();
         }
+      } finally {
+        onBlur();
       }
     },
-    [onChange, onBlur, onError, song]
+    [onChange, onError, song, onBlur]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -289,9 +340,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         ) }
       </Box>
 
-      { !!errorMessage && (
-        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
-      ) }
+      <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
     </Stack>
   );
 };

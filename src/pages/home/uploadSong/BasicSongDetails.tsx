@@ -169,12 +169,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           </Typography>
 
           <UploadImageField
-            rootSx={ { width: "100%", alignSelf: "center" } }
-            name="coverArtUrl"
-            emptyMessage="Drag and drop or browse your image"
             changeImageButtonText="Change cover"
-            minDimensions={ { width: 1400, height: 1400 } }
+            emptyMessage="Drag and drop or browse your image"
+            isAspectRatioOneToOne
             isMultiButtonLayout
+            maxFileSizeMB={ 10 }
+            minDimensions={ { width: 1400, height: 1400 } }
+            name="coverArtUrl"
+            rootSx={ { width: "100%", alignSelf: "center" } }
           />
         </Stack>
       </Stack>
