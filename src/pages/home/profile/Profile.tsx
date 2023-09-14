@@ -429,7 +429,7 @@ const Profile: FunctionComponent = () => {
                         name="companyIpRights"
                         title="DO YOU HAVE A COMPANY?"
                         description={
-                          "If your IP Rights are held under your Company, please select this option."
+                          "If your Royalty Splits are held under your Company, please select this option."
                         }
                       >
                         <Stack

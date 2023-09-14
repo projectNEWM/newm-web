@@ -118,8 +118,8 @@ const ViewDetails: FunctionComponent = () => {
           sx={ {
             ".MuiButtonBase-root.MuiTab-root": {
               minWidth: "auto",
-              textTransform: "none",
               ...theme.typography.subtitle2,
+              fontWeight: 600,
             },
             ".MuiTabs-flexContainer": {
               gap: 4,
@@ -136,8 +136,8 @@ const ViewDetails: FunctionComponent = () => {
             },
           } }
         >
-          <Tab label="Info" id="tab-0" aria-controls="tabpanel-0" />
-          <Tab label="Collaborators" id="tab-1" aria-controls="tabpanel-1" />
+          <Tab label="INFO" id="tab-0" aria-controls="tabpanel-0" />
+          <Tab label="MINTING" id="tab-1" aria-controls="tabpanel-1" />
         </Tabs>
 
         <TabPanel value={ tab } index={ 0 }>

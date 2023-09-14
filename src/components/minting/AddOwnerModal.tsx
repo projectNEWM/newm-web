@@ -98,8 +98,8 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <SwitchInputField
                 name="isRightsOwner"
-                title="IP RIGHTS"
-                description="Does this person own IP rights to this song?"
+                title="ROYALTY SPLITS"
+                description="Should this person receive a percentage of royalties generated?"
               />
 
               <SwitchInputField

@@ -40,7 +40,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
       <Stack flexDirection="row" justifyContent="space-between">
         <Stack columnGap={ 1 } mt={ 1.5 } flexDirection="row">
           <Typography color="grey100" variant="h5">
-            IP RIGHTS HOLDERS
+            ROYALTY SPLIT HOLDERS
           </Typography>
 
           <Tooltip
@@ -62,7 +62,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
         </Stack>
 
         <Typography color="grey100" variant="h5">
-          SHARES
+          SPLITS
         </Typography>
       </Stack>
 
