@@ -1,8 +1,8 @@
-import { MintingStatus as MintingStatusType } from "modules/song";
-import { IconStatus } from "components";
 import { FunctionComponent } from "react";
 import { Theme } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
+import { MintingStatus as MintingStatusType } from "modules/song";
+import { IconStatus } from "components";
 import InfoCircleLine from "assets/images/InfoCircleLine";
 import TimeCircleLine from "assets/images/TimeCircleLine";
 import theme from "theme";
