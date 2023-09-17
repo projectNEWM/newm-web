@@ -29,8 +29,8 @@ export const REGEX_ISWC_FORMAT = /^T-\d{9}-\d$/g;
 export const REGEX_JAN_FORMAT = /^(49|45)\d{1,11}$/;
 
 export const REGEX_9_TO_11_DIGITS = /^\d{9,11}$/;
-export const REGEX_12_DIGITS_OR_LESS = /^\d{1,12}$/;
-export const REGEX_13_DIGITS_OR_LESS = /^\d{1,13}$/;
+export const REGEX_EXACTLY_12_DIGITS = /^\d{12}$/;
+export const REGEX_EXACTLY_13_DIGITS = /^\d{13}$/;
 
 /**
  * Check for alphabetic characters (upper or lower case) and spaces.
