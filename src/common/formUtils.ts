@@ -2,9 +2,9 @@ import * as Yup from "yup";
 import { FormikErrors, FormikValues } from "formik";
 import { BarcodeConfig, BarcodeType, FieldOptions } from "./types";
 import {
-  REGEX_12_DIGITS_OR_LESS,
-  REGEX_13_DIGITS_OR_LESS,
   REGEX_9_TO_11_DIGITS,
+  REGEX_EXACTLY_12_DIGITS,
+  REGEX_EXACTLY_13_DIGITS,
   REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
@@ -44,20 +44,20 @@ const includesGenres = (
 
 const BARCODE_CONFIG: Record<BarcodeType | "DEFAULT", BarcodeConfig> = {
   [BarcodeType.UPC]: {
-    regEx: REGEX_12_DIGITS_OR_LESS,
-    message: "UPC barcode must have 12 digits or less",
+    regEx: REGEX_EXACTLY_12_DIGITS,
+    message: "UPC barcode must have 12 digits",
   },
   [BarcodeType.EAN]: {
-    regEx: REGEX_13_DIGITS_OR_LESS,
-    message: "EAN barcode must have 13 digits or less",
+    regEx: REGEX_EXACTLY_13_DIGITS,
+    message: "EAN barcode must have 13 digits",
   },
   [BarcodeType.JAN]: {
     regEx: REGEX_JAN_FORMAT,
     message: "JAN barcode must have 13 digits or less and start with 45 or 49",
   },
   DEFAULT: {
-    regEx: REGEX_13_DIGITS_OR_LESS,
-    message: "Barcode must be 13 digits or less",
+    regEx: REGEX_EXACTLY_13_DIGITS,
+    message: "Barcode must be 13 digits",
   },
 };
 
@@ -124,6 +124,10 @@ export const commonYupValidation = {
   coverArtUrl: Yup.mixed().required("This field is required"),
   title: Yup.string()
     .required("This field is required")
+    .matches(
+      /^[^%,*=#<>{}~@\\\\/;:?$"]*$/,
+      "Cannot contain special characters like %,*=#<>{}~@\\/;:?$\""
+    )
     .max(
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`
