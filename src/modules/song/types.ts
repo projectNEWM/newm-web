@@ -154,18 +154,25 @@ export interface CloudinarySignatureResponse {
 }
 
 export enum MintingStatus {
-  Undistributed = "Undistributed",
-  StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
+  ArweaveUploadException = "ArweaveUploadException",
+  AwaitingAudioEncoding = "AwaitingAudioEncoding",
+  AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
+  Declined = "Declined",
+  Distributed = "Distributed",
+  DistributionException = "DistributionException",
+  Minted = "Minted",
+  MintingException = "MintingException",
+  MintingPaymentException = "MintingPaymentException",
+  MintingPaymentReceived = "MintingPaymentReceived",
   MintingPaymentRequested = "MintingPaymentRequested",
   MintingPaymentSubmitted = "MintingPaymentSubmitted",
-  MintingPaymentReceived = "MintingPaymentReceived",
-  AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
-  ReadyToDistribute = "ReadyToDistribute",
-  SubmittedForDistribution = "SubmittedForDistribution",
-  Distributed = "Distributed",
-  Declined = "Declined",
+  MintingPaymentTimeout = "MintingPaymentTimeout",
   Pending = "Pending",
-  Minted = "Minted",
+  ReadyToDistribute = "ReadyToDistribute",
+  StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
+  SubmittedForDistribution = "SubmittedForDistribution",
+  SubmittedForDistributionException = "SubmittedForDistributionException",
+  Undistributed = "Undistributed",
 }
 
 export enum MarketplaceStatus {
