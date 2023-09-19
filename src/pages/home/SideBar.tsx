@@ -17,8 +17,8 @@ import {
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
 import {
-  NEWM_ARTIST_PORTAL_FAQ_URL,
-  NEWM_ARTIST_PORTAL_TELEGRAM_URL,
+  NEWM_STUDIO_FAQ_URL,
+  NEWM_STUDIO_TELEGRAM_URL,
   NEWM_SUPPORT_EMAIL,
 } from "common";
 
@@ -148,13 +148,13 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               Icon={ FaqIcon }
               label="FAQ"
-              href={ NEWM_ARTIST_PORTAL_FAQ_URL }
+              href={ NEWM_STUDIO_FAQ_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               Icon={ AskCommunityIcon }
               label="ASK THE COMMUNITY"
-              href={ NEWM_ARTIST_PORTAL_TELEGRAM_URL }
+              href={ NEWM_STUDIO_TELEGRAM_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
