@@ -1,5 +1,5 @@
 import type { AsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useAppDispatch } from "./hooks";
 
 interface UseWrappedThunkResponse<Returned> {
@@ -22,7 +22,7 @@ export const asThunkHook = <Returned, Arg>(
     (arg: Arg) => Promise<void>,
     UseWrappedThunkResponse<Returned>
   ] => {
-    const resultRef = useRef<PayloadAction<Returned>>();
+    const [data, setData] = useState<Returned>();
 
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
@@ -30,15 +30,15 @@ export const asThunkHook = <Returned, Arg>(
     const callHook = useCallback(
       async (arg: Arg) => {
         setIsLoading(true);
-        resultRef.current = (await dispatch(
-          thunk(arg)
-        )) as PayloadAction<Returned>;
+        const result = (await dispatch(thunk(arg))) as PayloadAction<Returned>;
+
+        setData(result.payload);
         setIsLoading(false);
       },
       [dispatch, setIsLoading]
     );
 
-    return [callHook, { isLoading, data: resultRef.current?.payload }];
+    return [callHook, { isLoading, data }];
   };
 
   return useWrappedThunk;
