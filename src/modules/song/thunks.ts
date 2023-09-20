@@ -544,8 +544,9 @@ export const fetchInvites = createAsyncThunk(
       !collaborationsData ||
       !collaborationsData.length ||
       "error" in collaborationsResponse
-    )
+    ) {
       return;
+    }
 
     const collaboratorsPromises = collaborationsData.map(
       (collaboration: Collaboration) => createInvite(collaboration, dispatch)
