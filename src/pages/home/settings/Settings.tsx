@@ -4,7 +4,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine } from "elements";
 import { LogoutButton, PasswordInputField } from "components";
 import {
-  NEWM_ARTIST_PORTAL_TERMS_OF_SERVICE_URL,
+  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
   commonYupValidation,
   getUpdatedValues,
   useWindowDimensions,
@@ -185,7 +185,7 @@ const Settings: FunctionComponent = () => {
                       ABOUT
                     </Typography>
                     <Link
-                      href={ NEWM_ARTIST_PORTAL_TERMS_OF_SERVICE_URL }
+                      href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
                       target="_blank"
                       rel="noopener"
                       color={ theme.colors.grey100 }

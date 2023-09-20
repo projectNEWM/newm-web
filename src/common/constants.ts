@@ -8,10 +8,9 @@ export const MINTING_FEE_IN_ADA = 6;
  * NEWM External Links and Support
  */
 export const NEWM_SUPPORT_EMAIL = "support@newm.io";
-export const NEWM_ARTIST_PORTAL_FAQ_URL = "https://newm.io/artists-faq";
-export const NEWM_ARTIST_PORTAL_TELEGRAM_URL = "https://t.me/NEWMartists";
-export const NEWM_ARTIST_PORTAL_TERMS_OF_SERVICE_URL =
-  "https://newm.io/tos_artist-portal/";
+export const NEWM_STUDIO_FAQ_URL = "https://newm.io/artist-faq";
+export const NEWM_STUDIO_TELEGRAM_URL = "https://t.me/NEWMartists";
+export const NEWM_STUDIO_TERMS_OF_SERVICE_URL = "https://newm.io/tos/";
 
 /**
  * Character count constants for form validation
