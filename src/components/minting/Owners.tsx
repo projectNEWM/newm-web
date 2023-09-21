@@ -11,6 +11,7 @@ import {
 import { Button, Tooltip, Typography } from "elements";
 import { TextInputField } from "components";
 import theme from "theme";
+import { emptyProfile, useGetProfileQuery } from "modules/session";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";
 
@@ -40,6 +41,8 @@ const Owners: FunctionComponent<OwnersProps> = ({
       skip: !emails.length,
     }
   );
+
+  const { data: { email: authorEmail } = emptyProfile } = useGetProfileQuery();
 
   return (
     <Box>
@@ -100,6 +103,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
               pictureUrl={ collaboratorInfo.pictureUrl }
               firstName={ collaboratorInfo.firstName }
               lastName={ collaboratorInfo.lastName }
+              showStatus={ authorEmail !== owner.email }
             />
 
             <Stack flexDirection="row" alignItems="center">

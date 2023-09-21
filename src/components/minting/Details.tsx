@@ -11,6 +11,7 @@ interface DetailsProps {
   readonly firstName?: string;
   readonly lastName?: string;
   readonly status?: CollaborationStatus;
+  readonly showStatus?: boolean;
 }
 
 const badgeMap: Record<Exclude<CollaborationStatus, "Editing">, BadgeProps> = {
@@ -25,6 +26,7 @@ const Details: FunctionComponent<DetailsProps> = ({
   lastName,
   email,
   status,
+  showStatus = true,
 }) => {
   const name = `${firstName || ""} ${lastName || ""}`.trim();
 
@@ -54,14 +56,16 @@ const Details: FunctionComponent<DetailsProps> = ({
           } }
         />
       ) }
-      <Stack maxWidth={ ["150px", "unset"] } overflow={ "scroll" }>
+      <Stack maxWidth={ ["150px", "300px"] } sx={ { overflowX: "auto" } }>
         { name ? <Typography title={ name }>{ name }</Typography> : null }
 
         <Typography variant="subtitle1" title={ email }>
           { email }
         </Typography>
       </Stack>
-      { status && status !== "Editing" ? <Badge { ...badgeMap[status] } /> : null }
+      { showStatus && status && status !== "Editing" ? (
+        <Badge { ...badgeMap[status] } />
+      ) : null }
     </Stack>
   );
 };
