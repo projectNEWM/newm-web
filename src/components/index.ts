@@ -2,6 +2,8 @@
 
 export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
+export { default as Badge } from "./styled/Badge";
+export * from "./styled/Badge";
 export { default as Creditors } from "./minting/Creditors";
 export { default as ConfirmContract } from "./minting/ConfirmContract";
 export { default as ConnectWalletModal } from "./ConnectWalletModal";

@@ -1,16 +1,18 @@
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Tooltip, Typography } from "elements";
+import { Button, Typography } from "elements";
 import { useExtractProperty } from "common";
 import {
   Creditor,
   MintingStatus,
-  getCollaboratorStatusContent,
   getIsCreditorEditable,
+  useGetCollaboratorsQuery,
 } from "modules/song";
 import DropdownSelectField from "components/form/DropdownSelectField";
 import { useGetRolesQuery } from "modules/content";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
@@ -34,6 +36,16 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
   const roleOptions = useExtractProperty(roles, "name");
+  const emails = creditors.map((creditor) => creditor.email);
+
+  const { data: collaborators } = useGetCollaboratorsQuery(
+    {
+      emails,
+    },
+    {
+      skip: !emails.length,
+    }
+  );
 
   return (
     <Box>
@@ -48,7 +60,10 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
       { creditors.map((creditor, idx) => {
         const isEditable = getIsCreditorEditable(songMintingStatus, creditor);
-        const statusContent = getCollaboratorStatusContent(creditor.status);
+        const collaboratorInfo = getCollaboratorInfo(
+          creditor.email,
+          collaborators
+        );
 
         return (
           <Stack
@@ -56,21 +71,18 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
             sx={ {
               alignItems: "center",
               flexDirection: "row",
-              flexWrap: "wrap",
               justifyContent: "space-between",
               mt: 2,
               rowGap: 2,
+              columnGap: 1,
             } }
           >
-            <Stack direction="row" gap={ 1 } alignItems="center">
-              { statusContent && (
-                <Tooltip title={ statusContent.tooltip }>
-                  { statusContent.icon }
-                </Tooltip>
-              ) }
-
-              <Typography variant="subtitle1">{ creditor.email }</Typography>
-            </Stack>
+            <Details
+              email={ creditor.email }
+              pictureUrl={ collaboratorInfo.pictureUrl }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+            />
 
             <Stack direction="row" alignItems="center">
               { isEditable ? (
@@ -89,7 +101,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
               <Button
                 color="white"
-                sx={ { ml: 3 } }
+                sx={ { ml: [1, 1, 3] } }
                 variant="secondary"
                 disabled={ isDeleteDisabled }
                 width="icon"

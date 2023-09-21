@@ -1,5 +1,4 @@
 import { OnUploadProgress } from "api/types";
-import { ReactElement } from "react";
 
 export interface SongState {
   artistAgreement: string;
@@ -344,6 +343,7 @@ export interface GetCollaboratorsRequest {
   readonly phrase?: string;
   readonly songIds?: string[];
   readonly sortOrder?: SortOrder;
+  readonly emails?: string[];
 }
 
 export type GetCollaboratorsResponse = Array<Collaborators>;
@@ -380,11 +380,6 @@ export interface SubmitTransactionRequest {
 
 export interface CborHexResponse {
   readonly cborHex: string;
-}
-
-export interface CollaboratorStatusContent {
-  readonly tooltip: string;
-  readonly icon: ReactElement;
 }
 
 export interface GetEarliestReleaseDateResponse {

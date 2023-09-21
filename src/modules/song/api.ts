@@ -81,7 +81,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching song info",
+              message: "An error occurred while fetching song info",
               severity: "error",
             })
           );
@@ -114,7 +114,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching stream info",
+              message: "An error occurred while fetching stream info",
               severity: "error",
             })
           );
@@ -122,11 +122,24 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getSongs: build.query<GetSongsResponse, GetSongsRequest>({
-      query: (params) => ({
-        url: "v1/songs",
-        method: "GET",
-        params,
-      }),
+      query: (params) => {
+        const { genres, ids, ownerIds, mintingStatuses, ...restOfParams } =
+          params;
+
+        return {
+          url: "v1/songs",
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
+            ...(mintingStatuses
+              ? { mintingStatuses: mintingStatuses.join(",") }
+              : {}),
+          },
+        };
+      },
       providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -135,7 +148,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching songs",
+              message: "An error occurred while fetching songs",
               severity: "error",
             })
           );
@@ -143,11 +156,31 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getSongCount: build.query<GetSongCountResponse, GetSongCountRequest>({
-      query: (params) => ({
-        url: "v1/songs/count",
-        method: "GET",
-        params,
-      }),
+      query: (params) => {
+        const {
+          genres,
+          ids,
+          ownerIds,
+          moods,
+          mintingStatuses,
+          ...restOfParams
+        } = params;
+
+        return {
+          url: "v1/songs/count",
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
+            ...(moods ? { moods: moods.join(",") } : {}),
+            ...(mintingStatuses
+              ? { mintingStatuses: mintingStatuses.join(",") }
+              : {}),
+          },
+        };
+      },
       providesTags: [Tags.Song],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -156,7 +189,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching song count",
+              message: "An error occurred while fetching song count",
               severity: "error",
             })
           );
@@ -177,7 +210,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while uploading your song",
+              message: "An error occurred while uploading your song",
               severity: "error",
             })
           );
@@ -233,7 +266,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while updating your song",
+              message: "An error occurred while updating your song",
               severity: "error",
             })
           );
@@ -263,7 +296,7 @@ export const extendedApi = api.injectEndpoints({
           if (showToast) {
             dispatch(
               setToastMessage({
-                message: "An error occured while deleting your song",
+                message: "An error occurred while deleting your song",
                 severity: "error",
               })
             );
@@ -322,11 +355,19 @@ export const extendedApi = api.injectEndpoints({
       GetCollaborationsResponse,
       GetCollaborationsRequest
     >({
-      query: (params) => ({
-        url: "v1/collaborations",
-        method: "GET",
-        params,
-      }),
+      query: (params) => {
+        const { ids, statuses, ...restOfParams } = params;
+
+        return {
+          url: "v1/collaborations",
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(statuses ? { statuses: statuses.join(",") } : {}),
+          },
+        };
+      },
       providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -335,7 +376,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching collaborations",
+              message: "An error occurred while fetching collaborations",
               severity: "error",
             })
           );
@@ -359,7 +400,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while adding a collaborator",
+              message: "An error occurred while adding a collaborator",
               severity: "error",
             })
           );
@@ -380,7 +421,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while updating a collaborator",
+              message: "An error occurred while updating a collaborator",
               severity: "error",
             })
           );
@@ -400,7 +441,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (err) {
           dispatch(
             setToastMessage({
-              message: "An error occured while removing a collaborator",
+              message: "An error occurred while removing a collaborator",
               severity: "error",
             })
           );
@@ -411,11 +452,19 @@ export const extendedApi = api.injectEndpoints({
       GetCollaboratorsResponse,
       GetCollaboratorsRequest
     >({
-      query: (params) => ({
-        url: "v1/collaborations/collaborators",
-        method: "GET",
-        params,
-      }),
+      query: (params) => {
+        const { emails, songIds, ...restOfParams } = params;
+
+        return {
+          url: "v1/collaborations/collaborators",
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(emails ? { emails: emails.join(",") } : {}),
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
+          },
+        };
+      },
       providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -424,7 +473,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching collaborators",
+              message: "An error occurred while fetching collaborators",
               severity: "error",
             })
           );
@@ -435,11 +484,18 @@ export const extendedApi = api.injectEndpoints({
       GetCollaboratorCountResponse,
       GetCollaboratorCountRequest
     >({
-      query: (params) => ({
-        url: "v1/collaborations/collaborators/count",
-        method: "GET",
-        params,
-      }),
+      query: (params) => {
+        const { songIds, ...restOfParams } = params;
+
+        return {
+          url: "v1/collaborations/collaborators/count",
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
+          },
+        };
+      },
       providesTags: [Tags.Collaboration],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -448,7 +504,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching collaborator count",
+              message: "An error occurred while fetching collaborator count",
               severity: "error",
             })
           );
@@ -476,7 +532,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while replying to a collaboration",
+              message: "An error occurred while replying to a collaboration",
               severity: "error",
             })
           );
@@ -495,7 +551,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching your payment",
+              message: "An error occurred while fetching your payment",
               severity: "error",
             })
           );
@@ -518,7 +574,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while submitting your payment",
+              message: "An error occurred while submitting your payment",
               severity: "error",
             })
           );
@@ -539,7 +595,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching your payment",
+              message: "An error occurred while fetching your payment",
               severity: "error",
             })
           );
@@ -558,7 +614,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching earliest release date",
+              message: "An error occurred while fetching earliest release date",
               severity: "error",
             })
           );

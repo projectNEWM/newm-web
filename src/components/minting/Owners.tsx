@@ -1,21 +1,18 @@
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  Stack,
-  useTheme,
-} from "@mui/material";
-import { Button, Tooltip, Typography } from "elements";
+import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import HelpIcon from "@mui/icons-material/Help";
+import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import {
   MintingStatus,
   Owner,
-  getCollaboratorStatusContent,
   getIsOwnerEditable,
+  useGetCollaboratorsQuery,
 } from "modules/song";
-import { FunctionComponent } from "react";
+import { Button, Tooltip, Typography } from "elements";
 import { TextInputField } from "components";
-import CloseIcon from "@mui/icons-material/Close";
-import HelpIcon from "@mui/icons-material/Help";
+import theme from "theme";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
@@ -33,7 +30,16 @@ const Owners: FunctionComponent<OwnersProps> = ({
   songMintingStatus,
   isDeleteDisabled = false,
 }) => {
-  const theme = useTheme();
+  const emails = owners.map((owner) => owner.email);
+
+  const { data: collaborators } = useGetCollaboratorsQuery(
+    {
+      emails,
+    },
+    {
+      skip: !emails.length,
+    }
+  );
 
   return (
     <Box>
@@ -67,12 +73,15 @@ const Owners: FunctionComponent<OwnersProps> = ({
       </Stack>
 
       { owners.map((owner, idx) => {
+        const collaboratorInfo = getCollaboratorInfo(
+          owner.email,
+          collaborators
+        );
         const isEditable = getIsOwnerEditable(
           songMintingStatus,
           owner,
           owners.length
         );
-        const statusContent = getCollaboratorStatusContent(owner.status);
 
         return (
           <Stack
@@ -82,17 +91,16 @@ const Owners: FunctionComponent<OwnersProps> = ({
               justifyContent: "space-between",
               alignItems: "center",
               mt: 1.5,
+              columnGap: 1,
             } }
           >
-            <Stack direction="row" gap={ 1 } alignItems="center">
-              { statusContent && (
-                <Tooltip title={ statusContent.tooltip }>
-                  { statusContent.icon }
-                </Tooltip>
-              ) }
-
-              <Typography variant="subtitle1">{ owner.email }</Typography>
-            </Stack>
+            <Details
+              email={ owner.email }
+              status={ owner.status }
+              pictureUrl={ collaboratorInfo.pictureUrl }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+            />
 
             <Stack flexDirection="row" alignItems="center">
               { isEditable ? (
@@ -121,7 +129,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
 
               <Button
                 color="white"
-                sx={ { ml: 3 } }
+                sx={ { ml: [1, 1, 3] } }
                 variant="secondary"
                 width="icon"
                 disabled={ owner.isCreator || isDeleteDisabled }
