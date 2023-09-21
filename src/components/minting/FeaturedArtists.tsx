@@ -1,8 +1,11 @@
-import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Tooltip, Typography } from "elements";
-import { Featured, getCollaboratorStatusContent } from "modules/song";
 import { FunctionComponent } from "react";
+import { Box, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "elements";
+import { Featured, useGetCollaboratorsQuery } from "modules/song";
+import theme from "theme";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
@@ -21,13 +24,23 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   onDelete,
   isDeleteDisabled = false,
 }) => {
-  const theme = useTheme();
+  const emails = featured.map((featuredArtist) => featuredArtist.email);
+
+  const { data: collaborators } = useGetCollaboratorsQuery(
+    {
+      emails,
+    },
+    {
+      skip: !emails.length,
+    }
+  );
 
   return (
     <Box>
       { featured.map((featuredArtist) => {
-        const statusContent = getCollaboratorStatusContent(
-          featuredArtist.status
+        const collaboratorInfo = getCollaboratorInfo(
+          featuredArtist.email,
+          collaborators
         );
 
         return (
@@ -38,23 +51,19 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
               justifyContent: "space-between",
               alignItems: "center",
               mt: 2,
+              columnGap: 1,
             } }
           >
-            <Stack direction="row" gap={ 1 } alignItems="center">
-              { statusContent && (
-                <Tooltip title={ statusContent.tooltip }>
-                  { statusContent.icon }
-                </Tooltip>
-              ) }
-
-              <Typography variant="subtitle1">
-                { featuredArtist.email }
-              </Typography>
-            </Stack>
+            <Details
+              email={ featuredArtist.email }
+              pictureUrl={ collaboratorInfo.pictureUrl }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+            />
 
             <Button
               color="white"
-              sx={ { ml: 3 } }
+              sx={ { ml: [1, 1, 3] } }
               disabled={ isDeleteDisabled }
               variant="secondary"
               width="icon"

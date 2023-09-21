@@ -37,7 +37,7 @@ const api = createApi({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occured while fetching your artist agreement",
+              message: "An error occurred while fetching your artist agreement",
               severity: "error",
             })
           );
