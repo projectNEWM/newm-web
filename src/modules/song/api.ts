@@ -274,9 +274,10 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     deleteSong: build.mutation<void, DeleteSongRequest>({
-      query: ({ songId }) => ({
+      query: ({ songId, archived = true }) => ({
         url: `v1/songs/${songId}`,
-        method: "DELETE",
+        method: "PATCH",
+        body: { archived },
       }),
       invalidatesTags: [Tags.Song],
 

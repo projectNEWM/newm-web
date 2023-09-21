@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { IconButton, Stack } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import {
+  MintingStatus,
   Song,
   SortOrder,
   useFetchSongStreamThunk,
@@ -22,8 +23,7 @@ import placeholderBackground from "assets/images/bg-img.png";
 
 const Songs: FunctionComponent = () => {
   const limit = 25;
-  // TODO: MVP When minting is implemented add mintingStatuses to useGetSongCountQuery & useGetSongsQuery params
-  //   const mintingStatuses = [MintingStatus.Minted];
+  const mintingStatuses = [MintingStatus.Minted];
   const { userId = "" } = useParams();
   const [offset, setOffset] = useState(0);
   const [songs, setSongs] = useState<Song[]>([]);
@@ -36,6 +36,7 @@ const Songs: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
+    mintingStatuses,
     ownerIds: [userId],
   });
 
@@ -43,9 +44,10 @@ const Songs: FunctionComponent = () => {
     windowWidth && windowWidth > theme.breakpoints.values.md;
 
   const { data: songData = [], isLoading } = useGetSongsQuery({
-    ownerIds: [userId],
-    offset,
     limit,
+    mintingStatuses,
+    offset,
+    ownerIds: [userId],
     sortOrder: SortOrder.Desc,
   });
 
