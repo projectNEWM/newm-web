@@ -266,7 +266,7 @@ const EditSong: FunctionComponent = () => {
     barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyrightYear: commonYupValidation.year.required("This field is required"),
+    copyrightYear: commonYupValidation.year,
     copyrightOwner: commonYupValidation.copyright,
     userIpi: commonYupValidation.userIpi,
     iswc: commonYupValidation.iswc,

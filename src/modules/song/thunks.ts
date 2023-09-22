@@ -102,6 +102,9 @@ export const uploadSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
+      const releaseYear = body.releaseDate?.split("-")[0];
+      const defaultCopyright = body.artistName || body.companyName;
+
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
@@ -114,10 +117,14 @@ export const uploadSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          compositionCopyrightYear: body.compositionCopyrightYear,
-          compositionCopyrightOwner: body.compositionCopyrightOwner,
-          phonographicCopyrightYear: body.phonographicCopyrightYear,
-          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          compositionCopyrightYear:
+            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner:
+            body.compositionCopyrightOwner || defaultCopyright,
+          phonographicCopyrightYear:
+            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner:
+            body.phonographicCopyrightOwner || defaultCopyright,
           parentalAdvisory,
           barcodeType,
           barcodeNumber: body.barcodeNumber || undefined,
@@ -392,6 +399,9 @@ export const patchSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
+      const releaseYear = body.releaseDate?.split("-")[0];
+      const defaultCopyright = body.artistName || body.companyName;
+
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
@@ -404,10 +414,14 @@ export const patchSong = createAsyncThunk(
           album: body.album,
           track: body.track,
           language: body.language,
-          compositionCopyrightYear: body.compositionCopyrightYear,
-          compositionCopyrightOwner: body.compositionCopyrightOwner,
-          phonographicCopyrightYear: body.phonographicCopyrightYear,
-          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          compositionCopyrightYear:
+            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner:
+            body.compositionCopyrightOwner || defaultCopyright,
+          phonographicCopyrightYear:
+            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner:
+            body.phonographicCopyrightOwner || defaultCopyright,
           parentalAdvisory,
           barcodeType,
           barcodeNumber: body.barcodeNumber || undefined,
