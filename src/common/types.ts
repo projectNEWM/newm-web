@@ -55,5 +55,4 @@ export interface PlayerState {
   readonly loadingSongId?: string;
   readonly isReadyToPlay: boolean;
   readonly song?: Song;
-  readonly url?: string;
 }

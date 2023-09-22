@@ -151,7 +151,6 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        url: fetchStreamDataResp.data?.streamData.url,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
