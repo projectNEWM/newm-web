@@ -175,7 +175,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        url: fetchStreamDataResp.data?.streamData.url,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));

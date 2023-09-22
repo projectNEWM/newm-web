@@ -304,8 +304,14 @@ export const fetchSongStream = createAsyncThunk(
       );
 
       if ("error" in audioStreamResp) return;
-
-      return audioStreamResp.data;
+      if (!audioStreamResp.data) return;
+      const data = audioStreamResp.data;
+      return {
+        song: {
+          ...data.song,
+          streamUrl: data.streamData?.url,
+        },
+      };
     } catch (error) {
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {

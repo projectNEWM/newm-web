@@ -82,7 +82,6 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        url: fetchStreamDataResp.data?.streamData.url,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
