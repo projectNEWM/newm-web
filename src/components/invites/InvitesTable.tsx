@@ -239,31 +239,24 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                         whiteSpace: "nowrap",
                       } }
                     >
+                      <PlaySongAdvanced
+                        song={ song }
+                        isPlaying={ songId === playerState.currentPlayingSongId }
+                        onPlayPause={ handleSongPlayPause }
+                      />
                       { coverArtUrl ? (
-                        <Stack display="grid">
-                          <img
-                            style={ {
-                              borderRadius: "4px",
-                              gridColumnStart: 1,
-                              gridRowStart: 1,
-                              height: "40px",
-                              width: "40px",
-                            } }
-                            src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
-                              width: 50,
-                              height: 50,
-                            }) }
-                            alt="Song cover"
-                          />
-                          <PlaySongAdvanced
-                            song={ song }
-                            isPlaying={
-                              songId === playerState.currentPlayingSongId
-                            }
-                            onPlayPause={ handleSongPlayPause }
-                            contentSx={ { gridRowStart: 1, gridColumnStart: 1 } }
-                          />
-                        </Stack>
+                        <img
+                          style={ {
+                            borderRadius: "4px",
+                            height: "40px",
+                            width: "40px",
+                          } }
+                          src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
+                            width: 50,
+                            height: 50,
+                          }) }
+                          alt="Song cover"
+                        />
                       ) : (
                         <Stack sx={ { height: "40px", width: "40px" } }></Stack>
                       ) }

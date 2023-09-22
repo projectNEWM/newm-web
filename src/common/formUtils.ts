@@ -158,12 +158,10 @@ export const commonYupValidation = {
     .matches(/^[0-9]+$/, "Year must only contain digits")
     .min(4, "Year must be 4 digits")
     .max(4, "Year must be 4 digits"),
-  copyright: Yup.string()
-    .max(
-      MAX_CHARACTER_COUNT,
-      `Must be ${MAX_CHARACTER_COUNT} characters or less`
-    )
-    .required("The copyright owner's name is required"),
+  copyright: Yup.string().max(
+    MAX_CHARACTER_COUNT,
+    `Must be ${MAX_CHARACTER_COUNT} characters or less`
+  ),
   userIpi: Yup.string().matches(
     REGEX_9_TO_11_DIGITS,
     "Field should contain 9 to 11 digits"
