@@ -3,6 +3,7 @@ import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import {
+  commonYupValidation,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
@@ -158,23 +159,7 @@ const MintSong = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    owners: Yup.array().when("isMinting", {
-      is: (value: boolean) => !!value,
-      then: Yup.array()
-        .min(1, "At least one owner is required when minting")
-        .test({
-          message: "100% ownership must be distributed",
-          test: (owners) => {
-            if (!owners) return false;
-
-            const percentageSum = owners.reduce((sum, owner) => {
-              return sum + owner.percentage;
-            }, 0);
-
-            return percentageSum === 100;
-          },
-        }),
-    }),
+    owners: commonYupValidation.owners,
     consentsToContract: Yup.bool().required("This field is required"),
   });
 

@@ -117,7 +117,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
       validationSchema={ getValidationSchema }
     >
       { () => (
-        <Form style={ { height: "100%" } }>
+        <Form style={ { height: "100%" } } noValidate>
           { isProgressStepperVisible && (
             <FormProgressStepper
               activeStep={ currentIndex + 1 }
