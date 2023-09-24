@@ -196,10 +196,9 @@ const AdvancedSongDetails = () => {
           name="barcodeType"
           label="RELEASE CODE TYPE"
           tooltipText={
-            "If you already have a UPC or JAN code for this release, you can " +
-            "select it as the code type here. Otherwise, select EAN as " +
-            "the code type and enter the code number in the next field if " +
-            "you have one, or if not, one will be generated for you."
+            "If you already have a release code, select the code type here " +
+            "and enter the code in the next field. If not, leave this field " +
+            "blank and an EAN release code will be auto-generated for you."
           }
           placeholder="Select one"
           options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
@@ -212,10 +211,8 @@ const AdvancedSongDetails = () => {
           ref={ barcodeNumberRef }
           tooltipText={
             "A release code number is a unique code that identifies your " +
-            "release. If you do not already have one, leave this field " +
-            "blank, select EAN as Release Code type in the previous " +
-            "field, and an EAN release code number will be generated for " +
-            "you in this field."
+            "release. If you do not already have one, leave this field blank, " +
+            "and an EAN release code number will be auto-generated for you."
           }
         />
         <TextInputField
