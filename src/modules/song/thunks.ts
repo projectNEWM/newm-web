@@ -249,7 +249,7 @@ export const uploadSong = createAsyncThunk(
       // navigate to library page to view new song
       history.push("/home/library");
     } catch (error) {
-      // delete song it exist
+      // delete the song if it exists
       if (songId) {
         try {
           await dispatch(
