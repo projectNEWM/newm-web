@@ -129,6 +129,7 @@ export interface UploadSongAudioResponse {
 }
 
 export interface DeleteSongRequest {
+  readonly archived?: boolean;
   readonly songId: string;
   readonly showToast?: boolean;
 }

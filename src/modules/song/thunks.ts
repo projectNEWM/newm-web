@@ -256,24 +256,9 @@ export const uploadSong = createAsyncThunk(
       // navigate to library page to view new song
       history.push("/home/library");
     } catch (error) {
-      // delete song and collaborators if they exist
+      // delete the song if it exists
       if (songId) {
         try {
-          if (
-            body.owners?.length ||
-            body.creditors?.length ||
-            body.featured?.length
-          ) {
-            await dispatch(
-              updateCollaborations({
-                id: songId,
-                owners: [],
-                creditors: [],
-                featured: [],
-              })
-            );
-          }
-
           await dispatch(
             songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
           );
