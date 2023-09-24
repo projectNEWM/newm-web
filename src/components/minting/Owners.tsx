@@ -119,7 +119,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
                         position="start"
                         sx={ {
                           color: theme.colors.white,
-                          mr: 1,
+                          mx: 0.8,
                         } }
                       >
                         <Typography>%</Typography>
