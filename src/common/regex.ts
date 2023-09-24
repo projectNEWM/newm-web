@@ -36,3 +36,24 @@ export const REGEX_EXACTLY_13_DIGITS = /^\d{13}$/;
  * Check for alphabetic characters (upper or lower case) and spaces.
  */
 export const REGEX_ONLY_ALPHABETS_AND_SPACES = /^[aA-zZ\s]+$/;
+
+/**
+ * Matches a valid Spotify artist profile URI format.
+ * It begins with the string 'spotify:artist:', followed by one or more alphanumeric characters.
+ * For example, it would match "spotify:artist:4FemUzxZW18iLloqkxi1p".
+ */
+export const REGEX_SPOTIFY_PROFILE = /^spotify:artist:[a-zA-Z0-9]+$/;
+
+/**
+ * Matches a valid numeric Apple Music artist profile ID.
+ * It captures one or more numeric digits.
+ * For example, it would match "123456" from a URL like "music.apple.com/us/artist/john-doe/123456".
+ */
+export const REGEX_APPLE_MUSIC_PROFILE = /^\d+$/;
+
+/**
+ * Matches a valid SoundCloud artist profile name.
+ * The profile name can contain lowercase letters, numbers, underscores, and hyphens.
+ * For example, it would match "yourSoundCloudArtistName" or "artist-name_123".
+ */
+export const REGEX_SOUNDCLOUD_PROFILE = /^[0-9a-z_-]+$/;
