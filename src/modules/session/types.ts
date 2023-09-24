@@ -25,6 +25,9 @@ export interface Profile {
   readonly companyIpRights: boolean;
   readonly companyName?: string;
   readonly companyLogoUrl?: string;
+  readonly spotifyProfile?: string;
+  readonly soundCloudProfile?: string;
+  readonly appleMusicProfile?: string;
 }
 
 export interface GetUserRequest {

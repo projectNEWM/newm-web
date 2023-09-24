@@ -16,6 +16,9 @@ import {
 import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
+  REGEX_APPLE_MUSIC_PROFILE,
+  REGEX_SOUNDCLOUD_PROFILE,
+  REGEX_SPOTIFY_PROFILE,
   commonYupValidation,
   getUpdatedValues,
   scrollToError,
@@ -70,6 +73,9 @@ const Profile: FunctionComponent = () => {
       twitterUrl,
       verificationStatus,
       websiteUrl,
+      spotifyProfile,
+      soundCloudProfile,
+      appleMusicProfile,
     } = emptyProfile,
   } = useGetProfileQuery();
 
@@ -107,6 +113,9 @@ const Profile: FunctionComponent = () => {
     location,
     twitterUrl,
     websiteUrl,
+    spotifyProfile,
+    soundCloudProfile,
+    appleMusicProfile,
   };
 
   const validationSchema = Yup.object({
@@ -133,6 +142,18 @@ const Profile: FunctionComponent = () => {
     genre: commonYupValidation.genre(genreOptions),
     twitterUrl: Yup.string().url("Please enter a valid url"),
     websiteUrl: Yup.string().url("Please enter a valid url"),
+    spotifyProfile: Yup.string().matches(
+      REGEX_SPOTIFY_PROFILE,
+      "This is not a valid Spotify artist profile URI format"
+    ),
+    appleMusicProfile: Yup.string().matches(
+      REGEX_APPLE_MUSIC_PROFILE,
+      "Use the numeric part from the URL"
+    ),
+    soundCloudProfile: Yup.string().matches(
+      REGEX_SOUNDCLOUD_PROFILE,
+      "This is not a valid SoundCloud artist profile Id"
+    ),
   });
 
   /**
@@ -355,7 +376,8 @@ const Profile: FunctionComponent = () => {
                         sx={ {
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
-                          rowGap: 2,
+                          gap: 2,
+                          flexWrap: "wrap",
                         } }
                       >
                         <TextInputField
@@ -378,6 +400,49 @@ const Profile: FunctionComponent = () => {
                         type="text"
                       />
                     </Stack>
+
+                    <Stack rowGap={ 2 }>
+                      <Stack rowGap={ 0.5 }>
+                        <Typography variant="h4" fontWeight="700">
+                          OUTLET PROFILES
+                        </Typography>
+                        <Typography variant="subtitle2">
+                          Link your outlet platforms profiles so fans can follow
+                          and connect with you.
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        sx={ {
+                          flexDirection: ["column", "column", "row"],
+                          flexWrap: "wrap",
+                          justifyContent: "space-between",
+                          gap: 2,
+                        } }
+                      >
+                        <TextInputField
+                          label="SPOTIFY"
+                          name="spotifyProfile"
+                          placeholder="Spotify Profile URI"
+                          type="text"
+                          tooltipText="Example: spotify:artist:4FemUzxZW18iLloqkxi1p"
+                        />
+                        <TextInputField
+                          label="SOUNDCLOUD"
+                          name="soundCloudProfile"
+                          placeholder="SoundCloud Profile Id"
+                          type="text"
+                          tooltipText='Example: "yourSoundCloudArtistName"'
+                        />
+                        <TextInputField
+                          label="APPLE MUSIC"
+                          name="appleMusicProfile"
+                          placeholder="Apple Music Profile Id"
+                          type="text"
+                          tooltipText='Example: Use "123456" from "music.apple.com/us/artist/john-doe/123456"'
+                        />
+                      </Stack>
+                    </Stack>
+
                     <Stack rowGap={ 2 }>
                       <Stack rowGap={ 0.5 }>
                         <Typography variant="h4" fontWeight="700">
@@ -391,7 +456,8 @@ const Profile: FunctionComponent = () => {
                         sx={ {
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
-                          rowGap: 2,
+                          gap: 2,
+                          flexWrap: "wrap",
                         } }
                       >
                         <TextInputField
