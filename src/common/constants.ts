@@ -26,7 +26,7 @@ export const MIN_DISTRIBUTION_TIME = 11;
 /**
  * None option for dropdowns
  */
-export const NONE_OPTION = "None";
+export const NONE_OPTION = "-";
 
 /**
  * Skip fetching invites in this list of paths

@@ -201,7 +201,7 @@ const AdvancedSongDetails = () => {
             "blank and an EAN release code will be auto-generated for you."
           }
           placeholder="Select one"
-          options={ [NONE_OPTION, "UPC", "EAN", "JAN"] }
+          options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
         />
         <TextInputField
           disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
