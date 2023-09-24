@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, MouseEventHandler, useState } from "react";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
 import { history } from "common/history";
 import { Form, Formik, FormikValues } from "formik";
@@ -17,6 +17,7 @@ import { useLoginThunk } from "modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
+
   const [login, { isLoading }] = useLoginThunk();
   const [maskPassword, setMaskPassword] = useState(true);
 
@@ -31,6 +32,17 @@ const Login: FunctionComponent = () => {
 
   const handleLogin = ({ email, password }: FormikValues) => {
     login({ email, password });
+  };
+
+  /**
+   * Hack for when Chrome autofill prevents typing in fields.
+   * Appears to only happen after log out. Stack Overflow post:
+   * https://stackoverflow.com/questions/58201291/chrome-autocomplete-lock-inputs-like-they-are-not-clickable
+   */
+  const unfreezeInput: MouseEventHandler<HTMLInputElement> = (event) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    target.value = value;
   };
 
   useAuthenticatedRedirect();
@@ -85,6 +97,7 @@ const Login: FunctionComponent = () => {
                 name="email"
                 placeholder="Email"
                 type="email"
+                onClick={ unfreezeInput }
               />
               <PasswordInputField
                 aria-label="Password input field"
@@ -92,6 +105,7 @@ const Login: FunctionComponent = () => {
                 handlePressEndAdornment={ togglePasswordMask }
                 name="password"
                 showEndAdornment={ !!password }
+                onClick={ unfreezeInput }
               />
 
               <Button disabled={ isLoading } type="submit">
