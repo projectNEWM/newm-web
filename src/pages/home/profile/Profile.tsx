@@ -407,8 +407,9 @@ const Profile: FunctionComponent = () => {
                           OUTLET PROFILES
                         </Typography>
                         <Typography variant="subtitle2">
-                          Link your outlet platforms profiles so fans can follow
-                          and connect with you.
+                          Connecting your outlet profile ensures that your music
+                          will be associated with your designated artist page on
+                          each platform following distribution.
                         </Typography>
                       </Stack>
                       <Stack
