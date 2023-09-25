@@ -150,7 +150,6 @@ const AdvancedSongDetails = () => {
           yearFieldName="compositionCopyrightYear"
           ownerFieldName="compositionCopyrightOwner"
           copyrightType="composition"
-          isOptional={ false }
           tooltipText={
             <span>
               The copyright for a musical composition covers the music and
@@ -174,7 +173,6 @@ const AdvancedSongDetails = () => {
           yearFieldName="phonographicCopyrightYear"
           ownerFieldName="phonographicCopyrightOwner"
           copyrightType="phonographic"
-          isOptional={ false }
           tooltipText={
             <span>
               The copyright in a sound recording covers the recording itself (it
