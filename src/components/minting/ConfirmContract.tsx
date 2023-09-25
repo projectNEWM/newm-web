@@ -1,4 +1,4 @@
-import { Box, IconButton, Link, Stack } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
@@ -8,7 +8,6 @@ import agreementPreview from "assets/images/artist-agreement-preview.jpg";
 import {
   COLLABORATOR_FEE_IN_ADA,
   MINTING_FEE_IN_ADA,
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
   useAppSelector,
 } from "common";
 import theme from "theme";
@@ -140,16 +139,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 opacity: values.hasViewedAgreement ? 1 : 0.5,
               } }
             >
-              I have read the contract and agree to its
-              <Link
-                color={ theme.colors.grey200 }
-                href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-                variant="subtitle1"
-              >
-                Terms and Conditions.
-              </Link>
+              I have read the contract and agree to its Terms and Conditions.
             </Typography>
           }
         />
