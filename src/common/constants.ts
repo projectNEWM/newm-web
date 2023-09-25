@@ -11,6 +11,8 @@ export const NEWM_SUPPORT_EMAIL = "support@newm.io";
 export const NEWM_STUDIO_FAQ_URL = "https://newm.io/artist-faq";
 export const NEWM_STUDIO_TELEGRAM_URL = "https://t.me/NEWMartists";
 export const NEWM_STUDIO_TERMS_OF_SERVICE_URL = "https://newm.io/tos/";
+export const NEWM_STUDIO_OUTLETS_URL = "https://newm.io/faq/#outlets";
+export const NEWM_PRIVACY_POLICY_URL = "https://newm.io/privacy-policy/";
 
 /**
  * Character count constants for form validation
