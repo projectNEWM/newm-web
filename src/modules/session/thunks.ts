@@ -1,11 +1,19 @@
 import { asThunkHook } from "common/reduxUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { setToastMessage } from "modules/ui";
+import {
+  setIsWalletEnvMismatchModalOpen,
+  setToastMessage,
+  setUpdateWalletAddressModal,
+} from "modules/ui";
 import { history } from "common/history";
 import { uploadToCloudinary } from "api/cloudinary/utils";
 import api, { cloudinaryApi, lambdaApi } from "api";
-import { disconnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  EnabledWallet,
+  disconnectWallet,
+  getWalletAddress,
+} from "@newm.io/cardano-dapp-wallet-connector";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
@@ -17,6 +25,7 @@ import {
   ResetPasswordRequest,
 } from "./types";
 import { setIsLoggedIn } from "./slice";
+import { getIsWalletEnvMismatch } from "./utils";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -356,6 +365,90 @@ export const logOut = createAsyncThunk(
     dispatch(lambdaApi.util.resetApiState());
 
     dispatch(setIsLoggedIn(false));
+  }
+);
+
+/**
+ * Handles functionality around saving a wallet address to a user's
+ * profile. If an address has not been saved to the profile yet,
+ * save it and notify the user. If an address has been added before, but
+ * the address from the currently connected wallet is different, prompt
+ * the user about overwriting the existing address in their profile.
+ */
+export const saveWalletAddress = createAsyncThunk(
+  "session/saveWalletAddress",
+  async (wallet: EnabledWallet, { dispatch }) => {
+    let savedWalletAddress;
+
+    try {
+      const isEnvMismatch = await getIsWalletEnvMismatch(wallet);
+      const newWalletAddress = await getWalletAddress(wallet);
+
+      // notify the user if their connected wallet is for the incorrect env
+      if (isEnvMismatch) {
+        dispatch(setIsWalletEnvMismatchModalOpen(true));
+        return;
+      }
+
+      // fetch profile and get currently saved wallet address
+      const getProfileResp = await dispatch(
+        sessionApi.endpoints.getProfile.initiate()
+      );
+      if ("error" in getProfileResp || !getProfileResp.data) {
+        throw new Error();
+      }
+      savedWalletAddress = getProfileResp.data.walletAddress;
+
+      // if address hasn't been saved to profile yet, save and notify user
+      if (!savedWalletAddress) {
+        const updateProfileResp = await dispatch(
+          sessionApi.endpoints.updateProfile.initiate({
+            walletAddress: newWalletAddress,
+          })
+        );
+
+        if ("error" in updateProfileResp) {
+          throw new Error();
+        }
+
+        dispatch(
+          setUpdateWalletAddressModal({
+            isConfirmationRequired: false,
+            message:
+              "An address from your currently connected wallet has been " +
+              "saved to your profile. This address is where you will " +
+              "receive any song tokens and royalties. If you would like " +
+              "to use an address from a different wallet, please connect " +
+              "that wallet and confirm the prompt to overwrite your " +
+              "existing wallet address.",
+          })
+        );
+
+        return;
+      }
+
+      // if address has been saved but current address is different, prompt user
+      if (savedWalletAddress !== newWalletAddress) {
+        dispatch(
+          setUpdateWalletAddressModal({
+            isConfirmationRequired: true,
+            message:
+              "You already have a wallet address saved to your profile. " +
+              "Would you like to overwrite it with an address from your " +
+              "currently connected wallet?",
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        setUpdateWalletAddressModal({
+          message:
+            "There was an error saving your wallet address to your " +
+            "profile, please disconnect and reconnect your wallet.",
+          isConfirmationRequired: false,
+        })
+      );
+    }
   }
 );
 

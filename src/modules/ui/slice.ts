@@ -13,11 +13,14 @@ const initialState: UIState = {
     disclaimer: "",
     animationSeconds: 0,
   },
+  updateWalletAddressModal: {
+    message: "",
+    isConfirmationRequired: false,
+  },
   isProgressBarModalOpen: false,
   isIdenfyModalOpen: false,
   isConnectWalletModalOpen: false,
   isInvitesModalOpen: false,
-  isUpdateWalletAddressModalOpen: false,
   isWalletEnvMismatchModalOpen: false,
 };
 
@@ -62,11 +65,11 @@ const uiSlice = createSlice({
     setIsInvitesModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isInvitesModalOpen = payload;
     },
-    setIsUpdateWalletAddressModalOpen: (
+    setUpdateWalletAddressModal: (
       state,
-      { payload }: PayloadAction<boolean>
+      { payload }: PayloadAction<UIState["updateWalletAddressModal"]>
     ) => {
-      state.isUpdateWalletAddressModalOpen = payload;
+      state.updateWalletAddressModal = payload;
     },
     setIsWalletEnvMismatchModalOpen: (
       state,
@@ -81,12 +84,12 @@ export const {
   clearToastMessage,
   setToastMessage,
   setProgressBarModal,
+  setUpdateWalletAddressModal,
   clearProgressBarModal,
   setIsProgressBarModalOpen,
   setIsIdenfyModalOpen,
   setIsConnectWalletModalOpen,
   setIsInvitesModalOpen,
-  setIsUpdateWalletAddressModalOpen,
   setIsWalletEnvMismatchModalOpen,
 } = uiSlice.actions;
 

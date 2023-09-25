@@ -12,11 +12,14 @@ export interface UIState {
     disclaimer: string;
     animationSeconds: number;
   };
+  updateWalletAddressModal: {
+    message: string;
+    isConfirmationRequired: boolean;
+  };
   isProgressBarModalOpen: boolean;
   isIdenfyModalOpen: boolean;
   isConnectWalletModalOpen: boolean;
   isInvitesModalOpen: boolean;
-  isUpdateWalletAddressModalOpen: boolean;
   isWalletEnvMismatchModalOpen: boolean;
 }
 

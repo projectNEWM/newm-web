@@ -49,7 +49,7 @@ const WalletEnvMismatchModal: FunctionComponent = () => {
           <Typography>
             There is a mismatch between the environment for your connected
             wallet and the application environment. Please switch to the correct
-            wallet environment and refresh the page.
+            wallet environment and then disconnect and reconnect the wallet.
           </Typography>
         </Stack>
       </Box>
