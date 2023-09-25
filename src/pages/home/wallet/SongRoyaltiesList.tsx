@@ -14,7 +14,7 @@ import theme from "theme";
 import { Dispatch, SetStateAction } from "react";
 import { Typography } from "elements";
 import { TableDropdownSelect, TablePagination } from "components";
-import { Song, useGetSongCountQuery } from "modules/song";
+import { Song } from "modules/song";
 import AllCaughtUp from "./AllCaughtUp";
 
 interface SongRoyaltiesListProps {
@@ -24,6 +24,7 @@ interface SongRoyaltiesListProps {
   rowsPerPage: number;
   lastRowOnPage: number;
   setPage: Dispatch<SetStateAction<number>>;
+  totalCountOfSongs: number;
 }
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -48,11 +49,8 @@ export default function SongRoyaltiesList({
   rowsPerPage,
   lastRowOnPage,
   setPage,
+  totalCountOfSongs,
 }: SongRoyaltiesListProps) {
-  const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
-    ownerIds: ["me"],
-  });
-
   const TABLE_WIDTH = 700;
 
   const handlePageChange = (

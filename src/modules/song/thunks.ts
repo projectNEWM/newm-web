@@ -13,10 +13,12 @@ import { sessionApi } from "modules/session";
 import { SilentError, UploadSongError, isCloudinaryUrl, sleep } from "common";
 import { AxiosProgressEvent } from "axios";
 import { handleUploadProgress } from "modules/ui/utils";
+import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
+  GetUserWalletSongsRequest,
   PatchSongRequest,
   Song,
   UpdateCollaborationsRequest,
@@ -509,6 +511,28 @@ export const patchSong = createAsyncThunk(
   }
 );
 
+export const getUserWalletSongs = createAsyncThunk(
+  "song/getUserWalletSongs",
+  async (
+    body: Omit<GetUserWalletSongsRequest, "utxoCborHexList">,
+    { dispatch }
+  ) => {
+    try {
+      const wallet = await enableWallet();
+      const utxoCborHexList = (await wallet.getUtxos()) || [];
+
+      return await dispatch(
+        songApi.endpoints.getUserWalletSongs.initiate({
+          ...body,
+          utxoCborHexList,
+        })
+      );
+    } catch (err) {
+      // do nothing, errors handled by endpoints
+    }
+  }
+);
+
 /**
  * Request to delete user song. If successful, navigate to
  * library and fetch new songs.
@@ -668,3 +692,5 @@ export const useDeleteSongThunk = asThunkHook(deleteSong);
 export const useGenerateArtistAgreementThunk = asThunkHook(
   generateArtistAgreement
 );
+
+export const useGetUserWalletSongsThunk = asThunkHook(getUserWalletSongs);
