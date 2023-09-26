@@ -180,6 +180,7 @@ export enum MarketplaceStatus {
   NotSelling = "NotSelling",
 }
 export interface Song {
+  readonly archived: boolean;
   readonly id: string;
   readonly ownerId: string;
   readonly createdAt: string;
@@ -397,3 +398,22 @@ export type CustomError = {
   };
   status: number;
 };
+
+export interface GetUserWalletSongsRequest {
+  readonly offset?: number;
+  readonly limit?: number;
+  readonly sortOrder?: SortOrder;
+  readonly utxoCborHexList: ReadonlyArray<string>;
+}
+
+interface WalletSong {
+  readonly token_amount: number;
+  readonly song: Song;
+}
+
+export interface GetUserWalletSongsResponse {
+  readonly total: number;
+  readonly offset: number;
+  readonly limit: number;
+  readonly songs: WalletSong[];
+}

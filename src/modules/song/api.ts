@@ -22,6 +22,8 @@ import {
   GetSongStreamResponse,
   GetSongsRequest,
   GetSongsResponse,
+  GetUserWalletSongsRequest,
+  GetUserWalletSongsResponse,
   MarketplaceStatus,
   MintingStatus,
   PatchSongRequest,
@@ -37,6 +39,7 @@ import {
 } from "./types";
 
 export const emptySong: Song = {
+  archived: true,
   id: "",
   ownerId: "",
   createdAt: "",
@@ -616,6 +619,34 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while fetching earliest release date",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
+    getUserWalletSongs: build.query<
+      GetUserWalletSongsResponse,
+      GetUserWalletSongsRequest
+    >({
+      query: (params) => {
+        const { utxoCborHexList, ...restOfParams } = params;
+
+        return {
+          url: "v1/cardano/songs",
+          method: "POST",
+          params: restOfParams,
+          body: utxoCborHexList,
+        };
+      },
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching songs",
               severity: "error",
             })
           );
