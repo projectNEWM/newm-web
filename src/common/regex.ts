@@ -57,3 +57,9 @@ export const REGEX_APPLE_MUSIC_PROFILE = /^\d+$/;
  * For example, it would match "yourSoundCloudArtistName" or "artist-name_123".
  */
 export const REGEX_SOUNDCLOUD_PROFILE = /^[0-9a-z_-]+$/;
+
+/**
+ * Matches a valid website URL including the case that http, https, or www are not provided.
+ */
+export const REGEX_WEBSITE_URL =
+  /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._+~#=-]+\.[a-z]+\b([a-zA-Z0-9@:%_+~#?&/=.-]*)$/;

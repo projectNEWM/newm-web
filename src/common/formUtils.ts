@@ -9,6 +9,7 @@ import {
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
   REGEX_PASSWORD_REQUIREMENTS,
+  REGEX_WEBSITE_URL,
 } from "./regex";
 import {
   MAX_CHARACTER_COUNT,
@@ -225,6 +226,10 @@ export const commonYupValidation = {
         const countryCode = value.substring(0, 2).toLowerCase();
         return languageCodes.includes(countryCode);
       }),
+  websiteUrl: Yup.string().matches(
+    REGEX_WEBSITE_URL,
+    "Please enter a valid URL"
+  ),
 };
 
 /**

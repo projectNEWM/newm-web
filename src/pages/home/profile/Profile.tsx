@@ -134,14 +134,14 @@ const Profile: FunctionComponent = () => {
       otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,
-    instagramUrl: Yup.string().url("Please enter a valid url"),
+    instagramUrl: commonYupValidation.websiteUrl,
     companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roleOptions),
     genre: commonYupValidation.genre(genreOptions),
-    twitterUrl: Yup.string().url("Please enter a valid url"),
-    websiteUrl: Yup.string().url("Please enter a valid url"),
+    twitterUrl: commonYupValidation.websiteUrl,
+    websiteUrl: commonYupValidation.websiteUrl,
     spotifyProfile: Yup.string().matches(
       REGEX_SPOTIFY_PROFILE,
       "This is not a valid Spotify artist profile URI format"
