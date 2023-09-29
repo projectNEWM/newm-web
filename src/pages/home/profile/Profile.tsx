@@ -156,11 +156,30 @@ const Profile: FunctionComponent = () => {
     ),
   });
 
+  // check if URL has http or https at the beginning
+  const isHttpAtStart = (url: string) => {
+    return url.startsWith("http://") || url.startsWith("https://");
+  };
+
   /**
    * Update profile data with modifications made.
    */
   const handleSubmit = (values: UpdateProfileRequest) => {
     const updatedValues = getUpdatedValues(initialValues, values);
+
+    // Add https at start of URLs if missing, if not append it
+    if (updatedValues.websiteUrl && !isHttpAtStart(updatedValues.websiteUrl)) {
+      updatedValues.websiteUrl = `https://${updatedValues.websiteUrl}`;
+    }
+    if (updatedValues.twitterUrl && !isHttpAtStart(updatedValues.twitterUrl)) {
+      updatedValues.twitterUrl = `https://${updatedValues.twitterUrl}`;
+    }
+    if (
+      updatedValues.instagramUrl &&
+      !isHttpAtStart(updatedValues.instagramUrl)
+    ) {
+      updatedValues.instagramUrl = `https://${updatedValues.instagramUrl}`;
+    }
 
     if (
       updatedValues.companyIpRights === false ||
