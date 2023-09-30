@@ -18,7 +18,7 @@ import AddLastName from "./AddLastName";
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = useExtractProperty(roles, "name");
+  const roleOptions = useExtractProperty(roles, "name", false);
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 

@@ -52,7 +52,7 @@ const Profile: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
   const { data: genres = [] } = useGetGenresQuery();
-  const genreOptions = useExtractProperty(genres, "name");
+  const genreOptions = useExtractProperty(genres, "name", false);
   const roleOptions = useExtractProperty(roles, "name");
 
   const {
