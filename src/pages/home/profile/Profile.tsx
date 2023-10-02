@@ -156,10 +156,15 @@ const Profile: FunctionComponent = () => {
     ),
   });
 
-  // check if URL has http or https at the beginning
+  // check if URL has http or https at the start
   const isHttpAtStart = (url: string) => {
     return url.startsWith("http://") || url.startsWith("https://");
   };
+
+  // format URL with https at the start
+  function formatUrlHttps(url: string) {
+    return !isHttpAtStart(url) ? `https://${url}` : url;
+  }
 
   /**
    * Update profile data with modifications made.
@@ -167,18 +172,15 @@ const Profile: FunctionComponent = () => {
   const handleSubmit = (values: UpdateProfileRequest) => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
-    // Add https at start of URLs if missing, if not append it
-    if (updatedValues.websiteUrl && !isHttpAtStart(updatedValues.websiteUrl)) {
-      updatedValues.websiteUrl = `https://${updatedValues.websiteUrl}`;
+    // Add https at the start if URL is missing http/https on updated socials
+    if (updatedValues.websiteUrl) {
+      updatedValues.websiteUrl = formatUrlHttps(updatedValues.websiteUrl);
     }
-    if (updatedValues.twitterUrl && !isHttpAtStart(updatedValues.twitterUrl)) {
-      updatedValues.twitterUrl = `https://${updatedValues.twitterUrl}`;
+    if (updatedValues.twitterUrl) {
+      updatedValues.twitterUrl = formatUrlHttps(updatedValues.twitterUrl);
     }
-    if (
-      updatedValues.instagramUrl &&
-      !isHttpAtStart(updatedValues.instagramUrl)
-    ) {
-      updatedValues.instagramUrl = `https://${updatedValues.instagramUrl}`;
+    if (updatedValues.instagramUrl) {
+      updatedValues.instagramUrl = formatUrlHttps(updatedValues.instagramUrl);
     }
 
     if (
