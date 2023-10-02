@@ -172,7 +172,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             changeImageButtonText="Change cover"
             emptyMessage="Drag and drop or browse your image"
             isAspectRatioOneToOne
-            isMultiButtonLayout
+            hasPreviewOption
             maxFileSizeMB={ 10 }
             minDimensions={ { width: 1400, height: 1400 } }
             name="coverArtUrl"
