@@ -37,7 +37,7 @@ export interface UploadImageProps {
   readonly file?: FileWithPreview;
   readonly isAspectRatioOneToOne?: boolean;
   readonly isMinimumSizeDisplayed?: boolean;
-  readonly isMultiButtonLayout?: boolean;
+  readonly hasPreviewOption?: boolean;
   readonly isSuccessIconDisplayed?: boolean;
   readonly maxFileSizeMB?: number;
   readonly minDimensions?: {
@@ -53,6 +53,7 @@ export interface UploadImageProps {
 }
 
 interface ImagePreviewProps extends BoxProps {
+  readonly hasPersistentOverlay?: boolean;
   readonly imageUrl: string;
 }
 
@@ -70,7 +71,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   file,
   isAspectRatioOneToOne = false,
   isMinimumSizeDisplayed = true,
-  isMultiButtonLayout = false,
+  hasPreviewOption = false,
   isSuccessIconDisplayed = true,
   maxFileSizeMB,
   minDimensions,
@@ -242,9 +243,10 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             onMouseEnter={ () => setIsHovering(true) }
             onMouseLeave={ () => setIsHovering(false) }
             imageUrl={ (file.preview || file) as string }
+            hasPersistentOverlay={ hasPreviewOption }
             sx={ { height: 100, ...contentSx } }
           >
-            { !isMultiButtonLayout && (isHovering || isDragActive) ? (
+            { !hasPreviewOption && (isHovering || isDragActive) ? (
               <IconMessage
                 icon={ <AddImageIcon /> }
                 message={ replaceMessage }
@@ -323,9 +325,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
 };
 
 /**
- * Displays a background image with a dark overlay.
+ * Displays a background image. A persistent overlay is added for multi button
+ * layouts and a hover overlay is added for single button layouts.
  */
 const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
+  hasPersistentOverlay = false,
   imageUrl,
   children,
   sx,
@@ -340,9 +344,17 @@ const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
         justifyContent: "center",
         alignItems: "stretch",
         flexGrow: 1,
-        background: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`,
+        background: hasPersistentOverlay
+          ? `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`
+          : `url(${imageUrl})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
+
+        "&:hover": !hasPersistentOverlay
+          ? {
+              backgroundImage: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`,
+            }
+          : null,
         ...sx,
       } }
       { ...boxProps }

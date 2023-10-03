@@ -139,7 +139,7 @@ const SongInfo = () => {
                   rootSx={ { width: "100%", alignSelf: "center" } }
                   name="coverArtUrl"
                   emptyMessage="Loading..."
-                  isMultiButtonLayout={ true }
+                  hasPreviewOption={ true }
                   allowImageChange={ false }
                 />
               </Stack>
