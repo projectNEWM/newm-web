@@ -3,9 +3,9 @@ import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
 import { Typography } from "elements";
 import { ProfileImage, SideBarHeader, SideBarNavLink } from "components";
 import { emptyProfile, useGetProfileQuery } from "modules/session";
+import AskCommunityIcon from "assets/images/DiscordLogo";
 import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
 import {
-  Telegram as AskCommunityIcon,
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
   FolderCopy as LibraryIcon,
@@ -17,9 +17,9 @@ import {
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
 import {
+  NEWM_CLICKUP_FORM_URL,
+  NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
-  NEWM_STUDIO_TELEGRAM_URL,
-  NEWM_SUPPORT_EMAIL,
 } from "common";
 
 interface SideBarProps {
@@ -154,13 +154,13 @@ export const SideBar: FunctionComponent<SideBarProps> = (
               onClick={ () => props.setMobileOpen(false) }
               Icon={ AskCommunityIcon }
               label="ASK THE COMMUNITY"
-              href={ NEWM_STUDIO_TELEGRAM_URL }
+              href={ NEWM_STUDIO_DISCORD_URL }
             />
             <SideBarNavLink
               onClick={ () => props.setMobileOpen(false) }
               Icon={ SupportIcon }
               label="SUPPORT"
-              href={ `mailto: ${NEWM_SUPPORT_EMAIL}` }
+              href={ NEWM_CLICKUP_FORM_URL }
             />
           </Stack>
         </Box>
