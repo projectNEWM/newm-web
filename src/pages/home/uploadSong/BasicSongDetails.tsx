@@ -66,7 +66,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const genreOptions = useExtractProperty(genres, "name");
   const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
@@ -215,7 +214,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             isOptional={ false }
             name="genres"
             placeholder="Select all that apply"
-            options={ genreOptions }
+            options={ genres }
           />
 
           <DropdownSelectField

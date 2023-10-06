@@ -244,13 +244,11 @@ const EditSong: FunctionComponent = () => {
     // eslint-disable-next-line
   }, []);
 
-  const genreOptions = useExtractProperty(genres, "name", false);
-
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
     title: commonYupValidation.title,
     description: commonYupValidation.description,
-    genres: commonYupValidation.genres(genreOptions),
+    genres: commonYupValidation.genres(genres),
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
     consentsToContract: commonYupValidation.consentsToContract,

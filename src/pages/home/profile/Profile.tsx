@@ -23,10 +23,9 @@ import {
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
-  useExtractProperty,
   useWindowDimensions,
 } from "common";
-import { useGetGenresQuery, useGetRolesQuery } from "modules/content";
+import { useGetRolesQuery } from "modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -51,9 +50,6 @@ const Profile: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
-  const { data: genres = [] } = useGetGenresQuery();
-  const genreOptions = useExtractProperty(genres, "name", false);
-  const roleOptions = useExtractProperty(roles, "name");
 
   const {
     data: {
@@ -138,8 +134,7 @@ const Profile: FunctionComponent = () => {
     companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roleOptions),
-    genre: commonYupValidation.genre(genreOptions),
+    role: commonYupValidation.role(roles),
     twitterUrl: Yup.string().url("Please enter a valid url"),
     websiteUrl: Yup.string().url("Please enter a valid url"),
     spotifyProfile: Yup.string().matches(
@@ -343,7 +338,7 @@ const Profile: FunctionComponent = () => {
                           isOptional={ false }
                           label="MAIN ROLE"
                           name="role"
-                          options={ roleOptions }
+                          options={ roles }
                           placeholder="Main role"
                         />
                         <TextInputField

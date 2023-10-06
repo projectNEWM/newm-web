@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 /**
- * Extracts the specified property from an array of items.
+ * This hook extracts the specified property from an array of items.
  * Each item is expected to have the specified property of type string.
  *
  * @param {T[]} items - An array of items to extract property from.
@@ -13,16 +13,6 @@ import { useMemo } from "react";
  * @typedef {object} T
  * @property {string} K
  */
-const extractProperty = <T extends Record<K, string>, K extends keyof T>(
-  items: T[],
-  property: K,
-  shouldSort = true
-): T[K][] => {
-  const extracted = items.map((item) => item[property]);
-
-  return shouldSort ? extracted.sort((a, b) => a.localeCompare(b)) : extracted;
-};
-
 export const useExtractProperty = <
   T extends Record<K, string>,
   K extends keyof T
@@ -31,10 +21,10 @@ export const useExtractProperty = <
   property: K,
   shouldSort = true
 ): T[K][] => {
-  const memoized = useMemo(
-    () => extractProperty(items, property, shouldSort),
-    [items, property, shouldSort]
-  );
-
-  return memoized;
+  return useMemo(() => {
+    const extracted = items.map((item) => item[property]);
+    return shouldSort
+      ? extracted.sort((a, b) => a.localeCompare(b))
+      : extracted;
+  }, [items, property, shouldSort]);
 };

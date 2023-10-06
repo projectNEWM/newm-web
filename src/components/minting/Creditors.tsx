@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
-import { useExtractProperty } from "common";
 import {
   Creditor,
   MintingStatus,
@@ -35,7 +34,6 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 }) => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = useExtractProperty(roles, "name");
   const emails = creditors.map((creditor) => creditor.email);
 
   const { data: collaborators } = useGetCollaboratorsQuery(
@@ -89,7 +87,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                 <DropdownSelectField
                   isOptional={ false }
                   name={ `creditors[${idx}].role` }
-                  options={ roleOptions }
+                  options={ roles }
                   placeholder="Select role"
                   widthType="full"
                 />

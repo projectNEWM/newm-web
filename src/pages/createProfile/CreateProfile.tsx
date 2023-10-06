@@ -5,7 +5,7 @@ import {
   useUpdateInitialProfileThunk,
 } from "modules/session";
 import { WizardForm } from "components";
-import { commonYupValidation, useExtractProperty } from "common";
+import { commonYupValidation } from "common";
 import * as Yup from "yup";
 import { useGetRolesQuery } from "modules/content";
 import Begin from "./Begin";
@@ -18,7 +18,6 @@ import AddLastName from "./AddLastName";
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = useExtractProperty(roles, "name", false);
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
@@ -36,7 +35,7 @@ const CreateProfile: FunctionComponent = () => {
    */
   const validations = {
     nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roleOptions),
+    role: commonYupValidation.role(roles),
     firstName: commonYupValidation.firstName,
     lastName: commonYupValidation.lastName,
   };

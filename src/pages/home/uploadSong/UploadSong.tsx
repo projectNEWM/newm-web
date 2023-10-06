@@ -138,14 +138,13 @@ const UploadSong: FunctionComponent = () => {
     // to only run on mount.
     // eslint-disable-next-line
   }, []);
-  const genreOptions = useExtractProperty(genres, "name", false);
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
     description: commonYupValidation.description,
-    genres: commonYupValidation.genres(genreOptions),
+    genres: commonYupValidation.genres(genres),
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
     consentsToContract: commonYupValidation.consentsToContract,
