@@ -8,7 +8,7 @@ import {
   SwitchInputField,
   TextInputField,
 } from "components";
-import { commonYupValidation, useExtractProperty } from "common";
+import { commonYupValidation } from "common";
 import { useGetRolesQuery } from "modules/content";
 import { CollaborationStatus } from "modules/song";
 
@@ -26,7 +26,6 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   onSubmit,
 }) => {
   const { data: roles = [] } = useGetRolesQuery();
-  const roleOptions = useExtractProperty(roles, "name");
 
   const initialValues = {
     email: "",
@@ -51,7 +50,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       ),
     isRightsOwner: Yup.boolean(),
     isCreator: Yup.boolean(),
-    role: commonYupValidation.role(roleOptions),
+    role: commonYupValidation.role(roles),
   });
 
   return (
@@ -121,7 +120,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 label="ROLE"
                 isOptional={ false }
                 name="role"
-                options={ roleOptions }
+                options={ roles }
                 placeholder="Select role"
                 widthType="full"
               />

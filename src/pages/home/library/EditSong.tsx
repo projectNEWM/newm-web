@@ -23,13 +23,8 @@ import {
   usePatchSongThunk,
 } from "modules/song";
 import { setToastMessage } from "modules/ui";
-import {
-  Genre,
-  Language,
-  useGetGenresQuery,
-  useGetLanguagesQuery,
-} from "modules/content";
-import { commonYupValidation, extractProperty } from "common";
+import { useGetGenresQuery, useGetLanguagesQuery } from "modules/content";
+import { commonYupValidation, useExtractProperty } from "common";
 import AdvancedSongDetails from "pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "pages/home/uploadSong/ConfirmAgreement";
@@ -53,10 +48,8 @@ const EditSong: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = extractProperty<Language, "language_code">(
-    languages,
-    "language_code"
-  );
+  const languageCodes = useExtractProperty(languages, "language_code", false);
+
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     songIds: songId,
   });
@@ -251,13 +244,11 @@ const EditSong: FunctionComponent = () => {
     // eslint-disable-next-line
   }, []);
 
-  const genreOptions = extractProperty<Genre, "name">(genres, "name");
-
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
     title: commonYupValidation.title,
     description: commonYupValidation.description,
-    genres: commonYupValidation.genres(genreOptions),
+    genres: commonYupValidation.genres(genres),
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
     consentsToContract: commonYupValidation.consentsToContract,

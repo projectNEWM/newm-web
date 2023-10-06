@@ -108,7 +108,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         />
       </Stack>
 
-      <Stack direction="column" mt={ 3 } spacing={ 2 }>
+      <Stack direction="column" mt={ 3 } spacing={ 2 } textAlign="left">
         <CheckboxField
           name="isCreator"
           label={
