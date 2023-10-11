@@ -20,6 +20,7 @@ import {
   REGEX_SOUNDCLOUD_PROFILE,
   REGEX_SPOTIFY_PROFILE,
   commonYupValidation,
+  formatUrlHttps,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
@@ -150,16 +151,6 @@ const Profile: FunctionComponent = () => {
       "This is not a valid SoundCloud artist profile Id"
     ),
   });
-
-  // check if URL has http or https at the start
-  const isHttpAtStart = (url: string) => {
-    return url.startsWith("http://") || url.startsWith("https://");
-  };
-
-  // format URL with https at the start
-  function formatUrlHttps(url: string) {
-    return !isHttpAtStart(url) ? `https://${url}` : url;
-  }
 
   /**
    * Update profile data with modifications made.
