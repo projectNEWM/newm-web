@@ -4,7 +4,7 @@ import { Genre, Language, Role } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getGenres: build.query<Genre[], void>({
+    getGenres: build.query<string[], void>({
       query: () => ({ url: "v1/distribution/genres", method: "GET" }),
       providesTags: [Tags.Genres],
 
@@ -20,8 +20,14 @@ export const extendedApi = api.injectEndpoints({
           );
         }
       },
+      transformResponse: (response: Genre[]) => {
+        const extracted = response.map((genre) => genre.name);
+
+        // Sort alphabetically
+        return extracted.sort((a, b) => a.localeCompare(b));
+      },
     }),
-    getRoles: build.query<Role[], void>({
+    getRoles: build.query<string[], void>({
       query: () => ({ url: "v1/distribution/roles", method: "GET" }),
       providesTags: [Tags.Roles],
 
@@ -36,6 +42,12 @@ export const extendedApi = api.injectEndpoints({
             })
           );
         }
+      },
+      transformResponse: (response: Role[]) => {
+        const extracted = response.map((role) => role.name);
+
+        // Sort alphabetically
+        return extracted.sort((a, b) => a.localeCompare(b));
       },
     }),
     getMoods: build.query<Array<string>, void>({

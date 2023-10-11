@@ -59,6 +59,30 @@ export const REGEX_APPLE_MUSIC_PROFILE = /^\d+$/;
 export const REGEX_SOUNDCLOUD_PROFILE = /^[0-9a-z_-]+$/;
 
 /**
+ * Matches strings containing alphanumeric characters (both lower and uppercase),
+ * spaces, and most ASCII punctuation characters. It excludes some special characters like `%,*,=#<>{}~@\\/;:?$"`.
+ * Main purpose is to prevent emojis.
+ *
+ * - `\w`: Matches any word character (alphanumeric + underscore).
+ * - `\s`: Matches any whitespace character (spaces, tabs, line breaks).
+ * - `!-/:-@[-``{-~`: Matches most ASCII punctuation characters.
+ */
+export const REGEX_SONG_TITLE = /^[\w\s!-/:-@[-`{-~]*$/;
+
+/**
+ * A regular expression pattern that matches strings excluding specific special characters
+ * like %,*=#<>{}~@\\/;:?$".
+ *
+ * The pattern breaks down as follows:
+ *
+ * - `^`: Asserts position at start of a line.
+ * - `[^%,*=#<>{}~@\\\\/;:?$"]`: Matches any character that is not in this character set.
+ * - `*`: Matches the previous token (the character set) between zero and unlimited times.
+ * - `$`: Asserts position at end of a line.
+ */
+export const REGEX_EVEARA_PROHIBITED_CHARACTERS = /^[^%,*=#<>{}~@\\\\/;:?$"]*$/;
+
+/**
  * Matches a valid website URL including the case that http, https, or www are not provided.
  */
 export const REGEX_WEBSITE_URL =

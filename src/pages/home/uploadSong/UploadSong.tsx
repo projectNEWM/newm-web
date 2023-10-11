@@ -34,7 +34,7 @@ const UploadSong: FunctionComponent = () => {
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = useExtractProperty(languages, "language_code");
+  const languageCodes = useExtractProperty(languages, "language_code", false);
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
       // endpoint throws error if user hasn't added first name
@@ -138,14 +138,13 @@ const UploadSong: FunctionComponent = () => {
     // to only run on mount.
     // eslint-disable-next-line
   }, []);
-  const genreOptions = useExtractProperty(genres, "name");
 
   const validations = {
     coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
     title: commonYupValidation.title,
     description: commonYupValidation.description,
-    genres: commonYupValidation.genres(genreOptions),
+    genres: commonYupValidation.genres(genres),
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
     consentsToContract: commonYupValidation.consentsToContract,

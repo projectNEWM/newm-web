@@ -3,12 +3,14 @@ import { FormikErrors, FormikValues } from "formik";
 import { BarcodeConfig, BarcodeType, FieldOptions } from "./types";
 import {
   REGEX_9_TO_11_DIGITS,
+  REGEX_EVEARA_PROHIBITED_CHARACTERS,
   REGEX_EXACTLY_12_DIGITS,
   REGEX_EXACTLY_13_DIGITS,
   REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
   REGEX_PASSWORD_REQUIREMENTS,
+  REGEX_SONG_TITLE,
   REGEX_WEBSITE_URL,
 } from "./regex";
 import {
@@ -71,9 +73,11 @@ export const commonYupValidation = {
     .email("Please enter a vaild email")
     .required("Email is required"),
   firstName: Yup.string()
+    .trim()
     .max(15, "Must be 15 characters or less")
     .required("First name is required"),
   lastName: Yup.string()
+    .trim()
     .max(20, "Must be 20 characters or less")
     .required("Last name is required"),
   role: (roles: string[]) =>
@@ -124,11 +128,13 @@ export const commonYupValidation = {
     ),
   coverArtUrl: Yup.mixed().required("This field is required"),
   title: Yup.string()
+    .trim()
     .required("This field is required")
     .matches(
-      /^[^%,*=#<>{}~@\\\\/;:?$"]*$/,
+      REGEX_EVEARA_PROHIBITED_CHARACTERS,
       "Cannot contain special characters like %,*=#<>{}~@\\/;:?$\""
     )
+    .matches(REGEX_SONG_TITLE, "Cannot contain special characters")
     .max(
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`
