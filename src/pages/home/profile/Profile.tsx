@@ -20,6 +20,7 @@ import {
   REGEX_SOUNDCLOUD_PROFILE,
   REGEX_SPOTIFY_PROFILE,
   commonYupValidation,
+  formatUrlHttps,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
@@ -130,13 +131,13 @@ const Profile: FunctionComponent = () => {
       otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,
-    instagramUrl: Yup.string().url("Please enter a valid url"),
+    instagramUrl: commonYupValidation.websiteUrl,
     companyIpRights: Yup.bool(),
     lastName: commonYupValidation.lastName,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
-    twitterUrl: Yup.string().url("Please enter a valid url"),
-    websiteUrl: Yup.string().url("Please enter a valid url"),
+    twitterUrl: commonYupValidation.websiteUrl,
+    websiteUrl: commonYupValidation.websiteUrl,
     spotifyProfile: Yup.string().matches(
       REGEX_SPOTIFY_PROFILE,
       "This is not a valid Spotify artist profile URI format"
@@ -156,6 +157,17 @@ const Profile: FunctionComponent = () => {
    */
   const handleSubmit = (values: UpdateProfileRequest) => {
     const updatedValues = getUpdatedValues(initialValues, values);
+
+    // Add https at the start if URL is missing http/https on updated socials
+    if (updatedValues.websiteUrl) {
+      updatedValues.websiteUrl = formatUrlHttps(updatedValues.websiteUrl);
+    }
+    if (updatedValues.twitterUrl) {
+      updatedValues.twitterUrl = formatUrlHttps(updatedValues.twitterUrl);
+    }
+    if (updatedValues.instagramUrl) {
+      updatedValues.instagramUrl = formatUrlHttps(updatedValues.instagramUrl);
+    }
 
     if (
       updatedValues.companyIpRights === false ||

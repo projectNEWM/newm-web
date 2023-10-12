@@ -81,3 +81,9 @@ export const REGEX_SONG_TITLE = /^[\w\s!-/:-@[-`{-~]*$/;
  * - `$`: Asserts position at end of a line.
  */
 export const REGEX_EVEARA_PROHIBITED_CHARACTERS = /^[^%,*=#<>{}~@\\\\/;:?$"]*$/;
+
+/**
+ * Matches a valid website URL including the case that http, https, or www are not provided.
+ */
+export const REGEX_WEBSITE_URL =
+  /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._+~#=-]+\.[a-z]+\b([a-zA-Z0-9@:%_+~#?&/=.-]*)$/;
