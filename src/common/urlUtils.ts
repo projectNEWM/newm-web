@@ -12,7 +12,7 @@ export const removeTrailingSlash = (path: string) => {
 /**
  * Check if URL has http or https at the start of the URL
  */
-const isHttpAtStart = (url: string) => {
+const hasHttpOrHttpsPrefix = (url: string) => {
   return url.startsWith("http://") || url.startsWith("https://");
 };
 
@@ -20,5 +20,5 @@ const isHttpAtStart = (url: string) => {
  * Format URL with https at the start if missing http or https
  */
 export const formatUrlHttps = (url: string) => {
-  return isHttpAtStart(url) ? url : `https://${url}`;
+  return hasHttpOrHttpsPrefix(url) ? url : `https://${url}`;
 };
