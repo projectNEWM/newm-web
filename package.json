@@ -11,6 +11,7 @@
     "@newm.io/cardano-dapp-wallet-connector": "^0.2.54",
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^1.7.2",
+    "@sentry/cli": "^2.21.2",
     "@sentry/react": "^7.73.0",
     "async-mutex": "^0.3.2",
     "axios": "^1.5.0",
@@ -50,7 +51,7 @@
     "format": "prettier-eslint --config .prettierrc.json --write \"src/**/*.{jsx,js,ts,tsx}\"",
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public",
-    "sentry:sourcemaps": "npx sentry-cli sourcemaps inject --org project-newm --project javascript-react ./build/ && npx sentry-cli sourcemaps upload --org project-newm --project javascript-react ./build/"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org project-newm --project javascript-react ./build/ && sentry-cli sourcemaps upload --org project-newm --project javascript-react ./build/"
   },
   "browserslist": {
     "production": [
