@@ -20,6 +20,7 @@ jobs:
           REACT_APP_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           REACT_APP_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
