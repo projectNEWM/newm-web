@@ -14,6 +14,7 @@ import {
   disconnectWallet,
   getWalletAddress,
 } from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "common";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
@@ -86,15 +87,7 @@ export const updateProfile = createAsyncThunk(
         })
       );
 
-      if ("error" in updateProfileResponse) {
-        dispatch(
-          setToastMessage({
-            message: "There was an error updating your profile",
-            severity: "error",
-          })
-        );
-        return;
-      }
+      if ("error" in updateProfileResponse) throw new SilentError();
 
       dispatch(
         setToastMessage({

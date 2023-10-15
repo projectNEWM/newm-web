@@ -1,13 +1,12 @@
 import api, { CloudinaryUploadOptions, Tags } from "api";
 import { setToastMessage } from "modules/ui";
-import { EmptyResponse } from "common";
+import { CustomError, EmptyResponse } from "common";
 import {
   CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
   CreateMintSongPaymentRequest,
-  CustomError,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,

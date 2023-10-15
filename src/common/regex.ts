@@ -38,25 +38,30 @@ export const REGEX_EXACTLY_13_DIGITS = /^\d{13}$/;
 export const REGEX_ONLY_ALPHABETS_AND_SPACES = /^[aA-zZ\s]+$/;
 
 /**
- * Matches a valid Spotify artist profile URI format.
- * It begins with the string 'spotify:artist:', followed by one or more alphanumeric characters.
- * For example, it would match "spotify:artist:4FemUzxZW18iLloqkxi1p".
+ * Regular expression to match URLs in the format of "domain.whatever" with
+ * optional "http://" or "https://" prefixes and potential subdomains.
+ * This ignores paths after the domain.
+ *
+ * @example
+ * - domain.com
+ * - https://domain.org
+ * - http://sub.domain.net
  */
-export const REGEX_SPOTIFY_PROFILE = /^spotify:artist:[a-zA-Z0-9]+$/;
+export const REGEX_SIMPLE_DOMAIN = /([a-z0-9-]+\.[a-z]+)/i;
 
 /**
- * Matches a valid numeric Apple Music artist profile ID.
- * It captures one or more numeric digits.
- * For example, it would match "123456" from a URL like "music.apple.com/us/artist/john-doe/123456".
+ * Regular expression to match URLs with the specified domain followed by a path.
  */
-export const REGEX_APPLE_MUSIC_PROFILE = /^\d+$/;
+const generateRegexForDomainWithPath = (domain: string): RegExp => {
+  return new RegExp(`${domain}/.+`, "i");
+};
 
-/**
- * Matches a valid SoundCloud artist profile name.
- * The profile name can contain lowercase letters, numbers, underscores, and hyphens.
- * For example, it would match "yourSoundCloudArtistName" or "artist-name_123".
- */
-export const REGEX_SOUNDCLOUD_PROFILE = /^[0-9a-z_-]+$/;
+export const REGEX_SPOTIFY_PROFILE =
+  generateRegexForDomainWithPath("open.spotify.com");
+export const REGEX_APPLE_MUSIC_PROFILE =
+  generateRegexForDomainWithPath("music.apple.com");
+export const REGEX_SOUNDCLOUD_PROFILE =
+  generateRegexForDomainWithPath("soundcloud.com");
 
 /**
  * Matches strings containing alphanumeric characters (both lower and uppercase),

@@ -17,6 +17,7 @@ import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
   REGEX_APPLE_MUSIC_PROFILE,
+  REGEX_SIMPLE_DOMAIN,
   REGEX_SOUNDCLOUD_PROFILE,
   REGEX_SPOTIFY_PROFILE,
   commonYupValidation,
@@ -138,18 +139,24 @@ const Profile: FunctionComponent = () => {
     role: commonYupValidation.role(roles),
     twitterUrl: commonYupValidation.websiteUrl,
     websiteUrl: commonYupValidation.websiteUrl,
-    spotifyProfile: Yup.string().matches(
-      REGEX_SPOTIFY_PROFILE,
-      "This is not a valid Spotify artist profile URI format"
-    ),
-    appleMusicProfile: Yup.string().matches(
-      REGEX_APPLE_MUSIC_PROFILE,
-      "Use the numeric part from the URL"
-    ),
-    soundCloudProfile: Yup.string().matches(
-      REGEX_SOUNDCLOUD_PROFILE,
-      "This is not a valid SoundCloud artist profile Id"
-    ),
+    spotifyProfile: Yup.string()
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
+      .matches(
+        REGEX_SPOTIFY_PROFILE,
+        "URL must be in the format similar to \"https://open.spotify.com/artist/your-artist-id\""
+      ),
+    appleMusicProfile: Yup.string()
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
+      .matches(
+        REGEX_APPLE_MUSIC_PROFILE,
+        "URL must be in the format similar to \"https://music.apple.com/country-code/artist/artist-name/artist-id\""
+      ),
+    soundCloudProfile: Yup.string()
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
+      .matches(
+        REGEX_SOUNDCLOUD_PROFILE,
+        "URL must be in the format \"soundcloud.com/your-profile\""
+      ),
   });
 
   /**
@@ -167,6 +174,21 @@ const Profile: FunctionComponent = () => {
     }
     if (updatedValues.instagramUrl) {
       updatedValues.instagramUrl = formatUrlHttps(updatedValues.instagramUrl);
+    }
+    if (updatedValues.spotifyProfile) {
+      updatedValues.spotifyProfile = formatUrlHttps(
+        updatedValues.spotifyProfile
+      );
+    }
+    if (updatedValues.appleMusicProfile) {
+      updatedValues.appleMusicProfile = formatUrlHttps(
+        updatedValues.appleMusicProfile
+      );
+    }
+    if (updatedValues.soundCloudProfile) {
+      updatedValues.soundCloudProfile = formatUrlHttps(
+        updatedValues.soundCloudProfile
+      );
     }
 
     if (
@@ -428,25 +450,25 @@ const Profile: FunctionComponent = () => {
                         } }
                       >
                         <TextInputField
-                          label="SPOTIFY"
+                          label="SPOTIFY URL"
                           name="spotifyProfile"
-                          placeholder="Spotify Profile URI"
+                          placeholder="Spotify Profile URL"
                           type="text"
-                          tooltipText="Example: spotify:artist:4FemUzxZW18iLloqkxi1p"
+                          tooltipText="Example: https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X"
                         />
                         <TextInputField
-                          label="SOUNDCLOUD"
+                          label="SOUNDCLOUD URL"
                           name="soundCloudProfile"
-                          placeholder="SoundCloud Profile Id"
+                          placeholder="SoundCloud Profile URL"
                           type="text"
-                          tooltipText='Example: "yourSoundCloudArtistName"'
+                          tooltipText="Example: https://soundcloud.com/octobersveryown"
                         />
                         <TextInputField
-                          label="APPLE MUSIC"
+                          label="APPLE MUSIC URL"
                           name="appleMusicProfile"
-                          placeholder="Apple Music Profile Id"
+                          placeholder="Apple Music Profile URL"
                           type="text"
-                          tooltipText='Example: Use "123456" from "music.apple.com/us/artist/john-doe/123456"'
+                          tooltipText="Example: https://music.apple.com/us/artist/taylor-swift/159260351"
                         />
                       </Stack>
                     </Stack>

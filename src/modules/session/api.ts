@@ -1,5 +1,5 @@
 import api, { Tags } from "api";
-import { EmptyResponse } from "common";
+import { CustomError, EmptyResponse } from "common";
 import { setToastMessage } from "modules/ui";
 import {
   ChangePasswordRequest,
@@ -182,9 +182,17 @@ export const extendedApi = api.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (error) {
+          let message = "There was an error updating your profile";
+
+          const customError = error as CustomError;
+
+          if (customError.error?.data?.cause) {
+            message = customError.error.data.cause;
+          }
+
           dispatch(
             setToastMessage({
-              message: "There was an error updating your profile",
+              message,
               severity: "error",
             })
           );
