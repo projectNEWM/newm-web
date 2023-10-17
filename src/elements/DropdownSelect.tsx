@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import {
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
   KeyboardEvent,
   forwardRef,
+  useState,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -42,12 +44,14 @@ const DropdownSelect: ForwardRefRenderFunction<
     noResultsText = "Nothing found",
     options,
     placeholder,
-    value,
+    value = null,
     widthType,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const {
     getInputProps,
     getListboxProps,
@@ -62,14 +66,25 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(newValue as string);
+        setIsPopupOpen(false);
       }
     },
     options,
     value: value as string,
+    open: isPopupOpen,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
+
+  // A helper to toggle the options list
+  const toggleOptionsList = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const handleCloseOptions = () => {
+    setIsPopupOpen(false);
+  };
 
   /**
    * This prevents a form submission when input
@@ -95,7 +110,9 @@ const DropdownSelect: ForwardRefRenderFunction<
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
+              onClick={ toggleOptionsList }
               sx={ {
+                cursor: "pointer",
                 color: theme.colors.white,
                 transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                 transition: "transform 200ms ease-in",
@@ -107,13 +124,26 @@ const DropdownSelect: ForwardRefRenderFunction<
           name={ name }
           placeholder={ placeholder }
           onKeyDown={ preventFormSubmit }
+          onClick={ () => toggleOptionsList() }
+          closeOptionsBox={ handleCloseOptions }
+          onKeyDownCapture={ () => {
+            !isPopupOpen && setIsPopupOpen(true);
+          } }
         />
       </div>
 
       { hasResults && (
         <ResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
-            <li { ...getOptionProps({ option, index }) } key={ index }>
+            <li
+              { ...getOptionProps({ option, index }) }
+              key={ index }
+              onMouseDown={ () => {
+                if (option === value) {
+                  setIsPopupOpen(false);
+                }
+              } }
+            >
               { option }
             </li>
           )) }
