@@ -41,6 +41,13 @@ import { setIsIdenfyModalOpen } from "modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
+const OUTLET_PROFILE_TOOLTIP_TEXT =
+  "In order to mint your music you must ensure that your " +
+  "outlet profile artist name aligns with your NEWM Studio 'stage name' or, in the absence " +
+  "of a stage name, matches your first and last name. If these names are not " +
+  "consistent, please update your outlet " +
+  "profiles to reflect your chosen artist name on this platform.";
+
 const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
@@ -450,25 +457,25 @@ const Profile: FunctionComponent = () => {
                         } }
                       >
                         <TextInputField
-                          label="SPOTIFY URL"
+                          label="SPOTIFY"
                           name="spotifyProfile"
                           placeholder="Spotify Profile URL"
                           type="text"
-                          tooltipText="Example: https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X"
+                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
                         />
                         <TextInputField
-                          label="SOUNDCLOUD URL"
+                          label="SOUNDCLOUD"
                           name="soundCloudProfile"
                           placeholder="SoundCloud Profile URL"
                           type="text"
-                          tooltipText="Example: https://soundcloud.com/octobersveryown"
+                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
                         />
                         <TextInputField
-                          label="APPLE MUSIC URL"
+                          label="APPLE MUSIC"
                           name="appleMusicProfile"
-                          placeholder="Apple Music Profile URL"
+                          placeholder="Apple Music URL"
                           type="text"
-                          tooltipText="Example: https://music.apple.com/us/artist/taylor-swift/159260351"
+                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
                         />
                       </Stack>
                     </Stack>
