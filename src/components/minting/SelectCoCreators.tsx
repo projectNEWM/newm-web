@@ -3,7 +3,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Creditors, Owners } from "components";
 import { Button, HorizontalLine, Tooltip, Typography } from "elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Featured, MintingStatus, Owner } from "modules/song";
+import { Creditor, Featured, Owner } from "modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "theme";
 import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "common";
@@ -23,12 +23,10 @@ interface SelectCoCreatorsProps {
   readonly onChangeOwners: (newOwners: ReadonlyArray<Owner>) => void;
   readonly onChangeCreditors: (newCreditors: ReadonlyArray<Creditor>) => void;
   readonly onChangeFeatured: (newFeatured: ReadonlyArray<Featured>) => void;
-  readonly songMintingStatus: MintingStatus;
   readonly isAddDeleteDisabled?: boolean;
 }
 
 interface FormContentProps extends FormikProps<FormValues> {
-  readonly songMintingStatus: MintingStatus;
   readonly isAddDeleteDisabled?: boolean;
 }
 
@@ -42,7 +40,6 @@ const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
   onChangeOwners,
   onChangeCreditors,
   onChangeFeatured,
-  songMintingStatus,
   isAddDeleteDisabled = false,
 }) => {
   const initialValues = {
@@ -58,11 +55,14 @@ const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
   };
 
   return (
-    <Formik initialValues={ initialValues } onSubmit={ handleSubmit }>
+    <Formik
+      initialValues={ initialValues }
+      onSubmit={ handleSubmit }
+      enableReinitialize
+    >
       { (formikProps) => (
         <FormContent
           { ...formikProps }
-          songMintingStatus={ songMintingStatus }
           isAddDeleteDisabled={ isAddDeleteDisabled }
         />
       ) }
@@ -74,7 +74,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   values,
   setFieldValue,
   handleSubmit,
-  songMintingStatus,
   isAddDeleteDisabled,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,7 +97,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           <Owners
             owners={ values.owners }
             isDeleteDisabled={ isAddDeleteDisabled }
-            songMintingStatus={ songMintingStatus }
             onDelete={ ({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
               setFieldValue("owners", newOwners);
@@ -114,7 +112,6 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           <Creditors
             creditors={ values.creditors }
             isDeleteDisabled={ isAddDeleteDisabled }
-            songMintingStatus={ songMintingStatus }
             onDelete={ ({ email }, creditors) => {
               const newCreditors = creditors.filter(
                 (creditor) => creditor.email !== email

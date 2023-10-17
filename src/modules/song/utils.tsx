@@ -20,10 +20,6 @@ import {
 import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";
 
-const EDITABLE_SONG_STATUSES = [
-  MintingStatus.Undistributed,
-  MintingStatus.StreamTokenAgreementApproved,
-];
 const EDITABLE_COLLABORATOR_STATUSES = [
   CollaborationStatus.Editing,
   CollaborationStatus.Rejected,
@@ -180,46 +176,33 @@ export const mapCollaboratorsToCollaborations = (
   }));
 };
 
-export const getIsOwnerEditable = (
-  songStatus: MintingStatus,
-  owner: Owner,
-  totalNumOwners: number
-) => {
-  const status = owner.status;
+/**
+ * Allows editing an owner if they are the user and there is more than
+ * one collaborator, or if the collaborator has an editable status.
+ */
+export const getIsOwnerEditable = (owner: Owner, totalNumOwners: number) => {
+  const ownerStatus = owner.status;
   const isCreator = "isCreator" in owner && !!owner.isCreator;
   const canEditOwnAmount = totalNumOwners > 1 && isCreator;
+  const isEditableStatus = EDITABLE_COLLABORATOR_STATUSES.includes(ownerStatus);
 
-  // uploader can always edit own amount if song has multiple collabs
-  if (canEditOwnAmount) return true;
-
-  // delay between song minting status and collab acceptance status, if the song
-  // is not in editable state, but collab is still "editable", disable editing.
-  const isEditableSong = EDITABLE_SONG_STATUSES.includes(songStatus);
-  if (!isEditableSong && status === CollaborationStatus.Editing) return false;
-
-  // allow editing if collab has "Rejected" or "Editing" status
-  return EDITABLE_COLLABORATOR_STATUSES.includes(status);
+  return canEditOwnAmount || isEditableStatus;
 };
 
 /**
- * Allow editing a credited collaborator if they have rejected
- * the collaboration request.
+ * Allows editing a credited collaborator if they have an editable status.
  */
-export const getIsCreditorEditable = (
-  songStatus: MintingStatus,
-  creditor: Creditor
-) => {
+export const getIsCreditorEditable = (creditor: Creditor) => {
   const status = creditor.status;
+  const isEditableStatus = EDITABLE_COLLABORATOR_STATUSES.includes(status);
 
-  // delay between song minting status and collab acceptance status, if the song
-  // is not in editable state, but collab is still "editable", disable editing.
-  const isEditableSong = EDITABLE_SONG_STATUSES.includes(songStatus);
-  if (!isEditableSong && status === CollaborationStatus.Editing) return false;
-
-  // Allow editing if collab has "Rejected" or "Editing" status
-  return EDITABLE_COLLABORATOR_STATUSES.includes(status);
+  return isEditableStatus;
 };
 
+/**
+ * Determines whether a song can be deleted, depending on the
+ * current minting status of the song.
+ */
 export const getIsSongDeletable = (status: MintingStatus) => {
   return [
     MintingStatus.Undistributed,

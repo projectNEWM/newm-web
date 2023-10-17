@@ -4,7 +4,6 @@ import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "elements";
 import {
   Creditor,
-  MintingStatus,
   getIsCreditorEditable,
   useGetCollaboratorsQuery,
 } from "modules/song";
@@ -15,7 +14,6 @@ import { getCollaboratorInfo } from "./utils";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
-  readonly songMintingStatus: MintingStatus;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (
     creditor: Creditor,
@@ -29,7 +27,6 @@ interface CreditorsProps {
 const Creditors: FunctionComponent<CreditorsProps> = ({
   creditors,
   onDelete,
-  songMintingStatus,
   isDeleteDisabled = false,
 }) => {
   const theme = useTheme();
@@ -57,7 +54,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
       </Stack>
 
       { creditors.map((creditor, idx) => {
-        const isEditable = getIsCreditorEditable(songMintingStatus, creditor);
+        const isEditable = getIsCreditorEditable(creditor);
         const collaboratorInfo = getCollaboratorInfo(
           creditor.email,
           collaborators

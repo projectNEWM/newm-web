@@ -3,7 +3,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import {
-  MintingStatus,
   Owner,
   getIsOwnerEditable,
   useGetCollaboratorsQuery,
@@ -17,7 +16,6 @@ import { getCollaboratorInfo } from "./utils";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
-  readonly songMintingStatus: MintingStatus;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
 }
@@ -28,7 +26,6 @@ interface OwnersProps {
 const Owners: FunctionComponent<OwnersProps> = ({
   owners,
   onDelete,
-  songMintingStatus,
   isDeleteDisabled = false,
 }) => {
   const emails = owners.map((owner) => owner.email);
@@ -80,11 +77,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
           owner.email,
           collaborators
         );
-        const isEditable = getIsOwnerEditable(
-          songMintingStatus,
-          owner,
-          owners.length
-        );
+        const isEditable = getIsOwnerEditable(owner, owners.length);
 
         return (
           <Stack

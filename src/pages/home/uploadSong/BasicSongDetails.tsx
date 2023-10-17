@@ -8,13 +8,7 @@ import {
   useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "modules/content";
-import {
-  Creditor,
-  Featured,
-  MintingStatus,
-  Owner,
-  UploadSongRequest,
-} from "modules/song";
+import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
 import {
   DropdownMultiSelectField,
   DropdownSelectField,
@@ -268,7 +262,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   onChangeOwners={ handleChangeOwners }
                   onChangeCreditors={ handleChangeCreditors }
                   onChangeFeatured={ handleChangeFeatured }
-                  songMintingStatus={ MintingStatus.Undistributed }
                 />
               ) }
             </Box>
