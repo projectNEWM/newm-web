@@ -428,6 +428,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             );
           }) }
         </TableBody>
+
         { totalCountOfSongs > songData.length && (
           <TablePagination
             numberOfRows={ totalCountOfSongs }
