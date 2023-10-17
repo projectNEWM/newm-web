@@ -388,17 +388,6 @@ export interface GetEarliestReleaseDateResponse {
   readonly date: string;
 }
 
-export type CustomError = {
-  error: {
-    data: {
-      code: number;
-      cause: string;
-      description: string;
-    };
-  };
-  status: number;
-};
-
 export interface GetUserWalletSongsRequest {
   readonly offset?: number;
   readonly limit?: number;

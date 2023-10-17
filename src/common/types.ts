@@ -56,3 +56,14 @@ export interface PlayerState {
   readonly isReadyToPlay: boolean;
   readonly song?: Song;
 }
+
+export type CustomError = {
+  error: {
+    data: {
+      code: number;
+      cause: string;
+      description: string;
+    };
+  };
+  status: number;
+};
