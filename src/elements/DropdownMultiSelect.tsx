@@ -5,6 +5,7 @@ import {
   HTMLProps,
   SyntheticEvent,
   forwardRef,
+  useState,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -55,6 +56,8 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const {
     getInputProps,
     getListboxProps,
@@ -70,12 +73,13 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     multiple: true,
     disableCloseOnSelect: true,
     options,
-    value,
+    value: value as Array<string>,
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(event, newValue);
       }
     },
+    open: isPopupOpen,
   });
 
   const getDisplayValue = () => {
@@ -94,6 +98,15 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
+
+  // A helper to toggle the options list
+  const toggleOptionsList = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const handleCloseOptions = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
     <Box sx={ { position: "relative" } }>
@@ -118,7 +131,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             placeholder={ popupOpen ? "Search" : placeholder }
             endAdornment={
               <ArrowDropDownIcon
+                onClick={ toggleOptionsList }
                 sx={ {
+                  cursor: "pointer",
                   color: theme.colors.white,
                   transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                   transition: "transform 200ms ease-in",
@@ -127,6 +142,11 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             }
             errorMessage={ errorMessage }
             name={ name }
+            onClick={ () => toggleOptionsList() }
+            closeOptionsBox={ handleCloseOptions }
+            onKeyDownCapture={ () => {
+              !isPopupOpen && setIsPopupOpen(true);
+            } }
           />
         </Stack>
       </div>
