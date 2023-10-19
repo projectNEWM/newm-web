@@ -3,6 +3,7 @@ import {
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
+  KeyboardEvent,
   SyntheticEvent,
   forwardRef,
   useState,
@@ -26,7 +27,9 @@ export interface DropdownMultiSelectProps
     event: SyntheticEvent,
     newValue: ReadonlyArray<string>
   ) => void;
-  readonly handleBlur: (event: FocusEvent<HTMLInputElement, Element>) => void;
+  readonly handleFieldBlur?: (
+    event: FocusEvent<HTMLInputElement, Element>
+  ) => void;
   readonly label?: string;
   readonly name: string;
   readonly tooltipText?: string;
@@ -51,12 +54,12 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     placeholder = "Select all that apply",
     value,
     handleChange,
-    handleBlur,
+    handleFieldBlur,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const {
     getInputProps,
@@ -79,7 +82,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
         handleChange(event, newValue);
       }
     },
-    open: isPopupOpen,
+    open: isOptionsOpen,
   });
 
   const getDisplayValue = () => {
@@ -99,13 +102,29 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
 
-  // A helper to toggle the options list
-  const toggleOptionsList = () => {
-    setIsPopupOpen(!isPopupOpen);
+  /**
+   * This prevents a form submission when input
+   * text does not match any options.
+   */
+  const preventFormSubmit = (event: KeyboardEvent): void => {
+    if (event.key === "Enter" && value && inputValue !== value[0])
+      event.preventDefault();
   };
 
-  const handleCloseOptions = () => {
-    setIsPopupOpen(false);
+  // Helpers for handling dropdown options list for integration of
+  // end adornment interactivity
+  const toggleOptionsList = () => {
+    setIsOptionsOpen(!isOptionsOpen);
+  };
+
+  const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleFieldBlur?.(event);
+    setIsOptionsOpen(false);
+  };
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    setIsOptionsOpen(true);
+    preventFormSubmit(event);
   };
 
   return (
@@ -116,10 +135,6 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             ref={ ref }
             { ...rest }
             { ...inputProps }
-            onBlur={ (event: FocusEvent<HTMLInputElement, Element>) => {
-              if (inputProps.onBlur) inputProps.onBlur(event);
-              handleBlur(event);
-            } }
             style={ {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -142,11 +157,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             }
             errorMessage={ errorMessage }
             name={ name }
-            onClick={ () => toggleOptionsList() }
-            closeOptionsBox={ handleCloseOptions }
-            onKeyDownCapture={ () => {
-              !isPopupOpen && setIsPopupOpen(true);
-            } }
+            onBlur={ handleBlurEvent }
+            onClick={ toggleOptionsList }
+            onKeyDown={ handleKeydown }
           />
         </Stack>
       </div>

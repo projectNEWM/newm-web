@@ -15,7 +15,7 @@ const DropdownMultiSelectField: ForwardRefRenderFunction<
         handleChange={ (event: SyntheticEvent, value: ReadonlyArray<string>) => {
           form.setFieldValue(field.name, value);
         } }
-        handleBlur={ form.handleBlur }
+        handleFieldBlur={ form.handleBlur }
         ref={ ref }
       />
     ) }

@@ -19,7 +19,6 @@ import { Tooltip } from "elements";
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
-  readonly closeOptionsBox?: () => void;
   readonly isOptional?: boolean;
   readonly tooltipText?: ReactNode;
   readonly label?: string;
@@ -97,7 +96,6 @@ export const TextInput: ForwardRefRenderFunction<
     maskChar,
     onBlur,
     onFocus,
-    closeOptionsBox,
     startAdornment,
     tooltipText = "",
     widthType = "default",
@@ -132,7 +130,6 @@ export const TextInput: ForwardRefRenderFunction<
     }
 
     setIsFocused(false);
-    closeOptionsBox?.();
   };
 
   return (

@@ -13,6 +13,7 @@ const DropdownSelectField: ForwardRefRenderFunction<
         { ...props }
         errorMessage={ meta.touched ? meta.error : "" }
         handleChange={ form.handleChange(props.name) }
+        handleFieldBlur={ form.handleBlur }
         ref={ ref }
       />
     ) }

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import {
+  FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
@@ -21,6 +22,9 @@ export interface DropdownSelectProps
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleChange?: (newValue: string) => void;
+  readonly handleFieldBlur?: (
+    event: FocusEvent<HTMLInputElement, Element>
+  ) => void;
   readonly label?: string;
   readonly isOptional?: boolean;
   readonly name: string;
@@ -39,6 +43,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     disabled,
     errorMessage,
     handleChange,
+    handleFieldBlur,
     label,
     name,
     noResultsText = "Nothing found",
@@ -50,7 +55,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const {
     getInputProps,
@@ -66,25 +71,17 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       if (handleChange) {
         handleChange(newValue as string);
-        setIsPopupOpen(false);
+        setIsOptionsOpen(false);
       }
     },
     options,
     value: value as string,
-    open: isPopupOpen,
+    open: isOptionsOpen,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
-
-  // A helper to toggle the options list
-  const toggleOptionsList = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
-
-  const handleCloseOptions = () => {
-    setIsPopupOpen(false);
-  };
+  const inputProps = getInputProps();
 
   /**
    * This prevents a form submission when input
@@ -92,6 +89,22 @@ const DropdownSelect: ForwardRefRenderFunction<
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value) event.preventDefault();
+  };
+
+  // Helpers for handling dropdown options list for integration of
+  // end adornment interactivity
+  const toggleOptionsList = () => {
+    setIsOptionsOpen(!isOptionsOpen);
+  };
+
+  const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleFieldBlur?.(event);
+    setIsOptionsOpen(false);
+  };
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    setIsOptionsOpen(true);
+    preventFormSubmit(event);
   };
 
   return (
@@ -106,7 +119,7 @@ const DropdownSelect: ForwardRefRenderFunction<
         <TextInput
           ref={ ref }
           { ...rest }
-          { ...getInputProps() }
+          { ...inputProps }
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
@@ -123,27 +136,16 @@ const DropdownSelect: ForwardRefRenderFunction<
           label={ label }
           name={ name }
           placeholder={ placeholder }
-          onKeyDown={ preventFormSubmit }
-          onClick={ () => toggleOptionsList() }
-          closeOptionsBox={ handleCloseOptions }
-          onKeyDownCapture={ () => {
-            !isPopupOpen && setIsPopupOpen(true);
-          } }
+          onBlur={ handleBlurEvent }
+          onClick={ toggleOptionsList }
+          onKeyDown={ handleKeydown }
         />
       </div>
 
       { hasResults && (
         <ResultsList { ...getListboxProps() }>
           { (groupedOptions as typeof options).map((option, index) => (
-            <li
-              { ...getOptionProps({ option, index }) }
-              key={ index }
-              onMouseDown={ () => {
-                if (option === value) {
-                  setIsPopupOpen(false);
-                }
-              } }
-            >
+            <li { ...getOptionProps({ option, index }) } key={ index }>
               { option }
             </li>
           )) }
