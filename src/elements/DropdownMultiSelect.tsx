@@ -52,7 +52,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     noResultsText = "Nothing found",
     options,
     placeholder = "Select all that apply",
-    value,
+    value = null,
     handleChange,
     handleFieldBlur,
     ...rest
@@ -78,9 +78,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     options,
     value: value as Array<string>,
     onChange: (event, newValue) => {
-      if (handleChange) {
-        handleChange(event, newValue);
-      }
+      handleChange?.(event, newValue);
     },
     open: isOptionsOpen,
   });
@@ -123,6 +121,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
+    // Prevents null TypeError on left arrow "previous" event in useAutocomplete
+    if (event.key === "ArrowLeft") event.stopPropagation();
+
     setIsOptionsOpen(true);
     preventFormSubmit(event);
   };
