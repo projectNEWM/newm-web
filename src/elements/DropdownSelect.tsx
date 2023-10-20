@@ -69,11 +69,17 @@ const DropdownSelect: ForwardRefRenderFunction<
     id: name,
     getOptionLabel: (option) => option,
     onChange: (event, newValue) => {
-      if (handleChange) {
-        handleChange(newValue as string);
-        setIsOptionsOpen(false);
-      }
+      // Updates as empty string instead of invalid null error for empty field
+      // or for partial edit of selected input causing invalid undefined error
+      if (newValue === null || newValue === undefined) handleChange?.("");
+      else handleChange?.(newValue as string);
+
+      setIsOptionsOpen(false);
     },
+    // Removes warning for empty string not being a valid option
+    isOptionEqualToValue: (option, value) =>
+      value === "" ? true : option === value,
+    clearOnBlur: true,
     options,
     value: value as string,
     open: isOptionsOpen,
