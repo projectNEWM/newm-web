@@ -207,6 +207,19 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     event.stopPropagation();
   };
 
+  const handleRowClick = (
+    event: MouseEvent<HTMLButtonElement | HTMLTableRowElement>,
+    {
+      songId,
+      hasStartedMintingProcess,
+    }: { songId: string; hasStartedMintingProcess: boolean }
+  ) => {
+    event.stopPropagation();
+    navigate(
+      `${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`
+    );
+  };
+
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
     page: number
@@ -288,7 +301,13 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             return (
               <TableRow
                 onClick={
-                  isSongStale ? undefined : () => handleSongPlayPause(song)
+                  isSongStale
+                    ? undefined
+                    : (event) =>
+                        handleRowClick(event, {
+                          songId: song.id,
+                          hasStartedMintingProcess,
+                        })
                 }
                 key={ song.id }
                 sx={
@@ -405,16 +424,12 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     <Button
                       variant="secondary"
                       width="icon"
-                      onClick={ (e) => {
-                        e.stopPropagation();
-                        navigate(
-                          `${
-                            hasStartedMintingProcess
-                              ? "view-details"
-                              : "edit-song"
-                          }/${song.id}`
-                        );
-                      } }
+                      onClick={ (event) =>
+                        handleRowClick(event, {
+                          songId: song.id,
+                          hasStartedMintingProcess,
+                        })
+                      }
                     >
                       { hasStartedMintingProcess ? (
                         <VisibilityIcon sx={ { color: theme.colors.music } } />
