@@ -172,31 +172,22 @@ const Profile: FunctionComponent = () => {
   const handleSubmit = (values: UpdateProfileRequest) => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
-    // Add https at the start if URL is missing http/https on updated socials
-    if (updatedValues.websiteUrl) {
-      updatedValues.websiteUrl = formatUrlHttps(updatedValues.websiteUrl);
-    }
-    if (updatedValues.twitterUrl) {
-      updatedValues.twitterUrl = formatUrlHttps(updatedValues.twitterUrl);
-    }
-    if (updatedValues.instagramUrl) {
-      updatedValues.instagramUrl = formatUrlHttps(updatedValues.instagramUrl);
-    }
-    if (updatedValues.spotifyProfile) {
-      updatedValues.spotifyProfile = formatUrlHttps(
-        updatedValues.spotifyProfile
-      );
-    }
-    if (updatedValues.appleMusicProfile) {
-      updatedValues.appleMusicProfile = formatUrlHttps(
-        updatedValues.appleMusicProfile
-      );
-    }
-    if (updatedValues.soundCloudProfile) {
-      updatedValues.soundCloudProfile = formatUrlHttps(
-        updatedValues.soundCloudProfile
-      );
-    }
+    // List of social URLs to format
+    const socialURLs = [
+      "websiteUrl",
+      "twitterUrl",
+      "instagramUrl",
+      "spotifyProfile",
+      "appleMusicProfile",
+      "soundCloudProfile",
+    ];
+
+    // Format the URLs with https:// if missing
+    socialURLs.forEach((url) => {
+      if (updatedValues[url]) {
+        updatedValues[url] = formatUrlHttps(updatedValues[url]);
+      }
+    });
 
     if (
       updatedValues.companyIpRights === false ||
@@ -205,7 +196,24 @@ const Profile: FunctionComponent = () => {
       updatedValues.companyName = "";
     }
 
-    updateProfile(updatedValues);
+    // If user updates any of these fields, send all to be revalidated
+    const shouldRevalidateOutlets =
+      updatedValues.nickname ||
+      updatedValues.spotifyProfile ||
+      updatedValues.appleMusicProfile ||
+      updatedValues.soundCloudProfile;
+
+    updateProfile(
+      shouldRevalidateOutlets
+        ? {
+            nickname: values.nickname,
+            spotifyProfile: values.spotifyProfile,
+            appleMusicProfile: values.appleMusicProfile,
+            soundCloudProfile: values.soundCloudProfile,
+            ...updatedValues,
+          }
+        : updatedValues
+    );
   };
 
   return (
@@ -499,6 +507,7 @@ const Profile: FunctionComponent = () => {
                       >
                         <TextInputField
                           isOptional={ false }
+                          disabled={ isVerified }
                           label="FIRST NAME"
                           name="firstName"
                           placeholder="First name"
@@ -507,6 +516,7 @@ const Profile: FunctionComponent = () => {
                         />
                         <TextInputField
                           isOptional={ false }
+                          disabled={ isVerified }
                           label="LAST NAME"
                           name="lastName"
                           placeholder="Last name"
