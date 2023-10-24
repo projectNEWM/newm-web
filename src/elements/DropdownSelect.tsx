@@ -105,11 +105,29 @@ const DropdownSelect: ForwardRefRenderFunction<
 
   const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
     handleFieldBlur?.(event);
+    inputProps.onBlur?.(event);
     setIsOptionsOpen(false);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
-    setIsOptionsOpen(true);
+    // Replaces AutoComplete key actions
+    switch (event.key) {
+      case "ArrowLeft": {
+        break;
+      }
+      case "ArrowRight": {
+        break;
+      }
+      case "Escape": {
+        setIsOptionsOpen(false);
+        break;
+      }
+      default: {
+        setIsOptionsOpen(true);
+        break;
+      }
+    }
+
     preventFormSubmit(event);
   };
 

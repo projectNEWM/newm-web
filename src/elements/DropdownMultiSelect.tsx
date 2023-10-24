@@ -117,14 +117,33 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
 
   const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
     handleFieldBlur?.(event);
+    inputProps.onBlur?.(event);
     setIsOptionsOpen(false);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
-    // Prevents null TypeError on left arrow "previous" event in useAutocomplete
-    if (event.key === "ArrowLeft") event.stopPropagation();
+    // Replaces AutoComplete key actions
+    switch (event.key) {
+      case "ArrowLeft": {
+        setIsOptionsOpen(false);
+        // Prevents null TypeError on left arrow "previous" event in useAutocomplete
+        event.stopPropagation();
+        break;
+      }
+      case "ArrowRight": {
+        setIsOptionsOpen(false);
+        break;
+      }
+      case "Escape": {
+        setIsOptionsOpen(false);
+        break;
+      }
+      default: {
+        setIsOptionsOpen(true);
+        break;
+      }
+    }
 
-    setIsOptionsOpen(true);
     preventFormSubmit(event);
   };
 
