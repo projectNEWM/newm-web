@@ -23,13 +23,12 @@ export interface DropdownMultiSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly handleChange?: (
     event: SyntheticEvent,
     newValue: ReadonlyArray<string>
   ) => void;
-  readonly handleFieldBlur?: (
-    event: FocusEvent<HTMLInputElement, Element>
-  ) => void;
+
   readonly label?: string;
   readonly name: string;
   readonly tooltipText?: string;
@@ -54,7 +53,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     placeholder = "Select all that apply",
     value = null,
     handleChange,
-    handleFieldBlur,
+    handleBlur,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -101,22 +100,26 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const inputProps = getInputProps();
 
   /**
-   * This prevents a form submission when input
-   * text does not match any options.
+   * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && value && inputValue !== value[0])
       event.preventDefault();
   };
 
-  // Helpers for handling dropdown options list for integration of
-  // end adornment interactivity
-  const toggleOptionsList = () => {
+  /**
+   *  Dropdown options toggle to handle separate end adornment interactivity
+   */
+  function toggleOptionsList() {
     setIsOptionsOpen(!isOptionsOpen);
-  };
+  }
 
-  const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
-    handleFieldBlur?.(event);
+  /**
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete,
+   * and sets dropdown options to close on blur.
+   */
+  const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleBlur?.(event);
     inputProps.onBlur?.(event);
     setIsOptionsOpen(false);
   };
@@ -177,7 +180,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             }
             errorMessage={ errorMessage }
             name={ name }
-            onBlur={ handleBlurEvent }
+            onBlur={ handleBlurEvents }
             onClick={ toggleOptionsList }
             onKeyDown={ handleKeydown }
           />

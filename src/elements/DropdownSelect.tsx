@@ -21,10 +21,8 @@ export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly handleChange?: (newValue: string) => void;
-  readonly handleFieldBlur?: (
-    event: FocusEvent<HTMLInputElement, Element>
-  ) => void;
   readonly label?: string;
   readonly isOptional?: boolean;
   readonly name: string;
@@ -43,7 +41,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     disabled,
     errorMessage,
     handleChange,
-    handleFieldBlur,
+    handleBlur,
     label,
     name,
     noResultsText = "Nothing found",
@@ -90,27 +88,31 @@ const DropdownSelect: ForwardRefRenderFunction<
   const inputProps = getInputProps();
 
   /**
-   * This prevents a form submission when input
-   * text does not match any options.
+   * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value) event.preventDefault();
   };
 
-  // Helpers for handling dropdown options list for integration of
-  // end adornment interactivity
+  /**
+   *  Dropdown options toggle to handle separate end adornment interactivity
+   */
   const toggleOptionsList = () => {
     setIsOptionsOpen(!isOptionsOpen);
   };
 
-  const handleBlurEvent = (event: FocusEvent<HTMLInputElement, Element>) => {
-    handleFieldBlur?.(event);
+  /**
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete,
+   * and sets dropdown options to close on blur.
+   */
+  const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleBlur?.(event);
     inputProps.onBlur?.(event);
     setIsOptionsOpen(false);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
-    // Replaces AutoComplete key actions
+    // Replaces useAutocomplete key actions
     switch (event.key) {
       case "ArrowLeft": {
         break;
@@ -160,7 +162,7 @@ const DropdownSelect: ForwardRefRenderFunction<
           label={ label }
           name={ name }
           placeholder={ placeholder }
-          onBlur={ handleBlurEvent }
+          onBlur={ handleBlurEvents }
           onClick={ toggleOptionsList }
           onKeyDown={ handleKeydown }
         />
