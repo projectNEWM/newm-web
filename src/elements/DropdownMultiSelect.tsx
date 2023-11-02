@@ -62,6 +62,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     getInputProps,
     getListboxProps,
     getOptionProps,
+    getPopupIndicatorProps,
     getRootProps,
     groupedOptions,
     popupOpen,
@@ -95,8 +96,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
+  const popupIndicatorProps = getPopupIndicatorProps();
   const handleEndAdornmentClick =
-    inputProps.onMouseDown as MouseEventHandler<HTMLOrSVGElement>;
+    popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
    * This prevents a form submission when input text does not match any options.
