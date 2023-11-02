@@ -1,12 +1,11 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import {
   FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
   KeyboardEvent,
+  MouseEventHandler,
   forwardRef,
-  useState,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -53,8 +52,6 @@ const DropdownSelect: ForwardRefRenderFunction<
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
   const {
     getInputProps,
     getListboxProps,
@@ -71,8 +68,6 @@ const DropdownSelect: ForwardRefRenderFunction<
       // or for partial edit of selected input causing invalid undefined error
       if (newValue === null || newValue === undefined) handleChange?.("");
       else handleChange?.(newValue as string);
-
-      setIsOptionsOpen(false);
     },
     // Removes warning for empty string not being a valid option
     isOptionEqualToValue: (option, value) =>
@@ -80,12 +75,13 @@ const DropdownSelect: ForwardRefRenderFunction<
     clearOnBlur: true,
     options,
     value: value as string,
-    open: isOptionsOpen,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
   const inputProps = getInputProps();
+  const handleEndAdornmentClick =
+    inputProps.onMouseDown as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
    * This prevents a form submission when input text does not match any options.
@@ -95,42 +91,11 @@ const DropdownSelect: ForwardRefRenderFunction<
   };
 
   /**
-   *  Dropdown options toggle to handle separate end adornment interactivity
-   */
-  const toggleOptionsList = () => {
-    setIsOptionsOpen(!isOptionsOpen);
-  };
-
-  /**
-   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete,
-   * and sets dropdown options to close on blur.
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
    */
   const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
     handleBlur?.(event);
     inputProps.onBlur?.(event);
-    setIsOptionsOpen(false);
-  };
-
-  const handleKeydown = (event: KeyboardEvent) => {
-    // Replaces useAutocomplete key actions
-    switch (event.key) {
-      case "ArrowLeft": {
-        break;
-      }
-      case "ArrowRight": {
-        break;
-      }
-      case "Escape": {
-        setIsOptionsOpen(false);
-        break;
-      }
-      default: {
-        setIsOptionsOpen(true);
-        break;
-      }
-    }
-
-    preventFormSubmit(event);
   };
 
   return (
@@ -149,13 +114,15 @@ const DropdownSelect: ForwardRefRenderFunction<
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
-              onClick={ toggleOptionsList }
-              sx={ {
-                cursor: "pointer",
-                color: theme.colors.white,
-                transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 200ms ease-in",
-              } }
+              onClick={ handleEndAdornmentClick }
+              sx={
+                {
+                  cursor: "pointer",
+                  color: theme.colors.white,
+                  transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                  transition: "transform 200ms ease-in",
+                } as React.CSSProperties
+              }
             />
           }
           errorMessage={ errorMessage }
@@ -163,8 +130,7 @@ const DropdownSelect: ForwardRefRenderFunction<
           name={ name }
           placeholder={ placeholder }
           onBlur={ handleBlurEvents }
-          onClick={ toggleOptionsList }
-          onKeyDown={ handleKeydown }
+          onKeyDown={ preventFormSubmit }
         />
       </div>
 

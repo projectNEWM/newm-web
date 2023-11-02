@@ -4,9 +4,9 @@ import {
   ForwardedRef,
   HTMLProps,
   KeyboardEvent,
+  MouseEventHandler,
   SyntheticEvent,
   forwardRef,
-  useState,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -58,8 +58,6 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
   const {
     getInputProps,
     getListboxProps,
@@ -79,7 +77,6 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       handleChange?.(event, newValue);
     },
-    open: isOptionsOpen,
   });
 
   const getDisplayValue = () => {
@@ -98,6 +95,8 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
+  const handleEndAdornmentClick =
+    inputProps.onMouseDown as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
    * This prevents a form submission when input text does not match any options.
@@ -108,43 +107,17 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   };
 
   /**
-   *  Dropdown options toggle to handle separate end adornment interactivity
-   */
-  function toggleOptionsList() {
-    setIsOptionsOpen(!isOptionsOpen);
-  }
-
-  /**
-   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete,
-   * and sets dropdown options to close on blur.
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
    */
   const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
     handleBlur?.(event);
     inputProps.onBlur?.(event);
-    setIsOptionsOpen(false);
   };
 
   const handleKeydown = (event: KeyboardEvent) => {
-    // Replaces AutoComplete key actions
-    switch (event.key) {
-      case "ArrowLeft": {
-        setIsOptionsOpen(false);
-        // Prevents null TypeError on left arrow "previous" event in useAutocomplete
-        event.stopPropagation();
-        break;
-      }
-      case "ArrowRight": {
-        setIsOptionsOpen(false);
-        break;
-      }
-      case "Escape": {
-        setIsOptionsOpen(false);
-        break;
-      }
-      default: {
-        setIsOptionsOpen(true);
-        break;
-      }
+    // Prevents null TypeError on left arrow "previous" event in useAutocomplete
+    if (event.key === "ArrowLeft") {
+      event.stopPropagation();
     }
 
     preventFormSubmit(event);
@@ -169,7 +142,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             placeholder={ popupOpen ? "Search" : placeholder }
             endAdornment={
               <ArrowDropDownIcon
-                onClick={ toggleOptionsList }
+                onClick={ handleEndAdornmentClick }
                 sx={ {
                   cursor: "pointer",
                   color: theme.colors.white,
@@ -181,7 +154,6 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             errorMessage={ errorMessage }
             name={ name }
             onBlur={ handleBlurEvents }
-            onClick={ toggleOptionsList }
             onKeyDown={ handleKeydown }
           />
         </Stack>
