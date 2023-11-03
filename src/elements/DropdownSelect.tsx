@@ -1,8 +1,10 @@
 import {
+  FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
   KeyboardEvent,
+  MouseEventHandler,
   forwardRef,
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
@@ -18,6 +20,7 @@ export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly handleChange?: (newValue: string) => void;
   readonly label?: string;
   readonly isOptional?: boolean;
@@ -37,12 +40,13 @@ const DropdownSelect: ForwardRefRenderFunction<
     disabled,
     errorMessage,
     handleChange,
+    handleBlur,
     label,
     name,
     noResultsText = "Nothing found",
     options,
     placeholder,
-    value,
+    value = null,
     widthType,
     ...rest
   },
@@ -52,6 +56,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     getInputProps,
     getListboxProps,
     getOptionProps,
+    getPopupIndicatorProps,
     getRootProps,
     groupedOptions,
     popupOpen,
@@ -60,23 +65,39 @@ const DropdownSelect: ForwardRefRenderFunction<
     id: name,
     getOptionLabel: (option) => option,
     onChange: (event, newValue) => {
-      if (handleChange) {
-        handleChange(newValue as string);
-      }
+      // Updates as empty string instead of invalid null error for empty field
+      // or for partial edit of selected input causing invalid undefined error
+      if (newValue === null || newValue === undefined) handleChange?.("");
+      else handleChange?.(newValue as string);
     },
+    // Removes warning for empty string not being a valid option
+    isOptionEqualToValue: (option, value) =>
+      value === "" ? true : option === value,
+    clearOnBlur: true,
     options,
     value: value as string,
   });
 
   const hasResults = groupedOptions.length > 0;
   const showNoResults = !hasResults && popupOpen;
+  const inputProps = getInputProps();
+  const popupIndicatorProps = getPopupIndicatorProps();
+  const handleEndAdornmentClick =
+    popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
-   * This prevents a form submission when input
-   * text does not match any options.
+   * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value) event.preventDefault();
+  };
+
+  /**
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
+   */
+  const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleBlur?.(event);
+    inputProps.onBlur?.(event);
   };
 
   return (
@@ -91,21 +112,26 @@ const DropdownSelect: ForwardRefRenderFunction<
         <TextInput
           ref={ ref }
           { ...rest }
-          { ...getInputProps() }
+          { ...inputProps }
           disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
-              sx={ {
-                color: theme.colors.white,
-                transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 200ms ease-in",
-              } }
+              onClick={ handleEndAdornmentClick }
+              sx={
+                {
+                  cursor: "pointer",
+                  color: theme.colors.white,
+                  transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                  transition: "transform 200ms ease-in",
+                } as React.CSSProperties
+              }
             />
           }
           errorMessage={ errorMessage }
           label={ label }
           name={ name }
           placeholder={ placeholder }
+          onBlur={ handleBlurEvents }
           onKeyDown={ preventFormSubmit }
         />
       </div>

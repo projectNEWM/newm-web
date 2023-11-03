@@ -3,6 +3,8 @@ import {
   ForwardRefRenderFunction,
   ForwardedRef,
   HTMLProps,
+  KeyboardEvent,
+  MouseEventHandler,
   SyntheticEvent,
   forwardRef,
 } from "react";
@@ -21,11 +23,12 @@ export interface DropdownMultiSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly handleChange?: (
     event: SyntheticEvent,
     newValue: ReadonlyArray<string>
   ) => void;
-  readonly handleBlur: (event: FocusEvent<HTMLInputElement, Element>) => void;
+
   readonly label?: string;
   readonly name: string;
   readonly tooltipText?: string;
@@ -48,7 +51,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     noResultsText = "Nothing found",
     options,
     placeholder = "Select all that apply",
-    value,
+    value = null,
     handleChange,
     handleBlur,
     ...rest
@@ -59,6 +62,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     getInputProps,
     getListboxProps,
     getOptionProps,
+    getPopupIndicatorProps,
     getRootProps,
     groupedOptions,
     popupOpen,
@@ -70,11 +74,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     multiple: true,
     disableCloseOnSelect: true,
     options,
-    value,
+    value: value as Array<string>,
     onChange: (event, newValue) => {
-      if (handleChange) {
-        handleChange(event, newValue);
-      }
+      handleChange?.(event, newValue);
     },
   });
 
@@ -94,6 +96,34 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const showNoResults = !hasResults && popupOpen;
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
+  const popupIndicatorProps = getPopupIndicatorProps();
+  const handleEndAdornmentClick =
+    popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
+
+  /**
+   * This prevents a form submission when input text does not match any options.
+   */
+  const preventFormSubmit = (event: KeyboardEvent): void => {
+    if (event.key === "Enter" && value && inputValue !== value[0])
+      event.preventDefault();
+  };
+
+  /**
+   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
+   */
+  const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
+    handleBlur?.(event);
+    inputProps.onBlur?.(event);
+  };
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    // Prevents null TypeError on left arrow "previous" event in useAutocomplete
+    if (event.key === "ArrowLeft") {
+      event.stopPropagation();
+    }
+
+    preventFormSubmit(event);
+  };
 
   return (
     <Box sx={ { position: "relative" } }>
@@ -103,10 +133,6 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             ref={ ref }
             { ...rest }
             { ...inputProps }
-            onBlur={ (event: FocusEvent<HTMLInputElement, Element>) => {
-              if (inputProps.onBlur) inputProps.onBlur(event);
-              handleBlur(event);
-            } }
             style={ {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -118,7 +144,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             placeholder={ popupOpen ? "Search" : placeholder }
             endAdornment={
               <ArrowDropDownIcon
+                onClick={ handleEndAdornmentClick }
                 sx={ {
+                  cursor: "pointer",
                   color: theme.colors.white,
                   transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                   transition: "transform 200ms ease-in",
@@ -127,6 +155,8 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             }
             errorMessage={ errorMessage }
             name={ name }
+            onBlur={ handleBlurEvents }
+            onKeyDown={ handleKeydown }
           />
         </Stack>
       </div>
