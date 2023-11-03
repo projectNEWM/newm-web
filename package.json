@@ -10,7 +10,7 @@
     "@mui/material": "^5.13.5",
     "@newm.io/cardano-dapp-wallet-connector": "^1.0.0",
     "@react-oauth/google": "^0.11.0",
-    "@reduxjs/toolkit": "^1.7.2",
+    "@reduxjs/toolkit": "^1.9.7",
     "@sentry/cli": "^2.21.2",
     "@sentry/react": "7.72.0",
     "async-mutex": "^0.3.2",
