@@ -17,7 +17,7 @@
   "pricingPlanOptions": [
     {
       "id": 1,
-      "icon": "leaf",
+      "icon": "collaborator",
       "title": "The Collaborator",
       "pricing": "FREE",
       "description": "Create a free account to collaborate with other artists.",
@@ -81,7 +81,7 @@
     },
     {
       "id": 2,
-      "icon": "seedling",
+      "icon": "artist",
       "title": "The Artist",
       "pricing": "$9.99/RELEASE",
       "originalPricing": "$14/RELEASE",
@@ -146,7 +146,7 @@
     },
     {
       "id": 3,
-      "icon": "star",
+      "icon": "artistPlus",
       "title": "The Artist+",
       "pricing": "Coming soon",
       "description": "Our full-feature package is being built just for you.",

@@ -277,6 +277,13 @@ const theme = createTheme({
       fontSize: "80px",
       lineHeight: "96px",
     },
+    h2: {
+      fontFamily: "Raleway",
+      fontStyle: "normal",
+      fontWeight: 800,
+      fontSize: "36px",
+      lineHeight: "46px",
+    },
     h3: {
       fontFamily: "Raleway",
       fontStyle: "normal",

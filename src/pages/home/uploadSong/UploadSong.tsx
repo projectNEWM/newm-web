@@ -15,6 +15,7 @@ import {
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "modules/song";
+import PricingPlansModal from "components/pricing/PricingPlansModal";
 import ConfirmAgreement from "./ConfirmAgreement";
 import BasicSongDetails from "./BasicSongDetails";
 import AdvancedSongDetails from "./AdvancedSongDetails";
@@ -173,6 +174,7 @@ const UploadSong: FunctionComponent = () => {
         UPLOAD A SONG
       </Typography>
 
+      <PricingPlansModal />
       <Box pt={ 5 } pb={ 7 }>
         <WizardForm
           initialValues={ initialValues }
