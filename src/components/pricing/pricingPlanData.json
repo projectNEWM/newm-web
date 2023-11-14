@@ -1,0 +1,212 @@
+{
+  "sharedCriterionText": {
+    "customizeArtistProfile": "Customize artist profile",
+    "trackCatalogStatus": "Track catalog status",
+    "acceptDeclineCollaborations": "Accept/decline collaborations",
+    "connectWalletToReceiveRoyaltySplits": "Connect wallet to receive royalty splits",
+    "viewCollaboratorDetails": "View collaborator details",
+    "uploadYourMusic": "Upload your music",
+    "inviteCollaborators": "Invite collaborators",
+    "freeEANBarcodeAndISRCs": "Free EAN barcode & ISRCs",
+    "distributeMusicTo130PlusGlobalPlatforms": "Distribute music to 130+ global platforms",
+    "mintMusic": "Mint music",
+    "automateRoyaltySplitsToCollaborators": "Automate royalty splits to collaborators",
+    "listYourMusicOnNEWMMarketplace": "List your music on NEWMMarketplace (coming soon)",
+    "releaseUpTo50TracksPerMonth": "Release up to 50 tracks per month"
+  },
+  "pricingPlanOptions": [
+    {
+      "id": 1,
+      "icon": "leaf",
+      "title": "The Collaborator",
+      "pricing": "FREE",
+      "description": "Create a free account to collaborate with other artists.",
+      "buttonText": "Continue with Free",
+      "buttonType": "secondary",
+      "active": true,
+      "criteria": [
+        {
+          "includedInPlan": true,
+          "criterionText": "customizeArtistProfile"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "trackCatalogStatus"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "acceptDeclineCollaborations"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "connectWalletToReceiveRoyaltySplits"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "viewCollaboratorDetails"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "uploadYourMusic"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "inviteCollaborators"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "freeEANBarcodeAndISRCs"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "distributeMusicTo130PlusGlobalPlatforms"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "mintMusic"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "automateRoyaltySplitsToCollaborators"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "listYourMusicOnNEWMMarketplace"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "releaseUpTo50TracksPerMonth"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "icon": "seedling",
+      "title": "The Artist",
+      "pricing": "$9.99/RELEASE",
+      "originalPricing": "$14/RELEASE",
+      "description": "Release your music with NEWM and ensure correct royalty splits",
+      "buttonText": "Get started",
+      "buttonType": "primary",
+      "active": true,
+      "criteria": [
+        {
+          "includedInPlan": true,
+          "criterionText": "customizeArtistProfile"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "trackCatalogStatus"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "acceptDeclineCollaborations"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "connectWalletToReceiveRoyaltySplits"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "viewCollaboratorDetails"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "uploadYourMusic"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "inviteCollaborators"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "freeEANBarcodeAndISRCs"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "distributeMusicTo130PlusGlobalPlatforms"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "mintMusic"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "automateRoyaltySplitsToCollaborators"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "listYourMusicOnNEWMMarketplace"
+        },
+        {
+          "includedInPlan": false,
+          "criterionText": "releaseUpTo50TracksPerMonth"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "icon": "star",
+      "title": "The Artist+",
+      "pricing": "Coming soon",
+      "description": "Our full-feature package is being built just for you.",
+      "buttonText": "Subscribe",
+      "buttonType": "secondary",
+      "active": false,
+      "criteria": [
+        {
+          "includedInPlan": true,
+          "criterionText": "customizeArtistProfile"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "trackCatalogStatus"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "acceptDeclineCollaborations"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "connectWalletToReceiveRoyaltySplits"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "viewCollaboratorDetails"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "uploadYourMusic"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "inviteCollaborators"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "freeEANBarcodeAndISRCs"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "distributeMusicTo130PlusGlobalPlatforms"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "mintMusic"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "automateRoyaltySplitsToCollaborators"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "listYourMusicOnNEWMMarketplace"
+        },
+        {
+          "includedInPlan": true,
+          "criterionText": "releaseUpTo50TracksPerMonth"
+        }
+      ]
+    }
+  ]
+}
