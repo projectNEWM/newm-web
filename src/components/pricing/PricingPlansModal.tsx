@@ -4,15 +4,17 @@ import { Modal } from "components";
 import { JSX, useState } from "react";
 import LeafFill from "assets/images/LeafFillIcon";
 import theme from "theme";
+import SeedlingFillIcon from "assets/images/SeedlingFillIcon";
+import StarFillIcon from "assets/images/StarFillIcon";
 import PricingPlanOption from "./PricingPlanOption";
 import pricingPlanData from "./pricingPlanData.json";
 
-const ICON_SIZE = 20;
+const ICON_SIZE = "20px";
 
 const PRICING_PLAN_ICON: Record<string, JSX.Element> = {
   collaborator: <LeafFill sx={ { fontSize: ICON_SIZE } } />,
-  artist: <LeafFill sx={ { fontSize: ICON_SIZE } } />,
-  artistPlus: <LeafFill sx={ { fontSize: ICON_SIZE } } />,
+  artist: <SeedlingFillIcon sx={ { fontSize: ICON_SIZE } } />,
+  artistPlus: <StarFillIcon sx={ { fontSize: ICON_SIZE } } />,
 };
 
 const PricingPlansModal = () => {
@@ -62,8 +64,8 @@ const PricingPlansModal = () => {
               <PricingPlanOption
                 key={ pricingPlan.id }
                 planIcon={ {
-                  size: ICON_SIZE,
-                  icon: PRICING_PLAN_ICON[pricingPlan.icon],
+                  iconPxSize: ICON_SIZE,
+                  iconElement: PRICING_PLAN_ICON[pricingPlan.icon],
                 } }
                 { ...pricingPlan }
               />

@@ -3,11 +3,14 @@ import { Box, Divider, Stack } from "@mui/material";
 import { Button, Typography } from "elements";
 import { JSX } from "react";
 import theme from "theme";
+import pricingPlanData from "./pricingPlanData.json";
 
 interface PricingPlanOptionProps {
-  readonly planIcon: { size: number; icon: JSX.Element };
+  readonly active: boolean;
+  readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
   readonly title: string;
   readonly pricing: string;
+  readonly originalPricing: string;
   readonly description: string;
   readonly criteria: Array<{
     includedInPlan: boolean;
@@ -18,9 +21,11 @@ interface PricingPlanOptionProps {
 }
 
 const PricingPlanOption = ({
-  planIcon,
+  active,
+  planIcon: { iconPxSize, iconElement },
   title,
   pricing,
+  originalPricing,
   description,
   criteria,
   buttonText,
@@ -28,67 +33,120 @@ const PricingPlanOption = ({
 }: PricingPlanOptionProps) => {
   const criterionIcon = (includedInPlan: boolean) => {
     if (includedInPlan) {
-      return <Check sx={ { color: theme.colors.green } } />;
+      return <Check sx={ { color: theme.colors.green, fontSize: iconPxSize } } />;
     }
-    return <Close sx={ { color: theme.colors.red } } />;
+    return <Close sx={ { color: theme.colors.red, fontSize: iconPxSize } } />;
   };
 
   return (
     <Box
       sx={ {
-        display: "flex",
-        flexDirection: "column",
+        backgroundColor: theme.colors.grey600,
         border: `1px solid ${theme.colors.grey400}`,
         borderRadius: "12px",
-        backgroundColor: theme.colors.grey600,
-        position: "relative",
-        padding: 5,
+        display: "flex",
         flex: 1,
+        flexDirection: "column",
+        opacity: active ? 1 : 0.5,
+        padding: 5,
+        position: "relative",
       } }
     >
       <Box
         sx={ {
+          backgroundColor: theme.colors.black,
           border: `1px solid ${theme.colors.grey500}`,
           borderRadius: "4px",
-          padding: "8px",
-          backgroundColor: theme.colors.black,
-          position: "absolute",
-          top: `-${planIcon.size}px`,
-          left: `calc(50% - ${planIcon.size}px)`,
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          left: `calc(50% - ${iconPxSize})`,
+          padding: "8px",
+          position: "absolute",
+          top: `-${iconPxSize}`,
         } }
       >
-        { planIcon.icon }
+        { iconElement }
       </Box>
 
-      <Stack textAlign="center">
-        <Typography variant="h4" fontWeight={ 700 }>
-          { pricing }
-        </Typography>
-        <Typography variant="h2">{ title }</Typography>
-        <Typography variant="subtitle1" fontWeight={ 500 }>
-          { description }
-        </Typography>
-      </Stack>
+      <Stack
+        sx={ {
+          alignItems: "center",
+          display: "flex",
+          gap: 3.75,
+          justifyContent: "center",
+        } }
+      >
+        <Stack textAlign="center">
+          <Typography variant="h4" sx={ { fontWeight: 700, pb: 2 } }>
+            { originalPricing && (
+              <Box
+                component="span"
+                sx={ { textDecoration: "line-through", mr: 1 } }
+              >
+                { originalPricing }
+              </Box>
+            ) }
 
-      <Stack>
-        { criteria.map((criterion, index) => (
-          <Stack sx={ { display: "flex", flexDirection: "row" } } key={ index }>
-            { criterionIcon(criterion.includedInPlan) }
-            <Typography>{ criterion.criterionText }</Typography>
-          </Stack>
-        )) }
+            { pricing === "Coming soon" ? (
+              <Box
+                component="span"
+                sx={ {
+                  background: theme.colors.lightGreen,
+                  borderRadius: "12px",
+                  color: theme.colors.green,
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  px: 1.5,
+                  py: 0.5,
+                } }
+              >
+                { pricing }
+              </Box>
+            ) : (
+              pricing
+            ) }
+          </Typography>
+          <Typography variant="h2">{ title }</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={ { fontWeight: 500, height: "60px" } }
+          >
+            { description }
+          </Typography>
+        </Stack>
+
+        <Stack gap={ 1.25 }>
+          { criteria.map((criterion, index) => (
+            <Stack
+              sx={ {
+                display: "flex",
+                flexDirection: "row",
+                gap: 1.5,
+              } }
+              key={ index }
+            >
+              { criterionIcon(criterion.includedInPlan) }
+              <Typography variant="body1" fontWeight={ 500 }>
+                {
+                  pricingPlanData.sharedCriterionText[
+                    criterion.criterionText as keyof typeof pricingPlanData.sharedCriterionText
+                  ]
+                }
+              </Typography>
+            </Stack>
+          )) }
+        </Stack>
+
+        <Divider sx={ { width: "70%" } } color={ theme.colors.grey400 } />
+
+        { buttonType === "primary" ? (
+          <Button>{ buttonText }</Button>
+        ) : (
+          <Button variant={ "secondary" } color="music" disabled={ !active }>
+            { buttonText }
+          </Button>
+        ) }
       </Stack>
-      <Divider />
-      { buttonType === "primary" ? (
-        <Button>{ buttonText }</Button>
-      ) : (
-        <Button variant={ "secondary" } color="music">
-          { buttonText }
-        </Button>
-      ) }
     </Box>
   );
 };
