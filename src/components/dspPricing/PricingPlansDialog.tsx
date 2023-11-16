@@ -1,11 +1,11 @@
-import { Box, Stack } from "@mui/material";
-import { Typography } from "elements";
-import { Modal } from "components";
-import { JSX, useState } from "react";
+import { Box, IconButton, Stack } from "@mui/material";
+import { Dialog, Typography } from "elements";
+import { JSX } from "react";
 import LeafFill from "assets/images/LeafFillIcon";
 import theme from "theme";
 import SeedlingFillIcon from "assets/images/SeedlingFillIcon";
 import StarFillIcon from "assets/images/StarFillIcon";
+import CloseIcon from "@mui/icons-material/Close";
 import PricingPlanOption from "./PricingPlanOption";
 import pricingPlanData from "./pricingPlanData.json";
 
@@ -17,20 +17,34 @@ const PRICING_PLAN_ICON: Record<string, JSX.Element> = {
   artistPlus: <StarFillIcon sx={ { fontSize: ICON_SIZE } } />,
 };
 
-const PricingPlansModal = () => {
-  const [open, setOpen] = useState(true);
-  const handleClose = () => {
-    setOpen(false);
-  };
+interface PricingPlansDialogProps {
+  readonly handleClose: () => void;
+  readonly open: boolean;
+}
 
+const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
   return (
-    <Modal isOpen={ open } onClose={ handleClose }>
+    <Dialog onClose={ handleClose } open={ open } fullScreen sx={ { m: 5 } }>
+      <IconButton
+        aria-label="close"
+        onClick={ handleClose }
+        sx={ {
+          position: "absolute",
+          right: "30px",
+          top: "30px",
+          color: theme.colors.grey200,
+          p: 0,
+        } }
+      >
+        <CloseIcon sx={ { fontSize: "40px" } } />
+      </IconButton>
       <Box
         sx={ {
           alignItems: "center",
           backgroundColor: theme.colors.black,
           height: "100%",
           width: "100%",
+          padding: 7.5,
 
           display: "flex",
           alignContent: "center",
@@ -62,6 +76,7 @@ const PricingPlansModal = () => {
           { pricingPlanData.pricingPlanOptions.map((pricingPlan) => {
             return (
               <PricingPlanOption
+                handleOptionClick={ handleClose }
                 key={ pricingPlan.id }
                 planIcon={ {
                   iconPxSize: ICON_SIZE,
@@ -73,8 +88,8 @@ const PricingPlansModal = () => {
           }) }
         </Stack>
       </Box>
-    </Modal>
+    </Dialog>
   );
 };
 
-export default PricingPlansModal;
+export default PricingPlansDialog;

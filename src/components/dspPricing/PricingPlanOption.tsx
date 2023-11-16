@@ -3,6 +3,8 @@ import { Box, Divider, Stack } from "@mui/material";
 import { Button, Typography } from "elements";
 import { JSX } from "react";
 import theme from "theme";
+import { useAppDispatch } from "common";
+import { setIsArtistPricePlanSelected } from "modules/ui";
 import pricingPlanData from "./pricingPlanData.json";
 
 interface PricingPlanOptionProps {
@@ -18,6 +20,7 @@ interface PricingPlanOptionProps {
   }>;
   readonly buttonText: string;
   readonly buttonType: string;
+  handleOptionClick: () => void;
 }
 
 const PricingPlanOption = ({
@@ -30,7 +33,10 @@ const PricingPlanOption = ({
   criteria,
   buttonText,
   buttonType,
+  handleOptionClick,
 }: PricingPlanOptionProps) => {
+  const dispatch = useAppDispatch();
+
   const criterionIcon = (includedInPlan: boolean) => {
     if (includedInPlan) {
       return <Check sx={ { color: theme.colors.green, fontSize: iconPxSize } } />;
@@ -140,9 +146,21 @@ const PricingPlanOption = ({
         <Divider sx={ { width: "70%" } } color={ theme.colors.grey400 } />
 
         { buttonType === "primary" ? (
-          <Button>{ buttonText }</Button>
+          <Button
+            onClick={ () => {
+              dispatch(setIsArtistPricePlanSelected(true));
+              handleOptionClick();
+            } }
+          >
+            { buttonText }
+          </Button>
         ) : (
-          <Button variant={ "secondary" } color="music" disabled={ !active }>
+          <Button
+            variant={ "secondary" }
+            color="music"
+            disabled={ !active }
+            onClick={ handleOptionClick }
+          >
             { buttonText }
           </Button>
         ) }

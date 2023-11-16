@@ -17,6 +17,7 @@ const initialState: UIState = {
     message: "",
     isConfirmationRequired: false,
   },
+  isArtistPricePlanSelected: false,
   isProgressBarModalOpen: false,
   isIdenfyModalOpen: false,
   isConnectWalletModalOpen: false,
@@ -56,6 +57,12 @@ const uiSlice = createSlice({
     setIsIdenfyModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isIdenfyModalOpen = payload;
     },
+    setIsArtistPricePlanSelected: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isArtistPricePlanSelected = payload;
+    },
     setIsConnectWalletModalOpen: (
       state,
       { payload }: PayloadAction<boolean>
@@ -86,6 +93,7 @@ export const {
   setProgressBarModal,
   setUpdateWalletAddressModal,
   clearProgressBarModal,
+  setIsArtistPricePlanSelected,
   setIsProgressBarModalOpen,
   setIsIdenfyModalOpen,
   setIsConnectWalletModalOpen,

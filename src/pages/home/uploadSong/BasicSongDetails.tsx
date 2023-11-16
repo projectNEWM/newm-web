@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Alert, Button, HorizontalLine, Typography } from "elements";
 import { Box, Stack, useTheme } from "@mui/material";
@@ -14,6 +14,7 @@ import {
   DropdownSelectField,
   ErrorMessage,
   PlaySong,
+  PricingPlansDialog,
   SolidOutline,
   SwitchInputField,
   TextAreaField,
@@ -24,6 +25,7 @@ import {
 import {
   scrollToError,
   useAppDispatch,
+  useAppSelector,
   useExtractProperty,
   useWindowDimensions,
 } from "common";
@@ -34,7 +36,11 @@ import {
   emptyProfile,
   useGetProfileQuery,
 } from "modules/session";
-import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import {
+  selectUi,
+  setIsConnectWalletModalOpen,
+  setIsIdenfyModalOpen,
+} from "modules/ui";
 import { SongRouteParams } from "../library/types";
 
 interface BasicDonDetailsProps {
@@ -68,6 +74,23 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
+
+  // DSP pricing plan toggling
+  const { isArtistPricePlanSelected } = useAppSelector(selectUi);
+  const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
+  const handlePricingPlanClose = () => {
+    setIsPricingPlansOpen(false);
+  };
+
+  useEffect(() => {
+    if (!isPricingPlansOpen && isArtistPricePlanSelected) {
+      setFieldValue("isMinting", true);
+    } else {
+      setFieldValue("isMinting", false);
+    }
+  }, [isArtistPricePlanSelected, isPricingPlansOpen, setFieldValue]);
+
+  const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
 
   const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
 
@@ -104,240 +127,252 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   }, [errors, isSubmitting]);
 
   return (
-    <Stack direction="column" spacing={ 5 }>
-      <Stack
-        sx={ {
-          display: "flex",
-          flexDirection: ["column", "column", "row"],
-          columnGap: [undefined, undefined, 1.5],
-          rowGap: [2, null, 3],
-          maxWidth: [undefined, undefined, "700px"],
-          marginBottom: 3,
-          alignItems: ["center", "center", "unset"],
-        } }
-      >
+    <Stack>
+      { !isArtistPricePlanSelected && (
+        <PricingPlansDialog
+          handleClose={ handlePricingPlanClose }
+          open={ isPricingPlansOpen }
+        />
+      ) }
+      <Stack direction="column" spacing={ 5 }>
         <Stack
-          ref={ audioRef }
-          spacing={ 0.5 }
-          width="100%"
-          maxWidth={ theme.inputField.maxWidth }
-        >
-          { isInEditMode ? (
-            <>
-              <Typography color="grey100" fontWeight={ 500 }>
-                SONG
-              </Typography>
-
-              <SolidOutline
-                sx={ {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexGrow: 1,
-                  height: "100px",
-                } }
-              >
-                <PlaySong id={ songId } />
-              </SolidOutline>
-            </>
-          ) : (
-            <>
-              <Typography color="grey100" fontWeight={ 500 }>
-                SONG FILE
-              </Typography>
-
-              <UploadSongField name="audio" />
-            </>
-          ) }
-        </Stack>
-
-        <Stack
-          maxWidth={ theme.inputField.maxWidth }
-          ref={ coverArtUrlRef }
-          spacing={ 0.5 }
-          width="100%"
-        >
-          <Typography color="grey100" fontWeight={ 500 }>
-            SONG COVER ART
-          </Typography>
-
-          <UploadImageField
-            changeImageButtonText="Change cover"
-            emptyMessage="Drag and drop or browse your image"
-            isAspectRatioOneToOne
-            hasPreviewOption
-            maxFileSizeMB={ 10 }
-            minDimensions={ { width: 1400, height: 1400 } }
-            name="coverArtUrl"
-            rootSx={ { width: "100%", alignSelf: "center" } }
-          />
-        </Stack>
-      </Stack>
-
-      <Stack
-        spacing={ 3 }
-        sx={ {
-          marginX: ["auto", "auto", "unset"],
-          maxWidth: [
-            theme.inputField.maxWidth,
-            theme.inputField.maxWidth,
-            "700px",
-          ],
-          alignSelf: ["center", "center", "unset"],
-        } }
-      >
-        <Stack
-          ref={ songDetailsRef }
           sx={ {
-            display: "grid",
-            gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
-            rowGap: [2, null, 3],
+            display: "flex",
+            flexDirection: ["column", "column", "row"],
             columnGap: [undefined, undefined, 1.5],
+            rowGap: [2, null, 3],
+            maxWidth: [undefined, undefined, "700px"],
+            marginBottom: 3,
+            alignItems: ["center", "center", "unset"],
           } }
         >
-          <TextInputField
-            isOptional={ false }
-            name="title"
-            label="SONG TITLE"
-            placeholder="Give your track a name..."
-            widthType="full"
-          />
+          <Stack
+            ref={ audioRef }
+            spacing={ 0.5 }
+            width="100%"
+            maxWidth={ theme.inputField.maxWidth }
+          >
+            { isInEditMode ? (
+              <>
+                <Typography color="grey100" fontWeight={ 500 }>
+                  SONG
+                </Typography>
 
-          <DropdownMultiSelectField
-            label="GENRE"
-            isOptional={ false }
-            name="genres"
-            placeholder="Select all that apply"
-            options={ genres }
-          />
+                <SolidOutline
+                  sx={ {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexGrow: 1,
+                    height: "100px",
+                  } }
+                >
+                  <PlaySong id={ songId } />
+                </SolidOutline>
+              </>
+            ) : (
+              <>
+                <Typography color="grey100" fontWeight={ 500 }>
+                  SONG FILE
+                </Typography>
 
-          <DropdownSelectField
-            label="LANGUAGE"
-            name="language"
-            options={ languageOptions }
-            placeholder="Select a language"
-          />
+                <UploadSongField name="audio" />
+              </>
+            ) }
+          </Stack>
 
-          <DropdownMultiSelectField
-            label="MOOD"
-            name="moods"
-            options={ moodOptions }
-            placeholder="Select all that apply"
-          />
+          <Stack
+            maxWidth={ theme.inputField.maxWidth }
+            ref={ coverArtUrlRef }
+            spacing={ 0.5 }
+            width="100%"
+          >
+            <Typography color="grey100" fontWeight={ 500 }>
+              SONG COVER ART
+            </Typography>
+
+            <UploadImageField
+              changeImageButtonText="Change cover"
+              emptyMessage="Drag and drop or browse your image"
+              isAspectRatioOneToOne
+              hasPreviewOption
+              maxFileSizeMB={ 10 }
+              minDimensions={ { width: 1400, height: 1400 } }
+              name="coverArtUrl"
+              rootSx={ { width: "100%", alignSelf: "center" } }
+            />
+          </Stack>
         </Stack>
 
-        <TextAreaField
-          label="DESCRIPTION"
-          name="description"
-          placeholder="Tell us about your song"
-          ref={ descriptionRef }
-        />
+        <Stack
+          spacing={ 3 }
+          sx={ {
+            marginX: ["auto", "auto", "unset"],
+            maxWidth: [
+              theme.inputField.maxWidth,
+              theme.inputField.maxWidth,
+              "700px",
+            ],
+            alignSelf: ["center", "center", "unset"],
+          } }
+        >
+          <Stack
+            ref={ songDetailsRef }
+            sx={ {
+              display: "grid",
+              gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
+              rowGap: [2, null, 3],
+              columnGap: [undefined, undefined, 1.5],
+            } }
+          >
+            <TextInputField
+              isOptional={ false }
+              name="title"
+              label="SONG TITLE"
+              placeholder="Give your track a name..."
+              widthType="full"
+            />
 
-        <Stack mt={ 5 } spacing={ 5 }>
-          <Box>
-            <Box
-              ref={ ownersRef }
-              sx={ {
-                backgroundColor: theme.colors.grey600,
-                border: `2px solid ${theme.colors.grey400}`,
-                borderRadius: "4px",
-              } }
-            >
-              <SwitchInputField
-                name="isMinting"
-                title="MINT SONG"
-                includeBorder={ false }
-                description={
-                  "Minting a song will create an NFT that reflects " +
-                  "ownership, makes streaming royalties available for " +
-                  "purchase, and enables royalty distribution to your account."
-                }
-              />
+            <DropdownMultiSelectField
+              label="GENRE"
+              isOptional={ false }
+              name="genres"
+              placeholder="Select all that apply"
+              options={ genres }
+            />
 
-              { values.isMinting && (
-                <SelectCoCeators
-                  owners={ values.owners }
-                  creditors={ values.creditors }
-                  featured={ values.featured }
-                  onChangeOwners={ handleChangeOwners }
-                  onChangeCreditors={ handleChangeCreditors }
-                  onChangeFeatured={ handleChangeFeatured }
+            <DropdownSelectField
+              label="LANGUAGE"
+              name="language"
+              options={ languageOptions }
+              placeholder="Select a language"
+            />
+
+            <DropdownMultiSelectField
+              label="MOOD"
+              name="moods"
+              options={ moodOptions }
+              placeholder="Select all that apply"
+            />
+          </Stack>
+
+          <TextAreaField
+            label="DESCRIPTION"
+            name="description"
+            placeholder="Tell us about your song"
+            ref={ descriptionRef }
+          />
+
+          <Stack mt={ 5 } spacing={ 5 }>
+            <Box>
+              <Box
+                ref={ ownersRef }
+                sx={ {
+                  backgroundColor: theme.colors.grey600,
+                  border: `2px solid ${theme.colors.grey400}`,
+                  borderRadius: "4px",
+                } }
+              >
+                <SwitchInputField
+                  name="isMinting"
+                  title="MINT SONG"
+                  includeBorder={ false }
+                  description={
+                    "Minting a song will create an NFT that reflects " +
+                    "ownership, makes streaming royalties available for " +
+                    "purchase, and enables royalty distribution to your account."
+                  }
+                  onClick={ () => {
+                    !isArtistPricePlanSelected &&
+                      setIsPricingPlansOpen(!values.isMinting);
+                  } }
                 />
+
+                { isMintingVisible && (
+                  <SelectCoCeators
+                    owners={ values.owners }
+                    creditors={ values.creditors }
+                    featured={ values.featured }
+                    onChangeOwners={ handleChangeOwners }
+                    onChangeCreditors={ handleChangeCreditors }
+                    onChangeFeatured={ handleChangeFeatured }
+                  />
+                ) }
+              </Box>
+
+              { !!touched.owners && !!errors.owners && (
+                <Box mt={ 0.5 }>
+                  <ErrorMessage>{ errors.owners as string }</ErrorMessage>
+                </Box>
               ) }
             </Box>
 
-            { !!touched.owners && !!errors.owners && (
-              <Box mt={ 0.5 }>
-                <ErrorMessage>{ errors.owners as string }</ErrorMessage>
-              </Box>
+            { isMintingVisible && !isVerified && (
+              <Alert
+                severity="warning"
+                action={
+                  <Button
+                    aria-label="close"
+                    variant="outlined"
+                    color="yellow"
+                    onClick={ handleVerifyProfile }
+                    sx={ { textTransform: "none" } }
+                  >
+                    Verify profile
+                  </Button>
+                }
+              >
+                <Typography color="yellow">Verify your profile</Typography>
+                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                  Profile verification is required to mint. Please verify your
+                  profile.
+                </Typography>
+              </Alert>
             ) }
+
+            { isMintingVisible && !wallet && (
+              <Alert
+                sx={ { py: 2.5 } }
+                severity="warning"
+                action={
+                  <Button
+                    aria-label="close"
+                    variant="outlined"
+                    color="yellow"
+                    onClick={ () => {
+                      dispatch(setIsConnectWalletModalOpen(true));
+                    } }
+                    sx={ { textTransform: "none" } }
+                  >
+                    Connect wallet
+                  </Button>
+                }
+              >
+                <Typography color="yellow">Connect a wallet</Typography>
+                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                  To continue, please connect a wallet.
+                </Typography>
+              </Alert>
+            ) }
+          </Stack>
+
+          <Box>
+            <HorizontalLine mb={ 5 } />
+
+            <Button
+              type="submit"
+              disabled={ isSubmitDisabled }
+              isLoading={ isSubmitting }
+              width={
+                windowWidth && windowWidth > theme.breakpoints.values.md
+                  ? "compact"
+                  : "default"
+              }
+            >
+              { isMintingVisible ? "Next" : isInEditMode ? "Save" : "Upload" }
+            </Button>
           </Box>
-
-          { values.isMinting && !isVerified && (
-            <Alert
-              severity="warning"
-              action={
-                <Button
-                  aria-label="close"
-                  variant="outlined"
-                  color="yellow"
-                  onClick={ handleVerifyProfile }
-                  sx={ { textTransform: "none" } }
-                >
-                  Verify profile
-                </Button>
-              }
-            >
-              <Typography color="yellow">Verify your profile</Typography>
-              <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-                Profile verification is required to mint. Please verify your
-                profile.
-              </Typography>
-            </Alert>
-          ) }
-
-          { values.isMinting && !wallet && (
-            <Alert
-              sx={ { py: 2.5 } }
-              severity="warning"
-              action={
-                <Button
-                  aria-label="close"
-                  variant="outlined"
-                  color="yellow"
-                  onClick={ () => {
-                    dispatch(setIsConnectWalletModalOpen(true));
-                  } }
-                  sx={ { textTransform: "none" } }
-                >
-                  Connect wallet
-                </Button>
-              }
-            >
-              <Typography color="yellow">Connect a wallet</Typography>
-              <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-                To continue, please connect a wallet.
-              </Typography>
-            </Alert>
-          ) }
         </Stack>
-
-        <Box>
-          <HorizontalLine mb={ 5 } />
-
-          <Button
-            type="submit"
-            disabled={ isSubmitDisabled }
-            isLoading={ isSubmitting }
-            width={
-              windowWidth && windowWidth > theme.breakpoints.values.md
-                ? "compact"
-                : "default"
-            }
-          >
-            { values.isMinting ? "Next" : isInEditMode ? "Save" : "Upload" }
-          </Button>
-        </Box>
       </Stack>
     </Stack>
   );
