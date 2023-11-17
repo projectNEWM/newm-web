@@ -26,6 +26,7 @@ import {
   scrollToError,
   useAppDispatch,
   useAppSelector,
+  useEffectAfterMount,
   useExtractProperty,
   useWindowDimensions,
 } from "common";
@@ -75,14 +76,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { values, errors, touched, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
 
-  // DSP pricing plan toggling
+  // DSP pricing plan mint song toggling
   const { isArtistPricePlanSelected } = useAppSelector(selectUi);
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);
   };
 
-  useEffect(() => {
+  useEffectAfterMount(() => {
     if (!isPricingPlansOpen && isArtistPricePlanSelected) {
       setFieldValue("isMinting", true);
     } else {
@@ -92,7 +93,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
 
-  const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
+  const isSubmitDisabled = isMintingVisible && (!wallet || !isVerified);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
