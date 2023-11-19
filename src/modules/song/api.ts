@@ -66,6 +66,7 @@ export const emptySong: Song = {
   ipis: [],
   releaseDate: "",
   publicationDate: "",
+  coverRemixSample: false,
 };
 
 export const extendedApi = api.injectEndpoints({

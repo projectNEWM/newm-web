@@ -10,6 +10,7 @@ import {
 } from "common";
 import {
   CopyrightInputField,
+  CoverRemixSample,
   DropdownSelectField,
   SwitchInputField,
   TextInputField,
@@ -111,6 +112,8 @@ const AdvancedSongDetails = () => {
           "or depictions of sex, violence or substance abuse."
         }
       />
+      <CoverRemixSample />
+
       <Stack
         display="grid"
         gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }

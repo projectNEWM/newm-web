@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useWindowDimensions } from "common";
 import {
   CopyrightInputField,
+  CoverRemixSample,
   PlaySong,
   SolidOutline,
   SwitchInputField,
@@ -40,6 +41,7 @@ const SongInfo = () => {
       isrc,
       iswc,
       ipis,
+      coverRemixSample,
     } = emptySong,
   } = useGetSongQuery(songId);
 
@@ -65,6 +67,7 @@ const SongInfo = () => {
     publicationDate,
     iswc,
     userIpi: ipis?.join(", "),
+    coverRemixSample,
   };
 
   return (
@@ -232,6 +235,7 @@ const SongInfo = () => {
                   "or depictions of sex, violence or substance abuse."
                 }
               />
+              <CoverRemixSample disabled={ true } />
               <Stack
                 display="grid"
                 gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }

@@ -6,6 +6,7 @@ export { default as Badge } from "./styled/Badge";
 export * from "./styled/Badge";
 export { default as Creditors } from "./minting/Creditors";
 export { default as ConfirmContract } from "./minting/ConfirmContract";
+export { CoverRemixSample } from "./minting/CoverRemixSample";
 export { default as ConnectWalletModal } from "./ConnectWalletModal";
 export { default as CopyrightInputField } from "./form/CopyrightInputField";
 export { default as DashedOutline } from "./styled/DashedOutline";
