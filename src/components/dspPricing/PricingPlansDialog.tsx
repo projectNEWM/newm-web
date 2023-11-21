@@ -12,9 +12,15 @@ import pricingPlanData from "./pricingPlanData.json";
 const ICON_SIZE = "20px";
 
 const PRICING_PLAN_ICON: Record<string, JSX.Element> = {
-  collaborator: <LeafFill sx={ { fontSize: ICON_SIZE } } />,
-  artist: <SeedlingFillIcon sx={ { fontSize: ICON_SIZE } } />,
-  artistPlus: <StarFillIcon sx={ { fontSize: ICON_SIZE } } />,
+  collaborator: (
+    <LeafFill sx={ { color: theme.colors.music, fontSize: ICON_SIZE } } />
+  ),
+  artist: (
+    <SeedlingFillIcon sx={ { color: theme.colors.music, fontSize: ICON_SIZE } } />
+  ),
+  artistPlus: (
+    <StarFillIcon sx={ { color: theme.colors.music, fontSize: ICON_SIZE } } />
+  ),
 };
 
 interface PricingPlansDialogProps {

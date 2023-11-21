@@ -4,22 +4,41 @@ const StarFillIcon = createSvgIcon(
   <svg
     width="24"
     height="24"
-    viewBox="0 0 20 20"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clipPath="url(#clip0_8552_1513)">
+    <g clipPath="url(#clip0_4_3236)">
       <path
-        d="M10.0001 0.416626L13.5218 5.56913L19.5109 7.32663L15.6984 12.2683L15.8776 18.5066L10.0001 16.4083L4.12259 18.5066L4.30176 12.2683L0.489258 7.32663L6.47843 5.56913L10.0001 0.416626Z"
-        fill="#DC3CAA"
+        d="M12 0.5L16.226 6.683L23.413 8.792L18.838 14.722L19.053 22.208L12 19.69L4.94701 22.208L5.16201 14.722L0.587006 8.792L7.77401 6.683L12 0.5Z"
+        fill="currentColor"
       />
     </g>
     <defs>
-      <clipPath id="clip0_8552_1513">
-        <rect width="20" height="20" fill="white" />
+      <clipPath id="clip0_4_3236">
+        <rect width="24" height="24" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   "Star"
 );
 export default StarFillIcon;
+<svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g clipPath="url(#clip0_4_3236)">
+    <path
+      d="M12 0.5L16.226 6.683L23.413 8.792L18.838 14.722L19.053 22.208L12 19.69L4.94701 22.208L5.16201 14.722L0.587006 8.792L7.77401 6.683L12 0.5Z"
+      fill="white"
+    />
+  </g>
+  <defs>
+    <clipPath id="clip0_4_3236">
+      <rect width="24" height="24" fill="white" />
+    </clipPath>
+  </defs>
+</svg>;
