@@ -30,16 +30,23 @@ interface PricingPlansDialogProps {
 
 const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
   return (
-    <Dialog onClose={ handleClose } open={ open } fullScreen sx={ { m: 5 } }>
+    <Dialog
+      onClose={ handleClose }
+      open={ open }
+      fullScreen
+      sx={ {
+        margin: [0, 5],
+      } }
+    >
       <IconButton
         aria-label="close"
         onClick={ handleClose }
         sx={ {
+          color: theme.colors.grey200,
+          p: 0,
           position: "absolute",
           right: "30px",
           top: "30px",
-          color: theme.colors.grey200,
-          p: 0,
         } }
       >
         <CloseIcon sx={ { fontSize: "40px" } } />
@@ -48,23 +55,20 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
         sx={ {
           alignItems: "center",
           backgroundColor: theme.colors.black,
-          height: "100%",
-          width: "100%",
-          padding: 7.5,
-
           display: "flex",
-          alignContent: "center",
-          justifyContent: "center",
+          flex: 1,
           flexDirection: "column",
+          justifyContent: "center",
+          padding: 7.5,
         } }
       >
-        <Stack sx={ { mb: 12 } }>
+        <Stack sx={ { mb: 12, textAlign: "center" } }>
           <Typography
-            variant="subtitle1"
-            fontWeight={ 500 }
-            color="music"
             align="center"
+            color="music"
+            fontWeight={ 500 }
             mb={ 1.5 }
+            variant="subtitle1"
           >
             Pricing
           </Typography>
@@ -72,11 +76,15 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
         </Stack>
         <Stack
           sx={ {
-            display: "flex",
-            justifyContent: "center",
             alignContent: "center",
+            display: "flex",
             flexDirection: "row",
             gap: 4,
+            [theme.breakpoints.down("xl")]: {
+              flexDirection: "column",
+              gap: 10,
+            },
+            justifyContent: "center",
           } }
         >
           { pricingPlanData.pricingPlanOptions.map((pricingPlan) => {

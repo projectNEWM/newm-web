@@ -56,17 +56,19 @@ const PricingPlanOption = ({
         opacity: active ? 1 : 0.5,
         padding: 5,
         position: "relative",
+        justifyContent: "center",
+        height: "100%",
       } }
     >
       <Box
         sx={ {
           backgroundColor: theme.colors.black,
-          border: `1px solid ${theme.colors.grey500}`,
+          border: `2px solid ${theme.colors.grey500}`,
           borderRadius: "4px",
           display: "flex",
           justifyContent: "center",
           left: `calc(50% - ${iconPxSize})`,
-          padding: "8px",
+          padding: 1.25,
           position: "absolute",
           top: `-${iconPxSize}`,
         } }
@@ -78,8 +80,8 @@ const PricingPlanOption = ({
         sx={ {
           alignItems: "center",
           display: "flex",
-          gap: 3.75,
-          justifyContent: "center",
+          gap: 4,
+          flex: 1,
         } }
       >
         <Stack textAlign="center">
@@ -115,7 +117,10 @@ const PricingPlanOption = ({
           <Typography variant="h2">{ title }</Typography>
           <Typography
             variant="subtitle1"
-            sx={ { fontWeight: 500, height: "60px" } }
+            sx={ {
+              fontWeight: 500,
+              [theme.breakpoints.up("xl")]: { height: "60px" },
+            } }
           >
             { description }
           </Typography>
