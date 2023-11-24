@@ -32,6 +32,7 @@ export { default as Owners } from "./minting/Owners";
 export { default as Popup } from "./Popup";
 export { default as PlaySong } from "./PlaySong";
 export { default as PlaySongAdvanced } from "./PlaySongAdvanced";
+export { default as PricingPlansDialog } from "./dspPricing/PricingPlansDialog";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProfileImage } from "./styled/ProfileImage";
 export { default as ProgressBar } from "./ProgressBar";

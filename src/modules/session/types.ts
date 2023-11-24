@@ -1,4 +1,5 @@
 export interface SessionState {
+  isArtistPricePlanSelected: boolean;
   isLoggedIn: boolean;
   verificationPingStartedAt?: number;
 }
