@@ -35,13 +35,10 @@ import { useFormikContext } from "formik";
 import {
   VerificationStatus,
   emptyProfile,
+  selectSession,
   useGetProfileQuery,
 } from "modules/session";
-import {
-  selectUi,
-  setIsConnectWalletModalOpen,
-  setIsIdenfyModalOpen,
-} from "modules/ui";
+import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
 import { SongRouteParams } from "../library/types";
 
 interface BasicDonDetailsProps {
@@ -77,7 +74,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     useFormikContext<UploadSongRequest>();
 
   // DSP pricing plan mint song toggling
-  const { isArtistPricePlanSelected } = useAppSelector(selectUi);
+  const { isArtistPricePlanSelected } = useAppSelector(selectSession);
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);

@@ -127,18 +127,18 @@ export const usePrevious = <T>(value: T) => {
  *   // do something on next update, not including initial render
  * }, []);
  *
- * @param cb the callback to run during the next component update
+ * @param callback the callback to run during the next component update
  * @param dependencies the dependencies to watch for changes
  */
 export const useEffectAfterMount = (
-  cb: EffectCallback,
+  callback: EffectCallback,
   dependencies: DependencyList | undefined
 ) => {
   const isMounted = useRef(false);
 
   useEffect(() => {
     if (isMounted.current) {
-      return cb();
+      return callback();
     }
     isMounted.current = true;
   }, dependencies); // eslint-disable-line react-hooks/exhaustive-deps

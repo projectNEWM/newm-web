@@ -4,7 +4,7 @@ import { Button, Typography } from "elements";
 import { JSX } from "react";
 import theme from "theme";
 import { useAppDispatch } from "common";
-import { setIsArtistPricePlanSelected } from "modules/ui";
+import { setIsArtistPricePlanSelected } from "modules/session";
 import pricingPlanData from "assets/data/pricingPlanData.json";
 
 interface PricingPlanOptionProps {

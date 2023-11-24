@@ -16,7 +16,6 @@ export interface UIState {
     message: string;
     isConfirmationRequired: boolean;
   };
-  isArtistPricePlanSelected: boolean;
   isProgressBarModalOpen: boolean;
   isIdenfyModalOpen: boolean;
   isConnectWalletModalOpen: boolean;
