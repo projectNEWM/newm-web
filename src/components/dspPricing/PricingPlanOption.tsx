@@ -5,7 +5,7 @@ import { JSX } from "react";
 import theme from "theme";
 import { useAppDispatch } from "common";
 import { setIsArtistPricePlanSelected } from "modules/ui";
-import pricingPlanData from "./pricingPlanData.json";
+import pricingPlanData from "assets/data/pricingPlanData.json";
 
 interface PricingPlanOptionProps {
   readonly active: boolean;

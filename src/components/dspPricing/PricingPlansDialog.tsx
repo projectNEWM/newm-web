@@ -6,8 +6,8 @@ import theme from "theme";
 import SeedlingFillIcon from "assets/images/SeedlingFillIcon";
 import StarFillIcon from "assets/images/StarFillIcon";
 import CloseIcon from "@mui/icons-material/Close";
+import pricingPlanData from "assets/data/pricingPlanData.json";
 import PricingPlanOption from "./PricingPlanOption";
-import pricingPlanData from "./pricingPlanData.json";
 
 const ICON_SIZE = "20px";
 
