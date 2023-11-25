@@ -1,8 +1,8 @@
 {
   "run": {
     "command": "nx run artist-portal:\"start\"",
-    "startTime": "2023-11-25T02:20:58.751Z",
-    "endTime": "2023-11-25T02:22:35.076Z",
+    "startTime": "2023-11-25T02:57:40.912Z",
+    "endTime": "2023-11-25T02:58:25.052Z",
     "inner": false
   },
   "tasks": [
@@ -10,9 +10,9 @@
       "taskId": "artist-portal:start",
       "target": "start",
       "projectName": "artist-portal",
-      "hash": "10520345177477800647",
-      "startTime": "2023-11-25T02:20:58.754Z",
-      "endTime": "2023-11-25T02:22:35.075Z",
+      "hash": "1089190736854348573",
+      "startTime": "2023-11-25T02:57:40.917Z",
+      "endTime": "2023-11-25T02:58:25.051Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 1

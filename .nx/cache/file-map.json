@@ -144,6 +144,22 @@
         "hash": "6211711939344931829"
       },
       {
+        "file": ".nx/cache/14597806287710670422/code",
+        "hash": "1838281907459330133"
+      },
+      {
+        "file": ".nx/cache/14597806287710670422/terminalOutput",
+        "hash": "11974769201201681514"
+      },
+      {
+        "file": ".nx/cache/14597806287710670422.commit",
+        "hash": "4664556114322093609"
+      },
+      {
+        "file": ".nx/cache/14597806287710670422.tar.gz",
+        "hash": "1141622271843707102"
+      },
+      {
         "file": ".nx/cache/cloud/2311.09.8.hotfix6/index.js",
         "hash": "15966481786630545044"
       },
@@ -161,19 +177,19 @@
       },
       {
         "file": ".nx/cache/cloud/verify.lock",
-        "hash": "5724752592922812275"
+        "hash": "6213115616854770470"
       },
       {
         "file": ".nx/cache/d/daemon.log",
-        "hash": "8962182719384172872"
+        "hash": "6815830777919003317"
       },
       {
         "file": ".nx/cache/d/server-process.json",
-        "hash": "17301728288961664847"
+        "hash": "15355230108124428715"
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "15462020669917564372"
+        "hash": "3956204364871322813"
       },
       {
         "file": ".nx/cache/lockfile.hash",
@@ -189,23 +205,71 @@
       },
       {
         "file": ".nx/cache/run.json",
-        "hash": "10341967688081352861"
+        "hash": "13351376900961495275"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/10520345177477800647",
+        "hash": "16622026102367021740"
       },
       {
         "file": ".nx/cache/terminalOutputs/10674375475229255480",
         "hash": "18098362998414097639"
       },
       {
+        "file": ".nx/cache/terminalOutputs/10783253427097645704",
+        "hash": "424066838762908052"
+      },
+      {
         "file": ".nx/cache/terminalOutputs/10910618298597961592",
         "hash": "13456468687266272490"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/1121938554078955306",
+        "hash": "416973529120956107"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11492273317421704880",
+        "hash": "11552262918872859523"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/1150177203264912984",
+        "hash": "8462274535821672749"
       },
       {
         "file": ".nx/cache/terminalOutputs/1168728720502516627",
         "hash": "4619891834716112695"
       },
       {
+        "file": ".nx/cache/terminalOutputs/13192897545534417877",
+        "hash": "3404095211899342669"
+      },
+      {
         "file": ".nx/cache/terminalOutputs/13782234365116894821",
         "hash": "8604881071742610699"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/13859529261301883642",
+        "hash": "17826479321924896667"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/14597806287710670422",
+        "hash": "11974769201201681514"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/14718591929832765995",
+        "hash": "5243340306304792284"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/15292751659796841099",
+        "hash": "9281001703380750934"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/15837497934777188971",
+        "hash": "2199460285513096748"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/18286838592915702399",
+        "hash": "17442528439919241583"
       },
       {
         "file": ".nx/cache/terminalOutputs/2872783165800490167",
@@ -216,12 +280,28 @@
         "hash": "801340783301296084"
       },
       {
+        "file": ".nx/cache/terminalOutputs/566914574161089900",
+        "hash": "3463750552227580383"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/7120950359492893405",
+        "hash": "5980880700990881049"
+      },
+      {
         "file": ".nx/cache/terminalOutputs/7329028519886633476",
         "hash": "5902123202426751615"
       },
       {
         "file": ".nx/cache/terminalOutputs/7721970909092170043",
         "hash": "15266924196141949504"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/805837175611887404",
+        "hash": "16108950744835169039"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/8299966602117149998",
+        "hash": "12947825772613946229"
       },
       {
         "file": ".nx/cache/terminalOutputs/8434539770112410993",
@@ -287,8 +367,16 @@
     "projectFileMap": {
       "artist-portal": [
         {
+          "file": "apps/artist-portal/.env.template",
+          "hash": "14441200730012880287"
+        },
+        {
           "file": "apps/artist-portal/README.md",
           "hash": "14662224379774919567"
+        },
+        {
+          "file": "apps/artist-portal/index.html",
+          "hash": "12470474041201603853"
         },
         {
           "file": "apps/artist-portal/package-lock.json",
@@ -2948,14 +3036,6 @@
             "npm:@vitejs/plugin-react",
             "npm:vite-tsconfig-paths"
           ]
-        },
-        {
-          "file": "apps/artist-portal/index.html",
-          "hash": "12470474041201603853"
-        },
-        {
-          "file": "apps/artist-portal/.env.template",
-          "hash": "14441200730012880287"
         }
       ]
     }

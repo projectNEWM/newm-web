@@ -1846,3 +1846,99 @@ Error: write EPIPE
 [NX Daemon Server] - 2023-11-25T02:22:35.192Z - Closed a connection. Number of open connections: 1
 [NX Daemon Server] - 2023-11-25T02:22:35.197Z - Closed a connection. Number of open connections: 0
 [NX Daemon Server] - 2023-11-25T02:22:35.398Z - Done sending EndRun request
+[NX Daemon Server] - 2023-11-25T02:57:08.248Z - Started listening on: /var/folders/w9/v7wfxxn1159d8n_hwr4t34mw0000gn/T/4090d6390a23398d44e6/d.sock
+[NX Daemon Server] - 2023-11-25T02:57:08.250Z - [WATCHER]: Subscribed to changes within: /Users/trevorscandalios/work/newm-artist-portal (native)
+[NX Daemon Server] - 2023-11-25T02:57:08.251Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:08.252Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:08.253Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:08.256Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:08.331Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2023-11-25T02:57:08.332Z - [REQUEST]: 
+[NX Daemon Server] - 2023-11-25T02:57:08.332Z - [REQUEST]: 
+[NX Daemon Server] - 2023-11-25T02:57:08.384Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:08.386Z - Time taken for 'total for creating and serializing project graph' 128.3512500524521ms
+[NX Daemon Server] - 2023-11-25T02:57:08.388Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:08.388Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 129. Response time: 4.
+[NX Daemon Server] - 2023-11-25T02:57:08.993Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:08.993Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:08.994Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:08.996Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:08.996Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:08.997Z - Time taken for 'total for creating and serializing project graph' 0.1200830340385437ms
+[NX Daemon Server] - 2023-11-25T02:57:09.000Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:09.000Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 4.
+[NX Daemon Server] - 2023-11-25T02:57:09.069Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2023-11-25T02:57:09.071Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2023-11-25T02:57:09.071Z - Handled HASH_TASKS. Handling time: 38. Response time: 2.
+[NX Daemon Server] - 2023-11-25T02:57:10.238Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2023-11-25T02:57:10.238Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:10.239Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2023-11-25T02:57:10.240Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:10.240Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:10.241Z - Time taken for 'total for creating and serializing project graph' 0.08966600894927979ms
+[NX Daemon Server] - 2023-11-25T02:57:10.243Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:10.243Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 3.
+[NX Daemon Server] - 2023-11-25T02:57:10.627Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:10.636Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2023-11-25T02:57:10.636Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2023-11-25T02:57:10.637Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2023-11-25T02:57:10.770Z - [REQUEST]: Responding to the client. PROCESS_IN_BACKGROUND
+[NX Daemon Server] - 2023-11-25T02:57:10.770Z - Done responding to the client PROCESS_IN_BACKGROUND
+[NX Daemon Server] - 2023-11-25T02:57:10.770Z - Handled PROCESS_IN_BACKGROUND. Handling time: 67. Response time: 0.
+[NX Daemon Server] - 2023-11-25T02:57:10.771Z - Uploading file artifacts
+[NX Daemon Server] - 2023-11-25T02:57:10.771Z - Done uploading file artifacts
+[NX Daemon Server] - 2023-11-25T02:57:10.771Z - Sending EndRun request
+[NX Daemon Server] - 2023-11-25T02:57:10.804Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:10.804Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2023-11-25T02:57:10.969Z - Done sending EndRun request
+[NX Daemon Server] - 2023-11-25T02:57:37.129Z - [WATCHER]: apps/artist-portal/package-lock.json was modified
+[NX Daemon Server] - 2023-11-25T02:57:37.130Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2023-11-25T02:57:37.242Z - [REQUEST]: Updated file-hasher based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2023-11-25T02:57:37.242Z - [REQUEST]: apps/artist-portal/package-lock.json
+[NX Daemon Server] - 2023-11-25T02:57:37.242Z - [REQUEST]: 
+[NX Daemon Server] - 2023-11-25T02:57:37.283Z - Time taken for 'hash changed files from watcher' 1.0775409936904907ms
+[NX Daemon Server] - 2023-11-25T02:57:40.060Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:40.060Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2023-11-25T02:57:40.061Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:40.062Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:40.062Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:40.064Z - Time taken for 'total for creating and serializing project graph' 0.12174999713897705ms
+[NX Daemon Server] - 2023-11-25T02:57:40.066Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:40.066Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 4.
+[NX Daemon Server] - 2023-11-25T02:57:40.799Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:40.800Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:57:40.800Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:40.801Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:40.801Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:40.803Z - Time taken for 'total for creating and serializing project graph' 0.15458297729492188ms
+[NX Daemon Server] - 2023-11-25T02:57:40.804Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:40.805Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 4.
+[NX Daemon Server] - 2023-11-25T02:57:40.868Z - [REQUEST]: Responding to the client. handleHashTasks
+[NX Daemon Server] - 2023-11-25T02:57:40.869Z - Done responding to the client handleHashTasks
+[NX Daemon Server] - 2023-11-25T02:57:40.869Z - Handled HASH_TASKS. Handling time: 32. Response time: 1.
+[NX Daemon Server] - 2023-11-25T02:57:41.662Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2023-11-25T02:57:41.663Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:57:41.663Z - Established a connection. Number of open connections: 3
+[NX Daemon Server] - 2023-11-25T02:57:41.664Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2023-11-25T02:57:41.664Z - [REQUEST]: Responding to the client. project-graph
+[NX Daemon Server] - 2023-11-25T02:57:41.666Z - Time taken for 'total for creating and serializing project graph' 0.10074996948242188ms
+[NX Daemon Server] - 2023-11-25T02:57:41.668Z - Done responding to the client project-graph
+[NX Daemon Server] - 2023-11-25T02:57:41.668Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 4.
+[NX Daemon Server] - 2023-11-25T02:58:25.036Z - Closed a connection. Number of open connections: 2
+[NX Daemon Server] - 2023-11-25T02:58:25.051Z - [REQUEST]: Responding to the client. recordOutputsHash
+[NX Daemon Server] - 2023-11-25T02:58:25.051Z - Done responding to the client recordOutputsHash
+[NX Daemon Server] - 2023-11-25T02:58:25.051Z - Handled RECORD_OUTPUTS_HASH. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2023-11-25T02:58:25.126Z - [REQUEST]: Responding to the client. PROCESS_IN_BACKGROUND
+[NX Daemon Server] - 2023-11-25T02:58:25.126Z - Done responding to the client PROCESS_IN_BACKGROUND
+[NX Daemon Server] - 2023-11-25T02:58:25.126Z - Handled PROCESS_IN_BACKGROUND. Handling time: 17. Response time: 0.
+[NX Daemon Server] - 2023-11-25T02:58:25.127Z - Uploading file artifacts
+[NX Daemon Server] - 2023-11-25T02:58:25.127Z - Done uploading file artifacts
+[NX Daemon Server] - 2023-11-25T02:58:25.127Z - Sending EndRun request
+[NX Daemon Server] - 2023-11-25T02:58:25.139Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2023-11-25T02:58:25.161Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2023-11-25T02:58:25.297Z - Done sending EndRun request
+[NX Daemon Server] - 2023-11-25T02:58:42.746Z - [WATCHER]: .gitignore was modified
+[NX Daemon Server] - 2023-11-25T02:58:42.746Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2023-11-25T02:58:42.746Z - [WATCHER]: Stopping the watcher for /Users/trevorscandalios/work/newm-artist-portal (sources)
+[NX Daemon Server] - 2023-11-25T02:58:42.746Z - [WATCHER]: Stopping the watcher for /Users/trevorscandalios/work/newm-artist-portal (outputs)
+[NX Daemon Server] - 2023-11-25T02:58:42.747Z - Server stopped because: "Stopping the daemon the set of ignored files changed (native)"

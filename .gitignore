@@ -44,4 +44,5 @@ Thumbs.db
 
 # NX
 .nx/cachenode_modules
+.nx/cache
 dist
