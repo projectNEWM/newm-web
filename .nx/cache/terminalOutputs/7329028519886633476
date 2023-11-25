@@ -1,0 +1,131 @@
+
+> artist-portal@0.1.0 start
+> nx exec -- vite
+
+
+  [32m[1mVITE[22m v4.3.9[39m  [2mready in [0m[1m641[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh[22m[2m to show help[22m
+Error: The following dependencies are imported but could not be resolved:
+
+  [36mcomponents[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mpages/login[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mpages/home[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mpages/signUp[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mpages/forgotPassword[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mpages/createProfile[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mtheme[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mcommon/BrowserRouter[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mcommon/history[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mcomponents/OnboardingRedirect[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx)[22m[39m
+  [36mapi[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mmodules/playlist[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mmodules/session[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mmodules/song[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mbuildParams[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mmodules/ui[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+  [36mmodules/wallet[39m [37m[2m(imported by /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/store.ts)[22m[39m
+
+Are they installed?
+    at file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:44188:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:43597:38
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:19:00 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:19:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:19:48 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:19:49 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:06 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:07 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Error: Command failed: "vite"
+[90m    at checkExecSyncError (node:child_process:890:11)[39m
+[90m    at execSync (node:child_process:962:15)[39m
+    at Object.nxExecCommand (/Users/trevorscandalios/work/newm-artist-portal/node_modules/[4mnx[24m/src/command-line/exec/exec.js:32:38)
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async Object.handler (/Users/trevorscandalios/work/newm-artist-portal/node_modules/[4mnx[24m/src/command-line/exec/command-object.js:11:13) {
+  status: [33m1[39m,
+  signal: [1mnull[22m,
+  output: [ [1mnull[22m, [1mnull[22m, [1mnull[22m ],
+  pid: [33m14441[39m,
+  stdout: [1mnull[22m,
+  stderr: [1mnull[22m
+}

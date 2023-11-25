@@ -39,9 +39,15 @@
     "react-router-dom": "^6.3.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.3.3",
+    "web-vitals": "^3.3.2",
     "yup": "^0.32.11"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "nx exec -- vite",
+    "serve": "nx exec -- vite",
+    "build": "nx exec -- vite build",
+    "test": "nx exec -- vitest"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -66,6 +72,7 @@
     "@storybook/addon-interactions": "^7.0.5",
     "@storybook/addon-links": "^7.0.5",
     "@storybook/addon-mdx-gfm": "^7.0.22",
+    "@storybook/builder-vite": "^7.5.3",
     "@storybook/node-logger": "^7.0.5",
     "@storybook/react": "^7.0.22",
     "@storybook/react-webpack5": "^7.0.22",
@@ -73,7 +80,7 @@
     "@swc-node/register": "~1.6.7",
     "@swc/cli": "~0.1.62",
     "@swc/core": "~1.3.85",
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/history": "^5.0.0",
@@ -94,7 +101,6 @@
     "@vitest/ui": "~0.34.6",
     "eslint": "~8.46.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsx-a11y": "6.7.1",
@@ -102,7 +108,6 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-storybook": "^0.6.13",
     "eslint-plugin-testing-library": "^6.0.1",
-    "jest-watch-typeahead": "^2.2.2",
     "jsdom": "~22.1.0",
     "nx": "17.1.3",
     "prettier": "^2.6.2",
@@ -112,8 +117,8 @@
     "storybook": "^7.0.5",
     "typescript": "~5.2.2",
     "vite": "~4.3.9",
-    "vitest": "^0.34.6",
-    "web-vitals": "^3.5.0"
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "~0.34.6"
   },
   "jest": {
     "moduleNameMapper": {

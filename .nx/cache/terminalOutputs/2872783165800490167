@@ -1,0 +1,570 @@
+
+> artist-portal@0.1.0 start
+> nx exec -- vite
+
+
+  [32m[1mVITE[22m v4.3.9[39m  [2mready in [0m[1m722[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4200[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh[22m[2m to show help[22m
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:13 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:24 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+[2m5:20:24 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:58 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:20:58 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:02 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.tsx[22m
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:02 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.tsx[22m
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/Creditors.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/createProfile/AddProfileInformation.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CopyrightInputField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/ConfirmContract.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/ConnectWalletModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownMultiSelectField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownSelectField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "components" from "src/components/WalletEnvMismatchModal.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/FacebookLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/FilteredTagsField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/form/FormProgressStepper.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/DisconnectWalletButton.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/GradientTextInputField.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/GoogleLogin.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/PaperInput.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/NEWMLogo.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/invites/InvitesModal.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/form/PasswordInputField.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/minting/Owners.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/LinkedInLogin.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/PlaySong.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/ProgressBarModal.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/ResponsiveNEWMLogo.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/skeletons/TableSkeleton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/home/SideBarNavLink.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/PrivateRoute.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/home/SideBarHeader.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/home/LogoutButton.tsx". Does the file exist?
+Failed to resolve import "elements/SwitchInput" from "src/components/form/SwitchInputField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableHeadCell.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/Toast.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextInputField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableCell.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextAreaField.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/UpdateWalletAddressModal.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/SearchBox.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/form/WizardForm.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/TablePagination.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/uploadSong/SelectWalletItem.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/SongStreamPlaybackIcon.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+[2m5:21:02 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:17:18
+[33m  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "src/components";
+  20 |  import Login from "pages/login";
+     |                     ^
+  21 |  import Home from "pages/home";
+  22 |  import SignUp from "pages/signUp";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 6)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CheckboxField.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/idenfy/IdenfyModal.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/idenfy/IdenfyPingUserStatus.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfySuccessSession.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfyFailSession.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "common" from "src/components/invites/InvitesTable.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:02 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:17:18
+[33m  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "src/components";
+  20 |  import Login from "pages/login";
+     |                     ^
+  21 |  import Home from "pages/home";
+  22 |  import SignUp from "pages/signUp";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 6)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:04 PM[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33m@mui/icons-material/Close, formik, @mui/icons-material/Help, @newm.io/cardano-dapp-wallet-connector, @greatsumini/react-facebook-login, @mui/icons-material/Facebook, @mui/icons-material, currency.js, @mui/icons-material/ArrowDropUp, @mui/icons-material/ArrowDropDown, @mui/icons-material/ContentCopy, @mui/icons-material/Done, @mui/icons-material/Logout, @mui/icons-material/Google, @mui/material/IconButton, @mui/icons-material/Visibility, @mui/icons-material/VisibilityOff, @mui/icons-material/LinkedIn, @mui/icons-material/PlayArrow, @mui/icons-material/Stop, @mui/material/useMediaQuery, react-dropzone, @mui/icons-material/ChangeCircle, @mui/icons-material/PictureInPictureAlt, react-audio-visualize, howler, @mui/icons-material/SearchRounded, @mui/icons-material/CheckCircle, @mui/icons-material/Launch, @mui/icons-material/FileDownload, yup, @mui/icons-material/ArrowRight, @mui/icons-material/ArrowLeft, @mui/icons-material/AccountCircle, js-cookie, @mui/icons-material/Check[32m[39m
+[2m5:21:04 PM[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/createProfile/AddProfileInformation.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/Creditors.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/ConfirmContract.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/ConnectWalletModal.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CopyrightInputField.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/DisconnectWalletButton.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownSelectField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownMultiSelectField.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/WalletEnvMismatchModal.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/FacebookLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/FilteredTagsField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/form/FormProgressStepper.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/GoogleLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/GradientTextInputField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/LinkedInLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/invites/InvitesModal.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/PaperInput.ts". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/NEWMLogo.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/uploadSong/SelectWalletItem.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/form/PasswordInputField.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/minting/Owners.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/PrivateRoute.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/ProgressBarModal.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/PlaySong.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/ResponsiveNEWMLogo.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/home/LogoutButton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/skeletons/TableSkeleton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/home/SideBarHeader.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/home/SideBarNavLink.tsx". Does the file exist?
+Failed to resolve import "elements/SwitchInput" from "src/components/form/SwitchInputField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableHeadCell.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextAreaField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableCell.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextInputField.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/UpdateWalletAddressModal.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/Toast.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/form/WizardForm.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/SearchBox.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/TablePagination.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/SongStreamPlaybackIcon.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+[2m5:21:05 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:17:18
+[33m  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "src/components";
+  20 |  import Login from "pages/login";
+     |                     ^
+  21 |  import Home from "pages/home";
+  22 |  import SignUp from "pages/signUp";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 6)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CheckboxField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/idenfy/IdenfyPingUserStatus.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/idenfy/IdenfyModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfySuccessSession.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfyFailSession.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/invites/InvitesTable.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+[2m5:21:31 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:32 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:17:18
+[33m  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "src/components";
+  20 |  import Login from "pages/login";
+     |                     ^
+  21 |  import Home from "pages/home";
+  22 |  import SignUp from "pages/signUp";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 6)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "elements" from "src/components/createProfile/AddProfileInformation.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/Creditors.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/ConnectWalletModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/ConfirmContract.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CopyrightInputField.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/DisconnectWalletButton.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownSelectField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownMultiSelectField.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/WalletEnvMismatchModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/FilteredTagsField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/FacebookLogin.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/form/FormProgressStepper.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/GoogleLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/invites/InvitesModal.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/NEWMLogo.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/PaperInput.ts". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/LinkedInLogin.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/form/PasswordInputField.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/minting/Owners.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/uploadSong/SelectWalletItem.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/PlaySong.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/PrivateRoute.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/ProgressBarModal.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/ResponsiveNEWMLogo.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/skeletons/TableSkeleton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/home/SideBarNavLink.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/home/SideBarHeader.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/home/LogoutButton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "elements/SwitchInput" from "src/components/form/SwitchInputField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/GradientTextInputField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableHeadCell.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableCell.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextAreaField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextInputField.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/Toast.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/UpdateWalletAddressModal.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/form/WizardForm.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/TablePagination.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/SearchBox.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/SongStreamPlaybackIcon.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CheckboxField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfyFailSession.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/idenfy/IdenfyModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfySuccessSession.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/idenfy/IdenfyPingUserStatus.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "common" from "src/components/invites/InvitesTable.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+[2m5:21:33 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:34 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "pages/login" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:17:18
+[33m  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "src/components";
+  20 |  import Login from "pages/login";
+     |                     ^
+  21 |  import Home from "pages/home";
+  22 |  import SignUp from "pages/signUp";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 6)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "elements" from "src/components/minting/Creditors.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/Badge.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/ConnectWalletModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/createProfile/AddProfileInformation.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownSelectField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/minting/ConfirmContract.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CopyrightInputField.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/DisconnectWalletButton.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/DropdownMultiSelectField.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/WalletEnvMismatchModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/FacebookLogin.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/form/FormProgressStepper.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/FilteredTagsField.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/GoogleLogin.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/GradientTextInputField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/invites/InvitesModal.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/LinkedInLogin.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/NEWMLogo.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/uploadSong/SelectWalletItem.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/PaperInput.ts". Does the file exist?
+Failed to resolve import "components" from "src/components/form/PasswordInputField.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/minting/Owners.tsx". Does the file exist?
+Failed to resolve import "modules/song" from "src/components/PlaySong.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/PrivateRoute.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/ProgressBarModal.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/skeletons/TableSkeleton.tsx". Does the file exist?
+Failed to resolve import "assets/images/NEWMLogo" from "src/components/ResponsiveNEWMLogo.tsx". Does the file exist?
+Failed to resolve import "modules/session" from "src/components/home/LogoutButton.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/home/SideBarNavLink.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/home/SideBarHeader.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "elements/SwitchInput" from "src/components/form/SwitchInputField.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableHeadCell.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/TableCell.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextAreaField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/TextInputField.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/Toast.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/UpdateWalletAddressModal.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/UploadImage.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "assets/images/AddSong" from "src/components/UploadSong.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/TablePagination.tsx". Does the file exist?
+Failed to resolve import "common" from "src/components/form/WizardForm.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/ViewPDF.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/SongStreamPlaybackIcon.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/library/IconStatus.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/minting/Details.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/SearchBox.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/form/CheckboxField.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfyFailSession.tsx". Does the file exist?
+Failed to resolve import "modules/ui" from "src/components/idenfy/IdenfyPingUserStatus.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/idenfy/IdenfySuccessSession.tsx". Does the file exist?
+Failed to resolve import "components" from "src/components/idenfy/IdenfyModal.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+Failed to resolve import "common" from "src/components/invites/InvitesTable.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/StyledPagination.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "elements" from "src/components/IconMessage.tsx". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/SolidOutline.ts". Does the file exist?
+Failed to resolve import "theme" from "src/components/styled/DashedOutline.ts". Does the file exist?
+Failed to resolve import "elements" from "src/components/styled/ErrorMessage.ts". Does the file exist?
+[2m5:21:45 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/App.tsx[22m
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:45 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+[2m5:21:49 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+[2m5:21:49 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: /Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "components" from "src/App.tsx". Does the file exist?
+[2m5:21:49 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "components" from "src/App.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/src/App.tsx[39m:16:7
+[33m  17 |  import { CssBaseline } from "@mui/material";
+  18 |  import { ThemeProvider } from "@mui/material/styles";
+  19 |  import { Background, ConnectWalletModal, IdenfyFailSession, IdenfyModal, IdenfyPingUserStatus, IdenfySuccessSession, InvitesModal, PrivateRoute, ProgressBarModal, Toast, UpdateWalletAddressModal, WalletEnvMismatchModal } from "components";
+     |                                                                                                                                                                                                                                     ^
+  20 |  import Login from "pages/login";
+  21 |  import Home from "pages/home";[39m
+      at formatError (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42645:46)
+      at TransformContext.error (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42641:19)
+      at normalizeUrl (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40508:33)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40651:47
+      at async Promise.all (index 5)
+      at async TransformContext.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:40577:13)
+      at async Object.transform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:42919:30)
+      at async loadAndTransform (file:///Users/trevorscandalios/work/newm-artist-portal/apps/artist-portal/node_modules/vite/dist/node/chunks/dep-e8f070e8.js:53385:29)
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Failed to resolve import "api" from "src/store.ts". Does the file exist?
+Error: Command failed: "vite"
+[90m    at checkExecSyncError (node:child_process:890:11)[39m
+[90m    at execSync (node:child_process:962:15)[39m
+    at Object.nxExecCommand (/Users/trevorscandalios/work/newm-artist-portal/node_modules/[4mnx[24m/src/command-line/exec/exec.js:32:38)
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async Object.handler (/Users/trevorscandalios/work/newm-artist-portal/node_modules/[4mnx[24m/src/command-line/exec/command-object.js:11:13) {
+  status: [33m1[39m,
+  signal: [1mnull[22m,
+  output: [ [1mnull[22m, [1mnull[22m, [1mnull[22m ],
+  pid: [33m14872[39m,
+  stdout: [1mnull[22m,
+  stderr: [1mnull[22m
+}

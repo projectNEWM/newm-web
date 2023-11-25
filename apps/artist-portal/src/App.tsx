@@ -60,22 +60,13 @@ const App = () => {
 
                   <Route path="login" element={ <Login /> } />
 
-                  <Route
-                    path="forgot-password/*"
-                    element={ <ForgotPassword /> }
-                  />
+                  <Route path="forgot-password/*" element={ <ForgotPassword /> } />
 
                   <Route path="sign-up/*" element={ <SignUp /> } />
 
-                  <Route
-                    path="idenfy-success-session"
-                    element={ <IdenfySuccessSession /> }
-                  />
+                  <Route path="idenfy-success-session" element={ <IdenfySuccessSession /> } />
 
-                  <Route
-                    path="idenfy-fail-session"
-                    element={ <IdenfyFailSession /> }
-                  />
+                  <Route path="idenfy-fail-session" element={ <IdenfyFailSession /> } />
 
                   <Route
                     path="home/*"

@@ -1,0 +1,2935 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.1.3",
+  "deps": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@greatsumini/react-facebook-login": "^3.2.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.13.5",
+    "@newm.io/cardano-dapp-wallet-connector": "^1.0.0",
+    "@react-oauth/google": "^0.11.0",
+    "@reduxjs/toolkit": "^1.7.2",
+    "@sentry/cli": "^2.21.2",
+    "@sentry/react": "7.72.0",
+    "@swc/helpers": "~0.5.2",
+    "async-mutex": "^0.3.2",
+    "axios": "^1.5.0",
+    "buffer": "^6.0.3",
+    "cloudinary-react": "^1.7.1",
+    "cross-env": "^7.0.3",
+    "currency.js": "^2.0.4",
+    "formik": "^2.2.9",
+    "hls.js": "^1.4.1-0.canary.9072",
+    "howler": "^2.2.3",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "react": "18.2.0",
+    "react-audio-visualize": "^1.1.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-input-mask": "^2.0.4",
+    "react-intersection-observer": "^9.4.3",
+    "react-linkedin-login-oauth2": "^2.0.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.3.0",
+    "redux-persist": "^6.0.0",
+    "styled-components": "^5.3.3",
+    "yup": "^0.32.11",
+    "@nx/eslint": "17.1.3",
+    "@nx/eslint-plugin": "17.1.3",
+    "@nx/js": "17.1.3",
+    "@nx/react": "17.1.3",
+    "@nx/vite": "17.1.3",
+    "@nx/workspace": "17.1.3",
+    "@storybook/addon-actions": "^7.0.22",
+    "@storybook/addon-essentials": "^7.0.5",
+    "@storybook/addon-interactions": "^7.0.5",
+    "@storybook/addon-links": "^7.0.5",
+    "@storybook/addon-mdx-gfm": "^7.0.22",
+    "@storybook/node-logger": "^7.0.5",
+    "@storybook/react": "^7.0.22",
+    "@storybook/react-webpack5": "^7.0.22",
+    "@storybook/testing-library": "0.1.0",
+    "@swc-node/register": "~1.6.7",
+    "@swc/cli": "~0.1.62",
+    "@swc/core": "~1.3.85",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/history": "^5.0.0",
+    "@types/howler": "^2.2.7",
+    "@types/jest": "^27.4.0",
+    "@types/js-cookie": "^3.0.1",
+    "@types/node": "18.14.2",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14",
+    "@types/react-input-mask": "^3.0.2",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/redux-logger": "^3.0.9",
+    "@types/styled-components": "^5.1.25",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "@vitejs/plugin-react": "~4.0.0",
+    "@vitest/coverage-v8": "~0.34.6",
+    "@vitest/ui": "~0.34.6",
+    "eslint": "~8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-storybook": "^0.6.13",
+    "eslint-plugin-testing-library": "^6.0.1",
+    "jest-watch-typeahead": "^2.2.2",
+    "jsdom": "~22.1.0",
+    "nx": "17.1.3",
+    "prettier": "^2.6.2",
+    "prettier-eslint": "15.0.1",
+    "prettier-eslint-cli": "^7.1.0",
+    "redux-logger": "^3.0.6",
+    "storybook": "^7.0.5",
+    "typescript": "~5.2.2",
+    "vite": "~4.3.9",
+    "vitest": "^0.34.6",
+    "web-vitals": "^3.5.0"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".env.template",
+        "hash": "7714202072090687509"
+      },
+      {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".eslintrc.js",
+        "hash": "4499107878463437215"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "17866138117546000433"
+      },
+      {
+        "file": ".github/dependabot.yml",
+        "hash": "5951041951127304692"
+      },
+      {
+        "file": ".github/workflows/firebase-hosting-merge-deploy.yml",
+        "hash": "1204026410959655425"
+      },
+      {
+        "file": ".github/workflows/firebase-hosting-pull-request.yml",
+        "hash": "17598359349688189329"
+      },
+      {
+        "file": ".github/workflows/test-master-merge.yml",
+        "hash": "12523214802922353868"
+      },
+      {
+        "file": ".github/workflows/test-pull-request.yml",
+        "hash": "1570132832724613454"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2605354412882507050"
+      },
+      {
+        "file": ".nx/cache/cloud/2311.09.8.hotfix6/index.js",
+        "hash": "15966481786630545044"
+      },
+      {
+        "file": ".nx/cache/cloud/2311.09.8.hotfix6/lib/daemon/process-run-end.js",
+        "hash": "4387998712489105129"
+      },
+      {
+        "file": ".nx/cache/cloud/2311.09.8.hotfix6/lib/heartbeat/heartbeat-process.js",
+        "hash": "5633484099946442012"
+      },
+      {
+        "file": ".nx/cache/cloud/2311.09.8.hotfix6/package.json",
+        "hash": "11687418979936424737"
+      },
+      {
+        "file": ".nx/cache/cloud/verify.lock",
+        "hash": "842961058467790952"
+      },
+      {
+        "file": ".nx/cache/d/daemon.log",
+        "hash": "12213936554385603355"
+      },
+      {
+        "file": ".nx/cache/d/server-process.json",
+        "hash": "1451459201745448770"
+      },
+      {
+        "file": ".nx/cache/file-map.json",
+        "hash": "8280737781021875817"
+      },
+      {
+        "file": ".nx/cache/lockfile.hash",
+        "hash": "6384616258676336585"
+      },
+      {
+        "file": ".nx/cache/parsed-lock-file.json",
+        "hash": "11242061478356771614"
+      },
+      {
+        "file": ".nx/cache/project-graph.json",
+        "hash": "18136246781402609249"
+      },
+      {
+        "file": ".nx/cache/run.json",
+        "hash": "3199368125045575043"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/4991225883199959535",
+        "hash": "801340783301296084"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".prettierrc.json",
+        "hash": "16072842542456141468"
+      },
+      {
+        "file": ".storybook/main.js",
+        "hash": "5234101677619803501"
+      },
+      {
+        "file": ".storybook/preview-head.html",
+        "hash": "10075341060529195143"
+      },
+      {
+        "file": ".storybook/preview.js",
+        "hash": "5807555512788582341"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "16884713733442577066"
+      },
+      {
+        "file": "LICENSE",
+        "hash": "12649885980860800067"
+      },
+      {
+        "file": "README.md",
+        "hash": "15604759276463414439"
+      },
+      {
+        "file": "firebase.json",
+        "hash": "2121042919954369267"
+      },
+      {
+        "file": "nx.json",
+        "hash": "13710416209559235808"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "10998114211623606789"
+      },
+      {
+        "file": "package.json",
+        "hash": "11663934976869271908"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
+      }
+    ],
+    "projectFileMap": {
+      "artist-portal": [
+        {
+          "file": "apps/artist-portal/README.md",
+          "hash": "14662224379774919567"
+        },
+        {
+          "file": "apps/artist-portal/index.html",
+          "hash": "15470617630181896747"
+        },
+        {
+          "file": "apps/artist-portal/package-lock.json",
+          "hash": "13310894729417025480"
+        },
+        {
+          "file": "apps/artist-portal/package.json",
+          "hash": "12273094171133077534",
+          "deps": [
+            "npm:@emotion/react",
+            "npm:@emotion/styled",
+            "npm:@greatsumini/react-facebook-login",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:@react-oauth/google",
+            "npm:@reduxjs/toolkit",
+            "npm:@sentry/cli",
+            "npm:@sentry/react",
+            "npm:@swc/helpers",
+            "npm:async-mutex",
+            "npm:axios",
+            "npm:buffer",
+            "npm:cloudinary-react",
+            "npm:cross-env",
+            "npm:currency.js",
+            "npm:formik",
+            "npm:hls.js",
+            "npm:howler",
+            "npm:js-cookie",
+            "npm:jwt-decode",
+            "npm:moment",
+            "npm:moment-duration-format",
+            "npm:react",
+            "npm:react-audio-visualize",
+            "npm:react-device-detect",
+            "npm:react-dom",
+            "npm:react-dropzone",
+            "npm:react-input-mask",
+            "npm:react-intersection-observer",
+            "npm:react-linkedin-login-oauth2",
+            "npm:react-redux",
+            "npm:react-router-dom",
+            "npm:redux-persist",
+            "npm:styled-components",
+            "npm:web-vitals",
+            "npm:yup",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/js",
+            "npm:@nx/react",
+            "npm:@nx/vite",
+            "npm:@nx/workspace",
+            "npm:@storybook/addon-actions",
+            "npm:@storybook/addon-essentials",
+            "npm:@storybook/addon-interactions",
+            "npm:@storybook/addon-links",
+            "npm:@storybook/addon-mdx-gfm",
+            "npm:@storybook/node-logger",
+            "npm:@storybook/react",
+            "npm:@storybook/react-webpack5",
+            "npm:@storybook/testing-library",
+            "npm:@swc-node/register",
+            "npm:@swc/cli",
+            "npm:@swc/core",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/react",
+            "npm:@testing-library/user-event",
+            "npm:@types/history",
+            "npm:@types/howler",
+            "npm:@types/jest",
+            "npm:@types/js-cookie",
+            "npm:@types/node",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@types/react-input-mask",
+            "npm:@types/react-router-dom",
+            "npm:@types/redux-logger",
+            "npm:@types/styled-components",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:@vitejs/plugin-react",
+            "npm:@vitest/coverage-v8",
+            "npm:@vitest/ui",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-import",
+            "npm:eslint-plugin-jest",
+            "npm:eslint-plugin-jsx-a11y",
+            "npm:eslint-plugin-react",
+            "npm:eslint-plugin-react-hooks",
+            "npm:eslint-plugin-storybook",
+            "npm:eslint-plugin-testing-library",
+            "npm:jsdom",
+            "npm:nx",
+            "npm:prettier",
+            "npm:prettier-eslint",
+            "npm:prettier-eslint-cli",
+            "npm:redux-logger",
+            "npm:storybook",
+            "npm:typescript",
+            "npm:vite",
+            "npm:vitest"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/project.json",
+          "hash": "14281393747430524283"
+        },
+        {
+          "file": "apps/artist-portal/public/android-chrome-192x192.png",
+          "hash": "12253519006611223818"
+        },
+        {
+          "file": "apps/artist-portal/public/android-chrome-512x512.png",
+          "hash": "186914568627357731"
+        },
+        {
+          "file": "apps/artist-portal/public/apple-touch-icon.png",
+          "hash": "10784370341669143303"
+        },
+        {
+          "file": "apps/artist-portal/public/browserconfig.xml",
+          "hash": "11614269902582020806"
+        },
+        {
+          "file": "apps/artist-portal/public/favicon-16x16.png",
+          "hash": "12701737688655487101"
+        },
+        {
+          "file": "apps/artist-portal/public/favicon-32x32.png",
+          "hash": "3850287316023589160"
+        },
+        {
+          "file": "apps/artist-portal/public/favicon-dark.ico",
+          "hash": "6482266577672786941"
+        },
+        {
+          "file": "apps/artist-portal/public/favicon-light.ico",
+          "hash": "17108683863679992156"
+        },
+        {
+          "file": "apps/artist-portal/public/favicon.ico",
+          "hash": "17108683863679992156"
+        },
+        {
+          "file": "apps/artist-portal/public/index.html",
+          "hash": "11622731415486711187"
+        },
+        {
+          "file": "apps/artist-portal/public/manifest.json",
+          "hash": "4104017320296556602"
+        },
+        {
+          "file": "apps/artist-portal/public/mstile-150x150.png",
+          "hash": "17482430728726668134"
+        },
+        {
+          "file": "apps/artist-portal/public/safari-pinned-tab.svg",
+          "hash": "132571658054885329"
+        },
+        {
+          "file": "apps/artist-portal/src/App.css",
+          "hash": "16773675333416445845"
+        },
+        {
+          "file": "apps/artist-portal/src/App.tsx",
+          "hash": "15887139702528449092",
+          "deps": [
+            "npm:@mui/material",
+            "npm:components",
+            "npm:pages/login",
+            "npm:pages/home",
+            "npm:pages/signUp",
+            "npm:pages/forgotPassword",
+            "npm:pages/createProfile",
+            "npm:react-linkedin-login-oauth2",
+            "npm:react-redux",
+            "npm:react-router-dom",
+            "npm:theme",
+            "npm:common/BrowserRouter",
+            "npm:common/history",
+            "npm:redux-persist",
+            "npm:@react-oauth/google",
+            "npm:components/OnboardingRedirect"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/cloudinary/api.ts",
+          "hash": "15800152617044875849",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:buildParams",
+            "npm:api/utils"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/cloudinary/types.ts",
+          "hash": "2834560606974322245",
+          "deps": [
+            "npm:api/types"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/cloudinary/utils.ts",
+          "hash": "2803900443295969478",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:api",
+            "npm:common",
+            "npm:modules/song",
+            "npm:api/types"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/index.ts",
+          "hash": "13380553556423084012"
+        },
+        {
+          "file": "apps/artist-portal/src/api/lambda/api.ts",
+          "hash": "2146457243194687679",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:buildParams",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/lambda/types.ts",
+          "hash": "9522409229637805222"
+        },
+        {
+          "file": "apps/artist-portal/src/api/newm/api.ts",
+          "hash": "3300406071079201847",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:buildParams"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/newm/types.ts",
+          "hash": "5103708207357563770"
+        },
+        {
+          "file": "apps/artist-portal/src/api/types.ts",
+          "hash": "3918259253694669054",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/api/utils.ts",
+          "hash": "12382185621764289029",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:js-cookie",
+            "npm:store",
+            "npm:async-mutex",
+            "npm:modules/session",
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/AddImage.tsx",
+          "hash": "6683838401509992092"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/AddSong.tsx",
+          "hash": "10201292215324459228"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/CheckCircle.tsx",
+          "hash": "3617808102563472389",
+          "deps": [
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/CheckIcon.jsx",
+          "hash": "160618348804658335"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/CheckboxIcon.tsx",
+          "hash": "3500546491968648588"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/CloseCircleFill.tsx",
+          "hash": "16793234802766707611"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/CloseIcon.jsx",
+          "hash": "16400230628051431800"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/DiscordLogo.tsx",
+          "hash": "12546536338760289755"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/DropdownAdornment.tsx",
+          "hash": "8558047707795611772",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/FoldersIcon.jsx",
+          "hash": "3357433172355849781"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/GlobalFill.tsx",
+          "hash": "1565044316091870077"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/InfoCircleLine.tsx",
+          "hash": "5983296422858182246"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/InstagramLogo.tsx",
+          "hash": "1644754493117535419"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/NEWM-logo-sm-inverse.tsx",
+          "hash": "3192322607229426502"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/NEWM-logo.png",
+          "hash": "1111236331995745947"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/NEWMLogo.tsx",
+          "hash": "14923696434303223269",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/Owner.tsx",
+          "hash": "3986499683537420985"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/PeopleIcon.tsx",
+          "hash": "6453406349042095799"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/PlayButton.tsx",
+          "hash": "14404372954272638573",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/SelectedCheckboxIcon.jsx",
+          "hash": "5334795998707286883"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/SoundWave.tsx",
+          "hash": "370824970365085753"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/StarIcon.tsx",
+          "hash": "3493529432175536996"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/TimeCircleLine.tsx",
+          "hash": "8168266116084375792"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/TwitterLogo.tsx",
+          "hash": "11801663331733299276"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/UnselectedCheckboxIcon.jsx",
+          "hash": "280645349066533645"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/UploadIcon.tsx",
+          "hash": "14718658611534600921"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/VerticalEllipsis.tsx",
+          "hash": "337035996842730359"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/WalletIcon.tsx",
+          "hash": "11686681515302497769"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/add-song.png",
+          "hash": "1825543393343762822"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/artist-agreement-preview.jpg",
+          "hash": "15651526614090916709"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/artist.svg",
+          "hash": "1541810389175604284"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/bg-img.png",
+          "hash": "13960290424459100150"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/cardwallet-logo.svg",
+          "hash": "3242535659355472892"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/eternl-logo.png",
+          "hash": "8452564644850908883"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/flint-logo.svg",
+          "hash": "10688568055352838923"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/genre.svg",
+          "hash": "16176552443481902677"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/gerowallet-logo.png",
+          "hash": "327015756307705125"
+        },
+        {
+          "file": "apps/artist-portal/src/assets/images/nami-logo.svg",
+          "hash": "15479632223101585941"
+        },
+        {
+          "file": "apps/artist-portal/src/buildParams.ts",
+          "hash": "5622049553053087576"
+        },
+        {
+          "file": "apps/artist-portal/src/common/BrowserRouter.tsx",
+          "hash": "8312306367976689497",
+          "deps": [
+            "npm:react",
+            "npm:history",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/arrayUtils.ts",
+          "hash": "3327610458315274478",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/asyncUtils.ts",
+          "hash": "1172151906140001978"
+        },
+        {
+          "file": "apps/artist-portal/src/common/constants.ts",
+          "hash": "6242714201288909503"
+        },
+        {
+          "file": "apps/artist-portal/src/common/errors.ts",
+          "hash": "6510376870217028655"
+        },
+        {
+          "file": "apps/artist-portal/src/common/fileUtils.ts",
+          "hash": "4000481213037154753"
+        },
+        {
+          "file": "apps/artist-portal/src/common/formUtils.ts",
+          "hash": "14780062845975359494",
+          "deps": [
+            "npm:yup",
+            "npm:formik"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/history.ts",
+          "hash": "2491683183938224376",
+          "deps": [
+            "npm:history"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/hooks.ts",
+          "hash": "4566902075179077560",
+          "deps": [
+            "npm:react",
+            "npm:react-redux",
+            "npm:modules/session",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/index.ts",
+          "hash": "2611459807125313679"
+        },
+        {
+          "file": "apps/artist-portal/src/common/miscUtils.ts",
+          "hash": "16708492527263907465"
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/index.ts",
+          "hash": "15496024059331075415"
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockFile.ts",
+          "hash": "14958104014032438692"
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockProfile.ts",
+          "hash": "3248671264521572535",
+          "deps": [
+            "npm:modules/session/types"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockRoyalties.ts",
+          "hash": "4265316739743622564"
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockSession.ts",
+          "hash": "16848585462179177619",
+          "deps": [
+            "npm:modules/session",
+            "npm:redux-persist"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockSong.ts",
+          "hash": "18028097323501135174"
+        },
+        {
+          "file": "apps/artist-portal/src/common/mockConstants/mockTransactions.ts",
+          "hash": "12985520913041439910"
+        },
+        {
+          "file": "apps/artist-portal/src/common/reduxUtils.ts",
+          "hash": "566342257922474659",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/regex.ts",
+          "hash": "7903285762886882745"
+        },
+        {
+          "file": "apps/artist-portal/src/common/storybookUtils.tsx",
+          "hash": "15608909606620876087",
+          "deps": [
+            "npm:@storybook/react",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/testUtils.tsx",
+          "hash": "6213911032918058783",
+          "deps": [
+            "npm:@testing-library/react",
+            "npm:@mui/material",
+            "npm:@reduxjs/toolkit",
+            "npm:react-redux",
+            "npm:react-router-dom",
+            "npm:react",
+            "npm:formik",
+            "npm:store",
+            "npm:theme",
+            "npm:@react-oauth/google"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/types.ts",
+          "hash": "17420786359045356979",
+          "deps": [
+            "npm:react",
+            "npm:store",
+            "npm:@testing-library/react",
+            "npm:@reduxjs/toolkit",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/common/urlUtils.ts",
+          "hash": "5054257846265352473"
+        },
+        {
+          "file": "apps/artist-portal/src/components/Background.tsx",
+          "hash": "17722150734114956963",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/ConnectWalletModal.tsx",
+          "hash": "5118443604985003565",
+          "deps": [
+            "npm:modules/ui",
+            "npm:react",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:@mui/material",
+            "npm:common",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/DisconnectWalletButton.tsx",
+          "hash": "7414378041347892437",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:common",
+            "npm:elements",
+            "npm:currency.js",
+            "npm:@mui/icons-material",
+            "npm:react",
+            "npm:modules/ui",
+            "npm:modules/wallet"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/FacebookLogin.tsx",
+          "hash": "17296497903114811986",
+          "deps": [
+            "npm:modules/session",
+            "npm:modules/ui",
+            "npm:react",
+            "npm:@greatsumini/react-facebook-login",
+            "npm:@mui/icons-material",
+            "npm:elements",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/GoogleLogin.tsx",
+          "hash": "2354235424203837082",
+          "deps": [
+            "npm:modules/session",
+            "npm:modules/ui",
+            "npm:react",
+            "npm:@react-oauth/google",
+            "npm:@mui/icons-material",
+            "npm:elements",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/IconMessage.tsx",
+          "hash": "14429811397516103155",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/LinkedInLogin.tsx",
+          "hash": "2129633543739061758",
+          "deps": [
+            "npm:react",
+            "npm:react-linkedin-login-oauth2",
+            "npm:modules/session",
+            "npm:@mui/icons-material",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/Modal.tsx",
+          "hash": "18290227698747699548",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/NEWMLogo.tsx",
+          "hash": "7607164047957949514",
+          "deps": [
+            "npm:@mui/material",
+            "npm:assets/images/NEWMLogo"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/OnboardingRedirect.tsx",
+          "hash": "1319202108637258542",
+          "deps": [
+            "npm:common",
+            "npm:modules/session",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/PlaySong.tsx",
+          "hash": "14821918017583236116",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:modules/song",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/PlaySongAdvanced.tsx",
+          "hash": "4643825447955576679",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/Popup.tsx",
+          "hash": "15230330211964679546",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/PrivateRoute.tsx",
+          "hash": "5160493661410761219",
+          "deps": [
+            "npm:react",
+            "npm:modules/session",
+            "npm:react-router-dom",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/ProgressBar.tsx",
+          "hash": "13360427265977441565",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/ProgressBarModal.tsx",
+          "hash": "13229214812990081601",
+          "deps": [
+            "npm:@mui/material",
+            "npm:common",
+            "npm:components/Modal",
+            "npm:modules/ui",
+            "npm:react",
+            "npm:react-redux"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/ResponsiveNEWMLogo.tsx",
+          "hash": "7383553628373543773",
+          "deps": [
+            "npm:react",
+            "npm:assets/images/NEWMLogo",
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/SearchBox.tsx",
+          "hash": "5364325252654432486",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:@mui/icons-material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/SquareGridCard.tsx",
+          "hash": "15209980711549746225",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/TableDropdownSelect.tsx",
+          "hash": "17146887678718130496",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/TablePagination.tsx",
+          "hash": "12648115199407396951",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/Toast.tsx",
+          "hash": "8566910459637874867",
+          "deps": [
+            "npm:react",
+            "npm:modules/ui",
+            "npm:@mui/material",
+            "npm:assets/images/CheckCircle",
+            "npm:assets/images/CloseCircleFill",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/UpdateWalletAddressModal.tsx",
+          "hash": "6356121411937504495",
+          "deps": [
+            "npm:modules/ui",
+            "npm:react",
+            "npm:react-redux",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:common",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/UploadImage.tsx",
+          "hash": "7833160653201307122",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:common",
+            "npm:react-dropzone",
+            "npm:assets/images/AddImage",
+            "npm:assets/images/CheckCircle",
+            "npm:@mui/icons-material",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/UploadSong.tsx",
+          "hash": "16545540662239002195",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:react-dropzone",
+            "npm:assets/images/AddSong",
+            "npm:assets/images/CheckCircle",
+            "npm:@mui/icons-material",
+            "npm:react-audio-visualize",
+            "npm:howler",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/ViewPDF.tsx",
+          "hash": "2251115434983247307",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:components",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/WalletEnvMismatchModal.tsx",
+          "hash": "7370738652968921145",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:components",
+            "npm:common",
+            "npm:modules/ui",
+            "npm:modules/session",
+            "npm:@newm.io/cardano-dapp-wallet-connector"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/createProfile/AddProfileInformation.tsx",
+          "hash": "5880032488852248705",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:formik",
+            "npm:components",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/CheckboxField.tsx",
+          "hash": "14262002435242938182",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements",
+            "npm:elements/Checkbox"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/CopyrightInputField.tsx",
+          "hash": "13554123828822806523",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:formik",
+            "npm:components/styled/ErrorMessage"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/DropdownMultiSelectField.tsx",
+          "hash": "16467165080627573554",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/DropdownSelectField.tsx",
+          "hash": "17036676452719895970",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/FilteredTagsField.tsx",
+          "hash": "14218777734964980095",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/FormProgressStepper.tsx",
+          "hash": "16783117872709613538",
+          "deps": [
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/GradientTextInputField.tsx",
+          "hash": "6461243321285105573",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/PasswordInputField.tsx",
+          "hash": "4558830296146938003",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react",
+            "npm:components",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/SwitchInputField.tsx",
+          "hash": "375607800951487407",
+          "deps": [
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:react",
+            "npm:elements/SwitchInput"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/TextAreaField.tsx",
+          "hash": "11803656441501525881",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/TextInputField.tsx",
+          "hash": "14878771125869503716",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/UploadImageField.tsx",
+          "hash": "90442457973988282",
+          "deps": [
+            "npm:react",
+            "npm:formik"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/UploadSongField.tsx",
+          "hash": "9632964783292827532",
+          "deps": [
+            "npm:react",
+            "npm:formik"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/form/WizardForm.tsx",
+          "hash": "10632444490992481706",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:react-router-dom",
+            "npm:common",
+            "npm:yup",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/home/LogoutButton.tsx",
+          "hash": "8597564293574300012",
+          "deps": [
+            "npm:react",
+            "npm:modules/session",
+            "npm:elements",
+            "npm:@mui/icons-material",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/home/SideBarHeader.tsx",
+          "hash": "15201479936945401650",
+          "deps": [
+            "npm:react",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/home/SideBarNavLink.tsx",
+          "hash": "1163832750410742510",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/idenfy/IdenfyFailSession.tsx",
+          "hash": "5552396205901668989",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:elements",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/idenfy/IdenfyModal.tsx",
+          "hash": "16454583616929441085",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:js-cookie",
+            "npm:components",
+            "npm:modules/session",
+            "npm:theme",
+            "npm:modules/ui",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/idenfy/IdenfyPingUserStatus.tsx",
+          "hash": "13326476883751208932",
+          "deps": [
+            "npm:react",
+            "npm:modules/ui",
+            "npm:js-cookie",
+            "npm:modules/session",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/idenfy/IdenfySuccessSession.tsx",
+          "hash": "16327506474682900699",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/idenfy/index.ts",
+          "hash": "8785087635903375844"
+        },
+        {
+          "file": "apps/artist-portal/src/components/index.ts",
+          "hash": "12336307635685326713"
+        },
+        {
+          "file": "apps/artist-portal/src/components/invites/InvitesModal.tsx",
+          "hash": "13793425527648621714",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:theme",
+            "npm:modules/song",
+            "npm:modules/ui",
+            "npm:modules/session",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/invites/InvitesTable.tsx",
+          "hash": "1327170134717601424",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:common",
+            "npm:components",
+            "npm:theme",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/library/IconStatus.tsx",
+          "hash": "14253369530910709919",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/library/SongStreamPlaybackIcon.tsx",
+          "hash": "1659552551097400138",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/AddOwnerModal.tsx",
+          "hash": "15815470585987603556",
+          "deps": [
+            "npm:yup",
+            "npm:react",
+            "npm:formik",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:components",
+            "npm:common",
+            "npm:modules/content",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/ConfirmContract.tsx",
+          "hash": "4352115004264793628",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:elements",
+            "npm:formik",
+            "npm:modules/song",
+            "npm:react",
+            "npm:assets/images/artist-agreement-preview.jpg",
+            "npm:common",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/Creditors.tsx",
+          "hash": "12851838606599610173",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:modules/song",
+            "npm:components/form/DropdownSelectField",
+            "npm:modules/content"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/Details.tsx",
+          "hash": "9993852811212561515",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:modules/song",
+            "npm:@mui/material",
+            "npm:theme",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/FeaturedArtists.tsx",
+          "hash": "10752683773997604324",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:elements",
+            "npm:modules/song",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/Owners.tsx",
+          "hash": "13464742414065091847",
+          "deps": [
+            "npm:react",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:modules/song",
+            "npm:elements",
+            "npm:components",
+            "npm:theme",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/SelectCoCreators.tsx",
+          "hash": "7450821598001580784",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:components",
+            "npm:elements",
+            "npm:formik",
+            "npm:modules/song",
+            "npm:react",
+            "npm:theme",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/minting/utils.ts",
+          "hash": "9831631112807175376",
+          "deps": [
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/skeletons/ProfileSkeleton.tsx",
+          "hash": "2675191977477421816",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/skeletons/TableSkeleton.tsx",
+          "hash": "9828472818729546545",
+          "deps": [
+            "npm:theme",
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/stories/form.stories.tsx",
+          "hash": "1662086882837124280",
+          "deps": [
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:elements",
+            "npm:yup",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/Badge.tsx",
+          "hash": "6166567817081501890",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/DashedOutline.ts",
+          "hash": "8991505676414448698",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/ErrorMessage.ts",
+          "hash": "1847172328743560358",
+          "deps": [
+            "npm:elements",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/PaperInput.ts",
+          "hash": "10183232361256883839",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/ProfileImage.ts",
+          "hash": "11288772357658420790",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/SolidOutline.ts",
+          "hash": "3840352842050917561",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/StyledPagination.tsx",
+          "hash": "1667447763281107325",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/TableCell.tsx",
+          "hash": "18401152461782242091",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/styled/TableHeadCell.tsx",
+          "hash": "1560235073016028107",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/AddProfileInformation.test.tsx",
+          "hash": "9977336560623898015",
+          "deps": [
+            "npm:common",
+            "npm:formik"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/FacebookLogin.test.tsx",
+          "hash": "18242598724591422246",
+          "deps": [
+            "npm:common",
+            "npm:@testing-library/react",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/FilteredTagsField.test.tsx",
+          "hash": "8800251286953737589",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/GoogleLogin.test.tsx",
+          "hash": "13386921654969838577",
+          "deps": [
+            "npm:common",
+            "npm:@testing-library/react",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/PasswordInputField.test.tsx",
+          "hash": "9700106704043996309",
+          "deps": [
+            "npm:@testing-library/react",
+            "npm:common",
+            "npm:formik",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/user-event"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/SideBarNavLink.test.tsx",
+          "hash": "1745517256167730460",
+          "deps": [
+            "npm:common",
+            "npm:react-router-dom",
+            "npm:@mui/icons-material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/UploadImage.test.tsx",
+          "hash": "14969986168873881149",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/test/UploadSong.test.tsx",
+          "hash": "16415529385561504188",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/components/uploadSong/SelectWalletItem.tsx",
+          "hash": "12938302014935468139",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/docs/projectStructure.md",
+          "hash": "14952320269780742883"
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Alert.tsx",
+          "hash": "16514075353001704911",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Button.tsx",
+          "hash": "17237876352598164705",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Checkbox.tsx",
+          "hash": "9052238269114136046",
+          "deps": [
+            "npm:react",
+            "npm:theme",
+            "npm:@mui/material",
+            "npm:assets/images/CheckboxIcon",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/DropdownMultiSelect.tsx",
+          "hash": "17782262175044683355",
+          "deps": [
+            "npm:react",
+            "npm:@mui/base",
+            "npm:@mui/icons-material",
+            "npm:theme",
+            "npm:@mui/material",
+            "npm:assets/images/SelectedCheckboxIcon",
+            "npm:assets/images/UnselectedCheckboxIcon",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/DropdownSelect.tsx",
+          "hash": "3193449557089391665",
+          "deps": [
+            "npm:react",
+            "npm:@mui/base",
+            "npm:@mui/icons-material",
+            "npm:theme",
+            "npm:@mui/material",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/GradientTextInput.tsx",
+          "hash": "18222845228740018721",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Link.tsx",
+          "hash": "1185279368934678664",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Switch.tsx",
+          "hash": "6073058513478444367",
+          "deps": [
+            "npm:@mui/material",
+            "npm:assets/images/CheckIcon",
+            "npm:assets/images/CloseIcon",
+            "npm:react",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/SwitchInput.tsx",
+          "hash": "5358424221207083403",
+          "deps": [
+            "npm:elements",
+            "npm:@mui/material",
+            "npm:react",
+            "npm:@mui/icons-material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/TextArea.tsx",
+          "hash": "17519223778344816871",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:styled-components",
+            "npm:theme",
+            "npm:components",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/TextInput.tsx",
+          "hash": "15717443313721134981",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react-input-mask",
+            "npm:styled-components",
+            "npm:theme",
+            "npm:components",
+            "npm:common",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/Typography.tsx",
+          "hash": "15965489310684039665",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/index.ts",
+          "hash": "12270431615322058866"
+        },
+        {
+          "file": "apps/artist-portal/src/elements/stories/button.stories.tsx",
+          "hash": "13746693475922124819",
+          "deps": [
+            "npm:@storybook/react",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/stories/dropdownSelect.stories.tsx",
+          "hash": "17334272732558705482",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/stories/gradientTextInput.stories.tsx",
+          "hash": "16177949049372734859",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/stories/textInput.stories.tsx",
+          "hash": "6241803978896456243",
+          "deps": [
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/stories/typography.stories.tsx",
+          "hash": "9761369396213777665",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/Dialog.ts",
+          "hash": "3847202619253168171",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/GradientTypography.ts",
+          "hash": "1741304948968768939",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/HorizontalLine.ts",
+          "hash": "6350988554334817254",
+          "deps": [
+            "npm:@mui/material",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/NoResultsList.ts",
+          "hash": "603379201077148925",
+          "deps": [
+            "npm:theme",
+            "npm:styled-components",
+            "npm:elements/DropdownMultiSelect"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/ResultsList.ts",
+          "hash": "9639954475129925351",
+          "deps": [
+            "npm:styled-components",
+            "npm:elements/DropdownMultiSelect",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/styled/Tooltip.tsx",
+          "hash": "14758789737552290248",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/test/DropdownSelect.test.tsx",
+          "hash": "10963128412339980779",
+          "deps": [
+            "npm:@testing-library/react",
+            "npm:common",
+            "npm:@testing-library/jest-dom",
+            "npm:@testing-library/user-event"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/test/GradientTextInput.test.tsx",
+          "hash": "14454712834842163460",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/elements/test/TextInput.test.tsx",
+          "hash": "11716018767799814335",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/global.d.ts",
+          "hash": "7447395161386255427"
+        },
+        {
+          "file": "apps/artist-portal/src/index.css",
+          "hash": "17516062592257360816"
+        },
+        {
+          "file": "apps/artist-portal/src/index.tsx",
+          "hash": "2862318664699583402",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/content/api.ts",
+          "hash": "18347782732419277227",
+          "deps": [
+            "npm:api",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/content/index.ts",
+          "hash": "8476981033576670126"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/content/types.ts",
+          "hash": "13745238156932130242"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/playlist/index.ts",
+          "hash": "641151453254384957"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/playlist/selectors.ts",
+          "hash": "14943336336890020503",
+          "deps": [
+            "npm:store"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/playlist/slice.ts",
+          "hash": "8297749730900688141",
+          "deps": [
+            "npm:@reduxjs/toolkit"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/playlist/types.ts",
+          "hash": "966310001066954679"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/api.ts",
+          "hash": "13018224417425438587",
+          "deps": [
+            "npm:api",
+            "npm:common",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/index.ts",
+          "hash": "2143188384685460522"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/selectors.ts",
+          "hash": "11735754384423392029",
+          "deps": [
+            "npm:store"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/slice.ts",
+          "hash": "10967390718921612041",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:js-cookie"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/thunks.ts",
+          "hash": "13349267991466066350",
+          "deps": [
+            "npm:common/reduxUtils",
+            "npm:@reduxjs/toolkit",
+            "npm:js-cookie",
+            "npm:modules/ui",
+            "npm:common/history",
+            "npm:api/cloudinary/utils",
+            "npm:api",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/types.ts",
+          "hash": "11091373372455716059"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/session/utils.ts",
+          "hash": "690957034461336064",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:js-cookie",
+            "npm:jwt-decode",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:buildParams"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/api.ts",
+          "hash": "3048606956786894632",
+          "deps": [
+            "npm:api",
+            "npm:modules/ui",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/hooks.ts",
+          "hash": "187384908948128255",
+          "deps": [
+            "npm:buildParams",
+            "npm:react",
+            "npm:hls.js",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/index.ts",
+          "hash": "13079827689437570177"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/selectors.ts",
+          "hash": "15593684782197112848",
+          "deps": [
+            "npm:store"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/slice.ts",
+          "hash": "16461888209443960129",
+          "deps": [
+            "npm:@reduxjs/toolkit"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/thunks.ts",
+          "hash": "907140466136096345",
+          "deps": [
+            "npm:common/reduxUtils",
+            "npm:@reduxjs/toolkit",
+            "npm:api",
+            "npm:common/history",
+            "npm:api/cloudinary/utils",
+            "npm:modules/ui",
+            "npm:modules/session",
+            "npm:common",
+            "npm:axios",
+            "npm:modules/ui/utils",
+            "npm:@newm.io/cardano-dapp-wallet-connector"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/types.ts",
+          "hash": "16118169325662760489",
+          "deps": [
+            "npm:api/types"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/song/utils.tsx",
+          "hash": "14337580723206106186",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:lodash",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/ui/index.ts",
+          "hash": "18009732656329183595"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/ui/selectors.ts",
+          "hash": "16846808065064928794",
+          "deps": [
+            "npm:store"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/ui/slice.ts",
+          "hash": "9144871312390210981",
+          "deps": [
+            "npm:@reduxjs/toolkit"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/ui/types.ts",
+          "hash": "3447286252738993241",
+          "deps": [
+            "npm:@reduxjs/toolkit"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/ui/utils.ts",
+          "hash": "11062413353569122235"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/wallet/index.ts",
+          "hash": "560225903607745178"
+        },
+        {
+          "file": "apps/artist-portal/src/modules/wallet/selectors.ts",
+          "hash": "13522835318759889018",
+          "deps": [
+            "npm:store"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/wallet/slice.ts",
+          "hash": "5009500446829945389",
+          "deps": [
+            "npm:@reduxjs/toolkit"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/modules/wallet/types.ts",
+          "hash": "17036191275176661439"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/AddFirstName.tsx",
+          "hash": "15918928540516794740",
+          "deps": [
+            "npm:react",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/AddLastName.tsx",
+          "hash": "11017166514092495409",
+          "deps": [
+            "npm:react",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/Begin.tsx",
+          "hash": "7471756625043784095",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:react-router-dom",
+            "npm:elements",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/Complete.tsx",
+          "hash": "9577883182814431833",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:components",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/CreateProfile.tsx",
+          "hash": "8557163935035201065",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:modules/session",
+            "npm:components",
+            "npm:common",
+            "npm:yup",
+            "npm:modules/content"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/SelectNickname.tsx",
+          "hash": "5439690480110468858",
+          "deps": [
+            "npm:react",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/SelectRole.tsx",
+          "hash": "16261640564267891386",
+          "deps": [
+            "npm:react",
+            "npm:components",
+            "npm:formik",
+            "npm:modules/content",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/createProfile/index.ts",
+          "hash": "6500358384526975735"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/forgotPassword/ForgotPassword.tsx",
+          "hash": "529744266749036240",
+          "deps": [
+            "npm:yup",
+            "npm:@mui/material",
+            "npm:react",
+            "npm:formik",
+            "npm:theme",
+            "npm:components",
+            "npm:common",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/forgotPassword/InitiateReset.tsx",
+          "hash": "6185409117930552170",
+          "deps": [
+            "npm:react",
+            "npm:elements",
+            "npm:components",
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/forgotPassword/ResetPassword.tsx",
+          "hash": "18020597996912256282",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/forgotPassword/VerifyEmail.tsx",
+          "hash": "11373029967295227236",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:elements",
+            "npm:components",
+            "npm:modules/session",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/forgotPassword/index.ts",
+          "hash": "17491628265610088657"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/Home.tsx",
+          "hash": "11486253105424225181",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:@mui/icons-material",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/SideBar.tsx",
+          "hash": "14898014653821440114",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:components",
+            "npm:modules/session",
+            "npm:assets/images/DiscordLogo",
+            "npm:assets/images/NEWM-logo-sm-inverse",
+            "npm:@mui/icons-material",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/index.ts",
+          "hash": "10471499313738185187"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/DeleteSongModal.tsx",
+          "hash": "5869896820899132189",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:theme",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/Discography.tsx",
+          "hash": "3942742500638699663",
+          "deps": [
+            "npm:react",
+            "npm:components",
+            "npm:modules/song",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/EditSong.tsx",
+          "hash": "72483794912346934",
+          "deps": [
+            "npm:react",
+            "npm:react-redux",
+            "npm:formik",
+            "npm:yup",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react-router",
+            "npm:elements",
+            "npm:components",
+            "npm:modules/session",
+            "npm:modules/song",
+            "npm:modules/ui",
+            "npm:modules/content",
+            "npm:common",
+            "npm:pages/home/uploadSong/AdvancedSongDetails",
+            "npm:pages/home/uploadSong/BasicSongDetails",
+            "npm:pages/home/uploadSong/ConfirmAgreement"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/Library.tsx",
+          "hash": "13361696588592757467",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/MintSong.tsx",
+          "hash": "11361512621501118837",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:@mui/material",
+            "npm:react-router",
+            "npm:common",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:elements",
+            "npm:theme",
+            "npm:modules/song",
+            "npm:components",
+            "npm:modules/session",
+            "npm:components/minting/SelectCoCreators",
+            "npm:yup",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/MintingStatus.tsx",
+          "hash": "17172255018335188497",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:modules/song",
+            "npm:components",
+            "npm:assets/images/InfoCircleLine",
+            "npm:assets/images/TimeCircleLine",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/NoSongsYet.tsx",
+          "hash": "7956370455903716635",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react-router-dom",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/SongInfo.tsx",
+          "hash": "15537720505594711902",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react-router",
+            "npm:common",
+            "npm:components",
+            "npm:elements",
+            "npm:theme",
+            "npm:modules/song",
+            "npm:formik"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/SongList.tsx",
+          "hash": "5332435560954294653",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:theme",
+            "npm:elements",
+            "npm:common",
+            "npm:modules/song",
+            "npm:components",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/Table/TableHead.tsx",
+          "hash": "5429297057204405722",
+          "deps": [
+            "npm:@mui/material",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/ViewDetails.tsx",
+          "hash": "16073638994078008778",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:react-redux",
+            "npm:react-router-dom",
+            "npm:components",
+            "npm:elements",
+            "npm:modules/song",
+            "npm:modules/ui",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/test/SongList.test.tsx",
+          "hash": "2027172026134083605"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/library/types.ts",
+          "hash": "9779585421422914406"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/NoOwnersYet.tsx",
+          "hash": "13457643822282113927",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:assets/images/Owner",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/Owner.tsx",
+          "hash": "3760061143495578966",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:@mui/icons-material",
+            "npm:@mui/material",
+            "npm:assets/images/TwitterLogo",
+            "npm:assets/images/GlobalFill",
+            "npm:assets/images/InstagramLogo",
+            "npm:assets/images/bg-img.png",
+            "npm:theme",
+            "npm:common",
+            "npm:common/history",
+            "npm:modules/session",
+            "npm:elements",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/OwnerModal.tsx",
+          "hash": "10640556452259779258",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/Owners.tsx",
+          "hash": "16634492383744340245",
+          "deps": [
+            "npm:@mui/material",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/OwnersList.tsx",
+          "hash": "9884432129115500513",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:modules/song",
+            "npm:modules/ui",
+            "npm:elements",
+            "npm:components",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/OwnersTable.tsx",
+          "hash": "697302438237942595",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:theme",
+            "npm:modules/song",
+            "npm:common",
+            "npm:components",
+            "npm:common/history",
+            "npm:@mui/icons-material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/Songs.tsx",
+          "hash": "903005544961030214",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:react-intersection-observer",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:modules/song",
+            "npm:elements",
+            "npm:theme",
+            "npm:common",
+            "npm:assets/images/bg-img.png"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/owners/test/OwnersTable.test.tsx",
+          "hash": "9330521739619061562",
+          "deps": [
+            "npm:@testing-library/react",
+            "npm:react-router-dom",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/profile/Profile.tsx",
+          "hash": "2443797078643993638",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:@mui/icons-material",
+            "npm:formik",
+            "npm:yup",
+            "npm:modules/song",
+            "npm:elements",
+            "npm:components",
+            "npm:common",
+            "npm:modules/content",
+            "npm:modules/session",
+            "npm:theme",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/settings/DeleteAccountDialog.tsx",
+          "hash": "5308814959138932867",
+          "deps": [
+            "npm:@mui/material",
+            "npm:components",
+            "npm:elements",
+            "npm:formik",
+            "npm:react",
+            "npm:yup",
+            "npm:theme",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/settings/Settings.tsx",
+          "hash": "17802770871549587185",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:elements",
+            "npm:components",
+            "npm:common",
+            "npm:yup",
+            "npm:modules/session",
+            "npm:theme"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/test/SideBar.test.tsx",
+          "hash": "17544993658082112212",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/uploadSong/AdvancedSongDetails.tsx",
+          "hash": "6449701944758338999",
+          "deps": [
+            "npm:react",
+            "npm:formik",
+            "npm:@mui/material",
+            "npm:common",
+            "npm:components",
+            "npm:elements",
+            "npm:modules/song",
+            "npm:theme",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/uploadSong/BasicSongDetails.tsx",
+          "hash": "3504882975597718473",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:elements",
+            "npm:@mui/material",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:modules/content",
+            "npm:modules/song",
+            "npm:components",
+            "npm:common",
+            "npm:components/minting/SelectCoCreators",
+            "npm:formik",
+            "npm:modules/session",
+            "npm:modules/ui"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/uploadSong/ConfirmAgreement.tsx",
+          "hash": "18201668191368348275",
+          "deps": [
+            "npm:@mui/material",
+            "npm:common",
+            "npm:elements",
+            "npm:formik",
+            "npm:modules/song",
+            "npm:react",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/uploadSong/UploadSong.tsx",
+          "hash": "9697232824414943296",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:yup",
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:common",
+            "npm:components",
+            "npm:elements",
+            "npm:modules/content",
+            "npm:modules/session",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/AllCaughtUp.tsx",
+          "hash": "210024396450249168",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/ClaimedRoyalties.tsx",
+          "hash": "17125951840556067975",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:currency.js",
+            "npm:theme",
+            "npm:@mui/icons-material",
+            "npm:assets/images/CheckCircle"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/Portfolio.tsx",
+          "hash": "4984259216026569109",
+          "deps": [
+            "npm:react",
+            "npm:common",
+            "npm:@mui/material",
+            "npm:components/skeletons/TableSkeleton",
+            "npm:theme",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/SongRoyaltiesList.tsx",
+          "hash": "2539121386335723529",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:theme",
+            "npm:elements",
+            "npm:components",
+            "npm:modules/song"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/UnclaimedRoyalties.tsx",
+          "hash": "12607352656067710417",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:currency.js",
+            "npm:theme",
+            "npm:@mui/icons-material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/home/wallet/Wallet.tsx",
+          "hash": "7688707441564069587",
+          "deps": [
+            "npm:react",
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:@newm.io/cardano-dapp-wallet-connector",
+            "npm:modules/ui",
+            "npm:common",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/login/Login.tsx",
+          "hash": "11204623375043793624",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react",
+            "npm:common",
+            "npm:common/history",
+            "npm:formik",
+            "npm:components",
+            "npm:yup",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/login/index.ts",
+          "hash": "14631802500751919323"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/signUp/SignUp.tsx",
+          "hash": "1278425175473789523",
+          "deps": [
+            "npm:yup",
+            "npm:@mui/material",
+            "npm:formik",
+            "npm:react",
+            "npm:components",
+            "npm:common",
+            "npm:modules/session"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/signUp/Verification.tsx",
+          "hash": "7815318428546725012",
+          "deps": [
+            "npm:react",
+            "npm:elements",
+            "npm:components",
+            "npm:formik",
+            "npm:@mui/material",
+            "npm:modules/session",
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/signUp/Welcome.tsx",
+          "hash": "16687836373972109508",
+          "deps": [
+            "npm:@mui/material",
+            "npm:elements",
+            "npm:react",
+            "npm:common",
+            "npm:common/history",
+            "npm:formik",
+            "npm:components"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/pages/signUp/index.ts",
+          "hash": "18299062192972505010"
+        },
+        {
+          "file": "apps/artist-portal/src/pages/signUp/test/Signup.test.tsx",
+          "hash": "12263411859324567521",
+          "deps": [
+            "npm:common"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/reportWebVitals.ts",
+          "hash": "13179978946851081733",
+          "deps": [
+            "npm:web-vitals",
+            [
+              "npm:web-vitals",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/sentryConfig.ts",
+          "hash": "3219031277482612889",
+          "deps": [
+            "npm:@sentry/react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/setupTests.js",
+          "hash": "13697089313880801487",
+          "deps": [
+            "npm:@testing-library/jest-dom"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/store.ts",
+          "hash": "11937936142872555078",
+          "deps": [
+            "npm:@reduxjs/toolkit",
+            "npm:redux-logger",
+            "npm:redux-persist",
+            "npm:api",
+            "npm:modules/playlist",
+            "npm:modules/session",
+            "npm:modules/song",
+            "npm:buildParams",
+            "npm:modules/ui",
+            "npm:modules/wallet"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/theme/emotion.d.ts",
+          "hash": "10047947491863729598",
+          "deps": [
+            "npm:@emotion/react"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/src/theme/index.ts",
+          "hash": "11685832212880254058"
+        },
+        {
+          "file": "apps/artist-portal/src/theme/theme.ts",
+          "hash": "16813593484481085032",
+          "deps": [
+            "npm:@mui/material"
+          ]
+        },
+        {
+          "file": "apps/artist-portal/tsconfig.app.json",
+          "hash": "9230191882657796292"
+        },
+        {
+          "file": "apps/artist-portal/tsconfig.json",
+          "hash": "15536130476333000261"
+        },
+        {
+          "file": "apps/artist-portal/tsconfig.spec.json",
+          "hash": "5672916290019494716"
+        },
+        {
+          "file": "apps/artist-portal/vite.config.js",
+          "hash": "12773231427874861231",
+          "deps": [
+            "npm:vite",
+            "npm:@vitejs/plugin-react",
+            "npm:vite-tsconfig-paths"
+          ]
+        }
+      ]
+    }
+  }
+}
