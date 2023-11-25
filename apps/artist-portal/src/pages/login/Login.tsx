@@ -1,5 +1,5 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, HorizontalLine, Link, Typography } from "elements";
+import { Button, HorizontalLine, Link, Typography } from "@newm.io/studio/elements";
 import { FunctionComponent, MouseEventHandler, useState } from "react";
 import { commonYupValidation, useAuthenticatedRedirect } from "common";
 import { history } from "common/history";
@@ -14,9 +14,11 @@ import {
 } from "components";
 import * as Yup from "yup";
 import { useLoginThunk } from "modules/session";
+import { theme as hello } from "@newm.io/theme";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
+  console.log("hello: ", hello());
 
   const [login, { isLoading }] = useLoginThunk();
   const [maskPassword, setMaskPassword] = useState(true);
@@ -57,9 +59,7 @@ const Login: FunctionComponent = () => {
         width: "100%",
       } }
     >
-      <Stack
-        sx={ { alignItems: "center", gap: 1, mt: [2, 4, 5], width: "100%" } }
-      >
+      <Stack sx={ { alignItems: "center", gap: 1, mt: [2, 4, 5], width: "100%" } }>
         <Button
           color="music"
           onClick={ () => {
@@ -77,20 +77,10 @@ const Login: FunctionComponent = () => {
       <Typography variant="h1" sx={ { mt: [4, 4, 5] } }>
         Welcome back
       </Typography>
-      <Formik
-        initialValues={ { email: "", password: "" } }
-        onSubmit={ handleLogin }
-        validationSchema={ validationSchema }
-      >
+      <Formik initialValues={ { email: "", password: "" } } onSubmit={ handleLogin } validationSchema={ validationSchema }>
         { ({ values: { password } }) => (
           <Form style={ { textAlign: "center", width: "100%" } }>
-            <Stack
-              display="inline-flex"
-              maxWidth={ theme.inputField.maxWidth }
-              mt={ 3 }
-              spacing={ 1.5 }
-              width="100%"
-            >
+            <Stack display="inline-flex" maxWidth={ theme.inputField.maxWidth } mt={ 3 } spacing={ 1.5 } width="100%">
               <TextInputField
                 aria-label="Email input field"
                 isOptional={ false }
@@ -111,13 +101,7 @@ const Login: FunctionComponent = () => {
               <Button disabled={ isLoading } type="submit">
                 Log In
               </Button>
-              <Link
-                color="grey100"
-                sx={ { textDecoration: "none" } }
-                to="/forgot-password"
-                variant="subtitle1"
-                mt={ 0.5 }
-              >
+              <Link color="grey100" sx={ { textDecoration: "none" } } to="/forgot-password" variant="subtitle1" mt={ 0.5 }>
                 Forgot password?
               </Link>
             </Stack>
@@ -125,14 +109,7 @@ const Login: FunctionComponent = () => {
         ) }
       </Formik>
 
-      <Stack
-        alignItems="center"
-        columnGap={ 2 }
-        direction="row"
-        maxWidth={ theme.inputField.maxWidth }
-        mt={ 3 }
-        width="100%"
-      >
+      <Stack alignItems="center" columnGap={ 2 } direction="row" maxWidth={ theme.inputField.maxWidth } mt={ 3 } width="100%">
         <HorizontalLine />
         <Typography>or</Typography>
         <HorizontalLine />

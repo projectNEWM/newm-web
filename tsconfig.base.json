@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@newm.io/studio/*": ["apps/artist-portal/src/*"],
+      "@newm.io/theme": ["packages/theme/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
