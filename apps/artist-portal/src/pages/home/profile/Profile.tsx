@@ -4,15 +4,15 @@ import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useGetSongsQuery } from "modules/song";
-import { Button, HorizontalLine, Tooltip } from "elements";
+import { useGetSongsQuery } from "@newm.io/studio/modules/song";
+import { Button, HorizontalLine, Tooltip } from "@newm.io/studio/elements";
 import {
   DropdownSelectField,
   SwitchInputField,
   TextAreaField,
   TextInputField,
   UploadImageField,
-} from "components";
+} from "@newm.io/studio/components";
 import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
@@ -26,8 +26,8 @@ import {
   scrollToError,
   useAppDispatch,
   useWindowDimensions,
-} from "common";
-import { useGetRolesQuery } from "modules/content";
+} from "@newm.io/studio/common";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -35,9 +35,9 @@ import {
   emptyProfile,
   useGetProfileQuery,
   useUpdateProfileThunk,
-} from "modules/session";
-import theme from "theme";
-import { setIsIdenfyModalOpen } from "modules/ui";
+} from "@newm.io/studio/modules/session";
+import theme from "@newm.io/studio/theme";
+import { setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
@@ -124,17 +124,11 @@ const Profile: FunctionComponent = () => {
   };
 
   const validationSchema = Yup.object({
-    biography: Yup.string().max(
-      MAX_CHARACTER_COUNT_LONG,
-      `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
-    ),
+    biography: Yup.string().max(MAX_CHARACTER_COUNT_LONG, `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`),
     companyName: Yup.string().when("companyIpRights", {
       is: true,
       then: Yup.string()
-        .max(
-          MAX_CHARACTER_COUNT,
-          `Must be ${MAX_CHARACTER_COUNT} characters or less`
-        )
+        .max(MAX_CHARACTER_COUNT, `Must be ${MAX_CHARACTER_COUNT} characters or less`)
         .required("Company name is required"),
       otherwise: Yup.string(),
     }),
@@ -160,10 +154,7 @@ const Profile: FunctionComponent = () => {
       ),
     soundCloudProfile: Yup.string()
       .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
-      .matches(
-        REGEX_SOUNDCLOUD_PROFILE,
-        "URL must be in the format \"soundcloud.com/your-profile\""
-      ),
+      .matches(REGEX_SOUNDCLOUD_PROFILE, "URL must be in the format \"soundcloud.com/your-profile\""),
   });
 
   /**
@@ -189,10 +180,7 @@ const Profile: FunctionComponent = () => {
       }
     });
 
-    if (
-      updatedValues.companyIpRights === false ||
-      values.companyIpRights === false
-    ) {
+    if (updatedValues.companyIpRights === false || values.companyIpRights === false) {
       updatedValues.companyName = "";
     }
 
@@ -233,12 +221,7 @@ const Profile: FunctionComponent = () => {
 
         { isUnverified || isPendingVerification ? (
           <Stack direction="row">
-            <Button
-              color="partners"
-              variant="outlined"
-              width="compact"
-              onClick={ handleVerificationSession }
-            >
+            <Button color="partners" variant="outlined" width="compact" onClick={ handleVerificationSession }>
               { isUnverified ? "Verify your profile" : "Pending Verification" }
             </Button>
 
@@ -247,8 +230,7 @@ const Profile: FunctionComponent = () => {
                 <>
                   <Typography>Why Verify?</Typography>
                   <Typography fontWeight={ 500 }>
-                    In order to mint songs and collect royalties, you must
-                    complete the profile verification process.
+                    In order to mint songs and collect royalties, you must complete the profile verification process.
                   </Typography>
                 </>
               }
@@ -296,10 +278,7 @@ const Profile: FunctionComponent = () => {
                 } }
               />
 
-              <Box
-                display="flex"
-                justifyContent={ ["center", "center", "flex-start"] }
-              >
+              <Box display="flex" justifyContent={ ["center", "center", "flex-start"] }>
                 <Stack maxWidth={ ["340px", "340px", "700px"] } flexGrow={ 1 }>
                   <Stack
                     display="flex"
@@ -328,11 +307,7 @@ const Profile: FunctionComponent = () => {
                       } }
                     />
 
-                    <Stack
-                      gap={ 1 }
-                      width="100%"
-                      alignItems={ ["center", "center", "flex-start"] }
-                    >
+                    <Stack gap={ 1 } width="100%" alignItems={ ["center", "center", "flex-start"] }>
                       <Stack
                         direction="row"
                         alignItems="center"
@@ -342,13 +317,9 @@ const Profile: FunctionComponent = () => {
                         <Typography variant="h3" fontWeight="700">
                           { nickname
                             ? nickname?.toUpperCase()
-                            : firstName?.toUpperCase() +
-                              " " +
-                              lastName?.toUpperCase() }
+                            : firstName?.toUpperCase() + " " + lastName?.toUpperCase() }
                         </Typography>
-                        { isVerified ? (
-                          <CheckCircleIcon color="success" />
-                        ) : null }
+                        { isVerified ? <CheckCircleIcon color="success" /> : null }
                       </Stack>
 
                       { location ? (
@@ -369,12 +340,7 @@ const Profile: FunctionComponent = () => {
                       <Typography variant="h4" fontWeight="700">
                         YOUR PUBLIC PROFILE
                       </Typography>
-                      <TextInputField
-                        label="STAGE NAME"
-                        name="nickname"
-                        placeholder="Stage name"
-                        type="text"
-                      />
+                      <TextInputField label="STAGE NAME" name="nickname" placeholder="Stage name" type="text" />
                       <Stack
                         ref={ roleRef }
                         sx={ {
@@ -400,11 +366,7 @@ const Profile: FunctionComponent = () => {
                           placeholder="Not yet defined"
                         />
                       </Stack>
-                      <TextAreaField
-                        label="DESCRIPTION"
-                        name="biography"
-                        placeholder="Tell us about yourself"
-                      />
+                      <TextAreaField label="DESCRIPTION" name="biography" placeholder="Tell us about yourself" />
                     </Stack>
                     <Stack rowGap={ 2 }>
                       <Stack rowGap={ 0.5 }>
@@ -412,8 +374,7 @@ const Profile: FunctionComponent = () => {
                           SOCIAL MEDIA
                         </Typography>
                         <Typography variant="subtitle2">
-                          Link your preferred profiles so fans can follow and
-                          connect with you.
+                          Link your preferred profiles so fans can follow and connect with you.
                         </Typography>
                       </Stack>
                       <Stack
@@ -424,25 +385,10 @@ const Profile: FunctionComponent = () => {
                           flexWrap: "wrap",
                         } }
                       >
-                        <TextInputField
-                          label="WEBSITE"
-                          name="websiteUrl"
-                          placeholder="Your website link"
-                          type="text"
-                        />
-                        <TextInputField
-                          label="TWITTER"
-                          name="twitterUrl"
-                          placeholder="Twitter link"
-                          type="text"
-                        />
+                        <TextInputField label="WEBSITE" name="websiteUrl" placeholder="Your website link" type="text" />
+                        <TextInputField label="TWITTER" name="twitterUrl" placeholder="Twitter link" type="text" />
                       </Stack>
-                      <TextInputField
-                        label="INSTAGRAM"
-                        name="instagramUrl"
-                        placeholder="Instagram link"
-                        type="text"
-                      />
+                      <TextInputField label="INSTAGRAM" name="instagramUrl" placeholder="Instagram link" type="text" />
                     </Stack>
 
                     <Stack rowGap={ 2 }>
@@ -451,9 +397,8 @@ const Profile: FunctionComponent = () => {
                           OUTLET PROFILES
                         </Typography>
                         <Typography variant="subtitle2">
-                          Connecting your outlet profile ensures that your music
-                          will be associated with your designated artist page on
-                          each platform following distribution.
+                          Connecting your outlet profile ensures that your music will be associated with your designated
+                          artist page on each platform following distribution.
                         </Typography>
                       </Stack>
                       <Stack
@@ -493,9 +438,7 @@ const Profile: FunctionComponent = () => {
                         <Typography variant="h4" fontWeight="700">
                           ABOUT YOU
                         </Typography>
-                        <Typography variant="subtitle2">
-                          This info will not be made public on your profile.
-                        </Typography>
+                        <Typography variant="subtitle2">This info will not be made public on your profile.</Typography>
                       </Stack>
                       <Stack
                         sx={ {
@@ -541,16 +484,9 @@ const Profile: FunctionComponent = () => {
                       <SwitchInputField
                         name="companyIpRights"
                         title="DO YOU HAVE A COMPANY?"
-                        description={
-                          "If your Royalty Splits are held under your Company, please select this option."
-                        }
+                        description={ "If your Royalty Splits are held under your Company, please select this option." }
                       >
-                        <Stack
-                          alignItems="center"
-                          columnGap={ 1.5 }
-                          flexDirection="row"
-                          mt={ 2 }
-                        >
+                        <Stack alignItems="center" columnGap={ 1.5 } flexDirection="row" mt={ 2 }>
                           <UploadImageField
                             name="companyLogoUrl"
                             minDimensions={ { width: 100, height: 100 } }
@@ -597,22 +533,14 @@ const Profile: FunctionComponent = () => {
                       disabled={ !dirty }
                       onClick={ handleReset }
                       variant="secondary"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
+                      width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
                     >
                       Cancel
                     </Button>
 
                     <Button
                       isLoading={ isLoading }
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
+                      width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
                       type="submit"
                     >
                       Save

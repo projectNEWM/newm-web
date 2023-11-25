@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { DialogActions, DialogContentText, DialogProps } from "@mui/material";
-import { Button, Dialog, HorizontalLine, Typography } from "elements";
+import { Button, Dialog, HorizontalLine, Typography } from "@newm.io/studio/elements";
 
 interface OwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
@@ -9,13 +9,7 @@ interface OwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly role?: string;
 }
 
-const OwnerModal: FunctionComponent<OwnerModalProps> = ({
-  biography,
-  nickname,
-  onClose,
-  open,
-  role,
-}) =>
+const OwnerModal: FunctionComponent<OwnerModalProps> = ({ biography, nickname, onClose, open, role }) =>
   open ? (
     <Dialog
       fullWidth={ true }
@@ -29,13 +23,7 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
         },
       } }
     >
-      <Typography
-        fontSize="20px"
-        fontWeight={ 800 }
-        lineHeight="24px"
-        textTransform="uppercase"
-        variant="h4"
-      >
+      <Typography fontSize="20px" fontWeight={ 800 } lineHeight="24px" textTransform="uppercase" variant="h4">
         About { nickname }
       </Typography>
       <DialogContentText>

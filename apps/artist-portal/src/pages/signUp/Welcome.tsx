@@ -1,8 +1,8 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, HorizontalLine, Typography } from "elements";
+import { Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
 import { FunctionComponent, useState } from "react";
-import { useAuthenticatedRedirect } from "common";
-import { history } from "common/history";
+import { useAuthenticatedRedirect } from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
 import { FormikValues, useFormikContext } from "formik";
 import {
   FacebookLogin,
@@ -11,7 +11,7 @@ import {
   PasswordInputField,
   ResponsiveNEWMLogo,
   TextInputField,
-} from "components";
+} from "@newm.io/studio/components";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
@@ -46,12 +46,7 @@ const SignUp: FunctionComponent = () => {
       <Typography variant="h1" mt={ 5 }>
         Welcome
       </Typography>
-      <Stack
-        maxWidth={ theme.inputField.maxWidth }
-        mt={ 3 }
-        spacing={ 1.5 }
-        width="100%"
-      >
+      <Stack maxWidth={ theme.inputField.maxWidth } mt={ 3 } spacing={ 1.5 } width="100%">
         <TextInputField
           aria-label="Email input field"
           isOptional={ false }
@@ -77,14 +72,7 @@ const SignUp: FunctionComponent = () => {
         <Button type="submit">Create account</Button>
       </Stack>
 
-      <Stack
-        alignItems="center"
-        columnGap={ 2 }
-        direction="row"
-        maxWidth={ theme.inputField.maxWidth }
-        mt={ 3 }
-        width="100%"
-      >
+      <Stack alignItems="center" columnGap={ 2 } direction="row" maxWidth={ theme.inputField.maxWidth } mt={ 3 } width="100%">
         <HorizontalLine />
         <Typography>or</Typography>
         <HorizontalLine />

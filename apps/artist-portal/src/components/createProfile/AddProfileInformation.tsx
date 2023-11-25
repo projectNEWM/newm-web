@@ -1,13 +1,9 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
+import { Button, Typography } from "@newm.io/studio/elements";
 import { FormikValues, useFormikContext } from "formik";
-import {
-  FilteredTagsField,
-  GradientTextInputField,
-  ResponsiveNEWMLogo,
-} from "components";
-import { useUserDevice, useWindowDimensions } from "common";
+import { FilteredTagsField, GradientTextInputField, ResponsiveNEWMLogo } from "@newm.io/studio/components";
+import { useUserDevice, useWindowDimensions } from "@newm.io/studio/common";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
@@ -28,8 +24,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const skipButtonRef = useRef<HTMLButtonElement | null>(null);
-  const { isValid, setFieldTouched, handleSubmit, values } =
-    useFormikContext<FormikValues>();
+  const { isValid, setFieldTouched, handleSubmit, values } = useFormikContext<FormikValues>();
   const { isMobileOrTablet } = useUserDevice();
   const windowWidth = useWindowDimensions()?.width;
   const theme = useTheme();
@@ -38,8 +33,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
 
   const centerButtonOffset =
     isSkipButtonVisible && skipButtonRef.current
-      ? skipButtonRef.current?.offsetWidth +
-        Number(theme.spacing(2).slice(0, -2))
+      ? skipButtonRef.current?.offsetWidth + Number(theme.spacing(2).slice(0, -2))
       : null;
 
   /**
@@ -128,11 +122,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
                   } }
                   onClick={ () => handleSubmit() }
                   variant="secondary"
-                  width={
-                    windowWidth && windowWidth > theme.breakpoints.values.md
-                      ? "compact"
-                      : "default"
-                  }
+                  width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
                 >
                   Skip
                 </Button>
@@ -143,20 +133,12 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
                   left: [null, null, centerButtonOffset],
                 } }
                 type="submit"
-                width={
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "compact"
-                    : "default"
-                }
+                width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
               >
                 Next
               </Button>
             </Stack>
-            <Typography
-              variant="h5"
-              color="grey100"
-              sx={ { opacity: isValid ? 1 : 0.5 } }
-            >
+            <Typography variant="h5" color="grey100" sx={ { opacity: isValid ? 1 : 0.5 } }>
               or press Enter
             </Typography>
           </Box>

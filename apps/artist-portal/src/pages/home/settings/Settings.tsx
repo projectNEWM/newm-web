@@ -1,31 +1,28 @@
 import { FunctionComponent } from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Button, HorizontalLine } from "elements";
-import { LogoutButton, PasswordInputField } from "components";
+import { Button, HorizontalLine } from "@newm.io/studio/elements";
+import { LogoutButton, PasswordInputField } from "@newm.io/studio/components";
 import {
   NEWM_STUDIO_TERMS_OF_SERVICE_URL,
   commonYupValidation,
   getUpdatedValues,
   useWindowDimensions,
-} from "common";
+} from "@newm.io/studio/common";
 import * as Yup from "yup";
 import {
   ChangePasswordRequest,
   emptyProfile,
   useChangePasswordThunk,
   useGetProfileQuery,
-} from "modules/session";
-import theme from "theme";
+} from "@newm.io/studio/modules/session";
+import theme from "@newm.io/studio/theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 
 const Settings: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
 
-  const {
-    data: { oauthType } = emptyProfile,
-    isLoading: isGetUserProfileLoading,
-  } = useGetProfileQuery();
+  const { data: { oauthType } = emptyProfile, isLoading: isGetUserProfileLoading } = useGetProfileQuery();
   const isSocialLogin = !!oauthType;
   const [changePassword, { isLoading }] = useChangePasswordThunk();
 
@@ -42,22 +39,16 @@ const Settings: FunctionComponent = () => {
     is: (currentValue: string) => currentValue,
     then: Yup.string()
       .required("New password is required")
-      .notOneOf(
-        [Yup.ref("currentPassword")],
-        "New password cannot be the same as the current password"
-      ),
+      .notOneOf([Yup.ref("currentPassword")], "New password cannot be the same as the current password"),
   });
 
   /**
    * If there is a new password, the confirmation password is required and it has to match the new password.
    */
-  const confirmPassword = commonYupValidation.confirmPassword.when(
-    "newPassword",
-    {
-      is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Must match new password"),
-    }
-  );
+  const confirmPassword = commonYupValidation.confirmPassword.when("newPassword", {
+    is: (currentValue: string) => currentValue,
+    then: Yup.string().required("Must match new password"),
+  });
 
   /**
    * Defines the validation schema based on the user's login method.
@@ -66,9 +57,7 @@ const Settings: FunctionComponent = () => {
    */
   const validationSchema = isSocialLogin
     ? Yup.object({
-        newPassword: commonYupValidation.newPassword.required(
-          "New password is required"
-        ),
+        newPassword: commonYupValidation.newPassword.required("New password is required"),
         confirmPassword,
       })
     : Yup.object({
@@ -80,10 +69,7 @@ const Settings: FunctionComponent = () => {
   /**
    * Update profile data with modifications made.
    */
-  const handleSubmit = (
-    values: ChangePasswordRequest,
-    { resetForm }: FormikHelpers<ChangePasswordRequest>
-  ) => {
+  const handleSubmit = (values: ChangePasswordRequest, { resetForm }: FormikHelpers<ChangePasswordRequest>) => {
     const updatedValues = getUpdatedValues(initialValues, values);
     changePassword({ ...updatedValues });
     resetForm();
@@ -114,16 +100,8 @@ const Settings: FunctionComponent = () => {
         onSubmit={ handleSubmit }
         validationSchema={ validationSchema }
       >
-        { ({
-          dirty,
-          values: { currentPassword, newPassword, confirmPassword },
-          handleReset,
-        }) => {
-          const showEndAdornment = !!(
-            currentPassword ||
-            newPassword ||
-            confirmPassword
-          );
+        { ({ dirty, values: { currentPassword, newPassword, confirmPassword }, handleReset }) => {
+          const showEndAdornment = !!(currentPassword || newPassword || confirmPassword);
 
           return (
             <Form>
@@ -173,9 +151,7 @@ const Settings: FunctionComponent = () => {
                       <Typography variant="h4" fontWeight={ 700 }>
                         DELETE ACCOUNT
                       </Typography>
-                      <Typography variant="subtitle1">
-                        This action cannot be undone.
-                      </Typography>
+                      <Typography variant="subtitle1">This action cannot be undone.</Typography>
                     </Stack>
                     <DeleteAccountDialog />
                   </Stack>
@@ -213,11 +189,7 @@ const Settings: FunctionComponent = () => {
                 >
                   <Button
                     disabled={ !dirty }
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? "compact"
-                        : "default"
-                    }
+                    width={ windowWidth && windowWidth > theme.breakpoints.values.lg ? "compact" : "default" }
                     variant="secondary"
                     color="music"
                     onClick={ handleReset }
@@ -227,11 +199,7 @@ const Settings: FunctionComponent = () => {
                   <Button
                     isLoading={ isLoading }
                     type="submit"
-                    width={
-                      windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? "compact"
-                        : "default"
-                    }
+                    width={ windowWidth && windowWidth > theme.breakpoints.values.lg ? "compact" : "default" }
                   >
                     Save
                   </Button>

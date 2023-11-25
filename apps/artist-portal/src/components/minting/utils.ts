@@ -1,4 +1,4 @@
-import { CollaboratorInfo, Collaborators } from "modules/song";
+import { CollaboratorInfo, Collaborators } from "@newm.io/studio/modules/song";
 
 /**
  * Returns the collaborator details based on the provided email.
@@ -8,10 +8,7 @@ import { CollaboratorInfo, Collaborators } from "modules/song";
  *
  * @returns {Partial<CollaboratorInfo>} The collaborator's details if found; otherwise, an empty object.
  */
-export const getCollaboratorInfo = (
-  email: string,
-  collaboratorsData?: Collaborators[]
-): Partial<CollaboratorInfo> => {
+export const getCollaboratorInfo = (email: string, collaboratorsData?: Collaborators[]): Partial<CollaboratorInfo> => {
   const collaborator = collaboratorsData?.find((item) => item.email === email);
 
   if (!collaborator?.user) return {};

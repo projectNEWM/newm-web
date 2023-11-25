@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import { Box, Container } from "@mui/material";
-import { Button, Typography } from "elements";
+import { Button, Typography } from "@newm.io/studio/elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { setIsConnectWalletModalOpen } from "modules/ui";
-import { useAppDispatch } from "common";
-import { DisconnectWalletButton } from "components";
+import { setIsConnectWalletModalOpen } from "@newm.io/studio/modules/ui";
+import { useAppDispatch } from "@newm.io/studio/common";
+import { DisconnectWalletButton } from "@newm.io/studio/components";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 

@@ -5,11 +5,11 @@ import {
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
-} from "modules/song";
-import { selectUi, setIsInvitesModalOpen } from "modules/ui";
-import { Button, Typography } from "elements";
-import { SearchBox } from "components";
-import { useAppDispatch, useAppSelector } from "common";
+} from "@newm.io/studio/modules/song";
+import { selectUi, setIsInvitesModalOpen } from "@newm.io/studio/modules/ui";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { SearchBox } from "@newm.io/studio/components";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 import OwnersTable from "./OwnersTable";
 
 const OwnersList: FunctionComponent = () => {
@@ -22,11 +22,10 @@ const OwnersList: FunctionComponent = () => {
     statuses: [CollaborationStatus.Waiting],
   });
 
-  const { data: { count: totalCollaborators = 0 } = {} } =
-    useGetCollaboratorCountQuery({
-      phrase: query,
-      excludeMe: true,
-    });
+  const { data: { count: totalCollaborators = 0 } = {} } = useGetCollaboratorCountQuery({
+    phrase: query,
+    excludeMe: true,
+  });
 
   const handleSearch = (searched: string) => {
     setQuery(searched);
@@ -48,21 +47,14 @@ const OwnersList: FunctionComponent = () => {
       >
         <Typography variant="h3">COLLABORATORS</Typography>
         { invites?.length ? (
-          <Button
-            onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) }
-            width="compact"
-          >
+          <Button onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) } width="compact">
             Invitation pending
           </Button>
         ) : null }
       </Stack>
 
       { totalCollaborators || query ? (
-        <SearchBox
-          placeholder="Search by name or email"
-          query={ query }
-          onSearch={ handleSearch }
-        />
+        <SearchBox placeholder="Search by name or email" query={ query } onSearch={ handleSearch } />
       ) : null }
 
       <OwnersTable totalCollaborators={ totalCollaborators } query={ query } />

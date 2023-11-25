@@ -1,13 +1,10 @@
 import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import {
-  ProfileFormValues,
-  useUpdateInitialProfileThunk,
-} from "modules/session";
-import { WizardForm } from "components";
-import { commonYupValidation } from "common";
+import { ProfileFormValues, useUpdateInitialProfileThunk } from "@newm.io/studio/modules/session";
+import { WizardForm } from "@newm.io/studio/components";
+import { commonYupValidation } from "@newm.io/studio/common";
 import * as Yup from "yup";
-import { useGetRolesQuery } from "modules/content";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";

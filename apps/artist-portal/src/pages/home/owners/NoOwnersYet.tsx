@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
-import { Button, Typography } from "elements";
-import Owner from "assets/images/Owner";
+import { Button, Typography } from "@newm.io/studio/elements";
+import Owner from "@newm.io/studio/assets/images/Owner";
 import { useNavigate } from "react-router-dom";
 
 const NoOwnersYet: FunctionComponent = () => {
@@ -24,15 +24,9 @@ const NoOwnersYet: FunctionComponent = () => {
         There are no collaborators yet.
       </Typography>
       <Typography fontWeight="regular" fontSize="14x">
-        After minting, the co-creators and co-owners of your songs will appear
-        here.
+        After minting, the co-creators and co-owners of your songs will appear here.
       </Typography>
-      <Button
-        color="music"
-        onClick={ () => navigate("/home/upload-song") }
-        variant="secondary"
-        width="compact"
-      >
+      <Button color="music" onClick={ () => navigate("/home/upload-song") } variant="secondary" width="compact">
         Upload your first song
       </Button>
     </Box>

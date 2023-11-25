@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/await-async-events */
 import { screen } from "@testing-library/react";
-import { renderWithContext, withFormik } from "common";
+import { renderWithContext, withFormik } from "@newm.io/studio/common";
 import * as Formik from "formik";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
@@ -37,9 +37,7 @@ describe("<PasswordInputField>", () => {
   it("renders with defaults when only required name prop is given", () => {
     renderComponent();
 
-    expect(
-      screen.getByPlaceholderText("password placeholder")
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("password placeholder")).toBeInTheDocument();
     expect(screen.getByTestId("VisibilityIcon")).toBeInTheDocument();
   });
 

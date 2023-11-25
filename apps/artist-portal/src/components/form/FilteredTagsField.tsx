@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import { Field, FieldProps } from "formik";
-import { Button } from "elements";
+import { Button } from "@newm.io/studio/elements";
 
 interface FilteredTagsFieldProps {
   readonly name: string;
@@ -12,10 +12,7 @@ interface FilteredTagsFieldProps {
  * Formik field component that displays tags based on the value of
  * the field. Pressing one of the tags will update the field with that value.
  */
-const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
-  name,
-  tags,
-}) => (
+const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({ name, tags }) => (
   <Field name={ name }>
     { ({ field, form }: FieldProps) => {
       const filteredTags = tags.filter(filterTags(field.value));

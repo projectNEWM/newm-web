@@ -1,16 +1,12 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
-import { HorizontalLine, Tooltip, Typography } from "elements";
+import { HorizontalLine, Tooltip, Typography } from "@newm.io/studio/elements";
 import { Formik, FormikProps } from "formik";
-import { selectSong } from "modules/song";
+import { selectSong } from "@newm.io/studio/modules/song";
 import { FunctionComponent, useEffect } from "react";
-import agreementPreview from "assets/images/artist-agreement-preview.jpg";
-import {
-  COLLABORATOR_FEE_IN_ADA,
-  MINTING_FEE_IN_ADA,
-  useAppSelector,
-} from "common";
-import theme from "theme";
+import agreementPreview from "@newm.io/studio/assets/images/artist-agreement-preview.jpg";
+import { COLLABORATOR_FEE_IN_ADA, MINTING_FEE_IN_ADA, useAppSelector } from "@newm.io/studio/common";
+import theme from "@newm.io/studio/theme";
 import ViewPDF from "../ViewPDF";
 import CheckboxField from "../form/CheckboxField";
 
@@ -28,8 +24,7 @@ interface FormValues {
   readonly agreesToDistribution: boolean;
 }
 
-type FormContentProps = FormikProps<FormValues> &
-  Omit<ConfirmContractProps, "onConfirm">;
+type FormContentProps = FormikProps<FormValues> & Omit<ConfirmContractProps, "onConfirm">;
 
 /**
  * Allows for viewing and accepting an artist agreement contract.
@@ -48,11 +43,7 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
   };
 
   const handleChange = (values: FormValues) => {
-    if (
-      values.isCreator &&
-      values.agreesToContract &&
-      values.agreesToDistribution
-    ) {
+    if (values.isCreator && values.agreesToContract && values.agreesToDistribution) {
       onConfirm(true);
     } else {
       onConfirm(false);
@@ -62,12 +53,7 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
   return (
     <Formik initialValues={ initialValues } onSubmit={ handleChange }>
       { (formikProps) => (
-        <FormContent
-          songTitle={ songTitle }
-          isCoCreator={ isCoCreator }
-          totalOwners={ totalOwners }
-          { ...formikProps }
-        />
+        <FormContent songTitle={ songTitle } isCoCreator={ isCoCreator } totalOwners={ totalOwners } { ...formikProps } />
       ) }
     </Formik>
   );
@@ -82,9 +68,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   totalOwners,
 }) => {
   const { artistAgreement } = useAppSelector(selectSong);
-  const TotalFeeToMint = parseFloat(
-    (MINTING_FEE_IN_ADA + totalOwners * COLLABORATOR_FEE_IN_ADA).toFixed(2)
-  );
+  const TotalFeeToMint = parseFloat((MINTING_FEE_IN_ADA + totalOwners * COLLABORATOR_FEE_IN_ADA).toFixed(2));
 
   /**
    * Call onConfirm callback when form values change.
@@ -114,14 +98,12 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           label={
             isCoCreator ? (
               <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-                I confirm that I am the primary creator of{ " " }
-                <strong>{ songTitle }</strong> and all mentioned collaborators are
-                accurate.
+                I confirm that I am the primary creator of <strong>{ songTitle }</strong> and all mentioned collaborators
+                are accurate.
               </Typography>
             ) : (
               <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-                I confirm that I am the exclusive creator of{ " " }
-                <strong>{ songTitle }.</strong>
+                I confirm that I am the exclusive creator of <strong>{ songTitle }.</strong>
               </Typography>
             )
           }
@@ -149,9 +131,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             name="agreesToDistribution"
             label={
               <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-                By selecting &lsquo;Distribute & Mint&rsquo; you agree to
-                distribute this song to all current and future available stores
-                including digital downloads.
+                By selecting &lsquo;Distribute & Mint&rsquo; you agree to distribute this song to all current and future
+                available stores including digital downloads.
               </Typography>
             }
           />
@@ -161,8 +142,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
         <Stack direction="row" columnGap={ 0.5 }>
           <Typography variant="subtitle1" color="white" fontSize={ 12 }>
-            The minting process has a fee of{ " " }
-            <strong>{ `~₳${TotalFeeToMint}` }</strong> and may take 3-15 days to
+            The minting process has a fee of <strong>{ `~₳${TotalFeeToMint}` }</strong> and may take 3-15 days to
             complete.
           </Typography>
 

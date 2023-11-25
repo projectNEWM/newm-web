@@ -2,13 +2,8 @@ import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { Stack, Typography } from "@mui/material";
-import {
-  Song,
-  useFetchSongStreamThunk,
-  useGetSongQuery,
-  useHlsJs,
-} from "modules/song";
-import { PlayerState } from "common";
+import { Song, useFetchSongStreamThunk, useGetSongQuery, useHlsJs } from "@newm.io/studio/modules/song";
+import { PlayerState } from "@newm.io/studio/common";
 import IconMessage from "./IconMessage";
 
 interface PlaySongProps {
@@ -76,34 +71,21 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
       return;
     }
 
-    if (
-      fetchStreamDataResp.data &&
-      playerState.loadingSongId === fetchStreamDataResp.data.song.id
-    ) {
+    if (fetchStreamDataResp.data && playerState.loadingSongId === fetchStreamDataResp.data.song.id) {
       setPlayerState((prevState) => ({
         ...prevState,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
     }
-  }, [
-    playerState.loadingSongId,
-    fetchStreamDataResp.isLoading,
-    fetchStreamDataResp.data,
-    playSong,
-  ]);
+  }, [playerState.loadingSongId, fetchStreamDataResp.isLoading, fetchStreamDataResp.data, playSong]);
 
   // when a songs stream information is ready - play the song
   useEffect(() => {
     if (playerState.isReadyToPlay && playerState.song) {
       playSong(playerState.song);
     }
-  }, [
-    playerState.song,
-    playerState.loadingSongId,
-    playerState.isReadyToPlay,
-    playSong,
-  ]);
+  }, [playerState.song, playerState.loadingSongId, playerState.isReadyToPlay, playSong]);
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
@@ -119,9 +101,7 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   return song?.streamUrl ? (
     <Stack sx={ { cursor: "pointer", width: "100%", height: "100%" } }>
       <IconMessage
-        icon={
-          playerState.currentPlayingSongId ? <StopIcon /> : <PlayArrowIcon />
-        }
+        icon={ playerState.currentPlayingSongId ? <StopIcon /> : <PlayArrowIcon /> }
         message={ playerState.currentPlayingSongId ? "Stop song" : "Play song" }
         onClick={ () => handleSongPlayPause(song) }
       />

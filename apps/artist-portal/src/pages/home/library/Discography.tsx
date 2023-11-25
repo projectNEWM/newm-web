@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
-import { SearchBox } from "components";
-import { useGetSongCountQuery } from "modules/song";
-import { Typography } from "elements";
+import { SearchBox } from "@newm.io/studio/components";
+import { useGetSongCountQuery } from "@newm.io/studio/modules/song";
+import { Typography } from "@newm.io/studio/elements";
 import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
@@ -23,11 +23,7 @@ const Discography: FunctionComponent = () => {
       </Typography>
 
       { totalCountOfSongs || query ? (
-        <SearchBox
-          placeholder="Search songs"
-          query={ query }
-          onSearch={ handleSearch }
-        />
+        <SearchBox placeholder="Search songs" query={ query } onSearch={ handleSearch } />
       ) : null }
 
       <SongList totalCountOfSongs={ totalCountOfSongs } query={ query } />

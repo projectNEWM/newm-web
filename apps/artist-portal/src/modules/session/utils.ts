@@ -2,15 +2,12 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { EnabledWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { isProd } from "buildParams";
+import { isProd } from "@newm.io/studio/buildParams";
 import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
 export const sendVerificationEmail = (email: string) => {
-  return sessionApi.endpoints.sendVerificationEmail.initiate(
-    { email },
-    { forceRefetch: true }
-  );
+  return sessionApi.endpoints.sendVerificationEmail.initiate({ email }, { forceRefetch: true });
 };
 
 export const handleSuccessfulAuthentication = (

@@ -44,18 +44,18 @@ fluid and can be updated as necessary.
 ### Exports
 
 All exports should exported from the index.ts file at the top level of each
-directory. Two exceptions are the "modules" and "pages" directories. The
-"modules" directory should have exports exported from the top level of each
-module directory (e.g. `modules/session`), and the "pages" directory should have
+directory. Two exceptions are the "@newm.io/studio/modules" and "@newm.io/studio/pages" directories. The
+"@newm.io/studio/modules" directory should have exports exported from the top level of each
+module directory (e.g. `modules/session`), and the "@newm.io/studio/pages" directory should have
 a single export at the top level of each page directory (e.g. `pages/home`).
 
 ### Tests
 
 Test files should be placed in a "test" directory at the top level of each
-directory, except for the "modules" and "pages" directories, where they should
+directory, except for the "@newm.io/studio/modules" and "@newm.io/studio/pages" directories, where they should
 be placed at the top level of each module or page directory.
 
 ### Stories
 
 Story files should be placed in a "story" directory at the top level of the
-"elements" and "components" directories.
+"@newm.io/studio/elements" and "@newm.io/studio/components" directories.

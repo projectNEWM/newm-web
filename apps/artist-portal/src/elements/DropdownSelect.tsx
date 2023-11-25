@@ -9,15 +9,14 @@ import {
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import { Box } from "@mui/material";
-import { WidthType } from "common";
+import { WidthType } from "@newm.io/studio/common";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsList";
 
-export interface DropdownSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+export interface DropdownSelectProps extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
@@ -32,10 +31,7 @@ export interface DropdownSelectProps
   readonly widthType?: WidthType;
 }
 
-const DropdownSelect: ForwardRefRenderFunction<
-  HTMLInputElement,
-  DropdownSelectProps
-> = (
+const DropdownSelect: ForwardRefRenderFunction<HTMLInputElement, DropdownSelectProps> = (
   {
     disabled,
     errorMessage,
@@ -71,8 +67,7 @@ const DropdownSelect: ForwardRefRenderFunction<
       else handleChange?.(newValue as string);
     },
     // Removes warning for empty string not being a valid option
-    isOptionEqualToValue: (option, value) =>
-      value === "" ? true : option === value,
+    isOptionEqualToValue: (option, value) => (value === "" ? true : option === value),
     clearOnBlur: true,
     options,
     value: value as string,
@@ -82,8 +77,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   const showNoResults = !hasResults && popupOpen;
   const inputProps = getInputProps();
   const popupIndicatorProps = getPopupIndicatorProps();
-  const handleEndAdornmentClick =
-    popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
+  const handleEndAdornmentClick = popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
    * This prevents a form submission when input text does not match any options.

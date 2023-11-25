@@ -1,17 +1,14 @@
 import { FunctionComponent } from "react";
 import { Stack, Typography } from "@mui/material";
-import theme from "theme";
-import { Button } from "elements";
+import theme from "@newm.io/studio/theme";
+import { Button } from "@newm.io/studio/elements";
 
 interface DeleteSongModalProps {
   primaryAction: () => void;
   secondaryAction: () => void;
 }
 
-const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
-  primaryAction,
-  secondaryAction,
-}) => (
+const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({ primaryAction, secondaryAction }) => (
   <Stack
     sx={ {
       alignItems: "center",
@@ -39,8 +36,8 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
       >
         <Typography variant="body2">Delete Song</Typography>
         <Typography variant="subtitle1">
-          Are you sure you want to delete this song? Clicking &quot;Yes,&quot;
-          will immediately remove this song from your library.
+          Are you sure you want to delete this song? Clicking &quot;Yes,&quot; will immediately remove this song from
+          your library.
         </Typography>
       </Stack>
       <Stack
@@ -54,12 +51,7 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
           padding: "12px 24px",
         } }
       >
-        <Button
-          color="music"
-          onClick={ secondaryAction }
-          variant="secondary"
-          width="compact"
-        >
+        <Button color="music" onClick={ secondaryAction } variant="secondary" width="compact">
           Cancel
         </Button>
         <Button onClick={ primaryAction } width="compact">

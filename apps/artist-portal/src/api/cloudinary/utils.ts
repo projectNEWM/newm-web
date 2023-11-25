@@ -1,8 +1,8 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "api";
-import { getFileBinary } from "common";
-import { songApi } from "modules/song";
-import { OnUploadProgress } from "api/types";
+import { cloudinaryApi } from "@newm.io/studio/api";
+import { getFileBinary } from "@newm.io/studio/common";
+import { songApi } from "@newm.io/studio/modules/song";
+import { OnUploadProgress } from "@newm.io/studio/api/types";
 import { CloudinaryUploadOptions } from "./types";
 
 /**
@@ -17,9 +17,7 @@ export const uploadToCloudinary = async (
 ): Promise<string> => {
   // TODO: Delete previously saved image from cloudinary after successfully updating it.
 
-  const signatureResp = await dispatch(
-    songApi.endpoints.getCloudinarySignature.initiate(params)
-  );
+  const signatureResp = await dispatch(songApi.endpoints.getCloudinarySignature.initiate(params));
 
   if ("error" in signatureResp || !("data" in signatureResp)) {
     throw new Error("Error fetching secure Cloudinary signature");
@@ -45,7 +43,5 @@ export const uploadToCloudinary = async (
     throw new Error("Error uploading image to cloudinary");
   }
 
-  return cloudinaryResp.data.eager
-    ? cloudinaryResp.data.eager[0].secure_url
-    : cloudinaryResp.data.secure_url;
+  return cloudinaryResp.data.eager ? cloudinaryResp.data.eager[0].secure_url : cloudinaryResp.data.secure_url;
 };

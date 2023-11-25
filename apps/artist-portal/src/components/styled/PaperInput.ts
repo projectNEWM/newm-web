@@ -5,7 +5,7 @@
 
 import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 const PaperInput = styled(Paper)({
   alignItems: "center",

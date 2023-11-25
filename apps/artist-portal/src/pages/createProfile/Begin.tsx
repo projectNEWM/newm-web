@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { GradientTypography, Typography } from "elements";
-import { ResponsiveNEWMLogo } from "components";
+import { GradientTypography, Typography } from "@newm.io/studio/elements";
+import { ResponsiveNEWMLogo } from "@newm.io/studio/components";
 
 const Begin: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -26,10 +26,7 @@ const Begin: FunctionComponent = () => {
       </Typography>
 
       <Box mt={ 1 } mb={ 8 }>
-        <GradientTypography
-          variant="h1"
-          sx={ { ...theme.typography.emphasized } }
-        >
+        <GradientTypography variant="h1" sx={ { ...theme.typography.emphasized } }>
           Let&apos;s set you up.
         </GradientTypography>
       </Box>

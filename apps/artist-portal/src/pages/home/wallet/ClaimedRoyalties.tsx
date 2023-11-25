@@ -1,17 +1,15 @@
 import { Box, Icon, IconButton, Stack, Typography } from "@mui/material";
-import { Button, Tooltip } from "elements";
+import { Button, Tooltip } from "@newm.io/studio/elements";
 import currency from "currency.js";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import HelpIcon from "@mui/icons-material/Help";
-import CheckCircle from "assets/images/CheckCircle";
+import CheckCircle from "@newm.io/studio/assets/images/CheckCircle";
 
 interface ClaimedRoyaltiesProps {
   claimedRoyalties: number;
 }
 
-export const ClaimedRoyalties = ({
-  claimedRoyalties,
-}: ClaimedRoyaltiesProps) => {
+export const ClaimedRoyalties = ({ claimedRoyalties }: ClaimedRoyaltiesProps) => {
   return (
     <Box
       sx={ {

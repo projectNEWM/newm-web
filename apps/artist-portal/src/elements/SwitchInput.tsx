@@ -1,11 +1,5 @@
-import { Switch, Tooltip, Typography } from "elements";
-import {
-  IconButton,
-  Stack,
-  SwitchProps,
-  SxProps,
-  useTheme,
-} from "@mui/material";
+import { Switch, Tooltip, Typography } from "@newm.io/studio/elements";
+import { IconButton, Stack, SwitchProps, SxProps, useTheme } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 
@@ -50,11 +44,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
       >
         <Stack pr={ [0, 0, 4] }>
           <Stack display="flex" flexDirection="row">
-            <Typography
-              pr={ 1 }
-              color="white"
-              variant={ description ? "body1" : "subtitle1" }
-            >
+            <Typography pr={ 1 } color="white" variant={ description ? "body1" : "subtitle1" }>
               { title }
             </Typography>
 

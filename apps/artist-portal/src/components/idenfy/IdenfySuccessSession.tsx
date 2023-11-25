@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
-import { Button, GradientTypography } from "elements";
-import theme from "theme";
+import { Button, GradientTypography } from "@newm.io/studio/elements";
+import theme from "@newm.io/studio/theme";
 
 const IdenfySuccessSession: FunctionComponent = () => {
   useEffect(() => {
@@ -22,10 +22,7 @@ const IdenfySuccessSession: FunctionComponent = () => {
       } }
     >
       <Typography variant="h1">THANK YOU!</Typography>
-      <GradientTypography
-        style={ { ...theme.typography.emphasized } }
-        variant="h1"
-      >
+      <GradientTypography style={ { ...theme.typography.emphasized } } variant="h1">
         You will be notified soon.
       </GradientTypography>
       <Typography

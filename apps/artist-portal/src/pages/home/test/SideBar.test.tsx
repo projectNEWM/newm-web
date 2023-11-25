@@ -1,6 +1,6 @@
 // import { createAction } from "@reduxjs/toolkit";
-// import { renderWithContext } from "common";
-// import { Profile, sessionApi } from "modules/session";
+// import { renderWithContext } from "@newm.io/studio/common";
+// import { Profile, sessionApi } from "@newm.io/studio/modules/session";
 // import { SideBar } from "../SideBar";
 import React from "react";
 

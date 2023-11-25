@@ -3,7 +3,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LaunchIcon from "@mui/icons-material/Launch";
 import PreviewIcon from "@mui/icons-material/PictureInPictureAlt";
 import DownloadIcon from "@mui/icons-material/FileDownload";
-import { IconMessage, Modal, SolidOutline } from "components";
+import { IconMessage, Modal, SolidOutline } from "@newm.io/studio/components";
 import { FunctionComponent, useRef, useState } from "react";
 
 interface ViewPdfProps {
@@ -20,12 +20,7 @@ interface ViewPdfProps {
 /**
  * Component to preview or download a PDF file.
  */
-const ViewPDF: FunctionComponent<ViewPdfProps> = ({
-  data,
-  preview,
-  onViewPDF,
-  isViewed = false,
-}) => {
+const ViewPDF: FunctionComponent<ViewPdfProps> = ({ data, preview, onViewPDF, isViewed = false }) => {
   const linkRef = useRef<HTMLAnchorElement | null>(null);
 
   const { colors } = useTheme();
@@ -52,12 +47,7 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
   return (
     <>
       <Box>
-        <a
-          ref={ linkRef }
-          style={ { display: "none" } }
-          href={ agreementData }
-          download="artist-agreement.pdf"
-        >
+        <a ref={ linkRef } style={ { display: "none" } } href={ agreementData } download="artist-agreement.pdf">
           Download
         </a>
 
@@ -69,10 +59,9 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "stretch",
-            background: [
-              "linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.9))",
-              `url(${preview})`,
-            ].join(", "),
+            background: ["linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.9))", `url(${preview})`].join(
+              ", "
+            ),
             backgroundSize: "cover",
             flexGrow: 1,
             cursor: "pointer",
@@ -110,15 +99,9 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
               )) }
             </Stack>
           ) : isViewed ? (
-            <IconMessage
-              icon={ <CheckCircleIcon sx={ { color: colors.green } } /> }
-              message="Document read"
-            />
+            <IconMessage icon={ <CheckCircleIcon sx={ { color: colors.green } } /> } message="Document read" />
           ) : (
-            <IconMessage
-              icon={ <LaunchIcon sx={ { color: colors.white } } /> }
-              message="View contract"
-            />
+            <IconMessage icon={ <LaunchIcon sx={ { color: colors.white } } /> } message="View contract" />
           ) }
         </SolidOutline>
       </Box>

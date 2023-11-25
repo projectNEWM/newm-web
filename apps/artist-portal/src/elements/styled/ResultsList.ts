@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { DropdownMultiSelectProps } from "elements/DropdownMultiSelect";
-import theme from "theme";
+import { DropdownMultiSelectProps } from "@newm.io/studio/elements/DropdownMultiSelect";
+import theme from "@newm.io/studio/theme";
 
 const ResultsList = styled.ul`
   background-color: ${theme.colors.grey500};

@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
-import { Button } from "elements";
-import theme from "theme";
+import { Button } from "@newm.io/studio/elements";
+import theme from "@newm.io/studio/theme";
 
 const IdenfyFailSession: FunctionComponent = () => {
   useEffect(() => {
@@ -29,8 +29,8 @@ const IdenfyFailSession: FunctionComponent = () => {
           px: [2, 3],
         } }
       >
-        Sorry, we couldn&apos;t verify your profile. Please check your email and
-        review your details. Try again after 30 minutes.
+        Sorry, we couldn&apos;t verify your profile. Please check your email and review your details. Try again after 30
+        minutes.
       </Typography>
       <Button onClick={ handleClick }>Got it</Button>
     </Stack>

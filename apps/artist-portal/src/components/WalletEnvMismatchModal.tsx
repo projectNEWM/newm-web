@@ -1,9 +1,9 @@
 import { FunctionComponent, useEffect } from "react";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { Modal } from "components";
-import { useAppDispatch, useAppSelector } from "common";
-import { selectUi, setIsWalletEnvMismatchModalOpen } from "modules/ui";
-import { getIsWalletEnvMismatch } from "modules/session";
+import { Modal } from "@newm.io/studio/components";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import { selectUi, setIsWalletEnvMismatchModalOpen } from "@newm.io/studio/modules/ui";
+import { getIsWalletEnvMismatch } from "@newm.io/studio/modules/session";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 /**
@@ -47,9 +47,8 @@ const WalletEnvMismatchModal: FunctionComponent = () => {
           } }
         >
           <Typography>
-            There is a mismatch between the environment for your connected
-            wallet and the application environment. Please switch to the correct
-            wallet environment and then disconnect and reconnect the wallet.
+            There is a mismatch between the environment for your connected wallet and the application environment.
+            Please switch to the correct wallet environment and then disconnect and reconnect the wallet.
           </Typography>
         </Stack>
       </Box>

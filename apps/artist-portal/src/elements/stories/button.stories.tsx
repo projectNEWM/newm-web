@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { Button } from "elements";
+import { Button } from "@newm.io/studio/elements";
 
 export default {
   component: Button,
@@ -50,38 +50,16 @@ export const Width: StoryFn = (args) => (
 
 export const Icon: StoryFn = (args) => (
   <div style={ { display: "flex", gap: "16px" } }>
-    <Button
-      { ...args }
-      startIcon={
-        <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
-        ></div>
-      }
-    >
+    <Button { ...args } startIcon={ <div style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }></div> }>
       Start Icon
     </Button>
-    <Button
-      { ...args }
-      endIcon={
-        <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
-        ></div>
-      }
-    >
+    <Button { ...args } endIcon={ <div style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }></div> }>
       End Icon
     </Button>
     <Button
       { ...args }
-      startIcon={
-        <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
-        ></div>
-      }
-      endIcon={
-        <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
-        ></div>
-      }
+      startIcon={ <div style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }></div> }
+      endIcon={ <div style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }></div> }
     >
       Both Icons
     </Button>

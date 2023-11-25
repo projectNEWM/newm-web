@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FormikHelpers, FormikValues } from "formik";
-import { commonYupValidation, useExtractProperty } from "common";
-import { WizardForm } from "components";
-import { Typography } from "elements";
-import { useGetGenresQuery, useGetLanguagesQuery } from "modules/content";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+import { commonYupValidation, useExtractProperty } from "@newm.io/studio/common";
+import { WizardForm } from "@newm.io/studio/components";
+import { Typography } from "@newm.io/studio/elements";
+import { useGetGenresQuery, useGetLanguagesQuery } from "@newm.io/studio/modules/content";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import {
   CollaborationStatus,
   UploadSongRequest,
   useGenerateArtistAgreementThunk,
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
-} from "modules/song";
+} from "@newm.io/studio/modules/song";
 import ConfirmAgreement from "./ConfirmAgreement";
 import BasicSongDetails from "./BasicSongDetails";
 import AdvancedSongDetails from "./AdvancedSongDetails";
@@ -24,22 +24,14 @@ const UploadSong: FunctionComponent = () => {
 
   const { data: genres = [] } = useGetGenresQuery();
   const {
-    data: {
-      companyName = "",
-      firstName = "",
-      lastName = "",
-      nickname: stageName = "",
-      email,
-      role,
-    } = emptyProfile,
+    data: { companyName = "", firstName = "", lastName = "", nickname: stageName = "", email, role } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const languageCodes = useExtractProperty(languages, "language_code", false);
-  const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery(undefined, {
-      // endpoint throws error if user hasn't added first name
-      skip: !firstName,
-    });
+  const { data: { date: earliestReleaseDate } = {} } = useGetEarliestReleaseDateQuery(undefined, {
+    // endpoint throws error if user hasn't added first name
+    skip: !firstName,
+  });
 
   const [uploadSong] = useUploadSongThunk();
   const [generateArtistAgreement] = useGenerateArtistAgreementThunk();
@@ -90,10 +82,7 @@ const UploadSong: FunctionComponent = () => {
   };
 
   // Navigate to advanced details if minting, otherwise upload song
-  const handleSongInfo = async (
-    values: UploadSongRequest,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
+  const handleSongInfo = async (values: UploadSongRequest, helpers: FormikHelpers<FormikValues>) => {
     if (values.isMinting) {
       helpers.setSubmitting(false);
       navigate("advanced-details");
@@ -103,10 +92,7 @@ const UploadSong: FunctionComponent = () => {
   };
 
   // Prepare Artist Agreement for confirmation page
-  const handleAdvancedDetails = async (
-    values: UploadSongRequest,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
+  const handleAdvancedDetails = async (values: UploadSongRequest, helpers: FormikHelpers<FormikValues>) => {
     await generateArtistAgreement({
       songName: values.title,
       companyName,
@@ -117,10 +103,7 @@ const UploadSong: FunctionComponent = () => {
     helpers.setSubmitting(false);
   };
 
-  const handleSubmit = async (
-    values: UploadSongRequest,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
+  const handleSubmit = async (values: UploadSongRequest, helpers: FormikHelpers<FormikValues>) => {
     await uploadSong(values);
     helpers.setSubmitting(false);
   };

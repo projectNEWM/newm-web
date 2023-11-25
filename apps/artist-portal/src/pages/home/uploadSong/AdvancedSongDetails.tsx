@@ -7,20 +7,12 @@ import {
   NONE_OPTION,
   scrollToError,
   useWindowDimensions,
-} from "common";
-import {
-  CopyrightInputField,
-  DropdownSelectField,
-  SwitchInputField,
-  TextInputField,
-} from "components";
-import { Button, HorizontalLine } from "elements";
-import {
-  UploadSongRequest,
-  useGetEarliestReleaseDateQuery,
-} from "modules/song";
-import theme from "theme";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+} from "@newm.io/studio/common";
+import { CopyrightInputField, DropdownSelectField, SwitchInputField, TextInputField } from "@newm.io/studio/components";
+import { Button, HorizontalLine } from "@newm.io/studio/elements";
+import { UploadSongRequest, useGetEarliestReleaseDateQuery } from "@newm.io/studio/modules/song";
+import theme from "@newm.io/studio/theme";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
@@ -36,19 +28,15 @@ const AdvancedSongDetails = () => {
   const userIpiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
-  const { isSubmitting, setFieldValue, errors, values } =
-    useFormikContext<UploadSongRequest>();
+  const { isSubmitting, setFieldValue, errors, values } = useFormikContext<UploadSongRequest>();
 
-  const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery(undefined, {
-      // endpoint throws error if user hasn't added first name
-      skip: !firstName,
-    });
+  const { data: { date: earliestReleaseDate } = {} } = useGetEarliestReleaseDateQuery(undefined, {
+    // endpoint throws error if user hasn't added first name
+    skip: !firstName,
+  });
 
   // Minimum date for schedule release date picker when no earliest release date
-  const minDistributionDate = new Date(
-    Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000
-  )
+  const minDistributionDate = new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0];
 
@@ -98,11 +86,7 @@ const AdvancedSongDetails = () => {
   }, [errors, isSubmitting, isrcRef]);
 
   return (
-    <Stack
-      marginX={ ["auto", "auto", "unset"] }
-      maxWidth={ ["340px", "340px", "700px"] }
-      spacing={ 3 }
-    >
+    <Stack marginX={ ["auto", "auto", "unset"] } maxWidth={ ["340px", "340px", "700px"] } spacing={ 3 }>
       <SwitchInputField
         name="isExplicit"
         title="Does the song contain explicit content?"
@@ -152,15 +136,10 @@ const AdvancedSongDetails = () => {
           copyrightType="composition"
           tooltipText={
             <span>
-              The copyright for a musical composition covers the music and
-              lyrics of a song (not the recorded performance). It is typically
-              owned by the songwriter and/or music publisher. If you are not the
-              copyright holder of the song composition, please review{ " " }
-              <Link
-                href={ NEWM_STUDIO_FAQ_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              The copyright for a musical composition covers the music and lyrics of a song (not the recorded
+              performance). It is typically owned by the songwriter and/or music publisher. If you are not the copyright
+              holder of the song composition, please review{ " " }
+              <Link href={ NEWM_STUDIO_FAQ_URL } rel="noopener noreferrer" target="_blank">
                 copyright requirements
               </Link>{ " " }
               in our FAQ.
@@ -175,15 +154,10 @@ const AdvancedSongDetails = () => {
           copyrightType="phonographic"
           tooltipText={
             <span>
-              The copyright in a sound recording covers the recording itself (it
-              does not cover the music or lyrics of the song). It is typically
-              owned by the artist and/or record label. If you are not the
-              copyright holder of the sound recording, please review{ " " }
-              <Link
-                href={ NEWM_STUDIO_FAQ_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-              >
+              The copyright in a sound recording covers the recording itself (it does not cover the music or lyrics of
+              the song). It is typically owned by the artist and/or record label. If you are not the copyright holder of
+              the sound recording, please review{ " " }
+              <Link href={ NEWM_STUDIO_FAQ_URL } rel="noopener noreferrer" target="_blank">
                 copyright requirements
               </Link>{ " " }
               in our FAQ.
@@ -225,9 +199,7 @@ const AdvancedSongDetails = () => {
             "recording. If you do not already have one, leave this field " +
             "blank, and one will be generated for you."
           }
-          onChange={ (event) =>
-            setFieldValue("isrc", event.target.value.toUpperCase())
-          }
+          onChange={ (event) => setFieldValue("isrc", event.target.value.toUpperCase()) }
         />
         <TextInputField
           label="IPI"
@@ -265,11 +237,7 @@ const AdvancedSongDetails = () => {
         <Button
           type="submit"
           isLoading={ isSubmitting }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
+          width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
         >
           Next
         </Button>

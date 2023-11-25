@@ -1,6 +1,6 @@
-import api, { CloudinaryUploadOptions, Tags } from "api";
-import { setToastMessage } from "modules/ui";
-import { CustomError, EmptyResponse } from "common";
+import api, { CloudinaryUploadOptions, Tags } from "@newm.io/studio/api";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import { CustomError, EmptyResponse } from "@newm.io/studio/common";
 import {
   CborHexResponse,
   CloudinarySignatureResponse,
@@ -99,11 +99,7 @@ export const extendedApi = api.injectEndpoints({
       providesTags: [Tags.Song],
 
       // transform the response to add the song to make it easy to couple the song with the stream info
-      transformResponse: (
-        value: GetSongStreamData,
-        _meta: GetSongStreamData,
-        song: Song
-      ): GetSongStreamResponse => {
+      transformResponse: (value: GetSongStreamData, _meta: GetSongStreamData, song: Song): GetSongStreamResponse => {
         return {
           song: song,
           streamData: value,
@@ -125,8 +121,7 @@ export const extendedApi = api.injectEndpoints({
     }),
     getSongs: build.query<GetSongsResponse, GetSongsRequest>({
       query: (params) => {
-        const { genres, ids, ownerIds, mintingStatuses, ...restOfParams } =
-          params;
+        const { genres, ids, ownerIds, mintingStatuses, ...restOfParams } = params;
 
         return {
           url: "v1/songs",
@@ -136,9 +131,7 @@ export const extendedApi = api.injectEndpoints({
             ...(genres ? { genres: genres.join(",") } : {}),
             ...(ids ? { ids: ids.join(",") } : {}),
             ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
-            ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(",") }
-              : {}),
+            ...(mintingStatuses ? { mintingStatuses: mintingStatuses.join(",") } : {}),
           },
         };
       },
@@ -159,14 +152,7 @@ export const extendedApi = api.injectEndpoints({
     }),
     getSongCount: build.query<GetSongCountResponse, GetSongCountRequest>({
       query: (params) => {
-        const {
-          genres,
-          ids,
-          ownerIds,
-          moods,
-          mintingStatuses,
-          ...restOfParams
-        } = params;
+        const { genres, ids, ownerIds, moods, mintingStatuses, ...restOfParams } = params;
 
         return {
           url: "v1/songs/count",
@@ -177,9 +163,7 @@ export const extendedApi = api.injectEndpoints({
             ...(ids ? { ids: ids.join(",") } : {}),
             ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
             ...(moods ? { moods: moods.join(",") } : {}),
-            ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(",") }
-              : {}),
+            ...(mintingStatuses ? { mintingStatuses: mintingStatuses.join(",") } : {}),
           },
         };
       },
@@ -219,10 +203,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    uploadSongAudio: build.mutation<
-      UploadSongAudioResponse,
-      UploadSongAudioRequest
-    >({
+    uploadSongAudio: build.mutation<UploadSongAudioResponse, UploadSongAudioRequest>({
       query: ({ onUploadProgress, songId, ...body }) => ({
         url: `v1/songs/${songId}/audio`,
         method: "POST",
@@ -235,8 +216,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (error) {
-          let message =
-            "There was a problem with your audio file, contact support";
+          let message = "There was a problem with your audio file, contact support";
 
           const customError = error as CustomError;
 
@@ -307,10 +287,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    processStreamTokenAgreement: build.mutation<
-      EmptyResponse,
-      ProcessStreamTokenAgreementRequest
-    >({
+    processStreamTokenAgreement: build.mutation<EmptyResponse, ProcessStreamTokenAgreementRequest>({
       query: ({ songId, ...body }) => ({
         url: `v1/songs/${songId}/agreement`,
         method: "PUT",
@@ -331,10 +308,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getCloudinarySignature: build.mutation<
-      CloudinarySignatureResponse,
-      CloudinaryUploadOptions
-    >({
+    getCloudinarySignature: build.mutation<CloudinarySignatureResponse, CloudinaryUploadOptions>({
       query: (body) => ({
         url: "v1/cloudinary/sign",
         method: "POST",
@@ -354,10 +328,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getCollaborations: build.query<
-      GetCollaborationsResponse,
-      GetCollaborationsRequest
-    >({
+    getCollaborations: build.query<GetCollaborationsResponse, GetCollaborationsRequest>({
       query: (params) => {
         const { ids, statuses, ...restOfParams } = params;
 
@@ -386,10 +357,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    createCollaboration: build.mutation<
-      CreateCollaborationResponse,
-      CreateCollaborationRequest
-    >({
+    createCollaboration: build.mutation<CreateCollaborationResponse, CreateCollaborationRequest>({
       query: (body) => ({
         url: "v1/collaborations",
         method: "POST",
@@ -451,10 +419,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getCollaborators: build.query<
-      GetCollaboratorsResponse,
-      GetCollaboratorsRequest
-    >({
+    getCollaborators: build.query<GetCollaboratorsResponse, GetCollaboratorsRequest>({
       query: (params) => {
         const { emails, songIds, ...restOfParams } = params;
 
@@ -483,10 +448,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getCollaboratorCount: build.query<
-      GetCollaboratorCountResponse,
-      GetCollaboratorCountRequest
-    >({
+    getCollaboratorCount: build.query<GetCollaboratorCountResponse, GetCollaboratorCountRequest>({
       query: (params) => {
         const { songIds, ...restOfParams } = params;
 
@@ -561,10 +523,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    createMintSongPayment: build.mutation<
-      CborHexResponse,
-      CreateMintSongPaymentRequest
-    >({
+    createMintSongPayment: build.mutation<CborHexResponse, CreateMintSongPaymentRequest>({
       query: ({ songId, ...body }) => ({
         url: `v1/songs/${songId}/mint/payment`,
         method: "POST",
@@ -624,10 +583,7 @@ export const extendedApi = api.injectEndpoints({
         }
       },
     }),
-    getUserWalletSongs: build.query<
-      GetUserWalletSongsResponse,
-      GetUserWalletSongsRequest
-    >({
+    getUserWalletSongs: build.query<GetUserWalletSongsResponse, GetUserWalletSongsRequest>({
       query: (params) => {
         const { utxoCborHexList, ...restOfParams } = params;
 

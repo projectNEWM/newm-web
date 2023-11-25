@@ -1,11 +1,8 @@
 import { FunctionComponent } from "react";
 import { Box, Link, useTheme } from "@mui/material";
-import { Button, GradientTypography, Typography } from "elements";
-import { ResponsiveNEWMLogo } from "components";
-import {
-  NEWM_PRIVACY_POLICY_URL,
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-} from "common";
+import { Button, GradientTypography, Typography } from "@newm.io/studio/elements";
+import { ResponsiveNEWMLogo } from "@newm.io/studio/components";
+import { NEWM_PRIVACY_POLICY_URL, NEWM_STUDIO_TERMS_OF_SERVICE_URL } from "@newm.io/studio/common";
 
 const Complete: FunctionComponent = () => {
   const theme = useTheme();
@@ -30,19 +27,13 @@ const Complete: FunctionComponent = () => {
         </Typography>
 
         <Box mt={ 1 } mb={ 6 }>
-          <GradientTypography
-            variant="h1"
-            sx={ { ...theme.typography.emphasized } }
-          >
+          <GradientTypography variant="h1" sx={ { ...theme.typography.emphasized } }>
             Shall we?
           </GradientTypography>
         </Box>
       </div>
       <Box alignItems="center" display="flex" flexDirection="column" mb={ 4 }>
-        <Button
-          sx={ { mb: [null, null, 3], mt: [2, 2, null], order: ["2", "2", "0"] } }
-          type="submit"
-        >
+        <Button sx={ { mb: [null, null, 3], mt: [2, 2, null], order: ["2", "2", "0"] } } type="submit">
           Enter NEWM
         </Button>
 

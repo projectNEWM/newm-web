@@ -1,7 +1,7 @@
 import { CSSProperties, FunctionComponent, ReactNode } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Box, Stack, SvgIconProps } from "@mui/material";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 interface ButtonProps {
   readonly onClick?: VoidFunction;
@@ -43,13 +43,7 @@ const Wrapper: FunctionComponent<WrapperProps> = ({ children, ...props }) => {
   }
 };
 
-const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
-  label,
-  Icon,
-  to,
-  href,
-  onClick,
-}) => {
+const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({ label, Icon, to, href, onClick }) => {
   const resolved = useResolvedPath(to || "");
   const match = useMatch({ path: resolved.pathname, end: false });
   const isActiveLink = to && match;
@@ -77,9 +71,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
           borderRadius: "6px",
           padding: "12px 20px",
           color: "white",
-          background: isActiveLink
-            ? theme.colors.activeBackground
-            : "transparent",
+          background: isActiveLink ? theme.colors.activeBackground : "transparent",
           opacity: isActiveLink ? 1 : 0.5,
           transition: "background-color 0ms",
           display: "flex",

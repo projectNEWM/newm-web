@@ -1,10 +1,10 @@
 import { FunctionComponent, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues, useFormikContext } from "formik";
-import { Button, GradientTypography, Typography } from "elements";
-import { TextInputField } from "components";
-import { sendVerificationEmail } from "modules/session";
-import { useAppDispatch } from "common";
+import { Button, GradientTypography, Typography } from "@newm.io/studio/elements";
+import { TextInputField } from "@newm.io/studio/components";
+import { sendVerificationEmail } from "@newm.io/studio/modules/session";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 const VerifyEmail: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -44,12 +44,7 @@ const VerifyEmail: FunctionComponent = () => {
           Check your email!
         </Typography>
 
-        <GradientTypography
-          id="verificationLabel"
-          mb={ 4 }
-          style={ { ...theme.typography.emphasized } }
-          variant="h1"
-        >
+        <GradientTypography id="verificationLabel" mb={ 4 } style={ { ...theme.typography.emphasized } } variant="h1">
           Enter your verification code below:
         </GradientTypography>
 
@@ -84,9 +79,7 @@ const VerifyEmail: FunctionComponent = () => {
             </button>
           </Typography>
         ) : (
-          <Typography>
-            Email re-sent. Don&apos;t forget to check your spam folder.
-          </Typography>
+          <Typography>Email re-sent. Don&apos;t forget to check your spam folder.</Typography>
         ) }
       </Box>
     </Box>

@@ -1,19 +1,8 @@
-import {
-  ForwardRefRenderFunction,
-  ForwardedRef,
-  ReactNode,
-  forwardRef,
-} from "react";
-import theme from "theme";
-import {
-  Box,
-  Checkbox as MUICheckbox,
-  CheckboxProps as MUICheckboxProps,
-  Stack,
-  Typography,
-} from "@mui/material";
-import CheckboxIcon from "assets/images/CheckboxIcon";
-import { ErrorMessage } from "components";
+import { ForwardRefRenderFunction, ForwardedRef, ReactNode, forwardRef } from "react";
+import theme from "@newm.io/studio/theme";
+import { Box, Checkbox as MUICheckbox, CheckboxProps as MUICheckboxProps, Stack, Typography } from "@mui/material";
+import CheckboxIcon from "@newm.io/studio/assets/images/CheckboxIcon";
+import { ErrorMessage } from "@newm.io/studio/components";
 
 export interface CheckboxProps extends MUICheckboxProps {
   readonly ariaDescribedBy?: string;
@@ -63,10 +52,7 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (
 
       <Stack direction="column">
         { typeof label === "string" ? (
-          <Typography
-            variant="subtitle1"
-            sx={ { color: theme.colors.white, fontSize: 12 } }
-          >
+          <Typography variant="subtitle1" sx={ { color: theme.colors.white, fontSize: 12 } }>
             { label }
           </Typography>
         ) : (

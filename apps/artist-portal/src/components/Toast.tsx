@@ -1,9 +1,9 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { clearToastMessage, selectUi } from "modules/ui";
+import { clearToastMessage, selectUi } from "@newm.io/studio/modules/ui";
 import { Alert, Snackbar, Typography, useTheme } from "@mui/material";
-import CheckCircleIcon from "assets/images/CheckCircle";
-import CloseCircleFill from "assets/images/CloseCircleFill";
-import { useAppDispatch, useAppSelector } from "common";
+import CheckCircleIcon from "@newm.io/studio/assets/images/CheckCircle";
+import CloseCircleFill from "@newm.io/studio/assets/images/CloseCircleFill";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 
 const Toast = () => {
   const dispatch = useAppDispatch();
@@ -73,10 +73,7 @@ const Toast = () => {
         variant="outlined"
       >
         <Typography variant="h6">{ heading }</Typography>
-        <Typography
-          sx={ { fontWeight: "400", marginTop: heading ? 1 : 0 } }
-          variant="h6"
-        >
+        <Typography sx={ { fontWeight: "400", marginTop: heading ? 1 : 0 } } variant="h6">
           { message }
         </Typography>
       </Alert>

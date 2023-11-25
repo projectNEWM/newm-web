@@ -2,15 +2,11 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
-import {
-  Owner,
-  getIsOwnerEditable,
-  useGetCollaboratorsQuery,
-} from "modules/song";
-import { Button, Tooltip, Typography } from "elements";
-import { TextInputField } from "components";
-import theme from "theme";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+import { Owner, getIsOwnerEditable, useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
+import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
+import { TextInputField } from "@newm.io/studio/components";
+import theme from "@newm.io/studio/theme";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";
 
@@ -23,11 +19,7 @@ interface OwnersProps {
 /**
  * Allows for displaying and updating owners when minting a song.
  */
-const Owners: FunctionComponent<OwnersProps> = ({
-  owners,
-  onDelete,
-  isDeleteDisabled = false,
-}) => {
+const Owners: FunctionComponent<OwnersProps> = ({ owners, onDelete, isDeleteDisabled = false }) => {
   const emails = owners.map((owner) => owner.email);
 
   const { data: collaborators } = useGetCollaboratorsQuery(
@@ -49,12 +41,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
             ROYALTY SPLIT HOLDERS
           </Typography>
 
-          <Tooltip
-            title={
-              "Do you hold the streaming royalty rights to this song? If so, " +
-              "what percentage?"
-            }
-          >
+          <Tooltip title={ "Do you hold the streaming royalty rights to this song? If so, " + "what percentage?" }>
             <IconButton sx={ { padding: 0 } }>
               <HelpIcon
                 sx={ {
@@ -73,10 +60,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
       </Stack>
 
       { owners.map((owner, idx) => {
-        const collaboratorInfo = getCollaboratorInfo(
-          owner.email,
-          collaborators
-        );
+        const collaboratorInfo = getCollaboratorInfo(owner.email, collaborators);
         const isEditable = getIsOwnerEditable(owner, owners.length);
 
         return (

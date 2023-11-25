@@ -2,10 +2,10 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { FormikHelpers, FormikValues } from "formik";
-import theme from "theme";
-import { ResponsiveNEWMLogo, WizardForm } from "components";
-import { commonYupValidation, useAppDispatch } from "common";
-import { resetPassword, sendVerificationEmail } from "modules/session";
+import theme from "@newm.io/studio/theme";
+import { ResponsiveNEWMLogo, WizardForm } from "@newm.io/studio/components";
+import { commonYupValidation, useAppDispatch } from "@newm.io/studio/common";
+import { resetPassword, sendVerificationEmail } from "@newm.io/studio/modules/session";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
@@ -20,19 +20,11 @@ const ForgotPassword: FunctionComponent = () => {
     authCode: "",
   };
 
-  const handleSubmit = ({
-    authCode,
-    confirmPassword,
-    email,
-    newPassword,
-  }: FormikValues): void => {
+  const handleSubmit = ({ authCode, confirmPassword, email, newPassword }: FormikValues): void => {
     dispatch(resetPassword({ authCode, confirmPassword, email, newPassword }));
   };
 
-  const handleVerificationEmail = (
-    values: FormikValues,
-    { setSubmitting }: FormikHelpers<FormikValues>
-  ): void => {
+  const handleVerificationEmail = (values: FormikValues, { setSubmitting }: FormikHelpers<FormikValues>): void => {
     dispatch(sendVerificationEmail(values.email));
     setSubmitting(false);
   };
@@ -78,12 +70,8 @@ const ForgotPassword: FunctionComponent = () => {
             element: <ResetPassword />,
             path: "reset",
             validationSchema: Yup.object().shape({
-              newPassword: commonYupValidation.newPassword.required(
-                "Password is required"
-              ),
-              confirmPassword: commonYupValidation.confirmPassword.required(
-                "Confirm password is required"
-              ),
+              newPassword: commonYupValidation.newPassword.required("Password is required"),
+              confirmPassword: commonYupValidation.confirmPassword.required("Confirm password is required"),
             }),
           },
         ] }

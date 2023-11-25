@@ -1,37 +1,21 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
-} from "@mui/material";
-import { Button, Typography } from "elements";
-import theme from "theme";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack } from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/studio/theme";
 import {
   CollaborationStatus,
   getHasOwnershipInvite,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
-} from "modules/song";
+} from "@newm.io/studio/modules/song";
 import {
   selectUi,
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
-} from "modules/ui";
-import {
-  VerificationStatus,
-  emptyProfile,
-  selectSession,
-  useGetProfileQuery,
-} from "modules/session";
-import {
-  SKIP_FETCH_INVITE_PATH_LIST,
-  useAppDispatch,
-  useAppSelector,
-} from "common";
+} from "@newm.io/studio/modules/ui";
+import { VerificationStatus, emptyProfile, selectSession, useGetProfileQuery } from "@newm.io/studio/modules/session";
+import { SKIP_FETCH_INVITE_PATH_LIST, useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 import InvitesTable from "./InvitesTable";
 
 const { Verified } = VerificationStatus;
@@ -42,9 +26,7 @@ const InvitesModal: FunctionComponent = () => {
   const { isLoggedIn } = useAppSelector(selectSession);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
 
-  const shouldSkipFetch =
-    !isLoggedIn ||
-    SKIP_FETCH_INVITE_PATH_LIST.includes(window.location.pathname);
+  const shouldSkipFetch = !isLoggedIn || SKIP_FETCH_INVITE_PATH_LIST.includes(window.location.pathname);
 
   const { data: collaborations = [] } = useGetCollaborationsQuery(
     {
@@ -54,14 +36,10 @@ const InvitesModal: FunctionComponent = () => {
     { skip: shouldSkipFetch }
   );
 
-  const {
-    data: {
-      firstName,
-      lastName,
-      verificationStatus,
-      walletAddress,
-    } = emptyProfile,
-  } = useGetProfileQuery(undefined, { skip: shouldSkipFetch });
+  const { data: { firstName, lastName, verificationStatus, walletAddress } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    { skip: shouldSkipFetch }
+  );
 
   const [isFirstTimeModalOpen, setIsFirstTimeModalOpen] = useState(true);
   const isVerified = verificationStatus === Verified;
@@ -102,14 +80,10 @@ const InvitesModal: FunctionComponent = () => {
         open={ isInvitesModalOpen }
         onClose={ () => dispatch(setIsInvitesModalOpen(false)) }
       >
-        <DialogTitle
-          sx={ { backgroundColor: theme.colors.grey500, pb: 1, pt: 3 } }
-        >
+        <DialogTitle sx={ { backgroundColor: theme.colors.grey500, pb: 1, pt: 3 } }>
           <Typography variant="body2">Invitations pending</Typography>
         </DialogTitle>
-        <DialogContentText
-          sx={ { backgroundColor: theme.colors.grey500, px: 3 } }
-        >
+        <DialogContentText sx={ { backgroundColor: theme.colors.grey500, px: 3 } }>
           <Stack
             alignItems={ [null, null, "center"] }
             columnGap={ 1 }
@@ -149,9 +123,7 @@ const InvitesModal: FunctionComponent = () => {
         <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
           <InvitesTable invites={ invites } disabled={ isAcceptButtonDisabled } />
         </DialogContent>
-        <DialogActions
-          sx={ { backgroundColor: theme.colors.grey600, px: 3, py: 2 } }
-        >
+        <DialogActions sx={ { backgroundColor: theme.colors.grey600, px: 3, py: 2 } }>
           <Button
             color="music"
             onClick={ () => dispatch(setIsInvitesModalOpen(false)) }

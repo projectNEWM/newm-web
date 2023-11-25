@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import TextInput, { TextInput as UnwrappedTextInput } from "../TextInput";
 
 export default {
@@ -19,20 +19,14 @@ export const Variations = () => (
         placeholder="With icon"
         endAdornment={
           <IconButton sx={ { padding: 0, paddingRight: "1rem" } }>
-            <VisibilityOutlinedIcon
-              fontSize="small"
-              sx={ { color: theme.colors.white } }
-            />
+            <VisibilityOutlinedIcon fontSize="small" sx={ { color: theme.colors.white } } />
           </IconButton>
         }
       />
 
       <TextInput placeholder="Disabled" disabled />
 
-      <TextInput
-        placeholder="With error"
-        errorMessage="This is an error message"
-      />
+      <TextInput placeholder="With error" errorMessage="This is an error message" />
     </Stack>
   </Box>
 );

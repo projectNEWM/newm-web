@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { useAppDispatch, useAppSelector } from "common";
-import { Typography } from "elements";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import { Typography } from "@newm.io/studio/elements";
 import currency from "currency.js";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -9,12 +9,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { setIsConnectWalletModalOpen } from "modules/ui";
-import {
-  selectWallet,
-  setWalletAddress,
-  setWalletBalance,
-} from "modules/wallet";
+import { setIsConnectWalletModalOpen } from "@newm.io/studio/modules/ui";
+import { selectWallet, setWalletAddress, setWalletBalance } from "@newm.io/studio/modules/wallet";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const theme = useTheme();
@@ -28,9 +24,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   const truncatedAddress = walletAddress ? walletAddress.slice(0, 16) : "";
-  const ellipsedAddress = walletAddress
-    ? walletAddress.slice(0, 16) + "..." + walletAddress.slice(-12)
-    : "";
+  const ellipsedAddress = walletAddress ? walletAddress.slice(0, 16) + "..." + walletAddress.slice(-12) : "";
 
   /**
    * Toggles the dropdown.
@@ -110,13 +104,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   }, []);
 
   return (
-    <Stack
-      ref={ parentRef }
-      position="relative"
-      direction="column"
-      gap={ 1 }
-      alignItems="flex-end"
-    >
+    <Stack ref={ parentRef } position="relative" direction="column" gap={ 1 } alignItems="flex-end">
       <Stack
         direction="row"
         onClick={ handleClickButton }
@@ -146,9 +134,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
           top={ parentHeight + 8 }
           position="absolute"
           direction="column"
-          divider={
-            <Divider flexItem sx={ { borderColor: theme.colors.grey500 } } />
-          }
+          divider={ <Divider flexItem sx={ { borderColor: theme.colors.grey500 } } /> }
           sx={ {
             alignItems: "flex-start",
             backgroundColor: theme.colors.grey600,
@@ -186,9 +172,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
             width="100%"
           >
             <LogoutIcon fontSize="small" sx={ { color: theme.colors.white } } />
-            <Typography sx={ { color: theme.colors.white } }>
-              Disconnect
-            </Typography>
+            <Typography sx={ { color: theme.colors.white } }>Disconnect</Typography>
           </Stack>
         </Stack>
       ) }

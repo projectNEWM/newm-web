@@ -1,11 +1,6 @@
 import { ForwardRefRenderFunction, forwardRef } from "react";
-import {
-  CircularProgress,
-  Button as MUIButton,
-  ButtonProps as MUIButtonProps,
-  Theme,
-} from "@mui/material";
-import theme from "theme";
+import { CircularProgress, Button as MUIButton, ButtonProps as MUIButtonProps, Theme } from "@mui/material";
+import theme from "@newm.io/studio/theme";
 
 export interface CommonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly isLoading?: boolean;
@@ -126,8 +121,7 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
           disableShrink
           size={ 20 }
           sx={ {
-            color:
-              variant === "primary" ? theme.colors.white : theme.colors[color],
+            color: variant === "primary" ? theme.colors.white : theme.colors[color],
           } }
         />
       ) : (

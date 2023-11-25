@@ -3,16 +3,11 @@ import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProfileImage } from "components";
-import { Button } from "elements";
-import {
-  MintingStatus,
-  emptySong,
-  useGetSongQuery,
-  useHasSongAccess,
-} from "modules/song";
-import { setToastMessage } from "modules/ui";
-import theme from "theme";
+import { ProfileImage } from "@newm.io/studio/components";
+import { Button } from "@newm.io/studio/elements";
+import { MintingStatus, emptySong, useGetSongQuery, useHasSongAccess } from "@newm.io/studio/modules/song";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import theme from "@newm.io/studio/theme";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
@@ -27,11 +22,7 @@ interface ColorMap {
   [index: number]: Partial<keyof Theme["gradients" | "colors"]>;
 }
 
-const TabPanel: FunctionComponent<TabPanelProps> = ({
-  children,
-  value,
-  index,
-}) => {
+const TabPanel: FunctionComponent<TabPanelProps> = ({ children, value, index }) => {
   return (
     <Stack
       aria-labelledby={ `tab-${index}` }
@@ -59,11 +50,7 @@ const ViewDetails: FunctionComponent = () => {
 
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const {
-    data: { title, coverArtUrl, mintingStatus } = emptySong,
-    error,
-    isLoading,
-  } = useGetSongQuery(songId);
+  const { data: { title, coverArtUrl, mintingStatus } = emptySong, error, isLoading } = useGetSongQuery(songId);
 
   const hasAccess = useHasSongAccess(songId);
 
@@ -93,20 +80,10 @@ const ViewDetails: FunctionComponent = () => {
   return (
     <>
       <Stack direction="row" alignItems="center" gap={ 2.5 }>
-        <Button
-          color="white"
-          onClick={ () => navigate(-1) }
-          variant="outlined"
-          width="icon"
-        >
+        <Button color="white" onClick={ () => navigate(-1) } variant="outlined" width="icon">
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
-        <ProfileImage
-          alt="Song cover art"
-          height="90px"
-          src={ coverArtUrl }
-          width="90px"
-        />
+        <ProfileImage alt="Song cover art" height="90px" src={ coverArtUrl } width="90px" />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
       </Stack>
 

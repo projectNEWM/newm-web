@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { CollaborationStatus } from "modules/song";
+import { CollaborationStatus } from "@newm.io/studio/modules/song";
 import { Stack, Typography } from "@mui/material";
-import theme from "theme";
-import { Badge, BadgeProps } from "components";
+import theme from "@newm.io/studio/theme";
+import { Badge, BadgeProps } from "@newm.io/studio/components";
 
 interface DetailsProps {
   readonly email: string;
@@ -31,12 +31,7 @@ const Details: FunctionComponent<DetailsProps> = ({
   const name = `${firstName || ""} ${lastName || ""}`.trim();
 
   return (
-    <Stack
-      direction={ ["column", "row"] }
-      alignItems={ ["start", "center"] }
-      columnGap={ [1, 1, 2] }
-      rowGap={ 1 }
-    >
+    <Stack direction={ ["column", "row"] } alignItems={ ["start", "center"] } columnGap={ [1, 1, 2] } rowGap={ 1 }>
       { pictureUrl ? (
         <img
           style={ {
@@ -63,9 +58,7 @@ const Details: FunctionComponent<DetailsProps> = ({
           { email }
         </Typography>
       </Stack>
-      { showStatus && status && status !== "Editing" ? (
-        <Badge { ...badgeMap[status] } />
-      ) : null }
+      { showStatus && status && status !== "Editing" ? <Badge { ...badgeMap[status] } /> : null }
     </Stack>
   );
 };

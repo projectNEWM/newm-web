@@ -1,6 +1,6 @@
 import { FunctionComponent, MouseEventHandler } from "react";
 import { Stack } from "@mui/material";
-import { Typography } from "elements";
+import { Typography } from "@newm.io/studio/elements";
 import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {
@@ -14,13 +14,7 @@ interface IconMessageProps {
 /**
  * Displays a vertically stacked icon and message.
  */
-const IconMessage: FunctionComponent<IconMessageProps> = ({
-  icon,
-  message,
-  subtitle,
-  errorMessage,
-  onClick,
-}) => (
+const IconMessage: FunctionComponent<IconMessageProps> = ({ icon, message, subtitle, errorMessage, onClick }) => (
   <Stack
     spacing={ message || subtitle || errorMessage ? 1 : 0 }
     direction="column"
@@ -42,9 +36,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
         </Typography>
       ) }
 
-      { !!errorMessage && (
-        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
-      ) }
+      { !!errorMessage && <ErrorMessage align="center">{ errorMessage }</ErrorMessage> }
     </Stack>
   </Stack>
 );

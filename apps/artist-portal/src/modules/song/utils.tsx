@@ -1,11 +1,7 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { uniq } from "lodash";
-import {
-  enableWallet,
-  getWalletChangeAddress,
-  signWalletTransaction,
-} from "@newm.io/cardano-dapp-wallet-connector";
-import { SilentError } from "common";
+import { enableWallet, getWalletChangeAddress, signWalletTransaction } from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "@newm.io/studio/common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -20,10 +16,7 @@ import {
 import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";
 
-const EDITABLE_COLLABORATOR_STATUSES = [
-  CollaborationStatus.Editing,
-  CollaborationStatus.Rejected,
-];
+const EDITABLE_COLLABORATOR_STATUSES = [CollaborationStatus.Editing, CollaborationStatus.Rejected];
 
 /**
  * Generates a list of collaborators from a list of owners, creditors,
@@ -45,14 +38,11 @@ export const generateCollaborators = (
     ...featured.map(({ email }) => email),
   ]);
 
-  const ownersMap: Record<string, Owner> = owners.reduce(
-    (acc: Record<string, Owner>, owner: Owner) => {
-      acc[owner.email] = owner;
+  const ownersMap: Record<string, Owner> = owners.reduce((acc: Record<string, Owner>, owner: Owner) => {
+    acc[owner.email] = owner;
 
-      return acc;
-    },
-    {}
-  );
+    return acc;
+  }, {});
 
   const creditorsMap: Record<string, Creditor> = creditors.reduce(
     (acc: Record<string, Creditor>, creditor: Creditor) => {
@@ -63,14 +53,11 @@ export const generateCollaborators = (
     {}
   );
 
-  const featuredMap: Record<string, Featured> = featured.reduce(
-    (acc: Record<string, Featured>, featured: Featured) => {
-      acc[featured.email] = featured;
+  const featuredMap: Record<string, Featured> = featured.reduce((acc: Record<string, Featured>, featured: Featured) => {
+    acc[featured.email] = featured;
 
-      return acc;
-    },
-    {}
-  );
+    return acc;
+  }, {});
 
   return emails.map((email) => {
     const collaborator = {
@@ -148,10 +135,7 @@ export const getCollaborationsToCreate = (
   newCollabs: ReadonlyArray<CreateCollaborationRequest>
 ) => {
   return newCollabs.reduce((result, collab) => {
-    if (
-      collab.email &&
-      !currentCollabs.map(({ email }) => email).includes(collab.email)
-    ) {
+    if (collab.email && !currentCollabs.map(({ email }) => email).includes(collab.email)) {
       return [collab, ...result];
     }
 
@@ -162,10 +146,7 @@ export const getCollaborationsToCreate = (
 /**
  * Creates an array of API collaborations from an array of collaborators.
  */
-export const mapCollaboratorsToCollaborations = (
-  songId: string,
-  collaborators: ReadonlyArray<Collaborator>
-) => {
+export const mapCollaboratorsToCollaborations = (songId: string, collaborators: ReadonlyArray<Collaborator>) => {
   return collaborators.map((collaborator) => ({
     songId,
     email: collaborator.email,
@@ -225,9 +206,7 @@ export const createInvite = async (
   collaboration: Collaboration,
   dispatch: ThunkDispatch<unknown, unknown, AnyAction>
 ): Promise<Invite> => {
-  const getSongResponse = await dispatch(
-    songApi.endpoints.getSong.initiate(collaboration.songId)
-  );
+  const getSongResponse = await dispatch(songApi.endpoints.getSong.initiate(collaboration.songId));
 
   const songData = getSongResponse.data;
 
@@ -235,9 +214,7 @@ export const createInvite = async (
     throw new Error("Error getting song data");
   }
 
-  const getUserResponse = await dispatch(
-    sessionApi.endpoints.getUser.initiate({ userId: songData.ownerId })
-  );
+  const getUserResponse = await dispatch(sessionApi.endpoints.getUser.initiate({ userId: songData.ownerId }));
   const userData = getUserResponse.data;
 
   if ("error" in getUserResponse || !userData) {
@@ -265,9 +242,7 @@ export const createInvite = async (
  *
  * @returns {string} The time in 'm:ss' format.
  */
-export const convertMillisecondsToSongFormat = (
-  milliseconds: number
-): string => {
+export const convertMillisecondsToSongFormat = (milliseconds: number): string => {
   const totalSeconds = Math.ceil(milliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
@@ -282,15 +257,10 @@ export const convertMillisecondsToSongFormat = (
  * @param songId id of the song to submit a minting payment for
  * @param dispatch thunk dispatch helper
  */
-export const submitMintSongPayment = async (
-  songId: string,
-  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
-) => {
+export const submitMintSongPayment = async (songId: string, dispatch: ThunkDispatch<unknown, unknown, AnyAction>) => {
   const wallet = await enableWallet();
 
-  const getPaymentResp = await dispatch(
-    songApi.endpoints.getMintSongPayment.initiate(songId)
-  );
+  const getPaymentResp = await dispatch(songApi.endpoints.getMintSongPayment.initiate(songId));
 
   if ("error" in getPaymentResp || !getPaymentResp.data) {
     throw new SilentError();
@@ -333,8 +303,6 @@ export const submitMintSongPayment = async (
  * @param invites array of invites for the user
  * @returns true if any of invites contains an ownership amount greater than 0
  */
-export const getHasOwnershipInvite = (
-  invites: ReadonlyArray<Invite>
-): boolean => {
+export const getHasOwnershipInvite = (invites: ReadonlyArray<Invite>): boolean => {
   return !!invites.find((inv) => !!inv.royaltyRate);
 };

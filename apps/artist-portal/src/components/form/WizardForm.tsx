@@ -1,15 +1,9 @@
 import { FunctionComponent } from "react";
-import {
-  Form,
-  Formik,
-  FormikConfig,
-  FormikHelpers,
-  FormikValues,
-} from "formik";
+import { Form, Formik, FormikConfig, FormikHelpers, FormikValues } from "formik";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { removeTrailingSlash } from "common";
+import { removeTrailingSlash } from "@newm.io/studio/common";
 import * as Yup from "yup";
-import { FormProgressStepper } from "components";
+import { FormProgressStepper } from "@newm.io/studio/components";
 
 interface FormRoute {
   /** route corresponding to the step */
@@ -61,9 +55,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
     return removeTrailingSlash(`/${rootPath}/${path}`);
   };
 
-  const currentIndex = routes
-    .map(getPathname)
-    .indexOf(removeTrailingSlash(location.pathname));
+  const currentIndex = routes.map(getPathname).indexOf(removeTrailingSlash(location.pathname));
 
   /**
    * Navigate to next form route.
@@ -85,10 +77,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
    * Calls `onSubmitStep` if present. If this is the last route, it submits
    * the form, otherwise, it navigates if `navigateOnSubmitStep` is not false.
    */
-  const handleSubmit = async (
-    values: FormikValues,
-    helpers: FormikHelpers<FormikValues>
-  ) => {
+  const handleSubmit = async (values: FormikValues, helpers: FormikHelpers<FormikValues>) => {
     const currentRoute = routes[currentIndex];
     const isLastRoute = currentIndex === routes.length - 1;
     const shouldNavigate = currentRoute.navigateOnSubmitStep ?? true;
@@ -111,19 +100,13 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
   };
 
   return (
-    <Formik
-      { ...formikProps }
-      onSubmit={ handleSubmit }
-      validationSchema={ getValidationSchema }
-    >
+    <Formik { ...formikProps } onSubmit={ handleSubmit } validationSchema={ getValidationSchema }>
       { () => (
         <Form style={ { height: "100%" } } noValidate>
           { isProgressStepperVisible && (
             <FormProgressStepper
               activeStep={ currentIndex + 1 }
-              stepTitles={
-                routes.map((route) => route.progressStepTitle) as string[]
-              }
+              stepTitles={ routes.map((route) => route.progressStepTitle) as string[] }
             />
           ) }
 

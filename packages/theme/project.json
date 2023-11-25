@@ -1,5 +1,5 @@
 {
-  "name": "theme",
+  "name": "@newm.io/studio/theme",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/theme/src",
   "projectType": "library",

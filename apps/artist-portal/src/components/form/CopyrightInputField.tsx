@@ -1,15 +1,9 @@
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
-import { TextInput, TextInputProps, Tooltip } from "elements";
+import { TextInput, TextInputProps, Tooltip } from "@newm.io/studio/elements";
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import HelpIcon from "@mui/icons-material/Help";
-import {
-  Field,
-  FieldProps,
-  FormikErrors,
-  FormikTouched,
-  useFormikContext,
-} from "formik";
-import ErrorMessage from "components/styled/ErrorMessage";
+import { Field, FieldProps, FormikErrors, FormikTouched, useFormikContext } from "formik";
+import ErrorMessage from "@newm.io/studio/components/styled/ErrorMessage";
 
 interface Props extends Omit<TextInputProps, "startAdornment"> {
   readonly yearFieldName: string;
@@ -97,11 +91,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
                 startAdornment={
                   <Box px={ 1 } justifyContent="center" alignItems="center">
                     <Typography fontSize={ 20 }>
-                      { copyrightType === "composition" ? (
-                        <span>&copy;</span>
-                      ) : (
-                        <span>&#8471;</span>
-                      ) }
+                      { copyrightType === "composition" ? <span>&copy;</span> : <span>&#8471;</span> }
                     </Typography>
                   </Box>
                 }

@@ -1,8 +1,8 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Link, Typography } from "@newm.io/studio/elements";
 import { FunctionComponent, MouseEventHandler, useState } from "react";
-import { commonYupValidation, useAuthenticatedRedirect } from "common";
-import { history } from "common/history";
+import { commonYupValidation, useAuthenticatedRedirect } from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
 import { Form, Formik, FormikValues } from "formik";
 import {
   FacebookLogin,
@@ -11,14 +11,12 @@ import {
   PasswordInputField,
   ResponsiveNEWMLogo,
   TextInputField,
-} from "components";
+} from "@newm.io/studio/components";
 import * as Yup from "yup";
-import { useLoginThunk } from "modules/session";
-import { theme as hello } from "@newm.io/theme";
+import { useLoginThunk } from "@newm.io/studio/modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
-  console.log("hello: ", hello());
 
   const [login, { isLoading }] = useLoginThunk();
   const [maskPassword, setMaskPassword] = useState(true);

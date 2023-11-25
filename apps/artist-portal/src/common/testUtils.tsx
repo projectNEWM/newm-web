@@ -5,8 +5,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ReactElement, ReactNode } from "react";
 import { Form, Formik, FormikConfig } from "formik";
-import { reducer } from "store";
-import theme from "theme";
+import { reducer } from "@newm.io/studio/store";
+import theme from "@newm.io/studio/theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { RenderProps, StringMap, WrapperProps } from "./types";
 
@@ -23,11 +23,7 @@ import { RenderProps, StringMap, WrapperProps } from "./types";
  */
 export const renderWithContext = (
   ui: ReactElement,
-  {
-    preloadedState = {},
-    store = configureStore({ reducer, preloadedState }),
-    ...renderOptions
-  }: RenderProps = {
+  { preloadedState = {}, store = configureStore({ reducer, preloadedState }), ...renderOptions }: RenderProps = {
     preloadedState: {},
     store: configureStore({ reducer }),
   }
@@ -47,10 +43,7 @@ export const renderWithContext = (
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 };
 
-export const withFormik = (
-  element: ReactNode,
-  props: FormikConfig<StringMap>
-) => {
+export const withFormik = (element: ReactNode, props: FormikConfig<StringMap>) => {
   return (
     <Formik { ...props }>
       <Form>{ element }</Form>

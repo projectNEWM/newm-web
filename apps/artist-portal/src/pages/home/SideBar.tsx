@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
-import { Typography } from "elements";
-import { ProfileImage, SideBarHeader, SideBarNavLink } from "components";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
-import AskCommunityIcon from "assets/images/DiscordLogo";
-import NewmLogoSmInverse from "assets/images/NEWM-logo-sm-inverse";
+import { Typography } from "@newm.io/studio/elements";
+import { ProfileImage, SideBarHeader, SideBarNavLink } from "@newm.io/studio/components";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
+import AskCommunityIcon from "@newm.io/studio/assets/images/DiscordLogo";
+import NewmLogoSmInverse from "@newm.io/studio/assets/images/NEWM-logo-sm-inverse";
 import {
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
@@ -16,24 +16,17 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
-import {
-  NEWM_CLICKUP_FORM_URL,
-  NEWM_STUDIO_DISCORD_URL,
-  NEWM_STUDIO_FAQ_URL,
-} from "common";
+import { NEWM_CLICKUP_FORM_URL, NEWM_STUDIO_DISCORD_URL, NEWM_STUDIO_FAQ_URL } from "@newm.io/studio/common";
 
 interface SideBarProps {
   mobileVersion?: boolean;
   setMobileOpen: (field: boolean) => void;
 }
 
-export const SideBar: FunctionComponent<SideBarProps> = (
-  props: SideBarProps
-) => {
+export const SideBar: FunctionComponent<SideBarProps> = (props: SideBarProps) => {
   const theme = useTheme();
 
-  const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
-    useGetProfileQuery();
+  const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } = useGetProfileQuery();
 
   return (
     <Box
@@ -65,13 +58,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
       <Box display="flex" flexDirection="column" alignItems="center">
         <Stack mt={ 3.5 } spacing={ 2 }>
-          { !!pictureUrl && (
-            <ProfileImage
-              src={ pictureUrl }
-              aria-label="profile image"
-              referrerPolicy="no-referrer"
-            />
-          ) }
+          { !!pictureUrl && <ProfileImage src={ pictureUrl } aria-label="profile image" referrerPolicy="no-referrer" /> }
 
           <Typography variant="h4" fontWeight={ 700 } align="center">
             { nickname ? nickname : firstName + " " + lastName }
@@ -166,14 +153,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         </Box>
       </Box>
 
-      <Box
-        alignItems="center"
-        display="flex"
-        justifyContent="space-between"
-        pb={ 2.5 }
-        px={ 2.5 }
-        width="100%"
-      >
+      <Box alignItems="center" display="flex" justifyContent="space-between" pb={ 2.5 } px={ 2.5 } width="100%">
         <NewmLogoSmInverse />
       </Box>
     </Box>
@@ -185,11 +165,8 @@ interface ResponsiveSideBarProps {
   setMobileOpen: (field: boolean) => void;
 }
 
-const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
-  props: ResponsiveSideBarProps
-) => {
-  const container =
-    window !== undefined ? () => window.document.body : undefined;
+const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (props: ResponsiveSideBarProps) => {
+  const container = window !== undefined ? () => window.document.body : undefined;
 
   return (
     <>

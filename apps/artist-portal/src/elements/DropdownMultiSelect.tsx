@@ -10,24 +10,20 @@ import {
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import { Box, Stack } from "@mui/material";
-import SelectedCheckboxIcon from "assets/images/SelectedCheckboxIcon";
-import UnselectedCheckboxIcon from "assets/images/UnselectedCheckboxIcon";
-import { WidthType } from "common";
+import SelectedCheckboxIcon from "@newm.io/studio/assets/images/SelectedCheckboxIcon";
+import UnselectedCheckboxIcon from "@newm.io/studio/assets/images/UnselectedCheckboxIcon";
+import { WidthType } from "@newm.io/studio/common";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsList";
 
-export interface DropdownMultiSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
+export interface DropdownMultiSelectProps extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
-  readonly handleChange?: (
-    event: SyntheticEvent,
-    newValue: ReadonlyArray<string>
-  ) => void;
+  readonly handleChange?: (event: SyntheticEvent, newValue: ReadonlyArray<string>) => void;
 
   readonly label?: string;
   readonly name: string;
@@ -39,10 +35,7 @@ export interface DropdownMultiSelectProps
   readonly widthType?: WidthType;
 }
 
-const DropdownMultiSelect: ForwardRefRenderFunction<
-  HTMLInputElement,
-  DropdownMultiSelectProps
-> = (
+const DropdownMultiSelect: ForwardRefRenderFunction<HTMLInputElement, DropdownMultiSelectProps> = (
   {
     disabled,
     errorMessage,
@@ -97,15 +90,13 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   const displayValue = getDisplayValue();
   const inputProps = getInputProps();
   const popupIndicatorProps = getPopupIndicatorProps();
-  const handleEndAdornmentClick =
-    popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
+  const handleEndAdornmentClick = popupIndicatorProps.onClick as MouseEventHandler<HTMLOrSVGElement>;
 
   /**
    * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
-    if (event.key === "Enter" && value && inputValue !== value[0])
-      event.preventDefault();
+    if (event.key === "Enter" && value && inputValue !== value[0]) event.preventDefault();
   };
 
   /**
@@ -169,11 +160,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             return (
               <li { ...getOptionProps({ option, index }) } key={ index }>
                 <Stack direction="row" spacing={ 1 }>
-                  { isSelected ? (
-                    <SelectedCheckboxIcon />
-                  ) : (
-                    <UnselectedCheckboxIcon />
-                  ) }
+                  { isSelected ? <SelectedCheckboxIcon /> : <UnselectedCheckboxIcon /> }
                   <span>{ option }</span>
                 </Stack>
               </li>

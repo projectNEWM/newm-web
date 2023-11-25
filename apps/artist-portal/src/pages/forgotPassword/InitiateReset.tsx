@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Button, Typography } from "elements";
-import { TextInputField } from "components";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { TextInputField } from "@newm.io/studio/components";
 import { Box, Stack, useTheme } from "@mui/material";
 
 const InitiateReset: FunctionComponent = () => {
@@ -20,13 +20,7 @@ const InitiateReset: FunctionComponent = () => {
         Enter your email to reset your password
       </Typography>
 
-      <Stack
-        spacing={ 1.5 }
-        my={ 7.5 }
-        mx="auto"
-        maxWidth={ theme.inputField.maxWidth }
-        width="100%"
-      >
+      <Stack spacing={ 1.5 } my={ 7.5 } mx="auto" maxWidth={ theme.inputField.maxWidth } width="100%">
         <TextInputField
           aria-label="Enter email to reset password"
           isOptional={ false }

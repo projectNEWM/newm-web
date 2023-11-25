@@ -1,11 +1,8 @@
 import { FormEvent, ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
-import { GradientTextInput, GradientTextInputProps } from "elements";
+import { GradientTextInput, GradientTextInputProps } from "@newm.io/studio/elements";
 
-const GradientTextInputField: ForwardRefRenderFunction<
-  HTMLInputElement,
-  GradientTextInputProps
-> = (props, ref) => {
+const GradientTextInputField: ForwardRefRenderFunction<HTMLInputElement, GradientTextInputProps> = (props, ref) => {
   return (
     <Field name={ props.name }>
       { ({ field: { onBlur, ...field }, meta }: FieldProps) => {

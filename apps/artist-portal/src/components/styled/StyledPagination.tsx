@@ -1,6 +1,6 @@
 import { Pagination, PaginationProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 const StyledPagination = styled(Pagination)<PaginationProps>({
   color: theme.colors.grey100,

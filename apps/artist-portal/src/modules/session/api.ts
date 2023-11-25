@@ -1,6 +1,6 @@
-import api, { Tags } from "api";
-import { CustomError, EmptyResponse } from "common";
-import { setToastMessage } from "modules/ui";
+import api, { Tags } from "@newm.io/studio/api";
+import { CustomError, EmptyResponse } from "@newm.io/studio/common";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
@@ -63,8 +63,7 @@ export const extendedApi = api.injectEndpoints({
           // eslint-disable-next-line
         } catch (resp: any) {
           const errorMessage =
-            ("error" in resp && resp.error?.status === 403) ||
-            resp.error?.status === 404
+            ("error" in resp && resp.error?.status === 403) || resp.error?.status === 404
               ? "Invalid username or password"
               : "An error occurred while logging in";
 
@@ -317,8 +316,7 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message:
-                "There was an error creating an auth token, try again later.",
+              message: "There was an error creating an auth token, try again later.",
               severity: "error",
             })
           );
@@ -328,11 +326,6 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const {
-  useGetUserQuery,
-  useLoginMutation,
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} = extendedApi;
+export const { useGetUserQuery, useLoginMutation, useGetProfileQuery, useUpdateProfileMutation } = extendedApi;
 
 export default extendedApi;

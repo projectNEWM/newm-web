@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router";
-import { useWindowDimensions } from "common";
+import { useWindowDimensions } from "@newm.io/studio/common";
 import {
   CopyrightInputField,
   PlaySong,
@@ -9,10 +9,10 @@ import {
   TextAreaField,
   TextInputField,
   UploadImageField,
-} from "components";
-import { HorizontalLine, Typography } from "elements";
-import theme from "theme";
-import { emptySong, useGetSongQuery } from "modules/song";
+} from "@newm.io/studio/components";
+import { HorizontalLine, Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/studio/theme";
+import { emptySong, useGetSongQuery } from "@newm.io/studio/modules/song";
 import { Formik } from "formik";
 import { SongRouteParams } from "./types";
 
@@ -71,15 +71,8 @@ const SongInfo = () => {
     <Box
       sx={ {
         mt: 5,
-        textAlign:
-          windowWidth && windowWidth > theme.breakpoints.values.md
-            ? "left"
-            : "center",
-        maxWidth: [
-          theme.inputField.maxWidth,
-          theme.inputField.maxWidth,
-          "700px",
-        ],
+        textAlign: windowWidth && windowWidth > theme.breakpoints.values.md ? "left" : "center",
+        maxWidth: [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"],
       } }
     >
       <Formik
@@ -104,11 +97,7 @@ const SongInfo = () => {
                 alignItems: ["center", "center", "unset"],
               } }
             >
-              <Stack
-                maxWidth={ theme.inputField.maxWidth }
-                spacing={ 0.5 }
-                width="100%"
-              >
+              <Stack maxWidth={ theme.inputField.maxWidth } spacing={ 0.5 } width="100%">
                 <Typography color="grey100" fontWeight={ 500 }>
                   SONG
                 </Typography>
@@ -126,11 +115,7 @@ const SongInfo = () => {
                 </SolidOutline>
               </Stack>
 
-              <Stack
-                maxWidth={ theme.inputField.maxWidth }
-                spacing={ 0.5 }
-                width="100%"
-              >
+              <Stack maxWidth={ theme.inputField.maxWidth } spacing={ 0.5 } width="100%">
                 <Typography color="grey100" fontWeight={ 500 }>
                   SONG COVER ART
                 </Typography>
@@ -148,11 +133,7 @@ const SongInfo = () => {
               spacing={ 3 }
               sx={ {
                 marginX: ["auto", "auto", "unset"],
-                maxWidth: [
-                  theme.inputField.maxWidth,
-                  theme.inputField.maxWidth,
-                  "700px",
-                ],
+                maxWidth: [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"],
                 alignSelf: ["center", "center", "unset"],
                 width: "100%",
               } }
@@ -160,11 +141,7 @@ const SongInfo = () => {
               <Stack
                 sx={ {
                   display: "grid",
-                  gridTemplateColumns: [
-                    "repeat(1, 1fr)",
-                    null,
-                    "repeat(2, 1fr)",
-                  ],
+                  gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
                   rowGap: [2, null, 3],
                   columnGap: [undefined, undefined, 1.5],
                 } }
@@ -186,26 +163,12 @@ const SongInfo = () => {
                   title={ values.genres?.join(", ") || "" }
                 />
 
-                <TextInputField
-                  disabled={ true }
-                  label="LANGUAGE"
-                  name="language"
-                />
+                <TextInputField disabled={ true } label="LANGUAGE" name="language" />
 
-                <TextInputField
-                  disabled={ true }
-                  label="MOOD"
-                  name="moods"
-                  title={ values.moods?.join(", ") || "" }
-                />
+                <TextInputField disabled={ true } label="MOOD" name="moods" title={ values.moods?.join(", ") || "" } />
               </Stack>
 
-              <TextAreaField
-                disabled={ true }
-                label="DESCRIPTION"
-                name="description"
-                title={ values.description || "" }
-              />
+              <TextAreaField disabled={ true } label="DESCRIPTION" name="description" title={ values.description || "" } />
 
               <Stack>
                 <HorizontalLine my={ 2 } />
@@ -216,11 +179,7 @@ const SongInfo = () => {
             </Typography>
             <Stack
               marginX={ ["auto", "auto", "unset"] }
-              maxWidth={ [
-                theme.inputField.maxWidth,
-                theme.inputField.maxWidth,
-                "700px",
-              ] }
+              maxWidth={ [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"] }
               spacing={ 3 }
             >
               <SwitchInputField
@@ -291,19 +250,12 @@ const SongInfo = () => {
                     "the artist and/or record label."
                   }
                 />
-                <TextInputField
-                  disabled={ true }
-                  name="barcodeType"
-                  label="RELEASE CODE TYPE"
-                />
+                <TextInputField disabled={ true } name="barcodeType" label="RELEASE CODE TYPE" />
                 <TextInputField
                   disabled={ true }
                   name="barcodeNumber"
                   label="RELEASE CODE NUMBER"
-                  tooltipText={
-                    "A release code number is a unique code that identifies " +
-                    "your release."
-                  }
+                  tooltipText={ "A release code number is a unique code that identifies " + "your release." }
                 />
                 <TextInputField
                   disabled={ true }
@@ -311,19 +263,13 @@ const SongInfo = () => {
                   mask="aa-***-99-99999"
                   maskChar={ null }
                   name="isrc"
-                  tooltipText={
-                    "An ISRC is a unique code that identifies this specific " +
-                    "recording."
-                  }
+                  tooltipText={ "An ISRC is a unique code that identifies this specific " + "recording." }
                 />
                 <TextInputField
                   disabled={ true }
                   label="IPI"
                   name="userIpi"
-                  tooltipText={
-                    "An IPI is a unique code assigned to songwriters, " +
-                    "composers, and music publishers."
-                  }
+                  tooltipText={ "An IPI is a unique code assigned to songwriters, " + "composers, and music publishers." }
                   type="number"
                 />
                 <TextInputField

@@ -11,15 +11,11 @@ import {
   useGetSongCountQuery,
   useGetSongsQuery,
   useHlsJs,
-} from "modules/song";
-import { Typography } from "elements";
-import theme from "theme";
-import {
-  PlayerState,
-  getResizedAlbumCoverImageUrl,
-  useWindowDimensions,
-} from "common";
-import placeholderBackground from "assets/images/bg-img.png";
+} from "@newm.io/studio/modules/song";
+import { Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/studio/theme";
+import { PlayerState, getResizedAlbumCoverImageUrl, useWindowDimensions } from "@newm.io/studio/common";
+import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
 
 const Songs: FunctionComponent = () => {
   const limit = 25;
@@ -40,8 +36,7 @@ const Songs: FunctionComponent = () => {
     ownerIds: [userId],
   });
 
-  const isWidthAboveMd =
-    windowWidth && windowWidth > theme.breakpoints.values.md;
+  const isWidthAboveMd = windowWidth && windowWidth > theme.breakpoints.values.md;
 
   const { data: songData = [], isLoading } = useGetSongsQuery({
     limit,
@@ -121,34 +116,21 @@ const Songs: FunctionComponent = () => {
       return;
     }
 
-    if (
-      fetchStreamDataResp.data &&
-      playerState.loadingSongId === fetchStreamDataResp.data.song.id
-    ) {
+    if (fetchStreamDataResp.data && playerState.loadingSongId === fetchStreamDataResp.data.song.id) {
       setPlayerState((prevState) => ({
         ...prevState,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
     }
-  }, [
-    playerState.loadingSongId,
-    fetchStreamDataResp.isLoading,
-    fetchStreamDataResp.data,
-    playSong,
-  ]);
+  }, [playerState.loadingSongId, fetchStreamDataResp.isLoading, fetchStreamDataResp.data, playSong]);
 
   // when a songs stream information is ready - play the song
   useEffect(() => {
     if (playerState.isReadyToPlay && playerState.song) {
       playSong(playerState.song);
     }
-  }, [
-    playerState.song,
-    playerState.loadingSongId,
-    playerState.isReadyToPlay,
-    playSong,
-  ]);
+  }, [playerState.song, playerState.loadingSongId, playerState.isReadyToPlay, playSong]);
 
   if (!songs.length && !songData.length && !isLoading) {
     return (
@@ -159,22 +141,12 @@ const Songs: FunctionComponent = () => {
   }
 
   return (
-    <Stack
-      columnGap={ 2 }
-      flexDirection="row"
-      flexWrap="wrap"
-      justifyContent="center"
-      mt={ 7.5 }
-      rowGap={ 3 }
-    >
+    <Stack columnGap={ 2 } flexDirection="row" flexWrap="wrap" justifyContent="center" mt={ 7.5 } rowGap={ 3 }>
       { songs.map((song) => {
         const genresString = song.genres.join(", ");
 
         return (
-          <Stack
-            key={ song.id }
-            sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }
-          >
+          <Stack key={ song.id } sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }>
             <Stack display="grid" justifyItems="center" alignItems="center">
               <img
                 alt="Song cover art"
@@ -206,9 +178,7 @@ const Songs: FunctionComponent = () => {
                   { song.id === playerState.currentPlayingSongId ? (
                     <Stop sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
                   ) : (
-                    <PlayArrow
-                      sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } }
-                    />
+                    <PlayArrow sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
                   ) }
                 </IconButton>
               ) }

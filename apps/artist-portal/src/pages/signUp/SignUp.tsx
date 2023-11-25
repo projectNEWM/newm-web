@@ -2,9 +2,9 @@ import * as Yup from "yup";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
-import { WizardForm } from "components";
-import { commonYupValidation, useAppDispatch } from "common";
-import { createAccount, sendVerificationEmail } from "modules/session";
+import { WizardForm } from "@newm.io/studio/components";
+import { commonYupValidation, useAppDispatch } from "@newm.io/studio/common";
+import { createAccount, sendVerificationEmail } from "@newm.io/studio/modules/session";
 import Verification from "./Verification";
 import Welcome from "./Welcome";
 
@@ -31,12 +31,8 @@ const SignUp: FunctionComponent = () => {
   const validations = {
     authCode: Yup.string().required("Verification code is required"),
     email: commonYupValidation.email,
-    newPassword: commonYupValidation.newPassword.required(
-      "Password is required"
-    ),
-    confirmPassword: commonYupValidation.confirmPassword.required(
-      "Confirm password is required"
-    ),
+    newPassword: commonYupValidation.newPassword.required("Password is required"),
+    confirmPassword: commonYupValidation.confirmPassword.required("Confirm password is required"),
   };
 
   const handleVerificationEmail = (values: FormikValues): void => {
@@ -46,12 +42,7 @@ const SignUp: FunctionComponent = () => {
   /**
    * Attempts to create an account on submit of the last form route.
    */
-  const handleSubmit = ({
-    authCode,
-    confirmPassword,
-    email,
-    newPassword,
-  }: FormikValues): void => {
+  const handleSubmit = ({ authCode, confirmPassword, email, newPassword }: FormikValues): void => {
     dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
   };
 

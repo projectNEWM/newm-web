@@ -2,15 +2,11 @@ import * as Yup from "yup";
 import { FunctionComponent } from "react";
 import { Form, Formik, FormikValues } from "formik";
 import { Box, DialogProps, Stack, Typography } from "@mui/material";
-import { Button, Dialog, HorizontalLine } from "elements";
-import {
-  DropdownSelectField,
-  SwitchInputField,
-  TextInputField,
-} from "components";
-import { commonYupValidation } from "common";
-import { useGetRolesQuery } from "modules/content";
-import { CollaborationStatus } from "modules/song";
+import { Button, Dialog, HorizontalLine } from "@newm.io/studio/elements";
+import { DropdownSelectField, SwitchInputField, TextInputField } from "@newm.io/studio/components";
+import { commonYupValidation } from "@newm.io/studio/common";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
+import { CollaborationStatus } from "@newm.io/studio/modules/song";
 
 interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
@@ -20,11 +16,7 @@ interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
 /**
  * Allows adding an owner and/or creditor when minting a song.
  */
-const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
-  open,
-  onClose,
-  onSubmit,
-}) => {
+const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({ open, onClose, onSubmit }) => {
   const { data: roles = [] } = useGetRolesQuery();
 
   const initialValues = {
@@ -43,10 +35,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
       .test(
         "at-least-one-true",
         "Please enter valid featured artist, rights, or credits",
-        (item, testContext) =>
-          item ||
-          testContext.parent.isRightsOwner ||
-          testContext.parent.isFeatured
+        (item, testContext) => item || testContext.parent.isRightsOwner || testContext.parent.isFeatured
       ),
     isRightsOwner: Yup.boolean(),
     isCreator: Yup.boolean(),
@@ -54,17 +43,8 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   });
 
   return (
-    <Dialog
-      aria-labelledby="modal-title"
-      fullWidth
-      onClose={ onClose }
-      open={ open }
-    >
-      <Formik
-        initialValues={ initialValues }
-        onSubmit={ onSubmit }
-        validationSchema={ validationSchema }
-      >
+    <Dialog aria-labelledby="modal-title" fullWidth onClose={ onClose } open={ open }>
+      <Formik initialValues={ initialValues } onSubmit={ onSubmit } validationSchema={ validationSchema }>
         { ({ errors, touched }) => (
           <Form>
             <Box
@@ -104,10 +84,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
               <SwitchInputField
                 name="isCredited"
                 title="CREDITS"
-                description={
-                  "Did they have a role in making the song? Enable to credit " +
-                  "them as a contributor."
-                }
+                description={ "Did they have a role in making the song? Enable to credit " + "them as a contributor." }
               />
 
               { touched.isCredited && errors.isCredited ? (

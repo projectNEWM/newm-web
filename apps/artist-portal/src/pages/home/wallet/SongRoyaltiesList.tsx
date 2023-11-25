@@ -1,20 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import theme from "theme";
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import theme from "@newm.io/studio/theme";
 import { Dispatch, SetStateAction } from "react";
-import { Typography } from "elements";
-import { TableDropdownSelect, TablePagination } from "components";
-import { Song } from "modules/song";
+import { Typography } from "@newm.io/studio/elements";
+import { TableDropdownSelect, TablePagination } from "@newm.io/studio/components";
+import { Song } from "@newm.io/studio/modules/song";
 import AllCaughtUp from "./AllCaughtUp";
 
 interface SongRoyaltiesListProps {
@@ -53,10 +45,7 @@ export default function SongRoyaltiesList({
 }: SongRoyaltiesListProps) {
   const TABLE_WIDTH = 700;
 
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
+  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);
   };
 
@@ -65,10 +54,7 @@ export default function SongRoyaltiesList({
       return "";
     } else if (url.split("/")[2] == "res.cloudinary.com") {
       // replace upload params with smaller dimensions
-      return url.replace(
-        /upload\/[\w,]+\//,
-        "upload/w_56,h_56,c_fill,r_max,q_auto,f_auto/"
-      );
+      return url.replace(/upload\/[\w,]+\//, "upload/w_56,h_56,c_fill,r_max,q_auto,f_auto/");
     } else {
       return url;
     }
@@ -98,12 +84,7 @@ export default function SongRoyaltiesList({
 
             <TableBody>
               { songRoyalties.map((row, index) => (
-                <StyledTableRow
-                  key={ row.id }
-                  style={
-                    (index + 1) % 2 ? { background: theme.colors.grey600 } : {}
-                  }
-                >
+                <StyledTableRow key={ row.id } style={ (index + 1) % 2 ? { background: theme.colors.grey600 } : {} }>
                   <StyledTableCell>
                     <Box sx={ { display: "flex", alignItems: "center" } }>
                       <img

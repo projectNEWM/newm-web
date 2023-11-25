@@ -1,14 +1,10 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { Alert, Button, HorizontalLine, Typography } from "elements";
+import { Alert, Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
 import { Box, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import {
-  useGetGenresQuery,
-  useGetLanguagesQuery,
-  useGetMoodsQuery,
-} from "modules/content";
-import { Creditor, Featured, Owner, UploadSongRequest } from "modules/song";
+import { useGetGenresQuery, useGetLanguagesQuery, useGetMoodsQuery } from "@newm.io/studio/modules/content";
+import { Creditor, Featured, Owner, UploadSongRequest } from "@newm.io/studio/modules/song";
 import {
   DropdownMultiSelectField,
   DropdownSelectField,
@@ -20,30 +16,19 @@ import {
   TextInputField,
   UploadImageField,
   UploadSongField,
-} from "components";
-import {
-  scrollToError,
-  useAppDispatch,
-  useExtractProperty,
-  useWindowDimensions,
-} from "common";
-import SelectCoCeators from "components/minting/SelectCoCreators";
+} from "@newm.io/studio/components";
+import { scrollToError, useAppDispatch, useExtractProperty, useWindowDimensions } from "@newm.io/studio/common";
+import SelectCoCeators from "@newm.io/studio/components/minting/SelectCoCreators";
 import { useFormikContext } from "formik";
-import {
-  VerificationStatus,
-  emptyProfile,
-  useGetProfileQuery,
-} from "modules/session";
-import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "modules/ui";
+import { VerificationStatus, emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
+import { setIsConnectWalletModalOpen, setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
 import { SongRouteParams } from "../library/types";
 
 interface BasicDonDetailsProps {
   readonly isInEditMode?: boolean;
 }
 
-const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
-  isInEditMode,
-}) => {
+const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({ isInEditMode }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
@@ -66,8 +51,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
+  const { values, errors, touched, setFieldValue, isSubmitting } = useFormikContext<UploadSongRequest>();
 
   const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
 
@@ -116,12 +100,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           alignItems: ["center", "center", "unset"],
         } }
       >
-        <Stack
-          ref={ audioRef }
-          spacing={ 0.5 }
-          width="100%"
-          maxWidth={ theme.inputField.maxWidth }
-        >
+        <Stack ref={ audioRef } spacing={ 0.5 } width="100%" maxWidth={ theme.inputField.maxWidth }>
           { isInEditMode ? (
             <>
               <Typography color="grey100" fontWeight={ 500 }>
@@ -151,12 +130,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           ) }
         </Stack>
 
-        <Stack
-          maxWidth={ theme.inputField.maxWidth }
-          ref={ coverArtUrlRef }
-          spacing={ 0.5 }
-          width="100%"
-        >
+        <Stack maxWidth={ theme.inputField.maxWidth } ref={ coverArtUrlRef } spacing={ 0.5 } width="100%">
           <Typography color="grey100" fontWeight={ 500 }>
             SONG COVER ART
           </Typography>
@@ -178,11 +152,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
         spacing={ 3 }
         sx={ {
           marginX: ["auto", "auto", "unset"],
-          maxWidth: [
-            theme.inputField.maxWidth,
-            theme.inputField.maxWidth,
-            "700px",
-          ],
+          maxWidth: [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"],
           alignSelf: ["center", "center", "unset"],
         } }
       >
@@ -290,8 +260,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             >
               <Typography color="yellow">Verify your profile</Typography>
               <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-                Profile verification is required to mint. Please verify your
-                profile.
+                Profile verification is required to mint. Please verify your profile.
               </Typography>
             </Alert>
           ) }
@@ -329,11 +298,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             type="submit"
             disabled={ isSubmitDisabled }
             isLoading={ isSubmitting }
-            width={
-              windowWidth && windowWidth > theme.breakpoints.values.md
-                ? "compact"
-                : "default"
-            }
+            width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
           >
             { values.isMinting ? "Next" : isInEditMode ? "Save" : "Upload" }
           </Button>

@@ -1,16 +1,15 @@
 import { Box, useTheme } from "@mui/material";
-import { useWindowDimensions } from "common";
-import { Button, Typography } from "elements";
+import { useWindowDimensions } from "@newm.io/studio/common";
+import { Button, Typography } from "@newm.io/studio/elements";
 import { useFormikContext } from "formik";
-import { UploadSongRequest } from "modules/song";
+import { UploadSongRequest } from "@newm.io/studio/modules/song";
 import { FunctionComponent } from "react";
-import { ConfirmContract } from "components";
+import { ConfirmContract } from "@newm.io/studio/components";
 
 const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
 
-  const { values, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
+  const { values, setFieldValue, isSubmitting } = useFormikContext<UploadSongRequest>();
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -20,9 +19,7 @@ const ConfirmAgreement: FunctionComponent = () => {
 
   return (
     <Box maxWidth={ "500px" } marginX={ ["auto", "auto", "unset"] }>
-      <Typography mb={ 1.5 }>
-        You&apos;re almost ready. Please review your ownership contract.
-      </Typography>
+      <Typography mb={ 1.5 }>You&apos;re almost ready. Please review your ownership contract.</Typography>
 
       <ConfirmContract
         songTitle={ values.title }
@@ -36,11 +33,7 @@ const ConfirmAgreement: FunctionComponent = () => {
           type="submit"
           isLoading={ isSubmitting }
           disabled={ !values.consentsToContract }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
+          width={ windowWidth && windowWidth > theme.breakpoints.values.md ? "compact" : "default" }
         >
           Distribute & Mint
         </Button>

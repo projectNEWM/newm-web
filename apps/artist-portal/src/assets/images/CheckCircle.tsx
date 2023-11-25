@@ -1,4 +1,4 @@
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 const CheckCircle = () => (
   <svg width={ 20 } height={ 20 } fill="none" xmlns="http://www.w3.org/2000/svg">

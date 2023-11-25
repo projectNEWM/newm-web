@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Button, Typography } from "elements";
+import { Button, Typography } from "@newm.io/studio/elements";
 import * as Yup from "yup";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import TextInputField from "../form/TextInputField";
 
 export default {
@@ -25,21 +25,12 @@ const initialValues: FormValues = {
  * Validation schema using Yup
  */
 const ExampleSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+  lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const mockHandleSubmit = (
-  values: FormValues,
-  actions: FormikHelpers<FormValues>
-) => {
+const mockHandleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
   setTimeout(() => {
     alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
@@ -53,11 +44,7 @@ export const Example = () => {
         <Typography variant="h3">Example Form</Typography>
       </Box>
 
-      <Formik
-        initialValues={ initialValues }
-        validationSchema={ ExampleSchema }
-        onSubmit={ mockHandleSubmit }
-      >
+      <Formik initialValues={ initialValues } validationSchema={ ExampleSchema } onSubmit={ mockHandleSubmit }>
         { () => (
           <Form>
             <Box mb={ 2 }>

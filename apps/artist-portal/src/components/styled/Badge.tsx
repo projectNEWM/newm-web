@@ -1,5 +1,5 @@
 import { Theme, styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 export interface BadgeProps {
   readonly children: React.ReactNode;

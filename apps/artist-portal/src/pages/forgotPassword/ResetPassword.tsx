@@ -1,8 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import { PasswordInputField } from "components";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { PasswordInputField } from "@newm.io/studio/components";
 
 const ResetPassword: FunctionComponent = () => {
   const theme = useTheme();
@@ -30,13 +30,7 @@ const ResetPassword: FunctionComponent = () => {
         Enter your new password
       </Typography>
 
-      <Stack
-        maxWidth={ theme.inputField.maxWidth }
-        mx="auto"
-        my={ 7.5 }
-        spacing={ 1.5 }
-        width="100%"
-      >
+      <Stack maxWidth={ theme.inputField.maxWidth } mx="auto" my={ 7.5 } spacing={ 1.5 } width="100%">
         <PasswordInputField
           aria-label="Enter your new password"
           externalMaskPassword={ maskPassword }

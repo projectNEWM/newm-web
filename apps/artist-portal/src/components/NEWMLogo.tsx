@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import NEWMLogoSVG from "assets/images/NEWMLogo";
+import NEWMLogoSVG from "@newm.io/studio/assets/images/NEWMLogo";
 
 const NEWMLogo = () => {
   return (

@@ -2,13 +2,13 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import { useFacebookLoginThunk } from "modules/session";
-import { setToastMessage } from "modules/ui";
+import { useFacebookLoginThunk } from "@newm.io/studio/modules/session";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import FacebookLoginHelper, { LoginResponse } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import { Button } from "elements";
-import { useAppDispatch } from "common";
+import { Button } from "@newm.io/studio/elements";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 interface Props {
   readonly children?: ReactNode;

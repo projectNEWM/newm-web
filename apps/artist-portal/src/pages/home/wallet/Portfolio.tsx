@@ -1,9 +1,9 @@
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { useWindowDimensions } from "common";
+import { useWindowDimensions } from "@newm.io/studio/common";
 import { Box } from "@mui/material";
-import SkeletonTable from "components/skeletons/TableSkeleton";
-import theme from "theme";
-import { SortOrder, useGetUserWalletSongsThunk } from "modules/song";
+import SkeletonTable from "@newm.io/studio/components/skeletons/TableSkeleton";
+import theme from "@newm.io/studio/theme";
+import { SortOrder, useGetUserWalletSongsThunk } from "@newm.io/studio/modules/song";
 import SongRoyaltiesList from "./SongRoyaltiesList";
 
 const Portfolio: FunctionComponent = () => {
@@ -21,11 +21,9 @@ const Portfolio: FunctionComponent = () => {
   const pageIdx = page - 1;
   const lastRowOnPage = pageIdx * rowsPerPage + rowsPerPage;
 
-  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
-    useGetUserWalletSongsThunk();
+  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] = useGetUserWalletSongsThunk();
 
-  const songs =
-    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+  const songs = walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
 
   useEffect(() => {
     getUserWalletSongs({
@@ -39,12 +37,7 @@ const Portfolio: FunctionComponent = () => {
     const skeletonYPos = skeletonRef.current?.offsetTop || 0;
 
     const rowsToRender = windowHeight
-      ? Math.max(
-          Math.floor(
-            (windowHeight - skeletonYPos - SKELETON_PADDING) / ROW_HEIGHT
-          ),
-          MIN_ROWS
-        )
+      ? Math.max(Math.floor((windowHeight - skeletonYPos - SKELETON_PADDING) / ROW_HEIGHT), MIN_ROWS)
       : DEFAULT_ROWS;
 
     setSkeletonRows(rowsToRender);
@@ -55,9 +48,7 @@ const Portfolio: FunctionComponent = () => {
     <Box ref={ skeletonRef } pt={ 2 } pb={ 8 }>
       { isLoading ? (
         <SkeletonTable
-          cols={
-            windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2
-          }
+          cols={ windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2 }
           rows={ skeletonRows }
           maxWidth={ maxListWidth }
         />

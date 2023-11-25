@@ -1,14 +1,11 @@
-import { selectUi, setUpdateWalletAddressModal } from "modules/ui";
+import { selectUi, setUpdateWalletAddressModal } from "@newm.io/studio/modules/ui";
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { Button } from "elements";
-import { useAppDispatch } from "common";
-import {
-  getWalletAddress,
-  useConnectWallet,
-} from "@newm.io/cardano-dapp-wallet-connector";
-import { updateProfile } from "modules/session";
+import { Button } from "@newm.io/studio/elements";
+import { useAppDispatch } from "@newm.io/studio/common";
+import { getWalletAddress, useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { updateProfile } from "@newm.io/studio/modules/session";
 import Modal from "./Modal";
 
 const UpdateWalletAddressModal: FunctionComponent = () => {
@@ -41,11 +38,7 @@ const UpdateWalletAddressModal: FunctionComponent = () => {
   };
 
   return (
-    <Modal
-      isOpen={ !!message }
-      onClose={ handleClose }
-      isCloseButtonVisible={ false }
-    >
+    <Modal isOpen={ !!message } onClose={ handleClose } isCloseButtonVisible={ false }>
       <Box display="flex" flex={ 1 } justifyContent="center" alignItems="center">
         <Stack
           gap={ 2 }
@@ -60,12 +53,7 @@ const UpdateWalletAddressModal: FunctionComponent = () => {
 
           { isConfirmationRequired ? (
             <Stack direction="row" gap={ 2 } justifyContent="flex-end">
-              <Button
-                width="compact"
-                variant="secondary"
-                color="music"
-                onClick={ handleClose }
-              >
+              <Button width="compact" variant="secondary" color="music" onClick={ handleClose }>
                 No
               </Button>
 

@@ -1,15 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { TextInputField } from "components";
-import { Button, Dialog } from "elements";
+import { TextInputField } from "@newm.io/studio/components";
+import { Button, Dialog } from "@newm.io/studio/elements";
 import { Form, Formik, FormikValues } from "formik";
 import { FunctionComponent, useState } from "react";
 import * as Yup from "yup";
-import theme from "theme";
-import {
-  emptyProfile,
-  useDeleteAccountThunk,
-  useGetProfileQuery,
-} from "modules/session";
+import theme from "@newm.io/studio/theme";
+import { emptyProfile, useDeleteAccountThunk, useGetProfileQuery } from "@newm.io/studio/modules/session";
 
 const DeleteAccountDialog: FunctionComponent = () => {
   const deleteAccountPhrase = "YES";
@@ -52,11 +48,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
         Delete account
       </Button>
       <Dialog open={ isModalOpen } onClose={ handleCloseDialog }>
-        <Formik
-          initialValues={ initialValues }
-          onSubmit={ handleSubmit }
-          validationSchema={ validationSchema }
-        >
+        <Formik initialValues={ initialValues } onSubmit={ handleSubmit } validationSchema={ validationSchema }>
           { () => (
             <Form>
               <Box
@@ -69,13 +61,10 @@ const DeleteAccountDialog: FunctionComponent = () => {
                 } }
               >
                 <Stack sx={ { rowGap: 1 } }>
-                  <Typography variant="body2">
-                    You can still turn back...
-                  </Typography>
+                  <Typography variant="body2">You can still turn back...</Typography>
                   <Typography variant="subtitle1">
-                    Once you delete your profile it&apos;s gone for good. If
-                    you&apos;re sure and would like to proceed, please confirm
-                    by typing &ldquo;YES&rdquo; below.
+                    Once you delete your profile it&apos;s gone for good. If you&apos;re sure and would like to proceed,
+                    please confirm by typing &ldquo;YES&rdquo; below.
                   </Typography>
                 </Stack>
 
@@ -107,12 +96,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
                   >
                     Cancel
                   </Button>
-                  <Button
-                    isLoading={ isLoading }
-                    width="compact"
-                    type="submit"
-                    sx={ { background: theme.colors.red } }
-                  >
+                  <Button isLoading={ isLoading } width="compact" type="submit" sx={ { background: theme.colors.red } }>
                     Delete account
                   </Button>
                 </Stack>

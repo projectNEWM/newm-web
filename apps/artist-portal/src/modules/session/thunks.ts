@@ -1,20 +1,16 @@
-import { asThunkHook } from "common/reduxUtils";
+import { asThunkHook } from "@newm.io/studio/common/reduxUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
   setIsWalletEnvMismatchModalOpen,
   setToastMessage,
   setUpdateWalletAddressModal,
-} from "modules/ui";
-import { history } from "common/history";
-import { uploadToCloudinary } from "api/cloudinary/utils";
-import api, { cloudinaryApi, lambdaApi } from "api";
-import {
-  EnabledWallet,
-  disconnectWallet,
-  getWalletAddress,
-} from "@newm.io/cardano-dapp-wallet-connector";
-import { SilentError } from "common";
+} from "@newm.io/studio/modules/ui";
+import { history } from "@newm.io/studio/common/history";
+import { uploadToCloudinary } from "@newm.io/studio/api/cloudinary/utils";
+import api, { cloudinaryApi, lambdaApi } from "@newm.io/studio/api";
+import { EnabledWallet, disconnectWallet, getWalletAddress } from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "@newm.io/studio/common";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
@@ -45,11 +41,7 @@ export const updateProfile = createAsyncThunk(
           eager: "c_lfill,w_1600,h_200",
         };
 
-        bannerUrl = await uploadToCloudinary(
-          body.bannerUrl as File,
-          uploadParams,
-          dispatch
-        );
+        bannerUrl = await uploadToCloudinary(body.bannerUrl as File, uploadParams, dispatch);
       }
 
       if (body.pictureUrl) {
@@ -58,11 +50,7 @@ export const updateProfile = createAsyncThunk(
           eager: "c_lfill,w_400,h_400",
         };
 
-        pictureUrl = await uploadToCloudinary(
-          body.pictureUrl as File,
-          uploadParams,
-          dispatch
-        );
+        pictureUrl = await uploadToCloudinary(body.pictureUrl as File, uploadParams, dispatch);
       }
 
       if (body.companyLogoUrl) {
@@ -71,11 +59,7 @@ export const updateProfile = createAsyncThunk(
           eager: "c_lfill,w_200,h_200",
         };
 
-        companyLogoUrl = await uploadToCloudinary(
-          body.companyLogoUrl as File,
-          uploadParams,
-          dispatch
-        );
+        companyLogoUrl = await uploadToCloudinary(body.companyLogoUrl as File, uploadParams, dispatch);
       }
 
       const updateProfileResponse = await dispatch(
@@ -110,9 +94,7 @@ export const updateProfile = createAsyncThunk(
 export const updateInitialProfile = createAsyncThunk(
   "session/updateInitialProfile",
   async (body: ProfileFormValues, { dispatch }) => {
-    const updateProfileResponse = await dispatch(
-      sessionApi.endpoints.updateProfile.initiate(body)
-    );
+    const updateProfileResponse = await dispatch(sessionApi.endpoints.updateProfile.initiate(body));
 
     if ("error" in updateProfileResponse) {
       return;
@@ -125,50 +107,35 @@ export const updateInitialProfile = createAsyncThunk(
 /**
  * Logs in and navigates to the library page.
  */
-export const login = createAsyncThunk(
-  "session/login",
-  async (body: LoginRequest, { dispatch }) => {
-    const loginResponse = await dispatch(
-      sessionApi.endpoints.login.initiate(body)
-    );
+export const login = createAsyncThunk("session/login", async (body: LoginRequest, { dispatch }) => {
+  const loginResponse = await dispatch(sessionApi.endpoints.login.initiate(body));
 
-    if ("error" in loginResponse) return;
+  if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
-  }
-);
+  history.push("/home/upload-song");
+});
 
 /**
  * Logs in using Google and navigates to the library page.
  */
-export const googleLogin = createAsyncThunk(
-  "session/googleLogin",
-  async (accessToken: string, { dispatch }) => {
-    const loginResponse = dispatch(
-      sessionApi.endpoints.googleLogin.initiate({ accessToken })
-    );
+export const googleLogin = createAsyncThunk("session/googleLogin", async (accessToken: string, { dispatch }) => {
+  const loginResponse = dispatch(sessionApi.endpoints.googleLogin.initiate({ accessToken }));
 
-    if ("error" in loginResponse) return;
+  if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
-  }
-);
+  history.push("/home/upload-song");
+});
 
 /**
  * Logs in using Facebook and navigates to the library page.
  */
-export const facebookLogin = createAsyncThunk(
-  "session/facebookLogin",
-  async (accessToken: string, { dispatch }) => {
-    const loginResponse = dispatch(
-      sessionApi.endpoints.facebookLogin.initiate({ accessToken })
-    );
+export const facebookLogin = createAsyncThunk("session/facebookLogin", async (accessToken: string, { dispatch }) => {
+  const loginResponse = dispatch(sessionApi.endpoints.facebookLogin.initiate({ accessToken }));
 
-    if ("error" in loginResponse) return;
+  if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
-  }
-);
+  history.push("/home/upload-song");
+});
 
 /**
  * Logs in using LinkedIn and navigates to the library page.
@@ -196,9 +163,7 @@ export const linkedInLogin = createAsyncThunk(
 export const createAccount = createAsyncThunk(
   "session/createAccount",
   async (body: CreateAccountRequest, { dispatch }) => {
-    const createAccountResponse = await dispatch(
-      sessionApi.endpoints.createAccount.initiate(body)
-    );
+    const createAccountResponse = await dispatch(sessionApi.endpoints.createAccount.initiate(body));
 
     if ("error" in createAccountResponse) {
       return;
@@ -225,9 +190,7 @@ export const createAccount = createAsyncThunk(
 export const deleteAccount = createAsyncThunk(
   "session/deleteAccount",
   async (body: DeleteAccountRequest, { dispatch }) => {
-    const deleteAccountResponse = await dispatch(
-      sessionApi.endpoints.deleteAccount.initiate(body)
-    );
+    const deleteAccountResponse = await dispatch(sessionApi.endpoints.deleteAccount.initiate(body));
 
     if ("error" in deleteAccountResponse) {
       return;
@@ -248,28 +211,22 @@ export const deleteAccount = createAsyncThunk(
 /**
  * Request a iDenfy authToken and set it as a cookie.
  */
-export const getIdenfyAuthToken = createAsyncThunk(
-  "session/getIdenfyAuthToken",
-  async (_, { dispatch }) => {
-    const idenfyTokenResponse = await dispatch(
-      sessionApi.endpoints.getIdenfyAuthToken.initiate()
-    );
+export const getIdenfyAuthToken = createAsyncThunk("session/getIdenfyAuthToken", async (_, { dispatch }) => {
+  const idenfyTokenResponse = await dispatch(sessionApi.endpoints.getIdenfyAuthToken.initiate());
 
-    if ("error" in idenfyTokenResponse) {
-      return;
-    }
-
-    const { data: { authToken = "", expiryTime = 1200 } = {} } =
-      idenfyTokenResponse;
-
-    if (authToken) {
-      Cookies.set("idenfyAuthToken", authToken, {
-        expires: expiryTime / 86400,
-        secure: true,
-      });
-    }
+  if ("error" in idenfyTokenResponse) {
+    return;
   }
-);
+
+  const { data: { authToken = "", expiryTime = 1200 } = {} } = idenfyTokenResponse;
+
+  if (authToken) {
+    Cookies.set("idenfyAuthToken", authToken, {
+      expires: expiryTime / 86400,
+      secure: true,
+    });
+  }
+});
 
 /**
  * Reset user password. Navigate to the login page to have user
@@ -278,9 +235,7 @@ export const getIdenfyAuthToken = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   "session/resetPassword",
   async (body: ResetPasswordRequest, { dispatch }) => {
-    const resetPasswordResponse = await dispatch(
-      sessionApi.endpoints.resetPassword.initiate(body)
-    );
+    const resetPasswordResponse = await dispatch(sessionApi.endpoints.resetPassword.initiate(body));
 
     if ("error" in resetPasswordResponse) {
       return;
@@ -304,9 +259,7 @@ export const resetPassword = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   "session/changePassword",
   async (body: ChangePasswordRequest, { dispatch }) => {
-    const changePasswordResponse = await dispatch(
-      sessionApi.endpoints.changePassword.initiate(body)
-    );
+    const changePasswordResponse = await dispatch(sessionApi.endpoints.changePassword.initiate(body));
 
     if ("error" in changePasswordResponse) {
       return;
@@ -327,9 +280,7 @@ export const handleSocialLoginError = createAsyncThunk(
   // eslint-disable-next-line
   async (error: any, { dispatch }) => {
     const errorMessage =
-      error?.status === 409
-        ? "The email for this account is already in use"
-        : "Email or password is incorrect";
+      error?.status === 409 ? "The email for this account is already in use" : "Email or password is incorrect";
 
     dispatch(
       setToastMessage({
@@ -341,25 +292,22 @@ export const handleSocialLoginError = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk(
-  "session/logOut",
-  async (_, { dispatch }) => {
-    // disconnect wallet
-    disconnectWallet();
+export const logOut = createAsyncThunk("session/logOut", async (_, { dispatch }) => {
+  // disconnect wallet
+  disconnectWallet();
 
-    // remove cookies
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
-    Cookies.remove("idenfyAuthToken");
+  // remove cookies
+  Cookies.remove("accessToken");
+  Cookies.remove("refreshToken");
+  Cookies.remove("idenfyAuthToken");
 
-    // reset RTKQuery cache
-    dispatch(api.util.resetApiState());
-    dispatch(cloudinaryApi.util.resetApiState());
-    dispatch(lambdaApi.util.resetApiState());
+  // reset RTKQuery cache
+  dispatch(api.util.resetApiState());
+  dispatch(cloudinaryApi.util.resetApiState());
+  dispatch(lambdaApi.util.resetApiState());
 
-    dispatch(setIsLoggedIn(false));
-  }
-);
+  dispatch(setIsLoggedIn(false));
+});
 
 /**
  * Handles functionality around saving a wallet address to a user's
@@ -384,9 +332,7 @@ export const saveWalletAddress = createAsyncThunk(
       }
 
       // fetch profile and get currently saved wallet address
-      const getProfileResp = await dispatch(
-        sessionApi.endpoints.getProfile.initiate()
-      );
+      const getProfileResp = await dispatch(sessionApi.endpoints.getProfile.initiate());
       if ("error" in getProfileResp || !getProfileResp.data) {
         throw new Error();
       }

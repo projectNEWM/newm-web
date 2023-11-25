@@ -1,7 +1,7 @@
-import { isProd } from "buildParams";
+import { isProd } from "@newm.io/studio/buildParams";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import Hls from "hls.js";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import { Song, UseHlsJsParams, UseHlsJsResult } from "./types";
 import { emptySong, useGetSongQuery } from "./api";
 
@@ -11,11 +11,7 @@ import { emptySong, useGetSongQuery } from "./api";
  * @param params a memoized object with onPlaysong, onStopSong, and onSongEnded
  * @returns a memoized object with onPlay and onStop
  */
-export const useHlsJs = ({
-  onPlaySong,
-  onStopSong,
-  onSongEnded,
-}: UseHlsJsParams): UseHlsJsResult => {
+export const useHlsJs = ({ onPlaySong, onStopSong, onSongEnded }: UseHlsJsParams): UseHlsJsResult => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   /**
@@ -149,10 +145,8 @@ export const useHlsJs = ({
 };
 
 export const useHasSongAccess = (songId: string): boolean => {
-  const { data: { id: userId } = emptyProfile, isLoading: isProfileLoading } =
-    useGetProfileQuery();
-  const { data: { ownerId } = emptySong, isLoading: isSongLoading } =
-    useGetSongQuery(songId);
+  const { data: { id: userId } = emptyProfile, isLoading: isProfileLoading } = useGetProfileQuery();
+  const { data: { ownerId } = emptySong, isLoading: isSongLoading } = useGetSongQuery(songId);
 
   return isProfileLoading || isSongLoading || userId === ownerId;
 };

@@ -1,6 +1,6 @@
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import styled, { css } from "styled-components";
-import { DropdownMultiSelectProps } from "elements/DropdownMultiSelect";
+import { DropdownMultiSelectProps } from "@newm.io/studio/elements/DropdownMultiSelect";
 
 const NoResultsText = styled.span`
   background-color: ${theme.colors.grey500};

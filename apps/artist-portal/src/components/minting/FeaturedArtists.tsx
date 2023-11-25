@@ -1,29 +1,22 @@
 import { FunctionComponent } from "react";
 import { Box, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Button } from "elements";
-import { Featured, useGetCollaboratorsQuery } from "modules/song";
-import theme from "theme";
+import { Button } from "@newm.io/studio/elements";
+import { Featured, useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
+import theme from "@newm.io/studio/theme";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
   readonly isDeleteDisabled?: boolean;
-  readonly onDelete: (
-    featured: Featured,
-    featuredArtists: ReadonlyArray<Featured>
-  ) => void;
+  readonly onDelete: (featured: Featured, featuredArtists: ReadonlyArray<Featured>) => void;
 }
 
 /**
  * Allows for displaying and updating featured artists when minting a song.
  */
-const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
-  featured,
-  onDelete,
-  isDeleteDisabled = false,
-}) => {
+const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({ featured, onDelete, isDeleteDisabled = false }) => {
   const emails = featured.map((featuredArtist) => featuredArtist.email);
 
   const { data: collaborators } = useGetCollaboratorsQuery(
@@ -38,10 +31,7 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
   return (
     <Box>
       { featured.map((featuredArtist) => {
-        const collaboratorInfo = getCollaboratorInfo(
-          featuredArtist.email,
-          collaborators
-        );
+        const collaboratorInfo = getCollaboratorInfo(featuredArtist.email, collaborators);
 
         return (
           <Stack

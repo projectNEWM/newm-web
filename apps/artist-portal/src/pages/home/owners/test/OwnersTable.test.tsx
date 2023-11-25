@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from "react-router-dom";
-import { useGetCollaboratorsQuery } from "modules/song";
+import { useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
 import OwnersTable from "../OwnersTable";
 
-jest.mock("modules/song", () => ({
+jest.mock("@newm.io/studio/modules/song", () => ({
   useGetCollaboratorsQuery: jest.fn(),
 }));
 
@@ -44,9 +44,7 @@ describe("OwnersTable should", () => {
 
     expect(screen.getByTestId("table-skeleton")).toBeInTheDocument();
 
-    expect(
-      screen.queryByText("No collaborators matched your search.")
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText("No collaborators matched your search.")).not.toBeInTheDocument();
   });
 
   it("render no owners yet message when there are no collaborators and no query", () => {
@@ -64,9 +62,7 @@ describe("OwnersTable should", () => {
 
     screen.debug;
 
-    expect(
-      screen.getByText("There are no collaborators yet.")
-    ).toBeInTheDocument();
+    expect(screen.getByText("There are no collaborators yet.")).toBeInTheDocument();
 
     expect(screen.queryByTestId("table-skeleton")).not.toBeInTheDocument();
   });
@@ -80,9 +76,7 @@ describe("OwnersTable should", () => {
 
     render(<OwnersTable query="example" totalCollaborators={ 0 } />);
 
-    expect(
-      screen.getByText("No collaborators matched your search.")
-    ).toBeInTheDocument();
+    expect(screen.getByText("No collaborators matched your search.")).toBeInTheDocument();
     expect(screen.queryByTestId("table-skeleton")).not.toBeInTheDocument();
   });
 

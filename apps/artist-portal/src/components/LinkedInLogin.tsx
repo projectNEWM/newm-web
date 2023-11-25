@@ -6,9 +6,9 @@
 
 import { FunctionComponent, ReactNode } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
-import { useLinkedInLoginThunk } from "modules/session";
+import { useLinkedInLoginThunk } from "@newm.io/studio/modules/session";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { Button } from "elements";
+import { Button } from "@newm.io/studio/elements";
 
 interface Props {
   readonly children?: ReactNode;

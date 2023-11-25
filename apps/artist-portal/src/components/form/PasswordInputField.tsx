@@ -3,8 +3,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { TextInputField } from "components";
-import { TextInputProps } from "elements";
+import { TextInputField } from "@newm.io/studio/components";
+import { TextInputProps } from "@newm.io/studio/elements";
 
 interface PasswordInputFieldProps extends TextInputProps {
   readonly externalMaskPassword?: boolean;

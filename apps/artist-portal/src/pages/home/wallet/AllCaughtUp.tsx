@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Typography } from "elements";
+import { Typography } from "@newm.io/studio/elements";
 import { FunctionComponent } from "react";
 
 const AllCaughtUp: FunctionComponent = () => {

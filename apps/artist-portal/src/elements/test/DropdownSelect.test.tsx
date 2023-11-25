@@ -1,20 +1,12 @@
 /* eslint-disable testing-library/await-async-events */
 import { screen } from "@testing-library/react";
-import { renderWithContext } from "common";
+import { renderWithContext } from "@newm.io/studio/common";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import DropdownSelect from "../DropdownSelect";
 
 describe("<DropdownSelect>", () => {
-  const data = [
-    "Alternative",
-    "Anime",
-    "Blues",
-    "Children's",
-    "Classical",
-    "Comedy",
-    "Lofi",
-  ];
+  const data = ["Alternative", "Anime", "Blues", "Children's", "Classical", "Comedy", "Lofi"];
 
   const renderComponent = (propOverrides = {}) => {
     const props = {

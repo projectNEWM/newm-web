@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Stack } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import TwitterLogo from "assets/images/TwitterLogo";
-import GlobalFill from "assets/images/GlobalFill";
-import InstagramLogo from "assets/images/InstagramLogo";
-import placeholderBackground from "assets/images/bg-img.png";
-import theme from "theme";
-import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "common";
-import { history } from "common/history";
-import { VerificationStatus, useGetUserQuery } from "modules/session";
-import { Button, Typography } from "elements";
-import { ProfileSkeleton } from "components";
+import TwitterLogo from "@newm.io/studio/assets/images/TwitterLogo";
+import GlobalFill from "@newm.io/studio/assets/images/GlobalFill";
+import InstagramLogo from "@newm.io/studio/assets/images/InstagramLogo";
+import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
+import theme from "@newm.io/studio/theme";
+import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
+import { VerificationStatus, useGetUserQuery } from "@newm.io/studio/modules/session";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { ProfileSkeleton } from "@newm.io/studio/components";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
 
@@ -48,8 +48,7 @@ const Owner: FunctionComponent = () => {
   } = ownerData;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
-  const isWidthAboveSm =
-    windowWidth && windowWidth > theme.breakpoints.values.sm;
+  const isWidthAboveSm = windowWidth && windowWidth > theme.breakpoints.values.sm;
 
   return (
     <>
@@ -61,12 +60,7 @@ const Owner: FunctionComponent = () => {
           rowGap: 2,
         } }
       >
-        <Button
-          color="white"
-          onClick={ () => history.back() }
-          variant="outlined"
-          width="icon"
-        >
+        <Button color="white" onClick={ () => history.back() } variant="outlined" width="icon">
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
         <Typography variant="h3">ARTIST PAGE</Typography>
@@ -120,24 +114,16 @@ const Owner: FunctionComponent = () => {
             textAlign={ ["center", "center", "center", "left"] }
           >
             <Typography variant="h3" fontWeight="700">
-              { firstName || lastName
-                ? `${firstName} ${lastName}`.toUpperCase()
-                : "Name Unavailable" }
+              { firstName || lastName ? `${firstName} ${lastName}`.toUpperCase() : "Name Unavailable" }
             </Typography>
             { isVerified ? <CheckCircleIcon color="success" /> : null }
           </Stack>
           { location && (
-            <Typography
-              mt={ 0.5 }
-              variant="subtitle1"
-              textAlign={ ["center", "center", "center", "left"] }
-            >
+            <Typography mt={ 0.5 } variant="subtitle1" textAlign={ ["center", "center", "center", "left"] }>
               { location }
             </Typography>
           ) }
-          <Stack
-            sx={ { columnGap: 1.5, flexDirection: "row", mt: [2, 2, 2, 3.5] } }
-          >
+          <Stack sx={ { columnGap: 1.5, flexDirection: "row", mt: [2, 2, 2, 3.5] } }>
             <Button
               color="music"
               disabled={ !(biography || role) }

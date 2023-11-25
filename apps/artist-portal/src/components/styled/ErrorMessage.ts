@@ -1,6 +1,6 @@
-import { Typography } from "elements";
+import { Typography } from "@newm.io/studio/elements";
 import { styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 const ErrorMessage = styled(Typography)({
   ...theme.typography.h5,

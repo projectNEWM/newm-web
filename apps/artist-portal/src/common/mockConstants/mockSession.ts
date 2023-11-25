@@ -1,4 +1,4 @@
-import { SessionState } from "modules/session";
+import { SessionState } from "@newm.io/studio/modules/session";
 import { PersistPartial } from "redux-persist/lib/persistReducer";
 
 export const mockSession: SessionState & PersistPartial = {

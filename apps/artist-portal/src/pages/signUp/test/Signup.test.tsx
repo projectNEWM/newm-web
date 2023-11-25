@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/prefer-presence-queries */
-import { renderWithContext } from "common";
+import { renderWithContext } from "@newm.io/studio/common";
 import SignUp from "../SignUp";
 
 // mock useLocation for Wizard form

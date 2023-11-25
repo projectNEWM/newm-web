@@ -1,11 +1,7 @@
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { useAppDispatch } from "common";
-import Modal from "components/Modal";
-import {
-  clearProgressBarModal,
-  selectUi,
-  setIsProgressBarModalOpen,
-} from "modules/ui";
+import { useAppDispatch } from "@newm.io/studio/common";
+import Modal from "@newm.io/studio/components/Modal";
+import { clearProgressBarModal, selectUi, setIsProgressBarModalOpen } from "@newm.io/studio/modules/ui";
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import ProgressBar from "./ProgressBar";
@@ -25,11 +21,7 @@ const ProgressBarModal: FunctionComponent = () => {
   };
 
   return (
-    <Modal
-      isOpen={ isProgressBarModalOpen }
-      isCloseButtonVisible={ false }
-      onClose={ handleClose }
-    >
+    <Modal isOpen={ isProgressBarModalOpen } isCloseButtonVisible={ false } onClose={ handleClose }>
       <Box display="flex" flex={ 1 } justifyContent="center" alignItems="center">
         <Stack
           gap={ 2 }
@@ -40,16 +32,10 @@ const ProgressBarModal: FunctionComponent = () => {
             textAlign: "center",
           } }
         >
-          <ProgressBar
-            progress={ progress }
-            animationSeconds={ animationSeconds }
-          />
+          <ProgressBar progress={ progress } animationSeconds={ animationSeconds } />
 
           <Stack gap={ 1 }>
-            <Typography
-              variant="subtitle1"
-              sx={ { color: theme.colors.white, fontStyle: "italic" } }
-            >
+            <Typography variant="subtitle1" sx={ { color: theme.colors.white, fontStyle: "italic" } }>
               { message }
             </Typography>
 

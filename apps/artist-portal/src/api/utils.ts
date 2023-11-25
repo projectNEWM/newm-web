@@ -1,8 +1,8 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import Cookies from "js-cookie";
-import { RootState } from "store";
+import { RootState } from "@newm.io/studio/store";
 import { Mutex } from "async-mutex";
-import { NewmAuthResponse, logOut, receiveRefreshToken } from "modules/session";
+import { NewmAuthResponse, logOut, receiveRefreshToken } from "@newm.io/studio/modules/session";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { AxiosBaseQueryParams, BaseQuery } from "./types";
 
@@ -14,10 +14,7 @@ const mutex = new Mutex();
  * baseQuery for the refresh token API call. Utilizes Mutex to prevent
  * additional API calls while refreshing the token.
  */
-export const fetchBaseQueryWithReauth = (
-  baseQuery: BaseQuery,
-  refreshBaseQuery?: BaseQuery
-): BaseQuery => {
+export const fetchBaseQueryWithReauth = (baseQuery: BaseQuery, refreshBaseQuery?: BaseQuery): BaseQuery => {
   return async (args, api, extraOptions) => {
     const makeRequestWithRefreshedAccessToken = async () => {
       return await baseQuery(args, api, extraOptions);
@@ -84,13 +81,8 @@ export const fetchBaseQueryWithReauth = (
  * Sets up base query using axios request library (allows for tracking
  * upload progress, which the native fetch library does not).
  */
-export const axiosBaseQuery = (
-  { baseUrl, prepareHeaders }: AxiosBaseQueryParams = { baseUrl: "" }
-): BaseQuery => {
-  return async (
-    { url, method, body, params, headers = {}, onUploadProgress },
-    api
-  ) => {
+export const axiosBaseQuery = ({ baseUrl, prepareHeaders }: AxiosBaseQueryParams = { baseUrl: "" }): BaseQuery => {
+  return async ({ url, method, body, params, headers = {}, onUploadProgress }, api) => {
     try {
       const axiosInstance = axios.create({
         headers: prepareHeaders ? prepareHeaders(api, headers) : headers,
@@ -140,10 +132,7 @@ export const axiosBaseQuery = (
  * Adds auth header to requests. Can be overwritten by an auth
  * header present in a specific request.
  */
-export const prepareAuthHeader = (
-  api: BaseQueryApi,
-  headers: AxiosRequestConfig["headers"]
-) => {
+export const prepareAuthHeader = (api: BaseQueryApi, headers: AxiosRequestConfig["headers"]) => {
   const state = api.getState() as RootState;
   const { isLoggedIn } = state.session;
   const accessToken = Cookies.get("accessToken");

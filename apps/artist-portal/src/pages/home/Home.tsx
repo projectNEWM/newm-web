@@ -3,7 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
@@ -19,10 +19,7 @@ const Home: FunctionComponent = () => {
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 
-  const {
-    data: { firstName = "", lastName = "", role } = emptyProfile,
-    isLoading,
-  } = useGetProfileQuery();
+  const { data: { firstName = "", lastName = "", role } = emptyProfile, isLoading } = useGetProfileQuery();
 
   const hasBasicDetails = !!(firstName && lastName && role);
 

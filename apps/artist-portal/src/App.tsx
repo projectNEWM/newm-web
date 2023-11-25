@@ -13,21 +13,21 @@ import {
   Toast,
   UpdateWalletAddressModal,
   WalletEnvMismatchModal,
-} from "components";
-import Login from "pages/login";
-import Home from "pages/home";
-import SignUp from "pages/signUp";
-import ForgotPassword from "pages/forgotPassword";
-import CreateProfile from "pages/createProfile";
+} from "@newm.io/studio/components";
+import Login from "@newm.io/studio/pages/login";
+import Home from "@newm.io/studio/pages/home";
+import SignUp from "@newm.io/studio/pages/signUp";
+import ForgotPassword from "@newm.io/studio/pages/forgotPassword";
+import CreateProfile from "@newm.io/studio/pages/createProfile";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import theme from "theme";
-import BrowserRouter from "common/BrowserRouter";
-import { history } from "common/history";
+import theme from "@newm.io/theme";
+import BrowserRouter from "@newm.io/studio/common/BrowserRouter";
+import { history } from "@newm.io/studio/common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import OnboardingRedirect from "components/OnboardingRedirect";
+import OnboardingRedirect from "@newm.io/studio/components/OnboardingRedirect";
 import store, { persistor } from "./store";
 import "./App.css";
 

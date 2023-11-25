@@ -12,7 +12,7 @@ import {
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import React from "react";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import StyledPagination from "./styled/StyledPagination";
 
 const StyledTableCell = styled(TableCell)<TableCellProps>`
@@ -62,8 +62,7 @@ const TablePagination = ({
                 display: { xs: "none", sm: "block" },
               } }
             >
-              Showing { (page - 1) * rowsPerPage + 1 } to{ " " }
-              { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
+              Showing { (page - 1) * rowsPerPage + 1 } to { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
               { numberOfRows } { rows }
             </Typography>
             <StyledPagination
@@ -73,10 +72,7 @@ const TablePagination = ({
               count={ Math.ceil(numberOfRows / rowsPerPage) }
               onChange={ handlePageChange }
               renderItem={ (item) => (
-                <PaginationItem
-                  slots={ { previous: ArrowLeftIcon, next: ArrowRightIcon } }
-                  { ...item }
-                />
+                <PaginationItem slots={ { previous: ArrowLeftIcon, next: ArrowRightIcon } } { ...item } />
               ) }
             />
           </Box>

@@ -1,19 +1,15 @@
 import { Box, Switch as MuiSwitch, SwitchProps, styled } from "@mui/material";
-import CheckIcon from "assets/images/CheckIcon";
-import CloseIcon from "assets/images/CloseIcon";
+import CheckIcon from "@newm.io/studio/assets/images/CheckIcon";
+import CloseIcon from "@newm.io/studio/assets/images/CloseIcon";
 import { FunctionComponent } from "react";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 interface ToggleIconProps {
   readonly checked: boolean;
 }
 
 const StyledSwitch = styled((props: SwitchProps) => (
-  <MuiSwitch
-    focusVisibleClassName=".Mui-focusVisible"
-    disableRipple
-    { ...props }
-  />
+  <MuiSwitch focusVisibleClassName=".Mui-focusVisible" disableRipple { ...props } />
 ))(() => ({
   width: 44,
   height: 24,
@@ -74,13 +70,7 @@ const ToggleIcon: FunctionComponent<ToggleIconProps> = ({ checked }) => {
 };
 
 const Switch: FunctionComponent<SwitchProps> = (props) => {
-  return (
-    <StyledSwitch
-      icon={ <ToggleIcon checked={ false } /> }
-      checkedIcon={ <ToggleIcon checked={ true } /> }
-      { ...props }
-    />
-  );
+  return <StyledSwitch icon={ <ToggleIcon checked={ false } /> } checkedIcon={ <ToggleIcon checked={ true } /> } { ...props } />;
 };
 
 export default Switch;

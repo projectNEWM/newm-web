@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
-import { RootState } from "store";
+import { RootState } from "@newm.io/studio/store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
-import { Song } from "modules/song";
+import { Song } from "@newm.io/studio/modules/song";
 
 export interface EmptyResponse {
   readonly data: null;

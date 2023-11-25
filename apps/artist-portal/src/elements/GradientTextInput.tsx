@@ -1,31 +1,22 @@
-import {
-  ForwardRefRenderFunction,
-  ForwardedRef,
-  HTMLProps,
-  forwardRef,
-} from "react";
+import { ForwardRefRenderFunction, ForwardedRef, HTMLProps, forwardRef } from "react";
 import { Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import Typography from "./Typography";
 
-export interface GradientTextInputProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+export interface GradientTextInputProps extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly errorMessage?: string;
   readonly helperText?: string;
   readonly textAlign?: "left" | "center" | "right";
 }
 
-interface StyledInputElementProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+interface StyledInputElementProps extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly hasError: boolean;
   readonly textAlign: "left" | "center" | "right";
 }
 
 const mdBreakpoint = theme.breakpoints.down("md");
-const mdBreakpointStyles = theme.typography.h1[
-  mdBreakpoint
-] as typeof theme.typography.h1;
+const mdBreakpointStyles = theme.typography.h1[mdBreakpoint] as typeof theme.typography.h1;
 
 const StyledRootElement = styled("div")`
   display: flex;
@@ -48,10 +39,8 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
   background: ${(props) => (props.hasError ? "none" : theme.gradients.music)};
   background-clip: text;
-  text-fill-color: ${(props) =>
-    props.hasError ? "currentcolor" : "transparent"};
-  caret-color: ${(props) =>
-    props.hasError ? theme.colors.red : theme.colors.music};
+  text-fill-color: ${(props) => (props.hasError ? "currentcolor" : "transparent")};
+  caret-color: ${(props) => (props.hasError ? theme.colors.red : theme.colors.music)};
   text-align: ${(props) => props.textAlign};
   font-size: ${theme.typography.h1.fontSize};
   line-height: ${theme.typography.h1.lineHeight};
@@ -79,10 +68,7 @@ const StyledInputElement = styled("input")<StyledInputElementProps>`
   }
 `;
 
-const GradientTextInput: ForwardRefRenderFunction<
-  HTMLInputElement,
-  GradientTextInputProps
-> = (
+const GradientTextInput: ForwardRefRenderFunction<HTMLInputElement, GradientTextInputProps> = (
   { errorMessage, helperText, textAlign = "left", ...rest },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
@@ -101,11 +87,7 @@ const GradientTextInput: ForwardRefRenderFunction<
       </StyledRootElement>
 
       { errorMessage ? (
-        <Typography
-          variant="h5"
-          textAlign={ textAlign }
-          sx={ { color: theme.colors.red } }
-        >
+        <Typography variant="h5" textAlign={ textAlign } sx={ { color: theme.colors.red } }>
           { errorMessage }
         </Typography>
       ) : helperText ? (

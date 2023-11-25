@@ -1,34 +1,23 @@
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "elements";
-import {
-  Creditor,
-  getIsCreditorEditable,
-  useGetCollaboratorsQuery,
-} from "modules/song";
-import DropdownSelectField from "components/form/DropdownSelectField";
-import { useGetRolesQuery } from "modules/content";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { Creditor, getIsCreditorEditable, useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
+import DropdownSelectField from "@newm.io/studio/components/form/DropdownSelectField";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
   readonly isDeleteDisabled?: boolean;
-  readonly onDelete: (
-    creditor: Creditor,
-    creditors: ReadonlyArray<Creditor>
-  ) => void;
+  readonly onDelete: (creditor: Creditor, creditors: ReadonlyArray<Creditor>) => void;
 }
 
 /**
  * Allows for displaying and updating creditors when minting a song.
  */
-const Creditors: FunctionComponent<CreditorsProps> = ({
-  creditors,
-  onDelete,
-  isDeleteDisabled = false,
-}) => {
+const Creditors: FunctionComponent<CreditorsProps> = ({ creditors, onDelete, isDeleteDisabled = false }) => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
   const emails = creditors.map((creditor) => creditor.email);
@@ -55,10 +44,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
       { creditors.map((creditor, idx) => {
         const isEditable = getIsCreditorEditable(creditor);
-        const collaboratorInfo = getCollaboratorInfo(
-          creditor.email,
-          collaborators
-        );
+        const collaboratorInfo = getCollaboratorInfo(creditor.email, collaborators);
 
         return (
           <Stack

@@ -1,4 +1,4 @@
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import { Box, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
@@ -8,11 +8,7 @@ interface SkeletonTableProps {
   maxWidth?: string | number;
 }
 
-const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
-  cols = 3,
-  rows = 10,
-  maxWidth = 1200,
-}) => {
+const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({ cols = 3, rows = 10, maxWidth = 1200 }) => {
   return (
     <Box
       maxWidth={ maxWidth }
@@ -22,11 +18,7 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
       sx={ { backgroundColor: theme.colors.grey600 } }
       data-testid="table-skeleton"
     >
-      <Stack
-        columnGap={ 4 }
-        display="grid"
-        gridTemplateColumns={ `repeat(${cols}, minmax(72px, 1fr))` }
-      >
+      <Stack columnGap={ 4 } display="grid" gridTemplateColumns={ `repeat(${cols}, minmax(72px, 1fr))` }>
         { Array.from({ length: cols }, (_, i) => (
           <Skeleton key={ i } height="40px" width="72px" />
         )) }
@@ -45,12 +37,7 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
           <Skeleton key={ i } height="24px" />
         )) }
       </Stack>
-      <Stack
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        pb={ 4 }
-      >
+      <Stack display="flex" flexDirection="row" justifyContent="space-between" pb={ 4 }>
         <Skeleton height="40px" width="100px" />
         <Skeleton height="40px" width="100px" />
       </Stack>

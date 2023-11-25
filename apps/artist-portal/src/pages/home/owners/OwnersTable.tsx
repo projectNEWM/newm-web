@@ -1,24 +1,10 @@
 import { KeyboardEvent, useEffect, useState } from "react";
-import {
-  Box,
-  Stack,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import theme from "theme";
-import { useGetCollaboratorsQuery } from "modules/song";
-import { useWindowDimensions } from "common";
-import {
-  TableCell,
-  TableHeadCell,
-  TablePagination,
-  TableSkeleton,
-} from "components";
-import { history } from "common/history";
+import { Box, Stack, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import theme from "@newm.io/studio/theme";
+import { useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
+import { useWindowDimensions } from "@newm.io/studio/common";
+import { TableCell, TableHeadCell, TablePagination, TableSkeleton } from "@newm.io/studio/components";
+import { history } from "@newm.io/studio/common/history";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoOwnersYet from "./NoOwnersYet";
 
@@ -27,10 +13,7 @@ interface OwnersTableProps {
   totalCollaborators: number;
 }
 
-export default function OwnersTable({
-  query,
-  totalCollaborators,
-}: OwnersTableProps) {
+export default function OwnersTable({ query, totalCollaborators }: OwnersTableProps) {
   const headerHeight = 245;
   const footerHeight = 40;
   const bottomPadding = 30;
@@ -48,8 +31,7 @@ export default function OwnersTable({
 
   // Determines how many collaborators to request for the last page
   if (page === totalPagesCount) {
-    collaboratorsToRequest =
-      remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
+    collaboratorsToRequest = remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
   }
 
   const {
@@ -63,10 +45,7 @@ export default function OwnersTable({
     excludeMe: true,
   });
 
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);
   };
 
@@ -88,10 +67,7 @@ export default function OwnersTable({
   useEffect(() => {
     if (viewportHeight) {
       const rowsWithCurrentHeight = Math.abs(
-        Math.floor(
-          (viewportHeight - headerHeight - footerHeight - bottomPadding) /
-            rowHeight
-        )
+        Math.floor((viewportHeight - headerHeight - footerHeight - bottomPadding) / rowHeight)
       );
 
       setRowsPerPage(rowsWithCurrentHeight ? rowsWithCurrentHeight : 1);
@@ -100,13 +76,7 @@ export default function OwnersTable({
   }, [viewportHeight]);
 
   if (isLoading) {
-    return (
-      <TableSkeleton
-        cols={
-          viewportWidth && viewportWidth > theme.breakpoints.values.sm ? 3 : 2
-        }
-      />
-    );
+    return <TableSkeleton cols={ viewportWidth && viewportWidth > theme.breakpoints.values.sm ? 3 : 2 } />;
   }
 
   if (isSuccess && collaboratorsData?.length === 0 && !query) {
@@ -118,28 +88,14 @@ export default function OwnersTable({
       <Table size="small" aria-label="Song List">
         <TableHead>
           <TableRow>
-            <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
-              COLLABORATORS
-            </TableHeadCell>
+            <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>COLLABORATORS</TableHeadCell>
             <TableHeadCell>OWNER OF</TableHeadCell>
             <TableHeadCell sx={ { textAlign: "end" } }>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
           { collaboratorsData.map(
-            (
-              {
-                email,
-                songCount,
-                user: {
-                  firstName = "",
-                  id = "",
-                  lastName = "",
-                  pictureUrl = "",
-                } = {},
-              },
-              index
-            ) => (
+            ({ email, songCount, user: { firstName = "", id = "", lastName = "", pictureUrl = "" } = {} }, index) => (
               <TableRow
                 key={ id || index }
                 onClick={ id ? () => handleNavigateToOwner(id) : undefined }

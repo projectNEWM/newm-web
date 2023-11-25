@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
 import { Theme } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
-import { MintingStatus as MintingStatusType } from "modules/song";
-import { IconStatus } from "components";
-import InfoCircleLine from "assets/images/InfoCircleLine";
-import TimeCircleLine from "assets/images/TimeCircleLine";
-import theme from "theme";
+import { MintingStatus as MintingStatusType } from "@newm.io/studio/modules/song";
+import { IconStatus } from "@newm.io/studio/components";
+import InfoCircleLine from "@newm.io/studio/assets/images/InfoCircleLine";
+import TimeCircleLine from "@newm.io/studio/assets/images/TimeCircleLine";
+import theme from "@newm.io/studio/theme";
 
 interface MintingStatusProps {
   readonly mintingStatus: MintingStatusType;
@@ -66,20 +66,11 @@ const STATUS_ICON_CONFIG: Record<
   },
 };
 
-export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
-  mintingStatus,
-}) => {
+export const MintingStatus: FunctionComponent<MintingStatusProps> = ({ mintingStatus }) => {
   const status = UI_MINTING_STATUS[mintingStatus];
   const config = STATUS_ICON_CONFIG[status];
 
   if (!config) return null;
 
-  return (
-    <IconStatus
-      icon={ config.icon }
-      iconColor={ config.color }
-      fontColor={ config.fontColor }
-      status={ status }
-    />
-  );
+  return <IconStatus icon={ config.icon } iconColor={ config.color } fontColor={ config.fontColor } status={ status } />;
 };

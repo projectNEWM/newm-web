@@ -2,13 +2,13 @@
  * Logs the user into the app using the Google Auth API.
  */
 
-import { useGoogleLoginThunk } from "modules/session";
-import { setToastMessage } from "modules/ui";
+import { useGoogleLoginThunk } from "@newm.io/studio/modules/session";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "@mui/icons-material/Google";
-import { Button } from "elements";
-import { useAppDispatch } from "common";
+import { Button } from "@newm.io/studio/elements";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 interface Props {
   readonly children?: ReactNode;

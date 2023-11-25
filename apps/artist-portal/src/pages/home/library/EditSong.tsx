@@ -6,9 +6,9 @@ import { Box, Stack, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate, useParams } from "react-router";
-import { Button } from "elements";
-import { ProfileImage, WizardForm } from "components";
-import { emptyProfile, useGetProfileQuery } from "modules/session";
+import { Button } from "@newm.io/studio/elements";
+import { ProfileImage, WizardForm } from "@newm.io/studio/components";
+import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import {
   CollaborationStatus,
   MintingStatus,
@@ -21,13 +21,13 @@ import {
   useGetSongQuery,
   useHasSongAccess,
   usePatchSongThunk,
-} from "modules/song";
-import { setToastMessage } from "modules/ui";
-import { useGetGenresQuery, useGetLanguagesQuery } from "modules/content";
-import { commonYupValidation, useExtractProperty } from "common";
-import AdvancedSongDetails from "pages/home/uploadSong/AdvancedSongDetails";
-import BasicSongDetails from "pages/home/uploadSong/BasicSongDetails";
-import ConfirmAgreement from "pages/home/uploadSong/ConfirmAgreement";
+} from "@newm.io/studio/modules/song";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import { useGetGenresQuery, useGetLanguagesQuery } from "@newm.io/studio/modules/content";
+import { commonYupValidation, useExtractProperty } from "@newm.io/studio/common";
+import AdvancedSongDetails from "@newm.io/studio/pages/home/uploadSong/AdvancedSongDetails";
+import BasicSongDetails from "@newm.io/studio/pages/home/uploadSong/BasicSongDetails";
+import ConfirmAgreement from "@newm.io/studio/pages/home/uploadSong/ConfirmAgreement";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
 
@@ -38,14 +38,7 @@ const EditSong: FunctionComponent = () => {
 
   const { data: genres = [] } = useGetGenresQuery();
   const {
-    data: {
-      companyName = "",
-      firstName = "",
-      lastName = "",
-      nickname: stageName = "",
-      email,
-      role,
-    } = emptyProfile,
+    data: { companyName = "", firstName = "", lastName = "", nickname: stageName = "", email, role } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const languageCodes = useExtractProperty(languages, "language_code", false);
@@ -53,8 +46,7 @@ const EditSong: FunctionComponent = () => {
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     songIds: songId,
   });
-  const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery();
+  const { data: { date: earliestReleaseDate } = {} } = useGetEarliestReleaseDateQuery();
 
   const [patchSong, { isLoading: isPatchSongLoading }] = usePatchSongThunk();
 
@@ -91,19 +83,11 @@ const EditSong: FunctionComponent = () => {
   } = useGetSongQuery(songId);
 
   const owners = collaborations
-    .filter(
-      (collaboration) =>
-        collaboration.royaltyRate && collaboration.royaltyRate > 0
-    )
+    .filter((collaboration) => collaboration.royaltyRate && collaboration.royaltyRate > 0)
     .map((collaboration) => ({
       email: collaboration.email,
-      isRightsOwner: collaboration.royaltyRate
-        ? collaboration.royaltyRate > 0
-        : false,
-      percentage:
-        collaboration.royaltyRate !== undefined
-          ? +collaboration.royaltyRate
-          : 0,
+      isRightsOwner: collaboration.royaltyRate ? collaboration.royaltyRate > 0 : false,
+      percentage: collaboration.royaltyRate !== undefined ? +collaboration.royaltyRate : 0,
       role: collaboration.role,
       status: collaboration.status,
       isCreator: "isCreator" in collaboration && !!collaboration.isCreator,
@@ -266,20 +250,10 @@ const EditSong: FunctionComponent = () => {
   return (
     <>
       <Stack direction="row" alignItems="center" gap={ 2.5 }>
-        <Button
-          color="white"
-          onClick={ () => navigate(-1) }
-          variant="outlined"
-          width="icon"
-        >
+        <Button color="white" onClick={ () => navigate(-1) } variant="outlined" width="icon">
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
-        <ProfileImage
-          alt="Song cover art"
-          height="90px"
-          src={ coverArtUrl }
-          width="90px"
-        />
+        <ProfileImage alt="Song cover art" height="90px" src={ coverArtUrl } width="90px" />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
@@ -311,9 +285,7 @@ const EditSong: FunctionComponent = () => {
       <Box pt={ 5 } pb={ 7 }>
         <WizardForm
           initialValues={ initialValues }
-          onSubmit={ (values, helpers) =>
-            handleSubmit("confirm", values, helpers)
-          }
+          onSubmit={ (values, helpers) => handleSubmit("confirm", values, helpers) }
           rootPath={ `home/library/edit-song/${songId}` }
           isProgressStepperVisible={ true }
           validateOnMount={ true }
@@ -324,8 +296,7 @@ const EditSong: FunctionComponent = () => {
               path: "",
               progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,
-              onSubmitStep: (values, helpers) =>
-                handleSubmit("basic-details", values, helpers),
+              onSubmitStep: (values, helpers) => handleSubmit("basic-details", values, helpers),
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 title: validations.title,
@@ -337,8 +308,7 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: <AdvancedSongDetails />,
-              onSubmitStep: (values, helpers) =>
-                handleSubmit("advanced-details", values, helpers),
+              onSubmitStep: (values, helpers) => handleSubmit("advanced-details", values, helpers),
               path: "advanced-details",
               progressStepTitle: "Advanced details",
               validationSchema: Yup.object({

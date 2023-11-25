@@ -1,9 +1,5 @@
-import { useAppSelector } from "common";
-import {
-  emptyProfile,
-  selectSession,
-  useGetProfileQuery,
-} from "modules/session";
+import { useAppSelector } from "@newm.io/studio/common";
+import { emptyProfile, selectSession, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +11,9 @@ const OnboardingRedirect: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useAppSelector(selectSession);
-  const { data: { firstName, lastName, role } = emptyProfile, isLoading } =
-    useGetProfileQuery(undefined, { skip: !isLoggedIn });
+  const { data: { firstName, lastName, role } = emptyProfile, isLoading } = useGetProfileQuery(undefined, {
+    skip: !isLoggedIn,
+  });
 
   useEffect(() => {
     if (!isLoading && isLoggedIn && (!firstName || !lastName || !role)) {

@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { IconButton, Stack, SxProps } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
-import { Song } from "modules/song";
+import { Song } from "@newm.io/studio/modules/song";
 
 interface PlaySongAdvancedProps {
   readonly contentSx?: SxProps;
@@ -11,12 +11,7 @@ interface PlaySongAdvancedProps {
   readonly song: Song | undefined;
 }
 
-const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({
-  contentSx,
-  isPlaying,
-  onPlayPause,
-  song,
-}) => {
+const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({ contentSx, isPlaying, onPlayPause, song }) => {
   return song && song.streamUrl ? (
     <Stack
       sx={ {

@@ -1,12 +1,12 @@
 import { IconButton, Stack } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
-import { Creditors, Owners } from "components";
-import { Button, HorizontalLine, Tooltip, Typography } from "elements";
+import { Creditors, Owners } from "@newm.io/studio/components";
+import { Button, HorizontalLine, Tooltip, Typography } from "@newm.io/studio/elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Featured, Owner } from "modules/song";
+import { Creditor, Featured, Owner } from "@newm.io/studio/modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
-import theme from "theme";
-import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "common";
+import theme from "@newm.io/studio/theme";
+import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "@newm.io/studio/common";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -55,17 +55,8 @@ const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
   };
 
   return (
-    <Formik
-      initialValues={ initialValues }
-      onSubmit={ handleSubmit }
-      enableReinitialize
-    >
-      { (formikProps) => (
-        <FormContent
-          { ...formikProps }
-          isAddDeleteDisabled={ isAddDeleteDisabled }
-        />
-      ) }
+    <Formik initialValues={ initialValues } onSubmit={ handleSubmit } enableReinitialize>
+      { (formikProps) => <FormContent { ...formikProps } isAddDeleteDisabled={ isAddDeleteDisabled } /> }
     </Formik>
   );
 };
@@ -113,9 +104,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             creditors={ values.creditors }
             isDeleteDisabled={ isAddDeleteDisabled }
             onDelete={ ({ email }, creditors) => {
-              const newCreditors = creditors.filter(
-                (creditor) => creditor.email !== email
-              );
+              const newCreditors = creditors.filter((creditor) => creditor.email !== email);
 
               setFieldValue("creditors", newCreditors);
             } }
@@ -135,9 +124,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             featured={ values.featured }
             isDeleteDisabled={ isAddDeleteDisabled }
             onDelete={ ({ email }, featured) => {
-              const newFeaturedArtists = featured.filter(
-                (featured) => featured.email !== email
-              );
+              const newFeaturedArtists = featured.filter((featured) => featured.email !== email);
 
               setFieldValue("featured", newFeaturedArtists);
             } }
@@ -189,24 +176,10 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         onClose={ () => {
           setIsModalOpen(false);
         } }
-        onSubmit={ ({
-          email,
-          isCreator,
-          isRightsOwner,
-          isCredited,
-          isFeatured,
-          role,
-          status,
-        }) => {
-          const hasCreditorBeenAdded = values.creditors.find(
-            (creditor) => creditor.email === email
-          );
-          const hasOwnerBeenAdded = values.owners.find(
-            (owner) => owner.email === email
-          );
-          const hasFeaturedBeenAdded = values.featured.find(
-            (featuredArtist) => featuredArtist.email === email
-          );
+        onSubmit={ ({ email, isCreator, isRightsOwner, isCredited, isFeatured, role, status }) => {
+          const hasCreditorBeenAdded = values.creditors.find((creditor) => creditor.email === email);
+          const hasOwnerBeenAdded = values.owners.find((owner) => owner.email === email);
+          const hasFeaturedBeenAdded = values.featured.find((featuredArtist) => featuredArtist.email === email);
 
           if (isRightsOwner && !hasOwnerBeenAdded) {
             setFieldValue("owners", [

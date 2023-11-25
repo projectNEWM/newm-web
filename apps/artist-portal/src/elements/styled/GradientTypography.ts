@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import Typography from "../Typography";
 
 const GradientTypography = styled(Typography)`

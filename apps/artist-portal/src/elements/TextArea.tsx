@@ -8,12 +8,11 @@ import {
 } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import styled from "styled-components";
-import theme from "theme";
-import { ErrorMessage } from "components";
-import { WidthType } from "common";
+import theme from "@newm.io/studio/theme";
+import { ErrorMessage } from "@newm.io/studio/components";
+import { WidthType } from "@newm.io/studio/common";
 
-export interface TextAreaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   readonly label?: string;
   readonly errorMessage?: string;
   readonly startAdornment?: JSX.Element;
@@ -50,10 +49,7 @@ const StyledTextAreaElement = styled.textarea`
   }
 `;
 
-export const TextArea: ForwardRefRenderFunction<
-  HTMLTextAreaElement,
-  TextAreaProps
-> = (
+export const TextArea: ForwardRefRenderFunction<HTMLTextAreaElement, TextAreaProps> = (
   {
     errorMessage,
     label,
@@ -108,20 +104,11 @@ export const TextArea: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography
-          color={ theme.colors.grey100 }
-          columnGap={ 0.5 }
-          display="flex"
-          fontWeight={ 500 }
-        >
+        <Typography color={ theme.colors.grey100 } columnGap={ 0.5 } display="flex" fontWeight={ 500 }>
           { label }
 
           { isOptional && (
-            <Typography
-              color={ theme.colors.grey400 }
-              component="span"
-              marginLeft="auto"
-            >
+            <Typography color={ theme.colors.grey400 } component="span" marginLeft="auto">
               OPTIONAL
             </Typography>
           ) }
@@ -138,12 +125,7 @@ export const TextArea: ForwardRefRenderFunction<
         sx={ {
           borderWidth: theme.inputField.borderWidth,
           borderStyle: "solid",
-          borderColor: getBorderColor(
-            !!errorMessage,
-            disabled,
-            isHovered,
-            isFocused
-          ),
+          borderColor: getBorderColor(!!errorMessage, disabled, isHovered, isFocused),
           borderRadius: "4px",
           overflow: "hidden",
           background: theme.colors.grey500,
@@ -170,12 +152,7 @@ export const TextArea: ForwardRefRenderFunction<
   );
 };
 
-const getBorderColor = (
-  hasError: boolean,
-  isDisabled: boolean,
-  isHovered: boolean,
-  isFocused: boolean
-) => {
+const getBorderColor = (hasError: boolean, isDisabled: boolean, isHovered: boolean, isFocused: boolean) => {
   if (isDisabled) {
     return theme.colors.grey500;
   }

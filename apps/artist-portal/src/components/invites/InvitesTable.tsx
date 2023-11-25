@@ -1,22 +1,10 @@
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
-import {
-  IconButton,
-  Stack,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { IconButton, Stack, Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  PlayerState,
-  getResizedAlbumCoverImageUrl,
-  useAppDispatch,
-} from "common";
-import { PlaySongAdvanced, TableCell, TableHeadCell } from "components";
-import theme from "theme";
+import { PlayerState, getResizedAlbumCoverImageUrl, useAppDispatch } from "@newm.io/studio/common";
+import { PlaySongAdvanced, TableCell, TableHeadCell } from "@newm.io/studio/components";
+import theme from "@newm.io/studio/theme";
 import {
   Invite,
   Song,
@@ -26,25 +14,20 @@ import {
   useGetCollaborationsQuery,
   useGetSongsQuery,
   useHlsJs,
-} from "modules/song";
+} from "@newm.io/studio/modules/song";
 
 interface InvitesTableProps {
   invites: Invite[];
   disabled?: boolean;
 }
 
-const InvitesTable: FunctionComponent<InvitesTableProps> = ({
-  invites,
-  disabled,
-}) => {
+const InvitesTable: FunctionComponent<InvitesTableProps> = ({ invites, disabled }) => {
   const dispatch = useAppDispatch();
   const [playerState, setPlayerState] = useState<PlayerState>({
     isReadyToPlay: false,
   });
   const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
-  const collaborationIds = invites.map(
-    ({ collaborationId }) => collaborationId
-  );
+  const collaborationIds = invites.map(({ collaborationId }) => collaborationId);
 
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     ids: collaborationIds,
@@ -69,11 +52,13 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
    * { collab1: 'song1', collab2: 'song2' }
    *
    */
-  const songIdsByCollaborationId: Record<string, string> =
-    collaborations.reduce((acc: { [key: string]: string }, collaboration) => {
+  const songIdsByCollaborationId: Record<string, string> = collaborations.reduce(
+    (acc: { [key: string]: string }, collaboration) => {
       acc[collaboration.id] = collaboration.songId;
       return acc;
-    }, {});
+    },
+    {}
+  );
 
   const hlsJsParams = useMemo(
     () => ({
@@ -145,34 +130,21 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
       return;
     }
 
-    if (
-      fetchStreamDataResp.data &&
-      playerState.loadingSongId === fetchStreamDataResp.data.song.id
-    ) {
+    if (fetchStreamDataResp.data && playerState.loadingSongId === fetchStreamDataResp.data.song.id) {
       setPlayerState((prevState) => ({
         ...prevState,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
     }
-  }, [
-    playerState.loadingSongId,
-    fetchStreamDataResp.isLoading,
-    fetchStreamDataResp.data,
-    playSong,
-  ]);
+  }, [playerState.loadingSongId, fetchStreamDataResp.isLoading, fetchStreamDataResp.data, playSong]);
 
   // when a songs stream information is ready - play the song
   useEffect(() => {
     if (playerState.isReadyToPlay && playerState.song) {
       playSong(playerState.song);
     }
-  }, [
-    playerState.song,
-    playerState.loadingSongId,
-    playerState.isReadyToPlay,
-    playSong,
-  ]);
+  }, [playerState.song, playerState.loadingSongId, playerState.isReadyToPlay, playSong]);
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
@@ -285,25 +257,15 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                       ) : (
                         <Stack sx={ { height: "40px", width: "40px" } }></Stack>
                       ) }
-                      { firstName && lastName
-                        ? `${firstName} ${lastName}`
-                        : null }
+                      { firstName && lastName ? `${firstName} ${lastName}` : null }
                     </Stack>
                   </TableCell>
                   <TableCell>{ role }</TableCell>
-                  <TableCell>
-                    { duration
-                      ? convertMillisecondsToSongFormat(duration)
-                      : "--:--" }
-                  </TableCell>
+                  <TableCell>{ duration ? convertMillisecondsToSongFormat(duration) : "--:--" }</TableCell>
                   <TableCell>{ `${royaltyRate}%` }</TableCell>
                   <TableCell>
                     { status === "Waiting" ? (
-                      <Stack
-                        flexDirection="row"
-                        columnGap={ 2 }
-                        justifyContent="end"
-                      >
+                      <Stack flexDirection="row" columnGap={ 2 } justifyContent="end">
                         <IconButton
                           aria-label={ `Decline ${title} song collaboration` }
                           disabled={ disabled }

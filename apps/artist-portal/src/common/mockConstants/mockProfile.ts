@@ -1,4 +1,4 @@
-import { Profile, VerificationStatus } from "modules/session/types";
+import { Profile, VerificationStatus } from "@newm.io/studio/modules/session/types";
 
 export const mockProfile: Profile = {
   id: "ABCD1234",

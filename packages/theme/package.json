@@ -2,6 +2,9 @@
   "name": "@newm.io/theme",
   "version": "1.0.0",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.18",
     "tslib": "^2.3.0"
   },
   "type": "commonjs",

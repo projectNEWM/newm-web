@@ -1,25 +1,17 @@
 import React, { MouseEvent, useEffect, useMemo, useState } from "react";
-import {
-  Box,
-  IconButton,
-  Table,
-  TableBody,
-  TableContainer,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Table, TableBody, TableContainer, TableRow, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
-import theme from "theme";
-import { Button, Tooltip } from "elements";
+import theme from "@newm.io/studio/theme";
+import { Button, Tooltip } from "@newm.io/studio/elements";
 import {
   NEWM_SUPPORT_EMAIL,
   PlayerState,
   getResizedAlbumCoverImageUrl,
   isMoreThanThresholdSecondsLater,
   useWindowDimensions,
-} from "common";
+} from "@newm.io/studio/common";
 import {
   MintingStatus as MintingStatusType,
   Song,
@@ -28,13 +20,8 @@ import {
   useFetchSongStreamThunk,
   useGetSongsQuery,
   useHlsJs,
-} from "modules/song";
-import {
-  SongStreamPlaybackIcon,
-  TableCell,
-  TablePagination,
-  TableSkeleton,
-} from "components";
+} from "@newm.io/studio/modules/song";
+import { SongStreamPlaybackIcon, TableCell, TablePagination, TableSkeleton } from "@newm.io/studio/components";
 import { useNavigate } from "react-router-dom";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
@@ -51,10 +38,7 @@ const POLLING_INTERVALS = {
   PROCESS_INCOMPLETE: 60000,
 };
 
-const FINAL_STEP_MINTING_PROCESS = [
-  MintingStatusType.Declined,
-  MintingStatusType.Minted,
-];
+const FINAL_STEP_MINTING_PROCESS = [MintingStatusType.Declined, MintingStatusType.Minted];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const navigate = useNavigate();
@@ -78,13 +62,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   // Determines how many songs to request for the last page
   if (page === totalPagesCount) {
-    songsToRequest =
-      remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
+    songsToRequest = remainingSongsOnLastPage > 0 ? remainingSongsOnLastPage : rowsPerPage;
   }
 
-  const [currentPollingInterval, setPollingInterval] = useState<
-    number | undefined
-  >();
+  const [currentPollingInterval, setPollingInterval] = useState<number | undefined>();
 
   const {
     data: songData = [],
@@ -169,34 +150,21 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       return;
     }
 
-    if (
-      fetchStreamDataResp.data &&
-      playerState.loadingSongId === fetchStreamDataResp.data.song.id
-    ) {
+    if (fetchStreamDataResp.data && playerState.loadingSongId === fetchStreamDataResp.data.song.id) {
       setPlayerState((prevState) => ({
         ...prevState,
         song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
       }));
     }
-  }, [
-    playerState.loadingSongId,
-    fetchStreamDataResp.isLoading,
-    fetchStreamDataResp.data,
-    playSong,
-  ]);
+  }, [playerState.loadingSongId, fetchStreamDataResp.isLoading, fetchStreamDataResp.data, playSong]);
 
   // when a songs stream information is ready - play the song
   useEffect(() => {
     if (playerState.isReadyToPlay && playerState.song) {
       playSong(playerState.song);
     }
-  }, [
-    playerState.song,
-    playerState.loadingSongId,
-    playerState.isReadyToPlay,
-    playSong,
-  ]);
+  }, [playerState.song, playerState.loadingSongId, playerState.isReadyToPlay, playSong]);
 
   /**
    * Play song and ensure the event doesn't bubble up to the row
@@ -209,21 +177,13 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const handleRowClick = (
     event: MouseEvent<HTMLButtonElement | HTMLTableRowElement>,
-    {
-      songId,
-      hasStartedMintingProcess,
-    }: { songId: string; hasStartedMintingProcess: boolean }
+    { songId, hasStartedMintingProcess }: { songId: string; hasStartedMintingProcess: boolean }
   ) => {
     event.stopPropagation();
-    navigate(
-      `${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`
-    );
+    navigate(`${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`);
   };
 
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);
     // Changing the page while playing song will stop the song
     stopSong();
@@ -260,10 +220,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   useEffect(() => {
     if (viewportHeight) {
       const rowsWithCurrentHeight = Math.abs(
-        Math.floor(
-          (viewportHeight - headerHeight - footerHeight - bottomPadding) /
-            rowHeight
-        )
+        Math.floor((viewportHeight - headerHeight - footerHeight - bottomPadding) / rowHeight)
       );
 
       setRowsPerPage(rowsWithCurrentHeight ? rowsWithCurrentHeight : 1);
@@ -272,13 +229,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   }, [viewportHeight]);
 
   if (isLoading) {
-    return (
-      <TableSkeleton
-        cols={
-          viewportWidth && viewportWidth > theme.breakpoints.values.sm ? 3 : 2
-        }
-      />
-    );
+    return <TableSkeleton cols={ viewportWidth && viewportWidth > theme.breakpoints.values.sm ? 3 : 2 } />;
   }
 
   if (isSuccess && songData?.length === 0 && !query) {
@@ -291,12 +242,9 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         <TableHead />
         <TableBody>
           { songData.map((song) => {
-            const hasStartedMintingProcess =
-              song.mintingStatus !== MintingStatusType.Undistributed;
+            const hasStartedMintingProcess = song.mintingStatus !== MintingStatusType.Undistributed;
 
-            const isSongStale =
-              isMoreThanThresholdSecondsLater(song.createdAt, 1200) &&
-              !song.streamUrl;
+            const isSongStale = isMoreThanThresholdSecondsLater(song.createdAt, 1200) && !song.streamUrl;
 
             return (
               <TableRow
@@ -352,9 +300,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                         } }
                       >
                         <SongStreamPlaybackIcon
-                          isSongPlaying={
-                            song.id === playerState.currentPlayingSongId
-                          }
+                          isSongPlaying={ song.id === playerState.currentPlayingSongId }
                           isSongUploaded={ !!song.streamUrl }
                         />
                       </IconButton>
@@ -391,18 +337,14 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     <MintingStatus mintingStatus={ song.mintingStatus } />
                   </Box>
                 </TableCell>
-                <TableCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-                  { song.genres.join(", ") }
-                </TableCell>
+                <TableCell sx={ { display: { xs: "none", lg: "table-cell" } } }>{ song.genres.join(", ") }</TableCell>
                 <TableCell
                   sx={ {
                     textAlign: "end",
                     display: { xs: "none", md: "table-cell" },
                   } }
                 >
-                  { song.duration
-                    ? convertMillisecondsToSongFormat(song.duration)
-                    : "--:--" }
+                  { song.duration ? convertMillisecondsToSongFormat(song.duration) : "--:--" }
                 </TableCell>
                 <TableCell
                   sx={ {
@@ -413,11 +355,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                   } }
                 >
                   { isSongStale ? (
-                    <Button
-                      variant="secondary"
-                      color="music"
-                      onClick={ (event) => handleEmailSupport(event, song.id) }
-                    >
+                    <Button variant="secondary" color="music" onClick={ (event) => handleEmailSupport(event, song.id) }>
                       Support
                     </Button>
                   ) : (

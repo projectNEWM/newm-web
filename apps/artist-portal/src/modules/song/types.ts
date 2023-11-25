@@ -1,4 +1,4 @@
-import { OnUploadProgress } from "api/types";
+import { OnUploadProgress } from "@newm.io/studio/api/types";
 
 export interface SongState {
   artistAgreement: string;
@@ -94,8 +94,7 @@ export interface PostSongRequest {
   readonly publicationDate?: string;
 }
 
-export interface UploadSongRequest
-  extends Omit<PostSongRequest, "coverArtUrl"> {
+export interface UploadSongRequest extends Omit<PostSongRequest, "coverArtUrl"> {
   readonly coverArtUrl?: string | File;
   readonly audio?: any; // eslint-disable-line
   readonly isExplicit: boolean;
@@ -310,8 +309,7 @@ export interface CreateCollaborationRequest {
   readonly featured: boolean;
 }
 
-export interface UpdateCollaborationRequest
-  extends Partial<CreateCollaborationRequest> {
+export interface UpdateCollaborationRequest extends Partial<CreateCollaborationRequest> {
   readonly collaborationId: string;
 }
 

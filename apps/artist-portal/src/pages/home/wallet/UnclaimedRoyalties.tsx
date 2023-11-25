@@ -1,16 +1,14 @@
 import { Box, IconButton, Stack } from "@mui/material";
-import { Button, Tooltip, Typography } from "elements";
+import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
 import currency from "currency.js";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import HelpIcon from "@mui/icons-material/Help";
 
 interface UnclaimedRoyaltiesProps {
   unclaimedRoyalties: number;
 }
 
-export const UnclaimedRoyalties = ({
-  unclaimedRoyalties,
-}: UnclaimedRoyaltiesProps) => {
+export const UnclaimedRoyalties = ({ unclaimedRoyalties }: UnclaimedRoyaltiesProps) => {
   return (
     <Box
       sx={ {

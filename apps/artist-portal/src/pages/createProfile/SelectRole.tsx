@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import { AddProfileInformation } from "components";
+import { AddProfileInformation } from "@newm.io/studio/components";
 import { useFormikContext } from "formik";
-import { useGetRolesQuery } from "modules/content";
-import { ProfileFormValues } from "modules/session";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
+import { ProfileFormValues } from "@newm.io/studio/modules/session";
 
 const SelectRole: FunctionComponent = () => {
   const { data: roles = [] } = useGetRolesQuery();

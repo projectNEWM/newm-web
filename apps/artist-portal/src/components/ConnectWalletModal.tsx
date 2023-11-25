@@ -1,16 +1,9 @@
-import {
-  selectUi,
-  setIsConnectWalletModalOpen,
-  setToastMessage,
-} from "modules/ui";
+import { selectUi, setIsConnectWalletModalOpen, setToastMessage } from "@newm.io/studio/modules/ui";
 import { FunctionComponent } from "react";
-import {
-  WalletModal,
-  useConnectWallet,
-} from "@newm.io/cardano-dapp-wallet-connector";
+import { WalletModal, useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useTheme } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "common";
-import { saveWalletAddress } from "modules/session";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import { saveWalletAddress } from "@newm.io/studio/modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();

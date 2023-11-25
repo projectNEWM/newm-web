@@ -1,10 +1,10 @@
 import { FunctionComponent, useState } from "react";
-import { Button, GradientTypography, Typography } from "elements";
-import { ResponsiveNEWMLogo, TextInputField } from "components";
+import { Button, GradientTypography, Typography } from "@newm.io/studio/elements";
+import { ResponsiveNEWMLogo, TextInputField } from "@newm.io/studio/components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
-import { sendVerificationEmail } from "modules/session";
-import { useAppDispatch } from "common";
+import { sendVerificationEmail } from "@newm.io/studio/modules/session";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 const Verification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -38,21 +38,10 @@ const Verification: FunctionComponent = () => {
         <Typography variant="h1" mb={ 1.5 }>
           Check your email!
         </Typography>
-        <GradientTypography
-          id="verificationLabel"
-          variant="h1"
-          mb={ 7.5 }
-          style={ { ...theme.typography.emphasized } }
-        >
+        <GradientTypography id="verificationLabel" variant="h1" mb={ 7.5 } style={ { ...theme.typography.emphasized } }>
           Enter your verification code below:
         </GradientTypography>
-        <Stack
-          spacing={ 1.5 }
-          mb={ 7.5 }
-          margin="0 auto"
-          maxWidth={ theme.inputField.maxWidth }
-          width="100%"
-        >
+        <Stack spacing={ 1.5 } mb={ 7.5 } margin="0 auto" maxWidth={ theme.inputField.maxWidth } width="100%">
           <TextInputField
             aria-labelledby="verificationLabel"
             isOptional={ false }
@@ -82,9 +71,7 @@ const Verification: FunctionComponent = () => {
             </button>
           </Typography>
         ) : (
-          <Typography>
-            Email re-sent. Don&apos;t forget to check your spam folder.
-          </Typography>
+          <Typography>Email re-sent. Don&apos;t forget to check your spam folder.</Typography>
         ) }
       </Box>
     </Box>

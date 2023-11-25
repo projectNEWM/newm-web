@@ -1,4 +1,4 @@
-import { mockFile, renderWithContext } from "common";
+import { mockFile, renderWithContext } from "@newm.io/studio/common";
 import UploadImage from "../UploadImage";
 
 describe("<UploadImage>", () => {

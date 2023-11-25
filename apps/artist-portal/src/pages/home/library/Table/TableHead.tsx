@@ -1,17 +1,13 @@
 import { TableHead as MUITableHead, TableRow } from "@mui/material";
-import { TableHeadCell } from "components";
+import { TableHeadCell } from "@newm.io/studio/components";
 
 const TableHead = () => {
   return (
     <MUITableHead>
       <TableRow>
         <TableHeadCell>SONG NAME</TableHeadCell>
-        <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>
-          MINTING
-        </TableHeadCell>
-        <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>
-          GENRE
-        </TableHeadCell>
+        <TableHeadCell sx={ { display: { xs: "none", sm: "table-cell" } } }>MINTING</TableHeadCell>
+        <TableHeadCell sx={ { display: { xs: "none", lg: "table-cell" } } }>GENRE</TableHeadCell>
         <TableHeadCell
           sx={ {
             textAlign: "end",

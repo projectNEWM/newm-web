@@ -1,11 +1,8 @@
 import { ForwardRefRenderFunction, SyntheticEvent, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
-import { DropdownMultiSelect, DropdownSelectProps } from "elements";
+import { DropdownMultiSelect, DropdownSelectProps } from "@newm.io/studio/elements";
 
-const DropdownMultiSelectField: ForwardRefRenderFunction<
-  HTMLInputElement,
-  DropdownSelectProps
-> = (props, ref) => (
+const DropdownMultiSelectField: ForwardRefRenderFunction<HTMLInputElement, DropdownSelectProps> = (props, ref) => (
   <Field name={ props.name }>
     { ({ field, form, meta }: FieldProps) => (
       <DropdownMultiSelect

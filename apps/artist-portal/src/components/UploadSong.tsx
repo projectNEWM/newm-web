@@ -1,22 +1,15 @@
 import { Box, Stack } from "@mui/material";
-import {
-  FunctionComponent,
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, MouseEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { useTheme } from "@mui/material/styles";
-import AddSongIcon from "assets/images/AddSong";
-import CheckCircleIcon from "assets/images/CheckCircle";
+import AddSongIcon from "@newm.io/studio/assets/images/AddSong";
+import CheckCircleIcon from "@newm.io/studio/assets/images/CheckCircle";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { AudioVisualizer } from "react-audio-visualize";
 import { Howl } from "howler";
-import { getFileBinary } from "common";
+import { getFileBinary } from "@newm.io/studio/common";
 import IconMessage from "./IconMessage";
 import DashedOutline from "./styled/DashedOutline";
 import ErrorMessage from "./styled/ErrorMessage";
@@ -43,13 +36,7 @@ const AUDIO_MAX_FILE_SIZE_GB = 1;
  * Allows a user to upload a song by either clicking the area to
  * open the file browser or dropping it onto it.
  */
-const UploadSong: FunctionComponent<UploadSongProps> = ({
-  errorMessage,
-  file,
-  onChange,
-  onBlur,
-  onError,
-}) => {
+const UploadSong: FunctionComponent<UploadSongProps> = ({ errorMessage, file, onChange, onBlur, onError }) => {
   const theme = useTheme();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -69,10 +56,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     const fileSizeInMB = value.size / (1000 * 1000);
     const fileSizeInGB = value.size / (1000 * 1000 * 1000);
 
-    return (
-      fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB &&
-      fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB
-    );
+    return fileSizeInMB >= AUDIO_MIN_FILE_SIZE_MB && fileSizeInGB <= AUDIO_MAX_FILE_SIZE_GB;
   };
 
   const handlePlaySong: MouseEventHandler = (event) => {
@@ -100,10 +84,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
 
   // file validation hosted in component to prevent constant Yup validation
   const handleDrop = useCallback(
-    async (
-      acceptedFiles: ReadonlyArray<File>,
-      fileRejections: ReadonlyArray<FileRejection>
-    ) => {
+    async (acceptedFiles: ReadonlyArray<File>, fileRejections: ReadonlyArray<FileRejection>) => {
       try {
         // Check if the file type is valid or display other file errors
         fileRejections.forEach((rejection) => {
@@ -122,10 +103,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         const isValidFileSize = isFileSizeValid(firstFile);
 
         if (!isValidFileSize) {
-          throw new Error(
-            `Must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and` +
-              ` ${AUDIO_MAX_FILE_SIZE_GB}GB`
-          );
+          throw new Error(`Must be between ${AUDIO_MIN_FILE_SIZE_MB}MB and` + ` ${AUDIO_MAX_FILE_SIZE_GB}GB`);
         }
 
         // Check if the file duration is less than AUDIO_MIN_DURATION
@@ -267,18 +245,10 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                 alignItems="stretch"
                 zIndex={ 10 }
               >
-                <SongProgressOverlay
-                  progress={ songProgress }
-                  isPlaying={ isSongPlaying }
-                />
+                <SongProgressOverlay progress={ songProgress } isPlaying={ isSongPlaying } />
 
                 { isHovering ? (
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    flex={ 1 }
-                    mx="2px"
-                  >
+                  <Box display="flex" justifyContent="space-between" flex={ 1 } mx="2px">
                     <Box
                       display="flex"
                       flex={ 1 }
@@ -290,10 +260,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                         },
                       } }
                     >
-                      <IconMessage
-                        icon={ <ChangeCircleIcon /> }
-                        message="Change song"
-                      />
+                      <IconMessage icon={ <ChangeCircleIcon /> } message="Change song" />
                     </Box>
 
                     <Box
@@ -311,18 +278,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       { isSongPlaying ? (
                         <IconMessage icon={ <StopIcon /> } message="Stop song" />
                       ) : (
-                        <IconMessage
-                          icon={ <PlayArrowIcon /> }
-                          message="Play song"
-                        />
+                        <IconMessage icon={ <PlayArrowIcon /> } message="Play song" />
                       ) }
                     </Box>
                   </Box>
                 ) : isDragActive ? (
-                  <IconMessage
-                    icon={ <ChangeCircleIcon /> }
-                    message="Drop your song here"
-                  />
+                  <IconMessage icon={ <ChangeCircleIcon /> } message="Drop your song here" />
                 ) : (
                   <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } />
                 ) }
@@ -331,11 +292,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
           </SolidOutline>
         ) : (
           <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
-            <IconMessage
-              icon={ <AddSongIcon /> }
-              message="Drag and drop or browse your song"
-              subtitle=".flac, .wav"
-            />
+            <IconMessage icon={ <AddSongIcon /> } message="Drag and drop or browse your song" subtitle=".flac, .wav" />
           </DashedOutline>
         ) }
       </Box>
@@ -345,10 +302,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   );
 };
 
-const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({
-  progress,
-  isPlaying,
-}) => {
+const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({ progress, isPlaying }) => {
   const theme = useTheme();
 
   const progressPercentage = progress * 100 + "%";

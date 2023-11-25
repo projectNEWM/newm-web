@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { selectSession } from "modules/session";
+import { selectSession } from "@newm.io/studio/modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
 import { WindowDimensions } from "./types";
 import type { AppDispatch, RootState } from "../store";
@@ -15,9 +15,7 @@ const getWindowDimensions = () => {
 };
 
 export const useWindowDimensions = (): WindowDimensions | undefined => {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useLayoutEffect(() => {
     function handleResize() {

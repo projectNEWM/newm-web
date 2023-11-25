@@ -1,22 +1,13 @@
 import { Box, BoxProps, Stack } from "@mui/material";
-import {
-  FunctionComponent,
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import {
-  validateAspectRatioOneToOne,
-  validateMinImageDimensions,
-} from "common";
+import { FunctionComponent, MouseEventHandler, useCallback, useEffect, useState } from "react";
+import { validateAspectRatioOneToOne, validateMinImageDimensions } from "@newm.io/studio/common";
 import { SxProps, useTheme } from "@mui/material/styles";
 import { FileRejection, useDropzone } from "react-dropzone";
-import AddImageIcon from "assets/images/AddImage";
-import CheckCircleIcon from "assets/images/CheckCircle";
+import AddImageIcon from "@newm.io/studio/assets/images/AddImage";
+import CheckCircleIcon from "@newm.io/studio/assets/images/CheckCircle";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import PictureInPictureIcon from "@mui/icons-material/PictureInPictureAlt";
-import { Button } from "elements";
+import { Button } from "@newm.io/studio/elements";
 import SolidOutline from "./styled/SolidOutline";
 import DashedOutline from "./styled/DashedOutline";
 import IconMessage from "./IconMessage";
@@ -88,10 +79,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDrop = useCallback(
-    async (
-      acceptedFiles: ReadonlyArray<File>,
-      fileRejections: ReadonlyArray<FileRejection>
-    ) => {
+    async (acceptedFiles: ReadonlyArray<File>, fileRejections: ReadonlyArray<FileRejection>) => {
       try {
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
@@ -102,9 +90,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         const firstFile = acceptedFiles[0];
 
         if (maxFileSizeMB && firstFile.size > maxFileSizeMB * 1000 * 1000) {
-          throw new Error(
-            `Image must be less than or equal to ${maxFileSizeMB}MB`
-          );
+          throw new Error(`Image must be less than or equal to ${maxFileSizeMB}MB`);
         }
 
         const fileWithPreview = Object.assign(firstFile, {
@@ -133,14 +119,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         onBlur();
       }
     },
-    [
-      maxFileSizeMB,
-      isAspectRatioOneToOne,
-      minDimensions,
-      onChange,
-      onError,
-      onBlur,
-    ]
+    [maxFileSizeMB, isAspectRatioOneToOne, minDimensions, onChange, onError, onBlur]
   );
 
   const handleOpenPreview: MouseEventHandler = (event) => {
@@ -177,15 +156,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     return handleLoad;
   }, [file]);
 
-  const internalErrorMessage =
-    errorMessageLocation === "inside" && !!errorMessage
-      ? errorMessage
-      : undefined;
+  const internalErrorMessage = errorMessageLocation === "inside" && !!errorMessage ? errorMessage : undefined;
 
-  const externalErrorMessage =
-    errorMessageLocation === "outside" && !!errorMessage
-      ? errorMessage
-      : undefined;
+  const externalErrorMessage = errorMessageLocation === "outside" && !!errorMessage ? errorMessage : undefined;
 
   return (
     <>
@@ -207,12 +180,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
 
           <Stack direction="row" gap={ 2 } justifyContent="flex-end">
             { allowImageChange ? (
-              <Button
-                width="compact"
-                variant="secondary"
-                color="music"
-                onClick={ handleChangeImage }
-              >
+              <Button width="compact" variant="secondary" color="music" onClick={ handleChangeImage }>
                 { changeImageButtonText }
               </Button>
             ) : null }
@@ -247,11 +215,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
             sx={ { height: 100, ...contentSx } }
           >
             { !hasPreviewOption && (isHovering || isDragActive) ? (
-              <IconMessage
-                icon={ <AddImageIcon /> }
-                message={ replaceMessage }
-                errorMessage={ internalErrorMessage }
-              />
+              <IconMessage icon={ <AddImageIcon /> } message={ replaceMessage } errorMessage={ internalErrorMessage } />
             ) : isHovering ? (
               <Box display="flex" justifyContent="space-between" flex={ 1 }>
                 { allowImageChange ? (
@@ -266,10 +230,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                       },
                     } }
                   >
-                    <IconMessage
-                      icon={ <ChangeCircleIcon /> }
-                      message="Change cover"
-                    />
+                    <IconMessage icon={ <ChangeCircleIcon /> } message="Change cover" />
                   </Box>
                 ) : null }
 
@@ -285,24 +246,15 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                     },
                   } }
                 >
-                  <IconMessage
-                    icon={ <PictureInPictureIcon /> }
-                    message="Preview"
-                  />
+                  <IconMessage icon={ <PictureInPictureIcon /> } message="Preview" />
                 </Box>
               </Box>
             ) : isSuccessIconDisplayed ? (
-              <IconMessage
-                icon={ <CheckCircleIcon /> }
-                message={ file.name }
-                errorMessage={ internalErrorMessage }
-              />
+              <IconMessage icon={ <CheckCircleIcon /> } message={ file.name } errorMessage={ internalErrorMessage } />
             ) : null }
           </ImagePreview>
         ) : (
-          <DashedOutline
-            sx={ { display: "flex", flexGrow: 1, height: 100, ...contentSx } }
-          >
+          <DashedOutline sx={ { display: "flex", flexGrow: 1, height: 100, ...contentSx } }>
             <IconMessage
               icon={ <AddImageIcon /> }
               message={ emptyMessage }
@@ -316,9 +268,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           </DashedOutline>
         ) }
 
-        { !!externalErrorMessage && (
-          <ErrorMessage align="center">{ externalErrorMessage }</ErrorMessage>
-        ) }
+        { !!externalErrorMessage && <ErrorMessage align="center">{ externalErrorMessage }</ErrorMessage> }
       </Stack>
     </>
   );

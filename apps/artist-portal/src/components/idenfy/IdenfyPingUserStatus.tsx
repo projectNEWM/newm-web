@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { setToastMessage } from "modules/ui";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import Cookies from "js-cookie";
 import {
   VerificationStatus,
@@ -8,21 +8,19 @@ import {
   selectSession,
   startVerificationTimer,
   useGetProfileQuery,
-} from "modules/session";
-import { useAppDispatch, useAppSelector } from "common";
+} from "@newm.io/studio/modules/session";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector(selectSession);
 
-  const [currentPollingInterval, setPollingInterval] = useState<
-    number | undefined
-  >();
+  const [currentPollingInterval, setPollingInterval] = useState<number | undefined>();
 
-  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
-    undefined,
-    { skip: !isLoggedIn, pollingInterval: currentPollingInterval }
-  );
+  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(undefined, {
+    skip: !isLoggedIn,
+    pollingInterval: currentPollingInterval,
+  });
 
   const { verificationPingStartedAt } = useAppSelector(selectSession);
 
@@ -53,10 +51,7 @@ const IdenfyModal: FunctionComponent = () => {
   useEffect(() => {
     if (!isVerified) {
       const handleMessage = (event: MessageEvent) => {
-        if (
-          event?.data === "idenfy-verification-success" &&
-          !verificationPingStartedAt
-        ) {
+        if (event?.data === "idenfy-verification-success" && !verificationPingStartedAt) {
           dispatch(startVerificationTimer());
         }
       };

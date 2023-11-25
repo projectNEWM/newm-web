@@ -11,10 +11,10 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
-import theme from "theme";
-import { ErrorMessage } from "components";
-import { WidthType } from "common";
-import { Tooltip } from "elements";
+import theme from "@newm.io/studio/theme";
+import { ErrorMessage } from "@newm.io/studio/components";
+import { WidthType } from "@newm.io/studio/common";
+import { Tooltip } from "@newm.io/studio/elements";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
@@ -82,10 +82,7 @@ const StyledMaskedInput = styled(InputMask)`
   ${inputStyles}
 `;
 
-export const TextInput: ForwardRefRenderFunction<
-  HTMLInputElement,
-  TextInputProps
-> = (
+export const TextInput: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
   {
     disabled = false,
     endAdornment,
@@ -145,16 +142,9 @@ export const TextInput: ForwardRefRenderFunction<
       } }
     >
       { !!label && (
-        <Typography
-          color={ theme.colors.grey100 }
-          columnGap={ 0.5 }
-          display="flex"
-          fontWeight={ 500 }
-        >
+        <Typography color={ theme.colors.grey100 } columnGap={ 0.5 } display="flex" fontWeight={ 500 }>
           <>
-            <Typography sx={ { textTransform: "uppercase", fontWeight: 500 } }>
-              { label }
-            </Typography>
+            <Typography sx={ { textTransform: "uppercase", fontWeight: 500 } }>{ label }</Typography>
 
             { !!tooltipText && (
               <Tooltip title={ tooltipText }>
@@ -171,11 +161,7 @@ export const TextInput: ForwardRefRenderFunction<
             ) }
 
             { isOptional && (
-              <Typography
-                color={ theme.colors.grey400 }
-                component="span"
-                marginLeft="auto"
-              >
+              <Typography color={ theme.colors.grey400 } component="span" marginLeft="auto">
                 OPTIONAL
               </Typography>
             ) }
@@ -192,12 +178,7 @@ export const TextInput: ForwardRefRenderFunction<
         sx={ {
           borderWidth: theme.inputField.borderWidth,
           borderStyle: "solid",
-          borderColor: getBorderColor(
-            !!errorMessage,
-            disabled,
-            isHovered,
-            isFocused
-          ),
+          borderColor: getBorderColor(!!errorMessage, disabled, isHovered, isFocused),
           borderRadius: "4px",
           overflow: "hidden",
           background: theme.colors.grey500,
@@ -220,19 +201,12 @@ export const TextInput: ForwardRefRenderFunction<
         </StyledRootElement>
       </Box>
 
-      { !!errorMessage && shouldDisplayErrorMessage && (
-        <ErrorMessage>{ errorMessage }</ErrorMessage>
-      ) }
+      { !!errorMessage && shouldDisplayErrorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
     </Stack>
   );
 };
 
-const getBorderColor = (
-  hasError: boolean,
-  isDisabled: boolean,
-  isHovered: boolean,
-  isFocused: boolean
-) => {
+const getBorderColor = (hasError: boolean, isDisabled: boolean, isHovered: boolean, isFocused: boolean) => {
   if (isDisabled) {
     return theme.colors.grey400;
   }

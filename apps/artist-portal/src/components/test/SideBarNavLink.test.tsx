@@ -1,7 +1,7 @@
-import { renderWithContext } from "common";
+import { renderWithContext } from "@newm.io/studio/common";
 import * as routerUtils from "react-router-dom";
 import { Upload as UploadIcon } from "@mui/icons-material";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 import SideBarNavLink from "../home/SideBarNavLink";
 
 jest.mock("react-router-dom", () => ({
@@ -27,13 +27,9 @@ describe("<SideBarNavLink>", () => {
     it("highlights the nav link background", () => {
       jest.spyOn(routerUtils, "useMatch").mockImplementation(() => mockMatch);
 
-      const { getByTestId } = renderWithContext(
-        <SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />
-      );
+      const { getByTestId } = renderWithContext(<SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />);
 
-      expect(getByTestId("navStyled")).toHaveStyle(
-        `background: ${theme.colors.activeBackground};`
-      );
+      expect(getByTestId("navStyled")).toHaveStyle(`background: ${theme.colors.activeBackground};`);
     });
   });
 
@@ -41,9 +37,7 @@ describe("<SideBarNavLink>", () => {
     it("does not highlight the nav link background", () => {
       jest.spyOn(routerUtils, "useMatch").mockImplementation(() => null);
 
-      const { getByTestId } = renderWithContext(
-        <SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />
-      );
+      const { getByTestId } = renderWithContext(<SideBarNavLink label="Example" Icon={ UploadIcon } to="/example" />);
 
       expect(getByTestId("navStyled")).toHaveStyle("background: transparent;");
     });

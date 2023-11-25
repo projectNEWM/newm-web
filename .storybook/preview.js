@@ -1,4 +1,4 @@
-import { withContext } from "common";
+import { withContext } from "@newm.io/studio/common";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -1,12 +1,7 @@
 import { FunctionComponent } from "react";
-import {
-  Box,
-  Collapse,
-  Alert as MUIAlert,
-  AlertProps as MUIAlertProps,
-} from "@mui/material";
+import { Box, Collapse, Alert as MUIAlert, AlertProps as MUIAlertProps } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
-import theme from "theme";
+import theme from "@newm.io/studio/theme";
 
 interface AlertProps extends MUIAlertProps {
   open?: boolean;
@@ -17,23 +12,12 @@ const iconMapping = {
   warning: <WarningIcon />,
 };
 
-const Alert: FunctionComponent<AlertProps> = ({
-  action,
-  children,
-  open = true,
-  severity = "info",
-  sx,
-  ...rest
-}) => {
+const Alert: FunctionComponent<AlertProps> = ({ action, children, open = true, severity = "info", sx, ...rest }) => {
   return (
     <Box sx={ { width: "100%" } }>
       <Collapse in={ open }>
         <MUIAlert
-          action={
-            <Box sx={ { display: "flex", height: "100%", alignItems: "center" } }>
-              { action }
-            </Box>
-          }
+          action={ <Box sx={ { display: "flex", height: "100%", alignItems: "center" } }>{ action }</Box> }
           severity={ severity }
           iconMapping={ iconMapping }
           sx={ {

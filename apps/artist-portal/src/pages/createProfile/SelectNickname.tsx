@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { AddProfileInformation } from "components";
+import { AddProfileInformation } from "@newm.io/studio/components";
 
 const SelectNickname: FunctionComponent = () => {
   return (

@@ -1,4 +1,4 @@
-import { renderWithContext, withFormik } from "common";
+import { renderWithContext, withFormik } from "@newm.io/studio/common";
 import * as Formik from "formik";
 import AddProfileInformation from "../createProfile/AddProfileInformation";
 
@@ -16,17 +16,10 @@ describe("<AddProfileInformation />", () => {
         );
 
         const { queryByText } = renderWithContext(
-          withFormik(
-            <AddProfileInformation
-              fieldName="example"
-              prompt="example-prompt"
-              tags={ ["hello", "world"] }
-            />,
-            {
-              initialValues: { example: "" },
-              onSubmit: jest.fn(),
-            }
-          )
+          withFormik(<AddProfileInformation fieldName="example" prompt="example-prompt" tags={ ["hello", "world"] } />, {
+            initialValues: { example: "" },
+            onSubmit: jest.fn(),
+          })
         );
 
         expect(queryByText("hello")).toBeTruthy();
@@ -47,17 +40,10 @@ describe("<AddProfileInformation />", () => {
         );
 
         const { queryByText } = renderWithContext(
-          withFormik(
-            <AddProfileInformation
-              fieldName="example"
-              prompt="example-prompt"
-              tags={ ["hello", "world"] }
-            />,
-            {
-              initialValues: { example: "" },
-              onSubmit: jest.fn(),
-            }
-          )
+          withFormik(<AddProfileInformation fieldName="example" prompt="example-prompt" tags={ ["hello", "world"] } />, {
+            initialValues: { example: "" },
+            onSubmit: jest.fn(),
+          })
         );
 
         expect(queryByText("hello")).toBeFalsy();

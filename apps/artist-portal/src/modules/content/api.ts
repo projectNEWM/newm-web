@@ -1,5 +1,5 @@
-import api, { Tags } from "api";
-import { setToastMessage } from "modules/ui";
+import api, { Tags } from "@newm.io/studio/api";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import { Genre, Language, Role } from "./types";
 
 export const extendedApi = api.injectEndpoints({
@@ -86,11 +86,6 @@ export const extendedApi = api.injectEndpoints({
   }),
 });
 
-export const {
-  useGetGenresQuery,
-  useGetLanguagesQuery,
-  useGetMoodsQuery,
-  useGetRolesQuery,
-} = extendedApi;
+export const { useGetGenresQuery, useGetLanguagesQuery, useGetMoodsQuery, useGetRolesQuery } = extendedApi;
 
 export default extendedApi;
