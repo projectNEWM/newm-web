@@ -5,9 +5,7 @@
 import { useFacebookLoginThunk } from "modules/session";
 import { setToastMessage } from "modules/ui";
 import { FunctionComponent, ReactNode } from "react";
-import FacebookLoginHelper, {
-  LoginResponse,
-} from "@greatsumini/react-facebook-login";
+import FacebookLoginHelper, { LoginResponse } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "elements";
 import { useAppDispatch } from "common";
@@ -40,7 +38,7 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
 
   return (
     <FacebookLoginHelper
-      appId={ process.env.REACT_APP_FACEBOOK_CLIENT_ID || "" }
+      appId={ import.meta.env.VITE_FACEBOOK_CLIENT_ID || "" }
       onSuccess={ handleFacebookLoginSuccess }
       render={ ({ onClick }) => (
         <Button

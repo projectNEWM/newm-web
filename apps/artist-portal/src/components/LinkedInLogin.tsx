@@ -20,7 +20,7 @@ const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
   const redirectUri = `${window.location.origin}/linkedin`;
 
   const { linkedInLogin } = useLinkedIn({
-    clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || "",
+    clientId: import.meta.env.VITE_LINKEDIN_CLIENT_ID || "",
     redirectUri,
     scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {

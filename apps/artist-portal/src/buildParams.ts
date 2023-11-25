@@ -1,6 +1,6 @@
-export const isProd =
-  process.env.NODE_ENV === "production" &&
-  process.env.REACT_APP_ENV === "production";
+const { NODE_ENV, VITE_ENV } = import.meta.env;
+
+export const isProd = NODE_ENV === "production" && VITE_ENV === "production";
 
 // Change the second value to enable Redux logging in development
 export const enableReduxLogging = !isProd && false;
@@ -8,7 +8,5 @@ export const enableReduxLogging = !isProd && false;
 export const baseUrls: Record<string, string> = {
   newm: isProd ? "https://studio.newm.io/" : "https://garage.newm.io/",
   cloudinary: "https://api.cloudinary.com/",
-  lambda: isProd
-    ? "https://aws.studio.newm.io/"
-    : "https://aws.garage.newm.io/",
+  lambda: isProd ? "https://aws.studio.newm.io/" : "https://aws.garage.newm.io/",
 };

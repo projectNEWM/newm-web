@@ -38,5 +38,10 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Sensitive
+.env
+.env.local
+
+# NX
 .nx/cachenode_modules
 dist

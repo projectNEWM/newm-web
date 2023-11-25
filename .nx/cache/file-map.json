@@ -108,10 +108,6 @@
         "hash": "5443105041930014821"
       },
       {
-        "file": ".env.template",
-        "hash": "7714202072090687509"
-      },
-      {
         "file": ".eslintignore",
         "hash": "7663861978715868291"
       },
@@ -129,11 +125,11 @@
       },
       {
         "file": ".github/workflows/firebase-hosting-merge-deploy.yml",
-        "hash": "1204026410959655425"
+        "hash": "6975800209971024009"
       },
       {
         "file": ".github/workflows/firebase-hosting-pull-request.yml",
-        "hash": "17598359349688189329"
+        "hash": "11696096395144653916"
       },
       {
         "file": ".github/workflows/test-master-merge.yml",
@@ -145,7 +141,7 @@
       },
       {
         "file": ".gitignore",
-        "hash": "2605354412882507050"
+        "hash": "6211711939344931829"
       },
       {
         "file": ".nx/cache/cloud/2311.09.8.hotfix6/index.js",
@@ -165,39 +161,71 @@
       },
       {
         "file": ".nx/cache/cloud/verify.lock",
-        "hash": "842961058467790952"
+        "hash": "5724752592922812275"
       },
       {
         "file": ".nx/cache/d/daemon.log",
-        "hash": "12213936554385603355"
+        "hash": "8962182719384172872"
       },
       {
         "file": ".nx/cache/d/server-process.json",
-        "hash": "1451459201745448770"
+        "hash": "17301728288961664847"
       },
       {
         "file": ".nx/cache/file-map.json",
-        "hash": "8280737781021875817"
+        "hash": "15462020669917564372"
       },
       {
         "file": ".nx/cache/lockfile.hash",
-        "hash": "6384616258676336585"
+        "hash": "13735565543917050248"
       },
       {
         "file": ".nx/cache/parsed-lock-file.json",
-        "hash": "11242061478356771614"
+        "hash": "2853485186663550039"
       },
       {
         "file": ".nx/cache/project-graph.json",
-        "hash": "18136246781402609249"
+        "hash": "4719261932980780814"
       },
       {
         "file": ".nx/cache/run.json",
-        "hash": "3199368125045575043"
+        "hash": "10341967688081352861"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/10674375475229255480",
+        "hash": "18098362998414097639"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/10910618298597961592",
+        "hash": "13456468687266272490"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/1168728720502516627",
+        "hash": "4619891834716112695"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/13782234365116894821",
+        "hash": "8604881071742610699"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/2872783165800490167",
+        "hash": "9810660309386084177"
       },
       {
         "file": ".nx/cache/terminalOutputs/4991225883199959535",
         "hash": "801340783301296084"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/7329028519886633476",
+        "hash": "5902123202426751615"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/7721970909092170043",
+        "hash": "15266924196141949504"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/8434539770112410993",
+        "hash": "12720827021830962088"
       },
       {
         "file": ".prettierignore",
@@ -261,10 +289,6 @@
         {
           "file": "apps/artist-portal/README.md",
           "hash": "14662224379774919567"
-        },
-        {
-          "file": "apps/artist-portal/index.html",
-          "hash": "15470617630181896747"
         },
         {
           "file": "apps/artist-portal/package-lock.json",
@@ -411,10 +435,6 @@
           "hash": "17108683863679992156"
         },
         {
-          "file": "apps/artist-portal/public/index.html",
-          "hash": "11622731415486711187"
-        },
-        {
           "file": "apps/artist-portal/public/manifest.json",
           "hash": "4104017320296556602"
         },
@@ -432,7 +452,7 @@
         },
         {
           "file": "apps/artist-portal/src/App.tsx",
-          "hash": "15887139702528449092",
+          "hash": "11539266485585463810",
           "deps": [
             "npm:@mui/material",
             "npm:components",
@@ -694,7 +714,7 @@
         },
         {
           "file": "apps/artist-portal/src/buildParams.ts",
-          "hash": "5622049553053087576"
+          "hash": "9125053424890251279"
         },
         {
           "file": "apps/artist-portal/src/common/BrowserRouter.tsx",
@@ -885,7 +905,7 @@
         },
         {
           "file": "apps/artist-portal/src/components/FacebookLogin.tsx",
-          "hash": "17296497903114811986",
+          "hash": "5645676649896499668",
           "deps": [
             "npm:modules/session",
             "npm:modules/ui",
@@ -920,7 +940,7 @@
         },
         {
           "file": "apps/artist-portal/src/components/LinkedInLogin.tsx",
-          "hash": "2129633543739061758",
+          "hash": "18238756392070261726",
           "deps": [
             "npm:react",
             "npm:react-linkedin-login-oauth2",
@@ -2914,7 +2934,7 @@
         },
         {
           "file": "apps/artist-portal/tsconfig.json",
-          "hash": "15536130476333000261"
+          "hash": "10389093041391783305"
         },
         {
           "file": "apps/artist-portal/tsconfig.spec.json",
@@ -2922,12 +2942,20 @@
         },
         {
           "file": "apps/artist-portal/vite.config.js",
-          "hash": "12773231427874861231",
+          "hash": "5029255742943753906",
           "deps": [
             "npm:vite",
             "npm:@vitejs/plugin-react",
             "npm:vite-tsconfig-paths"
           ]
+        },
+        {
+          "file": "apps/artist-portal/index.html",
+          "hash": "12470474041201603853"
+        },
+        {
+          "file": "apps/artist-portal/.env.template",
+          "hash": "14441200730012880287"
         }
       ]
     }

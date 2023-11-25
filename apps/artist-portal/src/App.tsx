@@ -32,7 +32,7 @@ import store, { persistor } from "./store";
 import "./App.css";
 
 const App = () => {
-  const googleClientID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
+  const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
   return (
     <ThemeProvider theme={ theme }>

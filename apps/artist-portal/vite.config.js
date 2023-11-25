@@ -13,7 +13,7 @@ export default defineConfig({
     outDir: "../../dist/apps/artist-portal",
   },
   server: {
-    port: 4200,
+    port: 3000,
     open: true,
   },
   test: {
