@@ -46,3 +46,6 @@ Thumbs.db
 .nx/cachenode_modules
 .nx/cache
 dist
+
+# Next.js
+.next

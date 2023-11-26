@@ -69,6 +69,12 @@
     },
     "@nx/workspace:move": {
       "projectNameAndRootFormat": "as-provided"
+    },
+    "@nx/next": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
     }
   },
   "nxCloudAccessToken": "OWYxMjg1MWQtMWQ5Ni00ZmY3LTg1ZDQtYWE0OTM5Y2VjMDU0fHJlYWQtd3JpdGU="
