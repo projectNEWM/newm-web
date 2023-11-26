@@ -1,7 +1,7 @@
 import { ForwardRefRenderFunction, ForwardedRef, HTMLProps, forwardRef } from "react";
 import { Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import Typography from "./Typography";
 
 export interface GradientTextInputProps extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {

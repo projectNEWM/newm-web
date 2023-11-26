@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import TextInput, { TextInput as UnwrappedTextInput } from "../TextInput";
 
 export default {

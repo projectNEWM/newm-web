@@ -1,7 +1,7 @@
 import { Box, Icon, IconButton, Stack, Typography } from "@mui/material";
 import { Button, Tooltip } from "@newm.io/studio/elements";
 import currency from "currency.js";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircle from "@newm.io/studio/assets/images/CheckCircle";
 

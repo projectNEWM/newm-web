@@ -7,7 +7,7 @@ import { ProfileImage } from "@newm.io/studio/components";
 import { Button } from "@newm.io/studio/elements";
 import { MintingStatus, emptySong, useGetSongQuery, useHasSongAccess } from "@newm.io/studio/modules/song";
 import { setToastMessage } from "@newm.io/studio/modules/ui";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";

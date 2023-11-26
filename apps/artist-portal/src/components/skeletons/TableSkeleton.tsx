@@ -1,4 +1,4 @@
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Box, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 

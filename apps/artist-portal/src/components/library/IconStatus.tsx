@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Stack, Theme } from "@mui/material";
 import { Typography } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 export interface IconStatusProps {
   readonly icon: JSX.Element;

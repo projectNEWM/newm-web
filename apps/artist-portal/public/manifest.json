@@ -15,6 +15,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "@newm.io/studio/theme_color": "#000000",
+  "theme": "#000000",
   "background_color": "#000000"
 }

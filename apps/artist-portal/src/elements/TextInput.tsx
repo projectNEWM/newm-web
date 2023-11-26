@@ -11,7 +11,7 @@ import { Box, IconButton, Stack, Typography } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { ErrorMessage } from "@newm.io/studio/components";
 import { WidthType } from "@newm.io/studio/common";
 import { Tooltip } from "@newm.io/studio/elements";

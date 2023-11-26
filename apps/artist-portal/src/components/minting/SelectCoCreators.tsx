@@ -5,7 +5,7 @@ import { Button, HorizontalLine, Tooltip, Typography } from "@newm.io/studio/ele
 import { Formik, FormikProps } from "formik";
 import { Creditor, Featured, Owner } from "@newm.io/studio/modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "@newm.io/studio/common";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";

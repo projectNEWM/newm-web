@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { TextInput } from "@newm.io/studio/elements";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface SearchBoxProps {
   query: string;

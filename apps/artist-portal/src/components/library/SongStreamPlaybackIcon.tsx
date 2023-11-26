@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import { Tooltip } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface SongStreamPlaybackIconProps {
   readonly isSongPlaying: boolean;

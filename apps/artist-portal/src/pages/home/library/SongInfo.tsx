@@ -11,7 +11,7 @@ import {
   UploadImageField,
 } from "@newm.io/studio/components";
 import { HorizontalLine, Typography } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { emptySong, useGetSongQuery } from "@newm.io/studio/modules/song";
 import { Formik } from "formik";
 import { SongRouteParams } from "./types";

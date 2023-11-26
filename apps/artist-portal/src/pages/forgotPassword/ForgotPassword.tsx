@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { FormikHelpers, FormikValues } from "formik";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { ResponsiveNEWMLogo, WizardForm } from "@newm.io/studio/components";
 import { commonYupValidation, useAppDispatch } from "@newm.io/studio/common";
 import { resetPassword, sendVerificationEmail } from "@newm.io/studio/modules/session";

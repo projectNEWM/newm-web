@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack } from "@mui/material";
 import { Button, Typography } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import {
   CollaborationStatus,
   getHasOwnershipInvite,

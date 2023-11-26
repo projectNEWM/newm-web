@@ -11,7 +11,7 @@ import {
 import { CopyrightInputField, DropdownSelectField, SwitchInputField, TextInputField } from "@newm.io/studio/components";
 import { Button, HorizontalLine } from "@newm.io/studio/elements";
 import { UploadSongRequest, useGetEarliestReleaseDateQuery } from "@newm.io/studio/modules/song";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 
 const AdvancedSongDetails = () => {

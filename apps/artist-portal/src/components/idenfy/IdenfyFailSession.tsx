@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
 import { Button } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 const IdenfyFailSession: FunctionComponent = () => {
   useEffect(() => {

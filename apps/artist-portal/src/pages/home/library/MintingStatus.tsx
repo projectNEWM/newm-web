@@ -5,7 +5,7 @@ import { MintingStatus as MintingStatusType } from "@newm.io/studio/modules/song
 import { IconStatus } from "@newm.io/studio/components";
 import InfoCircleLine from "@newm.io/studio/assets/images/InfoCircleLine";
 import TimeCircleLine from "@newm.io/studio/assets/images/TimeCircleLine";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface MintingStatusProps {
   readonly mintingStatus: MintingStatusType;

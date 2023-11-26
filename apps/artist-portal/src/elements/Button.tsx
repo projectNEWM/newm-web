@@ -1,6 +1,6 @@
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import { CircularProgress, Button as MUIButton, ButtonProps as MUIButtonProps, Theme } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 export interface CommonProps extends Omit<MUIButtonProps, "color" | "variant"> {
   readonly isLoading?: boolean;

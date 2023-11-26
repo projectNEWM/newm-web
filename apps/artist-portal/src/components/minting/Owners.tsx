@@ -5,7 +5,7 @@ import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import { Owner, getIsOwnerEditable, useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
 import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
 import { TextInputField } from "@newm.io/studio/components";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { emptyProfile, useGetProfileQuery } from "@newm.io/studio/modules/session";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";

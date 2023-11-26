@@ -7,7 +7,7 @@ import TwitterLogo from "@newm.io/studio/assets/images/TwitterLogo";
 import GlobalFill from "@newm.io/studio/assets/images/GlobalFill";
 import InstagramLogo from "@newm.io/studio/assets/images/InstagramLogo";
 import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { getResizedAlbumCoverImageUrl, useWindowDimensions } from "@newm.io/studio/common";
 import { history } from "@newm.io/studio/common/history";
 import { VerificationStatus, useGetUserQuery } from "@newm.io/studio/modules/session";

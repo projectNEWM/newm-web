@@ -1,5 +1,5 @@
 import { ForwardRefRenderFunction, ForwardedRef, ReactNode, forwardRef } from "react";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Box, Checkbox as MUICheckbox, CheckboxProps as MUICheckboxProps, Stack, Typography } from "@mui/material";
 import CheckboxIcon from "@newm.io/studio/assets/images/CheckboxIcon";
 import { ErrorMessage } from "@newm.io/studio/components";

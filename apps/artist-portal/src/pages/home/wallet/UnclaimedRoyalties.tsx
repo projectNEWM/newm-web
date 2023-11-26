@@ -1,7 +1,7 @@
 import { Box, IconButton, Stack } from "@mui/material";
 import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
 import currency from "currency.js";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import HelpIcon from "@mui/icons-material/Help";
 
 interface UnclaimedRoyaltiesProps {

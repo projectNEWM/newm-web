@@ -2,7 +2,7 @@ import { Box, Switch as MuiSwitch, SwitchProps, styled } from "@mui/material";
 import CheckIcon from "@newm.io/studio/assets/images/CheckIcon";
 import CloseIcon from "@newm.io/studio/assets/images/CloseIcon";
 import { FunctionComponent } from "react";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface ToggleIconProps {
   readonly checked: boolean;

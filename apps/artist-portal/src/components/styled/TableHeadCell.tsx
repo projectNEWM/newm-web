@@ -1,6 +1,6 @@
 import { TableCell } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 const HeaderCell = styled(TableCell)({
   borderBottom: `1px solid ${theme.colors.grey500}`,

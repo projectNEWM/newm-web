@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@newm.io/studio/elements";
 import { Featured, useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import Details from "./Details";
 import { getCollaboratorInfo } from "./utils";
 

@@ -2,7 +2,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Dispatch, SetStateAction } from "react";
 import { Typography } from "@newm.io/studio/elements";
 import { TableDropdownSelect, TablePagination } from "@newm.io/studio/components";

@@ -1,7 +1,7 @@
 import { renderWithContext } from "@newm.io/studio/common";
 import * as routerUtils from "react-router-dom";
 import { Upload as UploadIcon } from "@mui/icons-material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import SideBarNavLink from "../home/SideBarNavLink";
 
 jest.mock("react-router-dom", () => ({

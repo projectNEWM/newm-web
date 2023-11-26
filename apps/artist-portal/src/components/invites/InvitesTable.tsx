@@ -4,7 +4,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { PlayerState, getResizedAlbumCoverImageUrl, useAppDispatch } from "@newm.io/studio/common";
 import { PlaySongAdvanced, TableCell, TableHeadCell } from "@newm.io/studio/components";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import {
   Invite,
   Song,

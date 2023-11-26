@@ -6,7 +6,7 @@ import { selectSong } from "@newm.io/studio/modules/song";
 import { FunctionComponent, useEffect } from "react";
 import agreementPreview from "@newm.io/studio/assets/images/artist-agreement-preview.jpg";
 import { COLLABORATOR_FEE_IN_ADA, MINTING_FEE_IN_ADA, useAppSelector } from "@newm.io/studio/common";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import ViewPDF from "../ViewPDF";
 import CheckboxField from "../form/CheckboxField";
 

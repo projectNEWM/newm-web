@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useWindowDimensions } from "@newm.io/studio/common";
 import { Box } from "@mui/material";
 import SkeletonTable from "@newm.io/studio/components/skeletons/TableSkeleton";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { SortOrder, useGetUserWalletSongsThunk } from "@newm.io/studio/modules/song";
 import SongRoyaltiesList from "./SongRoyaltiesList";
 

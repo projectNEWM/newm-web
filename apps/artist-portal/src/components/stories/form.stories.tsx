@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button, Typography } from "@newm.io/studio/elements";
 import * as Yup from "yup";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import TextInputField from "../form/TextInputField";
 
 export default {

@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, useState } from "react";
 import { Box, Stack, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
 import { useWindowDimensions } from "@newm.io/studio/common";
 import { TableCell, TableHeadCell, TablePagination, TableSkeleton } from "@newm.io/studio/components";

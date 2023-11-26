@@ -4,7 +4,7 @@ import { Button, Dialog } from "@newm.io/studio/elements";
 import { Form, Formik, FormikValues } from "formik";
 import { FunctionComponent, useState } from "react";
 import * as Yup from "yup";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { emptyProfile, useDeleteAccountThunk, useGetProfileQuery } from "@newm.io/studio/modules/session";
 
 const DeleteAccountDialog: FunctionComponent = () => {

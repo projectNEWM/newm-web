@@ -10,7 +10,7 @@ import {
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Box, Stack } from "@mui/material";
 import SelectedCheckboxIcon from "@newm.io/studio/assets/images/SelectedCheckboxIcon";
 import UnselectedCheckboxIcon from "@newm.io/studio/assets/images/UnselectedCheckboxIcon";

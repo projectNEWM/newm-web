@@ -11,7 +11,7 @@ import {
 } from "@newm.io/studio/common";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Alert, Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import {
   CollaborationStatus,
   Creditor,

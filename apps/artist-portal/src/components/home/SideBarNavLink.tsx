@@ -1,7 +1,7 @@
 import { CSSProperties, FunctionComponent, ReactNode } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Box, Stack, SvgIconProps } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface ButtonProps {
   readonly onClick?: VoidFunction;

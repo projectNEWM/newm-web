@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import styled from "styled-components";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { ErrorMessage } from "@newm.io/studio/components";
 import { WidthType } from "@newm.io/studio/common";
 

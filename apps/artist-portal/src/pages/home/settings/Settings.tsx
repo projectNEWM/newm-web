@@ -16,7 +16,7 @@ import {
   useChangePasswordThunk,
   useGetProfileQuery,
 } from "@newm.io/studio/modules/session";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 
 const Settings: FunctionComponent = () => {

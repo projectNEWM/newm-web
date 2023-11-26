@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { Stack, Table } from "@mui/material";
 import { Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
 import { useNavigate } from "react-router-dom";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import TableHead from "./Table/TableHead";
 
 const NoSongsYet: FunctionComponent = () => {

@@ -1,6 +1,6 @@
 import { CheckCircleOutline } from "@mui/icons-material";
 import { Box, Typography, styled } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface StepBoxProps {
   readonly boxColor: string;

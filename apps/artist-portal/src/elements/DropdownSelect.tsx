@@ -9,7 +9,7 @@ import {
 } from "react";
 import useAutocomplete from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Box } from "@mui/material";
 import { WidthType } from "@newm.io/studio/common";
 import TextInput from "./TextInput";

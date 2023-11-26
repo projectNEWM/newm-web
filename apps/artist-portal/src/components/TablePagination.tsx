@@ -12,7 +12,7 @@ import {
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import React from "react";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import StyledPagination from "./styled/StyledPagination";
 
 const StyledTableCell = styled(TableCell)<TableCellProps>`

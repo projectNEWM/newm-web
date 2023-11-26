@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Collapse, Alert as MUIAlert, AlertProps as MUIAlertProps } from "@mui/material";
 import WarningIcon from "@mui/icons-material/Warning";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 interface AlertProps extends MUIAlertProps {
   open?: boolean;

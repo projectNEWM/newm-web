@@ -3,7 +3,7 @@ import { Box, IconButton, Table, TableBody, TableContainer, TableRow, Typography
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Button, Tooltip } from "@newm.io/studio/elements";
 import {
   NEWM_SUPPORT_EMAIL,

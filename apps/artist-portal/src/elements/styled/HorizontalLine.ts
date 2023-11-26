@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 
 const HorizontalLine = styled(Box)`
   background-color: ${theme.colors.grey500};

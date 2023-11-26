@@ -3,7 +3,7 @@ import { CircularProgress, Stack } from "@mui/material";
 import Cookies from "js-cookie";
 import { Modal } from "@newm.io/studio/components";
 import { getIdenfyAuthToken } from "@newm.io/studio/modules/session";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { selectUi, setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
 import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 

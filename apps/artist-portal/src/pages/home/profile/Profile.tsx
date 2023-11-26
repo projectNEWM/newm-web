@@ -36,7 +36,7 @@ import {
   useGetProfileQuery,
   useUpdateProfileThunk,
 } from "@newm.io/studio/modules/session";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;

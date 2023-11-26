@@ -13,7 +13,7 @@ import {
   useHlsJs,
 } from "@newm.io/studio/modules/song";
 import { Typography } from "@newm.io/studio/elements";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { PlayerState, getResizedAlbumCoverImageUrl, useWindowDimensions } from "@newm.io/studio/common";
 import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
 

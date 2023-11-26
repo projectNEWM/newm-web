@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { CollaborationStatus } from "@newm.io/studio/modules/song";
 import { Stack, Typography } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Badge, BadgeProps } from "@newm.io/studio/components";
 
 interface DetailsProps {

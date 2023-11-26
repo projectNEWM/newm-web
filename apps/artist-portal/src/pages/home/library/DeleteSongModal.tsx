@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Stack, Typography } from "@mui/material";
-import theme from "@newm.io/studio/theme";
+import theme from "@newm.io/theme";
 import { Button } from "@newm.io/studio/elements";
 
 interface DeleteSongModalProps {
