@@ -1,8 +1,8 @@
-import { Box, Switch as MuiSwitch, SwitchProps, styled } from "@mui/material";
-import { FunctionComponent } from "react";
-import theme from "newm-theme";
-import CheckIcon from "./assets/images/CheckIcon";
-import CloseIcon from "./assets/images/CloseIcon";
+import { Box, Switch as MuiSwitch, SwitchProps, styled } from '@mui/material';
+import { FunctionComponent } from 'react';
+import theme from 'newm-theme';
+import CheckIcon from './assets/images/CheckIcon';
+import CloseIcon from './assets/images/CloseIcon';
 
 interface ToggleIconProps {
   readonly checked: boolean;
@@ -12,43 +12,43 @@ const StyledSwitch = styled((props: SwitchProps) => (
   <MuiSwitch
     focusVisibleClassName=".Mui-focusVisible"
     disableRipple
-    { ...props }
+    {...props}
   />
 ))(() => ({
   width: 44,
   height: 24,
   padding: 0,
-  "& .MuiSwitch-switchBase": {
+  '& .MuiSwitch-switchBase': {
     padding: 0,
     margin: 2,
-    transitionDuration: "300ms",
-    "&.Mui-checked": {
+    transitionDuration: '300ms',
+    '&.Mui-checked': {
       color: theme.colors.white,
-      transform: "translateX(20px)",
-      "& + .MuiSwitch-track": {
+      transform: 'translateX(20px)',
+      '& + .MuiSwitch-track': {
         background: theme.gradients.music,
         opacity: 1,
         border: 0,
       },
-      "&.Mui-disabled + .MuiSwitch-track": {
+      '&.Mui-disabled + .MuiSwitch-track': {
         opacity: 0.5,
       },
     },
-    "&.Mui-focusVisible .MuiSwitch-thumb": {
+    '&.Mui-focusVisible .MuiSwitch-thumb': {
       color: theme.colors.green,
       border: `6px solid ${theme.colors.white}`,
     },
-    "&.Mui-disabled .MuiSwitch-thumb": {
+    '&.Mui-disabled .MuiSwitch-thumb': {
       color: theme.colors.grey100,
     },
-    "&.Mui-disabled + .MuiSwitch-track": {
+    '&.Mui-disabled + .MuiSwitch-track': {
       opacity: 0.7,
     },
   },
-  "& .MuiSwitch-thumb": {
-    boxSizing: "border-box",
+  '& .MuiSwitch-thumb': {
+    boxSizing: 'border-box',
   },
-  "& .MuiSwitch-track": {
+  '& .MuiSwitch-track': {
     borderRadius: 26 / 2,
     background: theme.colors.grey400,
     opacity: 1,
@@ -58,17 +58,17 @@ const StyledSwitch = styled((props: SwitchProps) => (
 const ToggleIcon: FunctionComponent<ToggleIconProps> = ({ checked }) => {
   return (
     <Box
-      sx={ {
-        display: "flex",
+      sx={{
+        display: 'flex',
         width: 20,
         height: 204,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "50%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '50%',
         backgroundColor: theme.colors.white,
-      } }
+      }}
     >
-      { checked ? <CheckIcon /> : <CloseIcon /> }
+      {checked ? <CheckIcon /> : <CloseIcon />}
     </Box>
   );
 };
@@ -76,9 +76,9 @@ const ToggleIcon: FunctionComponent<ToggleIconProps> = ({ checked }) => {
 const Switch: FunctionComponent<SwitchProps> = (props) => {
   return (
     <StyledSwitch
-      icon={ <ToggleIcon checked={ false } /> }
-      checkedIcon={ <ToggleIcon checked={ true } /> }
-      { ...props }
+      icon={<ToggleIcon checked={false} />}
+      checkedIcon={<ToggleIcon checked={true} />}
+      {...props}
     />
   );
 };

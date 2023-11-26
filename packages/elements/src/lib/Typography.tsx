@@ -1,12 +1,12 @@
 import {
   TypographyProps as MuiTypogaphyProps,
   Typography as MuiTypography,
-} from "@mui/material";
-import { Theme, useTheme } from "@mui/material/styles";
-import { FunctionComponent } from "react";
+} from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import { FunctionComponent } from 'react';
 
 export interface TypographyProps extends MuiTypogaphyProps {
-  color?: keyof Theme["colors"];
+  color?: keyof Theme['colors'];
 }
 
 /**
@@ -21,8 +21,8 @@ const Typography: FunctionComponent<TypographyProps> = ({
   const theme = useTheme();
 
   return (
-    <MuiTypography color={ color ? theme.colors[color] : undefined } { ...rest }>
-      { children }
+    <MuiTypography color={color ? theme.colors[color] : undefined} {...rest}>
+      {children}
     </MuiTypography>
   );
 };

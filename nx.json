@@ -66,6 +66,9 @@
         "linter": "eslint",
         "unitTestRunner": "jest"
       }
+    },
+    "@nx/workspace:move": {
+      "projectNameAndRootFormat": "as-provided"
     }
   },
   "nxCloudAccessToken": "OWYxMjg1MWQtMWQ5Ni00ZmY3LTg1ZDQtYWE0OTM5Y2VjMDU0fHJlYWQtd3JpdGU="

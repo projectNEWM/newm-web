@@ -3,24 +3,24 @@
  * actual text input functionality.
  */
 
-import { Paper } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import theme from "newm-theme";
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import theme from 'newm-theme';
 
 const PaperInput = styled(Paper)({
-  alignItems: "center",
+  alignItems: 'center',
   backgroundColor: theme.colors.grey500,
   borderWidth: theme.inputField.borderWidth,
-  borderStyle: "solid",
+  borderStyle: 'solid',
   borderColor: theme.colors.grey400,
-  borderRadius: "9px",
+  borderRadius: '9px',
   boxShadow: `inset 0px 3px 6px ${theme.colors.black}`,
   color: theme.colors.grey100,
-  display: "flex",
-  justifyContent: "center",
-  minWidth: "100px",
+  display: 'flex',
+  justifyContent: 'center',
+  minWidth: '100px',
   opacity: 1,
-  textAlign: "center",
+  textAlign: 'center',
 });
 
 export default PaperInput;

@@ -1,14 +1,14 @@
-import theme from "newm-theme";
-import { styled, css } from "@mui/material/styles";
-import { ReactNode } from "react";
-import { WidthType } from "../types";
+import theme from 'newm-theme';
+import { styled, css } from '@mui/material/styles';
+import { ReactNode } from 'react';
+import { WidthType } from '../types';
 
 interface Props {
-  readonly widthType?: WidthType
-  readonly children?: ReactNode
+  readonly widthType?: WidthType;
+  readonly children?: ReactNode;
 }
 
-const NoResultsText = styled("span")`
+const NoResultsText = styled('span')`
   background-color: ${theme.colors.grey500};
   border-radius: 4px;
   border: 2px solid ${theme.colors.grey400};
@@ -20,7 +20,7 @@ const NoResultsText = styled("span")`
   z-index: 1;
 
   ${({ widthType }: Props) =>
-    widthType !== "full" &&
+    widthType !== 'full' &&
     css`
       max-width: ${theme.inputField.maxWidth};
     `}

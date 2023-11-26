@@ -5,11 +5,11 @@ import {
   TextareaHTMLAttributes,
   forwardRef,
   useState,
-} from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import theme from "newm-theme";
-import ErrorMessage from "./styled/ErrorMessage";
+} from 'react';
+import { Box, Stack, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import theme from 'newm-theme';
+import ErrorMessage from './styled/ErrorMessage';
 // import { WidthType } from "common"; TODO
 
 export interface TextAreaProps
@@ -22,14 +22,14 @@ export interface TextAreaProps
   readonly isOptional?: boolean;
 }
 
-const StyledRootElement = styled("div")`
+const StyledRootElement = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
 `;
 
-const StyledTextAreaElement = styled("textarea")`
+const StyledTextAreaElement = styled('textarea')`
   display: flex;
   flex-grow: 1;
   background: ${theme.colors.grey600};
@@ -63,7 +63,7 @@ export const TextArea: ForwardRefRenderFunction<
     endAdornment,
     disabled = false,
     isOptional = true,
-    widthType = "default",
+    widthType = 'default',
     ...rest
   },
   ref
@@ -97,75 +97,75 @@ export const TextArea: ForwardRefRenderFunction<
     <Stack
       direction="column"
       spacing="4px"
-      sx={ {
+      sx={{
         opacity: disabled ? 0.5 : 1,
-        width: "100%",
-        textAlign: "left",
-        [theme.breakpoints.down("md")]: {
-          margin: "0 auto",
-          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        width: '100%',
+        textAlign: 'left',
+        [theme.breakpoints.down('md')]: {
+          margin: '0 auto',
+          maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
         },
-      } }
+      }}
     >
-      { !!label && (
+      {!!label && (
         <Typography
-          color={ theme.colors.grey100 }
-          columnGap={ 0.5 }
+          color={theme.colors.grey100}
+          columnGap={0.5}
           display="flex"
-          fontWeight={ 500 }
+          fontWeight={500}
         >
-          { label }
+          {label}
 
-          { isOptional && (
+          {isOptional && (
             <Typography
-              color={ theme.colors.grey400 }
+              color={theme.colors.grey400}
               component="span"
               marginLeft="auto"
             >
               OPTIONAL
             </Typography>
-          ) }
+          )}
         </Typography>
-      ) }
+      )}
 
       <Box
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        onMouseEnter={ () => setIsHovered(true) }
-        onMouseLeave={ () => setIsHovered(false) }
-        sx={ {
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        sx={{
           borderWidth: theme.inputField.borderWidth,
-          borderStyle: "solid",
+          borderStyle: 'solid',
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
             isHovered,
             isFocused
           ),
-          borderRadius: "4px",
-          overflow: "hidden",
+          borderRadius: '4px',
+          overflow: 'hidden',
           background: theme.colors.grey500,
-        } }
+        }}
       >
         <StyledRootElement>
-          { startAdornment }
+          {startAdornment}
 
           <StyledTextAreaElement
-            rows={ 2 }
-            onFocus={ handleFocus }
-            onBlur={ handleBlur }
-            disabled={ disabled }
-            ref={ ref }
-            { ...rest }
+            rows={2}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            disabled={disabled}
+            ref={ref}
+            {...rest}
           />
 
-          { endAdornment }
+          {endAdornment}
         </StyledRootElement>
       </Box>
 
-      { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
+      {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Stack>
   );
 };

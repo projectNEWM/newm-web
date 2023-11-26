@@ -1,17 +1,17 @@
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 import MuiTooltip, {
   TooltipProps,
   tooltipClasses,
-} from "@mui/material/Tooltip";
+} from '@mui/material/Tooltip';
 
 const Tooltip = styled(({ className, ...props }: TooltipProps) => (
   <MuiTooltip
-    arrow={ true }
-    classes={ { popper: className } }
-    enterTouchDelay={ 0 }
-    leaveDelay={ 200 }
+    arrow={true}
+    classes={{ popper: className }}
+    enterTouchDelay={0}
+    leaveDelay={200}
     placement="top"
-    { ...props }
+    {...props}
   />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
@@ -19,14 +19,14 @@ const Tooltip = styled(({ className, ...props }: TooltipProps) => (
   },
   [`& .${tooltipClasses.tooltipArrow}`]: {
     backgroundColor: theme.colors.grey500,
-    borderRadius: "8px",
-    fontSize: "14px",
+    borderRadius: '8px',
+    fontSize: '14px',
     padding: `${theme.spacing(1.5)} ${theme.spacing(2)}`,
   },
   [`& .${tooltipClasses.tooltip}`]: {
     a: {
       color: theme.colors.music,
-      textDecoration: "none",
+      textDecoration: 'none',
     },
   },
 }));

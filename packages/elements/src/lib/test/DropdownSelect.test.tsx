@@ -1,121 +1,121 @@
 /* eslint-disable testing-library/await-async-events */
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import DropdownSelect from "../DropdownSelect";
-import "@testing-library/jest-dom";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import DropdownSelect from '../DropdownSelect';
+import '@testing-library/jest-dom';
 
-describe("<DropdownSelect>", () => {
+describe('<DropdownSelect>', () => {
   const data = [
-    "Alternative",
-    "Anime",
-    "Blues",
+    'Alternative',
+    'Anime',
+    'Blues',
     "Children's",
-    "Classical",
-    "Comedy",
-    "Lofi",
+    'Classical',
+    'Comedy',
+    'Lofi',
   ];
 
   const renderComponent = (propOverrides = {}) => {
     const props = {
       disabled: undefined,
       errorMessage: undefined,
-      label: "Label",
-      name: "name",
+      label: 'Label',
+      name: 'name',
       noResultsText: undefined,
       options: data,
       placeholder: undefined,
       ...propOverrides,
     };
 
-    return render(<DropdownSelect { ...props } />);
+    return render(<DropdownSelect {...props} />);
   };
 
-  it("renders with default props when only required props are provided", () => {
+  it('renders with default props when only required props are provided', () => {
     renderComponent();
 
-    expect(screen.getByText("Label")).toBeInTheDocument();
-    expect(screen.getByText("OPTIONAL")).toBeInTheDocument();
+    expect(screen.getByText('Label')).toBeInTheDocument();
+    expect(screen.getByText('OPTIONAL')).toBeInTheDocument();
   });
 
-  it("displays options available", () => {
-    renderComponent({ placeholder: "Placeholder" });
+  it('displays options available', () => {
+    renderComponent({ placeholder: 'Placeholder' });
 
-    const input = screen.getByPlaceholderText("Placeholder");
+    const input = screen.getByPlaceholderText('Placeholder');
 
-    expect(screen.queryByText("Alternative")).toBeNull();
+    expect(screen.queryByText('Alternative')).toBeNull();
 
     userEvent.click(input);
 
-    const availableOptions = screen.getAllByRole("option").length;
+    const availableOptions = screen.getAllByRole('option').length;
 
-    expect(screen.getByText("Alternative")).toBeInTheDocument();
+    expect(screen.getByText('Alternative')).toBeInTheDocument();
     expect(availableOptions).toBe(7);
-    expect(screen.getByPlaceholderText("Placeholder")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Placeholder')).toBeInTheDocument();
   });
 
-  it("filters results as the user types", () => {
-    renderComponent({ placeholder: "Placeholder" });
+  it('filters results as the user types', () => {
+    renderComponent({ placeholder: 'Placeholder' });
 
-    const input = screen.getByPlaceholderText("Placeholder");
+    const input = screen.getByPlaceholderText('Placeholder');
     let availableOptions;
 
-    userEvent.type(input, "a");
-    availableOptions = screen.getAllByRole("option").length;
+    userEvent.type(input, 'a');
+    availableOptions = screen.getAllByRole('option').length;
     expect(availableOptions).toBe(3);
 
-    userEvent.type(input, "l");
-    availableOptions = screen.getAllByRole("option").length;
+    userEvent.type(input, 'l');
+    availableOptions = screen.getAllByRole('option').length;
     expect(availableOptions).toBe(2);
 
-    userEvent.type(input, "t");
-    availableOptions = screen.getAllByRole("option").length;
-    expect(screen.getByText("Alternative")).toBeInTheDocument();
+    userEvent.type(input, 't');
+    availableOptions = screen.getAllByRole('option').length;
+    expect(screen.getByText('Alternative')).toBeInTheDocument();
     expect(availableOptions).toBe(1);
   });
 
-  it("changes the value of the input when an option is selected", () => {
+  it('changes the value of the input when an option is selected', () => {
     renderComponent();
 
-    userEvent.click(screen.getByRole("combobox"));
-    userEvent.click(screen.getByText("Alternative"));
+    userEvent.click(screen.getByRole('combobox'));
+    userEvent.click(screen.getByText('Alternative'));
 
-    expect(screen.getByDisplayValue("Alternative")).toBeInTheDocument();
-    expect(screen.queryByDisplayValue("Anime")).toBeNull();
+    expect(screen.getByDisplayValue('Alternative')).toBeInTheDocument();
+    expect(screen.queryByDisplayValue('Anime')).toBeNull();
   });
 
-  it("displays default text when no options are available", () => {
+  it('displays default text when no options are available', () => {
     renderComponent({ options: [] });
 
-    userEvent.click(screen.getByRole("combobox"));
+    userEvent.click(screen.getByRole('combobox'));
 
-    expect(screen.getByText("Nothing found")).toBeInTheDocument();
+    expect(screen.getByText('Nothing found')).toBeInTheDocument();
   });
 
-  it("displays custom text when no options are avaialble", () => {
+  it('displays custom text when no options are avaialble', () => {
     renderComponent({
-      noResultsText: "Nothing to see here",
-      placeholder: "Placeholder",
+      noResultsText: 'Nothing to see here',
+      placeholder: 'Placeholder',
     });
 
-    const input = screen.getByPlaceholderText("Placeholder");
+    const input = screen.getByPlaceholderText('Placeholder');
 
-    userEvent.type(input, "invalidSearch");
+    userEvent.type(input, 'invalidSearch');
 
-    expect(screen.getByText("Nothing to see here")).toBeInTheDocument();
+    expect(screen.getByText('Nothing to see here')).toBeInTheDocument();
   });
 
-  it("does not display options when disabled", () => {
-    renderComponent({ disabled: true, placeholder: "Placeholder" });
+  it('does not display options when disabled', () => {
+    renderComponent({ disabled: true, placeholder: 'Placeholder' });
 
-    userEvent.click(screen.getByPlaceholderText("Placeholder"));
+    userEvent.click(screen.getByPlaceholderText('Placeholder'));
 
-    expect(screen.queryByDisplayValue("Alternative")).toBeNull();
-    expect(screen.queryAllByRole("option")).toHaveLength(0);
+    expect(screen.queryByDisplayValue('Alternative')).toBeNull();
+    expect(screen.queryAllByRole('option')).toHaveLength(0);
   });
 
-  it("displays error message when it is passed", () => {
-    renderComponent({ errorMessage: "error message" });
+  it('displays error message when it is passed', () => {
+    renderComponent({ errorMessage: 'error message' });
 
-    expect(screen.getByText("error message")).toBeInTheDocument();
+    expect(screen.getByText('error message')).toBeInTheDocument();
   });
 });

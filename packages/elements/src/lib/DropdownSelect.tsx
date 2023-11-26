@@ -4,18 +4,18 @@ import {
   HTMLProps,
   KeyboardEvent,
   forwardRef,
-} from "react";
-import { useAutocomplete } from "@mui/base/useAutocomplete";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import theme from "newm-theme";
-import { Box } from "@mui/material";
-import { WidthType } from "./types";
-import TextInput from "./TextInput";
-import ResultsList from "./styled/ResultsList";
-import NoResultsText from "./styled/NoResultsText";
+} from 'react';
+import { useAutocomplete } from '@mui/base/useAutocomplete';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import theme from 'newm-theme';
+import { Box } from '@mui/material';
+import { WidthType } from './types';
+import TextInput from './TextInput';
+import ResultsList from './styled/ResultsList';
+import NoResultsText from './styled/NoResultsText';
 
 export interface DropdownSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleChange?: (newValue: string) => void;
@@ -39,7 +39,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     handleChange,
     label,
     name,
-    noResultsText = "Nothing found",
+    noResultsText = 'Nothing found',
     options,
     placeholder,
     value,
@@ -76,51 +76,51 @@ const DropdownSelect: ForwardRefRenderFunction<
    * text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
-    if (event.key === "Enter" && inputValue !== value) event.preventDefault();
+    if (event.key === 'Enter' && inputValue !== value) event.preventDefault();
   };
 
   return (
     <Box
-      sx={ {
-        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
-        position: "relative",
-        width: "100%",
-      } }
+      sx={{
+        maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
+        position: 'relative',
+        width: '100%',
+      }}
     >
-      <div { ...getRootProps() }>
+      <div {...getRootProps()}>
         <TextInput
-          { ...rest }
-          { ...getInputProps() }
-          disabled={ disabled }
+          {...rest}
+          {...getInputProps()}
+          disabled={disabled}
           endAdornment={
             <ArrowDropDownIcon
-              sx={ {
+              sx={{
                 color: theme.colors.white,
-                transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 200ms ease-in",
-              } }
+                transform: popupOpen ? 'rotate(-180deg)' : 'rotate(0deg)',
+                transition: 'transform 200ms ease-in',
+              }}
             />
           }
-          errorMessage={ errorMessage }
-          label={ label }
-          name={ name }
-          placeholder={ placeholder }
-          onKeyDown={ preventFormSubmit }
-          ref={ ref }
+          errorMessage={errorMessage}
+          label={label}
+          name={name}
+          placeholder={placeholder}
+          onKeyDown={preventFormSubmit}
+          ref={ref}
         />
       </div>
 
-      { hasResults && (
-        <ResultsList { ...getListboxProps() }>
-          { (groupedOptions as typeof options).map((option, index) => (
-            <li { ...getOptionProps({ option, index }) } key={ index }>
-              { option }
+      {hasResults && (
+        <ResultsList {...getListboxProps()}>
+          {(groupedOptions as typeof options).map((option, index) => (
+            <li {...getOptionProps({ option, index })} key={index}>
+              {option}
             </li>
-          )) }
+          ))}
         </ResultsList>
-      ) }
+      )}
 
-      { showNoResults ? <NoResultsText>{ noResultsText }</NoResultsText> : null }
+      {showNoResults ? <NoResultsText>{noResultsText}</NoResultsText> : null}
     </Box>
   );
 };

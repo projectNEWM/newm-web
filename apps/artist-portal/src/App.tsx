@@ -28,16 +28,11 @@ import { history } from "@newm.io/studio/common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import OnboardingRedirect from "@newm.io/studio/components/OnboardingRedirect";
-import { useExtractProperty } from "@newm.io/utils";
 import store, { persistor } from "./store";
 import "./App.css";
 
 const App = () => {
   const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
-
-  const record = { hello: "world" };
-  const prop = useExtractProperty([record], "hello");
-  console.log("prop: ", prop);
 
   return (
     <ThemeProvider theme={ theme }>

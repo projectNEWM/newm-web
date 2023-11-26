@@ -1,7 +1,7 @@
-import { withContext } from "@newm.io/utils";
+import { withContext } from '@newm.io/utils';
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -9,15 +9,15 @@ export const parameters = {
     },
   },
   backgrounds: {
-    default: "dark",
+    default: 'dark',
     values: [
       {
-        name: "light",
-        value: "#fff",
+        name: 'light',
+        value: '#fff',
       },
       {
-        name: "dark",
-        value: "#000",
+        name: 'dark',
+        value: '#000',
       },
     ],
   },

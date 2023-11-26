@@ -3,31 +3,31 @@ import {
   ForwardedRef,
   HTMLProps,
   forwardRef,
-} from "react";
-import { Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import theme from "newm-theme";
-import Typography from "./Typography";
+} from 'react';
+import { Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import theme from 'newm-theme';
+import Typography from './Typography';
 
 export interface GradientTextInputProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
   readonly errorMessage?: string;
   readonly helperText?: string;
-  readonly textAlign?: "left" | "center" | "right";
+  readonly textAlign?: 'left' | 'center' | 'right';
 }
 
 interface StyledInputElementProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
   readonly hasError: boolean;
-  readonly textAlign: "left" | "center" | "right";
+  readonly textAlign: 'left' | 'center' | 'right';
 }
 
-const mdBreakpoint = theme.breakpoints.down("md");
+const mdBreakpoint = theme.breakpoints.down('md');
 const mdBreakpointStyles = theme.typography.h1[
   mdBreakpoint
 ] as typeof theme.typography.h1;
 
-const StyledRootElement = styled("div")`
+const StyledRootElement = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,18 +38,18 @@ const StyledRootElement = styled("div")`
  * Styled input element with text that has a gradient, or the
  * color red if an error is present.
  */
-const StyledInputElement = styled("input")<StyledInputElementProps>`
+const StyledInputElement = styled('input')<StyledInputElementProps>`
   position: relative;
   display: flex;
   flex-grow: 1;
   max-width: 100%;
   border-width: 0;
-  color: ${(props) => (props.hasError ? theme.colors.red : "transparent")};
-  background-color: ${(props) => (props.hasError ? "none" : theme.colors.red)};
-  background: ${(props) => (props.hasError ? "none" : theme.gradients.music)};
+  color: ${(props) => (props.hasError ? theme.colors.red : 'transparent')};
+  background-color: ${(props) => (props.hasError ? 'none' : theme.colors.red)};
+  background: ${(props) => (props.hasError ? 'none' : theme.gradients.music)};
   background-clip: text;
   text-fill-color: ${(props) =>
-    props.hasError ? "currentcolor" : "transparent"};
+    props.hasError ? 'currentcolor' : 'transparent'};
   caret-color: ${(props) =>
     props.hasError ? theme.colors.red : theme.colors.music};
   text-align: ${(props) => props.textAlign};
@@ -83,36 +83,36 @@ const GradientTextInput: ForwardRefRenderFunction<
   HTMLInputElement,
   GradientTextInputProps
 > = (
-  { errorMessage, helperText, textAlign = "left", ...rest },
+  { errorMessage, helperText, textAlign = 'left', ...rest },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   return (
     <Stack direction="column" spacing="0">
       <StyledRootElement>
         <StyledInputElement
-          hasError={ !!errorMessage }
-          textAlign={ textAlign }
+          hasError={!!errorMessage}
+          textAlign={textAlign}
           autoCorrect="off"
           spellCheck="false"
           autoComplete="off"
-          { ...rest }
-          ref={ ref }
+          {...rest}
+          ref={ref}
         />
       </StyledRootElement>
 
-      { errorMessage ? (
+      {errorMessage ? (
         <Typography
           variant="h5"
-          textAlign={ textAlign }
-          sx={ { color: theme.colors.red } }
+          textAlign={textAlign}
+          sx={{ color: theme.colors.red }}
         >
-          { errorMessage }
+          {errorMessage}
         </Typography>
       ) : helperText ? (
-        <Typography variant="h5" textAlign={ textAlign } color="grey100">
-          { helperText }
+        <Typography variant="h5" textAlign={textAlign} color="grey100">
+          {helperText}
         </Typography>
-      ) : undefined }
+      ) : undefined}
     </Stack>
   );
 };

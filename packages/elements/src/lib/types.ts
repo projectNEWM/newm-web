@@ -1,1 +1,1 @@
-export type WidthType = "default" | "full";
+export type WidthType = 'default' | 'full';

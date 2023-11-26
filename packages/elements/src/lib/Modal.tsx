@@ -3,11 +3,11 @@ import {
   Modal as MuiModal,
   ModalProps as MuiModalProps,
   useTheme,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { FunctionComponent, useEffect } from "react";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { FunctionComponent, useEffect } from 'react';
 
-interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
+interface ModalProps extends Omit<MuiModalProps, 'open' | 'onClose'> {
   readonly isOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly onClose: (event: React.SyntheticEvent<any> | Event) => void;
@@ -27,34 +27,34 @@ const Modal: FunctionComponent<ModalProps> = ({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose(event);
+      if (event.key === 'Escape') onClose(event);
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
   return (
     <MuiModal
-      open={ isOpen }
-      sx={ { m: 2, mt: 1, mb: 10 } }
-      disableAutoFocus={ true }
+      open={isOpen}
+      sx={{ m: 2, mt: 1, mb: 10 }}
+      disableAutoFocus={true}
     >
-      <Box display="flex" flex={ 1 } flexDirection="column" height="100%">
-        { isCloseButtonVisible && (
-          <Box display="flex" justifyContent="flex-end" mb={ 1 }>
+      <Box display="flex" flex={1} flexDirection="column" height="100%">
+        {isCloseButtonVisible && (
+          <Box display="flex" justifyContent="flex-end" mb={1}>
             <CloseIcon
-              sx={ {
+              sx={{
                 color: theme.colors.white,
-                cursor: "pointer",
+                cursor: 'pointer',
                 fontSize: 42,
-              } }
-              onClick={ onClose }
+              }}
+              onClick={onClose}
             />
           </Box>
-        ) }
-        { children }
+        )}
+        {children}
       </Box>
     </MuiModal>
   );
