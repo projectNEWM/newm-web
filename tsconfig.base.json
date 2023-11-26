@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@newm.io/elements": ["packages/elements/src/index.ts"],
-      "@newm.io/studio/*": ["apps/artist-portal/src/*"],
+      "@newm.io/studio/*": ["apps/studio/src/*"],
       "@newm.io/theme": ["packages/theme/src/index.ts"],
       "@newm.io/utils": ["packages/utils/src/index.ts"]
     }

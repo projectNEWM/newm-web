@@ -1,0 +1,32 @@
+/* Firefox support */
+.modify-scrollbar :root {
+  scrollbar-width: 12px;
+  scrollbar-color: #2c2c2e transparent;
+}
+
+/* For Webkit browsers like Chrome and Safari */
+.modify-scrollbar *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.modify-scrollbar *::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+.modify-scrollbar *::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #2c2c2e;
+}
+.modify-scrollbar *::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.App {
+  text-align: center;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}

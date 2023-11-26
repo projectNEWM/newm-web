@@ -1,7 +1,0 @@
-{
-  "name": "artist-portal",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/artist-portal/src",
-  "projectType": "application",
-  "tags": []
-}

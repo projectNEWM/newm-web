@@ -1,0 +1,73 @@
+import { FunctionComponent, useEffect, useState } from 'react';
+import { Stack } from '@mui/material';
+import {
+  CollaborationStatus,
+  useFetchInvitesThunk,
+  useGetCollaborationsQuery,
+  useGetCollaboratorCountQuery,
+} from '@newm.io/studio/modules/song';
+import { selectUi, setIsInvitesModalOpen } from '@newm.io/studio/modules/ui';
+import { Button, Typography } from '@newm.io/studio/elements';
+import { SearchBox } from '@newm.io/studio/components';
+import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
+import OwnersTable from './OwnersTable';
+
+const OwnersList: FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+  const [query, setQuery] = useState('');
+  const { isInvitesModalOpen } = useAppSelector(selectUi);
+  const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
+  const { data: collaborations = [] } = useGetCollaborationsQuery({
+    inbound: true,
+    statuses: [CollaborationStatus.Waiting],
+  });
+
+  const { data: { count: totalCollaborators = 0 } = {} } =
+    useGetCollaboratorCountQuery({
+      phrase: query,
+      excludeMe: true,
+    });
+
+  const handleSearch = (searched: string) => {
+    setQuery(searched);
+  };
+
+  useEffect(() => {
+    fetchInvites();
+  }, [fetchInvites, collaborations]);
+
+  return (
+    <>
+      <Stack
+        sx={{
+          justifyContent: 'space-between',
+          flexDirection: ['column', 'row'],
+          rowGap: 2,
+          pb: 4,
+        }}
+      >
+        <Typography variant="h3">COLLABORATORS</Typography>
+        {invites?.length ? (
+          <Button
+            onClick={() => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen))}
+            width="compact"
+          >
+            Invitation pending
+          </Button>
+        ) : null}
+      </Stack>
+
+      {totalCollaborators || query ? (
+        <SearchBox
+          placeholder="Search by name or email"
+          query={query}
+          onSearch={handleSearch}
+        />
+      ) : null}
+
+      <OwnersTable totalCollaborators={totalCollaborators} query={query} />
+    </>
+  );
+};
+
+export default OwnersList;
