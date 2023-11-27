@@ -1,8 +1,8 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useInView } from 'react-intersection-observer';
-import { IconButton, Stack } from '@mui/material';
-import { PlayArrow, Stop } from '@mui/icons-material';
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import { IconButton, Stack } from "@mui/material";
+import { PlayArrow, Stop } from "@mui/icons-material";
 import {
   MintingStatus,
   Song,
@@ -11,20 +11,20 @@ import {
   useGetSongCountQuery,
   useGetSongsQuery,
   useHlsJs,
-} from '@newm.io/studio/modules/song';
-import { Typography } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+} from "@newm.io/studio/modules/song";
+import { Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 import {
   PlayerState,
   getResizedAlbumCoverImageUrl,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import placeholderBackground from '@newm.io/studio/assets/images/bg-img.png';
+} from "@newm.io/studio/common";
+import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
 
 const Songs: FunctionComponent = () => {
   const limit = 25;
   const mintingStatuses = [MintingStatus.Minted];
-  const { userId = '' } = useParams();
+  const { userId = "" } = useParams();
   const [offset, setOffset] = useState(0);
   const [songs, setSongs] = useState<Song[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -152,7 +152,7 @@ const Songs: FunctionComponent = () => {
 
   if (!songs.length && !songData.length && !isLoading) {
     return (
-      <Typography sx={{ marginTop: 8, textAlign: 'center' }}>
+      <Typography sx={{ marginTop: 8, textAlign: "center" }}>
         This artist does not have any minted songs yet.
       </Typography>
     );
@@ -168,18 +168,18 @@ const Songs: FunctionComponent = () => {
       rowGap={3}
     >
       {songs.map((song) => {
-        const genresString = song.genres.join(', ');
+        const genresString = song.genres.join(", ");
 
         return (
           <Stack
             key={song.id}
-            sx={{ maxWidth: ['150px', '150px', '260px'], rowGap: 0.5 }}
+            sx={{ maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 }}
           >
             <Stack display="grid" justifyItems="center" alignItems="center">
               <img
                 alt="Song cover art"
-                height={isWidthAboveMd ? '260px' : '150px'}
-                width={isWidthAboveMd ? '260px' : '150px'}
+                height={isWidthAboveMd ? "260px" : "150px"}
+                width={isWidthAboveMd ? "260px" : "150px"}
                 src={
                   song.coverArtUrl
                     ? getResizedAlbumCoverImageUrl(song.coverArtUrl, {
@@ -189,9 +189,9 @@ const Songs: FunctionComponent = () => {
                     : placeholderBackground
                 }
                 style={{
-                  borderRadius: '4px',
-                  objectFit: 'cover',
-                  gridArea: '1 / 1 / 2 / 2',
+                  borderRadius: "4px",
+                  objectFit: "cover",
+                  gridArea: "1 / 1 / 2 / 2",
                 }}
               />
               {song?.streamUrl && (
@@ -199,15 +199,15 @@ const Songs: FunctionComponent = () => {
                   onClick={() => handleSongPlayPause(song)}
                   sx={{
                     color: theme.colors.white,
-                    gridArea: '1 / 1 / 2 / 2',
-                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                    gridArea: "1 / 1 / 2 / 2",
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
                   }}
                 >
                   {song.id === playerState.currentPlayingSongId ? (
-                    <Stop sx={{ fontSize: isWidthAboveMd ? '60px' : '40px' }} />
+                    <Stop sx={{ fontSize: isWidthAboveMd ? "60px" : "40px" }} />
                   ) : (
                     <PlayArrow
-                      sx={{ fontSize: isWidthAboveMd ? '60px' : '40px' }}
+                      sx={{ fontSize: isWidthAboveMd ? "60px" : "40px" }}
                     />
                   )}
                 </IconButton>

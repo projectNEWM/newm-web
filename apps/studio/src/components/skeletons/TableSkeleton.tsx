@@ -1,6 +1,6 @@
-import theme from '@newm.io/theme';
-import { Box, Skeleton, Stack } from '@mui/material';
-import { FunctionComponent } from 'react';
+import theme from "@newm.io/theme";
+import { Box, Skeleton, Stack } from "@mui/material";
+import { FunctionComponent } from "react";
 
 interface SkeletonTableProps {
   cols?: number;

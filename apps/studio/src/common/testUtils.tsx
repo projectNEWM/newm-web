@@ -1,14 +1,14 @@
-import { render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material/styles';
-import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { ReactElement, ReactNode } from 'react';
-import { Form, Formik, FormikConfig } from 'formik';
-import { reducer } from '@newm.io/studio/store';
-import theme from '@newm.io/theme';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { RenderProps, StringMap, WrapperProps } from './types';
+import { render } from "@testing-library/react";
+import { ThemeProvider } from "@mui/material/styles";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { ReactElement, ReactNode } from "react";
+import { Form, Formik, FormikConfig } from "formik";
+import { reducer } from "@newm.io/studio/store";
+import theme from "@newm.io/theme";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { RenderProps, StringMap, WrapperProps } from "./types";
 
 /**
  * Wraps the element being tested with Theme, Provider, and

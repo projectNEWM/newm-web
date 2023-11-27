@@ -1,6 +1,6 @@
-import api, { CloudinaryUploadOptions, Tags } from '@newm.io/studio/api';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
-import { CustomError, EmptyResponse } from '@newm.io/studio/common';
+import api, { CloudinaryUploadOptions, Tags } from "@newm.io/studio/api";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import { CustomError, EmptyResponse } from "@newm.io/studio/common";
 import {
   CborHexResponse,
   CloudinarySignatureResponse,
@@ -35,37 +35,37 @@ import {
   UploadSongAudioRequest,
   UploadSongAudioResponse,
   UploadSongResponse,
-} from './types';
+} from "./types";
 
 export const emptySong: Song = {
   archived: true,
-  id: '',
-  ownerId: '',
-  createdAt: '',
-  title: '',
+  id: "",
+  ownerId: "",
+  createdAt: "",
+  title: "",
   genres: [],
   moods: [],
-  coverArtUrl: '',
-  description: '',
+  coverArtUrl: "",
+  description: "",
   duration: undefined,
-  streamUrl: '',
-  nftPolicyId: '',
-  nftName: '',
+  streamUrl: "",
+  nftPolicyId: "",
+  nftName: "",
   mintingStatus: MintingStatus.Pending,
   marketplaceStatus: MarketplaceStatus.NotSelling,
-  lyricsUrl: '',
-  album: '',
-  language: '',
-  compositionCopyrightYear: '',
-  compositionCopyrightOwner: '',
-  phonographicCopyrightYear: '',
-  phonographicCopyrightOwner: '',
-  parentalAdvisory: '',
-  isrc: '',
-  iswc: '',
+  lyricsUrl: "",
+  album: "",
+  language: "",
+  compositionCopyrightYear: "",
+  compositionCopyrightOwner: "",
+  phonographicCopyrightYear: "",
+  phonographicCopyrightOwner: "",
+  parentalAdvisory: "",
+  isrc: "",
+  iswc: "",
   ipis: [],
-  releaseDate: '',
-  publicationDate: '',
+  releaseDate: "",
+  publicationDate: "",
 };
 
 export const extendedApi = api.injectEndpoints({
@@ -73,7 +73,7 @@ export const extendedApi = api.injectEndpoints({
     getSong: build.query<Song, string>({
       query: (id) => ({
         url: `v1/songs/${id}`,
-        method: 'GET',
+        method: "GET",
       }),
       providesTags: [Tags.Song],
 
@@ -83,8 +83,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching song info',
-              severity: 'error',
+              message: "An error occurred while fetching song info",
+              severity: "error",
             })
           );
         }
@@ -93,8 +93,8 @@ export const extendedApi = api.injectEndpoints({
     getSongStream: build.query<GetSongStreamResponse, Song>({
       query: (song) => ({
         url: `v1/songs/${song.id}/stream`,
-        method: 'GET',
-        credentials: 'include',
+        method: "GET",
+        credentials: "include",
       }),
       providesTags: [Tags.Song],
 
@@ -116,8 +116,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching stream info',
-              severity: 'error',
+              message: "An error occurred while fetching stream info",
+              severity: "error",
             })
           );
         }
@@ -129,15 +129,15 @@ export const extendedApi = api.injectEndpoints({
           params;
 
         return {
-          url: 'v1/songs',
-          method: 'GET',
+          url: "v1/songs",
+          method: "GET",
           params: {
             ...restOfParams,
-            ...(genres ? { genres: genres.join(',') } : {}),
-            ...(ids ? { ids: ids.join(',') } : {}),
-            ...(ownerIds ? { ownerIds: ownerIds.join(',') } : {}),
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
             ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(',') }
+              ? { mintingStatuses: mintingStatuses.join(",") }
               : {}),
           },
         };
@@ -150,8 +150,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching songs',
-              severity: 'error',
+              message: "An error occurred while fetching songs",
+              severity: "error",
             })
           );
         }
@@ -169,16 +169,16 @@ export const extendedApi = api.injectEndpoints({
         } = params;
 
         return {
-          url: 'v1/songs/count',
-          method: 'GET',
+          url: "v1/songs/count",
+          method: "GET",
           params: {
             ...restOfParams,
-            ...(genres ? { genres: genres.join(',') } : {}),
-            ...(ids ? { ids: ids.join(',') } : {}),
-            ...(ownerIds ? { ownerIds: ownerIds.join(',') } : {}),
-            ...(moods ? { moods: moods.join(',') } : {}),
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
+            ...(moods ? { moods: moods.join(",") } : {}),
             ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(',') }
+              ? { mintingStatuses: mintingStatuses.join(",") }
               : {}),
           },
         };
@@ -191,8 +191,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching song count',
-              severity: 'error',
+              message: "An error occurred while fetching song count",
+              severity: "error",
             })
           );
         }
@@ -200,8 +200,8 @@ export const extendedApi = api.injectEndpoints({
     }),
     uploadSong: build.mutation<UploadSongResponse, PostSongRequest>({
       query: (body) => ({
-        url: 'v1/songs',
-        method: 'POST',
+        url: "v1/songs",
+        method: "POST",
         body,
       }),
       invalidatesTags: [Tags.Song],
@@ -212,8 +212,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while uploading your song',
-              severity: 'error',
+              message: "An error occurred while uploading your song",
+              severity: "error",
             })
           );
         }
@@ -225,7 +225,7 @@ export const extendedApi = api.injectEndpoints({
     >({
       query: ({ onUploadProgress, songId, ...body }) => ({
         url: `v1/songs/${songId}/audio`,
-        method: 'POST',
+        method: "POST",
         body: body.audio,
         onUploadProgress,
       }),
@@ -236,7 +236,7 @@ export const extendedApi = api.injectEndpoints({
           await queryFulfilled;
         } catch (error) {
           let message =
-            'There was a problem with your audio file, contact support';
+            "There was a problem with your audio file, contact support";
 
           const customError = error as CustomError;
 
@@ -246,9 +246,9 @@ export const extendedApi = api.injectEndpoints({
 
           dispatch(
             setToastMessage({
-              heading: 'Bad audio file',
+              heading: "Bad audio file",
               message,
-              severity: 'error',
+              severity: "error",
             })
           );
         }
@@ -257,7 +257,7 @@ export const extendedApi = api.injectEndpoints({
     patchSong: build.mutation<void, PatchSongRequest>({
       query: ({ id, ...body }) => ({
         url: `v1/songs/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body,
       }),
       invalidatesTags: [Tags.Song],
@@ -268,8 +268,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while updating your song',
-              severity: 'error',
+              message: "An error occurred while updating your song",
+              severity: "error",
             })
           );
         }
@@ -278,7 +278,7 @@ export const extendedApi = api.injectEndpoints({
     deleteSong: build.mutation<void, DeleteSongRequest>({
       query: ({ songId, archived = true }) => ({
         url: `v1/songs/${songId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: { archived },
       }),
       invalidatesTags: [Tags.Song],
@@ -290,8 +290,8 @@ export const extendedApi = api.injectEndpoints({
           if (showToast) {
             dispatch(
               setToastMessage({
-                message: 'Successfully deleted song',
-                severity: 'success',
+                message: "Successfully deleted song",
+                severity: "success",
               })
             );
           }
@@ -299,8 +299,8 @@ export const extendedApi = api.injectEndpoints({
           if (showToast) {
             dispatch(
               setToastMessage({
-                message: 'An error occurred while deleting your song',
-                severity: 'error',
+                message: "An error occurred while deleting your song",
+                severity: "error",
               })
             );
           }
@@ -313,7 +313,7 @@ export const extendedApi = api.injectEndpoints({
     >({
       query: ({ songId, ...body }) => ({
         url: `v1/songs/${songId}/agreement`,
-        method: 'PUT',
+        method: "PUT",
         body,
       }),
       invalidatesTags: [Tags.Song, Tags.Collaboration],
@@ -324,8 +324,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'There was an error accepting your agreement',
-              severity: 'error',
+              message: "There was an error accepting your agreement",
+              severity: "error",
             })
           );
         }
@@ -336,8 +336,8 @@ export const extendedApi = api.injectEndpoints({
       CloudinaryUploadOptions
     >({
       query: (body) => ({
-        url: 'v1/cloudinary/sign',
-        method: 'POST',
+        url: "v1/cloudinary/sign",
+        method: "POST",
         body,
       }),
 
@@ -347,8 +347,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error while uploading your image',
-              severity: 'error',
+              message: "An error while uploading your image",
+              severity: "error",
             })
           );
         }
@@ -362,12 +362,12 @@ export const extendedApi = api.injectEndpoints({
         const { ids, statuses, ...restOfParams } = params;
 
         return {
-          url: 'v1/collaborations',
-          method: 'GET',
+          url: "v1/collaborations",
+          method: "GET",
           params: {
             ...restOfParams,
-            ...(ids ? { ids: ids.join(',') } : {}),
-            ...(statuses ? { statuses: statuses.join(',') } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(statuses ? { statuses: statuses.join(",") } : {}),
           },
         };
       },
@@ -379,8 +379,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching collaborations',
-              severity: 'error',
+              message: "An error occurred while fetching collaborations",
+              severity: "error",
             })
           );
         }
@@ -391,8 +391,8 @@ export const extendedApi = api.injectEndpoints({
       CreateCollaborationRequest
     >({
       query: (body) => ({
-        url: 'v1/collaborations',
-        method: 'POST',
+        url: "v1/collaborations",
+        method: "POST",
         body,
       }),
       invalidatesTags: [Tags.Collaboration],
@@ -403,8 +403,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while adding a collaborator',
-              severity: 'error',
+              message: "An error occurred while adding a collaborator",
+              severity: "error",
             })
           );
         }
@@ -413,7 +413,7 @@ export const extendedApi = api.injectEndpoints({
     updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
       query: ({ collaborationId, ...body }) => ({
         url: `v1/collaborations/${collaborationId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body,
       }),
       invalidatesTags: [Tags.Collaboration],
@@ -424,8 +424,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while updating a collaborator',
-              severity: 'error',
+              message: "An error occurred while updating a collaborator",
+              severity: "error",
             })
           );
         }
@@ -434,7 +434,7 @@ export const extendedApi = api.injectEndpoints({
     deleteCollaboration: build.mutation<void, string>({
       query: (collaborationId) => ({
         url: `v1/collaborations/${collaborationId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
       invalidatesTags: [Tags.Collaboration],
 
@@ -444,8 +444,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (err) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while removing a collaborator',
-              severity: 'error',
+              message: "An error occurred while removing a collaborator",
+              severity: "error",
             })
           );
         }
@@ -459,12 +459,12 @@ export const extendedApi = api.injectEndpoints({
         const { emails, songIds, ...restOfParams } = params;
 
         return {
-          url: 'v1/collaborations/collaborators',
-          method: 'GET',
+          url: "v1/collaborations/collaborators",
+          method: "GET",
           params: {
             ...restOfParams,
-            ...(emails ? { emails: emails.join(',') } : {}),
-            ...(songIds ? { songIds: songIds.join(',') } : {}),
+            ...(emails ? { emails: emails.join(",") } : {}),
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
           },
         };
       },
@@ -476,8 +476,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching collaborators',
-              severity: 'error',
+              message: "An error occurred while fetching collaborators",
+              severity: "error",
             })
           );
         }
@@ -491,11 +491,11 @@ export const extendedApi = api.injectEndpoints({
         const { songIds, ...restOfParams } = params;
 
         return {
-          url: 'v1/collaborations/collaborators/count',
-          method: 'GET',
+          url: "v1/collaborations/collaborators/count",
+          method: "GET",
           params: {
             ...restOfParams,
-            ...(songIds ? { songIds: songIds.join(',') } : {}),
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
           },
         };
       },
@@ -507,8 +507,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching collaborator count',
-              severity: 'error',
+              message: "An error occurred while fetching collaborator count",
+              severity: "error",
             })
           );
         }
@@ -517,7 +517,7 @@ export const extendedApi = api.injectEndpoints({
     replyToCollaboration: build.mutation<void, ReplyCollaborationRequest>({
       query: ({ collaborationId, ...body }) => ({
         url: `v1/collaborations/${collaborationId}/reply`,
-        method: 'PUT',
+        method: "PUT",
         body,
       }),
       invalidatesTags: [Tags.Collaboration],
@@ -528,15 +528,15 @@ export const extendedApi = api.injectEndpoints({
 
           dispatch(
             setToastMessage({
-              message: `${accepted ? 'Accepted' : 'Declined'} collaboration`,
-              severity: 'success',
+              message: `${accepted ? "Accepted" : "Declined"} collaboration`,
+              severity: "success",
             })
           );
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while replying to a collaboration',
-              severity: 'error',
+              message: "An error occurred while replying to a collaboration",
+              severity: "error",
             })
           );
         }
@@ -545,7 +545,7 @@ export const extendedApi = api.injectEndpoints({
     getMintSongPayment: build.query<CborHexResponse, string>({
       query: (songId) => ({
         url: `v1/songs/${songId}/mint/payment`,
-        method: 'GET',
+        method: "GET",
         songId,
       }),
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -554,8 +554,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching your payment',
-              severity: 'error',
+              message: "An error occurred while fetching your payment",
+              severity: "error",
             })
           );
         }
@@ -567,7 +567,7 @@ export const extendedApi = api.injectEndpoints({
     >({
       query: ({ songId, ...body }) => ({
         url: `v1/songs/${songId}/mint/payment`,
-        method: 'POST',
+        method: "POST",
         body,
       }),
 
@@ -577,8 +577,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while submitting your payment',
-              severity: 'error',
+              message: "An error occurred while submitting your payment",
+              severity: "error",
             })
           );
         }
@@ -586,8 +586,8 @@ export const extendedApi = api.injectEndpoints({
     }),
     submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       query: (body) => ({
-        url: '/v1/cardano/submitTransaction',
-        method: 'POST',
+        url: "/v1/cardano/submitTransaction",
+        method: "POST",
         body,
       }),
       invalidatesTags: [Tags.Song],
@@ -598,8 +598,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching your payment',
-              severity: 'error',
+              message: "An error occurred while fetching your payment",
+              severity: "error",
             })
           );
         }
@@ -607,8 +607,8 @@ export const extendedApi = api.injectEndpoints({
     }),
     getEarliestReleaseDate: build.query<GetEarliestReleaseDateResponse, void>({
       query: () => ({
-        url: '/v1/distribution/earliest-release-date',
-        method: 'GET',
+        url: "/v1/distribution/earliest-release-date",
+        method: "GET",
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -617,8 +617,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching earliest release date',
-              severity: 'error',
+              message: "An error occurred while fetching earliest release date",
+              severity: "error",
             })
           );
         }
@@ -632,8 +632,8 @@ export const extendedApi = api.injectEndpoints({
         const { utxoCborHexList, ...restOfParams } = params;
 
         return {
-          url: 'v1/cardano/songs',
-          method: 'POST',
+          url: "v1/cardano/songs",
+          method: "POST",
           params: restOfParams,
           body: utxoCborHexList,
         };
@@ -645,8 +645,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching songs',
-              severity: 'error',
+              message: "An error occurred while fetching songs",
+              severity: "error",
             })
           );
         }

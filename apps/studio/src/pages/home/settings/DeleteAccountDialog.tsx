@@ -1,18 +1,18 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { TextInputField } from '@newm.io/studio/components';
-import { Button, Dialog } from '@newm.io/studio/elements';
-import { Form, Formik, FormikValues } from 'formik';
-import { FunctionComponent, useState } from 'react';
-import * as Yup from 'yup';
-import theme from '@newm.io/theme';
+import { Box, Stack, Typography } from "@mui/material";
+import { TextInputField } from "@newm.io/studio/components";
+import { Button, Dialog } from "@newm.io/studio/elements";
+import { Form, Formik, FormikValues } from "formik";
+import { FunctionComponent, useState } from "react";
+import * as Yup from "yup";
+import theme from "@newm.io/theme";
 import {
   emptyProfile,
   useDeleteAccountThunk,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/modules/session";
 
 const DeleteAccountDialog: FunctionComponent = () => {
-  const deleteAccountPhrase = 'YES';
+  const deleteAccountPhrase = "YES";
   const regExpPhrase = new RegExp(`^${deleteAccountPhrase}$`);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,7 @@ const DeleteAccountDialog: FunctionComponent = () => {
   const [deleteAccount, { isLoading }] = useDeleteAccountThunk();
 
   const initialValues = {
-    confirmationStatement: '',
+    confirmationStatement: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -61,9 +61,9 @@ const DeleteAccountDialog: FunctionComponent = () => {
             <Form>
               <Box
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
                   p: 3,
                   rowGap: 2,
                 }}
@@ -81,8 +81,8 @@ const DeleteAccountDialog: FunctionComponent = () => {
 
                 <Stack
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'start',
+                    display: "flex",
+                    justifyContent: "start",
                   }}
                 >
                   <TextInputField name="confirmationStatement" />
@@ -90,10 +90,10 @@ const DeleteAccountDialog: FunctionComponent = () => {
 
                 <Stack
                   sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'end',
-                    alignItems: 'end',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "end",
+                    alignItems: "end",
                     columnGap: 1.5,
                     pt: 1.5,
                   }}

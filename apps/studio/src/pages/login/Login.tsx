@@ -1,17 +1,17 @@
-import { Box, Stack, useTheme } from '@mui/material';
+import { Box, Stack, useTheme } from "@mui/material";
 import {
   Button,
   HorizontalLine,
   Link,
   Typography,
-} from '@newm.io/studio/elements';
-import { FunctionComponent, MouseEventHandler, useState } from 'react';
+} from "@newm.io/studio/elements";
+import { FunctionComponent, MouseEventHandler, useState } from "react";
 import {
   commonYupValidation,
   useAuthenticatedRedirect,
-} from '@newm.io/studio/common';
-import { history } from '@newm.io/studio/common/history';
-import { Form, Formik, FormikValues } from 'formik';
+} from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
+import { Form, Formik, FormikValues } from "formik";
 import {
   FacebookLogin,
   GoogleLogin,
@@ -19,9 +19,9 @@ import {
   PasswordInputField,
   ResponsiveNEWMLogo,
   TextInputField,
-} from '@newm.io/studio/components';
-import * as Yup from 'yup';
-import { useLoginThunk } from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/components";
+import * as Yup from "yup";
+import { useLoginThunk } from "@newm.io/studio/modules/session";
 
 const Login: FunctionComponent = () => {
   const theme = useTheme();
@@ -58,22 +58,22 @@ const Login: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
+        alignItems: "center",
         backgroundColor: theme.colors.black,
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
       }}
     >
       <Stack
-        sx={{ alignItems: 'center', gap: 1, mt: [2, 4, 5], width: '100%' }}
+        sx={{ alignItems: "center", gap: 1, mt: [2, 4, 5], width: "100%" }}
       >
         <Button
           color="music"
           onClick={() => {
-            history.push('/sign-up');
+            history.push("/sign-up");
           }}
-          sx={{ alignSelf: 'flex-end', mr: [1, 1, 2] }}
+          sx={{ alignSelf: "flex-end", mr: [1, 1, 2] }}
           variant="secondary"
           width="compact"
         >
@@ -86,12 +86,12 @@ const Login: FunctionComponent = () => {
         Welcome back
       </Typography>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={handleLogin}
         validationSchema={validationSchema}
       >
         {({ values: { password } }) => (
-          <Form style={{ textAlign: 'center', width: '100%' }}>
+          <Form style={{ textAlign: "center", width: "100%" }}>
             <Stack
               display="inline-flex"
               maxWidth={theme.inputField.maxWidth}
@@ -121,7 +121,7 @@ const Login: FunctionComponent = () => {
               </Button>
               <Link
                 color="grey100"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: "none" }}
                 to="/forgot-password"
                 variant="subtitle1"
                 mt={0.5}

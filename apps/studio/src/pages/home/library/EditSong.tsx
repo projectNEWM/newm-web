@@ -1,17 +1,17 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { FormikHelpers, FormikValues } from 'formik';
-import * as Yup from 'yup';
-import { Box, Stack, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate, useParams } from 'react-router';
-import { Button } from '@newm.io/studio/elements';
-import { ProfileImage, WizardForm } from '@newm.io/studio/components';
+import { FunctionComponent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { FormikHelpers, FormikValues } from "formik";
+import * as Yup from "yup";
+import { Box, Stack, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate, useParams } from "react-router";
+import { Button } from "@newm.io/studio/elements";
+import { ProfileImage, WizardForm } from "@newm.io/studio/components";
 import {
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/modules/session";
 import {
   CollaborationStatus,
   MintingStatus,
@@ -24,40 +24,40 @@ import {
   useGetSongQuery,
   useHasSongAccess,
   usePatchSongThunk,
-} from '@newm.io/studio/modules/song';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
+} from "@newm.io/studio/modules/song";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
-} from '@newm.io/studio/modules/content';
+} from "@newm.io/studio/modules/content";
 import {
   commonYupValidation,
   useExtractProperty,
-} from '@newm.io/studio/common';
-import AdvancedSongDetails from '@newm.io/studio/pages/home/uploadSong/AdvancedSongDetails';
-import BasicSongDetails from '@newm.io/studio/pages/home/uploadSong/BasicSongDetails';
-import ConfirmAgreement from '@newm.io/studio/pages/home/uploadSong/ConfirmAgreement';
-import DeleteSongModal from './DeleteSongModal';
-import { SongRouteParams } from './types';
+} from "@newm.io/studio/common";
+import AdvancedSongDetails from "@newm.io/studio/pages/home/uploadSong/AdvancedSongDetails";
+import BasicSongDetails from "@newm.io/studio/pages/home/uploadSong/BasicSongDetails";
+import ConfirmAgreement from "@newm.io/studio/pages/home/uploadSong/ConfirmAgreement";
+import DeleteSongModal from "./DeleteSongModal";
+import { SongRouteParams } from "./types";
 
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { songId } = useParams<'songId'>() as SongRouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const { data: genres = [] } = useGetGenresQuery();
   const {
     data: {
-      companyName = '',
-      firstName = '',
-      lastName = '',
-      nickname: stageName = '',
+      companyName = "",
+      firstName = "",
+      lastName = "",
+      nickname: stageName = "",
       email,
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = useExtractProperty(languages, 'language_code', false);
+  const languageCodes = useExtractProperty(languages, "language_code", false);
 
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     songIds: songId,
@@ -115,7 +115,7 @@ const EditSong: FunctionComponent = () => {
           : 0,
       role: collaboration.role,
       status: collaboration.status,
-      isCreator: 'isCreator' in collaboration && !!collaboration.isCreator,
+      isCreator: "isCreator" in collaboration && !!collaboration.isCreator,
     }));
 
   const creditors = collaborations
@@ -149,7 +149,7 @@ const EditSong: FunctionComponent = () => {
     phonographicCopyrightOwner,
     isrc,
     releaseDate,
-    isExplicit: parentalAdvisory === 'Explicit',
+    isExplicit: parentalAdvisory === "Explicit",
     isMinting: false,
     language,
     owners:
@@ -185,17 +185,17 @@ const EditSong: FunctionComponent = () => {
     barcodeType,
     publicationDate,
     iswc,
-    userIpi: ipis?.join(', '),
+    userIpi: ipis?.join(", "),
   };
 
   // TODO: show "Not found" content if not available for user
   if (error || !hasAccess) {
-    navigate('/home/library');
+    navigate("/home/library");
 
     dispatch(
       setToastMessage({
-        message: 'Error fetching song data',
-        severity: 'error',
+        message: "Error fetching song data",
+        severity: "error",
       })
     );
   }
@@ -211,7 +211,7 @@ const EditSong: FunctionComponent = () => {
   }
 
   const handleSubmit = async (
-    step: 'basic-details' | 'advanced-details' | 'confirm',
+    step: "basic-details" | "advanced-details" | "confirm",
     values: PatchSongRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
@@ -221,11 +221,11 @@ const EditSong: FunctionComponent = () => {
       shouldRedirect: false,
     };
 
-    if (step === 'basic-details') {
+    if (step === "basic-details") {
       patchValues.shouldRedirect = !values.isMinting;
-    } else if (step === 'advanced-details') {
+    } else if (step === "advanced-details") {
       patchValues.isMinting = true;
-    } else if (step === 'confirm') {
+    } else if (step === "confirm") {
       patchValues.isMinting = true;
       patchValues.shouldRedirect = true;
     }
@@ -234,8 +234,8 @@ const EditSong: FunctionComponent = () => {
 
     helpers.setSubmitting(false);
 
-    if (step === 'basic-details' && values.isMinting) {
-      navigate('advanced-details');
+    if (step === "basic-details" && values.isMinting) {
+      navigate("advanced-details");
     }
   };
 
@@ -281,7 +281,7 @@ const EditSong: FunctionComponent = () => {
           variant="outlined"
           width="icon"
         >
-          <ArrowBackIcon sx={{ color: 'white' }} />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </Button>
         <ProfileImage
           alt="Song cover art"
@@ -297,12 +297,12 @@ const EditSong: FunctionComponent = () => {
             variant="outlined"
             width="icon"
             disabled={!getIsSongDeletable(mintingStatus)}
-            sx={{ marginLeft: 'auto' }}
+            sx={{ marginLeft: "auto" }}
             onClick={() => {
               setIsDeleteModalActive(true);
             }}
           >
-            <DeleteIcon fontSize="small" sx={{ color: 'white' }} />
+            <DeleteIcon fontSize="small" sx={{ color: "white" }} />
           </Button>
 
           {isDeleteModalActive && (
@@ -321,7 +321,7 @@ const EditSong: FunctionComponent = () => {
         <WizardForm
           initialValues={initialValues}
           onSubmit={(values, helpers) =>
-            handleSubmit('confirm', values, helpers)
+            handleSubmit("confirm", values, helpers)
           }
           rootPath={`home/library/edit-song/${songId}`}
           isProgressStepperVisible={true}
@@ -330,11 +330,11 @@ const EditSong: FunctionComponent = () => {
           routes={[
             {
               element: <BasicSongDetails isInEditMode={true} />,
-              path: '',
-              progressStepTitle: 'Basic details',
+              path: "",
+              progressStepTitle: "Basic details",
               navigateOnSubmitStep: false,
               onSubmitStep: (values, helpers) =>
-                handleSubmit('basic-details', values, helpers),
+                handleSubmit("basic-details", values, helpers),
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 title: validations.title,
@@ -347,9 +347,9 @@ const EditSong: FunctionComponent = () => {
             {
               element: <AdvancedSongDetails />,
               onSubmitStep: (values, helpers) =>
-                handleSubmit('advanced-details', values, helpers),
-              path: 'advanced-details',
-              progressStepTitle: 'Advanced details',
+                handleSubmit("advanced-details", values, helpers),
+              path: "advanced-details",
+              progressStepTitle: "Advanced details",
               validationSchema: Yup.object({
                 isrc: validations.isrc,
                 barcodeType: validations.barcodeType,
@@ -366,8 +366,8 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: <ConfirmAgreement />,
-              path: 'confirm',
-              progressStepTitle: 'Distribute & Mint',
+              path: "confirm",
+              progressStepTitle: "Distribute & Mint",
               validationSchema: Yup.object().shape({
                 consentsToContract: validations.consentsToContract,
               }),

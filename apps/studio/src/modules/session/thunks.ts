@@ -1,21 +1,21 @@
-import { asThunkHook } from '@newm.io/studio/common/reduxUtils';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
+import { asThunkHook } from "@newm.io/studio/common/reduxUtils";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 import {
   setIsWalletEnvMismatchModalOpen,
   setToastMessage,
   setUpdateWalletAddressModal,
-} from '@newm.io/studio/modules/ui';
-import { history } from '@newm.io/studio/common/history';
-import { uploadToCloudinary } from '@newm.io/studio/api/cloudinary/utils';
-import api, { cloudinaryApi, lambdaApi } from '@newm.io/studio/api';
+} from "@newm.io/studio/modules/ui";
+import { history } from "@newm.io/studio/common/history";
+import { uploadToCloudinary } from "@newm.io/studio/api/cloudinary/utils";
+import api, { cloudinaryApi, lambdaApi } from "@newm.io/studio/api";
 import {
   EnabledWallet,
   disconnectWallet,
   getWalletAddress,
-} from '@newm.io/cardano-dapp-wallet-connector';
-import { SilentError } from '@newm.io/studio/common';
-import { extendedApi as sessionApi } from './api';
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "@newm.io/studio/common";
+import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
@@ -24,15 +24,15 @@ import {
   LoginRequest,
   ProfileFormValues,
   ResetPasswordRequest,
-} from './types';
-import { setIsLoggedIn } from './slice';
-import { getIsWalletEnvMismatch } from './utils';
+} from "./types";
+import { setIsLoggedIn } from "./slice";
+import { getIsWalletEnvMismatch } from "./utils";
 
 /**
  * Updates the user's profile and fetches the updated data.
  */
 export const updateProfile = createAsyncThunk(
-  'session/updateProfile',
+  "session/updateProfile",
   async (body: ProfileFormValues, { dispatch }) => {
     try {
       let bannerUrl;
@@ -42,7 +42,7 @@ export const updateProfile = createAsyncThunk(
       if (body.bannerUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: 'c_lfill,w_1600,h_200',
+          eager: "c_lfill,w_1600,h_200",
         };
 
         bannerUrl = await uploadToCloudinary(
@@ -55,7 +55,7 @@ export const updateProfile = createAsyncThunk(
       if (body.pictureUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: 'c_lfill,w_400,h_400',
+          eager: "c_lfill,w_400,h_400",
         };
 
         pictureUrl = await uploadToCloudinary(
@@ -68,7 +68,7 @@ export const updateProfile = createAsyncThunk(
       if (body.companyLogoUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: 'c_lfill,w_200,h_200',
+          eager: "c_lfill,w_200,h_200",
         };
 
         companyLogoUrl = await uploadToCloudinary(
@@ -87,12 +87,12 @@ export const updateProfile = createAsyncThunk(
         })
       );
 
-      if ('error' in updateProfileResponse) throw new SilentError();
+      if ("error" in updateProfileResponse) throw new SilentError();
 
       dispatch(
         setToastMessage({
-          message: 'Successfully updated profile',
-          severity: 'success',
+          message: "Successfully updated profile",
+          severity: "success",
         })
       );
 
@@ -108,17 +108,17 @@ export const updateProfile = createAsyncThunk(
  * and navigates to the home page if successful.
  */
 export const updateInitialProfile = createAsyncThunk(
-  'session/updateInitialProfile',
+  "session/updateInitialProfile",
   async (body: ProfileFormValues, { dispatch }) => {
     const updateProfileResponse = await dispatch(
       sessionApi.endpoints.updateProfile.initiate(body)
     );
 
-    if ('error' in updateProfileResponse) {
+    if ("error" in updateProfileResponse) {
       return;
     }
 
-    history.push('/home/profile');
+    history.push("/home/profile");
   }
 );
 
@@ -126,15 +126,15 @@ export const updateInitialProfile = createAsyncThunk(
  * Logs in and navigates to the library page.
  */
 export const login = createAsyncThunk(
-  'session/login',
+  "session/login",
   async (body: LoginRequest, { dispatch }) => {
     const loginResponse = await dispatch(
       sessionApi.endpoints.login.initiate(body)
     );
 
-    if ('error' in loginResponse) return;
+    if ("error" in loginResponse) return;
 
-    history.push('/home/upload-song');
+    history.push("/home/upload-song");
   }
 );
 
@@ -142,15 +142,15 @@ export const login = createAsyncThunk(
  * Logs in using Google and navigates to the library page.
  */
 export const googleLogin = createAsyncThunk(
-  'session/googleLogin',
+  "session/googleLogin",
   async (accessToken: string, { dispatch }) => {
     const loginResponse = dispatch(
       sessionApi.endpoints.googleLogin.initiate({ accessToken })
     );
 
-    if ('error' in loginResponse) return;
+    if ("error" in loginResponse) return;
 
-    history.push('/home/upload-song');
+    history.push("/home/upload-song");
   }
 );
 
@@ -158,15 +158,15 @@ export const googleLogin = createAsyncThunk(
  * Logs in using Facebook and navigates to the library page.
  */
 export const facebookLogin = createAsyncThunk(
-  'session/facebookLogin',
+  "session/facebookLogin",
   async (accessToken: string, { dispatch }) => {
     const loginResponse = dispatch(
       sessionApi.endpoints.facebookLogin.initiate({ accessToken })
     );
 
-    if ('error' in loginResponse) return;
+    if ("error" in loginResponse) return;
 
-    history.push('/home/upload-song');
+    history.push("/home/upload-song");
   }
 );
 
@@ -174,7 +174,7 @@ export const facebookLogin = createAsyncThunk(
  * Logs in using LinkedIn and navigates to the library page.
  */
 export const linkedInLogin = createAsyncThunk(
-  'session/linkedInLogin',
+  "session/linkedInLogin",
   async ({ code, redirectUri }: LinkedInLoginRequest, { dispatch }) => {
     const loginResponse = dispatch(
       sessionApi.endpoints.linkedInLogin.initiate({
@@ -183,9 +183,9 @@ export const linkedInLogin = createAsyncThunk(
       })
     );
 
-    if ('error' in loginResponse) return;
+    if ("error" in loginResponse) return;
 
-    history.push('/home/upload-song');
+    history.push("/home/upload-song");
   }
 );
 
@@ -194,13 +194,13 @@ export const linkedInLogin = createAsyncThunk(
  * so the user can enter their profile information.
  */
 export const createAccount = createAsyncThunk(
-  'session/createAccount',
+  "session/createAccount",
   async (body: CreateAccountRequest, { dispatch }) => {
     const createAccountResponse = await dispatch(
       sessionApi.endpoints.createAccount.initiate(body)
     );
 
-    if ('error' in createAccountResponse) {
+    if ("error" in createAccountResponse) {
       return;
     }
 
@@ -211,11 +211,11 @@ export const createAccount = createAsyncThunk(
       })
     );
 
-    if ('error' in loginResponse) {
+    if ("error" in loginResponse) {
       return;
     }
 
-    history.push('/create-profile');
+    history.push("/create-profile");
   }
 );
 
@@ -223,13 +223,13 @@ export const createAccount = createAsyncThunk(
  * Delete a user account. Navigate to the login page.
  */
 export const deleteAccount = createAsyncThunk(
-  'session/deleteAccount',
+  "session/deleteAccount",
   async (body: DeleteAccountRequest, { dispatch }) => {
     const deleteAccountResponse = await dispatch(
       sessionApi.endpoints.deleteAccount.initiate(body)
     );
 
-    if ('error' in deleteAccountResponse) {
+    if ("error" in deleteAccountResponse) {
       return;
     }
 
@@ -237,9 +237,9 @@ export const deleteAccount = createAsyncThunk(
 
     dispatch(
       setToastMessage({
-        heading: 'Account deleted!',
-        message: 'Your account has been deleted.',
-        severity: 'success',
+        heading: "Account deleted!",
+        message: "Your account has been deleted.",
+        severity: "success",
       })
     );
   }
@@ -249,21 +249,21 @@ export const deleteAccount = createAsyncThunk(
  * Request a iDenfy authToken and set it as a cookie.
  */
 export const getIdenfyAuthToken = createAsyncThunk(
-  'session/getIdenfyAuthToken',
+  "session/getIdenfyAuthToken",
   async (_, { dispatch }) => {
     const idenfyTokenResponse = await dispatch(
       sessionApi.endpoints.getIdenfyAuthToken.initiate()
     );
 
-    if ('error' in idenfyTokenResponse) {
+    if ("error" in idenfyTokenResponse) {
       return;
     }
 
-    const { data: { authToken = '', expiryTime = 1200 } = {} } =
+    const { data: { authToken = "", expiryTime = 1200 } = {} } =
       idenfyTokenResponse;
 
     if (authToken) {
-      Cookies.set('idenfyAuthToken', authToken, {
+      Cookies.set("idenfyAuthToken", authToken, {
         expires: expiryTime / 86400,
         secure: true,
       });
@@ -276,23 +276,23 @@ export const getIdenfyAuthToken = createAsyncThunk(
  * enter their new password.
  */
 export const resetPassword = createAsyncThunk(
-  'session/resetPassword',
+  "session/resetPassword",
   async (body: ResetPasswordRequest, { dispatch }) => {
     const resetPasswordResponse = await dispatch(
       sessionApi.endpoints.resetPassword.initiate(body)
     );
 
-    if ('error' in resetPasswordResponse) {
+    if ("error" in resetPasswordResponse) {
       return;
     }
 
-    history.push('/login');
+    history.push("/login");
 
     dispatch(
       setToastMessage({
-        heading: 'Password changed!',
-        message: 'Login with the newly defined password.',
-        severity: 'success',
+        heading: "Password changed!",
+        message: "Login with the newly defined password.",
+        severity: "success",
       })
     );
   }
@@ -302,55 +302,55 @@ export const resetPassword = createAsyncThunk(
  * Change user password.
  */
 export const changePassword = createAsyncThunk(
-  'session/changePassword',
+  "session/changePassword",
   async (body: ChangePasswordRequest, { dispatch }) => {
     const changePasswordResponse = await dispatch(
       sessionApi.endpoints.changePassword.initiate(body)
     );
 
-    if ('error' in changePasswordResponse) {
+    if ("error" in changePasswordResponse) {
       return;
     }
 
     dispatch(
       setToastMessage({
-        heading: 'Password changed!',
-        message: 'On next login use the newly defined password.',
-        severity: 'success',
+        heading: "Password changed!",
+        message: "On next login use the newly defined password.",
+        severity: "success",
       })
     );
   }
 );
 
 export const handleSocialLoginError = createAsyncThunk(
-  'session/handleSocialLoginError',
+  "session/handleSocialLoginError",
   // eslint-disable-next-line
   async (error: any, { dispatch }) => {
     const errorMessage =
       error?.status === 409
-        ? 'The email for this account is already in use'
-        : 'Email or password is incorrect';
+        ? "The email for this account is already in use"
+        : "Email or password is incorrect";
 
     dispatch(
       setToastMessage({
-        heading: 'Login',
+        heading: "Login",
         message: errorMessage,
-        severity: 'error',
+        severity: "error",
       })
     );
   }
 );
 
 export const logOut = createAsyncThunk(
-  'session/logOut',
+  "session/logOut",
   async (_, { dispatch }) => {
     // disconnect wallet
     disconnectWallet();
 
     // remove cookies
-    Cookies.remove('accessToken');
-    Cookies.remove('refreshToken');
-    Cookies.remove('idenfyAuthToken');
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("idenfyAuthToken");
 
     // reset RTKQuery cache
     dispatch(api.util.resetApiState());
@@ -369,7 +369,7 @@ export const logOut = createAsyncThunk(
  * the user about overwriting the existing address in their profile.
  */
 export const saveWalletAddress = createAsyncThunk(
-  'session/saveWalletAddress',
+  "session/saveWalletAddress",
   async (wallet: EnabledWallet, { dispatch }) => {
     let savedWalletAddress;
 
@@ -387,7 +387,7 @@ export const saveWalletAddress = createAsyncThunk(
       const getProfileResp = await dispatch(
         sessionApi.endpoints.getProfile.initiate()
       );
-      if ('error' in getProfileResp || !getProfileResp.data) {
+      if ("error" in getProfileResp || !getProfileResp.data) {
         throw new Error();
       }
       savedWalletAddress = getProfileResp.data.walletAddress;
@@ -400,7 +400,7 @@ export const saveWalletAddress = createAsyncThunk(
           })
         );
 
-        if ('error' in updateProfileResp) {
+        if ("error" in updateProfileResp) {
           throw new Error();
         }
 
@@ -408,12 +408,12 @@ export const saveWalletAddress = createAsyncThunk(
           setUpdateWalletAddressModal({
             isConfirmationRequired: false,
             message:
-              'An address from your currently connected wallet has been ' +
-              'saved to your profile. This address is where you will ' +
-              'receive any song tokens and royalties. If you would like ' +
-              'to use an address from a different wallet, please connect ' +
-              'that wallet and confirm the prompt to overwrite your ' +
-              'existing wallet address.',
+              "An address from your currently connected wallet has been " +
+              "saved to your profile. This address is where you will " +
+              "receive any song tokens and royalties. If you would like " +
+              "to use an address from a different wallet, please connect " +
+              "that wallet and confirm the prompt to overwrite your " +
+              "existing wallet address.",
           })
         );
 
@@ -426,9 +426,9 @@ export const saveWalletAddress = createAsyncThunk(
           setUpdateWalletAddressModal({
             isConfirmationRequired: true,
             message:
-              'You already have a wallet address saved to your profile. ' +
-              'Would you like to overwrite it with an address from your ' +
-              'currently connected wallet?',
+              "You already have a wallet address saved to your profile. " +
+              "Would you like to overwrite it with an address from your " +
+              "currently connected wallet?",
           })
         );
       }
@@ -436,8 +436,8 @@ export const saveWalletAddress = createAsyncThunk(
       dispatch(
         setUpdateWalletAddressModal({
           message:
-            'There was an error saving your wallet address to your ' +
-            'profile, please disconnect and reconnect your wallet.',
+            "There was an error saving your wallet address to your " +
+            "profile, please disconnect and reconnect your wallet.",
           isConfirmationRequired: false,
         })
       );

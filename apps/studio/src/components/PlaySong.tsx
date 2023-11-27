@@ -1,15 +1,15 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import StopIcon from '@mui/icons-material/Stop';
-import { Stack, Typography } from '@mui/material';
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
+import { Stack, Typography } from "@mui/material";
 import {
   Song,
   useFetchSongStreamThunk,
   useGetSongQuery,
   useHlsJs,
-} from '@newm.io/studio/modules/song';
-import { PlayerState } from '@newm.io/studio/common';
-import IconMessage from './IconMessage';
+} from "@newm.io/studio/modules/song";
+import { PlayerState } from "@newm.io/studio/common";
+import IconMessage from "./IconMessage";
 
 interface PlaySongProps {
   readonly id: string;
@@ -117,12 +117,12 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   if (isLoading) return null;
 
   return song?.streamUrl ? (
-    <Stack sx={{ cursor: 'pointer', width: '100%', height: '100%' }}>
+    <Stack sx={{ cursor: "pointer", width: "100%", height: "100%" }}>
       <IconMessage
         icon={
           playerState.currentPlayingSongId ? <StopIcon /> : <PlayArrowIcon />
         }
-        message={playerState.currentPlayingSongId ? 'Stop song' : 'Play song'}
+        message={playerState.currentPlayingSongId ? "Stop song" : "Play song"}
         onClick={() => handleSongPlayPause(song)}
       />
     </Stack>

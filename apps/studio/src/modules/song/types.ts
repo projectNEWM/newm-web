@@ -1,4 +1,4 @@
-import { OnUploadProgress } from '@newm.io/studio/api/types';
+import { OnUploadProgress } from "@newm.io/studio/api/types";
 
 export interface SongState {
   artistAgreement: string;
@@ -16,8 +16,8 @@ export interface GetSongStreamData {
 }
 
 export enum SortOrder {
-  Asc = 'asc',
-  Desc = 'desc',
+  Asc = "asc",
+  Desc = "desc",
 }
 
 export interface GetSongsRequest {
@@ -95,7 +95,7 @@ export interface PostSongRequest {
 }
 
 export interface UploadSongRequest
-  extends Omit<PostSongRequest, 'coverArtUrl'> {
+  extends Omit<PostSongRequest, "coverArtUrl"> {
   readonly coverArtUrl?: string | File;
   readonly audio?: any; // eslint-disable-line
   readonly isExplicit: boolean;
@@ -154,30 +154,30 @@ export interface CloudinarySignatureResponse {
 }
 
 export enum MintingStatus {
-  ArweaveUploadException = 'ArweaveUploadException',
-  AwaitingAudioEncoding = 'AwaitingAudioEncoding',
-  AwaitingCollaboratorApproval = 'AwaitingCollaboratorApproval',
-  Declined = 'Declined',
-  Distributed = 'Distributed',
-  DistributionException = 'DistributionException',
-  Minted = 'Minted',
-  MintingException = 'MintingException',
-  MintingPaymentException = 'MintingPaymentException',
-  MintingPaymentReceived = 'MintingPaymentReceived',
-  MintingPaymentRequested = 'MintingPaymentRequested',
-  MintingPaymentSubmitted = 'MintingPaymentSubmitted',
-  MintingPaymentTimeout = 'MintingPaymentTimeout',
-  Pending = 'Pending',
-  ReadyToDistribute = 'ReadyToDistribute',
-  StreamTokenAgreementApproved = 'StreamTokenAgreementApproved',
-  SubmittedForDistribution = 'SubmittedForDistribution',
-  SubmittedForDistributionException = 'SubmittedForDistributionException',
-  Undistributed = 'Undistributed',
+  ArweaveUploadException = "ArweaveUploadException",
+  AwaitingAudioEncoding = "AwaitingAudioEncoding",
+  AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
+  Declined = "Declined",
+  Distributed = "Distributed",
+  DistributionException = "DistributionException",
+  Minted = "Minted",
+  MintingException = "MintingException",
+  MintingPaymentException = "MintingPaymentException",
+  MintingPaymentReceived = "MintingPaymentReceived",
+  MintingPaymentRequested = "MintingPaymentRequested",
+  MintingPaymentSubmitted = "MintingPaymentSubmitted",
+  MintingPaymentTimeout = "MintingPaymentTimeout",
+  Pending = "Pending",
+  ReadyToDistribute = "ReadyToDistribute",
+  StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
+  SubmittedForDistribution = "SubmittedForDistribution",
+  SubmittedForDistributionException = "SubmittedForDistributionException",
+  Undistributed = "Undistributed",
 }
 
 export enum MarketplaceStatus {
-  Selling = 'Selling',
-  NotSelling = 'NotSelling',
+  Selling = "Selling",
+  NotSelling = "NotSelling",
 }
 export interface Song {
   readonly archived: boolean;
@@ -252,10 +252,10 @@ export interface GetSongCountResponse {
 }
 
 export enum CollaborationStatus {
-  Editing = 'Editing',
-  Waiting = 'Waiting',
-  Rejected = 'Rejected',
-  Accepted = 'Accepted',
+  Editing = "Editing",
+  Waiting = "Waiting",
+  Rejected = "Rejected",
+  Accepted = "Accepted",
 }
 
 export interface GetCollaborationsRequest {

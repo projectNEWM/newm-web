@@ -1,18 +1,18 @@
-import { Stack } from '@mui/material';
-import DropdownSelect from '../DropdownSelect';
+import { Stack } from "@mui/material";
+import DropdownSelect from "../DropdownSelect";
 
 const options = [
-  'Alternative',
-  'Anime',
-  'Blues',
+  "Alternative",
+  "Anime",
+  "Blues",
   "Children's",
-  'Classical',
-  'Comedy',
-  'Lofi',
+  "Classical",
+  "Comedy",
+  "Lofi",
 ];
 
 export default {
-  title: 'Dropdown Select',
+  title: "Dropdown Select",
   component: DropdownSelect,
 };
 

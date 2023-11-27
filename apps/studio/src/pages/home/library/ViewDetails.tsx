@@ -1,21 +1,21 @@
-import { FunctionComponent, ReactNode, SyntheticEvent, useState } from 'react';
-import { Box, Stack, Tab, Tabs, Theme, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ProfileImage } from '@newm.io/studio/components';
-import { Button } from '@newm.io/studio/elements';
+import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
+import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { ProfileImage } from "@newm.io/studio/components";
+import { Button } from "@newm.io/studio/elements";
 import {
   MintingStatus,
   emptySong,
   useGetSongQuery,
   useHasSongAccess,
-} from '@newm.io/studio/modules/song';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
-import theme from '@newm.io/theme';
-import MintSong from './MintSong';
-import SongInfo from './SongInfo';
-import { SongRouteParams } from './types';
+} from "@newm.io/studio/modules/song";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import theme from "@newm.io/theme";
+import MintSong from "./MintSong";
+import SongInfo from "./SongInfo";
+import { SongRouteParams } from "./types";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -24,7 +24,7 @@ interface TabPanelProps {
 }
 
 interface ColorMap {
-  [index: number]: Partial<keyof Theme['gradients' | 'colors']>;
+  [index: number]: Partial<keyof Theme["gradients" | "colors"]>;
 }
 
 const TabPanel: FunctionComponent<TabPanelProps> = ({
@@ -39,7 +39,7 @@ const TabPanel: FunctionComponent<TabPanelProps> = ({
       id={`tabpanel-${index}`}
       role="tabpanel"
       mb={2}
-      alignItems={['center', 'center', 'unset']}
+      alignItems={["center", "center", "unset"]}
     >
       {value === index && children}
     </Stack>
@@ -47,8 +47,8 @@ const TabPanel: FunctionComponent<TabPanelProps> = ({
 };
 
 const colorMap: ColorMap = {
-  0: 'music',
-  1: 'crypto',
+  0: "music",
+  1: "crypto",
 };
 
 const ViewDetails: FunctionComponent = () => {
@@ -57,7 +57,7 @@ const ViewDetails: FunctionComponent = () => {
 
   const [tab, setTab] = useState(0);
 
-  const { songId } = useParams<'songId'>() as SongRouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const {
     data: { title, coverArtUrl, mintingStatus } = emptySong,
@@ -73,12 +73,12 @@ const ViewDetails: FunctionComponent = () => {
 
   // TODO: show "Not found" content if not available for user
   if (error || !hasAccess) {
-    navigate('/home/library');
+    navigate("/home/library");
 
     dispatch(
       setToastMessage({
-        message: 'Error fetching song data',
-        severity: 'error',
+        message: "Error fetching song data",
+        severity: "error",
       })
     );
   }
@@ -99,7 +99,7 @@ const ViewDetails: FunctionComponent = () => {
           variant="outlined"
           width="icon"
         >
-          <ArrowBackIcon sx={{ color: 'white' }} />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </Button>
         <ProfileImage
           alt="Song cover art"
@@ -116,22 +116,22 @@ const ViewDetails: FunctionComponent = () => {
           onChange={handleChange}
           aria-label="Edit song details"
           sx={{
-            '.MuiButtonBase-root.MuiTab-root': {
-              minWidth: 'auto',
+            ".MuiButtonBase-root.MuiTab-root": {
+              minWidth: "auto",
               ...theme.typography.subtitle2,
               fontWeight: 600,
             },
-            '.MuiTabs-flexContainer': {
+            ".MuiTabs-flexContainer": {
               gap: 4,
-              justifyContent: ['center', 'center', 'normal'],
+              justifyContent: ["center", "center", "normal"],
             },
-            '.Mui-selected': {
+            ".Mui-selected": {
               background: theme.gradients[colorMap[tab]],
-              backgroundClip: 'text',
+              backgroundClip: "text",
               color: theme.colors[colorMap[tab]],
-              textFillColor: 'transparent',
+              textFillColor: "transparent",
             },
-            '.MuiTabs-indicator': {
+            ".MuiTabs-indicator": {
               background: theme.gradients[colorMap[tab]],
             },
           }}

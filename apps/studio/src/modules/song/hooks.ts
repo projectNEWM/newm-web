@@ -1,12 +1,12 @@
-import { isProd } from '@newm.io/studio/buildParams';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import Hls from 'hls.js';
+import { isProd } from "@newm.io/studio/buildParams";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import Hls from "hls.js";
 import {
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import { Song, UseHlsJsParams, UseHlsJsResult } from './types';
-import { emptySong, useGetSongQuery } from './api';
+} from "@newm.io/studio/modules/session";
+import { Song, UseHlsJsParams, UseHlsJsResult } from "./types";
+import { emptySong, useGetSongQuery } from "./api";
 
 /**
  * Hook to abstract hls.js functionality.
@@ -54,7 +54,7 @@ export const useHlsJs = ({
 
       if (onSongEnded) onSongEnded(event);
 
-      videoRef.current.removeEventListener('ended', handleSongEnded);
+      videoRef.current.removeEventListener("ended", handleSongEnded);
     },
     [onSongEnded]
   );
@@ -66,7 +66,7 @@ export const useHlsJs = ({
     if (!videoRef.current || !song.streamUrl) return;
 
     videoRef.current.src = song.streamUrl;
-    videoRef.current.addEventListener('loadedmetadata', () => {
+    videoRef.current.addEventListener("loadedmetadata", () => {
       videoRef.current?.play();
     });
   };
@@ -95,7 +95,7 @@ export const useHlsJs = ({
     (song: Song) => {
       if (!videoRef.current) return;
 
-      if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+      if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
         playSongNatively(song);
       } else {
         playSongWithHlsJs(song);
@@ -103,7 +103,7 @@ export const useHlsJs = ({
 
       handlePlaySong(song);
 
-      videoRef.current.addEventListener('ended', handleSongEnded);
+      videoRef.current.addEventListener("ended", handleSongEnded);
     },
     [handlePlaySong, handleSongEnded]
   );
@@ -116,12 +116,12 @@ export const useHlsJs = ({
       if (!videoRef.current) return;
 
       videoRef.current.pause();
-      videoRef.current.removeAttribute('src');
+      videoRef.current.removeAttribute("src");
       videoRef.current.load();
 
       handleStopSong(song);
 
-      videoRef.current.removeEventListener('ended', handleSongEnded);
+      videoRef.current.removeEventListener("ended", handleSongEnded);
     },
     [handleStopSong, handleSongEnded]
   );
@@ -135,7 +135,7 @@ export const useHlsJs = ({
    * Create video element and attach ref.
    */
   useEffect(() => {
-    const video = document.createElement('video');
+    const video = document.createElement("video");
     videoRef.current = video;
   }, []);
 

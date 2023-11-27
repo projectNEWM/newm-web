@@ -1,6 +1,6 @@
-import theme from '@newm.io/theme';
-import styled, { css } from 'styled-components';
-import { DropdownMultiSelectProps } from '@newm.io/studio/elements/DropdownMultiSelect';
+import theme from "@newm.io/theme";
+import styled, { css } from "styled-components";
+import { DropdownMultiSelectProps } from "@newm.io/studio/elements/DropdownMultiSelect";
 
 const NoResultsText = styled.span`
   background-color: ${theme.colors.grey500};
@@ -14,7 +14,7 @@ const NoResultsText = styled.span`
   z-index: 1;
 
   ${({ widthType }: DropdownMultiSelectProps) =>
-    widthType !== 'full' &&
+    widthType !== "full" &&
     css`
       max-width: ${theme.inputField.maxWidth};
     `}

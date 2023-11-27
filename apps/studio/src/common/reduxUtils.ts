@@ -1,6 +1,6 @@
-import type { AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { useCallback, useState } from 'react';
-import { useAppDispatch } from './hooks';
+import type { AsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { useCallback, useState } from "react";
+import { useAppDispatch } from "./hooks";
 
 interface UseWrappedThunkResponse<Returned> {
   readonly isLoading: boolean;

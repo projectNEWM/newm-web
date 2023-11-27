@@ -1,8 +1,8 @@
-import { Stack } from '@mui/material';
-import Typography from '../Typography';
+import { Stack } from "@mui/material";
+import Typography from "../Typography";
 
 export default {
-  title: 'Typography',
+  title: "Typography",
   component: Typography,
 };
 

@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
-import { logOut, selectSession } from '@newm.io/studio/modules/session';
-import { Button, Typography } from '@newm.io/studio/elements';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
+import { FunctionComponent } from "react";
+import { logOut, selectSession } from "@newm.io/studio/modules/session";
+import { Button, Typography } from "@newm.io/studio/elements";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 
 const LogoutButton: FunctionComponent = () => {
   const dispatch = useAppDispatch();

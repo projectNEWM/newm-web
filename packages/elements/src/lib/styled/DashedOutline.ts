@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import theme from 'newm-theme';
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
+import theme from "newm-theme";
 
 const DashedOutline = styled(Box)`
   background-color: ${theme.colors.grey700};

@@ -1,7 +1,7 @@
-import { CSSProperties, FunctionComponent, ReactNode } from 'react';
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
-import { Box, Stack, SvgIconProps } from '@mui/material';
-import theme from '@newm.io/theme';
+import { CSSProperties, FunctionComponent, ReactNode } from "react";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { Box, Stack, SvgIconProps } from "@mui/material";
+import theme from "@newm.io/theme";
 
 interface ButtonProps {
   readonly onClick?: VoidFunction;
@@ -30,9 +30,9 @@ interface SideBarNavLinkProps {
 }
 
 const Wrapper: FunctionComponent<WrapperProps> = ({ children, ...props }) => {
-  if ('to' in props && props.to) {
+  if ("to" in props && props.to) {
     return <Link {...props}>{children}</Link>;
-  } else if ('href' in props && props.href) {
+  } else if ("href" in props && props.href) {
     return (
       <a target="_blank" rel="noreferrer" {...props}>
         {children}
@@ -50,7 +50,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   href,
   onClick,
 }) => {
-  const resolved = useResolvedPath(to || '');
+  const resolved = useResolvedPath(to || "");
   const match = useMatch({ path: resolved.pathname, end: false });
   const isActiveLink = to && match;
 
@@ -60,39 +60,39 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
       to={to}
       href={href}
       style={{
-        textDecoration: 'none',
-        minWidth: '100%',
-        cursor: 'pointer',
+        textDecoration: "none",
+        minWidth: "100%",
+        cursor: "pointer",
       }}
     >
       <Stack
         direction="row"
         spacing={2}
         sx={{
-          fontSize: '12px',
-          lineHeight: '15px',
+          fontSize: "12px",
+          lineHeight: "15px",
           fontWeight: 600,
           font: theme.typography.button.font,
-          alignItems: 'center',
-          borderRadius: '6px',
-          padding: '12px 20px',
-          color: 'white',
+          alignItems: "center",
+          borderRadius: "6px",
+          padding: "12px 20px",
+          color: "white",
           background: isActiveLink
             ? theme.colors.activeBackground
-            : 'transparent',
+            : "transparent",
           opacity: isActiveLink ? 1 : 0.5,
-          transition: 'background-color 0ms',
-          display: 'flex',
-          textTransform: 'none',
-          justifyContent: 'flex-start',
-          '&:hover': {
-            opacity: '1',
+          transition: "background-color 0ms",
+          display: "flex",
+          textTransform: "none",
+          justifyContent: "flex-start",
+          "&:hover": {
+            opacity: "1",
             background: theme.colors.activeBackground,
           },
         }}
         data-testid="navStyled"
       >
-        <Icon sx={{ fontSize: '18px' }} />
+        <Icon sx={{ fontSize: "18px" }} />
         <span>{label}</span>
       </Stack>
     </Wrapper>

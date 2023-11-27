@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import initializeSentry from './sentryConfig';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import initializeSentry from "./sentryConfig";
 
 initializeSentry();
 
-const isMac = navigator.userAgent.includes('Mac');
+const isMac = navigator.userAgent.includes("Mac");
 
 if (!isMac) {
-  document.documentElement.classList.add('modify-scrollbar');
+  document.documentElement.classList.add("modify-scrollbar");
 }
 
 // Get a reference to the root DOM node
-const rootDomNode = document.getElementById('root') as HTMLElement;
+const rootDomNode = document.getElementById("root") as HTMLElement;
 
 if (rootDomNode) {
   // Create a root

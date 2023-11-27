@@ -1,14 +1,14 @@
-import { HTMLAttributes } from 'react';
-import { styled, css } from '@mui/material/styles';
-import { DropdownMultiSelectProps } from '../DropdownMultiSelect';
-import theme from 'newm-theme';
-import { WidthType } from '../types';
+import { HTMLAttributes } from "react";
+import { styled, css } from "@mui/material/styles";
+import { DropdownMultiSelectProps } from "../DropdownMultiSelect";
+import theme from "newm-theme";
+import { WidthType } from "../types";
 
 interface ResultsListProps extends HTMLAttributes<HTMLUListElement> {
   readonly widthType?: WidthType;
 }
 
-const ResultsList = styled('ul')`
+const ResultsList = styled("ul")`
   background-color: ${theme.colors.grey500};
   border-radius: 4px;
   border: 2px solid ${theme.colors.grey400};
@@ -21,7 +21,7 @@ const ResultsList = styled('ul')`
   width: 100%;
   z-index: 10;
   ${({ widthType }: ResultsListProps) =>
-    widthType !== 'full' &&
+    widthType !== "full" &&
     css`
       max-width: ${theme.inputField.maxWidth};
     `}

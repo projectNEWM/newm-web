@@ -1,24 +1,24 @@
-import { FunctionComponent, useEffect } from 'react';
-import { Stack, Typography } from '@mui/material';
-import { Button, GradientTypography } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+import { FunctionComponent, useEffect } from "react";
+import { Stack, Typography } from "@mui/material";
+import { Button, GradientTypography } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 
 const IdenfySuccessSession: FunctionComponent = () => {
   useEffect(() => {
-    window.parent.postMessage('idenfy-verification-success');
+    window.parent.postMessage("idenfy-verification-success");
   }, []);
 
   const handleClick = () => {
-    window.parent.postMessage('idenfy-modal-close');
+    window.parent.postMessage("idenfy-modal-close");
   };
 
   return (
     <Stack
       sx={{
-        alignItems: 'center',
+        alignItems: "center",
         backgroundColor: theme.colors.black,
         flexGrow: 1,
-        justifyContent: 'center',
+        justifyContent: "center",
       }}
     >
       <Typography variant="h1">THANK YOU!</Typography>

@@ -1,15 +1,15 @@
-import Switch from './Switch';
-import Tooltip from './styled/Tooltip';
-import Typography from './Typography';
+import Switch from "./Switch";
+import Tooltip from "./styled/Tooltip";
+import Typography from "./Typography";
 import {
   IconButton,
   Stack,
   SwitchProps,
   SxProps,
   useTheme,
-} from '@mui/material';
-import { FunctionComponent, ReactNode } from 'react';
-import HelpIcon from '@mui/icons-material/Help';
+} from "@mui/material";
+import { FunctionComponent, ReactNode } from "react";
+import HelpIcon from "@mui/icons-material/Help";
 
 export interface SwitchInputProps extends SwitchProps {
   readonly title: string;
@@ -26,7 +26,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   title,
   description,
   includeBorder = true,
-  tooltipText = '',
+  tooltipText = "",
   children,
   ...props
 }) => {
@@ -36,7 +36,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
     ? {
         backgroundColor: theme.colors.grey600,
         border: `2px solid ${theme.colors.grey400}`,
-        borderRadius: '4px',
+        borderRadius: "4px",
       }
     : {};
 
@@ -44,10 +44,10 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
     <Stack sx={{ p: 2, ...borderStyles }}>
       <Stack
         sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
       >
         <Stack pr={[0, 0, 4]}>
@@ -55,7 +55,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
             <Typography
               pr={1}
               color="white"
-              variant={description ? 'body1' : 'subtitle1'}
+              variant={description ? "body1" : "subtitle1"}
             >
               {title}
             </Typography>
@@ -66,8 +66,8 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
                   <HelpIcon
                     sx={{
                       color: theme.colors.grey100,
-                      height: '18px',
-                      width: '18px',
+                      height: "18px",
+                      width: "18px",
                     }}
                   />
                 </IconButton>

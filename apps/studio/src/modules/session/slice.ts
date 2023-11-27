@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
-import { SessionState } from './types';
-import { handleSuccessfulAuthentication } from './utils';
+import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import { SessionState } from "./types";
+import { handleSuccessfulAuthentication } from "./utils";
 
 const initialState: SessionState = {
   // if refresh token is present, user is logged in or can refresh session
-  isLoggedIn: !!Cookies.get('refreshToken'),
+  isLoggedIn: !!Cookies.get("refreshToken"),
   verificationPingStartedAt: undefined,
 };
 
 const sessionSlice = createSlice({
   initialState,
-  name: 'session',
+  name: "session",
   reducers: {
     receiveRefreshToken: handleSuccessfulAuthentication,
     receiveSuccessfullAuthentication: handleSuccessfulAuthentication,

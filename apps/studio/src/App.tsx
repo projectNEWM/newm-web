@@ -1,5 +1,5 @@
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import {
   Background,
   ConnectWalletModal,
@@ -13,26 +13,26 @@ import {
   Toast,
   UpdateWalletAddressModal,
   WalletEnvMismatchModal,
-} from '@newm.io/studio/components';
-import Login from '@newm.io/studio/pages/login';
-import Home from '@newm.io/studio/pages/home';
-import SignUp from '@newm.io/studio/pages/signUp';
-import ForgotPassword from '@newm.io/studio/pages/forgotPassword';
-import CreateProfile from '@newm.io/studio/pages/createProfile';
-import { LinkedInCallback } from 'react-linkedin-login-oauth2';
-import { Provider } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import theme from '@newm.io/theme';
-import BrowserRouter from '@newm.io/studio/common/BrowserRouter';
-import { history } from '@newm.io/studio/common/history';
-import { PersistGate } from 'redux-persist/integration/react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import OnboardingRedirect from '@newm.io/studio/components/OnboardingRedirect';
-import store, { persistor } from './store';
-import './App.css';
+} from "@newm.io/studio/components";
+import Login from "@newm.io/studio/pages/login";
+import Home from "@newm.io/studio/pages/home";
+import SignUp from "@newm.io/studio/pages/signUp";
+import ForgotPassword from "@newm.io/studio/pages/forgotPassword";
+import CreateProfile from "@newm.io/studio/pages/createProfile";
+import { LinkedInCallback } from "react-linkedin-login-oauth2";
+import { Provider } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+import theme from "@newm.io/theme";
+import BrowserRouter from "@newm.io/studio/common/BrowserRouter";
+import { history } from "@newm.io/studio/common/history";
+import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import OnboardingRedirect from "@newm.io/studio/components/OnboardingRedirect";
+import store, { persistor } from "./store";
+import "./App.css";
 
 const App = () => {
-  const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+  const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
   return (
     <ThemeProvider theme={theme}>

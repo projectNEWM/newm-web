@@ -16,12 +16,12 @@ export const isMoreThanThresholdSecondsLater = (
 
   // Validate input date
   if (isNaN(inputTime)) {
-    throw new Error('Invalid date format');
+    throw new Error("Invalid date format");
   }
 
   // Validate secondsThreshold
-  if (typeof secondsThreshold !== 'number' || secondsThreshold <= 0) {
-    throw new Error('Invalid time in seconds');
+  if (typeof secondsThreshold !== "number" || secondsThreshold <= 0) {
+    throw new Error("Invalid time in seconds");
   }
 
   const MILLISECONDS_PER_SECOND = 1000;

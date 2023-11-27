@@ -1,14 +1,14 @@
-import { FunctionComponent, useState } from 'react';
-import { SearchBox } from '@newm.io/studio/components';
-import { useGetSongCountQuery } from '@newm.io/studio/modules/song';
-import { Typography } from '@newm.io/studio/elements';
-import SongList from './SongList';
+import { FunctionComponent, useState } from "react";
+import { SearchBox } from "@newm.io/studio/components";
+import { useGetSongCountQuery } from "@newm.io/studio/modules/song";
+import { Typography } from "@newm.io/studio/elements";
+import SongList from "./SongList";
 
 const Discography: FunctionComponent = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
-    ownerIds: ['me'],
+    ownerIds: ["me"],
     phrase: query,
   });
 

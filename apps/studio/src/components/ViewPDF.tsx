@@ -1,10 +1,10 @@
-import { Box, Stack, useTheme } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import LaunchIcon from '@mui/icons-material/Launch';
-import PreviewIcon from '@mui/icons-material/PictureInPictureAlt';
-import DownloadIcon from '@mui/icons-material/FileDownload';
-import { IconMessage, Modal, SolidOutline } from '@newm.io/studio/components';
-import { FunctionComponent, useRef, useState } from 'react';
+import { Box, Stack, useTheme } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import LaunchIcon from "@mui/icons-material/Launch";
+import PreviewIcon from "@mui/icons-material/PictureInPictureAlt";
+import DownloadIcon from "@mui/icons-material/FileDownload";
+import { IconMessage, Modal, SolidOutline } from "@newm.io/studio/components";
+import { FunctionComponent, useRef, useState } from "react";
 
 interface ViewPdfProps {
   /** True if the PDF has been viewed */
@@ -54,7 +54,7 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
       <Box>
         <a
           ref={linkRef}
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           href={agreementData}
           download="artist-agreement.pdf"
         >
@@ -66,16 +66,16 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
           onMouseLeave={() => setIsHovering(false)}
           sx={{
             height: 100,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'stretch',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "stretch",
             background: [
-              'linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.9))',
+              "linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.9))",
               `url(${preview})`,
-            ].join(', '),
-            backgroundSize: 'cover',
+            ].join(", "),
+            backgroundSize: "cover",
             flexGrow: 1,
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
         >
           {isHovered ? (
@@ -83,12 +83,12 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
               {[
                 {
                   icon: <PreviewIcon sx={{ color: colors.white }} />,
-                  message: 'Preview',
+                  message: "Preview",
                   onClick: handlePreview,
                 },
                 {
                   icon: <DownloadIcon sx={{ color: colors.white }} />,
-                  message: 'Download',
+                  message: "Download",
                   onClick: handleDownload,
                 },
               ].map(({ icon, message, onClick }) => (
@@ -96,12 +96,12 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
                   key={`agreement-option-${message}`}
                   onClick={onClick}
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     flex: 1,
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.6)",
                     },
                   }}
                 >
@@ -126,7 +126,7 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <object
           aria-label="Artist agreement"
-          style={{ height: '100%', width: '100%' }}
+          style={{ height: "100%", width: "100%" }}
           data={`data:application/pdf;base64,${data}`}
           type="application/pdf"
         />

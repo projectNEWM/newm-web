@@ -1,14 +1,14 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { useAppDispatch } from '@newm.io/studio/common';
-import Modal from '@newm.io/studio/components/Modal';
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { useAppDispatch } from "@newm.io/studio/common";
+import Modal from "@newm.io/studio/components/Modal";
 import {
   clearProgressBarModal,
   selectUi,
   setIsProgressBarModalOpen,
-} from '@newm.io/studio/modules/ui';
-import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
-import ProgressBar from './ProgressBar';
+} from "@newm.io/studio/modules/ui";
+import { FunctionComponent } from "react";
+import { useSelector } from "react-redux";
+import ProgressBar from "./ProgressBar";
 
 const ProgressBarModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -35,9 +35,9 @@ const ProgressBarModal: FunctionComponent = () => {
           gap={2}
           sx={{
             padding: 2,
-            width: '90%',
+            width: "90%",
             background: theme.colors.grey600,
-            textAlign: 'center',
+            textAlign: "center",
           }}
         >
           <ProgressBar
@@ -48,7 +48,7 @@ const ProgressBarModal: FunctionComponent = () => {
           <Stack gap={1}>
             <Typography
               variant="subtitle1"
-              sx={{ color: theme.colors.white, fontStyle: 'italic' }}
+              sx={{ color: theme.colors.white, fontStyle: "italic" }}
             >
               {message}
             </Typography>

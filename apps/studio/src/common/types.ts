@@ -1,8 +1,8 @@
-import { ReactElement } from 'react';
-import { RootState } from '@newm.io/studio/store';
-import { RenderOptions } from '@testing-library/react';
-import { EnhancedStore } from '@reduxjs/toolkit';
-import { Song } from '@newm.io/studio/modules/song';
+import { ReactElement } from "react";
+import { RootState } from "@newm.io/studio/store";
+import { RenderOptions } from "@testing-library/react";
+import { EnhancedStore } from "@reduxjs/toolkit";
+import { Song } from "@newm.io/studio/modules/song";
 
 export interface EmptyResponse {
   readonly data: null;
@@ -32,7 +32,7 @@ export interface ValidateDimensionsParams {
   readonly minHeight: number;
 }
 
-export type WidthType = 'default' | 'full';
+export type WidthType = "default" | "full";
 
 export interface FieldOptions {
   error: unknown;
@@ -40,9 +40,9 @@ export interface FieldOptions {
 }
 
 export enum BarcodeType {
-  UPC = 'UPC',
-  EAN = 'EAN',
-  JAN = 'JAN',
+  UPC = "UPC",
+  EAN = "EAN",
+  JAN = "JAN",
 }
 
 export interface BarcodeConfig {

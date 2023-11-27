@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import {
   IconButton,
   Stack,
@@ -7,20 +7,20 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   PlayerState,
   getResizedAlbumCoverImageUrl,
   useAppDispatch,
-} from '@newm.io/studio/common';
+} from "@newm.io/studio/common";
 import {
   PlaySongAdvanced,
   TableCell,
   TableHeadCell,
-} from '@newm.io/studio/components';
-import theme from '@newm.io/theme';
+} from "@newm.io/studio/components";
+import theme from "@newm.io/theme";
 import {
   Invite,
   Song,
@@ -30,7 +30,7 @@ import {
   useGetCollaborationsQuery,
   useGetSongsQuery,
   useHlsJs,
-} from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/modules/song";
 
 interface InvitesTableProps {
   invites: Invite[];
@@ -192,16 +192,16 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
   return (
     <TableContainer
       sx={{
-        maxHeight: '65vh',
+        maxHeight: "65vh",
         backgroundColor: theme.colors.black,
-        borderRadius: '8px',
+        borderRadius: "8px",
       }}
     >
       <Table size="small" aria-label="Song list">
         <TableHead
           sx={{
-            position: 'sticky',
-            top: '0',
+            position: "sticky",
+            top: "0",
             backgroundColor: theme.colors.black,
             zIndex: 5,
           }}
@@ -212,7 +212,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
             <TableHeadCell>YOUR ROLE</TableHeadCell>
             <TableHeadCell>LENGTH</TableHeadCell>
             <TableHeadCell>SPLIT</TableHeadCell>
-            <TableHeadCell sx={{ textAlign: 'end' }}>ACTION</TableHeadCell>
+            <TableHeadCell sx={{ textAlign: "end" }}>ACTION</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -237,10 +237,10 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                   <TableCell>
                     <Stack
                       sx={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: "row",
+                        alignItems: "center",
                         columnGap: 1.5,
-                        whiteSpace: 'nowrap',
+                        whiteSpace: "nowrap",
                       }}
                     >
                       <PlaySongAdvanced
@@ -251,9 +251,9 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                       {coverArtUrl ? (
                         <img
                           style={{
-                            borderRadius: '4px',
-                            height: '40px',
-                            width: '40px',
+                            borderRadius: "4px",
+                            height: "40px",
+                            width: "40px",
                           }}
                           src={getResizedAlbumCoverImageUrl(coverArtUrl, {
                             width: 50,
@@ -262,7 +262,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                           alt="Song cover"
                         />
                       ) : (
-                        <Stack sx={{ height: '40px', width: '40px' }}></Stack>
+                        <Stack sx={{ height: "40px", width: "40px" }}></Stack>
                       )}
                       {title}
                     </Stack>
@@ -270,24 +270,24 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                   <TableCell>
                     <Stack
                       sx={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: "row",
+                        alignItems: "center",
                         columnGap: 1.5,
-                        whiteSpace: 'nowrap',
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {pictureUrl ? (
                         <img
                           style={{
-                            borderRadius: '50%',
-                            width: '40px',
-                            height: '40px',
+                            borderRadius: "50%",
+                            width: "40px",
+                            height: "40px",
                           }}
                           src={pictureUrl}
                           alt="Profile"
                         />
                       ) : (
-                        <Stack sx={{ height: '40px', width: '40px' }}></Stack>
+                        <Stack sx={{ height: "40px", width: "40px" }}></Stack>
                       )}
                       {firstName && lastName
                         ? `${firstName} ${lastName}`
@@ -298,11 +298,11 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                   <TableCell>
                     {duration
                       ? convertMillisecondsToSongFormat(duration)
-                      : '--:--'}
+                      : "--:--"}
                   </TableCell>
                   <TableCell>{`${royaltyRate}%`}</TableCell>
                   <TableCell>
-                    {status === 'Waiting' ? (
+                    {status === "Waiting" ? (
                       <Stack
                         flexDirection="row"
                         columnGap={2}
@@ -314,12 +314,12 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                           onClick={() => handleDecline(collaborationId)}
                           sx={{
                             backgroundColor: theme.colors.red,
-                            borderRadius: '8px',
-                            '&:hover, &.Mui-disabled': {
+                            borderRadius: "8px",
+                            "&:hover, &.Mui-disabled": {
                               backgroundColor: theme.colors.red,
                               opacity: 0.9,
                             },
-                            '&.Mui-disabled': {
+                            "&.Mui-disabled": {
                               opacity: 0.5,
                             },
                           }}
@@ -332,12 +332,12 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                           onClick={() => handleAccept(collaborationId)}
                           sx={{
                             backgroundColor: theme.colors.green,
-                            borderRadius: '8px',
-                            '&:hover, &.Mui-disabled': {
+                            borderRadius: "8px",
+                            "&:hover, &.Mui-disabled": {
                               backgroundColor: theme.colors.green,
                               opacity: 0.9,
                             },
-                            '&.Mui-disabled': {
+                            "&.Mui-disabled": {
                               opacity: 0.5,
                             },
                           }}

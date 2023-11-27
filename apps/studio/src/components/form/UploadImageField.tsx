@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
-import { Field, FieldProps } from 'formik';
-import UploadImage, { UploadImageProps } from '../UploadImage';
+import { FunctionComponent } from "react";
+import { Field, FieldProps } from "formik";
+import UploadImage, { UploadImageProps } from "../UploadImage";
 
 interface UploadImageFieldProps
   extends Omit<
     UploadImageProps,
-    'file' | 'onChange' | 'onError' | 'onBlur' | 'errorMessage'
+    "file" | "onChange" | "onError" | "onBlur" | "errorMessage"
   > {
   readonly name: string;
 }

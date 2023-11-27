@@ -1,26 +1,26 @@
-import * as Yup from 'yup';
-import { Box, Container } from '@mui/material';
-import { FunctionComponent } from 'react';
-import { FormikHelpers, FormikValues } from 'formik';
-import theme from '@newm.io/theme';
-import { ResponsiveNEWMLogo, WizardForm } from '@newm.io/studio/components';
-import { commonYupValidation, useAppDispatch } from '@newm.io/studio/common';
+import * as Yup from "yup";
+import { Box, Container } from "@mui/material";
+import { FunctionComponent } from "react";
+import { FormikHelpers, FormikValues } from "formik";
+import theme from "@newm.io/theme";
+import { ResponsiveNEWMLogo, WizardForm } from "@newm.io/studio/components";
+import { commonYupValidation, useAppDispatch } from "@newm.io/studio/common";
 import {
   resetPassword,
   sendVerificationEmail,
-} from '@newm.io/studio/modules/session';
-import InitiateReset from './InitiateReset';
-import VerifyEmail from './VerifyEmail';
-import ResetPassword from './ResetPassword';
+} from "@newm.io/studio/modules/session";
+import InitiateReset from "./InitiateReset";
+import VerifyEmail from "./VerifyEmail";
+import ResetPassword from "./ResetPassword";
 
 const ForgotPassword: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const initialValues = {
-    email: '',
-    newPassword: '',
-    confirmPassword: '',
-    authCode: '',
+    email: "",
+    newPassword: "",
+    confirmPassword: "",
+    authCode: "",
   };
 
   const handleSubmit = ({
@@ -44,10 +44,10 @@ const ForgotPassword: FunctionComponent = () => {
     <Container
       maxWidth={false}
       sx={{
-        alignItems: 'center',
+        alignItems: "center",
         backgroundColor: theme.colors.black,
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         pt: 7.5,
         px: 2,
       }}
@@ -65,27 +65,27 @@ const ForgotPassword: FunctionComponent = () => {
           {
             element: <InitiateReset />,
             onSubmitStep: handleVerificationEmail,
-            path: '',
+            path: "",
             validationSchema: Yup.object().shape({
               email: commonYupValidation.email,
             }),
           },
           {
             element: <VerifyEmail />,
-            path: 'verification',
+            path: "verification",
             validationSchema: Yup.object().shape({
-              authCode: Yup.string().required('Verification code is required'),
+              authCode: Yup.string().required("Verification code is required"),
             }),
           },
           {
             element: <ResetPassword />,
-            path: 'reset',
+            path: "reset",
             validationSchema: Yup.object().shape({
               newPassword: commonYupValidation.newPassword.required(
-                'Password is required'
+                "Password is required"
               ),
               confirmPassword: commonYupValidation.confirmPassword.required(
-                'Confirm password is required'
+                "Confirm password is required"
               ),
             }),
           },

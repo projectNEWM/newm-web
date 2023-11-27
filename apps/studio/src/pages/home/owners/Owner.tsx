@@ -1,30 +1,30 @@
-import { FunctionComponent, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Stack } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import TwitterLogo from '@newm.io/studio/assets/images/TwitterLogo';
-import GlobalFill from '@newm.io/studio/assets/images/GlobalFill';
-import InstagramLogo from '@newm.io/studio/assets/images/InstagramLogo';
-import placeholderBackground from '@newm.io/studio/assets/images/bg-img.png';
-import theme from '@newm.io/theme';
+import { FunctionComponent, useState } from "react";
+import { useParams } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Stack } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import TwitterLogo from "@newm.io/studio/assets/images/TwitterLogo";
+import GlobalFill from "@newm.io/studio/assets/images/GlobalFill";
+import InstagramLogo from "@newm.io/studio/assets/images/InstagramLogo";
+import placeholderBackground from "@newm.io/studio/assets/images/bg-img.png";
+import theme from "@newm.io/theme";
 import {
   getResizedAlbumCoverImageUrl,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import { history } from '@newm.io/studio/common/history';
+} from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
 import {
   VerificationStatus,
   useGetUserQuery,
-} from '@newm.io/studio/modules/session';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { ProfileSkeleton } from '@newm.io/studio/components';
-import Songs from './Songs';
-import OwnerModal from './OwnerModal';
+} from "@newm.io/studio/modules/session";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { ProfileSkeleton } from "@newm.io/studio/components";
+import Songs from "./Songs";
+import OwnerModal from "./OwnerModal";
 
 const Owner: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { userId = '' } = useParams();
+  const { userId = "" } = useParams();
   const windowWidth = useWindowDimensions()?.width;
   const { data: ownerData, isLoading, isError } = useGetUserQuery({ userId });
 
@@ -33,7 +33,7 @@ const Owner: FunctionComponent = () => {
   }
 
   if (isError || !ownerData) {
-    history.push('/home/collaborators');
+    history.push("/home/collaborators");
 
     return null;
   }
@@ -62,7 +62,7 @@ const Owner: FunctionComponent = () => {
       <Stack
         sx={{
           columnGap: 2,
-          flexDirection: ['column', 'row'],
+          flexDirection: ["column", "row"],
           pb: 4,
           rowGap: 2,
         }}
@@ -73,7 +73,7 @@ const Owner: FunctionComponent = () => {
           variant="outlined"
           width="icon"
         >
-          <ArrowBackIcon sx={{ color: 'white' }} />
+          <ArrowBackIcon sx={{ color: "white" }} />
         </Button>
         <Typography variant="h3">ARTIST PAGE</Typography>
       </Stack>
@@ -81,25 +81,25 @@ const Owner: FunctionComponent = () => {
         alt="Artist banner"
         src={bannerUrl ? bannerUrl : placeholderBackground}
         style={{
-          objectFit: 'cover',
-          maxHeight: isWidthAboveSm ? '200px' : '100px',
+          objectFit: "cover",
+          maxHeight: isWidthAboveSm ? "200px" : "100px",
         }}
         width="100%"
       />
 
       <Stack
         sx={{
-          alignItems: 'center',
+          alignItems: "center",
           columnGap: 5,
-          flexDirection: [null, null, 'column', 'row'],
+          flexDirection: [null, null, "column", "row"],
           mt: -3.5,
           mx: 5,
         }}
       >
         <img
           alt="Artist profile"
-          height={isWidthAboveSm ? '200px' : '100px'}
-          width={isWidthAboveSm ? '200px' : '100px'}
+          height={isWidthAboveSm ? "200px" : "100px"}
+          width={isWidthAboveSm ? "200px" : "100px"}
           src={
             pictureUrl
               ? getResizedAlbumCoverImageUrl(pictureUrl, {
@@ -108,13 +108,13 @@ const Owner: FunctionComponent = () => {
                 })
               : placeholderBackground
           }
-          style={{ borderRadius: '50%', objectFit: 'cover' }}
+          style={{ borderRadius: "50%", objectFit: "cover" }}
         />
 
         <Stack
           sx={{
-            alignItems: ['center', 'center', 'center', 'initial'],
-            alignSelf: [null, null, null, 'flex-end'],
+            alignItems: ["center", "center", "center", "initial"],
+            alignSelf: [null, null, null, "flex-end"],
             mt: [2, 2, 2, 3.5],
           }}
         >
@@ -122,13 +122,13 @@ const Owner: FunctionComponent = () => {
             alignItems="center"
             direction="row"
             gap={1.5}
-            justifyContent={['center', 'center', 'center', 'flex-start']}
-            textAlign={['center', 'center', 'center', 'left']}
+            justifyContent={["center", "center", "center", "flex-start"]}
+            textAlign={["center", "center", "center", "left"]}
           >
             <Typography variant="h3" fontWeight="700">
               {firstName || lastName
                 ? `${firstName} ${lastName}`.toUpperCase()
-                : 'Name Unavailable'}
+                : "Name Unavailable"}
             </Typography>
             {isVerified ? <CheckCircleIcon color="success" /> : null}
           </Stack>
@@ -136,13 +136,13 @@ const Owner: FunctionComponent = () => {
             <Typography
               mt={0.5}
               variant="subtitle1"
-              textAlign={['center', 'center', 'center', 'left']}
+              textAlign={["center", "center", "center", "left"]}
             >
               {location}
             </Typography>
           )}
           <Stack
-            sx={{ columnGap: 1.5, flexDirection: 'row', mt: [2, 2, 2, 3.5] }}
+            sx={{ columnGap: 1.5, flexDirection: "row", mt: [2, 2, 2, 3.5] }}
           >
             <Button
               color="music"
@@ -158,10 +158,10 @@ const Owner: FunctionComponent = () => {
 
         <Stack
           sx={{
-            alignSelf: [null, null, null, 'flex-start'],
+            alignSelf: [null, null, null, "flex-start"],
             columnGap: 1.5,
-            flexDirection: 'row',
-            ml: [null, null, null, 'auto'],
+            flexDirection: "row",
+            ml: [null, null, null, "auto"],
             mt: [2, 2, 2, 6],
           }}
         >

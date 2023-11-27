@@ -1,14 +1,14 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState } from "react";
 import {
   Button,
   GradientTypography,
   Typography,
-} from '@newm.io/studio/elements';
-import { ResponsiveNEWMLogo, TextInputField } from '@newm.io/studio/components';
-import { FormikValues, useFormikContext } from 'formik';
-import { Box, Stack, useTheme } from '@mui/material';
-import { sendVerificationEmail } from '@newm.io/studio/modules/session';
-import { useAppDispatch } from '@newm.io/studio/common';
+} from "@newm.io/studio/elements";
+import { ResponsiveNEWMLogo, TextInputField } from "@newm.io/studio/components";
+import { FormikValues, useFormikContext } from "formik";
+import { Box, Stack, useTheme } from "@mui/material";
+import { sendVerificationEmail } from "@newm.io/studio/modules/session";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 const Verification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -27,12 +27,12 @@ const Verification: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column',
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
         flexGrow: 1,
-        height: '100%',
-        justifyContent: 'space-between',
+        height: "100%",
+        justifyContent: "space-between",
       }}
     >
       <Box display="flex" flexDirection="column" alignItems="center">
@@ -75,11 +75,11 @@ const Verification: FunctionComponent = () => {
             <button
               onClick={handleEmailResend}
               style={{
-                backgroundColor: 'initial',
-                border: 'none',
+                backgroundColor: "initial",
+                border: "none",
                 borderRadius: 0,
-                color: 'white',
-                font: 'inherit',
+                color: "white",
+                font: "inherit",
               }}
             >
               Click here to resend

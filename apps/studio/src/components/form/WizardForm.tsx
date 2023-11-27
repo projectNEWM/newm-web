@@ -1,15 +1,15 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent } from "react";
 import {
   Form,
   Formik,
   FormikConfig,
   FormikHelpers,
   FormikValues,
-} from 'formik';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { removeTrailingSlash } from '@newm.io/studio/common';
-import * as Yup from 'yup';
-import { FormProgressStepper } from '@newm.io/studio/components';
+} from "formik";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { removeTrailingSlash } from "@newm.io/studio/common";
+import * as Yup from "yup";
+import { FormProgressStepper } from "@newm.io/studio/components";
 
 interface FormRoute {
   /** route corresponding to the step */
@@ -47,7 +47,7 @@ interface WizardFormProps extends FormikConfig<any> {
 const WizardForm: FunctionComponent<WizardFormProps> = ({
   routes,
   onSubmit,
-  rootPath = '',
+  rootPath = "",
   isProgressStepperVisible,
   ...formikProps
 }) => {
@@ -117,7 +117,7 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
       validationSchema={getValidationSchema}
     >
       {() => (
-        <Form style={{ height: '100%' }} noValidate>
+        <Form style={{ height: "100%" }} noValidate>
           {isProgressStepperVisible && (
             <FormProgressStepper
               activeStep={currentIndex + 1}

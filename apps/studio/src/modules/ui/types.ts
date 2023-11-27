@@ -1,10 +1,10 @@
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 export interface UIState {
   toast: {
     heading?: string;
     message: string;
-    severity?: 'error' | 'success';
+    severity?: "error" | "success";
   };
   progressBarModal: {
     progress: number;

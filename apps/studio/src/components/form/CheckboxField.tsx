@@ -1,7 +1,7 @@
-import { ForwardRefRenderFunction, forwardRef } from 'react';
-import { Field, FieldProps } from 'formik';
-import { Checkbox } from '@newm.io/studio/elements';
-import { CheckboxProps } from '@newm.io/studio/elements/Checkbox';
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
+import { Checkbox } from "@newm.io/studio/elements";
+import { CheckboxProps } from "@newm.io/studio/elements/Checkbox";
 
 const CheckboxField: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -16,7 +16,7 @@ const CheckboxField: ForwardRefRenderFunction<
         return (
           <Checkbox
             ref={ref}
-            errorMessage={meta.touched ? meta.error : ''}
+            errorMessage={meta.touched ? meta.error : ""}
             {...field}
             {...props}
           />

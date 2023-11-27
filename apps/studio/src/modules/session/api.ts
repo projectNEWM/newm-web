@@ -1,6 +1,6 @@
-import api, { Tags } from '@newm.io/studio/api';
-import { CustomError, EmptyResponse } from '@newm.io/studio/common';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
+import api, { Tags } from "@newm.io/studio/api";
+import { CustomError, EmptyResponse } from "@newm.io/studio/common";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
@@ -17,42 +17,42 @@ import {
   ResetPasswordRequest,
   UpdateProfileRequest,
   VerificationStatus,
-} from './types';
-import { handleSocialLoginError } from './thunks';
-import { receiveSuccessfullAuthentication } from './slice';
+} from "./types";
+import { handleSocialLoginError } from "./thunks";
+import { receiveSuccessfullAuthentication } from "./slice";
 
 export const emptyProfile: Profile = {
-  id: '',
-  oauthId: '',
-  oauthType: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  nickname: '',
-  location: '',
-  pictureUrl: '',
-  bannerUrl: '',
-  role: '',
+  id: "",
+  oauthId: "",
+  oauthType: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  nickname: "",
+  location: "",
+  pictureUrl: "",
+  bannerUrl: "",
+  role: "",
   verificationStatus: VerificationStatus.Unverified,
-  biography: '',
-  instagramUrl: '',
+  biography: "",
+  instagramUrl: "",
   companyIpRights: false,
-  twitterUrl: '',
-  websiteUrl: '',
-  spotifyProfile: '',
-  soundCloudProfile: '',
-  appleMusicProfile: '',
-  companyLogoUrl: '',
-  companyName: '',
-  walletAddress: '',
+  twitterUrl: "",
+  websiteUrl: "",
+  spotifyProfile: "",
+  soundCloudProfile: "",
+  appleMusicProfile: "",
+  companyLogoUrl: "",
+  companyName: "",
+  walletAddress: "",
 };
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     login: build.mutation<NewmAuthResponse, LoginRequest>({
       query: (body) => ({
-        url: 'v1/auth/login',
-        method: 'POST',
+        url: "v1/auth/login",
+        method: "POST",
         body,
       }),
 
@@ -63,15 +63,15 @@ export const extendedApi = api.injectEndpoints({
           // eslint-disable-next-line
         } catch (resp: any) {
           const errorMessage =
-            ('error' in resp && resp.error?.status === 403) ||
+            ("error" in resp && resp.error?.status === 403) ||
             resp.error?.status === 404
-              ? 'Invalid username or password'
-              : 'An error occurred while logging in';
+              ? "Invalid username or password"
+              : "An error occurred while logging in";
 
           dispatch(
             setToastMessage({
               message: errorMessage,
-              severity: 'error',
+              severity: "error",
             })
           );
         }
@@ -80,8 +80,8 @@ export const extendedApi = api.injectEndpoints({
 
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: 'v1/auth/login/google',
-        method: 'POST',
+        url: "v1/auth/login/google",
+        method: "POST",
         body,
       }),
 
@@ -97,8 +97,8 @@ export const extendedApi = api.injectEndpoints({
 
     facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: 'v1/auth/login/facebook',
-        method: 'POST',
+        url: "v1/auth/login/facebook",
+        method: "POST",
         body,
       }),
 
@@ -114,8 +114,8 @@ export const extendedApi = api.injectEndpoints({
 
     linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: 'v1/auth/login/linkedin',
-        method: 'POST',
+        url: "v1/auth/login/linkedin",
+        method: "POST",
         body,
       }),
 
@@ -131,8 +131,8 @@ export const extendedApi = api.injectEndpoints({
 
     getProfile: build.query<GetProfileResponse, void>({
       query: () => ({
-        url: 'v1/users/me',
-        method: 'GET',
+        url: "v1/users/me",
+        method: "GET",
       }),
       providesTags: [Tags.Profile],
 
@@ -142,8 +142,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'There was an error fetching your profile data',
-              severity: 'error',
+              message: "There was an error fetching your profile data",
+              severity: "error",
             })
           );
         }
@@ -153,7 +153,7 @@ export const extendedApi = api.injectEndpoints({
     getUser: build.query<GetProfileResponse, GetUserRequest>({
       query: ({ userId }) => ({
         url: `v1/users/${userId}`,
-        method: 'GET',
+        method: "GET",
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -162,8 +162,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'There was an error fetching requested profile',
-              severity: 'error',
+              message: "There was an error fetching requested profile",
+              severity: "error",
             })
           );
         }
@@ -172,8 +172,8 @@ export const extendedApi = api.injectEndpoints({
 
     updateProfile: build.mutation<EmptyResponse, UpdateProfileRequest>({
       query: (body) => ({
-        url: 'v1/users/me',
-        method: 'PATCH',
+        url: "v1/users/me",
+        method: "PATCH",
         body,
       }),
       invalidatesTags: [Tags.Profile],
@@ -182,7 +182,7 @@ export const extendedApi = api.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (error) {
-          let message = 'There was an error updating your profile';
+          let message = "There was an error updating your profile";
 
           const customError = error as CustomError;
 
@@ -193,7 +193,7 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message,
-              severity: 'error',
+              severity: "error",
             })
           );
         }
@@ -202,8 +202,8 @@ export const extendedApi = api.injectEndpoints({
 
     sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
       query: ({ email }) => ({
-        url: 'v1/auth/code',
-        method: 'GET',
+        url: "v1/auth/code",
+        method: "GET",
         params: { email },
       }),
 
@@ -213,8 +213,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while sending the verification email',
-              severity: 'error',
+              message: "An error occurred while sending the verification email",
+              severity: "error",
             })
           );
         }
@@ -223,8 +223,8 @@ export const extendedApi = api.injectEndpoints({
 
     createAccount: build.mutation<CreateAccountResponse, CreateAccountRequest>({
       query: (body) => ({
-        url: 'v1/users',
-        method: 'POST',
+        url: "v1/users",
+        method: "POST",
         body,
       }),
 
@@ -234,8 +234,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while creating your account',
-              severity: 'error',
+              message: "An error occurred while creating your account",
+              severity: "error",
             })
           );
         }
@@ -244,8 +244,8 @@ export const extendedApi = api.injectEndpoints({
 
     deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
       query: (body) => ({
-        url: 'v1/users/me',
-        method: 'DELETE',
+        url: "v1/users/me",
+        method: "DELETE",
         body,
       }),
 
@@ -255,8 +255,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while deleting your account',
-              severity: 'error',
+              message: "An error occurred while deleting your account",
+              severity: "error",
             })
           );
         }
@@ -265,8 +265,8 @@ export const extendedApi = api.injectEndpoints({
 
     resetPassword: build.mutation<EmptyResponse, ResetPasswordRequest>({
       query: (body) => ({
-        url: 'v1/users/password',
-        method: 'PUT',
+        url: "v1/users/password",
+        method: "PUT",
         body,
       }),
 
@@ -276,8 +276,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while resetting your password',
-              severity: 'error',
+              message: "An error occurred while resetting your password",
+              severity: "error",
             })
           );
         }
@@ -286,8 +286,8 @@ export const extendedApi = api.injectEndpoints({
 
     changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
       query: (body) => ({
-        url: 'v1/users/me',
-        method: 'PATCH',
+        url: "v1/users/me",
+        method: "PATCH",
         body,
       }),
 
@@ -297,8 +297,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while changing your password',
-              severity: 'error',
+              message: "An error occurred while changing your password",
+              severity: "error",
             })
           );
         }
@@ -307,8 +307,8 @@ export const extendedApi = api.injectEndpoints({
 
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       query: () => ({
-        url: '/v1/idenfy/session',
-        method: 'GET',
+        url: "/v1/idenfy/session",
+        method: "GET",
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -318,8 +318,8 @@ export const extendedApi = api.injectEndpoints({
           dispatch(
             setToastMessage({
               message:
-                'There was an error creating an auth token, try again later.',
-              severity: 'error',
+                "There was an error creating an auth token, try again later.",
+              severity: "error",
             })
           );
         }

@@ -1,10 +1,10 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
-import { EnabledWallet } from '@newm.io/cardano-dapp-wallet-connector';
-import { isProd } from '@newm.io/studio/buildParams';
-import sessionApi from './api';
-import { DecodedJwt, NewmAuthResponse, SessionState } from './types';
+import { PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import { EnabledWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { isProd } from "@newm.io/studio/buildParams";
+import sessionApi from "./api";
+import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
 
 export const sendVerificationEmail = (email: string) => {
   return sessionApi.endpoints.sendVerificationEmail.initiate(
@@ -22,8 +22,8 @@ export const handleSuccessfulAuthentication = (
   const accessTokenExpDate = new Date(accessTokenExp * 1000);
   const refreshTokenExpDate = new Date(refreshTokenExp * 1000);
 
-  Cookies.set('accessToken', accessToken, { expires: accessTokenExpDate });
-  Cookies.set('refreshToken', refreshToken, { expires: refreshTokenExpDate });
+  Cookies.set("accessToken", accessToken, { expires: accessTokenExpDate });
+  Cookies.set("refreshToken", refreshToken, { expires: refreshTokenExpDate });
 
   state.isLoggedIn = true;
 };

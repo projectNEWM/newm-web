@@ -1,23 +1,23 @@
-import { FunctionComponent } from 'react';
-import { Box, Container, Link, Stack, Typography } from '@mui/material';
-import { Form, Formik, FormikHelpers } from 'formik';
-import { Button, HorizontalLine } from '@newm.io/studio/elements';
-import { LogoutButton, PasswordInputField } from '@newm.io/studio/components';
+import { FunctionComponent } from "react";
+import { Box, Container, Link, Stack, Typography } from "@mui/material";
+import { Form, Formik, FormikHelpers } from "formik";
+import { Button, HorizontalLine } from "@newm.io/studio/elements";
+import { LogoutButton, PasswordInputField } from "@newm.io/studio/components";
 import {
   NEWM_STUDIO_TERMS_OF_SERVICE_URL,
   commonYupValidation,
   getUpdatedValues,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import * as Yup from 'yup';
+} from "@newm.io/studio/common";
+import * as Yup from "yup";
 import {
   ChangePasswordRequest,
   emptyProfile,
   useChangePasswordThunk,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import theme from '@newm.io/theme';
-import DeleteAccountDialog from './DeleteAccountDialog';
+} from "@newm.io/studio/modules/session";
+import theme from "@newm.io/theme";
+import DeleteAccountDialog from "./DeleteAccountDialog";
 
 const Settings: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
@@ -30,21 +30,21 @@ const Settings: FunctionComponent = () => {
   const [changePassword, { isLoading }] = useChangePasswordThunk();
 
   const initialValues: ChangePasswordRequest = {
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   };
 
   /**
    * If there is a current password, the new password is required and it can't be the same as the current password.
    */
-  const newPassword = commonYupValidation.newPassword.when('currentPassword', {
+  const newPassword = commonYupValidation.newPassword.when("currentPassword", {
     is: (currentValue: string) => currentValue,
     then: Yup.string()
-      .required('New password is required')
+      .required("New password is required")
       .notOneOf(
-        [Yup.ref('currentPassword')],
-        'New password cannot be the same as the current password'
+        [Yup.ref("currentPassword")],
+        "New password cannot be the same as the current password"
       ),
   });
 
@@ -52,10 +52,10 @@ const Settings: FunctionComponent = () => {
    * If there is a new password, the confirmation password is required and it has to match the new password.
    */
   const confirmPassword = commonYupValidation.confirmPassword.when(
-    'newPassword',
+    "newPassword",
     {
       is: (currentValue: string) => currentValue,
-      then: Yup.string().required('Must match new password'),
+      then: Yup.string().required("Must match new password"),
     }
   );
 
@@ -67,12 +67,12 @@ const Settings: FunctionComponent = () => {
   const validationSchema = isSocialLogin
     ? Yup.object({
         newPassword: commonYupValidation.newPassword.required(
-          'New password is required'
+          "New password is required"
         ),
         confirmPassword,
       })
     : Yup.object({
-        currentPassword: Yup.string().required('Current password is required'),
+        currentPassword: Yup.string().required("Current password is required"),
         newPassword,
         confirmPassword,
       });
@@ -95,14 +95,14 @@ const Settings: FunctionComponent = () => {
       sx={{
         marginX: [null, null, 3],
         paddingBottom: 8,
-        overflow: 'auto',
-        textAlign: ['center', 'center', 'initial'],
+        overflow: "auto",
+        textAlign: ["center", "center", "initial"],
       }}
     >
       <Stack direction="row" justifyContent="space-between" mb={8}>
         <Typography variant="h3" fontWeight={800}>
           SETTINGS
-        </Typography>{' '}
+        </Typography>{" "}
         <Stack>
           <LogoutButton />
         </Stack>
@@ -129,8 +129,8 @@ const Settings: FunctionComponent = () => {
             <Form>
               <Box
                 sx={{
-                  maxWidth: { xs: '340px', lg: '700px' },
-                  margin: '0 auto',
+                  maxWidth: { xs: "340px", lg: "700px" },
+                  margin: "0 auto",
                 }}
               >
                 <Stack rowGap={10}>
@@ -149,8 +149,8 @@ const Settings: FunctionComponent = () => {
 
                     <Stack
                       sx={{
-                        flexDirection: { xs: 'column', lg: 'row' },
-                        justifyContent: 'space-between',
+                        flexDirection: { xs: "column", lg: "row" },
+                        justifyContent: "space-between",
                         rowGap: 2,
                       }}
                     >
@@ -191,7 +191,7 @@ const Settings: FunctionComponent = () => {
                       color={theme.colors.grey100}
                       variant="subtitle1"
                       underline="none"
-                      sx={{ alignSelf: ['center', 'center', 'flex-start'] }}
+                      sx={{ alignSelf: ["center", "center", "flex-start"] }}
                     >
                       Terms of Service
                     </Link>
@@ -206,7 +206,7 @@ const Settings: FunctionComponent = () => {
                 <Stack
                   sx={{
                     columnGap: 2,
-                    flexDirection: { sx: 'null', lg: 'row' },
+                    flexDirection: { sx: "null", lg: "row" },
                     mt: 5,
                     rowGap: 2,
                   }}
@@ -215,8 +215,8 @@ const Settings: FunctionComponent = () => {
                     disabled={!dirty}
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? 'compact'
-                        : 'default'
+                        ? "compact"
+                        : "default"
                     }
                     variant="secondary"
                     color="music"
@@ -229,8 +229,8 @@ const Settings: FunctionComponent = () => {
                     type="submit"
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.lg
-                        ? 'compact'
-                        : 'default'
+                        ? "compact"
+                        : "default"
                     }
                   >
                     Save

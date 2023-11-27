@@ -1,6 +1,6 @@
-import { FunctionComponent } from 'react';
-import { Field, FieldProps } from 'formik';
-import UploadSong from '../UploadSong';
+import { FunctionComponent } from "react";
+import { Field, FieldProps } from "formik";
+import UploadSong from "../UploadSong";
 
 interface UploadSongFieldProps {
   readonly name: string;

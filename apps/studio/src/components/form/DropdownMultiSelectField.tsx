@@ -1,9 +1,9 @@
-import { ForwardRefRenderFunction, SyntheticEvent, forwardRef } from 'react';
-import { Field, FieldProps } from 'formik';
+import { ForwardRefRenderFunction, SyntheticEvent, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
 import {
   DropdownMultiSelect,
   DropdownSelectProps,
-} from '@newm.io/studio/elements';
+} from "@newm.io/studio/elements";
 
 const DropdownMultiSelectField: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -14,7 +14,7 @@ const DropdownMultiSelectField: ForwardRefRenderFunction<
       <DropdownMultiSelect
         {...field}
         {...props}
-        errorMessage={meta.touched ? meta.error : ''}
+        errorMessage={meta.touched ? meta.error : ""}
         handleBlur={form.handleBlur}
         handleChange={(event: SyntheticEvent, value: ReadonlyArray<string>) => {
           form.setFieldValue(field.name, value);

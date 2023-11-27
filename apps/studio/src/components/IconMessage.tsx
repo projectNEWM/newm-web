@@ -1,7 +1,7 @@
-import { FunctionComponent, MouseEventHandler } from 'react';
-import { Stack } from '@mui/material';
-import { Typography } from '@newm.io/studio/elements';
-import ErrorMessage from './styled/ErrorMessage';
+import { FunctionComponent, MouseEventHandler } from "react";
+import { Stack } from "@mui/material";
+import { Typography } from "@newm.io/studio/elements";
+import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {
   readonly icon: JSX.Element;
@@ -25,7 +25,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
     spacing={message || subtitle || errorMessage ? 1 : 0}
     direction="column"
     onClick={onClick}
-    sx={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+    sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
   >
     {icon}
 

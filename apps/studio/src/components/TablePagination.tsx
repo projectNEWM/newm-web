@@ -8,12 +8,12 @@ import {
   TableRow,
   Typography,
   styled,
-} from '@mui/material';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import React from 'react';
-import theme from '@newm.io/theme';
-import StyledPagination from './styled/StyledPagination';
+} from "@mui/material";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import React from "react";
+import theme from "@newm.io/theme";
+import StyledPagination from "./styled/StyledPagination";
 
 const StyledTableCell = styled(TableCell)<TableCellProps>`
   border-color: ${theme.colors.black};
@@ -40,7 +40,7 @@ const TablePagination = ({
   handlePageChange,
   colSpan,
   color = theme.colors.black,
-  rows = 'rows',
+  rows = "rows",
   cellStyles,
 }: TablePaginationProps) => {
   return (
@@ -49,9 +49,9 @@ const TablePagination = ({
         <StyledTableCell sx={cellStyles} colSpan={colSpan}>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: { xs: 'center', sm: 'space-between' },
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: { xs: "center", sm: "space-between" },
+              alignItems: "center",
               mt: 0.5,
             }}
           >
@@ -59,11 +59,11 @@ const TablePagination = ({
               variant="body1"
               sx={{
                 fontWeight: 500,
-                display: { xs: 'none', sm: 'block' },
+                display: { xs: "none", sm: "block" },
               }}
             >
-              Showing {(page - 1) * rowsPerPage + 1} to{' '}
-              {lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows} of{' '}
+              Showing {(page - 1) * rowsPerPage + 1} to{" "}
+              {lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows} of{" "}
               {numberOfRows} {rows}
             </Typography>
             <StyledPagination

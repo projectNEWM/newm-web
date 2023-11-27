@@ -1,5 +1,5 @@
-import { Skeleton, Stack } from '@mui/material';
-import { FunctionComponent } from 'react';
+import { Skeleton, Stack } from "@mui/material";
+import { FunctionComponent } from "react";
 
 const ProfileSkeleton: FunctionComponent = () => {
   return (
@@ -13,14 +13,14 @@ const ProfileSkeleton: FunctionComponent = () => {
         alignItems="center"
         columnGap={3}
         rowGap={2}
-        flexDirection={['column', 'column', 'column', 'row']}
+        flexDirection={["column", "column", "column", "row"]}
       >
         <Skeleton
           sx={{ height: [100, 100, 200], width: [100, 100, 200] }}
           variant="circular"
         />
 
-        <Stack sx={{ alignItems: ['center', 'unset'] }}>
+        <Stack sx={{ alignItems: ["center", "unset"] }}>
           <Skeleton
             height={24}
             sx={{ width: [150, 250, 300] }}
@@ -36,11 +36,11 @@ const ProfileSkeleton: FunctionComponent = () => {
           <Skeleton variant="rectangular" sx={{ width: [100, 150, 200] }} />
         </Stack>
         <Stack
-          alignSelf={[null, null, null, 'flex-start']}
+          alignSelf={[null, null, null, "flex-start"]}
           columnGap={2}
           flexDirection="row"
           justifyContent="flex-end"
-          marginLeft={[null, null, null, 'auto']}
+          marginLeft={[null, null, null, "auto"]}
         >
           <Skeleton variant="rectangular" height={40} width={40} />
           <Skeleton variant="rectangular" height={40} width={40} />
@@ -51,9 +51,9 @@ const ProfileSkeleton: FunctionComponent = () => {
       <Stack
         sx={{
           columnGap: [2, 3, 5],
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
         }}
       >
         {Array.from(new Array(20)).map((item, index) => (

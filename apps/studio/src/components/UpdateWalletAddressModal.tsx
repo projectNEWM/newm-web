@@ -1,18 +1,18 @@
 import {
   selectUi,
   setUpdateWalletAddressModal,
-} from '@newm.io/studio/modules/ui';
-import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { Button } from '@newm.io/studio/elements';
-import { useAppDispatch } from '@newm.io/studio/common';
+} from "@newm.io/studio/modules/ui";
+import { FunctionComponent } from "react";
+import { useSelector } from "react-redux";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Button } from "@newm.io/studio/elements";
+import { useAppDispatch } from "@newm.io/studio/common";
 import {
   getWalletAddress,
   useConnectWallet,
-} from '@newm.io/cardano-dapp-wallet-connector';
-import { updateProfile } from '@newm.io/studio/modules/session';
-import Modal from './Modal';
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { updateProfile } from "@newm.io/studio/modules/session";
+import Modal from "./Modal";
 
 const UpdateWalletAddressModal: FunctionComponent = () => {
   const theme = useTheme();
@@ -23,7 +23,7 @@ const UpdateWalletAddressModal: FunctionComponent = () => {
   } = useSelector(selectUi);
 
   const emptyState = {
-    message: '',
+    message: "",
     isConfirmationRequired: false,
   };
 
@@ -55,8 +55,8 @@ const UpdateWalletAddressModal: FunctionComponent = () => {
           sx={{
             padding: 2,
             background: theme.colors.grey600,
-            textAlign: 'left',
-            maxWidth: '85%',
+            textAlign: "left",
+            maxWidth: "85%",
           }}
         >
           <Typography>{message}</Typography>

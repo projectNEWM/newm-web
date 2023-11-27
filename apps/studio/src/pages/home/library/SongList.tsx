@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
+import React, { MouseEvent, useEffect, useMemo, useState } from "react";
 import {
   Box,
   IconButton,
@@ -7,19 +7,19 @@ import {
   TableContainer,
   TableRow,
   Typography,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import CloseIcon from '@mui/icons-material/Close';
-import theme from '@newm.io/theme';
-import { Button, Tooltip } from '@newm.io/studio/elements';
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import CloseIcon from "@mui/icons-material/Close";
+import theme from "@newm.io/theme";
+import { Button, Tooltip } from "@newm.io/studio/elements";
 import {
   NEWM_SUPPORT_EMAIL,
   PlayerState,
   getResizedAlbumCoverImageUrl,
   isMoreThanThresholdSecondsLater,
   useWindowDimensions,
-} from '@newm.io/studio/common';
+} from "@newm.io/studio/common";
 import {
   MintingStatus as MintingStatusType,
   Song,
@@ -28,17 +28,17 @@ import {
   useFetchSongStreamThunk,
   useGetSongsQuery,
   useHlsJs,
-} from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/modules/song";
 import {
   SongStreamPlaybackIcon,
   TableCell,
   TablePagination,
   TableSkeleton,
-} from '@newm.io/studio/components';
-import { useNavigate } from 'react-router-dom';
-import { MintingStatus } from './MintingStatus';
-import NoSongsYet from './NoSongsYet';
-import TableHead from './Table/TableHead';
+} from "@newm.io/studio/components";
+import { useNavigate } from "react-router-dom";
+import { MintingStatus } from "./MintingStatus";
+import NoSongsYet from "./NoSongsYet";
+import TableHead from "./Table/TableHead";
 
 interface SongListProps {
   rowHeight?: number;
@@ -92,7 +92,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     isSuccess,
   } = useGetSongsQuery(
     {
-      ownerIds: ['me'],
+      ownerIds: ["me"],
       offset: (page - 1) * rowsPerPage,
       limit: songsToRequest,
       phrase: query,
@@ -216,7 +216,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   ) => {
     event.stopPropagation();
     navigate(
-      `${hasStartedMintingProcess ? 'view-details' : 'edit-song'}/${songId}`
+      `${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`
     );
   };
 
@@ -234,8 +234,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
     const mailtoLink =
       `mailto:${NEWM_SUPPORT_EMAIL}` +
-      '?subject=Support Request' +
-      '&body=' +
+      "?subject=Support Request" +
+      "&body=" +
       encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
 
     window.location.href = mailtoLink;
@@ -314,16 +314,16 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                   isSongStale
                     ? undefined
                     : {
-                        cursor: 'pointer',
-                        WebkitTapHighlightColor: 'transparent',
-                        '&:hover, &:focus': {
+                        cursor: "pointer",
+                        WebkitTapHighlightColor: "transparent",
+                        "&:hover, &:focus": {
                           background: theme.colors.activeBackground,
                         },
                       }
                 }
               >
                 <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
                     {isSongStale ? (
                       <Tooltip
                         title={
@@ -335,8 +335,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                           sx={{
                             marginRight: [2, 4],
                             marginLeft: [0, 1],
-                            height: '24px',
-                            width: '40px',
+                            height: "24px",
+                            width: "40px",
                           }}
                           color="error"
                         />
@@ -347,8 +347,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                         sx={{
                           marginRight: [2, 4],
                           marginLeft: [0, 1],
-                          height: '40px',
-                          width: '40px',
+                          height: "40px",
+                          width: "40px",
                         }}
                       >
                         <SongStreamPlaybackIcon
@@ -361,55 +361,55 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     )}
                     <img
                       style={{
-                        borderRadius: '4px',
-                        width: '40px',
-                        height: '40px',
+                        borderRadius: "4px",
+                        width: "40px",
+                        height: "40px",
                       }}
                       src={getResizedAlbumCoverImageUrl(song.coverArtUrl)}
                       alt="Album cover"
                     />
                     <Box
                       sx={{
-                        fontWeight: '500',
-                        paddingLeft: '12px',
-                        overflow: 'auto',
-                        whiteSpace: 'nowrap',
-                        maxWidth: { xs: '110px', sm: 'none' },
+                        fontWeight: "500",
+                        paddingLeft: "12px",
+                        overflow: "auto",
+                        whiteSpace: "nowrap",
+                        maxWidth: { xs: "110px", sm: "none" },
                       }}
                     >
                       {song.title}
                     </Box>
                   </Box>
                 </TableCell>
-                <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
+                      display: "flex",
+                      alignItems: "center",
                     }}
                   >
                     <MintingStatus mintingStatus={song.mintingStatus} />
                   </Box>
                 </TableCell>
-                <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>
-                  {song.genres.join(', ')}
+                <TableCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
+                  {song.genres.join(", ")}
                 </TableCell>
                 <TableCell
                   sx={{
-                    textAlign: 'end',
-                    display: { xs: 'none', md: 'table-cell' },
+                    textAlign: "end",
+                    display: { xs: "none", md: "table-cell" },
                   }}
                 >
                   {song.duration
                     ? convertMillisecondsToSongFormat(song.duration)
-                    : '--:--'}
+                    : "--:--"}
                 </TableCell>
                 <TableCell
                   sx={{
                     paddingLeft: [0, 1],
                     paddingRight: [1, 3],
-                    width: '0',
-                    textAlign: 'end',
+                    width: "0",
+                    textAlign: "end",
                   }}
                 >
                   {isSongStale ? (
@@ -453,7 +453,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
             handlePageChange={handlePageChange}
             colSpan={5}
             rows="songs"
-            cellStyles={{ paddingTop: '12px' }}
+            cellStyles={{ paddingTop: "12px" }}
           />
         )}
       </Table>

@@ -5,11 +5,11 @@ import {
   TextareaHTMLAttributes,
   forwardRef,
   useState,
-} from 'react';
-import { Box, Stack, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import theme from 'newm-theme';
-import ErrorMessage from './styled/ErrorMessage';
+} from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import theme from "newm-theme";
+import ErrorMessage from "./styled/ErrorMessage";
 // import { WidthType } from "common"; TODO
 
 export interface TextAreaProps
@@ -22,14 +22,14 @@ export interface TextAreaProps
   readonly isOptional?: boolean;
 }
 
-const StyledRootElement = styled('div')`
+const StyledRootElement = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
 `;
 
-const StyledTextAreaElement = styled('textarea')`
+const StyledTextAreaElement = styled("textarea")`
   display: flex;
   flex-grow: 1;
   background: ${theme.colors.grey600};
@@ -63,7 +63,7 @@ export const TextArea: ForwardRefRenderFunction<
     endAdornment,
     disabled = false,
     isOptional = true,
-    widthType = 'default',
+    widthType = "default",
     ...rest
   },
   ref
@@ -99,11 +99,11 @@ export const TextArea: ForwardRefRenderFunction<
       spacing="4px"
       sx={{
         opacity: disabled ? 0.5 : 1,
-        width: '100%',
-        textAlign: 'left',
-        [theme.breakpoints.down('md')]: {
-          margin: '0 auto',
-          maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
+        width: "100%",
+        textAlign: "left",
+        [theme.breakpoints.down("md")]: {
+          margin: "0 auto",
+          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         },
       }}
     >
@@ -137,15 +137,15 @@ export const TextArea: ForwardRefRenderFunction<
         onMouseLeave={() => setIsHovered(false)}
         sx={{
           borderWidth: theme.inputField.borderWidth,
-          borderStyle: 'solid',
+          borderStyle: "solid",
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
             isHovered,
             isFocused
           ),
-          borderRadius: '4px',
-          overflow: 'hidden',
+          borderRadius: "4px",
+          overflow: "hidden",
           background: theme.colors.grey500,
         }}
       >

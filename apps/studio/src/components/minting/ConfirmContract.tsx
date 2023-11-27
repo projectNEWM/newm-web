@@ -1,18 +1,18 @@
-import { Box, IconButton, Stack } from '@mui/material';
-import HelpIcon from '@mui/icons-material/Help';
-import { HorizontalLine, Tooltip, Typography } from '@newm.io/studio/elements';
-import { Formik, FormikProps } from 'formik';
-import { selectSong } from '@newm.io/studio/modules/song';
-import { FunctionComponent, useEffect } from 'react';
-import agreementPreview from '@newm.io/studio/assets/images/artist-agreement-preview.jpg';
+import { Box, IconButton, Stack } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import { HorizontalLine, Tooltip, Typography } from "@newm.io/studio/elements";
+import { Formik, FormikProps } from "formik";
+import { selectSong } from "@newm.io/studio/modules/song";
+import { FunctionComponent, useEffect } from "react";
+import agreementPreview from "@newm.io/studio/assets/images/artist-agreement-preview.jpg";
 import {
   COLLABORATOR_FEE_IN_ADA,
   MINTING_FEE_IN_ADA,
   useAppSelector,
-} from '@newm.io/studio/common';
-import theme from '@newm.io/theme';
-import ViewPDF from '../ViewPDF';
-import CheckboxField from '../form/CheckboxField';
+} from "@newm.io/studio/common";
+import theme from "@newm.io/theme";
+import ViewPDF from "../ViewPDF";
+import CheckboxField from "../form/CheckboxField";
 
 interface ConfirmContractProps {
   readonly songTitle: string;
@@ -29,7 +29,7 @@ interface FormValues {
 }
 
 type FormContentProps = FormikProps<FormValues> &
-  Omit<ConfirmContractProps, 'onConfirm'>;
+  Omit<ConfirmContractProps, "onConfirm">;
 
 /**
  * Allows for viewing and accepting an artist agreement contract.
@@ -102,7 +102,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
         <ViewPDF
           isViewed={values.hasViewedAgreement}
-          onViewPDF={() => setFieldValue('hasViewedAgreement', true)}
+          onViewPDF={() => setFieldValue("hasViewedAgreement", true)}
           data={artistAgreement}
           preview={agreementPreview}
         />
@@ -114,13 +114,13 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           label={
             isCoCreator ? (
               <Typography variant="subtitle1" color="white" fontSize={12}>
-                I confirm that I am the primary creator of{' '}
+                I confirm that I am the primary creator of{" "}
                 <strong>{songTitle}</strong> and all mentioned collaborators are
                 accurate.
               </Typography>
             ) : (
               <Typography variant="subtitle1" color="white" fontSize={12}>
-                I confirm that I am the exclusive creator of{' '}
+                I confirm that I am the exclusive creator of{" "}
                 <strong>{songTitle}.</strong>
               </Typography>
             )
@@ -134,7 +134,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             <Typography
               variant="subtitle1"
               sx={{
-                color: 'white',
+                color: "white",
                 fontSize: 12,
                 opacity: values.hasViewedAgreement ? 1 : 0.5,
               }}
@@ -157,22 +157,22 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           />
         </Typography>
 
-        <HorizontalLine style={{ marginTop: '24px' }} />
+        <HorizontalLine style={{ marginTop: "24px" }} />
 
         <Stack direction="row" columnGap={0.5}>
           <Typography variant="subtitle1" color="white" fontSize={12}>
-            The minting process has a fee of{' '}
+            The minting process has a fee of{" "}
             <strong>{`~₳${TotalFeeToMint}`}</strong> and may take 3-15 days to
             complete.
           </Typography>
 
-          <Tooltip title={' '}>
+          <Tooltip title={" "}>
             <IconButton sx={{ padding: 0 }}>
               <HelpIcon
                 sx={{
                   color: theme.colors.grey100,
-                  height: '18px',
-                  width: '18px',
+                  height: "18px",
+                  width: "18px",
                 }}
               />
             </IconButton>

@@ -2,15 +2,15 @@ import {
   selectUi,
   setIsConnectWalletModalOpen,
   setToastMessage,
-} from '@newm.io/studio/modules/ui';
-import { FunctionComponent } from 'react';
+} from "@newm.io/studio/modules/ui";
+import { FunctionComponent } from "react";
 import {
   WalletModal,
   useConnectWallet,
-} from '@newm.io/cardano-dapp-wallet-connector';
-import { useTheme } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
-import { saveWalletAddress } from '@newm.io/studio/modules/session';
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { useTheme } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import { saveWalletAddress } from "@newm.io/studio/modules/session";
 
 const ConnectWalletModal: FunctionComponent = () => {
   const theme = useTheme();
@@ -23,8 +23,8 @@ const ConnectWalletModal: FunctionComponent = () => {
 
     dispatch(
       setToastMessage({
-        message: 'Wallet successfully connected',
-        severity: 'success',
+        message: "Wallet successfully connected",
+        severity: "success",
       })
     );
 
@@ -35,7 +35,7 @@ const ConnectWalletModal: FunctionComponent = () => {
     dispatch(
       setToastMessage({
         message,
-        severity: 'error',
+        severity: "error",
       })
     );
   };
@@ -53,7 +53,7 @@ const ConnectWalletModal: FunctionComponent = () => {
         borderBottomColor: theme.colors.grey500,
       }}
       disconnectButtonStyle={{
-        borderRadius: '4px',
+        borderRadius: "4px",
         border: `2px solid ${theme.colors.white}`,
       }}
       isInverted={true}

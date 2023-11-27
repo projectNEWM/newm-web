@@ -1,7 +1,7 @@
-import { FunctionComponent } from 'react';
-import { Box } from '@mui/material';
-import { Field, FieldProps } from 'formik';
-import { Button } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import { Box } from "@mui/material";
+import { Field, FieldProps } from "formik";
+import { Button } from "@newm.io/studio/elements";
 
 interface FilteredTagsFieldProps {
   readonly name: string;

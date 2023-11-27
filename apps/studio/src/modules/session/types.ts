@@ -62,18 +62,18 @@ export interface DecodedJwt {
 export interface ProfileFormValues
   extends Omit<
     Profile,
-    | 'id'
-    | 'oauthType'
-    | 'oauthId'
-    | 'verificationStatus'
-    | 'pictureUrl'
-    | 'bannerUrl'
-    | 'companyLogoUrl'
-    | 'companyIpRights'
-    | 'email'
-    | 'role'
-    | 'firstName'
-    | 'lastName'
+    | "id"
+    | "oauthType"
+    | "oauthId"
+    | "verificationStatus"
+    | "pictureUrl"
+    | "bannerUrl"
+    | "companyLogoUrl"
+    | "companyIpRights"
+    | "email"
+    | "role"
+    | "firstName"
+    | "lastName"
   > {
   readonly pictureUrl?: string | File;
   readonly bannerUrl?: string | File;
@@ -85,7 +85,7 @@ export interface ProfileFormValues
   readonly lastName?: string;
 }
 
-export interface UpdateProfileRequest extends Omit<ProfileFormValues, 'email'> {
+export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
   readonly newPassword?: string;
   readonly confirmPassword?: string;
   readonly authCode?: number;
@@ -143,7 +143,7 @@ export interface LinkedInLoginRequest {
 }
 
 export enum VerificationStatus {
-  Verified = 'Verified',
-  Pending = 'Pending',
-  Unverified = 'Unverified',
+  Verified = "Verified",
+  Pending = "Pending",
+  Unverified = "Unverified",
 }

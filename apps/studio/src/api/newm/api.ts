@@ -1,11 +1,11 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseUrls } from '@newm.io/studio/buildParams';
-import { Tags } from './types';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseUrls } from "@newm.io/studio/buildParams";
+import { Tags } from "./types";
 import {
   axiosBaseQuery,
   fetchBaseQueryWithReauth,
   prepareAuthHeader,
-} from '../utils';
+} from "../utils";
 
 export const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.newm,
@@ -13,7 +13,7 @@ export const baseQuery = axiosBaseQuery({
 });
 
 const api = createApi({
-  reducerPath: 'newmApi',
+  reducerPath: "newmApi",
   tagTypes: [
     Tags.Collaboration,
     Tags.Genres,

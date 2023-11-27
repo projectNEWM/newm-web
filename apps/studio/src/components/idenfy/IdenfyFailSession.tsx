@@ -1,24 +1,24 @@
-import { Stack, Typography } from '@mui/material';
-import { FunctionComponent, useEffect } from 'react';
-import { Button } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+import { Stack, Typography } from "@mui/material";
+import { FunctionComponent, useEffect } from "react";
+import { Button } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 
 const IdenfyFailSession: FunctionComponent = () => {
   useEffect(() => {
-    window.parent.postMessage('idenfy-verification-fail');
+    window.parent.postMessage("idenfy-verification-fail");
   }, []);
 
   const handleClick = () => {
-    window.parent.postMessage('idenfy-modal-close');
+    window.parent.postMessage("idenfy-modal-close");
   };
 
   return (
     <Stack
       sx={{
-        alignItems: 'center',
+        alignItems: "center",
         backgroundColor: theme.colors.black,
         flexGrow: 1,
-        justifyContent: 'center',
+        justifyContent: "center",
       }}
     >
       <Typography variant="h1">OOPS!</Typography>

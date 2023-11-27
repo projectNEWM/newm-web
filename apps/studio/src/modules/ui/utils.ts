@@ -1,5 +1,5 @@
-import { setProgressBarModal } from './slice';
-import { UploadProgressParams } from './types';
+import { setProgressBarModal } from "./slice";
+import { UploadProgressParams } from "./types";
 
 /**
  * Uses a progress decimal value (from 0 to 1) to update the

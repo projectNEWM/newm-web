@@ -1,5 +1,5 @@
-import { Dialog as MuiDialog, styled } from '@mui/material';
-import theme from 'newm-theme';
+import { Dialog as MuiDialog, styled } from "@mui/material";
+import theme from "newm-theme";
 
 const Dialog = styled(MuiDialog)`
   & > .MuiBackdrop-root {

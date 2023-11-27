@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import { Typography } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import { Typography } from "@newm.io/studio/elements";
 
 interface SideBarHeaderProps {
   readonly children: string;

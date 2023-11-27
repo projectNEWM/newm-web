@@ -1,6 +1,6 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
-import Cookies from 'js-cookie';
+import { FunctionComponent, useEffect, useState } from "react";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import Cookies from "js-cookie";
 import {
   VerificationStatus,
   emptyProfile,
@@ -8,8 +8,8 @@ import {
   selectSession,
   startVerificationTimer,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
+} from "@newm.io/studio/modules/session";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -36,15 +36,15 @@ const IdenfyModal: FunctionComponent = () => {
    * Sends a success toast message.
    */
   if (isVerified && verificationPingStartedAt) {
-    Cookies.remove('idenfyAuthToken');
+    Cookies.remove("idenfyAuthToken");
 
     dispatch(removeVerificationTimer());
 
     dispatch(
       setToastMessage({
-        heading: 'Congrats!',
+        heading: "Congrats!",
         message: "You're now verified.",
-        severity: 'success',
+        severity: "success",
       })
     );
   }
@@ -57,17 +57,17 @@ const IdenfyModal: FunctionComponent = () => {
     if (!isVerified) {
       const handleMessage = (event: MessageEvent) => {
         if (
-          event?.data === 'idenfy-verification-success' &&
+          event?.data === "idenfy-verification-success" &&
           !verificationPingStartedAt
         ) {
           dispatch(startVerificationTimer());
         }
       };
 
-      window.addEventListener('message', handleMessage);
+      window.addEventListener("message", handleMessage);
 
       return () => {
-        window.removeEventListener('message', handleMessage);
+        window.removeEventListener("message", handleMessage);
       };
     }
   }, [dispatch, isVerified, verificationPingStartedAt]);

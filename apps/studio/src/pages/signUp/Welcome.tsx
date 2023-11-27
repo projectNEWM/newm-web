@@ -1,9 +1,9 @@
-import { Box, Stack, useTheme } from '@mui/material';
-import { Button, HorizontalLine, Typography } from '@newm.io/studio/elements';
-import { FunctionComponent, useState } from 'react';
-import { useAuthenticatedRedirect } from '@newm.io/studio/common';
-import { history } from '@newm.io/studio/common/history';
-import { FormikValues, useFormikContext } from 'formik';
+import { Box, Stack, useTheme } from "@mui/material";
+import { Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
+import { FunctionComponent, useState } from "react";
+import { useAuthenticatedRedirect } from "@newm.io/studio/common";
+import { history } from "@newm.io/studio/common/history";
+import { FormikValues, useFormikContext } from "formik";
 import {
   FacebookLogin,
   GoogleLogin,
@@ -11,7 +11,7 @@ import {
   PasswordInputField,
   ResponsiveNEWMLogo,
   TextInputField,
-} from '@newm.io/studio/components';
+} from "@newm.io/studio/components";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
@@ -28,13 +28,13 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Box alignItems="center" display="flex" flexDirection="column">
-      <Stack sx={{ alignItems: 'center', gap: 1, width: '100%' }}>
+      <Stack sx={{ alignItems: "center", gap: 1, width: "100%" }}>
         <Button
           color="music"
           onClick={() => {
-            history.push('/login');
+            history.push("/login");
           }}
-          sx={{ alignSelf: 'flex-end' }}
+          sx={{ alignSelf: "flex-end" }}
           variant="secondary"
           width="compact"
         >

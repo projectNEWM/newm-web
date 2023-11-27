@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from "react";
 import {
   Box,
   Stack,
@@ -8,19 +8,19 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from '@mui/material';
-import theme from '@newm.io/theme';
-import { useGetCollaboratorsQuery } from '@newm.io/studio/modules/song';
-import { useWindowDimensions } from '@newm.io/studio/common';
+} from "@mui/material";
+import theme from "@newm.io/theme";
+import { useGetCollaboratorsQuery } from "@newm.io/studio/modules/song";
+import { useWindowDimensions } from "@newm.io/studio/common";
 import {
   TableCell,
   TableHeadCell,
   TablePagination,
   TableSkeleton,
-} from '@newm.io/studio/components';
-import { history } from '@newm.io/studio/common/history';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import NoOwnersYet from './NoOwnersYet';
+} from "@newm.io/studio/components";
+import { history } from "@newm.io/studio/common/history";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import NoOwnersYet from "./NoOwnersYet";
 
 interface OwnersTableProps {
   query: string;
@@ -75,7 +75,7 @@ export default function OwnersTable({
   };
 
   const handleKeyDown = (event: KeyboardEvent, id: string) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleNavigateToOwner(id);
     }
   };
@@ -118,11 +118,11 @@ export default function OwnersTable({
       <Table size="small" aria-label="Song List">
         <TableHead>
           <TableRow>
-            <TableHeadCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+            <TableHeadCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
               COLLABORATORS
             </TableHeadCell>
             <TableHeadCell>OWNER OF</TableHeadCell>
-            <TableHeadCell sx={{ textAlign: 'end' }}>EMAIL</TableHeadCell>
+            <TableHeadCell sx={{ textAlign: "end" }}>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -132,10 +132,10 @@ export default function OwnersTable({
                 email,
                 songCount,
                 user: {
-                  firstName = '',
-                  id = '',
-                  lastName = '',
-                  pictureUrl = '',
+                  firstName = "",
+                  id = "",
+                  lastName = "",
+                  pictureUrl = "",
                 } = {},
               },
               index
@@ -148,30 +148,30 @@ export default function OwnersTable({
                 sx={
                   id
                     ? {
-                        cursor: 'pointer',
-                        WebkitTapHighlightColor: 'transparent',
-                        '&:hover, &:focus': {
+                        cursor: "pointer",
+                        WebkitTapHighlightColor: "transparent",
+                        "&:hover, &:focus": {
                           background: theme.colors.activeBackground,
                         },
                       }
                     : undefined
                 }
               >
-                <TableCell sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   <Stack
                     sx={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
+                      flexDirection: "row",
+                      alignItems: "center",
                       columnGap: 1.5,
-                      whiteSpace: 'nowrap',
+                      whiteSpace: "nowrap",
                     }}
                   >
                     {pictureUrl ? (
                       <img
                         style={{
-                          borderRadius: '50%',
-                          width: '40px',
-                          height: '40px',
+                          borderRadius: "50%",
+                          width: "40px",
+                          height: "40px",
                         }}
                         src={pictureUrl}
                         alt="Profile"
@@ -181,8 +181,8 @@ export default function OwnersTable({
                         <AccountCircleIcon
                           sx={{
                             color: theme.colors.grey200,
-                            fontSize: '46px',
-                            marginLeft: '-2px',
+                            fontSize: "46px",
+                            marginLeft: "-2px",
                           }}
                         />
 
@@ -197,18 +197,18 @@ export default function OwnersTable({
                 <TableCell>
                   <Box
                     sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      whiteSpace: 'nowrap',
+                      display: "flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {`${songCount} song${songCount > 1 ? 's' : ''}`}
+                    {`${songCount} song${songCount > 1 ? "s" : ""}`}
                   </Box>
                 </TableCell>
                 <TableCell
                   sx={{
-                    textAlign: 'end',
-                    whiteSpace: 'nowrap',
+                    textAlign: "end",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {email}
@@ -226,7 +226,7 @@ export default function OwnersTable({
             handlePageChange={handlePageChange}
             colSpan={3}
             rows="collaborators"
-            cellStyles={{ paddingTop: '12px' }}
+            cellStyles={{ paddingTop: "12px" }}
           />
         )}
       </Table>

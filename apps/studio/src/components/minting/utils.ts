@@ -1,4 +1,4 @@
-import { CollaboratorInfo, Collaborators } from '@newm.io/studio/modules/song';
+import { CollaboratorInfo, Collaborators } from "@newm.io/studio/modules/song";
 
 /**
  * Returns the collaborator details based on the provided email.

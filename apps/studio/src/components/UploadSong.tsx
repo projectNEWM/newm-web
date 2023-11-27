@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack } from "@mui/material";
 import {
   FunctionComponent,
   MouseEventHandler,
@@ -6,21 +6,21 @@ import {
   useEffect,
   useRef,
   useState,
-} from 'react';
-import { FileRejection, useDropzone } from 'react-dropzone';
-import { useTheme } from '@mui/material/styles';
-import AddSongIcon from '@newm.io/studio/assets/images/AddSong';
-import CheckCircleIcon from '@newm.io/studio/assets/images/CheckCircle';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import StopIcon from '@mui/icons-material/Stop';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import { AudioVisualizer } from 'react-audio-visualize';
-import { Howl } from 'howler';
-import { getFileBinary } from '@newm.io/studio/common';
-import IconMessage from './IconMessage';
-import DashedOutline from './styled/DashedOutline';
-import ErrorMessage from './styled/ErrorMessage';
-import SolidOutline from './styled/SolidOutline';
+} from "react";
+import { FileRejection, useDropzone } from "react-dropzone";
+import { useTheme } from "@mui/material/styles";
+import AddSongIcon from "@newm.io/studio/assets/images/AddSong";
+import CheckCircleIcon from "@newm.io/studio/assets/images/CheckCircle";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import { AudioVisualizer } from "react-audio-visualize";
+import { Howl } from "howler";
+import { getFileBinary } from "@newm.io/studio/common";
+import IconMessage from "./IconMessage";
+import DashedOutline from "./styled/DashedOutline";
+import ErrorMessage from "./styled/ErrorMessage";
+import SolidOutline from "./styled/SolidOutline";
 
 interface UploadSongProps {
   readonly errorMessage?: string;
@@ -108,8 +108,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         // Check if the file type is valid or display other file errors
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
-            if (error.code === 'file-invalid-type') {
-              throw new Error('File type must be .flac or .wav');
+            if (error.code === "file-invalid-type") {
+              throw new Error("File type must be .flac or .wav");
             } else {
               throw new Error(error.message);
             }
@@ -142,7 +142,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         }
 
         onChange(firstFile);
-        onError('');
+        onError("");
 
         // stop current song if it's playing
         if (song?.playing()) song.stop();
@@ -161,8 +161,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     onDrop: handleDrop,
     multiple: false,
     accept: {
-      'audio/flac': ['.flac'],
-      'audio/wav': ['.wav'],
+      "audio/flac": [".flac"],
+      "audio/wav": [".wav"],
     },
   });
 
@@ -220,13 +220,13 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
       <Box
         {...getRootProps()}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           flexGrow: 1,
           height: 100,
-          width: '100%',
+          width: "100%",
           maxWidth: theme.inputField.maxWidth,
-          cursor: 'pointer',
+          cursor: "pointer",
         }}
       >
         <input {...getInputProps()} />
@@ -236,9 +236,9 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               flexGrow: 1,
             }}
           >
@@ -285,8 +285,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       justifyContent="center"
                       alignItems="center"
                       sx={{
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
                       }}
                     >
@@ -303,8 +303,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
                       alignItems="center"
                       onClick={isSongPlaying ? handleStopSong : handlePlaySong}
                       sx={{
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
                       }}
                     >
@@ -330,7 +330,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
             </Box>
           </SolidOutline>
         ) : (
-          <DashedOutline sx={{ display: 'flex', flexGrow: 1 }}>
+          <DashedOutline sx={{ display: "flex", flexGrow: 1 }}>
             <IconMessage
               icon={<AddSongIcon />}
               message="Drag and drop or browse your song"
@@ -351,7 +351,7 @@ const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({
 }) => {
   const theme = useTheme();
 
-  const progressPercentage = progress * 100 + '%';
+  const progressPercentage = progress * 100 + "%";
 
   return (
     <Box
@@ -365,7 +365,7 @@ const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({
       sx={{
         opacity: 0.5,
         backgroundColor: theme.colors.black,
-        transition: isPlaying ? 'width 1s linear' : 'width 0',
+        transition: isPlaying ? "width 1s linear" : "width 0",
       }}
     />
   );

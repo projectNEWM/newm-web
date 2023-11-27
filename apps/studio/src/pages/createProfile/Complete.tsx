@@ -1,15 +1,15 @@
-import { FunctionComponent } from 'react';
-import { Box, Link, useTheme } from '@mui/material';
+import { FunctionComponent } from "react";
+import { Box, Link, useTheme } from "@mui/material";
 import {
   Button,
   GradientTypography,
   Typography,
-} from '@newm.io/studio/elements';
-import { ResponsiveNEWMLogo } from '@newm.io/studio/components';
+} from "@newm.io/studio/elements";
+import { ResponsiveNEWMLogo } from "@newm.io/studio/components";
 import {
   NEWM_PRIVACY_POLICY_URL,
   NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-} from '@newm.io/studio/common';
+} from "@newm.io/studio/common";
 
 const Complete: FunctionComponent = () => {
   const theme = useTheme();
@@ -17,19 +17,19 @@ const Complete: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column',
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
         flexGrow: 1,
-        height: '100%',
-        justifyContent: ['space-between', 'space-between', 'flex-start'],
+        height: "100%",
+        justifyContent: ["space-between", "space-between", "flex-start"],
       }}
     >
       <div>
         <Box mb={4}>
           <ResponsiveNEWMLogo />
         </Box>
-        <Typography variant="h1" sx={{ display: 'block' }}>
+        <Typography variant="h1" sx={{ display: "block" }}>
           Aaaaand we&apos;re done.
         </Typography>
 
@@ -44,7 +44,7 @@ const Complete: FunctionComponent = () => {
       </div>
       <Box alignItems="center" display="flex" flexDirection="column" mb={4}>
         <Button
-          sx={{ mb: [null, null, 3], mt: [2, 2, null], order: ['2', '2', '0'] }}
+          sx={{ mb: [null, null, 3], mt: [2, 2, null], order: ["2", "2", "0"] }}
           type="submit"
         >
           Enter NEWM
@@ -53,7 +53,7 @@ const Complete: FunctionComponent = () => {
         <Typography color="grey200" variant="subtitle1">
           By clicking &apos;Enter NEWM&apos;, you agree to
           <br />
-          NEWM&apos;s{' '}
+          NEWM&apos;s{" "}
           <Link
             color={theme.colors.grey200}
             href={NEWM_PRIVACY_POLICY_URL}
@@ -63,7 +63,7 @@ const Complete: FunctionComponent = () => {
           >
             Privacy Policy
           </Link>
-          {' & '}
+          {" & "}
           <Link
             color={theme.colors.grey200}
             href={NEWM_STUDIO_TERMS_OF_SERVICE_URL}

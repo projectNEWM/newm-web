@@ -1,6 +1,6 @@
-import { Box, Stack } from '@mui/material';
-import { useParams } from 'react-router';
-import { useWindowDimensions } from '@newm.io/studio/common';
+import { Box, Stack } from "@mui/material";
+import { useParams } from "react-router";
+import { useWindowDimensions } from "@newm.io/studio/common";
 import {
   CopyrightInputField,
   PlaySong,
@@ -9,16 +9,16 @@ import {
   TextAreaField,
   TextInputField,
   UploadImageField,
-} from '@newm.io/studio/components';
-import { HorizontalLine, Typography } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
-import { emptySong, useGetSongQuery } from '@newm.io/studio/modules/song';
-import { Formik } from 'formik';
-import { SongRouteParams } from './types';
+} from "@newm.io/studio/components";
+import { HorizontalLine, Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
+import { emptySong, useGetSongQuery } from "@newm.io/studio/modules/song";
+import { Formik } from "formik";
+import { SongRouteParams } from "./types";
 
 const SongInfo = () => {
   const windowWidth = useWindowDimensions()?.width;
-  const { songId } = useParams<'songId'>() as SongRouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const {
     data: {
@@ -56,7 +56,7 @@ const SongInfo = () => {
     phonographicCopyrightOwner,
     isrc,
     releaseDate,
-    isExplicit: parentalAdvisory === 'Explicit',
+    isExplicit: parentalAdvisory === "Explicit",
     isMinting: false,
     language,
     consentsToContract: false,
@@ -64,7 +64,7 @@ const SongInfo = () => {
     barcodeType,
     publicationDate,
     iswc,
-    userIpi: ipis?.join(', '),
+    userIpi: ipis?.join(", "),
   };
 
   return (
@@ -73,12 +73,12 @@ const SongInfo = () => {
         mt: 5,
         textAlign:
           windowWidth && windowWidth > theme.breakpoints.values.md
-            ? 'left'
-            : 'center',
+            ? "left"
+            : "center",
         maxWidth: [
           theme.inputField.maxWidth,
           theme.inputField.maxWidth,
-          '700px',
+          "700px",
         ],
       }}
     >
@@ -95,13 +95,13 @@ const SongInfo = () => {
             </Typography>
             <Stack
               sx={{
-                display: 'flex',
-                flexDirection: ['column', 'column', 'row'],
+                display: "flex",
+                flexDirection: ["column", "column", "row"],
                 columnGap: [undefined, undefined, 1.5],
                 rowGap: [2, null, 3],
-                maxWidth: [undefined, undefined, '700px'],
+                maxWidth: [undefined, undefined, "700px"],
                 marginBottom: 3,
-                alignItems: ['center', 'center', 'unset'],
+                alignItems: ["center", "center", "unset"],
               }}
             >
               <Stack
@@ -115,14 +115,14 @@ const SongInfo = () => {
 
                 <SolidOutline
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     flexGrow: 1,
-                    height: '100px',
+                    height: "100px",
                   }}
                 >
-                  <PlaySong id={songId || ''} />
+                  <PlaySong id={songId || ""} />
                 </SolidOutline>
               </Stack>
 
@@ -136,7 +136,7 @@ const SongInfo = () => {
                 </Typography>
 
                 <UploadImageField
-                  rootSx={{ width: '100%', alignSelf: 'center' }}
+                  rootSx={{ width: "100%", alignSelf: "center" }}
                   name="coverArtUrl"
                   emptyMessage="Loading..."
                   hasPreviewOption={true}
@@ -147,23 +147,23 @@ const SongInfo = () => {
             <Stack
               spacing={3}
               sx={{
-                marginX: ['auto', 'auto', 'unset'],
+                marginX: ["auto", "auto", "unset"],
                 maxWidth: [
                   theme.inputField.maxWidth,
                   theme.inputField.maxWidth,
-                  '700px',
+                  "700px",
                 ],
-                alignSelf: ['center', 'center', 'unset'],
-                width: '100%',
+                alignSelf: ["center", "center", "unset"],
+                width: "100%",
               }}
             >
               <Stack
                 sx={{
-                  display: 'grid',
+                  display: "grid",
                   gridTemplateColumns: [
-                    'repeat(1, 1fr)',
+                    "repeat(1, 1fr)",
                     null,
-                    'repeat(2, 1fr)',
+                    "repeat(2, 1fr)",
                   ],
                   rowGap: [2, null, 3],
                   columnGap: [undefined, undefined, 1.5],
@@ -174,7 +174,7 @@ const SongInfo = () => {
                   isOptional={false}
                   label="SONG TITLE"
                   name="title"
-                  title={values.title || ''}
+                  title={values.title || ""}
                   widthType="full"
                 />
 
@@ -183,7 +183,7 @@ const SongInfo = () => {
                   isOptional={false}
                   label="GENRE"
                   name="genres"
-                  title={values.genres?.join(', ') || ''}
+                  title={values.genres?.join(", ") || ""}
                 />
 
                 <TextInputField
@@ -196,7 +196,7 @@ const SongInfo = () => {
                   disabled={true}
                   label="MOOD"
                   name="moods"
-                  title={values.moods?.join(', ') || ''}
+                  title={values.moods?.join(", ") || ""}
                 />
               </Stack>
 
@@ -204,7 +204,7 @@ const SongInfo = () => {
                 disabled={true}
                 label="DESCRIPTION"
                 name="description"
-                title={values.description || ''}
+                title={values.description || ""}
               />
 
               <Stack>
@@ -215,11 +215,11 @@ const SongInfo = () => {
               Advanced Details
             </Typography>
             <Stack
-              marginX={['auto', 'auto', 'unset']}
+              marginX={["auto", "auto", "unset"]}
               maxWidth={[
                 theme.inputField.maxWidth,
                 theme.inputField.maxWidth,
-                '700px',
+                "700px",
               ]}
               spacing={3}
             >
@@ -228,13 +228,13 @@ const SongInfo = () => {
                 name="isExplicit"
                 title="Does the song contain explicit content?"
                 tooltipText={
-                  'Explicit content includes strong or discriminatory language, ' +
-                  'or depictions of sex, violence or substance abuse.'
+                  "Explicit content includes strong or discriminatory language, " +
+                  "or depictions of sex, violence or substance abuse."
                 }
               />
               <Stack
                 display="grid"
-                gridTemplateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
+                gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}
                 rowGap={[2, null, 3]}
                 columnGap={[undefined, undefined, 1.5]}
               >
@@ -245,10 +245,10 @@ const SongInfo = () => {
                   name="releaseDate"
                   type="date"
                   tooltipText={
-                    'When selecting a date to release your song on our ' +
-                    'platform, please remember to factor in approval from any ' +
-                    'contributors/featured artists as well as mint processing time ' +
-                    'which can take up to 15 days.'
+                    "When selecting a date to release your song on our " +
+                    "platform, please remember to factor in approval from any " +
+                    "contributors/featured artists as well as mint processing time " +
+                    "which can take up to 15 days."
                   }
                 />
                 <TextInputField
@@ -257,8 +257,8 @@ const SongInfo = () => {
                   label="ORIGINAL PUBLICATION DATE"
                   type="date"
                   tooltipText={
-                    'If your song has already been launched on other platforms you ' +
-                    'may input the release date here, but it is not required.'
+                    "If your song has already been launched on other platforms you " +
+                    "may input the release date here, but it is not required."
                   }
                 />
                 <CopyrightInputField
@@ -270,10 +270,10 @@ const SongInfo = () => {
                   isOptional={false}
                   placeholder=""
                   tooltipText={
-                    'The copyright for a musical composition covers the ' +
-                    'music and lyrics of a song (not the recorded ' +
-                    'performance). It is typically owned by the songwriter ' +
-                    'and/or music publisher.'
+                    "The copyright for a musical composition covers the " +
+                    "music and lyrics of a song (not the recorded " +
+                    "performance). It is typically owned by the songwriter " +
+                    "and/or music publisher."
                   }
                 />
                 <CopyrightInputField
@@ -285,10 +285,10 @@ const SongInfo = () => {
                   isOptional={false}
                   placeholder=""
                   tooltipText={
-                    'The copyright in a sound recording covers the ' +
-                    'recording itself (it does not cover the music ' +
-                    'or lyrics of the song). It is typically owned by ' +
-                    'the artist and/or record label.'
+                    "The copyright in a sound recording covers the " +
+                    "recording itself (it does not cover the music " +
+                    "or lyrics of the song). It is typically owned by " +
+                    "the artist and/or record label."
                   }
                 />
                 <TextInputField
@@ -301,8 +301,8 @@ const SongInfo = () => {
                   name="barcodeNumber"
                   label="RELEASE CODE NUMBER"
                   tooltipText={
-                    'A release code number is a unique code that identifies ' +
-                    'your release.'
+                    "A release code number is a unique code that identifies " +
+                    "your release."
                   }
                 />
                 <TextInputField
@@ -312,8 +312,8 @@ const SongInfo = () => {
                   maskChar={null}
                   name="isrc"
                   tooltipText={
-                    'An ISRC is a unique code that identifies this specific ' +
-                    'recording.'
+                    "An ISRC is a unique code that identifies this specific " +
+                    "recording."
                   }
                 />
                 <TextInputField
@@ -321,8 +321,8 @@ const SongInfo = () => {
                   label="IPI"
                   name="userIpi"
                   tooltipText={
-                    'An IPI is a unique code assigned to songwriters, ' +
-                    'composers, and music publishers.'
+                    "An IPI is a unique code assigned to songwriters, " +
+                    "composers, and music publishers."
                   }
                   type="number"
                 />
@@ -333,8 +333,8 @@ const SongInfo = () => {
                   maskChar={null}
                   name="iswc"
                   tooltipText={
-                    'An ISWC is the unique identification code of your song ' +
-                    '(unlike ISRC which is linked to  the specific recording).'
+                    "An ISWC is the unique identification code of your song " +
+                    "(unlike ISRC which is linked to  the specific recording)."
                   }
                 />
               </Stack>

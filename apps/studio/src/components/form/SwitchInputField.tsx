@@ -1,7 +1,7 @@
-import { SwitchProps } from '@mui/material';
-import { Field, FieldProps } from 'formik';
-import { FunctionComponent, ReactNode } from 'react';
-import SwitchInput from '@newm.io/studio/elements/SwitchInput';
+import { SwitchProps } from "@mui/material";
+import { Field, FieldProps } from "formik";
+import { FunctionComponent, ReactNode } from "react";
+import SwitchInput from "@newm.io/studio/elements/SwitchInput";
 
 interface SwitchInputFieldProps extends SwitchProps {
   readonly name: string;

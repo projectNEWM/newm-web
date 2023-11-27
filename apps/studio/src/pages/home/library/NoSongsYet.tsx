@@ -1,9 +1,9 @@
-import { FunctionComponent } from 'react';
-import { Stack, Table } from '@mui/material';
-import { Button, HorizontalLine, Typography } from '@newm.io/studio/elements';
-import { useNavigate } from 'react-router-dom';
-import theme from '@newm.io/theme';
-import TableHead from './Table/TableHead';
+import { FunctionComponent } from "react";
+import { Stack, Table } from "@mui/material";
+import { Button, HorizontalLine, Typography } from "@newm.io/studio/elements";
+import { useNavigate } from "react-router-dom";
+import theme from "@newm.io/theme";
+import TableHead from "./Table/TableHead";
 
 const NoSongsYet: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const NoSongsYet: FunctionComponent = () => {
   return (
     <Stack
       sx={{
-        alignItems: 'center',
+        alignItems: "center",
       }}
     >
       <Table>
@@ -25,7 +25,7 @@ const NoSongsYet: FunctionComponent = () => {
       </Typography>
       <Button
         color="music"
-        onClick={() => navigate('/home/upload-song')}
+        onClick={() => navigate("/home/upload-song")}
         variant="secondary"
         width="compact"
       >

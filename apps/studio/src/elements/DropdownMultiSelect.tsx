@@ -7,20 +7,20 @@ import {
   MouseEventHandler,
   SyntheticEvent,
   forwardRef,
-} from 'react';
-import useAutocomplete from '@mui/base/useAutocomplete';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import theme from '@newm.io/theme';
-import { Box, Stack } from '@mui/material';
-import SelectedCheckboxIcon from '@newm.io/studio/assets/images/SelectedCheckboxIcon';
-import UnselectedCheckboxIcon from '@newm.io/studio/assets/images/UnselectedCheckboxIcon';
-import { WidthType } from '@newm.io/studio/common';
-import TextInput from './TextInput';
-import ResultsList from './styled/ResultsList';
-import NoResultsText from './styled/NoResultsList';
+} from "react";
+import useAutocomplete from "@mui/base/useAutocomplete";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import theme from "@newm.io/theme";
+import { Box, Stack } from "@mui/material";
+import SelectedCheckboxIcon from "@newm.io/studio/assets/images/SelectedCheckboxIcon";
+import UnselectedCheckboxIcon from "@newm.io/studio/assets/images/UnselectedCheckboxIcon";
+import { WidthType } from "@newm.io/studio/common";
+import TextInput from "./TextInput";
+import ResultsList from "./styled/ResultsList";
+import NoResultsText from "./styled/NoResultsList";
 
 export interface DropdownMultiSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'ref' | 'value'> {
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "value"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
@@ -48,9 +48,9 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     errorMessage,
     label,
     name,
-    noResultsText = 'Nothing found',
+    noResultsText = "Nothing found",
     options,
-    placeholder = 'Select all that apply',
+    placeholder = "Select all that apply",
     value = null,
     handleChange,
     handleBlur,
@@ -82,11 +82,11 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
 
   const getDisplayValue = () => {
     if (selected.length === 0) {
-      return '';
+      return "";
     }
 
     if (selected.length < 5) {
-      return selected.join(', ');
+      return selected.join(", ");
     }
 
     return `${selected.length} selected`;
@@ -104,7 +104,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
    * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter' && value && inputValue !== value[0])
+    if (event.key === "Enter" && value && inputValue !== value[0])
       event.preventDefault();
   };
 
@@ -118,7 +118,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
 
   const handleKeydown = (event: KeyboardEvent) => {
     // Prevents null TypeError on left arrow "previous" event in useAutocomplete
-    if (event.key === 'ArrowLeft') {
+    if (event.key === "ArrowLeft") {
       event.stopPropagation();
     }
 
@@ -126,7 +126,7 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   };
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       <div {...getRootProps()}>
         <Stack direction="row" alignItems="center">
           <TextInput
@@ -134,22 +134,22 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
             {...rest}
             {...inputProps}
             style={{
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
             }}
             disabled={disabled}
             label={label}
             value={popupOpen ? inputValue : displayValue}
-            placeholder={popupOpen ? 'Search' : placeholder}
+            placeholder={popupOpen ? "Search" : placeholder}
             endAdornment={
               <ArrowDropDownIcon
                 onClick={handleEndAdornmentClick}
                 sx={{
-                  cursor: 'pointer',
+                  cursor: "pointer",
                   color: theme.colors.white,
-                  transform: popupOpen ? 'rotate(-180deg)' : 'rotate(0deg)',
-                  transition: 'transform 200ms ease-in',
+                  transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                  transition: "transform 200ms ease-in",
                 }}
               />
             }

@@ -1,15 +1,15 @@
-import * as Yup from 'yup';
-import { Box, useTheme } from '@mui/material';
-import { FormikValues } from 'formik';
-import { FunctionComponent } from 'react';
-import { WizardForm } from '@newm.io/studio/components';
-import { commonYupValidation, useAppDispatch } from '@newm.io/studio/common';
+import * as Yup from "yup";
+import { Box, useTheme } from "@mui/material";
+import { FormikValues } from "formik";
+import { FunctionComponent } from "react";
+import { WizardForm } from "@newm.io/studio/components";
+import { commonYupValidation, useAppDispatch } from "@newm.io/studio/common";
 import {
   createAccount,
   sendVerificationEmail,
-} from '@newm.io/studio/modules/session';
-import Verification from './Verification';
-import Welcome from './Welcome';
+} from "@newm.io/studio/modules/session";
+import Verification from "./Verification";
+import Welcome from "./Welcome";
 
 interface AccountValues {
   readonly authCode: string;
@@ -22,23 +22,23 @@ const SignUp: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const initialValues: AccountValues = {
-    email: '',
-    newPassword: '',
-    confirmPassword: '',
-    authCode: '',
+    email: "",
+    newPassword: "",
+    confirmPassword: "",
+    authCode: "",
   };
 
   /**
    * Yup validations for all form fields.
    */
   const validations = {
-    authCode: Yup.string().required('Verification code is required'),
+    authCode: Yup.string().required("Verification code is required"),
     email: commonYupValidation.email,
     newPassword: commonYupValidation.newPassword.required(
-      'Password is required'
+      "Password is required"
     ),
     confirmPassword: commonYupValidation.confirmPassword.required(
-      'Confirm password is required'
+      "Confirm password is required"
     ),
   };
 
@@ -62,13 +62,13 @@ const SignUp: FunctionComponent = () => {
     <Box
       sx={{
         backgroundColor: theme.colors.black,
-        display: 'flex',
+        display: "flex",
         flex: 1,
-        justifyContent: 'center',
-        maxWidth: '100%',
+        justifyContent: "center",
+        maxWidth: "100%",
         pt: 5,
         px: 2,
-        textAlign: 'center',
+        textAlign: "center",
       }}
     >
       <Box width="100%">
@@ -81,7 +81,7 @@ const SignUp: FunctionComponent = () => {
             {
               element: <Welcome />,
               onSubmitStep: handleVerificationEmail,
-              path: '',
+              path: "",
               validationSchema: Yup.object().shape({
                 email: validations.email,
                 newPassword: validations.newPassword,
@@ -90,7 +90,7 @@ const SignUp: FunctionComponent = () => {
             },
             {
               element: <Verification />,
-              path: 'verification',
+              path: "verification",
               validationSchema: Yup.object().shape({
                 authCode: validations.authCode,
               }),

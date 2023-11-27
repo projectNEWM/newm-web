@@ -1,20 +1,20 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { Stack } from '@mui/material';
+import { FunctionComponent, useEffect, useState } from "react";
+import { Stack } from "@mui/material";
 import {
   CollaborationStatus,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
   useGetCollaboratorCountQuery,
-} from '@newm.io/studio/modules/song';
-import { selectUi, setIsInvitesModalOpen } from '@newm.io/studio/modules/ui';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { SearchBox } from '@newm.io/studio/components';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
-import OwnersTable from './OwnersTable';
+} from "@newm.io/studio/modules/song";
+import { selectUi, setIsInvitesModalOpen } from "@newm.io/studio/modules/ui";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { SearchBox } from "@newm.io/studio/components";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import OwnersTable from "./OwnersTable";
 
 const OwnersList: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const { isInvitesModalOpen } = useAppSelector(selectUi);
   const [fetchInvites, { data: invites = [] }] = useFetchInvitesThunk();
   const { data: collaborations = [] } = useGetCollaborationsQuery({
@@ -40,8 +40,8 @@ const OwnersList: FunctionComponent = () => {
     <>
       <Stack
         sx={{
-          justifyContent: 'space-between',
-          flexDirection: ['column', 'row'],
+          justifyContent: "space-between",
+          flexDirection: ["column", "row"],
           rowGap: 2,
           pb: 4,
         }}

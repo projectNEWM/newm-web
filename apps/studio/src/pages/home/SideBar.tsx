@@ -1,17 +1,17 @@
-import { FunctionComponent } from 'react';
-import { Box, Drawer, IconButton, Stack, useTheme } from '@mui/material';
-import { Typography } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
+import { Typography } from "@newm.io/studio/elements";
 import {
   ProfileImage,
   SideBarHeader,
   SideBarNavLink,
-} from '@newm.io/studio/components';
+} from "@newm.io/studio/components";
 import {
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import AskCommunityIcon from '@newm.io/studio/assets/images/DiscordLogo';
-import NewmLogoSmInverse from '@newm.io/studio/assets/images/NEWM-logo-sm-inverse';
+} from "@newm.io/studio/modules/session";
+import AskCommunityIcon from "@newm.io/studio/assets/images/DiscordLogo";
+import NewmLogoSmInverse from "@newm.io/studio/assets/images/NEWM-logo-sm-inverse";
 import {
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
@@ -22,12 +22,12 @@ import {
   Email as SupportIcon,
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
-} from '@newm.io/studio/common';
+} from "@newm.io/studio/common";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -47,26 +47,26 @@ export const SideBar: FunctionComponent<SideBarProps> = (
       sx={{
         background: theme.colors.black,
         borderRight: `2px solid ${theme.colors.grey600}`,
-        display: 'flex',
-        height: '100%',
+        display: "flex",
+        height: "100%",
         width: theme.spacing(28.75),
         minWidth: theme.spacing(28.75),
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        flexDirection: "column",
+        justifyContent: "space-between",
         padding: 1.25,
-        overflowY: 'auto',
+        overflowY: "auto",
       }}
     >
       {props.mobileVersion && (
         <IconButton
           onClick={() => props.setMobileOpen(false)}
           sx={{
-            position: 'absolute',
-            top: '2rem',
-            right: '-2.5rem',
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
           }}
         >
-          <MenuOpenIcon sx={{ color: 'white' }} />
+          <MenuOpenIcon sx={{ color: "white" }} />
         </IconButton>
       )}
 
@@ -81,7 +81,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
           )}
 
           <Typography variant="h4" fontWeight={700} align="center">
-            {nickname ? nickname : firstName + ' ' + lastName}
+            {nickname ? nickname : firstName + " " + lastName}
           </Typography>
         </Stack>
 
@@ -97,7 +97,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: '100%' }}>
+          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
               onClick={() => props.setMobileOpen(false)}
               Icon={LibraryIcon}
@@ -117,7 +117,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: '100%' }}>
+          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
               onClick={() => props.setMobileOpen(false)}
               Icon={WalletIcon}
@@ -130,7 +130,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: '100%' }}>
+          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
               onClick={() => props.setMobileOpen(false)}
               Icon={ProfileIcon}
@@ -150,7 +150,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
-          <Stack mt={1.5} spacing={0.5} sx={{ width: '100%' }}>
+          <Stack mt={1.5} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
               onClick={() => props.setMobileOpen(false)}
               Icon={FaqIcon}
@@ -209,31 +209,31 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
           keepMounted: true,
         }}
         sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': {
-            overflow: props.isMobileOpen ? 'visible' : 'hidden',
-            boxSizing: 'border-box',
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            overflow: props.isMobileOpen ? "visible" : "hidden",
+            boxSizing: "border-box",
           },
         }}
       >
         <IconButton
           onClick={() => props.setMobileOpen(false)}
           sx={{
-            position: 'absolute',
-            top: '2rem',
-            right: '-2.5rem',
+            position: "absolute",
+            top: "2rem",
+            right: "-2.5rem",
           }}
         >
-          <MenuOpenIcon sx={{ color: 'white' }} />
+          <MenuOpenIcon sx={{ color: "white" }} />
         </IconButton>
         <SideBar mobileVersion setMobileOpen={props.setMobileOpen} />
       </Drawer>
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
+          display: { xs: "none", md: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
           },
         }}
         open

@@ -1,24 +1,24 @@
-import { asThunkHook } from '@newm.io/studio/common/reduxUtils';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GenerateArtistAgreementBody, lambdaApi } from '@newm.io/studio/api';
-import { history } from '@newm.io/studio/common/history';
-import { uploadToCloudinary } from '@newm.io/studio/api/cloudinary/utils';
+import { asThunkHook } from "@newm.io/studio/common/reduxUtils";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { GenerateArtistAgreementBody, lambdaApi } from "@newm.io/studio/api";
+import { history } from "@newm.io/studio/common/history";
+import { uploadToCloudinary } from "@newm.io/studio/api/cloudinary/utils";
 import {
   clearProgressBarModal,
   setIsProgressBarModalOpen,
   setProgressBarModal,
   setToastMessage,
-} from '@newm.io/studio/modules/ui';
-import { sessionApi } from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/modules/ui";
+import { sessionApi } from "@newm.io/studio/modules/session";
 import {
   SilentError,
   UploadSongError,
   isCloudinaryUrl,
   sleep,
-} from '@newm.io/studio/common';
-import { AxiosProgressEvent } from 'axios';
-import { handleUploadProgress } from '@newm.io/studio/modules/ui/utils';
-import { enableWallet } from '@newm.io/cardano-dapp-wallet-connector';
+} from "@newm.io/studio/common";
+import { AxiosProgressEvent } from "axios";
+import { handleUploadProgress } from "@newm.io/studio/modules/ui/utils";
+import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Collaboration,
   CollaborationStatus,
@@ -28,9 +28,9 @@ import {
   Song,
   UpdateCollaborationsRequest,
   UploadSongRequest,
-} from './types';
-import { extendedApi as songApi } from './api';
-import { receiveArtistAgreement } from './slice';
+} from "./types";
+import { extendedApi as songApi } from "./api";
+import { receiveArtistAgreement } from "./slice";
 import {
   createInvite,
   generateCollaborators,
@@ -39,7 +39,7 @@ import {
   getCollaborationsToUpdate,
   mapCollaboratorsToCollaborations,
   submitMintSongPayment,
-} from './utils';
+} from "./utils";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -48,12 +48,12 @@ import {
  * save the generated artist agreement if minting and then fetch the user's songs.
  */
 export const uploadSong = createAsyncThunk(
-  'song/uploadSong',
+  "song/uploadSong",
   async (body: UploadSongRequest, { dispatch }) => {
-    let songId = '';
+    let songId = "";
     const progressDisclaimer =
-      'Please do not refresh the page or navigate away while the ' +
-      'upload is in progress.';
+      "Please do not refresh the page or navigate away while the " +
+      "upload is in progress.";
 
     try {
       dispatch(setIsProgressBarModalOpen(true));
@@ -66,7 +66,7 @@ export const uploadSong = createAsyncThunk(
           progress,
           baseProgress: 0,
           totalIncrement,
-          message: 'Uploading song image...',
+          message: "Uploading song image...",
           disclaimer: progressDisclaimer,
           dispatch,
         });
@@ -74,7 +74,7 @@ export const uploadSong = createAsyncThunk(
 
       // downsize if necessary
       const uploadParams = {
-        eager: 'c_limit,w_4000,h_4000',
+        eager: "c_limit,w_4000,h_4000",
       };
 
       const coverArtUrl = await uploadToCloudinary(
@@ -85,7 +85,7 @@ export const uploadSong = createAsyncThunk(
       );
 
       // Backend expects "Non-Explicit" for clean songs, any value for explicit
-      const parentalAdvisory = body.isExplicit ? 'Explicit' : 'Non-Explicit';
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
 
       // combination of all IPI values for the song if present
       let ipis;
@@ -98,9 +98,9 @@ export const uploadSong = createAsyncThunk(
 
       // Convert barcodeType to the value expected by the API
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
-        UPC: 'Upc',
-        EAN: 'Ean',
-        JAN: 'Jan',
+        UPC: "Upc",
+        EAN: "Ean",
+        JAN: "Jan",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
@@ -109,7 +109,7 @@ export const uploadSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split('-')[0];
+      const releaseYear = body.releaseDate?.split("-")[0];
       const defaultCopyright = body.artistName || body.companyName;
 
       // create the song in the NEWM API
@@ -143,7 +143,7 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ('error' in songResp) throw new SilentError();
+      if ("error" in songResp) throw new SilentError();
 
       songId = songResp.data.songId;
 
@@ -156,7 +156,7 @@ export const uploadSong = createAsyncThunk(
           progress,
           baseProgress,
           totalIncrement,
-          message: 'Uploading song audio...',
+          message: "Uploading song audio...",
           disclaimer: progressDisclaimer,
           dispatch,
         });
@@ -170,7 +170,7 @@ export const uploadSong = createAsyncThunk(
         })
       );
 
-      if ('error' in uploadSongAudioResponse) throw new UploadSongError();
+      if ("error" in uploadSongAudioResponse) throw new UploadSongError();
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(
@@ -196,13 +196,13 @@ export const uploadSong = createAsyncThunk(
         );
 
         for (const collabResp of collabResponses) {
-          if ('error' in collabResp) throw new SilentError();
+          if ("error" in collabResp) throw new SilentError();
         }
 
         dispatch(
           setProgressBarModal({
             progress: 85,
-            message: 'Processing artist agreement...',
+            message: "Processing artist agreement...",
             disclaimer: progressDisclaimer,
             animationSeconds: 4,
           })
@@ -219,7 +219,7 @@ export const uploadSong = createAsyncThunk(
           })
         );
 
-        if ('error' in generateArtistAgreementResponse) throw new SilentError();
+        if ("error" in generateArtistAgreementResponse) throw new SilentError();
 
         const processStreamTokenAgreementResponse = await dispatch(
           songApi.endpoints.processStreamTokenAgreement.initiate({
@@ -228,7 +228,7 @@ export const uploadSong = createAsyncThunk(
           })
         );
 
-        if ('error' in processStreamTokenAgreementResponse) {
+        if ("error" in processStreamTokenAgreementResponse) {
           throw new SilentError();
         }
 
@@ -236,8 +236,8 @@ export const uploadSong = createAsyncThunk(
           setProgressBarModal({
             progress: 95,
             message:
-              'Requesting minting payment. ' +
-              'Please sign transaction when prompted.',
+              "Requesting minting payment. " +
+              "Please sign transaction when prompted.",
             disclaimer: progressDisclaimer,
             animationSeconds: 6,
           })
@@ -251,9 +251,9 @@ export const uploadSong = createAsyncThunk(
         setProgressBarModal({
           progress: 100,
           message: body.isMinting
-            ? 'Requesting minting payment. ' +
-              'Please sign transaction when prompted.'
-            : 'Uploading song audio...',
+            ? "Requesting minting payment. " +
+              "Please sign transaction when prompted."
+            : "Uploading song audio...",
           disclaimer: progressDisclaimer,
           animationSeconds: 0.25,
         })
@@ -261,7 +261,7 @@ export const uploadSong = createAsyncThunk(
       await sleep(250);
 
       // navigate to library page to view new song
-      history.push('/home/library');
+      history.push("/home/library");
     } catch (error) {
       // delete the song if it exists
       if (songId) {
@@ -275,14 +275,14 @@ export const uploadSong = createAsyncThunk(
       }
 
       if (error instanceof UploadSongError) {
-        history.push('/home/upload-song');
+        history.push("/home/upload-song");
       }
 
       if (error instanceof Error && !(error instanceof SilentError)) {
         dispatch(
           setToastMessage({
             message: error.message,
-            severity: 'error',
+            severity: "error",
           })
         );
       }
@@ -294,7 +294,7 @@ export const uploadSong = createAsyncThunk(
 );
 
 export const fetchSongStream = createAsyncThunk(
-  'song/streamSong',
+  "song/streamSong",
   async (song: Song, { dispatch }) => {
     try {
       // get stream info for song
@@ -302,7 +302,7 @@ export const fetchSongStream = createAsyncThunk(
         songApi.endpoints.getSongStream.initiate(song)
       );
 
-      if ('error' in audioStreamResp) return;
+      if ("error" in audioStreamResp) return;
       if (!audioStreamResp.data) return;
       const data = audioStreamResp.data;
       return {
@@ -317,7 +317,7 @@ export const fetchSongStream = createAsyncThunk(
         dispatch(
           setToastMessage({
             message: error.message,
-            severity: 'error',
+            severity: "error",
           })
         );
       }
@@ -330,14 +330,14 @@ export const fetchSongStream = createAsyncThunk(
  * to the confirmation screen.
  */
 export const generateArtistAgreement = createAsyncThunk(
-  'song/generateArtistAgreement',
+  "song/generateArtistAgreement",
   async (body: GenerateArtistAgreementBody, { dispatch }) => {
     try {
       const artistAgreementResp = await dispatch(
         lambdaApi.endpoints.generateArtistAgreement.initiate(body)
       );
 
-      if ('error' in artistAgreementResp) return;
+      if ("error" in artistAgreementResp) return;
 
       dispatch(receiveArtistAgreement(artistAgreementResp.data.message));
     } catch (err) {
@@ -352,7 +352,7 @@ export const generateArtistAgreement = createAsyncThunk(
  * modify the song in the NEWM back-end with the file url information.
  */
 export const patchSong = createAsyncThunk(
-  'song/patchSong',
+  "song/patchSong",
   async (body: PatchSongRequest, { dispatch }) => {
     try {
       let coverArtUrl: string | undefined;
@@ -360,7 +360,7 @@ export const patchSong = createAsyncThunk(
       if (body.coverArtUrl instanceof File) {
         // downsize if necessary
         const uploadParams = {
-          eager: 'c_limit,w_4000,h_4000',
+          eager: "c_limit,w_4000,h_4000",
         };
 
         coverArtUrl = await uploadToCloudinary(
@@ -368,12 +368,12 @@ export const patchSong = createAsyncThunk(
           uploadParams,
           dispatch
         );
-      } else if (isCloudinaryUrl(body.coverArtUrl || '')) {
+      } else if (isCloudinaryUrl(body.coverArtUrl || "")) {
         coverArtUrl = body.coverArtUrl;
       }
 
       // Backend expects "Non-Explicit" for clean songs, any value for explicit
-      const parentalAdvisory = body.isExplicit ? 'Explicit' : 'Non-Explicit';
+      const parentalAdvisory = body.isExplicit ? "Explicit" : "Non-Explicit";
 
       // combination of all IPI values for the song if present
       let ipis;
@@ -386,9 +386,9 @@ export const patchSong = createAsyncThunk(
 
       // Convert barcodeType to the value expected by the API
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
-        UPC: 'Upc',
-        EAN: 'Ean',
-        JAN: 'Jan',
+        UPC: "Upc",
+        EAN: "Ean",
+        JAN: "Jan",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
@@ -397,7 +397,7 @@ export const patchSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split('-')[0];
+      const releaseYear = body.releaseDate?.split("-")[0];
       const defaultCopyright = body.artistName || body.companyName;
 
       // patch song information
@@ -432,7 +432,7 @@ export const patchSong = createAsyncThunk(
         })
       );
 
-      if ('error' in patchSongResp) return;
+      if ("error" in patchSongResp) return;
 
       if (
         body.owners?.length ||
@@ -454,13 +454,13 @@ export const patchSong = createAsyncThunk(
           songApi.endpoints.getSong.initiate(body.id)
         );
 
-        if ('error' in songResp || !songResp.data) return;
+        if ("error" in songResp || !songResp.data) return;
 
         const profileResp = await dispatch(
           sessionApi.endpoints.getProfile.initiate()
         );
 
-        if ('error' in profileResp || !profileResp.data) return;
+        if ("error" in profileResp || !profileResp.data) return;
 
         // if body.isMinting is present and true, then the song is being
         // minted for the first time, save the artist agreement.
@@ -483,7 +483,7 @@ export const patchSong = createAsyncThunk(
             })
           );
 
-          if ('error' in processStreamTokenAgreementResponse) return;
+          if ("error" in processStreamTokenAgreementResponse) return;
 
           await submitMintSongPayment(body.id, dispatch);
         }
@@ -492,15 +492,15 @@ export const patchSong = createAsyncThunk(
       if (body.shouldRedirect) {
         dispatch(
           setToastMessage({
-            message: 'Updated song information',
-            severity: 'success',
+            message: "Updated song information",
+            severity: "success",
           })
         );
 
         await sleep(250);
 
         // navigate to library page to view new song
-        history.push('/home/library');
+        history.push("/home/library");
       }
     } catch (error) {
       // non-endpoint related error occur, show toast
@@ -508,7 +508,7 @@ export const patchSong = createAsyncThunk(
         dispatch(
           setToastMessage({
             message: error.message,
-            severity: 'error',
+            severity: "error",
           })
         );
       }
@@ -517,9 +517,9 @@ export const patchSong = createAsyncThunk(
 );
 
 export const getUserWalletSongs = createAsyncThunk(
-  'song/getUserWalletSongs',
+  "song/getUserWalletSongs",
   async (
-    body: Omit<GetUserWalletSongsRequest, 'utxoCborHexList'>,
+    body: Omit<GetUserWalletSongsRequest, "utxoCborHexList">,
     { dispatch }
   ) => {
     try {
@@ -543,14 +543,14 @@ export const getUserWalletSongs = createAsyncThunk(
  * library and fetch new songs.
  */
 export const deleteSong = createAsyncThunk(
-  'song/deleteSong',
+  "song/deleteSong",
   async (body: DeleteSongRequest, { dispatch }) => {
     try {
       // navigate to library page before deleting due to known
       // issue where RTK Query hook will re-fetch data after
       // delete call invalidates cache tag, causing 404 error to
       // display: https://github.com/reduxjs/redux-toolkit/issues/1672
-      history.replace('/home/library');
+      history.replace("/home/library");
 
       await dispatch(songApi.endpoints.deleteSong.initiate(body));
     } catch (err) {
@@ -564,7 +564,7 @@ export const deleteSong = createAsyncThunk(
  * Dispatches invites to app state.
  */
 export const fetchInvites = createAsyncThunk(
-  'collaborator/fetchInvites',
+  "collaborator/fetchInvites",
   async (_, { dispatch }) => {
     const collaborationsResponse = await dispatch(
       songApi.endpoints.getCollaborations.initiate({
@@ -577,7 +577,7 @@ export const fetchInvites = createAsyncThunk(
     if (
       !collaborationsData ||
       !collaborationsData.length ||
-      'error' in collaborationsResponse
+      "error" in collaborationsResponse
     ) {
       return;
     }
@@ -593,14 +593,14 @@ export const fetchInvites = createAsyncThunk(
 );
 
 export const updateCollaborations = createAsyncThunk(
-  'collaboration/updateCollaborations',
+  "collaboration/updateCollaborations",
   async (body: UpdateCollaborationsRequest, { dispatch }) => {
     try {
       const currentCollabsResp = await dispatch(
         songApi.endpoints.getCollaborations.initiate({ songIds: body.id })
       );
 
-      if ('error' in currentCollabsResp || !currentCollabsResp.data) return;
+      if ("error" in currentCollabsResp || !currentCollabsResp.data) return;
 
       const newCollaborators = generateCollaborators(
         body.owners || [],
@@ -644,7 +644,7 @@ export const updateCollaborations = createAsyncThunk(
       );
 
       for (const collabResp of createCollabResponses) {
-        if ('error' in collabResp) return;
+        if ("error" in collabResp) return;
       }
 
       const deleteCollabResponses = await Promise.all(
@@ -656,7 +656,7 @@ export const updateCollaborations = createAsyncThunk(
       );
 
       for (const collabResp of deleteCollabResponses) {
-        if ('error' in collabResp) return;
+        if ("error" in collabResp) return;
       }
 
       const updateCollabResponses = await Promise.all(
@@ -676,7 +676,7 @@ export const updateCollaborations = createAsyncThunk(
       );
 
       for (const collabResp of updateCollabResponses) {
-        if ('error' in collabResp) return;
+        if ("error" in collabResp) return;
       }
     } catch (error) {
       // do nothing, endpoint errors handled by endpoints

@@ -1,7 +1,7 @@
-import { Box } from '@mui/material';
-import { TextInput } from '@newm.io/studio/elements';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import theme from '@newm.io/theme';
+import { Box } from "@mui/material";
+import { TextInput } from "@newm.io/studio/elements";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import theme from "@newm.io/theme";
 
 interface SearchBoxProps {
   query: string;
@@ -11,10 +11,10 @@ interface SearchBoxProps {
 export const SearchBox = ({
   query,
   onSearch,
-  placeholder = '',
+  placeholder = "",
 }: SearchBoxProps) => {
   return (
-    <Box sx={{ pb: 3, maxWidth: '340px' }}>
+    <Box sx={{ pb: 3, maxWidth: "340px" }}>
       <TextInput
         value={query}
         isOptional={false}
@@ -24,7 +24,7 @@ export const SearchBox = ({
             fontSize="large"
             sx={{
               color: theme.colors.grey100,
-              paddingLeft: '8px',
+              paddingLeft: "8px",
             }}
           />
         }

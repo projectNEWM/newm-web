@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { WalletState } from './types';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { WalletState } from "./types";
 
 const initialState: WalletState = {
   walletAddress: undefined,
@@ -8,7 +8,7 @@ const initialState: WalletState = {
 
 const walletSlice = createSlice({
   initialState,
-  name: 'wallet',
+  name: "wallet",
   reducers: {
     setWalletAddress: (state, action: PayloadAction<string>) => {
       state.walletAddress = action.payload;

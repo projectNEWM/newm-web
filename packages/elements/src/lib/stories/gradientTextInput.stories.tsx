@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Stack } from '@mui/material';
-import GradientTextInput from '../GradientTextInput';
+import { useEffect, useRef } from "react";
+import { Stack } from "@mui/material";
+import GradientTextInput from "../GradientTextInput";
 
 export default {
-  title: 'Gradient Text Input',
+  title: "Gradient Text Input",
   component: GradientTextInput,
 };
 

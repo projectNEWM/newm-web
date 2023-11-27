@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
-import { Box } from '@mui/material';
-import { Button, Typography } from '@newm.io/studio/elements';
-import Owner from '@newm.io/studio/assets/images/Owner';
-import { useNavigate } from 'react-router-dom';
+import { FunctionComponent } from "react";
+import { Box } from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
+import Owner from "@newm.io/studio/assets/images/Owner";
+import { useNavigate } from "react-router-dom";
 
 const NoOwnersYet: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -10,11 +10,11 @@ const NoOwnersYet: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100%',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100%",
         rowGap: 2,
       }}
     >
@@ -29,7 +29,7 @@ const NoOwnersYet: FunctionComponent = () => {
       </Typography>
       <Button
         color="music"
-        onClick={() => navigate('/home/upload-song')}
+        onClick={() => navigate("/home/upload-song")}
         variant="secondary"
         width="compact"
       >

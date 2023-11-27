@@ -1,16 +1,16 @@
-import { FunctionComponent } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, Stack, useTheme } from '@mui/material';
-import { Button, Typography } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, Stack, useTheme } from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
 import {
   Creditor,
   getIsCreditorEditable,
   useGetCollaboratorsQuery,
-} from '@newm.io/studio/modules/song';
-import DropdownSelectField from '@newm.io/studio/components/form/DropdownSelectField';
-import { useGetRolesQuery } from '@newm.io/studio/modules/content';
-import Details from './Details';
-import { getCollaboratorInfo } from './utils';
+} from "@newm.io/studio/modules/song";
+import DropdownSelectField from "@newm.io/studio/components/form/DropdownSelectField";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;
@@ -64,9 +64,9 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           <Stack
             key={creditor.email}
             sx={{
-              alignItems: 'center',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
               mt: 2,
               rowGap: 2,
               columnGap: 1,

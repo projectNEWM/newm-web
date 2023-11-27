@@ -2,13 +2,13 @@
 // import { renderWithContext } from "@newm.io/studio/common";
 // import { Profile, sessionApi } from "@newm.io/studio/modules/session";
 // import { SideBar } from "../SideBar";
-import React from 'react';
+import React from "react";
 
 // const renderSidebar = (profileData: Partial<Profile> = {}) => {
 //   return renderWithContext(<SideBar setMobileOpen={ () => 1 } />);
 // };
 
-describe('<Sidebar>', () => {
+describe("<Sidebar>", () => {
   // TODO: There are currently issues mocking RTK Query hook
   // endpoint responses. The suggested solution is to mock the API as outlined
   // in this ticket: https://app.clickup.com/t/2gh7hx3
@@ -37,7 +37,7 @@ describe('<Sidebar>', () => {
   //   });
   // });
 
-  it('is commented out', () => {
+  it("is commented out", () => {
     expect(true).toBeTruthy();
   });
 });

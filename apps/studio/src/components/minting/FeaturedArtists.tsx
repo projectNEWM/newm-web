@@ -1,14 +1,14 @@
-import { FunctionComponent } from 'react';
-import { Box, Stack } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { Button } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import { Box, Stack } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "@newm.io/studio/elements";
 import {
   Featured,
   useGetCollaboratorsQuery,
-} from '@newm.io/studio/modules/song';
-import theme from '@newm.io/theme';
-import Details from './Details';
-import { getCollaboratorInfo } from './utils';
+} from "@newm.io/studio/modules/song";
+import theme from "@newm.io/theme";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
@@ -50,9 +50,9 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
           <Stack
             key={featuredArtist.email}
             sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
               mt: 2,
               columnGap: 1,
             }}

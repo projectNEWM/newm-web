@@ -1,20 +1,20 @@
-import { Meta, StoryFn } from '@storybook/react';
-import { Button } from '@newm.io/studio/elements';
+import { Meta, StoryFn } from "@storybook/react";
+import { Button } from "@newm.io/studio/elements";
 
 export default {
   component: Button,
-  title: 'Button',
+  title: "Button",
 } as Meta;
 
 const Template: StoryFn = (args) => <Button {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: 'Button Text',
+  children: "Button Text",
 };
 
 export const Color: StoryFn = () => (
-  <div style={{ display: 'flex', gap: '16px' }}>
+  <div style={{ display: "flex", gap: "16px" }}>
     <Button gradient="company">Company</Button>
     <Button gradient="crypto">Crypto</Button>
     <Button gradient="magazine">Magazine</Button>
@@ -24,7 +24,7 @@ export const Color: StoryFn = () => (
 );
 
 export const Variant: StoryFn = () => (
-  <div style={{ display: 'flex', gap: '16px' }}>
+  <div style={{ display: "flex", gap: "16px" }}>
     <Button variant="primary">Primary</Button>
     <Button variant="secondary">Secondary</Button>
     <Button variant="outlined">Outlined</Button>
@@ -32,7 +32,7 @@ export const Variant: StoryFn = () => (
 );
 
 export const Width: StoryFn = (args) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
     <Button {...args} width="icon">
       +
     </Button>
@@ -49,12 +49,12 @@ export const Width: StoryFn = (args) => (
 );
 
 export const Icon: StoryFn = (args) => (
-  <div style={{ display: 'flex', gap: '16px' }}>
+  <div style={{ display: "flex", gap: "16px" }}>
     <Button
       {...args}
       startIcon={
         <div
-          style={{ height: '20px', width: '20px', backgroundColor: 'yellow' }}
+          style={{ height: "20px", width: "20px", backgroundColor: "yellow" }}
         ></div>
       }
     >
@@ -64,7 +64,7 @@ export const Icon: StoryFn = (args) => (
       {...args}
       endIcon={
         <div
-          style={{ height: '20px', width: '20px', backgroundColor: 'yellow' }}
+          style={{ height: "20px", width: "20px", backgroundColor: "yellow" }}
         ></div>
       }
     >
@@ -74,12 +74,12 @@ export const Icon: StoryFn = (args) => (
       {...args}
       startIcon={
         <div
-          style={{ height: '20px', width: '20px', backgroundColor: 'yellow' }}
+          style={{ height: "20px", width: "20px", backgroundColor: "yellow" }}
         ></div>
       }
       endIcon={
         <div
-          style={{ height: '20px', width: '20px', backgroundColor: 'yellow' }}
+          style={{ height: "20px", width: "20px", backgroundColor: "yellow" }}
         ></div>
       }
     >

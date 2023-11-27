@@ -1,27 +1,27 @@
-import { Box, BoxProps, Stack } from '@mui/material';
+import { Box, BoxProps, Stack } from "@mui/material";
 import {
   FunctionComponent,
   MouseEventHandler,
   useCallback,
   useEffect,
   useState,
-} from 'react';
+} from "react";
 import {
   validateAspectRatioOneToOne,
   validateMinImageDimensions,
-} from '@newm.io/studio/common';
-import { SxProps, useTheme } from '@mui/material/styles';
-import { FileRejection, useDropzone } from 'react-dropzone';
-import AddImageIcon from '@newm.io/studio/assets/images/AddImage';
-import CheckCircleIcon from '@newm.io/studio/assets/images/CheckCircle';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import PictureInPictureIcon from '@mui/icons-material/PictureInPictureAlt';
-import { Button } from '@newm.io/studio/elements';
-import SolidOutline from './styled/SolidOutline';
-import DashedOutline from './styled/DashedOutline';
-import IconMessage from './IconMessage';
-import ErrorMessage from './styled/ErrorMessage';
-import Modal from './Modal';
+} from "@newm.io/studio/common";
+import { SxProps, useTheme } from "@mui/material/styles";
+import { FileRejection, useDropzone } from "react-dropzone";
+import AddImageIcon from "@newm.io/studio/assets/images/AddImage";
+import CheckCircleIcon from "@newm.io/studio/assets/images/CheckCircle";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import PictureInPictureIcon from "@mui/icons-material/PictureInPictureAlt";
+import { Button } from "@newm.io/studio/elements";
+import SolidOutline from "./styled/SolidOutline";
+import DashedOutline from "./styled/DashedOutline";
+import IconMessage from "./IconMessage";
+import ErrorMessage from "./styled/ErrorMessage";
+import Modal from "./Modal";
 
 export interface FileWithPreview extends File {
   readonly preview: string;
@@ -33,7 +33,7 @@ export interface UploadImageProps {
   readonly contentSx?: SxProps;
   readonly emptyMessage?: string;
   readonly errorMessage?: string;
-  readonly errorMessageLocation?: 'inside' | 'outside';
+  readonly errorMessageLocation?: "inside" | "outside";
   readonly file?: FileWithPreview;
   readonly isAspectRatioOneToOne?: boolean;
   readonly isMinimumSizeDisplayed?: boolean;
@@ -63,11 +63,11 @@ interface ImagePreviewProps extends BoxProps {
  */
 const UploadImage: FunctionComponent<UploadImageProps> = ({
   allowImageChange = true,
-  changeImageButtonText = 'Change image',
+  changeImageButtonText = "Change image",
   contentSx = {},
-  emptyMessage = 'Drag & drop to upload or browse',
+  emptyMessage = "Drag & drop to upload or browse",
   errorMessage,
-  errorMessageLocation = 'outside',
+  errorMessageLocation = "outside",
   file,
   isAspectRatioOneToOne = false,
   isMinimumSizeDisplayed = true,
@@ -75,11 +75,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   isSuccessIconDisplayed = true,
   maxFileSizeMB,
   minDimensions,
-  minimumSizeLabel = 'Minimum size',
+  minimumSizeLabel = "Minimum size",
   onBlur,
   onChange,
   onError,
-  replaceMessage = 'Upload a new image',
+  replaceMessage = "Upload a new image",
   rootSx = {},
 }) => {
   const theme = useTheme();
@@ -124,7 +124,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         }
 
         onChange(fileWithPreview);
-        onError('');
+        onError("");
       } catch (error) {
         if (error instanceof Error) {
           onError(error.message);
@@ -152,9 +152,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     onDrop: allowImageChange ? handleDrop : undefined,
     multiple: false,
     accept: {
-      'image/png': ['.png'],
-      'image/webp': ['.webp'],
-      'image/jpg': ['.jpg', '.jpeg'],
+      "image/png": [".png"],
+      "image/webp": [".webp"],
+      "image/jpg": [".jpg", ".jpeg"],
     },
   });
 
@@ -178,12 +178,12 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   }, [file]);
 
   const internalErrorMessage =
-    errorMessageLocation === 'inside' && !!errorMessage
+    errorMessageLocation === "inside" && !!errorMessage
       ? errorMessage
       : undefined;
 
   const externalErrorMessage =
-    errorMessageLocation === 'outside' && !!errorMessage
+    errorMessageLocation === "outside" && !!errorMessage
       ? errorMessage
       : undefined;
 
@@ -200,8 +200,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           sx={{ backgroundColor: theme.colors.grey600 }}
         >
           <img
-            src={typeof file === 'string' ? file : file?.preview}
-            style={{ maxHeight: '72vh', maxWidth: '100%' }}
+            src={typeof file === "string" ? file : file?.preview}
+            style={{ maxHeight: "72vh", maxWidth: "100%" }}
             alt="cover preview"
           />
 
@@ -228,11 +228,11 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         {...getRootProps()}
         gap={1}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           maxWidth: theme.inputField.maxWidth,
-          cursor: 'pointer',
-          borderRadius: '4px',
+          cursor: "pointer",
+          borderRadius: "4px",
           ...rootSx,
         }}
       >
@@ -261,8 +261,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                     justifyContent="center"
                     alignItems="center"
                     sx={{
-                      '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.4)",
                       },
                     }}
                   >
@@ -280,8 +280,8 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
                   alignItems="center"
                   onClick={handleOpenPreview}
                   sx={{
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.4)",
                     },
                   }}
                 >
@@ -301,7 +301,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           </ImagePreview>
         ) : (
           <DashedOutline
-            sx={{ display: 'flex', flexGrow: 1, height: 100, ...contentSx }}
+            sx={{ display: "flex", flexGrow: 1, height: 100, ...contentSx }}
           >
             <IconMessage
               icon={<AddImageIcon />}
@@ -335,22 +335,22 @@ const ImagePreview: FunctionComponent<ImagePreviewProps> = ({
   sx,
   ...boxProps
 }) => {
-  const overlay = 'rgba(0, 0, 0, 0.4)';
+  const overlay = "rgba(0, 0, 0, 0.4)";
 
   return (
     <SolidOutline
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'stretch',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "stretch",
         flexGrow: 1,
         background: hasPersistentOverlay
           ? `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`
           : `url(${imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
 
-        '&:hover': !hasPersistentOverlay
+        "&:hover": !hasPersistentOverlay
           ? {
               backgroundImage: `linear-gradient(0deg, ${overlay}, ${overlay}), url(${imageUrl})`,
             }

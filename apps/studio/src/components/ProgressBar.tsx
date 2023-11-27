@@ -1,5 +1,5 @@
-import { Box, useTheme } from '@mui/material';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { Box, useTheme } from "@mui/material";
+import { FunctionComponent, useEffect, useState } from "react";
 
 interface Props {
   /* Number between 1 and 100 representing the target progress percentage */
@@ -14,7 +14,7 @@ const ProgressBar: FunctionComponent<Props> = ({
 }) => {
   const theme = useTheme();
   const [animatedProgress, setAnimatedProgress] = useState(0);
-  const animatedProgressPercentage = animatedProgress + '%';
+  const animatedProgressPercentage = animatedProgress + "%";
 
   /**
    * Update progress to ensure it animates from zero
@@ -26,16 +26,16 @@ const ProgressBar: FunctionComponent<Props> = ({
   return (
     <Box
       sx={{
-        width: '100%',
+        width: "100%",
         backgroundColor: theme.colors.grey400,
         borderRadius: 1.5,
-        overflow: 'hidden',
+        overflow: "hidden",
         padding: 1,
       }}
     >
       <Box
         sx={{
-          height: '2rem',
+          height: "2rem",
           width: animatedProgressPercentage,
           backgroundColor: theme.colors.music,
           borderRadius: 1,

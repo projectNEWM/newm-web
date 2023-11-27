@@ -1,11 +1,11 @@
-import { useAppSelector } from '@newm.io/studio/common';
+import { useAppSelector } from "@newm.io/studio/common";
 import {
   emptyProfile,
   selectSession,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import { FunctionComponent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+} from "@newm.io/studio/modules/session";
+import { FunctionComponent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Redirects a user to the onboarding flow if they have not gone
@@ -22,7 +22,7 @@ const OnboardingRedirect: FunctionComponent = () => {
 
   useEffect(() => {
     if (!isLoading && isLoggedIn && (!firstName || !lastName || !role)) {
-      navigate('/create-profile');
+      navigate("/create-profile");
     }
 
     // useNavigate doesn't return memomized function. Ommiting from

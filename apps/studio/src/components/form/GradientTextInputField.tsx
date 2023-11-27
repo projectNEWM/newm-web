@@ -1,9 +1,9 @@
-import { FormEvent, ForwardRefRenderFunction, forwardRef } from 'react';
-import { Field, FieldProps } from 'formik';
+import { FormEvent, ForwardRefRenderFunction, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
 import {
   GradientTextInput,
   GradientTextInputProps,
-} from '@newm.io/studio/elements';
+} from "@newm.io/studio/elements";
 
 const GradientTextInputField: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -26,7 +26,7 @@ const GradientTextInputField: ForwardRefRenderFunction<
 
         return (
           <GradientTextInput
-            errorMessage={meta.touched ? meta.error : ''}
+            errorMessage={meta.touched ? meta.error : ""}
             onBlur={handleBlur}
             ref={ref}
             {...field}

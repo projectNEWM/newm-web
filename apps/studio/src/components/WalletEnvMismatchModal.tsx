@@ -1,13 +1,13 @@
-import { FunctionComponent, useEffect } from 'react';
-import { Box, Stack, Typography, useTheme } from '@mui/material';
-import { Modal } from '@newm.io/studio/components';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
+import { FunctionComponent, useEffect } from "react";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Modal } from "@newm.io/studio/components";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 import {
   selectUi,
   setIsWalletEnvMismatchModalOpen,
-} from '@newm.io/studio/modules/ui';
-import { getIsWalletEnvMismatch } from '@newm.io/studio/modules/session';
-import { useConnectWallet } from '@newm.io/cardano-dapp-wallet-connector';
+} from "@newm.io/studio/modules/ui";
+import { getIsWalletEnvMismatch } from "@newm.io/studio/modules/session";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 /**
  * Prompts a user to select the correct wallet environment to
@@ -45,8 +45,8 @@ const WalletEnvMismatchModal: FunctionComponent = () => {
           sx={{
             padding: 2,
             background: theme.colors.grey600,
-            textAlign: 'left',
-            maxWidth: '85%',
+            textAlign: "left",
+            maxWidth: "85%",
           }}
         >
           <Typography>

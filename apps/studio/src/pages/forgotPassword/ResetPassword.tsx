@@ -1,8 +1,8 @@
-import { FunctionComponent, useState } from 'react';
-import { FormikValues, useFormikContext } from 'formik';
-import { Box, Stack, useTheme } from '@mui/material';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { PasswordInputField } from '@newm.io/studio/components';
+import { FunctionComponent, useState } from "react";
+import { FormikValues, useFormikContext } from "formik";
+import { Box, Stack, useTheme } from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { PasswordInputField } from "@newm.io/studio/components";
 
 const ResetPassword: FunctionComponent = () => {
   const theme = useTheme();
@@ -20,10 +20,10 @@ const ResetPassword: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
       }}
     >
       <Typography variant="h1" mt={4}>

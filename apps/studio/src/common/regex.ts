@@ -53,15 +53,15 @@ export const REGEX_SIMPLE_DOMAIN = /([a-z0-9-]+\.[a-z]+)/i;
  * Regular expression to match URLs with the specified domain followed by a path.
  */
 const generateRegexForDomainWithPath = (domain: string): RegExp => {
-  return new RegExp(`${domain}/.+`, 'i');
+  return new RegExp(`${domain}/.+`, "i");
 };
 
 export const REGEX_SPOTIFY_PROFILE =
-  generateRegexForDomainWithPath('open.spotify.com');
+  generateRegexForDomainWithPath("open.spotify.com");
 export const REGEX_APPLE_MUSIC_PROFILE =
-  generateRegexForDomainWithPath('music.apple.com');
+  generateRegexForDomainWithPath("music.apple.com");
 export const REGEX_SOUNDCLOUD_PROFILE =
-  generateRegexForDomainWithPath('soundcloud.com');
+  generateRegexForDomainWithPath("soundcloud.com");
 
 /**
  * Matches strings containing alphanumeric characters (both lower and uppercase),

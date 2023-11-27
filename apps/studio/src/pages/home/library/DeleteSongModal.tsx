@@ -1,7 +1,7 @@
-import { FunctionComponent } from 'react';
-import { Stack, Typography } from '@mui/material';
-import theme from '@newm.io/theme';
-import { Button } from '@newm.io/studio/elements';
+import { FunctionComponent } from "react";
+import { Stack, Typography } from "@mui/material";
+import theme from "@newm.io/theme";
+import { Button } from "@newm.io/studio/elements";
 
 interface DeleteSongModalProps {
   primaryAction: () => void;
@@ -14,13 +14,13 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
 }) => (
   <Stack
     sx={{
-      alignItems: 'center',
-      backgroundColor: 'black',
+      alignItems: "center",
+      backgroundColor: "black",
       bottom: 0,
-      display: 'flex',
-      justifyContent: 'center',
+      display: "flex",
+      justifyContent: "center",
       left: 0,
-      position: 'fixed',
+      position: "fixed",
       right: 0,
       top: 0,
       zIndex: 9999,
@@ -30,10 +30,10 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
       <Stack
         sx={{
           backgroundColor: theme.colors.grey500,
-          borderTopLeftRadius: '8px',
-          borderTopRightRadius: '8px',
-          maxWidth: '512px',
-          padding: '24px 24px 16px',
+          borderTopLeftRadius: "8px",
+          borderTopRightRadius: "8px",
+          maxWidth: "512px",
+          padding: "24px 24px 16px",
           rowGap: 1,
         }}
       >
@@ -46,12 +46,12 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
       <Stack
         sx={{
           backgroundColor: theme.colors.grey600,
-          borderBottomLeftRadius: '8px',
-          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: "8px",
+          borderBottomRightRadius: "8px",
           columnGap: 1.5,
-          flexDirection: 'row',
-          justifyContent: 'end',
-          padding: '12px 24px',
+          flexDirection: "row",
+          justifyContent: "end",
+          padding: "12px 24px",
         }}
       >
         <Button

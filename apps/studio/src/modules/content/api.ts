@@ -1,11 +1,11 @@
-import api, { Tags } from '@newm.io/studio/api';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
-import { Genre, Language, Role } from './types';
+import api, { Tags } from "@newm.io/studio/api";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import { Genre, Language, Role } from "./types";
 
 export const extendedApi = api.injectEndpoints({
   endpoints: (build) => ({
     getGenres: build.query<string[], void>({
-      query: () => ({ url: 'v1/distribution/genres', method: 'GET' }),
+      query: () => ({ url: "v1/distribution/genres", method: "GET" }),
       providesTags: [Tags.Genres],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -14,8 +14,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching genres',
-              severity: 'error',
+              message: "An error occurred while fetching genres",
+              severity: "error",
             })
           );
         }
@@ -28,7 +28,7 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getRoles: build.query<string[], void>({
-      query: () => ({ url: 'v1/distribution/roles', method: 'GET' }),
+      query: () => ({ url: "v1/distribution/roles", method: "GET" }),
       providesTags: [Tags.Roles],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -37,8 +37,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching roles',
-              severity: 'error',
+              message: "An error occurred while fetching roles",
+              severity: "error",
             })
           );
         }
@@ -51,7 +51,7 @@ export const extendedApi = api.injectEndpoints({
       },
     }),
     getMoods: build.query<Array<string>, void>({
-      query: () => ({ url: 'contents/predefined-moods.json', method: 'GET' }),
+      query: () => ({ url: "contents/predefined-moods.json", method: "GET" }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -59,15 +59,15 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching moods',
-              severity: 'error',
+              message: "An error occurred while fetching moods",
+              severity: "error",
             })
           );
         }
       },
     }),
     getLanguages: build.query<Language[], void>({
-      query: () => ({ url: 'v1/distribution/languages', method: 'GET' }),
+      query: () => ({ url: "v1/distribution/languages", method: "GET" }),
       providesTags: [Tags.Languages],
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -76,8 +76,8 @@ export const extendedApi = api.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching languages',
-              severity: 'error',
+              message: "An error occurred while fetching languages",
+              severity: "error",
             })
           );
         }

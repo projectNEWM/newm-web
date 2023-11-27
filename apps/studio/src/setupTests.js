@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
-jest.mock('@newm.io/cardano-dapp-wallet-connector', () => ({
+jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
   ...jest.requireActual,
   getWalletBalance: jest.fn(),
   useConnectWallet: jest.fn(() => ({
@@ -14,7 +14,7 @@ jest.mock('@newm.io/cardano-dapp-wallet-connector', () => ({
   })),
 }));
 
-jest.mock('react-audio-visualize', () => ({
-  ...jest.requireActual('react-audio-visualize'),
+jest.mock("react-audio-visualize", () => ({
+  ...jest.requireActual("react-audio-visualize"),
   AudioVisualizer: jest.fn(),
 }));

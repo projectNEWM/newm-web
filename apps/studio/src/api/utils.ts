@@ -1,14 +1,14 @@
-import { BaseQueryApi } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
-import Cookies from 'js-cookie';
-import { RootState } from '@newm.io/studio/store';
-import { Mutex } from 'async-mutex';
+import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import Cookies from "js-cookie";
+import { RootState } from "@newm.io/studio/store";
+import { Mutex } from "async-mutex";
 import {
   NewmAuthResponse,
   logOut,
   receiveRefreshToken,
-} from '@newm.io/studio/modules/session';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { AxiosBaseQueryParams, BaseQuery } from './types';
+} from "@newm.io/studio/modules/session";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { AxiosBaseQueryParams, BaseQuery } from "./types";
 
 const mutex = new Mutex();
 
@@ -31,15 +31,15 @@ export const fetchBaseQueryWithReauth = (
     await mutex.waitForUnlock();
 
     // get current refresh token
-    const refreshToken = Cookies.get('refreshToken');
+    const refreshToken = Cookies.get("refreshToken");
 
     // attempt request
     let result = await baseQuery(args, api, extraOptions);
 
     if (
       result.error &&
-      typeof result.error === 'object' &&
-      'status' in result.error &&
+      typeof result.error === "object" &&
+      "status" in result.error &&
       result.error.status === 401 &&
       refreshToken
     ) {
@@ -53,8 +53,8 @@ export const fetchBaseQueryWithReauth = (
           // get new access and refresh token
           const refreshResult = await baseQueryForRefresh(
             {
-              url: 'v1/auth/refresh',
-              method: 'GET',
+              url: "v1/auth/refresh",
+              method: "GET",
               headers: {
                 Authorization: `Bearer ${refreshToken}`,
               },
@@ -89,7 +89,7 @@ export const fetchBaseQueryWithReauth = (
  * upload progress, which the native fetch library does not).
  */
 export const axiosBaseQuery = (
-  { baseUrl, prepareHeaders }: AxiosBaseQueryParams = { baseUrl: '' }
+  { baseUrl, prepareHeaders }: AxiosBaseQueryParams = { baseUrl: "" }
 ): BaseQuery => {
   return async (
     { url, method, body, params, headers = {}, onUploadProgress },
@@ -146,11 +146,11 @@ export const axiosBaseQuery = (
  */
 export const prepareAuthHeader = (
   api: BaseQueryApi,
-  headers: AxiosRequestConfig['headers']
+  headers: AxiosRequestConfig["headers"]
 ) => {
   const state = api.getState() as RootState;
   const { isLoggedIn } = state.session;
-  const accessToken = Cookies.get('accessToken');
+  const accessToken = Cookies.get("accessToken");
 
   if (isLoggedIn && accessToken) {
     return {

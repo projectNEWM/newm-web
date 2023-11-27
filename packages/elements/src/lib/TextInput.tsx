@@ -6,15 +6,15 @@ import {
   ReactNode,
   forwardRef,
   useState,
-} from 'react';
-import { Box, IconButton, Stack, Typography } from '@mui/material';
-import HelpIcon from '@mui/icons-material/Help';
-import InputMask from 'react-input-mask';
-import { styled } from '@mui/material/styles';
-import theme from 'newm-theme';
-import ErrorMessage from './styled/ErrorMessage';
-import { WidthType } from './types';
-import Tooltip from './styled/Tooltip';
+} from "react";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import InputMask from "react-input-mask";
+import { styled } from "@mui/material/styles";
+import theme from "newm-theme";
+import ErrorMessage from "./styled/ErrorMessage";
+import { WidthType } from "./types";
+import Tooltip from "./styled/Tooltip";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
@@ -29,7 +29,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly shouldDisplayErrorMessage?: boolean;
 }
 
-const StyledRootElement = styled('div')`
+const StyledRootElement = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,7 +75,7 @@ const inputStyles = `
   }
 `;
 
-const StyledInput = styled('input')`
+const StyledInput = styled("input")`
   ${inputStyles}
 `;
 const StyledMaskedInput = styled(InputMask)`
@@ -97,8 +97,8 @@ export const TextInput: ForwardRefRenderFunction<
     onBlur,
     onFocus,
     startAdornment,
-    tooltipText = '',
-    widthType = 'default',
+    tooltipText = "",
+    widthType = "default",
     shouldDisplayErrorMessage = true,
     ...rest
   },
@@ -138,11 +138,11 @@ export const TextInput: ForwardRefRenderFunction<
       direction="column"
       spacing="4px"
       sx={{
-        margin: ['0 auto', '0 auto', '0'],
-        maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
+        margin: ["0 auto", "0 auto", "0"],
+        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         opacity: disabled ? 0.5 : 1,
-        textAlign: 'left',
-        width: '100%',
+        textAlign: "left",
+        width: "100%",
       }}
     >
       {!!label && (
@@ -153,7 +153,7 @@ export const TextInput: ForwardRefRenderFunction<
           fontWeight={500}
         >
           <>
-            <Typography sx={{ textTransform: 'uppercase', fontWeight: 500 }}>
+            <Typography sx={{ textTransform: "uppercase", fontWeight: 500 }}>
               {label}
             </Typography>
 
@@ -163,8 +163,8 @@ export const TextInput: ForwardRefRenderFunction<
                   <HelpIcon
                     sx={{
                       color: theme.colors.grey100,
-                      height: '18px',
-                      width: '18px',
+                      height: "18px",
+                      width: "18px",
                     }}
                   />
                 </IconButton>
@@ -192,15 +192,15 @@ export const TextInput: ForwardRefRenderFunction<
         onMouseLeave={() => setIsHovered(false)}
         sx={{
           borderWidth: theme.inputField.borderWidth,
-          borderStyle: 'solid',
+          borderStyle: "solid",
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
             isHovered,
             isFocused
           ),
-          borderRadius: '4px',
-          overflow: 'hidden',
+          borderRadius: "4px",
+          overflow: "hidden",
           background: theme.colors.grey500,
         }}
         maxWidth={theme.inputField.maxWidth}

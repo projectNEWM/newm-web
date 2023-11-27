@@ -1,20 +1,20 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UIState } from './types';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { UIState } from "./types";
 
 const initialState: UIState = {
   toast: {
-    heading: '',
-    message: '',
-    severity: 'error',
+    heading: "",
+    message: "",
+    severity: "error",
   },
   progressBarModal: {
     progress: 0,
-    message: '',
-    disclaimer: '',
+    message: "",
+    disclaimer: "",
     animationSeconds: 0,
   },
   updateWalletAddressModal: {
-    message: '',
+    message: "",
     isConfirmationRequired: false,
   },
   isProgressBarModalOpen: false,
@@ -26,27 +26,27 @@ const initialState: UIState = {
 
 const uiSlice = createSlice({
   initialState,
-  name: 'ui',
+  name: "ui",
   reducers: {
     clearToastMessage: (state) => {
-      state.toast.heading = '';
-      state.toast.message = '';
-      state.toast.severity = 'error';
+      state.toast.heading = "";
+      state.toast.message = "";
+      state.toast.severity = "error";
     },
-    setToastMessage: (state, { payload }: PayloadAction<UIState['toast']>) => {
+    setToastMessage: (state, { payload }: PayloadAction<UIState["toast"]>) => {
       state.toast = payload;
     },
     clearProgressBarModal: (state) => {
       state.progressBarModal = {
         progress: 0,
-        message: '',
-        disclaimer: '',
+        message: "",
+        disclaimer: "",
         animationSeconds: 0,
       };
     },
     setProgressBarModal: (
       state,
-      { payload }: PayloadAction<UIState['progressBarModal']>
+      { payload }: PayloadAction<UIState["progressBarModal"]>
     ) => {
       state.progressBarModal = payload;
     },
@@ -67,7 +67,7 @@ const uiSlice = createSlice({
     },
     setUpdateWalletAddressModal: (
       state,
-      { payload }: PayloadAction<UIState['updateWalletAddressModal']>
+      { payload }: PayloadAction<UIState["updateWalletAddressModal"]>
     ) => {
       state.updateWalletAddressModal = payload;
     },

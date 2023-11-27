@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Table,
@@ -9,16 +9,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@mui/material';
-import theme from '@newm.io/theme';
-import { Dispatch, SetStateAction } from 'react';
-import { Typography } from '@newm.io/studio/elements';
+} from "@mui/material";
+import theme from "@newm.io/theme";
+import { Dispatch, SetStateAction } from "react";
+import { Typography } from "@newm.io/studio/elements";
 import {
   TableDropdownSelect,
   TablePagination,
-} from '@newm.io/studio/components';
-import { Song } from '@newm.io/studio/modules/song';
-import AllCaughtUp from './AllCaughtUp';
+} from "@newm.io/studio/components";
+import { Song } from "@newm.io/studio/modules/song";
+import AllCaughtUp from "./AllCaughtUp";
 
 interface SongRoyaltiesListProps {
   songRoyalties: ReadonlyArray<Song>;
@@ -31,18 +31,18 @@ interface SongRoyaltiesListProps {
 }
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 const StyledTableCell = styled(TableCell)({
   borderColor: theme.colors.grey700,
-  height: '48px',
+  height: "48px",
 });
 
 export default function SongRoyaltiesList({
@@ -65,12 +65,12 @@ export default function SongRoyaltiesList({
 
   const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
     if (!url) {
-      return '';
-    } else if (url.split('/')[2] == 'res.cloudinary.com') {
+      return "";
+    } else if (url.split("/")[2] == "res.cloudinary.com") {
       // replace upload params with smaller dimensions
       return url.replace(
         /upload\/[\w,]+\//,
-        'upload/w_56,h_56,c_fill,r_max,q_auto,f_auto/'
+        "upload/w_56,h_56,c_fill,r_max,q_auto,f_auto/"
       );
     } else {
       return url;
@@ -108,21 +108,21 @@ export default function SongRoyaltiesList({
                   }
                 >
                   <StyledTableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
                       <img
                         style={{
-                          borderRadius: '50%',
-                          width: '40px',
-                          height: '40px',
+                          borderRadius: "50%",
+                          width: "40px",
+                          height: "40px",
                         }}
                         src={getResizedAlbumCoverImageUrl(row.coverArtUrl)}
                         alt="Album cover"
                       />
                       <Box
                         sx={{
-                          paddingLeft: '12px',
-                          whiteSpace: 'nowrap',
-                          maxWidth: { xs: '200px', sm: 'unset' },
+                          paddingLeft: "12px",
+                          whiteSpace: "nowrap",
+                          maxWidth: { xs: "200px", sm: "unset" },
                         }}
                       >
                         <Typography fontWeight={500}>{row.title}</Typography>
@@ -147,7 +147,7 @@ export default function SongRoyaltiesList({
                 handlePageChange={handlePageChange}
                 colSpan={3}
                 rows="songs"
-                cellStyles={{ paddingTop: '12px' }}
+                cellStyles={{ paddingTop: "12px" }}
               />
             )}
           </Table>

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -6,33 +6,33 @@ import {
   DialogContentText,
   DialogTitle,
   Stack,
-} from '@mui/material';
-import { Button, Typography } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+} from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 import {
   CollaborationStatus,
   getHasOwnershipInvite,
   useFetchInvitesThunk,
   useGetCollaborationsQuery,
-} from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/modules/song";
 import {
   selectUi,
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
-} from '@newm.io/studio/modules/ui';
+} from "@newm.io/studio/modules/ui";
 import {
   VerificationStatus,
   emptyProfile,
   selectSession,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/modules/session";
 import {
   SKIP_FETCH_INVITE_PATH_LIST,
   useAppDispatch,
   useAppSelector,
-} from '@newm.io/studio/common';
-import InvitesTable from './InvitesTable';
+} from "@newm.io/studio/common";
+import InvitesTable from "./InvitesTable";
 
 const { Verified } = VerificationStatus;
 
@@ -70,10 +70,10 @@ const InvitesModal: FunctionComponent = () => {
   const isAcceptButtonDisabled = !isVerified || isWalletAddressRequired;
 
   const subtitleText = !isVerified
-    ? 'You need to verify your account to accept these pending invitations.'
+    ? "You need to verify your account to accept these pending invitations."
     : isWalletAddressRequired
-    ? 'You need to connect your wallet to accept these pending invitations.'
-    : 'You need to take action on these pending invitations.';
+    ? "You need to connect your wallet to accept these pending invitations."
+    : "You need to take action on these pending invitations.";
 
   const handleConnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
@@ -98,7 +98,7 @@ const InvitesModal: FunctionComponent = () => {
     <>
       <Dialog
         fullWidth={true}
-        maxWidth={'lg'}
+        maxWidth={"lg"}
         open={isInvitesModalOpen}
         onClose={() => dispatch(setIsInvitesModalOpen(false))}
       >
@@ -111,9 +111,9 @@ const InvitesModal: FunctionComponent = () => {
           sx={{ backgroundColor: theme.colors.grey500, px: 3 }}
         >
           <Stack
-            alignItems={[null, null, 'center']}
+            alignItems={[null, null, "center"]}
             columnGap={1}
-            flexDirection={[null, null, 'row']}
+            flexDirection={[null, null, "row"]}
             justifyContent="space-between"
             rowGap={2}
           >
@@ -124,7 +124,7 @@ const InvitesModal: FunctionComponent = () => {
                 <Button
                   color="yellow"
                   onClick={handleVerifyProfile}
-                  sx={{ textTransform: 'none' }}
+                  sx={{ textTransform: "none" }}
                   variant="outlined"
                   width="compact"
                 >
@@ -136,7 +136,7 @@ const InvitesModal: FunctionComponent = () => {
                 <Button
                   color="yellow"
                   onClick={handleConnectWallet}
-                  sx={{ textTransform: 'none' }}
+                  sx={{ textTransform: "none" }}
                   variant="outlined"
                   width="compact"
                 >

@@ -1,24 +1,24 @@
-import { FunctionComponent, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { FunctionComponent, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import {
   Alert,
   Button,
   HorizontalLine,
   Typography,
-} from '@newm.io/studio/elements';
-import { Box, Stack, useTheme } from '@mui/material';
-import { useConnectWallet } from '@newm.io/cardano-dapp-wallet-connector';
+} from "@newm.io/studio/elements";
+import { Box, Stack, useTheme } from "@mui/material";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
-} from '@newm.io/studio/modules/content';
+} from "@newm.io/studio/modules/content";
 import {
   Creditor,
   Featured,
   Owner,
   UploadSongRequest,
-} from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/modules/song";
 import {
   DropdownMultiSelectField,
   DropdownSelectField,
@@ -30,25 +30,25 @@ import {
   TextInputField,
   UploadImageField,
   UploadSongField,
-} from '@newm.io/studio/components';
+} from "@newm.io/studio/components";
 import {
   scrollToError,
   useAppDispatch,
   useExtractProperty,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import SelectCoCeators from '@newm.io/studio/components/minting/SelectCoCreators';
-import { useFormikContext } from 'formik';
+} from "@newm.io/studio/common";
+import SelectCoCeators from "@newm.io/studio/components/minting/SelectCoCreators";
+import { useFormikContext } from "formik";
 import {
   VerificationStatus,
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
+} from "@newm.io/studio/modules/session";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
-} from '@newm.io/studio/modules/ui';
-import { SongRouteParams } from '../library/types';
+} from "@newm.io/studio/modules/ui";
+import { SongRouteParams } from "../library/types";
 
 interface BasicDonDetailsProps {
   readonly isInEditMode?: boolean;
@@ -71,9 +71,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
-  const { songId } = useParams<'songId'>() as SongRouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const languageOptions = useExtractProperty(languages, 'language_name');
+  const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
 
@@ -85,15 +85,15 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const isSubmitDisabled = values.isMinting && (!wallet || !isVerified);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
-    setFieldValue('owners', owners);
+    setFieldValue("owners", owners);
   };
 
   const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
-    setFieldValue('creditors', creditors);
+    setFieldValue("creditors", creditors);
   };
 
   const handleChangeFeatured = (featured: ReadonlyArray<Featured>) => {
-    setFieldValue('featured', featured);
+    setFieldValue("featured", featured);
   };
 
   const handleVerifyProfile = () => {
@@ -120,13 +120,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     <Stack direction="column" spacing={5}>
       <Stack
         sx={{
-          display: 'flex',
-          flexDirection: ['column', 'column', 'row'],
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
           columnGap: [undefined, undefined, 1.5],
           rowGap: [2, null, 3],
-          maxWidth: [undefined, undefined, '700px'],
+          maxWidth: [undefined, undefined, "700px"],
           marginBottom: 3,
-          alignItems: ['center', 'center', 'unset'],
+          alignItems: ["center", "center", "unset"],
         }}
       >
         <Stack
@@ -143,11 +143,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
               <SolidOutline
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   flexGrow: 1,
-                  height: '100px',
+                  height: "100px",
                 }}
               >
                 <PlaySong id={songId} />
@@ -182,7 +182,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             maxFileSizeMB={10}
             minDimensions={{ width: 1400, height: 1400 }}
             name="coverArtUrl"
-            rootSx={{ width: '100%', alignSelf: 'center' }}
+            rootSx={{ width: "100%", alignSelf: "center" }}
           />
         </Stack>
       </Stack>
@@ -190,20 +190,20 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       <Stack
         spacing={3}
         sx={{
-          marginX: ['auto', 'auto', 'unset'],
+          marginX: ["auto", "auto", "unset"],
           maxWidth: [
             theme.inputField.maxWidth,
             theme.inputField.maxWidth,
-            '700px',
+            "700px",
           ],
-          alignSelf: ['center', 'center', 'unset'],
+          alignSelf: ["center", "center", "unset"],
         }}
       >
         <Stack
           ref={songDetailsRef}
           sx={{
-            display: 'grid',
-            gridTemplateColumns: ['repeat(1, 1fr)', null, 'repeat(2, 1fr)'],
+            display: "grid",
+            gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
             rowGap: [2, null, 3],
             columnGap: [undefined, undefined, 1.5],
           }}
@@ -253,7 +253,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               sx={{
                 backgroundColor: theme.colors.grey600,
                 border: `2px solid ${theme.colors.grey400}`,
-                borderRadius: '4px',
+                borderRadius: "4px",
               }}
             >
               <SwitchInputField
@@ -261,9 +261,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 title="MINT SONG"
                 includeBorder={false}
                 description={
-                  'Minting a song will create an NFT that reflects ' +
-                  'ownership, makes streaming royalties available for ' +
-                  'purchase, and enables royalty distribution to your account.'
+                  "Minting a song will create an NFT that reflects " +
+                  "ownership, makes streaming royalties available for " +
+                  "purchase, and enables royalty distribution to your account."
                 }
               />
 
@@ -295,7 +295,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   variant="outlined"
                   color="yellow"
                   onClick={handleVerifyProfile}
-                  sx={{ textTransform: 'none' }}
+                  sx={{ textTransform: "none" }}
                 >
                   Verify profile
                 </Button>
@@ -321,7 +321,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   onClick={() => {
                     dispatch(setIsConnectWalletModalOpen(true));
                   }}
-                  sx={{ textTransform: 'none' }}
+                  sx={{ textTransform: "none" }}
                 >
                   Connect wallet
                 </Button>
@@ -344,11 +344,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             isLoading={isSubmitting}
             width={
               windowWidth && windowWidth > theme.breakpoints.values.md
-                ? 'compact'
-                : 'default'
+                ? "compact"
+                : "default"
             }
           >
-            {values.isMinting ? 'Next' : isInEditMode ? 'Save' : 'Upload'}
+            {values.isMinting ? "Next" : isInEditMode ? "Save" : "Upload"}
           </Button>
         </Box>
       </Stack>

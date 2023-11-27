@@ -1,6 +1,6 @@
-import { ForwardRefRenderFunction, forwardRef } from 'react';
-import { Field, FieldProps } from 'formik';
-import { TextArea, TextAreaProps } from '@newm.io/studio/elements';
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
+import { TextArea, TextAreaProps } from "@newm.io/studio/elements";
 
 const TextAreaField: ForwardRefRenderFunction<
   HTMLTextAreaElement,
@@ -11,7 +11,7 @@ const TextAreaField: ForwardRefRenderFunction<
       {({ field, meta }: FieldProps) => {
         return (
           <TextArea
-            errorMessage={meta.touched ? meta.error : ''}
+            errorMessage={meta.touched ? meta.error : ""}
             ref={ref}
             {...field}
             {...props}

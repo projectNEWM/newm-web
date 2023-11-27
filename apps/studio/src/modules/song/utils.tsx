@@ -1,11 +1,11 @@
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
-import { uniq } from 'lodash';
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { uniq } from "lodash";
 import {
   enableWallet,
   getWalletChangeAddress,
   signWalletTransaction,
-} from '@newm.io/cardano-dapp-wallet-connector';
-import { SilentError } from '@newm.io/studio/common';
+} from "@newm.io/cardano-dapp-wallet-connector";
+import { SilentError } from "@newm.io/studio/common";
 import {
   Collaboration,
   CollaborationStatus,
@@ -16,9 +16,9 @@ import {
   Invite,
   MintingStatus,
   Owner,
-} from './types';
-import { extendedApi as songApi } from './api';
-import { sessionApi } from '../session';
+} from "./types";
+import { extendedApi as songApi } from "./api";
+import { sessionApi } from "../session";
 
 const EDITABLE_COLLABORATOR_STATUSES = [
   CollaborationStatus.Editing,
@@ -182,7 +182,7 @@ export const mapCollaboratorsToCollaborations = (
  */
 export const getIsOwnerEditable = (owner: Owner, totalNumOwners: number) => {
   const ownerStatus = owner.status;
-  const isCreator = 'isCreator' in owner && !!owner.isCreator;
+  const isCreator = "isCreator" in owner && !!owner.isCreator;
   const canEditOwnAmount = totalNumOwners > 1 && isCreator;
   const isEditableStatus = EDITABLE_COLLABORATOR_STATUSES.includes(ownerStatus);
 
@@ -231,8 +231,8 @@ export const createInvite = async (
 
   const songData = getSongResponse.data;
 
-  if ('error' in getSongResponse || !songData) {
-    throw new Error('Error getting song data');
+  if ("error" in getSongResponse || !songData) {
+    throw new Error("Error getting song data");
   }
 
   const getUserResponse = await dispatch(
@@ -240,8 +240,8 @@ export const createInvite = async (
   );
   const userData = getUserResponse.data;
 
-  if ('error' in getUserResponse || !userData) {
-    throw new Error('Error getting user data');
+  if ("error" in getUserResponse || !userData) {
+    throw new Error("Error getting user data");
   }
 
   return {
@@ -272,7 +272,7 @@ export const convertMillisecondsToSongFormat = (
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
 
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 };
 
 /**
@@ -292,7 +292,7 @@ export const submitMintSongPayment = async (
     songApi.endpoints.getMintSongPayment.initiate(songId)
   );
 
-  if ('error' in getPaymentResp || !getPaymentResp.data) {
+  if ("error" in getPaymentResp || !getPaymentResp.data) {
     throw new SilentError();
   }
 
@@ -308,7 +308,7 @@ export const submitMintSongPayment = async (
     })
   );
 
-  if ('error' in createPaymentResp || !createPaymentResp.data) {
+  if ("error" in createPaymentResp || !createPaymentResp.data) {
     throw new SilentError();
   }
 
@@ -323,7 +323,7 @@ export const submitMintSongPayment = async (
     })
   );
 
-  if ('error' in txResp) {
+  if ("error" in txResp) {
     throw new SilentError();
   }
 };

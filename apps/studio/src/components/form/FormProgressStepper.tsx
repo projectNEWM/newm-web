@@ -1,6 +1,6 @@
-import { CheckCircleOutline } from '@mui/icons-material';
-import { Box, Typography, styled } from '@mui/material';
-import theme from '@newm.io/theme';
+import { CheckCircleOutline } from "@mui/icons-material";
+import { Box, Typography, styled } from "@mui/material";
+import theme from "@newm.io/theme";
 
 interface StepBoxProps {
   readonly boxColor: string;
@@ -65,8 +65,8 @@ const FormProgressStepper = ({
   return (
     <Box
       display="flex"
-      flexDirection={['column', 'column', 'row']}
-      maxWidth={[undefined, undefined, '700px']}
+      flexDirection={["column", "column", "row"]}
+      maxWidth={[undefined, undefined, "700px"]}
       gap={0.5}
       mb={5}
       justifyContent="center"
@@ -81,7 +81,7 @@ const FormProgressStepper = ({
             key={index}
             boxColor={stepColor}
             boxTitle={stepTitle}
-            justifyContent={['center', 'center', 'flex-start']}
+            justifyContent={["center", "center", "flex-start"]}
           >
             <Box display="flex" flexDirection="row" gap={1.5} pl={1.75}>
               {isStepCompleted ? (

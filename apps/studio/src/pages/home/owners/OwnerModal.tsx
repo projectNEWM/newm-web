@@ -1,13 +1,13 @@
-import { FunctionComponent } from 'react';
-import { DialogActions, DialogContentText, DialogProps } from '@mui/material';
+import { FunctionComponent } from "react";
+import { DialogActions, DialogContentText, DialogProps } from "@mui/material";
 import {
   Button,
   Dialog,
   HorizontalLine,
   Typography,
-} from '@newm.io/studio/elements';
+} from "@newm.io/studio/elements";
 
-interface OwnerModalProps extends Omit<DialogProps, 'onClose'> {
+interface OwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
   readonly biography?: string;
   readonly nickname?: string;
@@ -24,11 +24,11 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
   open ? (
     <Dialog
       fullWidth={true}
-      maxWidth={'sm'}
+      maxWidth={"sm"}
       open={open}
       onClose={onClose}
       sx={{
-        '.MuiDialog-paper': {
+        ".MuiDialog-paper": {
           padding: 3,
           rowGap: 2.5,
         },

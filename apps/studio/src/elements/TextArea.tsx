@@ -5,12 +5,12 @@ import {
   TextareaHTMLAttributes,
   forwardRef,
   useState,
-} from 'react';
-import { Box, Stack, Typography } from '@mui/material';
-import styled from 'styled-components';
-import theme from '@newm.io/theme';
-import { ErrorMessage } from '@newm.io/studio/components';
-import { WidthType } from '@newm.io/studio/common';
+} from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import styled from "styled-components";
+import theme from "@newm.io/theme";
+import { ErrorMessage } from "@newm.io/studio/components";
+import { WidthType } from "@newm.io/studio/common";
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -63,7 +63,7 @@ export const TextArea: ForwardRefRenderFunction<
     endAdornment,
     disabled = false,
     isOptional = true,
-    widthType = 'default',
+    widthType = "default",
     ...rest
   },
   ref: ForwardedRef<HTMLTextAreaElement>
@@ -99,11 +99,11 @@ export const TextArea: ForwardRefRenderFunction<
       spacing="4px"
       sx={{
         opacity: disabled ? 0.5 : 1,
-        width: '100%',
-        textAlign: 'left',
-        [theme.breakpoints.down('md')]: {
-          margin: '0 auto',
-          maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
+        width: "100%",
+        textAlign: "left",
+        [theme.breakpoints.down("md")]: {
+          margin: "0 auto",
+          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         },
       }}
     >
@@ -137,15 +137,15 @@ export const TextArea: ForwardRefRenderFunction<
         onMouseLeave={() => setIsHovered(false)}
         sx={{
           borderWidth: theme.inputField.borderWidth,
-          borderStyle: 'solid',
+          borderStyle: "solid",
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
             isHovered,
             isFocused
           ),
-          borderRadius: '4px',
-          overflow: 'hidden',
+          borderRadius: "4px",
+          overflow: "hidden",
           background: theme.colors.grey500,
         }}
       >

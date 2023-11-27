@@ -1,12 +1,12 @@
-import { FunctionComponent } from 'react';
-import { Stack, Theme } from '@mui/material';
-import { Typography } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+import { FunctionComponent } from "react";
+import { Stack, Theme } from "@mui/material";
+import { Typography } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 
 export interface IconStatusProps {
   readonly icon: JSX.Element;
-  readonly iconColor?: keyof Theme['colors'];
-  readonly fontColor?: keyof Theme['colors'];
+  readonly iconColor?: keyof Theme["colors"];
+  readonly fontColor?: keyof Theme["colors"];
   readonly status: string | undefined;
 }
 
@@ -15,18 +15,18 @@ export interface IconStatusProps {
  */
 const IconStatus: FunctionComponent<IconStatusProps> = ({
   icon,
-  iconColor = 'music',
-  fontColor = 'white',
+  iconColor = "music",
+  fontColor = "white",
   status,
 }) => (
   <Stack
     sx={{
-      display: 'flex',
+      display: "flex",
       gap: 1,
-      flexDirection: 'row',
+      flexDirection: "row",
       color: theme.colors[iconColor],
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     }}
   >
     {icon}

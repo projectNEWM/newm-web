@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import theme from '@newm.io/theme';
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
+import theme from "@newm.io/theme";
 
 const SolidOutline = styled(Box)`
   border-radius: 4px;

@@ -6,18 +6,18 @@ import {
   KeyboardEvent,
   MouseEventHandler,
   forwardRef,
-} from 'react';
-import useAutocomplete from '@mui/base/useAutocomplete';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import theme from '@newm.io/theme';
-import { Box } from '@mui/material';
-import { WidthType } from '@newm.io/studio/common';
-import TextInput from './TextInput';
-import ResultsList from './styled/ResultsList';
-import NoResultsText from './styled/NoResultsList';
+} from "react";
+import useAutocomplete from "@mui/base/useAutocomplete";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import theme from "@newm.io/theme";
+import { Box } from "@mui/material";
+import { WidthType } from "@newm.io/studio/common";
+import TextInput from "./TextInput";
+import ResultsList from "./styled/ResultsList";
+import NoResultsText from "./styled/NoResultsList";
 
 export interface DropdownSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, 'as' | 'ref'> {
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
   readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
@@ -43,7 +43,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     handleBlur,
     label,
     name,
-    noResultsText = 'Nothing found',
+    noResultsText = "Nothing found",
     options,
     placeholder,
     value = null,
@@ -67,12 +67,12 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
-      if (newValue === null || newValue === undefined) handleChange?.('');
+      if (newValue === null || newValue === undefined) handleChange?.("");
       else handleChange?.(newValue as string);
     },
     // Removes warning for empty string not being a valid option
     isOptionEqualToValue: (option, value) =>
-      value === '' ? true : option === value,
+      value === "" ? true : option === value,
     clearOnBlur: true,
     options,
     value: value as string,
@@ -89,7 +89,7 @@ const DropdownSelect: ForwardRefRenderFunction<
    * This prevents a form submission when input text does not match any options.
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
-    if (event.key === 'Enter' && inputValue !== value) event.preventDefault();
+    if (event.key === "Enter" && inputValue !== value) event.preventDefault();
   };
 
   /**
@@ -103,9 +103,9 @@ const DropdownSelect: ForwardRefRenderFunction<
   return (
     <Box
       sx={{
-        maxWidth: widthType === 'default' ? theme.inputField.maxWidth : null,
-        position: 'relative',
-        width: '100%',
+        maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
+        position: "relative",
+        width: "100%",
       }}
     >
       <div {...getRootProps()}>
@@ -119,10 +119,10 @@ const DropdownSelect: ForwardRefRenderFunction<
               onClick={handleEndAdornmentClick}
               sx={
                 {
-                  cursor: 'pointer',
+                  cursor: "pointer",
                   color: theme.colors.white,
-                  transform: popupOpen ? 'rotate(-180deg)' : 'rotate(0deg)',
-                  transition: 'transform 200ms ease-in',
+                  transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                  transition: "transform 200ms ease-in",
                 } as React.CSSProperties
               }
             />

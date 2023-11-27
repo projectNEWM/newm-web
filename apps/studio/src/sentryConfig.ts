@@ -1,12 +1,12 @@
-import * as Sentry from '@sentry/react';
-import { isProd } from './buildParams';
+import * as Sentry from "@sentry/react";
+import { isProd } from "./buildParams";
 
 const initializeSentry = () => {
   Sentry.init({
-    dsn: 'https://b98c0562df1b2b5d4c6bf708b91a561f@o1174944.ingest.sentry.io/4505967320956928',
+    dsn: "https://b98c0562df1b2b5d4c6bf708b91a561f@o1174944.ingest.sentry.io/4505967320956928",
     // For testing purposes you can set the environment to "debug"
     // to separate development and production errors
-    environment: isProd ? 'production' : 'development',
+    environment: isProd ? "production" : "development",
     integrations: [
       new Sentry.BrowserTracing(),
       new Sentry.Replay({

@@ -1,12 +1,12 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent } from "react";
 import {
   Box,
   Collapse,
   Alert as MUIAlert,
   AlertProps as MUIAlertProps,
-} from '@mui/material';
-import WarningIcon from '@mui/icons-material/Warning';
-import theme from '@newm.io/theme';
+} from "@mui/material";
+import WarningIcon from "@mui/icons-material/Warning";
+import theme from "@newm.io/theme";
 
 interface AlertProps extends MUIAlertProps {
   open?: boolean;
@@ -21,16 +21,16 @@ const Alert: FunctionComponent<AlertProps> = ({
   action,
   children,
   open = true,
-  severity = 'info',
+  severity = "info",
   sx,
   ...rest
 }) => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Collapse in={open}>
         <MUIAlert
           action={
-            <Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+            <Box sx={{ display: "flex", height: "100%", alignItems: "center" }}>
               {action}
             </Box>
           }
@@ -38,18 +38,18 @@ const Alert: FunctionComponent<AlertProps> = ({
           iconMapping={iconMapping}
           sx={{
             backgroundColor: theme.colors.grey600,
-            borderRadius: '6px',
-            p: '8px 16px',
-            '.MuiAlert-icon': {
-              alignItems: 'center',
+            borderRadius: "6px",
+            p: "8px 16px",
+            ".MuiAlert-icon": {
+              alignItems: "center",
             },
-            '.MuiSvgIcon-root': {
-              color: 'inherit',
+            ".MuiSvgIcon-root": {
+              color: "inherit",
             },
-            '.MuiAlert-message': {
+            ".MuiAlert-message": {
               paddingRight: 1,
             },
-            '.MuiAlert-action': {
+            ".MuiAlert-action": {
               p: 0,
               mr: 0,
             },

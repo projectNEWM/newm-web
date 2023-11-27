@@ -5,7 +5,7 @@
 // import { extendedApi } from "@newm.io/studio/modules/song/api";
 // import * as api from "@newm.io/studio/modules/song";
 // import { mockUseGetSongsQueryResponse } from "@newm.io/studio/common";
-import Library from '../Library';
+import Library from "../Library";
 
 // jest.mock("@newm.io/studio/modules/song/api", () => ({
 //   ...jest.requireActual("@newm.io/studio/modules/song/api"),
@@ -45,7 +45,7 @@ import Library from '../Library';
 //   });
 // });
 
-it('Pass', async () => {
+it("Pass", async () => {
   // eslint-disable-next-line jest/valid-expect
   expect(true);
 });

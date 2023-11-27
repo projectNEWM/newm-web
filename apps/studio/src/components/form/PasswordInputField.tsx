@@ -1,10 +1,10 @@
-import IconButton from '@mui/material/IconButton';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useTheme } from '@mui/material';
-import { FunctionComponent, useState } from 'react';
-import { TextInputField } from '@newm.io/studio/components';
-import { TextInputProps } from '@newm.io/studio/elements';
+import IconButton from "@mui/material/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "@mui/material";
+import { FunctionComponent, useState } from "react";
+import { TextInputField } from "@newm.io/studio/components";
+import { TextInputProps } from "@newm.io/studio/elements";
 
 interface PasswordInputFieldProps extends TextInputProps {
   readonly externalMaskPassword?: boolean;
@@ -16,7 +16,7 @@ interface PasswordInputFieldProps extends TextInputProps {
 const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
   externalMaskPassword,
   handlePressEndAdornment,
-  placeholder = 'Password',
+  placeholder = "Password",
   showEndAdornment = true,
   ...rest
 }) => {
@@ -46,7 +46,7 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
         ) : undefined
       }
       placeholder={placeholder}
-      type={isMasked ? 'password' : 'text'}
+      type={isMasked ? "password" : "text"}
       isOptional={false}
       data-sentry-mask
       {...rest}

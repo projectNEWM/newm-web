@@ -1,9 +1,9 @@
-import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
-import { cloudinaryApi } from '@newm.io/studio/api';
-import { getFileBinary } from '@newm.io/studio/common';
-import { songApi } from '@newm.io/studio/modules/song';
-import { OnUploadProgress } from '@newm.io/studio/api/types';
-import { CloudinaryUploadOptions } from './types';
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { cloudinaryApi } from "@newm.io/studio/api";
+import { getFileBinary } from "@newm.io/studio/common";
+import { songApi } from "@newm.io/studio/modules/song";
+import { OnUploadProgress } from "@newm.io/studio/api/types";
+import { CloudinaryUploadOptions } from "./types";
 
 /**
  * Uploads an image to Cloudinary. Returns the response if
@@ -21,8 +21,8 @@ export const uploadToCloudinary = async (
     songApi.endpoints.getCloudinarySignature.initiate(params)
   );
 
-  if ('error' in signatureResp || !('data' in signatureResp)) {
-    throw new Error('Error fetching secure Cloudinary signature');
+  if ("error" in signatureResp || !("data" in signatureResp)) {
+    throw new Error("Error fetching secure Cloudinary signature");
   }
 
   const { apiKey, signature, timestamp } = signatureResp.data;
@@ -41,8 +41,8 @@ export const uploadToCloudinary = async (
     })
   );
 
-  if ('error' in cloudinaryResp || !('data' in cloudinaryResp)) {
-    throw new Error('Error uploading image to cloudinary');
+  if ("error" in cloudinaryResp || !("data" in cloudinaryResp)) {
+    throw new Error("Error uploading image to cloudinary");
   }
 
   return cloudinaryResp.data.eager

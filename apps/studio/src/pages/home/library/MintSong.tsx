@@ -1,22 +1,22 @@
-import { useRef, useState } from 'react';
-import { Formik, FormikValues } from 'formik';
-import { AlertTitle, Box, Button as MUIButton, Stack } from '@mui/material';
-import { useNavigate, useParams } from 'react-router';
+import { useRef, useState } from "react";
+import { Formik, FormikValues } from "formik";
+import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
+import { useNavigate, useParams } from "react-router";
 import {
   commonYupValidation,
   getUpdatedValues,
   scrollToError,
   useAppDispatch,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import { useConnectWallet } from '@newm.io/cardano-dapp-wallet-connector';
+} from "@newm.io/studio/common";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Alert,
   Button,
   HorizontalLine,
   Typography,
-} from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+} from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 import {
   CollaborationStatus,
   Creditor,
@@ -28,24 +28,24 @@ import {
   useGetCollaborationsQuery,
   useGetSongQuery,
   usePatchSongThunk,
-} from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/modules/song";
 import {
   ConfirmContract,
   ErrorMessage,
   SwitchInputField,
-} from '@newm.io/studio/components';
+} from "@newm.io/studio/components";
 import {
   VerificationStatus,
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import SelectCoCeators from '@newm.io/studio/components/minting/SelectCoCreators';
-import * as Yup from 'yup';
+} from "@newm.io/studio/modules/session";
+import SelectCoCeators from "@newm.io/studio/components/minting/SelectCoCreators";
+import * as Yup from "yup";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
-} from '@newm.io/studio/modules/ui';
-import { SongRouteParams } from './types';
+} from "@newm.io/studio/modules/ui";
+import { SongRouteParams } from "./types";
 
 interface FormValues {
   readonly isMinting: boolean;
@@ -60,17 +60,17 @@ const MintSong = () => {
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
-  const { songId } = useParams<'songId'>() as SongRouteParams;
+  const { songId } = useParams<"songId">() as SongRouteParams;
 
   const ownersRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);
 
   const {
     data: {
-      companyName = '',
+      companyName = "",
       email,
-      firstName = '',
-      lastName = '',
+      firstName = "",
+      lastName = "",
       nickname: stageName,
       verificationStatus,
       role,
@@ -172,7 +172,7 @@ const MintSong = () => {
 
   const validationSchema = Yup.object().shape({
     owners: commonYupValidation.owners,
-    consentsToContract: Yup.bool().required('This field is required'),
+    consentsToContract: Yup.bool().required("This field is required"),
   });
 
   const handleSubmitStep = async (values: FormValues) => {
@@ -224,7 +224,7 @@ const MintSong = () => {
     : handleSubmitStep;
 
   return (
-    <Box sx={{ maxWidth: '700px' }}>
+    <Box sx={{ maxWidth: "700px" }}>
       {showWarning && (
         <Box sx={{ mt: 3 }}>
           <Alert
@@ -235,8 +235,8 @@ const MintSong = () => {
                 onClick={() => {
                   setShowWarning(false);
                 }}
-                sx={{ textTransform: 'none' }}
-                variant={'outlined'}
+                sx={{ textTransform: "none" }}
+                variant={"outlined"}
               >
                 Dismiss
               </MUIButton>
@@ -245,15 +245,15 @@ const MintSong = () => {
             <AlertTitle sx={{ color: theme.colors.baseBlue, fontWeight: 600 }}>
               {isMintingInitiated
                 ? "Collaborators can't be added or removed after " +
-                  'initiating minting'
-                : 'These details cannot be changed after minting.'}
+                  "initiating minting"
+                : "These details cannot be changed after minting."}
             </AlertTitle>
             <Typography color="baseBlue" fontWeight={500} variant="subtitle1">
               {isMintingInitiated
-                ? 'If you need to add or remove a collaborator, please ' +
-                  'contact support.'
-                : 'Please review all details carefully before moving forward ' +
-                  'with the minting process.'}
+                ? "If you need to add or remove a collaborator, please " +
+                  "contact support."
+                : "Please review all details carefully before moving forward " +
+                  "with the minting process."}
             </Typography>
           </Alert>
         </Box>
@@ -281,15 +281,15 @@ const MintSong = () => {
             : values.isMinting;
 
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
-            setFieldValue('owners', values);
+            setFieldValue("owners", values);
           };
 
           const handleChangeCreditors = (values: ReadonlyArray<Creditor>) => {
-            setFieldValue('creditors', values);
+            setFieldValue("creditors", values);
           };
 
           const handleChangeFeatured = (values: ReadonlyArray<Featured>) => {
-            setFieldValue('featured', values);
+            setFieldValue("featured", values);
           };
 
           scrollToError(errors, isSubmitting, [
@@ -312,9 +312,9 @@ const MintSong = () => {
                         disabled={isMintingInitiated}
                         includeBorder={false}
                         description={
-                          'Minting a song will create an NFT that reflects ' +
-                          'ownership, making streaming royalties purchasable. ' +
-                          'Once a song is minted, it cannot be deleted.'
+                          "Minting a song will create an NFT that reflects " +
+                          "ownership, making streaming royalties purchasable. " +
+                          "Once a song is minted, it cannot be deleted."
                         }
                       />
 
@@ -346,7 +346,7 @@ const MintSong = () => {
                             variant="outlined"
                             color="yellow"
                             onClick={handleVerifyProfile}
-                            sx={{ textTransform: 'none' }}
+                            sx={{ textTransform: "none" }}
                           >
                             Verify profile
                           </Button>
@@ -376,7 +376,7 @@ const MintSong = () => {
                             variant="outlined"
                             color="yellow"
                             onClick={handleConnectWallet}
-                            sx={{ textTransform: 'none' }}
+                            sx={{ textTransform: "none" }}
                           >
                             Connect wallet
                           </Button>
@@ -405,8 +405,8 @@ const MintSong = () => {
                       variant="secondary"
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? 'compact'
-                          : 'default'
+                          ? "compact"
+                          : "default"
                       }
                     >
                       Cancel
@@ -420,11 +420,11 @@ const MintSong = () => {
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
-                            ? 'compact'
-                            : 'default'
+                            ? "compact"
+                            : "default"
                         }
                       >
-                        {isMintingInitiated ? 'Update collaborators' : 'Next'}
+                        {isMintingInitiated ? "Update collaborators" : "Next"}
                       </Button>
                     )}
                   </Stack>
@@ -445,7 +445,7 @@ const MintSong = () => {
                     songTitle={title}
                     isCoCreator={values.owners.length > 1}
                     onConfirm={(value: boolean) =>
-                      setFieldValue('consentsToContract', value)
+                      setFieldValue("consentsToContract", value)
                     }
                     totalOwners={values.owners.length}
                   />
@@ -464,8 +464,8 @@ const MintSong = () => {
                       variant="secondary"
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? 'compact'
-                          : 'default'
+                          ? "compact"
+                          : "default"
                       }
                     >
                       Previous
@@ -477,8 +477,8 @@ const MintSong = () => {
                       isLoading={isLoading}
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? 'compact'
-                          : 'default'
+                          ? "compact"
+                          : "default"
                       }
                     >
                       Request Minting

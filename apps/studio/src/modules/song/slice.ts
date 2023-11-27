@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { SongState } from './types';
+import { createSlice } from "@reduxjs/toolkit";
+import { SongState } from "./types";
 
 const initialState: SongState = {
-  artistAgreement: '',
+  artistAgreement: "",
 };
 
 const songSlice = createSlice({
   initialState,
-  name: 'song',
+  name: "song",
   reducers: {
     receiveArtistAgreement(state, { payload }) {
       state.artistAgreement = payload;

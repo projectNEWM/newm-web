@@ -1,3 +1,3 @@
-import { RootState } from '@newm.io/studio/store';
+import { RootState } from "@newm.io/studio/store";
 
-export const selectUi = (state: RootState): RootState['ui'] => state.ui;
+export const selectUi = (state: RootState): RootState["ui"] => state.ui;

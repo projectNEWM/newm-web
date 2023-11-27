@@ -1,16 +1,16 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseUrls } from '@newm.io/studio/buildParams';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseUrls } from "@newm.io/studio/buildParams";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
 import {
   GenerateArtistAgreementBody,
   GenerateArtistAgreementResponse,
-} from './types';
-import { baseQuery as newmBaseQuery } from '../newm/api';
+} from "./types";
+import { baseQuery as newmBaseQuery } from "../newm/api";
 import {
   axiosBaseQuery,
   fetchBaseQueryWithReauth,
   prepareAuthHeader,
-} from '../utils';
+} from "../utils";
 
 const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.lambda,
@@ -18,7 +18,7 @@ const baseQuery = axiosBaseQuery({
 });
 
 const api = createApi({
-  reducerPath: 'lambdaApi',
+  reducerPath: "lambdaApi",
   baseQuery: fetchBaseQueryWithReauth(baseQuery, newmBaseQuery),
   endpoints: (build) => ({
     generateArtistAgreement: build.mutation<
@@ -26,8 +26,8 @@ const api = createApi({
       GenerateArtistAgreementBody
     >({
       query: (body) => ({
-        url: 'generate-artist-agreement/',
-        method: 'POST',
+        url: "generate-artist-agreement/",
+        method: "POST",
         body,
       }),
 
@@ -37,8 +37,8 @@ const api = createApi({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: 'An error occurred while fetching your artist agreement',
-              severity: 'error',
+              message: "An error occurred while fetching your artist agreement",
+              severity: "error",
             })
           );
         }

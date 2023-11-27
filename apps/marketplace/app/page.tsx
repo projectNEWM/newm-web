@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledPage = styled.div`
   .page {
@@ -333,8 +333,8 @@ export default async function Index() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {' '}
-                  What is Nx Cloud?{' '}
+                  {" "}
+                  What is Nx Cloud?{" "}
                 </a>
               </div>
               <a

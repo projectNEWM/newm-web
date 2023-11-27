@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
-const ProfileImage = styled('img')(
+const ProfileImage = styled("img")(
   ({ height, theme, width }) => `
     border-radius: 50%;
     width: ${width || theme.spacing(16.25)};

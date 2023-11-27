@@ -1,20 +1,20 @@
-import { Box, Divider, Stack, useTheme } from '@mui/material';
-import { useConnectWallet } from '@newm.io/cardano-dapp-wallet-connector';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
-import { Typography } from '@newm.io/studio/elements';
-import currency from 'currency.js';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import DoneIcon from '@mui/icons-material/Done';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
-import { setIsConnectWalletModalOpen } from '@newm.io/studio/modules/ui';
+import { Box, Divider, Stack, useTheme } from "@mui/material";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
+import { Typography } from "@newm.io/studio/elements";
+import currency from "currency.js";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DoneIcon from "@mui/icons-material/Done";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { setIsConnectWalletModalOpen } from "@newm.io/studio/modules/ui";
 import {
   selectWallet,
   setWalletAddress,
   setWalletBalance,
-} from '@newm.io/studio/modules/wallet';
+} from "@newm.io/studio/modules/wallet";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const theme = useTheme();
@@ -27,10 +27,10 @@ const DisconnectWalletButton: FunctionComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
-  const truncatedAddress = walletAddress ? walletAddress.slice(0, 16) : '';
+  const truncatedAddress = walletAddress ? walletAddress.slice(0, 16) : "";
   const ellipsedAddress = walletAddress
-    ? walletAddress.slice(0, 16) + '...' + walletAddress.slice(-12)
-    : '';
+    ? walletAddress.slice(0, 16) + "..." + walletAddress.slice(-12)
+    : "";
 
   /**
    * Toggles the dropdown.
@@ -63,7 +63,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getBalance((value) => {
-        const adaBalance = currency(value, { symbol: '' }).format();
+        const adaBalance = currency(value, { symbol: "" }).format();
         dispatch(setWalletBalance(adaBalance));
       });
     }
@@ -102,10 +102,10 @@ const DisconnectWalletButton: FunctionComponent = () => {
 
     getParentHeight();
 
-    window.addEventListener('resize', getParentHeight);
+    window.addEventListener("resize", getParentHeight);
 
     return () => {
-      window.removeEventListener('resize', getParentHeight);
+      window.removeEventListener("resize", getParentHeight);
     };
   }, []);
 
@@ -124,15 +124,15 @@ const DisconnectWalletButton: FunctionComponent = () => {
           pl: 2,
           pr: 1.2,
           py: 1,
-          alignItems: 'center',
+          alignItems: "center",
           border: `2px solid ${theme.colors.white}`,
-          borderRadius: '4px',
-          cursor: 'pointer',
+          borderRadius: "4px",
+          cursor: "pointer",
         }}
       >
-        <Stack direction={['column', 'column', 'row']} gap={1}>
+        <Stack direction={["column", "column", "row"]} gap={1}>
           <Typography>{walletBalance} ₳</Typography>
-          <Typography sx={{ display: ['none', 'none', 'flex'] }}>|</Typography>
+          <Typography sx={{ display: ["none", "none", "flex"] }}>|</Typography>
           <Typography>{truncatedAddress}</Typography>
         </Stack>
 
@@ -150,10 +150,10 @@ const DisconnectWalletButton: FunctionComponent = () => {
             <Divider flexItem sx={{ borderColor: theme.colors.grey500 }} />
           }
           sx={{
-            alignItems: 'flex-start',
+            alignItems: "flex-start",
             backgroundColor: theme.colors.grey600,
             border: `2px solid ${theme.colors.grey500}`,
-            borderRadius: '4px',
+            borderRadius: "4px",
             zIndex: 10,
           }}
         >
@@ -167,7 +167,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
             ) : (
               <ContentCopyIcon
                 fontSize="small"
-                sx={{ cursor: 'pointer', color: theme.colors.grey200 }}
+                sx={{ cursor: "pointer", color: theme.colors.grey200 }}
                 onClick={handleClickCopyIcon}
               />
             )}
@@ -180,8 +180,8 @@ const DisconnectWalletButton: FunctionComponent = () => {
             p={2}
             onClick={handleDisconnectWallet}
             sx={{
-              cursor: 'pointer',
-              '&:hover': { backgroundColor: theme.colors.grey500 },
+              cursor: "pointer",
+              "&:hover": { backgroundColor: theme.colors.grey500 },
             }}
             width="100%"
           >

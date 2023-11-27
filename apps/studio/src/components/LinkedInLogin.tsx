@@ -4,11 +4,11 @@
  * and log the user into the app.
  */
 
-import { FunctionComponent, ReactNode } from 'react';
-import { useLinkedIn } from 'react-linkedin-login-oauth2';
-import { useLinkedInLoginThunk } from '@newm.io/studio/modules/session';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { Button } from '@newm.io/studio/elements';
+import { FunctionComponent, ReactNode } from "react";
+import { useLinkedIn } from "react-linkedin-login-oauth2";
+import { useLinkedInLoginThunk } from "@newm.io/studio/modules/session";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { Button } from "@newm.io/studio/elements";
 
 interface Props {
   readonly children?: ReactNode;
@@ -20,9 +20,9 @@ const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
   const redirectUri = `${window.location.origin}/linkedin`;
 
   const { linkedInLogin } = useLinkedIn({
-    clientId: import.meta.env.VITE_LINKEDIN_CLIENT_ID || '',
+    clientId: import.meta.env.VITE_LINKEDIN_CLIENT_ID || "",
     redirectUri,
-    scope: 'r_liteprofile r_emailaddress',
+    scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {
       logIn({ code, redirectUri });
     },

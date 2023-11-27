@@ -1,18 +1,18 @@
-import * as Yup from 'yup';
-import { FunctionComponent } from 'react';
-import { Form, Formik, FormikValues } from 'formik';
-import { Box, DialogProps, Stack, Typography } from '@mui/material';
-import { Button, Dialog, HorizontalLine } from '@newm.io/studio/elements';
+import * as Yup from "yup";
+import { FunctionComponent } from "react";
+import { Form, Formik, FormikValues } from "formik";
+import { Box, DialogProps, Stack, Typography } from "@mui/material";
+import { Button, Dialog, HorizontalLine } from "@newm.io/studio/elements";
 import {
   DropdownSelectField,
   SwitchInputField,
   TextInputField,
-} from '@newm.io/studio/components';
-import { commonYupValidation } from '@newm.io/studio/common';
-import { useGetRolesQuery } from '@newm.io/studio/modules/content';
-import { CollaborationStatus } from '@newm.io/studio/modules/song';
+} from "@newm.io/studio/components";
+import { commonYupValidation } from "@newm.io/studio/common";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
+import { CollaborationStatus } from "@newm.io/studio/modules/song";
 
-interface AddOwnerModalProps extends Omit<DialogProps, 'onClose'> {
+interface AddOwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly onClose: VoidFunction;
   readonly onSubmit: (values: FormikValues) => void;
 }
@@ -28,11 +28,11 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   const { data: roles = [] } = useGetRolesQuery();
 
   const initialValues = {
-    email: '',
+    email: "",
     isCreator: false,
     isRightsOwner: false,
     isCredited: false,
-    role: '',
+    role: "",
     status: CollaborationStatus.Editing,
   };
 
@@ -41,8 +41,8 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
     isCredited: Yup.boolean()
       .required()
       .test(
-        'at-least-one-true',
-        'Please enter valid featured artist, rights, or credits',
+        "at-least-one-true",
+        "Please enter valid featured artist, rights, or credits",
         (item, testContext) =>
           item ||
           testContext.parent.isRightsOwner ||
@@ -69,8 +69,8 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
           <Form>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
+                display: "flex",
+                flexDirection: "column",
                 p: 2,
                 rowGap: 2,
               }}
@@ -92,7 +92,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
               <SwitchInputField
                 name="isFeatured"
                 title="FEATURED ARTIST"
-                description={'Is this individual a featured artist?'}
+                description={"Is this individual a featured artist?"}
               />
 
               <SwitchInputField
@@ -105,8 +105,8 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 name="isCredited"
                 title="CREDITS"
                 description={
-                  'Did they have a role in making the song? Enable to credit ' +
-                  'them as a contributor.'
+                  "Did they have a role in making the song? Enable to credit " +
+                  "them as a contributor."
                 }
               />
 
@@ -129,11 +129,11 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
 
               <Stack
                 sx={{
-                  alignItems: 'center',
+                  alignItems: "center",
                   columnGap: 3,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
                 }}
               >
                 <Button variant="outlined" width="compact" onClick={onClose}>

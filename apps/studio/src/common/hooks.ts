@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { selectSession } from '@newm.io/studio/modules/session';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { WindowDimensions } from './types';
-import type { AppDispatch, RootState } from '../store';
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { selectSession } from "@newm.io/studio/modules/session";
+import { useLocation, useNavigate } from "react-router-dom";
+import { WindowDimensions } from "./types";
+import type { AppDispatch, RootState } from "../store";
 
-const hasWindow = typeof window !== 'undefined';
+const hasWindow = typeof window !== "undefined";
 
 const getWindowDimensions = () => {
   const width = hasWindow ? window.innerWidth : null;
@@ -25,8 +25,8 @@ export const useWindowDimensions = (): WindowDimensions | undefined => {
     }
 
     if (hasWindow) {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, [windowDimensions]);
 
@@ -59,7 +59,7 @@ export const useAuthenticatedRedirect = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const previousRoute = location?.state?.from;
-      navigate(previousRoute || '/home');
+      navigate(previousRoute || "/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);

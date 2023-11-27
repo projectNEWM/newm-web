@@ -1,20 +1,20 @@
-import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material';
-import { TextInput, TextInputProps, Tooltip } from '@newm.io/studio/elements';
-import { ForwardRefRenderFunction, forwardRef } from 'react';
-import HelpIcon from '@mui/icons-material/Help';
+import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { TextInput, TextInputProps, Tooltip } from "@newm.io/studio/elements";
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import HelpIcon from "@mui/icons-material/Help";
 import {
   Field,
   FieldProps,
   FormikErrors,
   FormikTouched,
   useFormikContext,
-} from 'formik';
-import ErrorMessage from '@newm.io/studio/components/styled/ErrorMessage';
+} from "formik";
+import ErrorMessage from "@newm.io/studio/components/styled/ErrorMessage";
 
-interface Props extends Omit<TextInputProps, 'startAdornment'> {
+interface Props extends Omit<TextInputProps, "startAdornment"> {
   readonly yearFieldName: string;
   readonly ownerFieldName: string;
-  readonly copyrightType?: 'composition' | 'phonographic';
+  readonly copyrightType?: "composition" | "phonographic";
 }
 
 /**
@@ -28,7 +28,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
     yearFieldName,
     ownerFieldName,
     tooltipText,
-    copyrightType = 'composition',
+    copyrightType = "composition",
     isOptional = true,
     ...rest
   },
@@ -50,7 +50,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
       <Stack direction="row" justifyContent="space-between">
         <Typography
           sx={{
-            textTransform: 'uppercase',
+            textTransform: "uppercase",
             fontWeight: 500,
             color: theme.colors.grey100,
             opacity: rest.disabled ? 0.5 : 1,
@@ -65,8 +65,8 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
                   <HelpIcon
                     sx={{
                       color: theme.colors.grey100,
-                      height: '18px',
-                      width: '18px',
+                      height: "18px",
+                      width: "18px",
                     }}
                   />
                 </IconButton>
@@ -97,7 +97,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
                 startAdornment={
                   <Box px={1} justifyContent="center" alignItems="center">
                     <Typography fontSize={20}>
-                      {copyrightType === 'composition' ? (
+                      {copyrightType === "composition" ? (
                         <span>&copy;</span>
                       ) : (
                         <span>&#8471;</span>
@@ -105,7 +105,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
                     </Typography>
                   </Box>
                 }
-                errorMessage={meta.touched ? meta.error : ''}
+                errorMessage={meta.touched ? meta.error : ""}
                 mask="9999"
                 maskChar={null}
                 placeholder={new Date().getFullYear().toString()}
@@ -121,7 +121,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
         <Field name={ownerFieldName}>
           {({ field, meta }: FieldProps) => (
             <TextInput
-              errorMessage={meta.touched ? meta.error : ''}
+              errorMessage={meta.touched ? meta.error : ""}
               endAdornment={endAdornment}
               placeholder="Owner Name"
               isOptional={false}

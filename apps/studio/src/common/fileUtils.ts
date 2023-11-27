@@ -1,4 +1,4 @@
-import { ValidateDimensionsParams } from './types';
+import { ValidateDimensionsParams } from "./types";
 
 /**
  * Checks if the aspect ratio of an image is 1:1.
@@ -15,14 +15,14 @@ export const validateAspectRatioOneToOne = async (
       const isOneToOneRatio = image.width === image.height;
 
       if (!isOneToOneRatio) {
-        reject(new Error('Image must be 1:1 aspect ratio'));
+        reject(new Error("Image must be 1:1 aspect ratio"));
 
         URL.revokeObjectURL(image.src);
       }
       resolve(true);
     };
 
-    image.onerror = () => reject('Failed to load image');
+    image.onerror = () => reject("Failed to load image");
 
     image.src = imageUrl;
   });
@@ -57,7 +57,7 @@ export const validateMinImageDimensions = ({
       resolve(true);
     };
 
-    image.onerror = () => reject('Failed to load image');
+    image.onerror = () => reject("Failed to load image");
 
     image.src = imageUrl;
   });
@@ -81,7 +81,7 @@ export const getFileBinary = async (
 };
 
 export const isCloudinaryUrl = (url: string) => {
-  return url.split('/')[2] === 'res.cloudinary.com';
+  return url.split("/")[2] === "res.cloudinary.com";
 };
 
 interface ResizeOptions {
@@ -103,16 +103,16 @@ export const getResizedAlbumCoverImageUrl = (
   options: ResizeOptions = { height: 40, width: 40 }
 ) => {
   if (!url) {
-    return '';
+    return "";
   }
 
   if (!isCloudinaryUrl(url)) {
     return url;
   }
 
-  const transformation = url.includes('upload/c_fit,w_5000,h_5000')
-    ? 'upload/c_limit,w_4000,h_4000'
-    : 'upload/';
+  const transformation = url.includes("upload/c_fit,w_5000,h_5000")
+    ? "upload/c_limit,w_4000,h_4000"
+    : "upload/";
 
   return url.replace(
     transformation,

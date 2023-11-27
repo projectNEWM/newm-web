@@ -1,19 +1,19 @@
-import { IconButton, Stack } from '@mui/material';
-import HelpIcon from '@mui/icons-material/Help';
-import { Creditors, Owners } from '@newm.io/studio/components';
+import { IconButton, Stack } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import { Creditors, Owners } from "@newm.io/studio/components";
 import {
   Button,
   HorizontalLine,
   Tooltip,
   Typography,
-} from '@newm.io/studio/elements';
-import { Formik, FormikProps } from 'formik';
-import { Creditor, Featured, Owner } from '@newm.io/studio/modules/song';
-import { FunctionComponent, useEffect, useState } from 'react';
-import theme from '@newm.io/theme';
-import { COLLABORATOR_FEE_IN_ADA, usePrevious } from '@newm.io/studio/common';
-import AddOwnerModal from './AddOwnerModal';
-import FeaturedArtists from './FeaturedArtists';
+} from "@newm.io/studio/elements";
+import { Formik, FormikProps } from "formik";
+import { Creditor, Featured, Owner } from "@newm.io/studio/modules/song";
+import { FunctionComponent, useEffect, useState } from "react";
+import theme from "@newm.io/theme";
+import { COLLABORATOR_FEE_IN_ADA, usePrevious } from "@newm.io/studio/common";
+import AddOwnerModal from "./AddOwnerModal";
+import FeaturedArtists from "./FeaturedArtists";
 
 interface FormValues {
   readonly owners: ReadonlyArray<Owner>;
@@ -104,7 +104,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
             isDeleteDisabled={isAddDeleteDisabled}
             onDelete={({ email }, owners) => {
               const newOwners = owners.filter((owner) => owner.email !== email);
-              setFieldValue('owners', newOwners);
+              setFieldValue("owners", newOwners);
             }}
           />
         </>
@@ -122,7 +122,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 (creditor) => creditor.email !== email
               );
 
-              setFieldValue('creditors', newCreditors);
+              setFieldValue("creditors", newCreditors);
             }}
           />
         </>
@@ -144,7 +144,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 (featured) => featured.email !== email
               );
 
-              setFieldValue('featured', newFeaturedArtists);
+              setFieldValue("featured", newFeaturedArtists);
             }}
           />
         </>
@@ -170,17 +170,17 @@ const FormContent: FunctionComponent<FormContentProps> = ({
               fee to complete the minting process will increase by ~₳${COLLABORATOR_FEE_IN_ADA}.`}
             <Tooltip
               title={
-                'This cost is increased with each additional artist because ' +
-                'this ADA needs to travel with each portion of stream tokens in order ' +
-                'to complete the split, which is an added extra cost for each transaction.'
+                "This cost is increased with each additional artist because " +
+                "this ADA needs to travel with each portion of stream tokens in order " +
+                "to complete the split, which is an added extra cost for each transaction."
               }
             >
               <IconButton sx={{ padding: 0, ml: 0.5 }}>
                 <HelpIcon
                   sx={{
                     color: theme.colors.grey100,
-                    height: '18px',
-                    width: '18px',
+                    height: "18px",
+                    width: "18px",
                   }}
                 />
               </IconButton>
@@ -214,7 +214,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           );
 
           if (isRightsOwner && !hasOwnerBeenAdded) {
-            setFieldValue('owners', [
+            setFieldValue("owners", [
               ...values.owners,
               {
                 email,
@@ -228,7 +228,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           }
 
           if (isCredited && !hasCreditorBeenAdded) {
-            setFieldValue('creditors', [
+            setFieldValue("creditors", [
               ...values.creditors,
               {
                 email,
@@ -240,7 +240,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           }
 
           if (isFeatured && !hasFeaturedBeenAdded) {
-            setFieldValue('featured', [
+            setFieldValue("featured", [
               ...values.featured,
               {
                 email,

@@ -2,15 +2,15 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import { useFacebookLoginThunk } from '@newm.io/studio/modules/session';
-import { setToastMessage } from '@newm.io/studio/modules/ui';
-import { FunctionComponent, ReactNode } from 'react';
+import { useFacebookLoginThunk } from "@newm.io/studio/modules/session";
+import { setToastMessage } from "@newm.io/studio/modules/ui";
+import { FunctionComponent, ReactNode } from "react";
 import FacebookLoginHelper, {
   LoginResponse,
-} from '@greatsumini/react-facebook-login';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import { Button } from '@newm.io/studio/elements';
-import { useAppDispatch } from '@newm.io/studio/common';
+} from "@greatsumini/react-facebook-login";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { Button } from "@newm.io/studio/elements";
+import { useAppDispatch } from "@newm.io/studio/common";
 
 interface Props {
   readonly children?: ReactNode;
@@ -20,15 +20,15 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
   const [logIn] = useFacebookLoginThunk();
 
-  const handleFacebookLoginSuccess = (resp: LoginResponse['authResponse']) => {
+  const handleFacebookLoginSuccess = (resp: LoginResponse["authResponse"]) => {
     const accessToken = resp?.accessToken;
 
     if (!accessToken) {
       dispatch(
         setToastMessage({
-          heading: 'Facebook',
-          message: 'Facebook authentication service offline.',
-          severity: 'error',
+          heading: "Facebook",
+          message: "Facebook authentication service offline.",
+          severity: "error",
         })
       );
 
@@ -40,7 +40,7 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
 
   return (
     <FacebookLoginHelper
-      appId={import.meta.env.VITE_FACEBOOK_CLIENT_ID || ''}
+      appId={import.meta.env.VITE_FACEBOOK_CLIENT_ID || ""}
       onSuccess={handleFacebookLoginSuccess}
       render={({ onClick }) => (
         <Button

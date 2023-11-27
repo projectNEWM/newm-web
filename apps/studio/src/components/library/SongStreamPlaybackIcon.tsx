@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
-import { PlayArrow, Stop } from '@mui/icons-material';
-import { CircularProgress } from '@mui/material';
-import { Tooltip } from '@newm.io/studio/elements';
-import theme from '@newm.io/theme';
+import { FunctionComponent } from "react";
+import { PlayArrow, Stop } from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
+import { Tooltip } from "@newm.io/studio/elements";
+import theme from "@newm.io/theme";
 
 interface SongStreamPlaybackIconProps {
   readonly isSongPlaying: boolean;
@@ -27,8 +27,8 @@ const SongStreamPlaybackIcon: FunctionComponent<
     return (
       <Tooltip
         title={
-          'Upload in progress. Please allow a few ' +
-          'minutes to complete the process.'
+          "Upload in progress. Please allow a few " +
+          "minutes to complete the process."
         }
       >
         <CircularProgress disableShrink size={24} color="secondary" />

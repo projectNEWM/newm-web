@@ -1,10 +1,10 @@
-import { Box, useTheme } from '@mui/material';
-import { useWindowDimensions } from '@newm.io/studio/common';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { useFormikContext } from 'formik';
-import { UploadSongRequest } from '@newm.io/studio/modules/song';
-import { FunctionComponent } from 'react';
-import { ConfirmContract } from '@newm.io/studio/components';
+import { Box, useTheme } from "@mui/material";
+import { useWindowDimensions } from "@newm.io/studio/common";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { useFormikContext } from "formik";
+import { UploadSongRequest } from "@newm.io/studio/modules/song";
+import { FunctionComponent } from "react";
+import { ConfirmContract } from "@newm.io/studio/components";
 
 const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
@@ -15,11 +15,11 @@ const ConfirmAgreement: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
 
   const handleConsentToContract = (value: boolean) => {
-    setFieldValue('consentsToContract', value);
+    setFieldValue("consentsToContract", value);
   };
 
   return (
-    <Box maxWidth={'500px'} marginX={['auto', 'auto', 'unset']}>
+    <Box maxWidth={"500px"} marginX={["auto", "auto", "unset"]}>
       <Typography mb={1.5}>
         You&apos;re almost ready. Please review your ownership contract.
       </Typography>
@@ -38,8 +38,8 @@ const ConfirmAgreement: FunctionComponent = () => {
           disabled={!values.consentsToContract}
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
-              ? 'compact'
-              : 'default'
+              ? "compact"
+              : "default"
           }
         >
           Distribute & Mint

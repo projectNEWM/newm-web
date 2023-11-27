@@ -1,11 +1,11 @@
-import { FunctionComponent, useCallback, useEffect, useState } from 'react';
-import { CircularProgress, Stack } from '@mui/material';
-import Cookies from 'js-cookie';
-import { Modal } from '@newm.io/studio/components';
-import { getIdenfyAuthToken } from '@newm.io/studio/modules/session';
-import theme from '@newm.io/theme';
-import { selectUi, setIsIdenfyModalOpen } from '@newm.io/studio/modules/ui';
-import { useAppDispatch, useAppSelector } from '@newm.io/studio/common';
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { CircularProgress, Stack } from "@mui/material";
+import Cookies from "js-cookie";
+import { Modal } from "@newm.io/studio/components";
+import { getIdenfyAuthToken } from "@newm.io/studio/modules/session";
+import theme from "@newm.io/theme";
+import { selectUi, setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
+import { useAppDispatch, useAppSelector } from "@newm.io/studio/common";
 
 const IdenfyModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const IdenfyModal: FunctionComponent = () => {
   const { isIdenfyModalOpen: isOpen } = useAppSelector(selectUi);
 
   const [idenfyAuthToken, setIdenfyAuthToken] = useState(
-    Cookies.get('idenfyAuthToken')
+    Cookies.get("idenfyAuthToken")
   );
 
   const handleClose = useCallback(() => {
@@ -25,15 +25,15 @@ const IdenfyModal: FunctionComponent = () => {
     if (!isOpen) return;
 
     const handleMessage = (event: MessageEvent) => {
-      if (event?.data === 'idenfy-modal-close') {
+      if (event?.data === "idenfy-modal-close") {
         handleClose();
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
 
     return () => {
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener("message", handleMessage);
     };
   }, [isOpen, handleClose]);
 
@@ -45,7 +45,7 @@ const IdenfyModal: FunctionComponent = () => {
     if (!isOpen) return;
 
     const cookieRefreshInterval = setInterval(() => {
-      const newAuthToken = Cookies.get('idenfyAuthToken');
+      const newAuthToken = Cookies.get("idenfyAuthToken");
 
       if (newAuthToken !== idenfyAuthToken) {
         setIdenfyAuthToken(newAuthToken);
@@ -68,10 +68,10 @@ const IdenfyModal: FunctionComponent = () => {
           allow="camera"
           allowFullScreen={true}
           style={{
-            border: 'none',
-            height: '100%',
-            padding: '24px',
-            width: '100%',
+            border: "none",
+            height: "100%",
+            padding: "24px",
+            width: "100%",
           }}
           src={`https://ui.idenfy.com/?authToken=${idenfyAuthToken}`}
           title="iDenfy verification session"
@@ -79,11 +79,11 @@ const IdenfyModal: FunctionComponent = () => {
       ) : (
         <Stack
           sx={{
-            alignItems: 'center',
+            alignItems: "center",
             backgroundColor: theme.colors.black,
-            height: '100%',
-            justifyContent: 'center',
-            width: '100%',
+            height: "100%",
+            justifyContent: "center",
+            width: "100%",
           }}
         >
           <CircularProgress />

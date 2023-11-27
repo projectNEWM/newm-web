@@ -1,6 +1,6 @@
-import { Stack } from '@mui/material';
-import { Button } from '@newm.io/studio/elements';
-import { FunctionComponent } from 'react';
+import { Stack } from "@mui/material";
+import { Button } from "@newm.io/studio/elements";
+import { FunctionComponent } from "react";
 
 interface SelectWalletItemProps {
   readonly name: string;
@@ -20,7 +20,7 @@ const SelectWalletItem: FunctionComponent<SelectWalletItemProps> = ({
       variant="outlined"
       width="full"
       color="white"
-      sx={{ opacity: 1, justifyContent: 'flex-start' }}
+      sx={{ opacity: 1, justifyContent: "flex-start" }}
     >
       <Stack
         direction="row"

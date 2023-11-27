@@ -1,5 +1,5 @@
-import { Dialog, DialogContent } from '@mui/material';
-import { keyframes, styled } from '@mui/material/styles';
+import { Dialog, DialogContent } from "@mui/material";
+import { keyframes, styled } from "@mui/material/styles";
 
 interface PopupProps {
   children: React.ReactNode;
@@ -17,9 +17,9 @@ const Popup = (props: PopupProps) => {
       <StyledDialogContent
         sx={{
           height: height,
-          paddingLeft: '0px',
-          paddingRight: '0px',
-          paddingTop: '30px',
+          paddingLeft: "0px",
+          paddingRight: "0px",
+          paddingTop: "30px",
           width: width,
         }}
         dividers
@@ -32,10 +32,10 @@ const Popup = (props: PopupProps) => {
 
 const StyledDialogContent = styled(DialogContent)(() => ({
   animation: `30s ${rotate} linear infinite;`,
-  border: '1.5px solid transparent;',
+  border: "1.5px solid transparent;",
   borderImage:
-    'conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;',
-  borderImageSlice: ' 1;',
+    "conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;",
+  borderImageSlice: " 1;",
 }));
 
 // --angle property defined in app.css

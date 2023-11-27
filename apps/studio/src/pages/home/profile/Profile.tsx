@@ -1,18 +1,18 @@
-import { FunctionComponent, useRef } from 'react';
-import { Box, Container, IconButton, Stack, Typography } from '@mui/material';
-import HelpIcon from '@mui/icons-material/Help';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useGetSongsQuery } from '@newm.io/studio/modules/song';
-import { Button, HorizontalLine, Tooltip } from '@newm.io/studio/elements';
+import { FunctionComponent, useRef } from "react";
+import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import { useGetSongsQuery } from "@newm.io/studio/modules/song";
+import { Button, HorizontalLine, Tooltip } from "@newm.io/studio/elements";
 import {
   DropdownSelectField,
   SwitchInputField,
   TextAreaField,
   TextInputField,
   UploadImageField,
-} from '@newm.io/studio/components';
+} from "@newm.io/studio/components";
 import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
@@ -26,8 +26,8 @@ import {
   scrollToError,
   useAppDispatch,
   useWindowDimensions,
-} from '@newm.io/studio/common';
-import { useGetRolesQuery } from '@newm.io/studio/modules/content';
+} from "@newm.io/studio/common";
+import { useGetRolesQuery } from "@newm.io/studio/modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -35,18 +35,18 @@ import {
   emptyProfile,
   useGetProfileQuery,
   useUpdateProfileThunk,
-} from '@newm.io/studio/modules/session';
-import theme from '@newm.io/theme';
-import { setIsIdenfyModalOpen } from '@newm.io/studio/modules/ui';
+} from "@newm.io/studio/modules/session";
+import theme from "@newm.io/theme";
+import { setIsIdenfyModalOpen } from "@newm.io/studio/modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
 const OUTLET_PROFILE_TOOLTIP_TEXT =
-  'In order to mint your music you must ensure that your ' +
+  "In order to mint your music you must ensure that your " +
   "outlet profile artist name aligns with your NEWM Studio 'stage name' or, in the absence " +
-  'of a stage name, matches your first and last name. If these names are not ' +
-  'consistent, please update your outlet ' +
-  'profiles to reflect your chosen artist name on this platform.';
+  "of a stage name, matches your first and last name. If these names are not " +
+  "consistent, please update your outlet " +
+  "profiles to reflect your chosen artist name on this platform.";
 
 const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -87,11 +87,11 @@ const Profile: FunctionComponent = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
   const { data: songData = [] } = useGetSongsQuery({
-    ownerIds: ['me'],
+    ownerIds: ["me"],
     limit: 1,
   });
 
-  const genre = songData?.[0]?.genres?.[0] ?? '';
+  const genre = songData?.[0]?.genres?.[0] ?? "";
 
   const isUnverified = verificationStatus === Unverified;
   const isPendingVerification = verificationStatus === Pending;
@@ -128,14 +128,14 @@ const Profile: FunctionComponent = () => {
       MAX_CHARACTER_COUNT_LONG,
       `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
     ),
-    companyName: Yup.string().when('companyIpRights', {
+    companyName: Yup.string().when("companyIpRights", {
       is: true,
       then: Yup.string()
         .max(
           MAX_CHARACTER_COUNT,
           `Must be ${MAX_CHARACTER_COUNT} characters or less`
         )
-        .required('Company name is required'),
+        .required("Company name is required"),
       otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,
@@ -147,19 +147,19 @@ const Profile: FunctionComponent = () => {
     twitterUrl: commonYupValidation.websiteUrl,
     websiteUrl: commonYupValidation.websiteUrl,
     spotifyProfile: Yup.string()
-      .matches(REGEX_SIMPLE_DOMAIN, 'Must be a valid URL')
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
       .matches(
         REGEX_SPOTIFY_PROFILE,
         'URL must be in the format similar to "https://open.spotify.com/artist/your-artist-id"'
       ),
     appleMusicProfile: Yup.string()
-      .matches(REGEX_SIMPLE_DOMAIN, 'Must be a valid URL')
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
       .matches(
         REGEX_APPLE_MUSIC_PROFILE,
         'URL must be in the format similar to "https://music.apple.com/country-code/artist/artist-name/artist-id"'
       ),
     soundCloudProfile: Yup.string()
-      .matches(REGEX_SIMPLE_DOMAIN, 'Must be a valid URL')
+      .matches(REGEX_SIMPLE_DOMAIN, "Must be a valid URL")
       .matches(
         REGEX_SOUNDCLOUD_PROFILE,
         'URL must be in the format "soundcloud.com/your-profile"'
@@ -174,12 +174,12 @@ const Profile: FunctionComponent = () => {
 
     // List of social URLs to format
     const socialURLs = [
-      'websiteUrl',
-      'twitterUrl',
-      'instagramUrl',
-      'spotifyProfile',
-      'appleMusicProfile',
-      'soundCloudProfile',
+      "websiteUrl",
+      "twitterUrl",
+      "instagramUrl",
+      "spotifyProfile",
+      "appleMusicProfile",
+      "soundCloudProfile",
     ];
 
     // Format the URLs with https:// if missing
@@ -193,7 +193,7 @@ const Profile: FunctionComponent = () => {
       updatedValues.companyIpRights === false ||
       values.companyIpRights === false
     ) {
-      updatedValues.companyName = '';
+      updatedValues.companyName = "";
     }
 
     // If user updates any of these fields, send all to be revalidated
@@ -222,8 +222,8 @@ const Profile: FunctionComponent = () => {
       sx={{
         marginX: [null, null, 3],
         paddingBottom: 8,
-        overflow: 'auto',
-        textAlign: ['center', 'center', 'initial'],
+        overflow: "auto",
+        textAlign: ["center", "center", "initial"],
       }}
     >
       <Stack direction="row" justifyContent="space-between">
@@ -239,7 +239,7 @@ const Profile: FunctionComponent = () => {
               width="compact"
               onClick={handleVerificationSession}
             >
-              {isUnverified ? 'Verify your profile' : 'Pending Verification'}
+              {isUnverified ? "Verify your profile" : "Pending Verification"}
             </Button>
 
             <Tooltip
@@ -284,27 +284,27 @@ const Profile: FunctionComponent = () => {
                 errorMessageLocation="inside"
                 isSuccessIconDisplayed={false}
                 rootSx={{
-                  position: 'absolute',
-                  left: [0, 0, '15rem'],
-                  right: '2px',
-                  top: '10rem',
+                  position: "absolute",
+                  left: [0, 0, "15rem"],
+                  right: "2px",
+                  top: "10rem",
                   zIndex: 0,
-                  maxWidth: '99999px',
+                  maxWidth: "99999px",
                 }}
                 contentSx={{
-                  height: '200px',
+                  height: "200px",
                 }}
               />
 
               <Box
                 display="flex"
-                justifyContent={['center', 'center', 'flex-start']}
+                justifyContent={["center", "center", "flex-start"]}
               >
-                <Stack maxWidth={['340px', '340px', '700px']} flexGrow={1}>
+                <Stack maxWidth={["340px", "340px", "700px"]} flexGrow={1}>
                   <Stack
                     display="flex"
-                    flexDirection={['column', 'column', 'row']}
-                    justifyContent={['center', 'center', 'flex-start']}
+                    flexDirection={["column", "column", "row"]}
+                    justifyContent={["center", "center", "flex-start"]}
                     alignItems="center"
                     position="relative"
                     zIndex={10}
@@ -319,11 +319,11 @@ const Profile: FunctionComponent = () => {
                       minimumSizeLabel="Min"
                       isSuccessIconDisplayed={false}
                       contentSx={{
-                        borderRadius: '50%',
+                        borderRadius: "50%",
                         width: 200,
                         height: 200,
                         padding: 1,
-                        marginTop: '-1.5rem',
+                        marginTop: "-1.5rem",
                         backgroundColor: theme.colors.grey700,
                       }}
                     />
@@ -331,19 +331,19 @@ const Profile: FunctionComponent = () => {
                     <Stack
                       gap={1}
                       width="100%"
-                      alignItems={['center', 'center', 'flex-start']}
+                      alignItems={["center", "center", "flex-start"]}
                     >
                       <Stack
                         direction="row"
                         alignItems="center"
-                        justifyContent={['center', 'center', 'flex-start']}
+                        justifyContent={["center", "center", "flex-start"]}
                         gap={2}
                       >
                         <Typography variant="h3" fontWeight="700">
                           {nickname
                             ? nickname?.toUpperCase()
                             : firstName?.toUpperCase() +
-                              ' ' +
+                              " " +
                               lastName?.toUpperCase()}
                         </Typography>
                         {isVerified ? (
@@ -378,8 +378,8 @@ const Profile: FunctionComponent = () => {
                       <Stack
                         ref={roleRef}
                         sx={{
-                          flexDirection: ['column', 'column', 'row'],
-                          justifyContent: 'space-between',
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
                           rowGap: 2,
                         }}
                       >
@@ -418,10 +418,10 @@ const Profile: FunctionComponent = () => {
                       </Stack>
                       <Stack
                         sx={{
-                          flexDirection: ['column', 'column', 'row'],
-                          justifyContent: 'space-between',
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
                           gap: 2,
-                          flexWrap: 'wrap',
+                          flexWrap: "wrap",
                         }}
                       >
                         <TextInputField
@@ -458,9 +458,9 @@ const Profile: FunctionComponent = () => {
                       </Stack>
                       <Stack
                         sx={{
-                          flexDirection: ['column', 'column', 'row'],
-                          flexWrap: 'wrap',
-                          justifyContent: 'space-between',
+                          flexDirection: ["column", "column", "row"],
+                          flexWrap: "wrap",
+                          justifyContent: "space-between",
                           gap: 2,
                         }}
                       >
@@ -499,10 +499,10 @@ const Profile: FunctionComponent = () => {
                       </Stack>
                       <Stack
                         sx={{
-                          flexDirection: ['column', 'column', 'row'],
-                          justifyContent: 'space-between',
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
                           gap: 2,
-                          flexWrap: 'wrap',
+                          flexWrap: "wrap",
                         }}
                       >
                         <TextInputField
@@ -542,7 +542,7 @@ const Profile: FunctionComponent = () => {
                         name="companyIpRights"
                         title="DO YOU HAVE A COMPANY?"
                         description={
-                          'If your Royalty Splits are held under your Company, please select this option.'
+                          "If your Royalty Splits are held under your Company, please select this option."
                         }
                       >
                         <Stack
@@ -560,7 +560,7 @@ const Profile: FunctionComponent = () => {
                             isSuccessIconDisplayed={false}
                             isMinimumSizeDisplayed={false}
                             contentSx={{
-                              borderRadius: '50%',
+                              borderRadius: "50%",
                               width: 60,
                               height: 60,
                             }}
@@ -579,15 +579,15 @@ const Profile: FunctionComponent = () => {
 
                   <HorizontalLine
                     sx={{
-                      maxWidth: ['340px', '340px', '700px'],
-                      mx: ['auto', 'auto', 'unset'],
+                      maxWidth: ["340px", "340px", "700px"],
+                      mx: ["auto", "auto", "unset"],
                       my: 5,
                     }}
                   />
                   <Stack
                     sx={{
                       columnGap: 2,
-                      flexDirection: [null, null, 'row'],
+                      flexDirection: [null, null, "row"],
                       mt: 5,
                       rowGap: 2,
                     }}
@@ -599,8 +599,8 @@ const Profile: FunctionComponent = () => {
                       variant="secondary"
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? 'compact'
-                          : 'default'
+                          ? "compact"
+                          : "default"
                       }
                     >
                       Cancel
@@ -610,8 +610,8 @@ const Profile: FunctionComponent = () => {
                       isLoading={isLoading}
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? 'compact'
-                          : 'default'
+                          ? "compact"
+                          : "default"
                       }
                       type="submit"
                     >

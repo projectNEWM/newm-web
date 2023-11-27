@@ -1,13 +1,13 @@
-import { FunctionComponent, useEffect, useRef } from 'react';
-import { Box, Stack, useTheme } from '@mui/material';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { FormikValues, useFormikContext } from 'formik';
+import { FunctionComponent, useEffect, useRef } from "react";
+import { Box, Stack, useTheme } from "@mui/material";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { FormikValues, useFormikContext } from "formik";
 import {
   FilteredTagsField,
   GradientTextInputField,
   ResponsiveNEWMLogo,
-} from '@newm.io/studio/components';
-import { useUserDevice, useWindowDimensions } from '@newm.io/studio/common';
+} from "@newm.io/studio/components";
+import { useUserDevice, useWindowDimensions } from "@newm.io/studio/common";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
@@ -20,7 +20,7 @@ interface AddProfileInformationProps {
 
 const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   fieldName,
-  helperText = '',
+  helperText = "",
   placeholder,
   prompt,
   subText,
@@ -64,16 +64,16 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleKeyDown = (event: any) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
         handleSubmit();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleSubmit]);
 
@@ -82,40 +82,40 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
       <Box mb={4}>
         <ResponsiveNEWMLogo />
       </Box>
-      <Typography variant="h1" sx={{ textAlign: 'center' }}>
+      <Typography variant="h1" sx={{ textAlign: "center" }}>
         {prompt}
       </Typography>
-      <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
+      <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
         {subText}
       </Typography>
 
       <GradientTextInputField
         ref={inputRef}
-        helperText={!isValid ? helperText : ''}
+        helperText={!isValid ? helperText : ""}
         name={fieldName}
         placeholder={isMobileOrTablet ? placeholder : undefined}
         textAlign="center"
       />
 
-      <Box sx={{ mt: [2, 2, 4], width: '100%' }}>
+      <Box sx={{ mt: [2, 2, 4], width: "100%" }}>
         {isValid || !tags ? (
           <Box
             sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column',
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
               mt: 2,
-              width: '100%',
+              width: "100%",
             }}
           >
             <Stack
               sx={{
-                display: ['flex', 'flex', 'block'],
-                flexDirection: ['column', 'column', 'row'],
+                display: ["flex", "flex", "block"],
+                flexDirection: ["column", "column", "row"],
                 gap: 2,
-                alignItems: 'center',
+                alignItems: "center",
                 mb: 1,
-                width: '100%',
+                width: "100%",
               }}
             >
               {isSkipButtonVisible && (
@@ -124,14 +124,14 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
                   color="music"
                   sx={{
                     mb: 1,
-                    position: ['relative', 'relative', 'absolute'],
+                    position: ["relative", "relative", "absolute"],
                   }}
                   onClick={() => handleSubmit()}
                   variant="secondary"
                   width={
                     windowWidth && windowWidth > theme.breakpoints.values.md
-                      ? 'compact'
-                      : 'default'
+                      ? "compact"
+                      : "default"
                   }
                 >
                   Skip
@@ -145,8 +145,8 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
                 type="submit"
                 width={
                   windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? 'compact'
-                    : 'default'
+                    ? "compact"
+                    : "default"
                 }
               >
                 Next

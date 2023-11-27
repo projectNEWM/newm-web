@@ -1,7 +1,7 @@
-import { FunctionComponent } from 'react';
-import { Button, Typography } from '@newm.io/studio/elements';
-import { TextInputField } from '@newm.io/studio/components';
-import { Box, Stack, useTheme } from '@mui/material';
+import { FunctionComponent } from "react";
+import { Button, Typography } from "@newm.io/studio/elements";
+import { TextInputField } from "@newm.io/studio/components";
+import { Box, Stack, useTheme } from "@mui/material";
 
 const InitiateReset: FunctionComponent = () => {
   const theme = useTheme();
@@ -9,10 +9,10 @@ const InitiateReset: FunctionComponent = () => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
         mb: 8,
       }}
     >

@@ -1,12 +1,12 @@
-import React, { FunctionComponent, memo } from 'react';
-import { History } from 'history';
+import React, { FunctionComponent, memo } from "react";
+import { History } from "history";
 import {
   BrowserRouterProps as NativeBrowserRouterProps,
   Router,
-} from 'react-router-dom';
+} from "react-router-dom";
 
 export interface BrowserRouterProps
-  extends Omit<NativeBrowserRouterProps, 'window'> {
+  extends Omit<NativeBrowserRouterProps, "window"> {
   history: History;
 }
 

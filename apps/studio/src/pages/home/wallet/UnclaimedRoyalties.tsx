@@ -1,8 +1,8 @@
-import { Box, IconButton, Stack } from '@mui/material';
-import { Button, Tooltip, Typography } from '@newm.io/studio/elements';
-import currency from 'currency.js';
-import theme from '@newm.io/theme';
-import HelpIcon from '@mui/icons-material/Help';
+import { Box, IconButton, Stack } from "@mui/material";
+import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
+import currency from "currency.js";
+import theme from "@newm.io/theme";
+import HelpIcon from "@mui/icons-material/Help";
 
 interface UnclaimedRoyaltiesProps {
   unclaimedRoyalties: number;
@@ -16,19 +16,19 @@ export const UnclaimedRoyalties = ({
       sx={{
         backgroundColor: theme.colors.grey600,
         padding: 2.5,
-        maxWidth: '400px',
-        minHeight: '100px',
-        borderRadius: '8px',
-        display: 'flex',
-        justifyContent: 'space-between',
+        maxWidth: "400px",
+        minHeight: "100px",
+        borderRadius: "8px",
+        display: "flex",
+        justifyContent: "space-between",
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          paddingRight: [1, 'unset'],
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          paddingRight: [1, "unset"],
         }}
       >
         <Stack direction="row" alignItems="center" gap={1}>
@@ -38,9 +38,9 @@ export const UnclaimedRoyalties = ({
 
           <Tooltip
             title={
-              'These are the royalties you have accrued since minting ' +
-              'your song(s). All royalties will be available to claim ' +
-              'following the launch of the Stream Token Marketplace.'
+              "These are the royalties you have accrued since minting " +
+              "your song(s). All royalties will be available to claim " +
+              "following the launch of the Stream Token Marketplace."
             }
           >
             <IconButton sx={{ padding: 0 }}>
@@ -53,14 +53,14 @@ export const UnclaimedRoyalties = ({
           {currency(unclaimedRoyalties).format()}
         </Typography>
       </Box>
-      <Tooltip title={'Feature coming soon'}>
-        <Box sx={{ alignSelf: 'center' }}>
+      <Tooltip title={"Feature coming soon"}>
+        <Box sx={{ alignSelf: "center" }}>
           <Button
             color="white"
             variant="outlined"
             width="compact"
             disabled={unclaimedRoyalties === 0}
-            sx={{ alignSelf: 'center' }}
+            sx={{ alignSelf: "center" }}
           >
             Claim now
           </Button>

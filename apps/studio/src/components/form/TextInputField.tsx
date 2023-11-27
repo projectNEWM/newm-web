@@ -1,6 +1,6 @@
-import { ForwardRefRenderFunction, forwardRef } from 'react';
-import { Field, FieldProps } from 'formik';
-import { TextInput, TextInputProps } from '@newm.io/studio/elements';
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import { Field, FieldProps } from "formik";
+import { TextInput, TextInputProps } from "@newm.io/studio/elements";
 
 const TextInputField: ForwardRefRenderFunction<
   HTMLInputElement,
@@ -10,7 +10,7 @@ const TextInputField: ForwardRefRenderFunction<
     <Field name={props.name}>
       {({ field, meta }: FieldProps) => (
         <TextInput
-          errorMessage={meta.touched ? meta.error : ''}
+          errorMessage={meta.touched ? meta.error : ""}
           ref={ref}
           {...field}
           {...props}

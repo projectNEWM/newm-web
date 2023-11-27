@@ -1,21 +1,21 @@
-import { FunctionComponent } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import HelpIcon from '@mui/icons-material/Help';
-import { Box, IconButton, InputAdornment, Stack } from '@mui/material';
+import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import HelpIcon from "@mui/icons-material/Help";
+import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import {
   Owner,
   getIsOwnerEditable,
   useGetCollaboratorsQuery,
-} from '@newm.io/studio/modules/song';
-import { Button, Tooltip, Typography } from '@newm.io/studio/elements';
-import { TextInputField } from '@newm.io/studio/components';
-import theme from '@newm.io/theme';
+} from "@newm.io/studio/modules/song";
+import { Button, Tooltip, Typography } from "@newm.io/studio/elements";
+import { TextInputField } from "@newm.io/studio/components";
+import theme from "@newm.io/theme";
 import {
   emptyProfile,
   useGetProfileQuery,
-} from '@newm.io/studio/modules/session';
-import Details from './Details';
-import { getCollaboratorInfo } from './utils';
+} from "@newm.io/studio/modules/session";
+import Details from "./Details";
+import { getCollaboratorInfo } from "./utils";
 
 interface OwnersProps {
   readonly owners: ReadonlyArray<Owner>;
@@ -54,16 +54,16 @@ const Owners: FunctionComponent<OwnersProps> = ({
 
           <Tooltip
             title={
-              'Do you hold the streaming royalty rights to this song? If so, ' +
-              'what percentage?'
+              "Do you hold the streaming royalty rights to this song? If so, " +
+              "what percentage?"
             }
           >
             <IconButton sx={{ padding: 0 }}>
               <HelpIcon
                 sx={{
                   color: theme.colors.grey100,
-                  height: '18px',
-                  width: '18px',
+                  height: "18px",
+                  width: "18px",
                 }}
               />
             </IconButton>
@@ -86,9 +86,9 @@ const Owners: FunctionComponent<OwnersProps> = ({
           <Stack
             key={owner.email}
             sx={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
               mt: 1.5,
               columnGap: 1,
             }}
