@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@newm.io/elements": ["packages/elements/src/index.ts"],
       "@newm.io/studio/*": ["apps/studio/src/*"],
+      "@newm.io/marketplace/*": ["apps/marketplace/src/*"],
+      "@newm.io/elements": ["packages/elements/src/index.ts"],
       "@newm.io/theme": ["packages/theme/src/index.ts"],
       "@newm.io/utils": ["packages/utils/src/index.ts"]
     }
