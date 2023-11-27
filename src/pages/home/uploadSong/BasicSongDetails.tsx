@@ -79,6 +79,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);
   };
+  const handlePricingPlanOpen = () => {
+    setIsPricingPlansOpen(true);
+  };
 
   useEffectAfterMount(() => {
     if (!isPricingPlansOpen && isArtistPricePlanSelected) {
@@ -261,8 +264,36 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             ref={ descriptionRef }
           />
 
-          <Stack mt={ 5 } spacing={ 5 }>
-            <Box>
+          <Stack spacing={ 3 }>
+            <Stack spacing={ 1.5 }>
+              { !isArtistPricePlanSelected && (
+                <Alert
+                  severity="warning"
+                  action={
+                    <Button
+                      aria-label="show pricing plans"
+                      variant="outlined"
+                      color="yellow"
+                      onClick={ handlePricingPlanOpen }
+                      sx={ { textTransform: "none" } }
+                    >
+                      See plans
+                    </Button>
+                  }
+                >
+                  <Typography mb={ 0.5 } color="yellow">
+                    You need a subscription plan in order to mint your songs
+                  </Typography>
+                  <Typography
+                    color="yellow"
+                    fontWeight={ 400 }
+                    variant="subtitle1"
+                  >
+                    Without one, you can still upload a song but it won&apos;t
+                    be minted nor distributed.
+                  </Typography>
+                </Alert>
+              ) }
               <Box
                 ref={ ownersRef }
                 sx={ {
@@ -281,8 +312,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                     "purchase, and enables royalty distribution to your account."
                   }
                   onClick={ () => {
-                    !isArtistPricePlanSelected &&
-                      setIsPricingPlansOpen(!values.isMinting);
+                    if (!isArtistPricePlanSelected) handlePricingPlanOpen();
                   } }
                 />
 
@@ -303,14 +333,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   <ErrorMessage>{ errors.owners as string }</ErrorMessage>
                 </Box>
               ) }
-            </Box>
+            </Stack>
 
             { isMintingVisible && !isVerified && (
               <Alert
                 severity="warning"
                 action={
                   <Button
-                    aria-label="close"
+                    aria-label="verify profile"
                     variant="outlined"
                     color="yellow"
                     onClick={ handleVerifyProfile }
@@ -320,7 +350,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   </Button>
                 }
               >
-                <Typography color="yellow">Verify your profile</Typography>
+                <Typography mb={ 0.5 } color="yellow">
+                  Verify your profile
+                </Typography>
                 <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
                   Profile verification is required to mint. Please verify your
                   profile.
@@ -334,7 +366,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 severity="warning"
                 action={
                   <Button
-                    aria-label="close"
+                    aria-label="connect wallet"
                     variant="outlined"
                     color="yellow"
                     onClick={ () => {
@@ -346,7 +378,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   </Button>
                 }
               >
-                <Typography color="yellow">Connect a wallet</Typography>
+                <Typography mb={ 0.5 } color="yellow">
+                  Connect a wallet
+                </Typography>
                 <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
                   To continue, please connect a wallet.
                 </Typography>
