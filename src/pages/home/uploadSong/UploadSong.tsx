@@ -87,7 +87,7 @@ const UploadSong: FunctionComponent = () => {
     barcodeNumber: undefined,
     barcodeType: undefined,
     publicationDate: undefined,
-    coverRemixSample: false,
+    isCoverRemixSample: false,
   };
 
   // Navigate to advanced details if minting, otherwise upload song

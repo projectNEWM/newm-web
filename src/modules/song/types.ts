@@ -109,6 +109,7 @@ export interface UploadSongRequest
   readonly artistName: string;
   readonly stageName: string;
   readonly userIpi?: string;
+  readonly isCoverRemixSample?: boolean;
 }
 
 export interface UploadSongResponse {

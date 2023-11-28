@@ -135,7 +135,7 @@ export const uploadSong = createAsyncThunk(
           ipis,
           releaseDate: body.releaseDate || undefined,
           publicationDate: body.publicationDate || undefined,
-          coverRemixSample: body.coverRemixSample,
+          coverRemixSample: body.isCoverRemixSample,
         })
       );
 

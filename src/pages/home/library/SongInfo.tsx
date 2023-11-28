@@ -41,7 +41,7 @@ const SongInfo = () => {
       isrc,
       iswc,
       ipis,
-      coverRemixSample,
+      coverRemixSample: isCoverRemixSample,
     } = emptySong,
   } = useGetSongQuery(songId);
 
@@ -67,7 +67,7 @@ const SongInfo = () => {
     publicationDate,
     iswc,
     userIpi: ipis?.join(", "),
-    coverRemixSample,
+    isCoverRemixSample,
   };
 
   return (
