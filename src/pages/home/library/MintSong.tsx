@@ -296,7 +296,7 @@ const MintSong = () => {
                     <Box>
                       <SwitchInputField
                         name="isMinting"
-                        title="MINT SONG"
+                        title="DISTRIBUTE & MINT SONG"
                         disabled={ isMintingInitiated }
                         includeBorder={ false }
                         description={
