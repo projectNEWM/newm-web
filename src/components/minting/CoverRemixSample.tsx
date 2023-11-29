@@ -31,8 +31,10 @@ export const CoverRemixSample: FunctionComponent<CoverRemixSampleProps> = ({
           <Alert severity="warning">
             <Typography color="yellow">ATTENTION!</Typography>
             <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-              If you selected yes above, you will need to secure and send the
-              proper license(s) from the copyright holder(s) to{ " " }
+              You may proceed with this process to upload your song; however, to
+              ensure completion of the distribution and minting process you must
+              secure and send the proper license(s) from the copyright holder(s)
+              to{ " " }
               <Link
                 href={ `mailto:${NEWM_SUPPORT_EMAIL}` }
                 sx={ {
@@ -40,9 +42,9 @@ export const CoverRemixSample: FunctionComponent<CoverRemixSampleProps> = ({
                   textDecorationColor: "yellow",
                 } }
               >
-                support@newm.io
+                { NEWM_SUPPORT_EMAIL }
               </Link>{ " " }
-              to proceed. See{ " " }
+              . See{ " " }
               <Link
                 href={ NEWM_STUDIO_FAQ_URL }
                 rel="noopener noreferrer"
