@@ -321,7 +321,7 @@ const SongInfo = () => {
                   label="IPI"
                   name="userIpi"
                   tooltipText={
-                    "An IPI is a unique code assigned to songwriters, " +
+                    "An IPI is a nine-digit number used to identify songwriters, " +
                     "composers, and music publishers."
                   }
                   type="number"
