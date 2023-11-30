@@ -233,6 +233,29 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           ref={ descriptionRef }
         />
 
+        { !isVerified && (
+          <Alert
+            severity="warning"
+            action={
+              <Button
+                aria-label="close"
+                variant="outlined"
+                color="yellow"
+                onClick={ handleVerifyProfile }
+                sx={ { textTransform: "none" } }
+              >
+                Verify profile
+              </Button>
+            }
+          >
+            <Typography color="yellow">Verify your profile</Typography>
+            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+              Profile verification is required to mint. Please verify your
+              profile.
+            </Typography>
+          </Alert>
+        ) }
+
         <Stack mt={ 5 } spacing={ 5 }>
           <Box>
             <Box
@@ -272,29 +295,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               </Box>
             ) }
           </Box>
-
-          { values.isMinting && !isVerified && (
-            <Alert
-              severity="warning"
-              action={
-                <Button
-                  aria-label="close"
-                  variant="outlined"
-                  color="yellow"
-                  onClick={ handleVerifyProfile }
-                  sx={ { textTransform: "none" } }
-                >
-                  Verify profile
-                </Button>
-              }
-            >
-              <Typography color="yellow">Verify your profile</Typography>
-              <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-                Profile verification is required to mint. Please verify your
-                profile.
-              </Typography>
-            </Alert>
-          ) }
 
           { values.isMinting && !wallet && (
             <Alert
