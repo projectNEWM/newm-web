@@ -29,10 +29,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import OnboardingRedirect from "./components/OnboardingRedirect";
 import store, { persistor } from "./store";
+import { VITE_GOOGLE_CLIENT_ID } from "@newm-web/env";
 import "./App.css";
 
 const App = () => {
-  const googleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
+  const googleClientID = VITE_GOOGLE_CLIENT_ID || "";
 
   return (
     <ThemeProvider theme={theme}>

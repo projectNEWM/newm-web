@@ -11,6 +11,7 @@ import FacebookLoginHelper, {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "@newm-web/elements";
 import { useAppDispatch } from "../common";
+import { VITE_FACEBOOK_CLIENT_ID } from "@newm-web/env";
 
 interface Props {
   readonly children?: ReactNode;
@@ -40,7 +41,7 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
 
   return (
     <FacebookLoginHelper
-      appId={import.meta.env.VITE_FACEBOOK_CLIENT_ID || ""}
+      appId={VITE_FACEBOOK_CLIENT_ID || ""}
       onSuccess={handleFacebookLoginSuccess}
       render={({ onClick }) => (
         <Button

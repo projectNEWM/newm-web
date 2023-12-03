@@ -48,7 +48,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   Icon,
   to,
   href,
-  onClick
+  onClick,
 }) => {
   const resolved = useResolvedPath(to || "");
   const match = useMatch({ path: resolved.pathname, end: false });
@@ -62,7 +62,7 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
       style={{
         textDecoration: "none",
         minWidth: "100%",
-        cursor: "pointer"
+        cursor: "pointer",
       }}
     >
       <Stack
@@ -87,8 +87,8 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
           justifyContent: "flex-start",
           "&:hover": {
             opacity: "1",
-            background: theme.colors.activeBackground
-          }
+            background: theme.colors.activeBackground,
+          },
         }}
         data-testid="navStyled"
       >

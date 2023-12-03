@@ -9,6 +9,7 @@ import { useLinkedIn } from "react-linkedin-login-oauth2";
 import { useLinkedInLoginThunk } from "../modules/session";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "@newm-web/elements";
+import { VITE_LINKEDIN_CLIENT_ID } from "@newm-web/env";
 
 interface Props {
   readonly children?: ReactNode;
@@ -20,7 +21,7 @@ const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
   const redirectUri = `${window.location.origin}/linkedin`;
 
   const { linkedInLogin } = useLinkedIn({
-    clientId: import.meta.env.VITE_LINKEDIN_CLIENT_ID || "",
+    clientId: VITE_LINKEDIN_CLIENT_ID || "",
     redirectUri,
     scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {

@@ -42,7 +42,7 @@ export { default as CopyrightInputField } from "./lib/form/CopyrightInputField";
 export { default as DropdownMultiSelectField } from "./lib/form/DropdownMultiSelectField";
 export { default as DropdownSelectField } from "./lib/form/DropdownSelectField";
 export { default as SwitchInputField } from "./lib/form/SwitchInputField";
-export { default as FilteredTagsField } from "./lib/form/DropdownSelectField";
+export { default as FilteredTagsField } from "./lib/form/FilteredTagsField";
 export { default as FormProgressStepper } from "./lib/form/FormProgressStepper";
 export { default as GradientTextInputField } from "./lib/form/GradientTextInputField";
 export { default as PasswordInputField } from "./lib/form/PasswordInputField";

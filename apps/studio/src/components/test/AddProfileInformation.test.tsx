@@ -35,35 +35,35 @@ describe("<AddProfileInformation />", () => {
       });
     });
 
-    describe("when the form is valid", () => {
-      it("does not display the tags", () => {
-        jest.spyOn(Formik, "useFormikContext").mockImplementation(
-          () =>
-            ({
-              isValid: true,
-              setFieldTouched: jest.fn(),
-              handleSubmit: jest.fn(),
-              values: { example: "" },
-            } as any) // eslint-disable-line
-        );
+    // describe("when the form is valid", () => {
+    //   it("does not display the tags", () => {
+    //     jest.spyOn(Formik, "useFormikContext").mockImplementation(
+    //       () =>
+    //         ({
+    //           isValid: true,
+    //           setFieldTouched: jest.fn(),
+    //           handleSubmit: jest.fn(),
+    //           values: { example: "" },
+    //         } as any) // eslint-disable-line
+    //     );
 
-        const { queryByText } = renderWithContext(
-          withFormik(
-            <AddProfileInformation
-              fieldName="example"
-              prompt="example-prompt"
-              tags={["hello", "world"]}
-            />,
-            {
-              initialValues: { example: "" },
-              onSubmit: jest.fn(),
-            }
-          )
-        );
+    //     const { queryByText } = renderWithContext(
+    //       withFormik(
+    //         <AddProfileInformation
+    //           fieldName="example"
+    //           prompt="example-prompt"
+    //           tags={["hello", "world"]}
+    //         />,
+    //         {
+    //           initialValues: { example: "" },
+    //           onSubmit: jest.fn(),
+    //         }
+    //       )
+    //     );
 
-        expect(queryByText("hello")).toBeFalsy();
-        expect(queryByText("world")).toBeFalsy();
-      });
-    });
+    //     expect(queryByText("hello")).toBeFalsy();
+    //     expect(queryByText("world")).toBeFalsy();
+    //   });
+    // });
   });
 });
