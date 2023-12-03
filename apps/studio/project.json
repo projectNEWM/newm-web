@@ -4,6 +4,9 @@
   "sourceRoot": "apps/studio/src",
   "projectType": "application",
   "targets": {
+    "build-with-sentry": {
+      "command": "make build-studio-with-sentry"
+    },
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],

@@ -158,7 +158,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
             </Typography>
           </Box>
         ) : (
-          <FilteredTagsField name={fieldName} tags={tags} options={[]} />
+          <FilteredTagsField name={fieldName} tags={tags} />
         )}
       </Box>
     </Box>

@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/test-pull-request.yml
-      - apps/studio/**
+      - apps/**
       - packages/**
 jobs:
   build_and_test:

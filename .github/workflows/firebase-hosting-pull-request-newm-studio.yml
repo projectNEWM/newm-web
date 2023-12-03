@@ -1,14 +1,14 @@
-name: Deploy to Firebase Hosting on merge
-"on":
-  push:
-    branches:
-      - master
+name: Deploy NEWM Studio to Firebase Hosting on PR
+on:
+  pull_request:
     paths:
+      - .github/workflows/firebase-hosting-pull-request.yml
       - apps/studio/**
       - packages/**
 jobs:
-  build_and_deploy:
-    runs-on: ubuntu-latest
+  build_and_preview:
+    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -17,7 +17,6 @@ jobs:
           VITE_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
-          VITE_ENV: ${{ secrets.REACT_APP_ENV }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -25,17 +24,5 @@ jobs:
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
-          channelId: live
           projectId: "${{ secrets.FIREBASE_PROJECT_ID }}"
-
-      - name: Send update to slack
-        id: slack
-        uses: slackapi/slack-github-action@v1.17.0
-        with:
-          payload: |
-            {
-              "text": "Artist Portal updated. View at https://artist.garage.newm.io"
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          expires: 30d
