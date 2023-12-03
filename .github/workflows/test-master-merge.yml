@@ -3,13 +3,16 @@ on:
   push:
     branches:
       - master
+    paths:
+      - apps/studio/**
+      - packages/**
 jobs:
   build_and_test:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npm run test:ci
+      - run: nx run-many -t test
 
       - uses: codecov/codecov-action@v1
         with:

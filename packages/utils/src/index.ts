@@ -10,4 +10,4 @@ export * from "./lib/redux";
 export * from "./lib/regex";
 export * from "./lib/storybook";
 export * from "./lib/form";
-export * from "./lib/test";
+export * from "./lib/tests";
