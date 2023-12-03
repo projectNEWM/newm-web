@@ -69,7 +69,7 @@ more [in the docs](https://nx.dev/core-features/run-tasks).
 The storybook for the elements package can be run using the command
 
 ```
-nx run elements:storybook
+nx storybook elements
 ```
 
 ### Editor Integration
