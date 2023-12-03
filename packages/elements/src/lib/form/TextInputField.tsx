@@ -1,6 +1,6 @@
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
-import { TextInput, TextInputProps } from "@newm-web/elements";
+import TextInput, { TextInputProps } from "../TextInput";
 
 const TextInputField: ForwardRefRenderFunction<
   HTMLInputElement,

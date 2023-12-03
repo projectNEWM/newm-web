@@ -1,10 +1,7 @@
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
-import {
-  TextInput,
-  TextInputProps,
-  Tooltip,
-  ErrorMessage,
-} from "@newm-web/elements";
+import TextInput, { TextInputProps } from "../TextInput";
+import Tooltip from "../styled/Tooltip";
+import ErrorMessage from "../styled/ErrorMessage";
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 import {

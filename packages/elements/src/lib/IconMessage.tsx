@@ -1,6 +1,6 @@
 import { FunctionComponent, MouseEventHandler } from "react";
 import { Stack } from "@mui/material";
-import { Typography } from "@newm-web/elements";
+import Typography from "./Typography";
 import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {
@@ -19,7 +19,7 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   message,
   subtitle,
   errorMessage,
-  onClick
+  onClick,
 }) => (
   <Stack
     spacing={message || subtitle || errorMessage ? 1 : 0}

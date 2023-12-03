@@ -1,6 +1,6 @@
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
-import { TextArea, TextAreaProps } from "@newm-web/elements";
+import TextArea, { TextAreaProps } from "../TextArea";
 
 const TextAreaField: ForwardRefRenderFunction<
   HTMLTextAreaElement,

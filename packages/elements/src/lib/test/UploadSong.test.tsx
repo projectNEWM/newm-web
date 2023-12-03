@@ -1,5 +1,5 @@
 import { renderWithContext } from "./utils/render";
-import mockFile from "./mocks/mockFile";
+// import mockFile from "./mocks/mockFile";
 import UploadSong from "../UploadSong";
 
 jest.mock("@newm-web/utils", () => ({

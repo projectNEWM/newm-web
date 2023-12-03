@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import { Field, FieldProps } from "formik";
-import { Button } from "@newm-web/elements";
+import Button from "../Button";
 
 interface FilteredTagsFieldProps {
   readonly name: string;
@@ -14,7 +14,7 @@ interface FilteredTagsFieldProps {
  */
 const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
   name,
-  tags
+  tags,
 }) => (
   <Field name={name}>
     {({ field, form }: FieldProps) => {

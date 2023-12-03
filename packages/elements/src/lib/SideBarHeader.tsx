@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Typography } from "@newm-web/elements";
+import Typography from "./Typography";
 
 interface SideBarHeaderProps {
   readonly children: string;

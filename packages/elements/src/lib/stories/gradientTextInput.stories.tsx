@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Stack } from "@mui/material";
 import GradientTextInput from "../GradientTextInput";
 
@@ -10,13 +10,9 @@ export default {
 export const Variations = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    const element = inputRef.current?.focus();
-  }, [inputRef]);
-
   return (
-    <Stack mt={ 2 } direction="column" spacing={ 4 } display="flex">
-      <GradientTextInput textAlign="center" ref={ inputRef } />
+    <Stack mt={2} direction="column" spacing={4} display="flex">
+      <GradientTextInput textAlign="center" ref={inputRef} />
       <GradientTextInput textAlign="center" errorMessage="With error message" />
     </Stack>
   );

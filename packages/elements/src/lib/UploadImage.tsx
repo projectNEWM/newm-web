@@ -15,7 +15,7 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import { AddImage, CheckCircle } from "@newm-web/assets";
 import ChangeCircle from "@mui/icons-material/ChangeCircle";
 import PictureInPictureIcon from "@mui/icons-material/PictureInPictureAlt";
-import { Button } from "@newm-web/elements";
+import Button from "./Button";
 import SolidOutline from "./styled/SolidOutline";
 import DashedOutline from "./styled/DashedOutline";
 import IconMessage from "./IconMessage";
