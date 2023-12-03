@@ -3,7 +3,7 @@ import { MemoryRouter as Router } from "react-router-dom";
 import { useGetCollaboratorsQuery } from "../../../../modules/song";
 import OwnersTable from "../OwnersTable";
 
-jest.mock("modules/song", () => ({
+jest.mock("../../../../modules/song", () => ({
   useGetCollaboratorsQuery: jest.fn(),
 }));
 

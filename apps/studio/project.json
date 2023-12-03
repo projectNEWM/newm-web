@@ -53,11 +53,12 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/jest:jest",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/apps/studio"
+        "reportsDirectory": "../../coverage/apps/studio",
+        "jestConfig": "apps/studio/jest.config.ts"
       }
     },
     "lint": {

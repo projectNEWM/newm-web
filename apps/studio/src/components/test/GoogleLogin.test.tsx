@@ -11,8 +11,8 @@ interface UseGoogleLoginParams {
 }
 
 // mock useAppDispatch so that it doesn't actually fire any Redux functionality
-jest.mock("common", () => ({
-  ...jest.requireActual("common"),
+jest.mock("../../common", () => ({
+  ...jest.requireActual("../../common"),
   useAppDispatch: () => jest.fn(),
 }));
 

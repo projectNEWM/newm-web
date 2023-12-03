@@ -3,6 +3,7 @@ import * as routerUtils from "react-router-dom";
 import { Upload as UploadIcon } from "@mui/icons-material";
 import theme from "@newm-web/theme";
 import { SideBarNavLink } from "@newm-web/elements";
+import "@testing-library/jest-dom";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),

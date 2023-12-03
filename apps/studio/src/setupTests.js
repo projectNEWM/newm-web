@@ -1,3 +1,4 @@
+// TODO: debug why importing here doesn't resolve linting errors in test files
 import "@testing-library/jest-dom";
 
 jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
