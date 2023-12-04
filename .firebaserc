@@ -1,0 +1,13 @@
+{
+  "projects": {},
+  "targets": {
+    "newm-artist-portal": {
+      "hosting": {
+        "newm-artist-portal": [
+          "newm-artist-portal"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
