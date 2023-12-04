@@ -1,6 +1,9 @@
 # env
 
-This library was generated with [Nx](https://nx.dev).
+This libary abstracts accessing env variables to standardize how they are
+accessed by different apps.
+
+It was generated with [Nx](https://nx.dev).
 
 ## Running unit tests
 
