@@ -15,6 +15,7 @@ import theme from "@newm-web/theme";
 import { emptySong, useGetSongQuery } from "../../../modules/song";
 import { Formik } from "formik";
 import { SongRouteParams } from "./types";
+import { CoverRemixSample } from "../../../components";
 
 const SongInfo = () => {
   const windowWidth = useWindowDimensions()?.width;
@@ -40,6 +41,7 @@ const SongInfo = () => {
       isrc,
       iswc,
       ipis,
+      coverRemixSample: isCoverRemixSample,
     } = emptySong,
   } = useGetSongQuery(songId);
 
@@ -65,6 +67,7 @@ const SongInfo = () => {
     publicationDate,
     iswc,
     userIpi: ipis?.join(", "),
+    isCoverRemixSample,
   };
 
   return (
@@ -85,7 +88,7 @@ const SongInfo = () => {
       <Formik
         initialValues={initialValues}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onSubmit={() => {}}
+        onSubmit={() => { }}
         enableReinitialize={true}
       >
         {({ values }) => (
@@ -232,6 +235,7 @@ const SongInfo = () => {
                   "or depictions of sex, violence or substance abuse."
                 }
               />
+              <CoverRemixSample disabled={true} />
               <Stack
                 display="grid"
                 gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}

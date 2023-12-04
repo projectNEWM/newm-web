@@ -20,6 +20,7 @@ import {
 } from "../../../modules/song";
 import theme from "@newm-web/theme";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
+import { CoverRemixSample } from "../../../components";
 
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
@@ -110,6 +111,7 @@ const AdvancedSongDetails = () => {
           "or depictions of sex, violence or substance abuse."
         }
       />
+      <CoverRemixSample />
       <Stack
         display="grid"
         gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}
