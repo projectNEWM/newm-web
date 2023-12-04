@@ -8,7 +8,7 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  UploadImageField,
+  UploadImageField
 } from "@newm-web/elements";
 import { HorizontalLine, Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
@@ -39,8 +39,8 @@ const SongInfo = () => {
       barcodeType,
       isrc,
       iswc,
-      ipis,
-    } = emptySong,
+      ipis
+    } = emptySong
   } = useGetSongQuery(songId);
 
   const initialValues = {
@@ -64,7 +64,7 @@ const SongInfo = () => {
     barcodeType,
     publicationDate,
     iswc,
-    userIpi: ipis?.join(", "),
+    userIpi: ipis?.join(", ")
   };
 
   return (
@@ -78,8 +78,8 @@ const SongInfo = () => {
         maxWidth: [
           theme.inputField.maxWidth,
           theme.inputField.maxWidth,
-          "700px",
-        ],
+          "700px"
+        ]
       }}
     >
       <Formik
@@ -101,7 +101,7 @@ const SongInfo = () => {
                 rowGap: [2, null, 3],
                 maxWidth: [undefined, undefined, "700px"],
                 marginBottom: 3,
-                alignItems: ["center", "center", "unset"],
+                alignItems: ["center", "center", "unset"]
               }}
             >
               <Stack
@@ -119,7 +119,7 @@ const SongInfo = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     flexGrow: 1,
-                    height: "100px",
+                    height: "100px"
                   }}
                 >
                   <PlaySong id={songId || ""} />
@@ -151,10 +151,10 @@ const SongInfo = () => {
                 maxWidth: [
                   theme.inputField.maxWidth,
                   theme.inputField.maxWidth,
-                  "700px",
+                  "700px"
                 ],
                 alignSelf: ["center", "center", "unset"],
-                width: "100%",
+                width: "100%"
               }}
             >
               <Stack
@@ -163,10 +163,10 @@ const SongInfo = () => {
                   gridTemplateColumns: [
                     "repeat(1, 1fr)",
                     null,
-                    "repeat(2, 1fr)",
+                    "repeat(2, 1fr)"
                   ],
                   rowGap: [2, null, 3],
-                  columnGap: [undefined, undefined, 1.5],
+                  columnGap: [undefined, undefined, 1.5]
                 }}
               >
                 <TextInputField
@@ -219,7 +219,7 @@ const SongInfo = () => {
               maxWidth={[
                 theme.inputField.maxWidth,
                 theme.inputField.maxWidth,
-                "700px",
+                "700px"
               ]}
               spacing={3}
             >
@@ -321,7 +321,7 @@ const SongInfo = () => {
                   label="IPI"
                   name="userIpi"
                   tooltipText={
-                    "An IPI is a unique code assigned to songwriters, " +
+                    "An IPI is a nine-digit number used to identify songwriters, " +
                     "composers, and music publishers."
                   }
                   type="number"
