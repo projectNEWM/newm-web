@@ -6,6 +6,7 @@ name: Deploy NEWM Studio to Firebase Hosting on merge
     paths:
       - apps/studio/**
       - packages/**
+      - Makefile
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
