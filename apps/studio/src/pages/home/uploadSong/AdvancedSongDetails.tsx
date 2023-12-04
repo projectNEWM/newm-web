@@ -4,19 +4,19 @@ import { Box, Link, Stack } from "@mui/material";
 import {
   MIN_DISTRIBUTION_TIME,
   NEWM_STUDIO_FAQ_URL,
-  NONE_OPTION,
+  NONE_OPTION
 } from "../../../common";
 import { useWindowDimensions, scrollToError } from "@newm-web/utils";
 import {
   CopyrightInputField,
   DropdownSelectField,
   SwitchInputField,
-  TextInputField,
+  TextInputField
 } from "@newm-web/elements";
 import { Button, HorizontalLine } from "@newm-web/elements";
 import {
   UploadSongRequest,
-  useGetEarliestReleaseDateQuery,
+  useGetEarliestReleaseDateQuery
 } from "../../../modules/song";
 import theme from "@newm-web/theme";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
@@ -41,7 +41,7 @@ const AdvancedSongDetails = () => {
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
       // endpoint throws error if user hasn't added first name
-      skip: !firstName,
+      skip: !firstName
     });
 
   // Minimum date for schedule release date picker when no earliest release date
@@ -55,44 +55,44 @@ const AdvancedSongDetails = () => {
     scrollToError(errors, isSubmitting, [
       {
         error: errors.releaseDate,
-        element: releaseDateRef.current,
+        element: releaseDateRef.current
       },
       {
         error: errors.publicationDate,
-        element: publicationDateRef.current,
+        element: publicationDateRef.current
       },
       {
         error: errors.compositionCopyrightYear,
-        element: compositionCopyrightRef.current,
+        element: compositionCopyrightRef.current
       },
       {
         error: errors.compositionCopyrightOwner,
-        element: compositionCopyrightRef.current,
+        element: compositionCopyrightRef.current
       },
       {
         error: errors.phonographicCopyrightYear,
-        element: phonographicCopyrightRef.current,
+        element: phonographicCopyrightRef.current
       },
       {
         error: errors.phonographicCopyrightOwner,
-        element: phonographicCopyrightRef.current,
+        element: phonographicCopyrightRef.current
       },
       {
         error: errors.isrc,
-        element: isrcRef.current?.getInputDOMNode(),
+        element: isrcRef.current?.getInputDOMNode()
       },
       {
         error: errors.barcodeNumber,
-        element: barcodeNumberRef.current,
+        element: barcodeNumberRef.current
       },
       {
         error: errors.userIpi,
-        element: userIpiRef.current,
+        element: userIpiRef.current
       },
       {
         error: errors.iswc,
-        element: iswcRef.current,
-      },
+        element: iswcRef.current
+      }
     ]);
   }, [errors, isSubmitting, isrcRef]);
 
@@ -234,10 +234,11 @@ const AdvancedSongDetails = () => {
           placeholder="000000000"
           ref={userIpiRef}
           tooltipText={
-            "An IPI is a unique code assigned to songwriters, composers, " +
-            "and music publishers. This information is optional; if you do " +
-            "not already have an IPI or choose not to obtain one, leave " +
-            "this field blank."
+            "An IPI is a nine-digit number used to identify songwriters, " +
+            "composers, and music publishers; they are automatically assigned " +
+            "to rights holders through membership to a PRO. This information is " +
+            "optional; if you do not already have an IPI or choose not to obtain " +
+            "one, leave this field blank."
           }
           type="number"
         />
