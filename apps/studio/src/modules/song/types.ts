@@ -409,3 +409,22 @@ export interface GetUserWalletSongsResponse {
   readonly limit: number;
   readonly songs: WalletSong[];
 }
+
+export interface GetMintSongEstimateRequest {
+  readonly collaborators: number;
+}
+
+export interface GetMintSongEstimateResponse {
+  readonly dspPriceUsd: string;
+  readonly cborHex: string;
+  readonly adaPrice: string;
+  readonly usdPrice: string;
+  readonly dspPriceAda: string;
+  readonly mintPriceAda: string;
+  readonly mintPriceUsd: string;
+  readonly collabPriceAda: string;
+  readonly collabPriceUsd: string;
+  readonly collabPerArtistPriceAda: string;
+  readonly collabPerArtistPriceUsd: string;
+  readonly usdAdaExchangeRate: string;
+}

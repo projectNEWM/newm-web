@@ -15,6 +15,8 @@ import {
   GetCollaboratorsRequest,
   GetCollaboratorsResponse,
   GetEarliestReleaseDateResponse,
+  GetMintSongEstimateRequest,
+  GetMintSongEstimateResponse,
   GetSongCountRequest,
   GetSongCountResponse,
   GetSongStreamData,
@@ -562,6 +564,28 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
     }),
+    getMintSongEstimate: build.query<
+      GetMintSongEstimateResponse,
+      GetMintSongEstimateRequest
+    >({
+      query: (params) => ({
+        url: "v1/songs/mint/estimate",
+        method: "GET",
+        params,
+      }),
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching your estimate",
+              severity: "error",
+            })
+          );
+        }
+      },
+    }),
     createMintSongPayment: build.mutation<
       CborHexResponse,
       CreateMintSongPaymentRequest
@@ -662,6 +686,7 @@ export const {
   useGetCollaboratorCountQuery,
   useGetCollaboratorsQuery,
   useGetEarliestReleaseDateQuery,
+  useGetMintSongEstimateQuery,
   useGetSongCountQuery,
   useGetSongQuery,
   useGetSongStreamQuery,
