@@ -28,6 +28,7 @@ import { history } from "./common/history";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import OnboardingRedirect from "./components/OnboardingRedirect";
+import ScrollToTop from "./components/ScrollToTop";
 import store, { persistor } from "./store";
 import { VITE_GOOGLE_CLIENT_ID } from "@newm-web/env";
 import "./App.css";
@@ -49,6 +50,7 @@ const App = () => {
             <ProgressBarModal />
             <UpdateWalletAddressModal />
             <WalletEnvMismatchModal />
+            <ScrollToTop />
 
             <Background>
               <BrowserRouter history={history}>
