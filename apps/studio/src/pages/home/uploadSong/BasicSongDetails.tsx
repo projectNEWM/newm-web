@@ -279,7 +279,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               >
                 <SwitchInputField
                   name="isMinting"
-                  title="MINT SONG"
+                  title="DISTRIBUTE & MINT SONG"
                   includeBorder={false}
                   description={
                     "Minting a song will create an NFT that reflects " +
