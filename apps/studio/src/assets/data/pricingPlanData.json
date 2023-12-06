@@ -16,8 +16,7 @@
   },
   "pricingPlanOptions": [
     {
-      "id": 1,
-      "icon": "collaborator",
+      "id": "collaborator",
       "title": "The Collaborator",
       "pricing": "FREE",
       "originalPricing": "",
@@ -81,8 +80,7 @@
       ]
     },
     {
-      "id": 2,
-      "icon": "artist",
+      "id": "artist",
       "title": "The Artist",
       "pricing": "$9.99/RELEASE",
       "originalPricing": "$14/RELEASE",
@@ -146,8 +144,7 @@
       ]
     },
     {
-      "id": 3,
-      "icon": "artistPlus",
+      "id": "artistPlus",
       "title": "The Artist+",
       "pricing": "Coming soon",
       "originalPricing": "",

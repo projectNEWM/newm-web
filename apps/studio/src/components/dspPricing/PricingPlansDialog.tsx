@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { pricingPlanData } from "../../assets";
 import PricingPlanOption from "./PricingPlanOption";
 import { LeafFillIcon, SeedlingFillIcon, StarFillIcon } from "@newm-web/assets";
+import { useGetMintSongEstimateQuery } from "../../modules/song";
 
 const ICON_SIZE = "20px";
 
@@ -27,6 +28,11 @@ interface PricingPlansDialogProps {
 }
 
 const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
+  const { data: { dspPriceAda, dspPriceUsd } = {} } =
+    useGetMintSongEstimateQuery({
+      collaborators: 1,
+    });
+
   return (
     <Dialog
       onClose={handleClose}
@@ -88,13 +94,23 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
           {pricingPlanData.pricingPlanOptions.map((pricingPlan) => {
             return (
               <PricingPlanOption
+                {...pricingPlan}
+                adaPricingEstimate={
+                  dspPriceAda && pricingPlan.id === "artist"
+                    ? `(~${Number(dspPriceAda).toFixed(2)}₳/RELEASE)`
+                    : undefined
+                }
                 handleOptionClick={handleClose}
                 key={pricingPlan.id}
                 planIcon={{
                   iconPxSize: ICON_SIZE,
-                  iconElement: PRICING_PLAN_ICON[pricingPlan.icon],
+                  iconElement: PRICING_PLAN_ICON[pricingPlan.id],
                 }}
-                {...pricingPlan}
+                pricing={
+                  dspPriceUsd && pricingPlan.id === "artist"
+                    ? `$${Number(dspPriceUsd).toFixed(2)}/RELEASE`
+                    : pricingPlan.pricing
+                }
               />
             );
           })}
