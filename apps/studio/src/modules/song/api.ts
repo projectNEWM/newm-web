@@ -38,7 +38,7 @@ import {
   UploadSongAudioResponse,
   UploadSongResponse,
 } from "./types";
-import { getApiErrorStatus, getIsApiError } from "../../api/utils";
+import { getApiErrorStatus } from "../../api/utils";
 
 export const emptySong: Song = {
   archived: true,
@@ -601,9 +601,9 @@ export const extendedApi = newmApi.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (error) {
-          const errorStatus = getApiErrorStatus(error);
+          const status = getApiErrorStatus(error);
           const message =
-            errorStatus === 402
+            status === 402
               ? "Please add funds to your wallet and try again"
               : "An error occurred while submitting your payment";
 
