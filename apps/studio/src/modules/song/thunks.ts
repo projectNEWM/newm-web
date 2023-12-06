@@ -16,10 +16,7 @@ import { SilentError } from "@newm-web/utils";
 import { sleep } from "@newm-web/utils";
 import { AxiosProgressEvent } from "axios";
 import { handleUploadProgress } from "../../modules/ui/utils";
-import {
-  enableWallet,
-  getWalletBalance,
-} from "@newm.io/cardano-dapp-wallet-connector";
+import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Collaboration,
   CollaborationStatus,
@@ -175,12 +172,6 @@ export const uploadSong = createAsyncThunk(
       if ("error" in uploadSongAudioResponse) throw new UploadSongError();
 
       if (body.isMinting) {
-        const wallet = await enableWallet();
-        const walletBallance = await getWalletBalance(wallet);
-        if (!walletBallance) {
-          throw new Error("Please add funds to your wallet and try again");
-        }
-
         const collaborators = generateCollaborators(
           body.owners,
           body.creditors,
@@ -462,12 +453,6 @@ export const patchSong = createAsyncThunk(
       }
 
       if (body.isMinting) {
-        const wallet = await enableWallet();
-        const walletBallance = await getWalletBalance(wallet);
-        if (!walletBallance) {
-          throw new Error("Please add funds to your wallet and try again");
-        }
-
         const songResp = await dispatch(
           songApi.endpoints.getSong.initiate(body.id)
         );
