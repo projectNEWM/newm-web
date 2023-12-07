@@ -158,3 +158,18 @@ export const prepareAuthHeader = (
 
   return headers;
 };
+
+export const getApiErrorStatus = (err: unknown) => {
+  if (
+    err &&
+    typeof err === "object" &&
+    "error" in err &&
+    err.error &&
+    typeof err.error === "object" &&
+    "status" in err.error
+  ) {
+    return err.error.status;
+  }
+
+  return undefined;
+};
