@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Charli3Logo } from "@newm-web/assets";
 import { HorizontalLine, Button } from "@newm-web/elements";
+import theme from "@newm-web/theme";
 import {
   UploadSongRequest,
   getCollaboratorInfo,
@@ -68,7 +69,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
       </DialogTitle>
       <DialogContent sx={{ p: 0 }}>
         <Stack alignItems="center" rowGap={0.5} mt={1.5}>
-          <Typography color="music" fontWeight={500}>
+          <Typography sx={{ color: theme.colors.music }} fontWeight={500}>
             Total amount
           </Typography>
           <Typography variant="h3">
@@ -90,8 +91,13 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             ]}
           >
             <Stack>
-              <Typography color="grey200">Minting</Typography>
-              <Typography variant="subtitle1" color="grey300">
+              <Typography sx={{ color: theme.colors.grey200 }}>
+                Minting
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{ color: theme.colors.grey300 }}
+              >
                 {`"${values.title}"`}
               </Typography>
             </Stack>
@@ -114,8 +120,13 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             columnGap={0.5}
           >
             <Stack>
-              <Typography color="grey200">Collaborators</Typography>
-              <Typography variant="subtitle1" color="grey300">
+              <Typography sx={{ color: theme.colors.grey200 }}>
+                Collaborators
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{ color: theme.colors.grey300 }}
+              >
                 {ownersDisplay}
               </Typography>
             </Stack>
@@ -138,7 +149,9 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             ]}
           >
             <Stack>
-              <Typography color="grey200">Distribution cost</Typography>
+              <Typography sx={{ color: theme.colors.grey200 }}>
+                Distribution cost
+              </Typography>
             </Stack>
             <Stack rowGap={0.5}>
               <Typography>
@@ -196,7 +209,11 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
           >
             <Charli3Logo />
 
-            <Typography variant="subtitle1" color="grey200" fontSize="8px">
+            <Typography
+              variant="subtitle1"
+              sx={{ color: theme.colors.grey200 }}
+              fontSize="8px"
+            >
               Prices powered by Charli3
             </Typography>
           </Stack>
