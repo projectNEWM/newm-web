@@ -1,0 +1,38 @@
+name: Deploy app to production on published release
+on:
+  release:
+    types: [published]
+jobs:
+  build_and_deploy_studio_release:
+    if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: npx nx build-with-sentry studio
+        env:
+          VITE_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          VITE_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          VITE_ENV: ${{ secrets.REACT_APP_ENV }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_STUDIO }}"
+          channelId: live
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_STUDIO }}"
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Studio deployed to production."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
