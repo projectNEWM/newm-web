@@ -1,13 +1,15 @@
+import { useFormikContext } from "formik";
 import { Box, useTheme } from "@mui/material";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
-import { useFormikContext } from "formik";
 import { UploadSongRequest } from "../../../modules/song";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { ConfirmContract } from "../../../components";
+import PriceSummaryDialog from "./PriceSummaryDialog";
 
 const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
+  const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
 
   const { values, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongRequest>();
@@ -28,14 +30,13 @@ const ConfirmAgreement: FunctionComponent = () => {
         songTitle={values.title}
         isCoCreator={values.owners.length > 1}
         onConfirm={handleConsentToContract}
-        totalOwners={values.owners.length}
       />
 
       <Box mt={6}>
         <Button
-          type="submit"
           isLoading={isSubmitting}
           disabled={!values.consentsToContract}
+          onClick={() => setIsPaymentSummaryOpen(!isPaymentSummaryOpen)}
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"
@@ -44,6 +45,13 @@ const ConfirmAgreement: FunctionComponent = () => {
         >
           Distribute & Mint
         </Button>
+
+        <PriceSummaryDialog
+          open={isPaymentSummaryOpen}
+          onClose={() => {
+            setIsPaymentSummaryOpen(false);
+          }}
+        />
       </Box>
     </Box>
   );
