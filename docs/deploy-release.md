@@ -18,6 +18,5 @@
 7. Add a release title and description.
 8. Publish the release to deploy the release branch to production.
 9. If it's preferable to not have the release deploy right away, select the
-   `Set as pre-release` checkbox, and publish the release at a later date to
-   deploy it.
+   `Set as pre-release` checkbox, and publish it at a later date.
 10. Merge the release branch back into master if additional changes were made.
