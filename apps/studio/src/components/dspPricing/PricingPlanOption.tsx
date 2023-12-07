@@ -9,6 +9,7 @@ import { pricingPlanData } from "../../assets";
 
 interface PricingPlanOptionProps {
   readonly active: boolean;
+  readonly adaPricingEstimate?: string;
   readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
   readonly title: string;
   readonly pricing: string;
@@ -25,6 +26,7 @@ interface PricingPlanOptionProps {
 
 const PricingPlanOption = ({
   active,
+  adaPricingEstimate,
   planIcon: { iconPxSize, iconElement },
   title,
   pricing,
@@ -85,34 +87,47 @@ const PricingPlanOption = ({
         }}
       >
         <Stack textAlign="center">
-          <Typography variant="h4" sx={{ fontWeight: 700, pb: 2 }}>
-            {originalPricing && (
-              <Box
-                component="span"
-                sx={{ textDecoration: "line-through", mr: 1 }}
-              >
-                {originalPricing}
-              </Box>
-            )}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              pb: 2,
+              height: "40px",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Box>
+              {originalPricing && (
+                <Box
+                  component="span"
+                  sx={{ textDecoration: "line-through", mr: 1 }}
+                >
+                  {originalPricing}
+                </Box>
+              )}
 
-            {pricing === "Coming soon" ? (
-              <Box
-                component="span"
-                sx={{
-                  background: theme.colors.lightGreen,
-                  borderRadius: "12px",
-                  color: theme.colors.green,
-                  fontSize: "14px",
-                  fontWeight: 500,
-                  px: 1.5,
-                  py: 0.5,
-                }}
-              >
-                {pricing}
-              </Box>
-            ) : (
-              pricing
-            )}
+              {pricing === "Coming soon" ? (
+                <Box
+                  component="span"
+                  sx={{
+                    background: theme.colors.lightGreen,
+                    borderRadius: "12px",
+                    color: theme.colors.green,
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    px: 1.5,
+                    py: 0.5,
+                  }}
+                >
+                  {pricing}
+                </Box>
+              ) : (
+                pricing
+              )}
+            </Box>
+            <Typography variant="subtitle1">{adaPricingEstimate}</Typography>
           </Typography>
           <Typography variant="h2">{title}</Typography>
           <Typography

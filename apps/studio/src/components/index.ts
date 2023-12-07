@@ -5,6 +5,7 @@ export { default as Background } from "./Background";
 export { default as Creditors } from "./minting/Creditors";
 export { default as ConfirmContract } from "./minting/ConfirmContract";
 export { default as ConnectWalletModal } from "./ConnectWalletModal";
+export { CoverRemixSample } from "./minting/CoverRemixSample";
 export { default as DisconnectWalletButton } from "./DisconnectWalletButton";
 export { default as WalletEnvMismatchModal } from "./WalletEnvMismatchModal";
 export { default as FacebookLogin } from "./FacebookLogin";

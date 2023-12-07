@@ -92,6 +92,7 @@ export interface PostSongRequest {
   readonly ipis?: ReadonlyArray<string>;
   readonly releaseDate?: string;
   readonly publicationDate?: string;
+  readonly coverRemixSample?: boolean;
 }
 
 export interface UploadSongRequest
@@ -108,6 +109,7 @@ export interface UploadSongRequest
   readonly artistName: string;
   readonly stageName: string;
   readonly userIpi?: string;
+  readonly isCoverRemixSample?: boolean;
 }
 
 export interface UploadSongResponse {
@@ -211,6 +213,7 @@ export interface Song {
   readonly marketplaceStatus: MarketplaceStatus;
   readonly barcodeType?: string;
   readonly barcodeNumber?: string;
+  readonly coverRemixSample?: boolean;
 }
 
 export interface Artist {
@@ -405,4 +408,23 @@ export interface GetUserWalletSongsResponse {
   readonly offset: number;
   readonly limit: number;
   readonly songs: WalletSong[];
+}
+
+export interface GetMintSongEstimateRequest {
+  readonly collaborators: number;
+}
+
+export interface GetMintSongEstimateResponse {
+  readonly dspPriceUsd: string;
+  readonly cborHex: string;
+  readonly adaPrice: string;
+  readonly usdPrice: string;
+  readonly dspPriceAda: string;
+  readonly mintPriceAda: string;
+  readonly mintPriceUsd: string;
+  readonly collabPriceAda: string;
+  readonly collabPriceUsd: string;
+  readonly collabPerArtistPriceAda: string;
+  readonly collabPerArtistPriceUsd: string;
+  readonly usdAdaExchangeRate: string;
 }
