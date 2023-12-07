@@ -1,11 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { SessionState } from "./types";
 import { handleSuccessfulAuthentication } from "./utils";
 import { logOutExpiredSession, receiveRefreshToken } from "../../api/actions";
 
 const initialState: SessionState = {
-  isArtistPricePlanSelected: false,
   // if refresh token is present, user is logged in or can refresh session
   isLoggedIn: !!Cookies.get("refreshToken"),
   verificationPingStartedAt: undefined,
@@ -22,12 +21,6 @@ const sessionSlice = createSlice({
     removeVerificationTimer: (state) => {
       state.verificationPingStartedAt = undefined;
     },
-    setIsArtistPricePlanSelected: (
-      state,
-      { payload }: PayloadAction<boolean>
-    ) => {
-      state.isArtistPricePlanSelected = payload;
-    },
     setIsLoggedIn: (state, { payload }) => {
       state.isLoggedIn = payload;
     },
@@ -43,7 +36,6 @@ const sessionSlice = createSlice({
 });
 
 export const {
-  setIsArtistPricePlanSelected,
   setIsLoggedIn,
   receiveSuccessfullAuthentication,
   startVerificationTimer,

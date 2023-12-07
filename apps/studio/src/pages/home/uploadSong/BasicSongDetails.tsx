@@ -26,7 +26,7 @@ import {
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
-import { useAppDispatch, useAppSelector } from "../../../common";
+import { useAppDispatch } from "../../../common";
 import { scrollToError, useEffectAfterMount } from "@newm-web/utils";
 import { useWindowDimensions } from "@newm-web/utils";
 import { useExtractProperty } from "@newm-web/utils";
@@ -35,7 +35,6 @@ import { useFormikContext } from "formik";
 import {
   VerificationStatus,
   emptyProfile,
-  selectSession,
   useGetProfileQuery,
 } from "../../../modules/session";
 import {
@@ -61,7 +60,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const ownersRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery();
+  const {
+    data: {
+      verificationStatus,
+      dspPlanSubscribed: isArtistPricePlanSelected,
+    } = emptyProfile,
+  } = useGetProfileQuery();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -77,7 +81,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     useFormikContext<UploadSongRequest>();
 
   // DSP pricing plan mint song toggling
-  const { isArtistPricePlanSelected } = useAppSelector(selectSession);
+
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);

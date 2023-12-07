@@ -1,5 +1,4 @@
 export interface SessionState {
-  isArtistPricePlanSelected: boolean;
   isLoggedIn: boolean;
   verificationPingStartedAt?: number;
 }
@@ -29,6 +28,7 @@ export interface Profile {
   readonly spotifyProfile?: string;
   readonly soundCloudProfile?: string;
   readonly appleMusicProfile?: string;
+  readonly dspPlanSubscribed?: boolean;
 }
 
 export interface GetUserRequest {

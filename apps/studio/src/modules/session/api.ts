@@ -45,6 +45,7 @@ export const emptyProfile: Profile = {
   companyLogoUrl: "",
   companyName: "",
   walletAddress: "",
+  dspPlanSubscribed: false,
 };
 
 export const extendedApi = newmApi.injectEndpoints({

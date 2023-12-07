@@ -7,6 +7,7 @@ import { pricingPlanData } from "../../assets";
 import PricingPlanOption from "./PricingPlanOption";
 import { LeafFillIcon, SeedlingFillIcon, StarFillIcon } from "@newm-web/assets";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
+import { useUpdateProfileThunk } from "../../modules/session";
 
 const ICON_SIZE = "20px";
 
@@ -28,6 +29,18 @@ interface PricingPlansDialogProps {
 }
 
 const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
+  const [updateProfile, { isLoading }] = useUpdateProfileThunk();
+
+  const handleOptionClick = (optionClicked: string) => {
+    if (optionClicked === "artist") {
+      updateProfile({ dspPlanSubscribed: true }).then(() => {
+        handleClose();
+      });
+    } else {
+      handleClose();
+    }
+  };
+
   const { data: { dspPriceAda, dspPriceUsd } = {} } =
     useGetMintSongEstimateQuery({
       collaborators: 1,
@@ -100,7 +113,7 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
                     ? `(~${Number(dspPriceAda).toFixed(2)}₳/RELEASE)`
                     : undefined
                 }
-                handleOptionClick={handleClose}
+                handleOptionClick={() => handleOptionClick(pricingPlan.id)}
                 key={pricingPlan.id}
                 planIcon={{
                   iconPxSize: ICON_SIZE,
@@ -111,6 +124,7 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
                     ? `$${Number(dspPriceUsd).toFixed(2)}/RELEASE`
                     : pricingPlan.pricing
                 }
+                hasOptionBeenSelected={isLoading}
               />
             );
           })}

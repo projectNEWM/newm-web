@@ -3,8 +3,6 @@ import { Box, Divider, Stack } from "@mui/material";
 import { Button, Typography } from "@newm-web/elements";
 import { JSX } from "react";
 import theme from "@newm-web/theme";
-import { useAppDispatch } from "../../common";
-import { setIsArtistPricePlanSelected } from "../../modules/session";
 import { pricingPlanData } from "../../assets";
 
 interface PricingPlanOptionProps {
@@ -22,6 +20,7 @@ interface PricingPlanOptionProps {
   readonly buttonText: string;
   readonly buttonType: string;
   handleOptionClick: () => void;
+  hasOptionBeenSelected: boolean;
 }
 
 const PricingPlanOption = ({
@@ -36,9 +35,8 @@ const PricingPlanOption = ({
   buttonText,
   buttonType,
   handleOptionClick,
+  hasOptionBeenSelected,
 }: PricingPlanOptionProps) => {
-  const dispatch = useAppDispatch();
-
   const criterionIcon = (includedInPlan: boolean) => {
     if (includedInPlan) {
       return <Check sx={{ color: theme.colors.green, fontSize: iconPxSize }} />;
@@ -166,19 +164,14 @@ const PricingPlanOption = ({
         <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
 
         {buttonType === "primary" ? (
-          <Button
-            onClick={() => {
-              dispatch(setIsArtistPricePlanSelected(true));
-              handleOptionClick();
-            }}
-          >
+          <Button onClick={handleOptionClick} isLoading={hasOptionBeenSelected}>
             {buttonText}
           </Button>
         ) : (
           <Button
             variant={"secondary"}
             color="music"
-            disabled={!active}
+            disabled={!active || hasOptionBeenSelected}
             onClick={handleOptionClick}
           >
             {buttonText}
