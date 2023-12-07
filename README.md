@@ -64,7 +64,13 @@ nx run-many -t <target1> <target2> -p <proj1> <proj2>
 Targets can be defined in the `package.json` or `projects.json`. Learn
 more [in the docs](https://nx.dev/core-features/run-tasks).
 
-### Storybook
+### Editor Integration
+
+The [Nx Console extensions](https://nx.dev/nx-console). It provides
+autocomplete support, a UI for exploring and running tasks & generators, and
+more.
+
+## Storybook
 
 The storybook for the elements package can be run using the command
 
@@ -72,8 +78,6 @@ The storybook for the elements package can be run using the command
 nx storybook elements
 ```
 
-### Editor Integration
+## Additional resource
 
-The [Nx Console extensions](https://nx.dev/nx-console). It provides
-autocomplete support, a UI for exploring and running tasks & generators, and
-more.
+- [Deploy to production](./docs/deploy-release.md)
