@@ -78,6 +78,6 @@ The storybook for the elements package can be run using the command
 nx storybook elements
 ```
 
-## Additional resource
+## Additional resources
 
 - [Deploy to production](./docs/deploy-release.md)

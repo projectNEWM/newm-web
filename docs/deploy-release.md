@@ -5,13 +5,13 @@
    `release/{app-prefix}/{version}`. For example, the release branch for the
    initial release of NEWM Studio would be `release/studio/1.0.0`.
    - The `app-prefix` can be one of two values:
-     - `newm` for NEWM Studio
+     - `studio` for NEWM Studio
      - `marketplace` for NEWM Marketplace
 2. Perform any testing for the release in the release branch.
 3. Merge additional changes or fixes into the release branch as required.
 4. Navigate to the [create release page](https://github.com/projectNEWM/newm-web/releases/new)
    for the repo.
-5. When choosing a tag, create a new tag for the release with the format
+5. Select "Choose a tag" and create a new tag for the release with the format
    `{app-prefix}-{version}`. The `app-prefix` value determines which app is
    deployed. For example, the initial studio release tag would be `studio-1.0.0`.
 6. Set the recently created release branch as the target.
