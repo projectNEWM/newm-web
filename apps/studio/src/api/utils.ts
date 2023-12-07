@@ -161,10 +161,10 @@ export const prepareAuthHeader = (
 
 export const getApiErrorStatus = (err: unknown) => {
   if (
-    !!err &&
+    err &&
     typeof err === "object" &&
     "error" in err &&
-    !!err.error &&
+    err.error &&
     typeof err.error === "object" &&
     "status" in err.error
   ) {
