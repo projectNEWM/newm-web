@@ -1,10 +1,4 @@
 /**
- * NEWM Fees
- */
-export const COLLABORATOR_FEE_IN_ADA = 1.3;
-export const MINTING_FEE_IN_ADA = 6;
-
-/**
  * NEWM External Links and Support
  */
 export const NEWM_SUPPORT_EMAIL = "support@newm.io";
@@ -39,5 +33,5 @@ export const NONE_OPTION = "-";
  */
 export const SKIP_FETCH_INVITE_PATH_LIST = [
   "/idenfy-success-session",
-  "/idenfy-fail-session",
+  "/idenfy-fail-session"
 ];

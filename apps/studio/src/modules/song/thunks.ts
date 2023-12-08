@@ -277,7 +277,11 @@ export const uploadSong = createAsyncThunk(
         history.push("/home/upload-song");
       }
 
-      if (error instanceof Error && !(error instanceof SilentError)) {
+      if (error instanceof SilentError) {
+        return;
+      }
+
+      if (error instanceof Error) {
         dispatch(
           setToastMessage({
             message: error.message,
