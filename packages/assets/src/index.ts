@@ -2,6 +2,7 @@ import AddImage from "./lib/images/AddImage";
 import AddSong from "./lib/images/AddSong";
 import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
 import bgImage from "./lib/images/bg-img.webp";
+import Charli3Logo from "./lib/images/Charli3Logo";
 import CheckboxIcon from "./lib/images/CheckboxIcon";
 import CheckCircle from "./lib/images/CheckCircle";
 import CheckIcon from "./lib/images/CheckIcon";
@@ -33,6 +34,7 @@ export {
   AddImage,
   artistAgreementPreview,
   bgImage,
+  Charli3Logo,
   CheckboxIcon,
   CheckCircle,
   CheckIcon,
@@ -57,5 +59,5 @@ export {
   UnselectedCheckboxIcon,
   UploadIcon,
   VerticalEllipsis,
-  WalletIcon,
+  WalletIcon
 };
