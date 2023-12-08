@@ -8,6 +8,7 @@ import PricingPlanOption from "./PricingPlanOption";
 import { LeafFillIcon, SeedlingFillIcon, StarFillIcon } from "@newm-web/assets";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 import { useUpdateProfileThunk } from "../../modules/session";
+import { PricingPlanDetails } from "../../common";
 
 const ICON_SIZE = "20px";
 
@@ -104,30 +105,32 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
             justifyContent: "center",
           }}
         >
-          {pricingPlanData.pricingPlanOptions.map((pricingPlan) => {
-            return (
-              <PricingPlanOption
-                {...pricingPlan}
-                adaPricingEstimate={
-                  dspPriceAda && pricingPlan.id === "artist"
-                    ? `(~${Number(dspPriceAda).toFixed(2)}₳/RELEASE)`
-                    : undefined
-                }
-                handleOptionClick={() => handleOptionClick(pricingPlan.id)}
-                key={pricingPlan.id}
-                planIcon={{
-                  iconPxSize: ICON_SIZE,
-                  iconElement: PRICING_PLAN_ICON[pricingPlan.id],
-                }}
-                pricing={
-                  dspPriceUsd && pricingPlan.id === "artist"
-                    ? `$${Number(dspPriceUsd).toFixed(2)}/RELEASE`
-                    : pricingPlan.pricing
-                }
-                hasOptionBeenSelected={isLoading}
-              />
-            );
-          })}
+          {pricingPlanData.pricingPlanOptions.map(
+            (pricingPlan: PricingPlanDetails) => {
+              return (
+                <PricingPlanOption
+                  {...pricingPlan}
+                  adaPricingEstimate={
+                    dspPriceAda && pricingPlan.id === "artist"
+                      ? `(~${Number(dspPriceAda).toFixed(2)}₳/RELEASE)`
+                      : undefined
+                  }
+                  handleOptionClick={() => handleOptionClick(pricingPlan.id)}
+                  key={pricingPlan.id}
+                  planIcon={{
+                    iconPxSize: ICON_SIZE,
+                    iconElement: PRICING_PLAN_ICON[pricingPlan.id],
+                  }}
+                  pricing={
+                    dspPriceUsd && pricingPlan.id === "artist"
+                      ? `$${Number(dspPriceUsd).toFixed(2)}/RELEASE`
+                      : pricingPlan.pricing
+                  }
+                  hasOptionBeenSelected={isLoading}
+                />
+              );
+            }
+          )}
         </Stack>
       </Box>
     </Dialog>

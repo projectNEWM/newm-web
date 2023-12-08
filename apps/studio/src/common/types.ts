@@ -25,3 +25,18 @@ export interface PlayerState {
   readonly isReadyToPlay: boolean;
   readonly song?: Song;
 }
+
+export interface PricingPlanDetails {
+  readonly buttonText: string;
+  readonly buttonType: string;
+  readonly criteria: Array<{
+    isIncludedInPlan: boolean;
+    criterionText: string;
+  }>;
+  readonly description: string;
+  readonly id: string;
+  readonly isActive: boolean;
+  readonly originalPricing: string;
+  readonly pricing: string;
+  readonly title: string;
+}

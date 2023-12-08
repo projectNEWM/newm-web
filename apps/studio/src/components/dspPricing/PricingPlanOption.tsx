@@ -4,27 +4,17 @@ import { Button, Typography } from "@newm-web/elements";
 import { JSX } from "react";
 import theme from "@newm-web/theme";
 import { pricingPlanData } from "../../assets";
+import { PricingPlanDetails } from "../../common";
 
-interface PricingPlanOptionProps {
-  readonly active: boolean;
+interface PricingPlanOptionProps extends PricingPlanDetails {
   readonly adaPricingEstimate?: string;
   readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
-  readonly title: string;
-  readonly pricing: string;
-  readonly originalPricing: string;
-  readonly description: string;
-  readonly criteria: Array<{
-    includedInPlan: boolean;
-    criterionText: string;
-  }>;
-  readonly buttonText: string;
-  readonly buttonType: string;
   handleOptionClick: () => void;
   hasOptionBeenSelected: boolean;
 }
 
 const PricingPlanOption = ({
-  active,
+  isActive,
   adaPricingEstimate,
   planIcon: { iconPxSize, iconElement },
   title,
@@ -53,7 +43,7 @@ const PricingPlanOption = ({
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        opacity: active ? 1 : 0.5,
+        opacity: isActive ? 1 : 0.5,
         padding: 5,
         position: "relative",
         justifyContent: "center",
@@ -149,7 +139,7 @@ const PricingPlanOption = ({
               }}
               key={index}
             >
-              {criterionIcon(criterion.includedInPlan)}
+              {criterionIcon(criterion.isIncludedInPlan)}
               <Typography variant="body1" fontWeight={500}>
                 {
                   pricingPlanData.sharedCriterionText[
@@ -171,7 +161,7 @@ const PricingPlanOption = ({
           <Button
             variant={"secondary"}
             color="music"
-            disabled={!active || hasOptionBeenSelected}
+            disabled={!isActive || hasOptionBeenSelected}
             onClick={handleOptionClick}
           >
             {buttonText}
