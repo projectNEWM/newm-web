@@ -9,8 +9,8 @@ import { PricingPlanDetails } from "../../common";
 interface PricingPlanOptionProps extends PricingPlanDetails {
   readonly adaPricingEstimate?: string;
   readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
-  onOptionClick: () => void;
-  hasOptionBeenSelected: boolean;
+  readonly onOptionClick: () => void;
+  readonly hasOptionBeenSelected: boolean;
 }
 
 const PricingPlanOption = ({
@@ -27,10 +27,6 @@ const PricingPlanOption = ({
   onOptionClick,
   hasOptionBeenSelected,
 }: PricingPlanOptionProps) => {
-  const handleClick = () => {
-    onOptionClick();
-  };
-
   const criterionIcon = (includedInPlan: boolean) => {
     if (includedInPlan) {
       return <Check sx={{ color: theme.colors.green, fontSize: iconPxSize }} />;
@@ -160,7 +156,7 @@ const PricingPlanOption = ({
         <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
 
         {buttonType === "primary" ? (
-          <Button onClick={handleClick} isLoading={hasOptionBeenSelected}>
+          <Button onClick={onOptionClick} isLoading={hasOptionBeenSelected}>
             {buttonText}
           </Button>
         ) : (
@@ -168,7 +164,7 @@ const PricingPlanOption = ({
             variant={"secondary"}
             color="music"
             disabled={!isActive || hasOptionBeenSelected}
-            onClick={handleClick}
+            onClick={onOptionClick}
           >
             {buttonText}
           </Button>

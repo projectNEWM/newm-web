@@ -33,10 +33,6 @@ interface PricingPlansDialogProps {
 const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
-  const handleClose = () => {
-    onClose();
-  };
-
   const handleOptionClick = (optionClicked: string) => {
     if (optionClicked === "artist") {
       updateProfile({ dspPlanSubscribed: true }).then(() => {
@@ -54,7 +50,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
 
   return (
     <Dialog
-      onClose={handleClose}
+      onClose={onClose}
       open={open}
       fullScreen
       sx={{
@@ -63,7 +59,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
     >
       <IconButton
         aria-label="close"
-        onClick={handleClose}
+        onClick={onClose}
         sx={{
           color: theme.colors.grey200,
           p: 0,
