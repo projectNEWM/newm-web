@@ -1,30 +1,20 @@
 import { Check, Close } from "@mui/icons-material";
-import { Box, Divider, Stack } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import { JSX } from "react";
 import theme from "@newm-web/theme";
 import { pricingPlanData } from "../../assets";
+import { PricingPlanDetails } from "../../common";
 
-interface PricingPlanOptionProps {
-  readonly active: boolean;
+interface PricingPlanOptionProps extends PricingPlanDetails {
   readonly adaPricingEstimate?: string;
   readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
-  readonly title: string;
-  readonly pricing: string;
-  readonly originalPricing: string;
-  readonly description: string;
-  readonly criteria: Array<{
-    includedInPlan: boolean;
-    criterionText: string;
-  }>;
-  readonly buttonText: string;
-  readonly buttonType: string;
-  handleOptionClick: () => void;
-  hasOptionBeenSelected: boolean;
+  readonly onOptionClick: () => void;
+  readonly hasOptionBeenSelected: boolean;
 }
 
 const PricingPlanOption = ({
-  active,
+  isActive,
   adaPricingEstimate,
   planIcon: { iconPxSize, iconElement },
   title,
@@ -34,7 +24,7 @@ const PricingPlanOption = ({
   criteria,
   buttonText,
   buttonType,
-  handleOptionClick,
+  onOptionClick,
   hasOptionBeenSelected,
 }: PricingPlanOptionProps) => {
   const criterionIcon = (includedInPlan: boolean) => {
@@ -53,11 +43,12 @@ const PricingPlanOption = ({
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        opacity: active ? 1 : 0.5,
+        opacity: isActive ? 1 : 0.5,
         padding: 5,
         position: "relative",
         justifyContent: "center",
         height: "100%",
+        [theme.breakpoints.down("xl")]: { paddingX: 2 },
       }}
     >
       <Box
@@ -132,7 +123,7 @@ const PricingPlanOption = ({
             variant="subtitle1"
             sx={{
               fontWeight: 500,
-              [theme.breakpoints.up("xl")]: { height: "60px" },
+              [theme.breakpoints.up("lg")]: { height: "48px" },
             }}
           >
             {description}
@@ -146,10 +137,11 @@ const PricingPlanOption = ({
                 display: "flex",
                 flexDirection: "row",
                 gap: 1.5,
+                [theme.breakpoints.down("xl")]: { paddingX: 3 },
               }}
               key={index}
             >
-              {criterionIcon(criterion.includedInPlan)}
+              {criterionIcon(criterion.isIncludedInPlan)}
               <Typography variant="body1" fontWeight={500}>
                 {
                   pricingPlanData.sharedCriterionText[
@@ -164,15 +156,15 @@ const PricingPlanOption = ({
         <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
 
         {buttonType === "primary" ? (
-          <Button onClick={handleOptionClick} isLoading={hasOptionBeenSelected}>
+          <Button onClick={onOptionClick} isLoading={hasOptionBeenSelected}>
             {buttonText}
           </Button>
         ) : (
           <Button
             variant={"secondary"}
             color="music"
-            disabled={!active || hasOptionBeenSelected}
-            onClick={handleOptionClick}
+            disabled={!isActive || hasOptionBeenSelected}
+            onClick={onOptionClick}
           >
             {buttonText}
           </Button>
