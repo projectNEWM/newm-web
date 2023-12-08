@@ -138,7 +138,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     <Stack>
       {!isArtistPricePlanSelected && (
         <PricingPlansDialog
-          handleClose={handlePricingPlanClose}
+          onClose={handlePricingPlanClose}
           open={isPricingPlansOpen}
         />
       )}

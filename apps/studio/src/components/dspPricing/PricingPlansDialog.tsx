@@ -1,5 +1,5 @@
-import { Box, IconButton, Stack } from "@mui/material";
-import { Dialog, Typography } from "@newm-web/elements";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Dialog } from "@newm-web/elements";
 import { JSX } from "react";
 import theme from "@newm-web/theme";
 import CloseIcon from "@mui/icons-material/Close";
@@ -9,6 +9,7 @@ import { LeafFillIcon, SeedlingFillIcon, StarFillIcon } from "@newm-web/assets";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 import { useUpdateProfileThunk } from "../../modules/session";
 import { PricingPlanDetails } from "../../common";
+import { formatPriceToDecimal } from "@newm-web/utils";
 
 const ICON_SIZE = "20px";
 
@@ -25,20 +26,24 @@ const PRICING_PLAN_ICON: Record<string, JSX.Element> = {
 };
 
 interface PricingPlansDialogProps {
-  readonly handleClose: () => void;
+  readonly onClose: () => void;
   readonly open: boolean;
 }
 
-const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
+const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
+
+  const handleClose = () => {
+    onClose();
+  };
 
   const handleOptionClick = (optionClicked: string) => {
     if (optionClicked === "artist") {
       updateProfile({ dspPlanSubscribed: true }).then(() => {
-        handleClose();
+        onClose();
       });
     } else {
-      handleClose();
+      onClose();
     }
   };
 
@@ -112,10 +117,10 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
                   {...pricingPlan}
                   adaPricingEstimate={
                     dspPriceAda && pricingPlan.id === "artist"
-                      ? `(~${Number(dspPriceAda).toFixed(2)}₳/RELEASE)`
+                      ? `(~${formatPriceToDecimal(dspPriceAda)}₳/RELEASE)`
                       : undefined
                   }
-                  handleOptionClick={() => handleOptionClick(pricingPlan.id)}
+                  onOptionClick={() => handleOptionClick(pricingPlan.id)}
                   key={pricingPlan.id}
                   planIcon={{
                     iconPxSize: ICON_SIZE,
@@ -123,7 +128,7 @@ const PricingPlansDialog = ({ handleClose, open }: PricingPlansDialogProps) => {
                   }}
                   pricing={
                     dspPriceUsd && pricingPlan.id === "artist"
-                      ? `$${Number(dspPriceUsd).toFixed(2)}/RELEASE`
+                      ? `$${formatPriceToDecimal(dspPriceUsd)}/RELEASE` || "N/A"
                       : pricingPlan.pricing
                   }
                   hasOptionBeenSelected={isLoading}

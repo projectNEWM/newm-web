@@ -1,6 +1,6 @@
 import { Check, Close } from "@mui/icons-material";
-import { Box, Divider, Stack } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import { JSX } from "react";
 import theme from "@newm-web/theme";
 import { pricingPlanData } from "../../assets";
@@ -9,7 +9,7 @@ import { PricingPlanDetails } from "../../common";
 interface PricingPlanOptionProps extends PricingPlanDetails {
   readonly adaPricingEstimate?: string;
   readonly planIcon: { iconPxSize: string; iconElement: JSX.Element };
-  handleOptionClick: () => void;
+  onOptionClick: () => void;
   hasOptionBeenSelected: boolean;
 }
 
@@ -24,9 +24,13 @@ const PricingPlanOption = ({
   criteria,
   buttonText,
   buttonType,
-  handleOptionClick,
+  onOptionClick,
   hasOptionBeenSelected,
 }: PricingPlanOptionProps) => {
+  const handleClick = () => {
+    onOptionClick();
+  };
+
   const criterionIcon = (includedInPlan: boolean) => {
     if (includedInPlan) {
       return <Check sx={{ color: theme.colors.green, fontSize: iconPxSize }} />;
@@ -154,7 +158,7 @@ const PricingPlanOption = ({
         <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
 
         {buttonType === "primary" ? (
-          <Button onClick={handleOptionClick} isLoading={hasOptionBeenSelected}>
+          <Button onClick={handleClick} isLoading={hasOptionBeenSelected}>
             {buttonText}
           </Button>
         ) : (
@@ -162,7 +166,7 @@ const PricingPlanOption = ({
             variant={"secondary"}
             color="music"
             disabled={!isActive || hasOptionBeenSelected}
-            onClick={handleOptionClick}
+            onClick={handleClick}
           >
             {buttonText}
           </Button>
