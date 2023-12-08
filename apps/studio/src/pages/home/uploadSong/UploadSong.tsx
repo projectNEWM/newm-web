@@ -34,6 +34,7 @@ const UploadSong: FunctionComponent = () => {
       nickname: stageName = "",
       email,
       role,
+      ipi: userIpi,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -91,6 +92,7 @@ const UploadSong: FunctionComponent = () => {
     barcodeType: undefined,
     publicationDate: undefined,
     isCoverRemixSample: false,
+    ipi: userIpi,
   };
 
   // Navigate to advanced details if minting, otherwise upload song
@@ -159,7 +161,7 @@ const UploadSong: FunctionComponent = () => {
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
     copyrightYear: commonYupValidation.year,
     copyrightOwner: commonYupValidation.copyright,
-    userIpi: commonYupValidation.userIpi,
+    ipi: commonYupValidation.ipi,
     iswc: commonYupValidation.iswc,
   };
 
@@ -216,7 +218,7 @@ const UploadSong: FunctionComponent = () => {
                 phonographicCopyrightOwner: validations.copyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
-                userIpi: validations.userIpi,
+                ipi: validations.ipi,
                 iswc: validations.iswc,
               }),
             },

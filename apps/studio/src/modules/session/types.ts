@@ -28,6 +28,8 @@ export interface Profile {
   readonly spotifyProfile?: string;
   readonly soundCloudProfile?: string;
   readonly appleMusicProfile?: string;
+  readonly isni?: string;
+  readonly ipi?: string;
 }
 
 export interface GetUserRequest {

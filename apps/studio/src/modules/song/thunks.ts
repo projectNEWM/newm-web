@@ -89,9 +89,9 @@ export const uploadSong = createAsyncThunk(
       let ipis;
 
       if (body.ipis) {
-        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+        ipis = body.ipi ? [...body.ipis, body.ipi] : body.ipis;
       } else {
-        ipis = body.userIpi ? [body.userIpi] : undefined;
+        ipis = body.ipi ? [body.ipi] : undefined;
       }
 
       // Convert barcodeType to the value expected by the API
@@ -382,9 +382,9 @@ export const patchSong = createAsyncThunk(
       let ipis;
 
       if (body.ipis) {
-        ipis = body.userIpi ? [...body.ipis, body.userIpi] : body.ipis;
+        ipis = body.ipi ? [...body.ipis, body.ipi] : body.ipis;
       } else {
-        ipis = body.userIpi ? [body.userIpi] : undefined;
+        ipis = body.ipi ? [body.ipi] : undefined;
       }
 
       // Convert barcodeType to the value expected by the API

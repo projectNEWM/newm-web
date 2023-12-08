@@ -45,6 +45,8 @@ export const emptyProfile: Profile = {
   companyLogoUrl: "",
   companyName: "",
   walletAddress: "",
+  isni: "",
+  ipi: "",
 };
 
 export const extendedApi = newmApi.injectEndpoints({
