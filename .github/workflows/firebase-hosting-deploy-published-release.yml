@@ -1,13 +1,10 @@
-name: Deploy NEWM Studio to Firebase Hosting on merge
-"on":
-  push:
-    branches:
-      - master
-    paths:
-      - apps/studio/**
-      - packages/**
+name: Deploy app to production on published release
+on:
+  release:
+    types: [published]
 jobs:
-  build_and_deploy:
+  build_and_deploy_studio_release:
+    if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,9 +21,9 @@ jobs:
         id: deploy
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_STUDIO }}"
           channelId: live
-          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_ARTIST_PORTAL }}"
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_STUDIO }}"
 
       - name: Send update to slack
         id: slack
@@ -34,7 +31,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "Artist Portal updated. View at https://artist.garage.newm.io"
+              "text": "NEWM Studio deployed to production."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
