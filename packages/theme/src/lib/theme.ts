@@ -23,6 +23,7 @@ declare module "@mui/material/styles" {
       grey500: string;
       grey600: string;
       grey700: string;
+      lightGreen: string;
       magazine: string;
       music: string;
       partners: string;
@@ -78,6 +79,7 @@ declare module "@mui/material/styles" {
       grey500?: string;
       grey600?: string;
       grey700?: string;
+      lightGreen?: string;
       magazine?: string;
       music?: string;
       partners?: string;
@@ -167,6 +169,7 @@ const colors = {
   grey500: "#1C1C1E",
   grey600: "#121214",
   grey700: "#0A0A0A",
+  lightGreen: "#D1FAE5",
   magazine: "#FA554B",
   music: "#DC3CAA",
   partners: "#FF9637",
@@ -193,9 +196,9 @@ const theme = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 900,
-      lg: 1060,
-      xl: 1536,
+      md: 960,
+      lg: 1280,
+      xl: 1600,
     },
   },
   components: {
@@ -276,6 +279,13 @@ const theme = createTheme({
       fontWeight: 800,
       fontSize: "80px",
       lineHeight: "96px",
+    },
+    h2: {
+      fontFamily: "Raleway",
+      fontStyle: "normal",
+      fontWeight: 800,
+      fontSize: "36px",
+      lineHeight: "46px",
     },
     h3: {
       fontFamily: "Raleway",

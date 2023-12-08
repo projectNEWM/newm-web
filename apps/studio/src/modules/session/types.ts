@@ -28,6 +28,7 @@ export interface Profile {
   readonly spotifyProfile?: string;
   readonly soundCloudProfile?: string;
   readonly appleMusicProfile?: string;
+  readonly dspPlanSubscribed?: boolean;
 }
 
 export interface GetUserRequest {
