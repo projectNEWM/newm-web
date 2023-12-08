@@ -52,6 +52,7 @@ const PricingPlanOption = ({
         position: "relative",
         justifyContent: "center",
         height: "100%",
+        [theme.breakpoints.down("xl")]: { paddingX: 2 },
       }}
     >
       <Box
@@ -126,7 +127,7 @@ const PricingPlanOption = ({
             variant="subtitle1"
             sx={{
               fontWeight: 500,
-              [theme.breakpoints.up("xl")]: { height: "60px" },
+              [theme.breakpoints.up("lg")]: { height: "48px" },
             }}
           >
             {description}
@@ -140,6 +141,7 @@ const PricingPlanOption = ({
                 display: "flex",
                 flexDirection: "row",
                 gap: 1.5,
+                [theme.breakpoints.down("xl")]: { paddingX: 3 },
               }}
               key={index}
             >

@@ -83,6 +83,9 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
           flexDirection: "column",
           justifyContent: "center",
           padding: 7.5,
+          [theme.breakpoints.down("xl")]: {
+            padding: 5,
+          },
         }}
       >
         <Stack sx={{ mb: 12, textAlign: "center" }}>
@@ -103,7 +106,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
             display: "flex",
             flexDirection: "row",
             gap: 4,
-            [theme.breakpoints.down("xl")]: {
+            [theme.breakpoints.down("lg")]: {
               flexDirection: "column",
               gap: 10,
             },
