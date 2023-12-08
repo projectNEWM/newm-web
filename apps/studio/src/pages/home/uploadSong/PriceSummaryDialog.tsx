@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
 import { useFormikContext } from "formik";
 import {
-  Dialog,
   DialogTitle,
   Typography,
   DialogContent,
@@ -9,7 +8,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import { Charli3Logo } from "@newm-web/assets";
-import { HorizontalLine, Button } from "@newm-web/elements";
+import { HorizontalLine, Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
   UploadSongRequest,
@@ -73,10 +72,10 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             Total amount
           </Typography>
           <Typography variant="h3">
-            {formatPriceToDecimal(songEstimate?.adaPrice)}₳
+            {formatPriceToDecimal(songEstimate?.adaPrice) || "N/A"}₳
           </Typography>
           <Typography variant="subtitle1">
-            ${formatPriceToDecimal(songEstimate?.usdPrice)}
+            ${formatPriceToDecimal(songEstimate?.usdPrice) || "N/A"}
           </Typography>
         </Stack>
 
@@ -103,10 +102,10 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={0.5}>
               <Typography>
-                {formatPriceToDecimal(songEstimate?.mintPriceAda)}₳
+                {formatPriceToDecimal(songEstimate?.mintPriceAda) || "N/A"}₳
               </Typography>
               <Typography variant="subtitle1">
-                ${formatPriceToDecimal(songEstimate?.mintPriceUsd)}
+                ${formatPriceToDecimal(songEstimate?.mintPriceUsd) || "N/A"}
               </Typography>
             </Stack>
           </Stack>
@@ -132,10 +131,10 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={0.5}>
               <Typography>
-                {formatPriceToDecimal(songEstimate?.collabPriceAda)}₳
+                {formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A"}₳
               </Typography>
               <Typography variant="subtitle1">
-                ${formatPriceToDecimal(songEstimate?.collabPriceUsd)}
+                ${formatPriceToDecimal(songEstimate?.collabPriceUsd) || "N/A"}
               </Typography>
             </Stack>
           </Stack>
@@ -155,10 +154,10 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={0.5}>
               <Typography>
-                {formatPriceToDecimal(songEstimate?.dspPriceAda)}₳
+                {formatPriceToDecimal(songEstimate?.dspPriceAda) || "N/A"}₳
               </Typography>
               <Typography variant="subtitle1">
-                ${formatPriceToDecimal(songEstimate?.dspPriceUsd)}
+                ${formatPriceToDecimal(songEstimate?.dspPriceUsd) || "N/A"}
               </Typography>
             </Stack>
           </Stack>
@@ -183,10 +182,10 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
           </Stack>
           <Stack rowGap={0.5}>
             <Typography>
-              {formatPriceToDecimal(songEstimate?.adaPrice)}₳
+              {formatPriceToDecimal(songEstimate?.adaPrice) || "N/A"}₳
             </Typography>
             <Typography variant="subtitle1">
-              ${formatPriceToDecimal(songEstimate?.usdPrice)}
+              ${formatPriceToDecimal(songEstimate?.usdPrice) || "N/A"}
             </Typography>
           </Stack>
         </Stack>
