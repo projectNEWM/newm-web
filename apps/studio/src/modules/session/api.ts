@@ -16,7 +16,7 @@ import {
   Request2FACode,
   ResetPasswordRequest,
   UpdateProfileRequest,
-  VerificationStatus,
+  VerificationStatus
 } from "./types";
 import { handleSocialLoginError } from "./thunks";
 import { receiveSuccessfullAuthentication } from "./slice";
@@ -45,7 +45,9 @@ export const emptyProfile: Profile = {
   companyLogoUrl: "",
   companyName: "",
   walletAddress: "",
-  dspPlanSubscribed: false,
+  isni: "",
+  ipi: "",
+  dspPlanSubscribed: false
 };
 
 export const extendedApi = newmApi.injectEndpoints({
@@ -54,7 +56,7 @@ export const extendedApi = newmApi.injectEndpoints({
       query: (body) => ({
         url: "v1/auth/login",
         method: "POST",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -72,18 +74,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: errorMessage,
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/google",
         method: "POST",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -93,14 +95,14 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
-      },
+      }
     }),
 
     facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/facebook",
         method: "POST",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -110,14 +112,14 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
-      },
+      }
     }),
 
     linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
         url: "v1/auth/login/linkedin",
         method: "POST",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -127,13 +129,13 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(handleSocialLoginError(error));
         }
-      },
+      }
     }),
 
     getProfile: build.query<GetProfileResponse, void>({
       query: () => ({
         url: "v1/users/me",
-        method: "GET",
+        method: "GET"
       }),
       providesTags: [Tags.Profile],
 
@@ -144,17 +146,17 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "There was an error fetching your profile data",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     getUser: build.query<GetProfileResponse, GetUserRequest>({
       query: ({ userId }) => ({
         url: `v1/users/${userId}`,
-        method: "GET",
+        method: "GET"
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -164,18 +166,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "There was an error fetching requested profile",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     updateProfile: build.mutation<EmptyResponse, UpdateProfileRequest>({
       query: (body) => ({
         url: "v1/users/me",
         method: "PATCH",
-        body,
+        body
       }),
       invalidatesTags: [Tags.Profile],
 
@@ -194,18 +196,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message,
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
       query: ({ email }) => ({
         url: "v1/auth/code",
         method: "GET",
-        params: { email },
+        params: { email }
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -215,18 +217,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while sending the verification email",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     createAccount: build.mutation<CreateAccountResponse, CreateAccountRequest>({
       query: (body) => ({
         url: "v1/users",
         method: "POST",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -236,18 +238,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while creating your account",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
       query: (body) => ({
         url: "v1/users/me",
         method: "DELETE",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -257,18 +259,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while deleting your account",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     resetPassword: build.mutation<EmptyResponse, ResetPasswordRequest>({
       query: (body) => ({
         url: "v1/users/password",
         method: "PUT",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -278,18 +280,18 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while resetting your password",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
       query: (body) => ({
         url: "v1/users/me",
         method: "PATCH",
-        body,
+        body
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -299,17 +301,17 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: "An error occurred while changing your password",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
+      }
     }),
 
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       query: () => ({
         url: "/v1/idenfy/session",
-        method: "GET",
+        method: "GET"
       }),
 
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -320,20 +322,20 @@ export const extendedApi = newmApi.injectEndpoints({
             setToastMessage({
               message:
                 "There was an error creating an auth token, try again later.",
-              severity: "error",
+              severity: "error"
             })
           );
         }
-      },
-    }),
-  }),
+      }
+    })
+  })
 });
 
 export const {
   useGetUserQuery,
   useLoginMutation,
   useGetProfileQuery,
-  useUpdateProfileMutation,
+  useUpdateProfileMutation
 } = extendedApi;
 
 export default extendedApi;

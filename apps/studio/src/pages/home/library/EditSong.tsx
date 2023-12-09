@@ -181,7 +181,7 @@ const EditSong: FunctionComponent = () => {
     barcodeType,
     publicationDate,
     iswc,
-    userIpi: ipis?.join(", "),
+    ipi: ipis?.join(", "),
   };
 
   // TODO: show "Not found" content if not available for user
@@ -264,7 +264,7 @@ const EditSong: FunctionComponent = () => {
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
     copyrightYear: commonYupValidation.year,
     copyrightOwner: commonYupValidation.copyright,
-    userIpi: commonYupValidation.userIpi,
+    ipi: commonYupValidation.ipi,
     iswc: commonYupValidation.iswc,
   };
 
@@ -356,7 +356,7 @@ const EditSong: FunctionComponent = () => {
                 phonographicCopyrightOwner: validations.copyrightOwner,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
-                userIpi: validations.userIpi,
+                ipi: validations.ipi,
                 iswc: validations.iswc,
               }),
             },

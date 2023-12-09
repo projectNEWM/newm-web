@@ -108,7 +108,7 @@ export interface UploadSongRequest
   readonly companyName: string;
   readonly artistName: string;
   readonly stageName: string;
-  readonly userIpi?: string;
+  readonly ipi?: string;
   readonly isCoverRemixSample?: boolean;
 }
 

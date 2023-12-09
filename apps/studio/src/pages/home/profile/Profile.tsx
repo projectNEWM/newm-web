@@ -27,8 +27,7 @@ import {
   getUpdatedValues,
   scrollToError,
 } from "@newm-web/utils";
-import { REGEX_SIMPLE_DOMAIN } from "@newm-web/utils";
-import { useWindowDimensions } from "@newm-web/utils";
+import { REGEX_SIMPLE_DOMAIN, useWindowDimensions } from "@newm-web/utils";
 import { useGetRolesQuery } from "../../../modules/content";
 import {
   ProfileFormValues,
@@ -58,6 +57,8 @@ const Profile: FunctionComponent = () => {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const roleRef = useRef<HTMLDivElement>(null);
+  const isniRef = useRef<HTMLInputElement>(null);
+  const userIpiRef = useRef<HTMLInputElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
@@ -83,6 +84,8 @@ const Profile: FunctionComponent = () => {
       spotifyProfile,
       soundCloudProfile,
       appleMusicProfile,
+      isni,
+      ipi: userIpi,
     } = emptyProfile,
   } = useGetProfileQuery();
 
@@ -123,6 +126,8 @@ const Profile: FunctionComponent = () => {
     spotifyProfile,
     soundCloudProfile,
     appleMusicProfile,
+    isni,
+    ipi: userIpi,
   };
 
   const validationSchema = Yup.object({
@@ -166,6 +171,8 @@ const Profile: FunctionComponent = () => {
         REGEX_SOUNDCLOUD_PROFILE,
         'URL must be in the format "soundcloud.com/your-profile"'
       ),
+    isni: commonYupValidation.isni,
+    ipi: commonYupValidation.ipi,
   });
 
   /**
@@ -275,6 +282,8 @@ const Profile: FunctionComponent = () => {
             { error: errors.firstName, element: firstNameRef.current },
             { error: errors.lastName, element: lastNameRef.current },
             { error: errors.companyName, element: companyNameRef.current },
+            { error: errors.isni, element: isniRef.current },
+            { error: errors.ipi, element: userIpiRef.current },
           ]);
 
           return (
@@ -525,16 +534,39 @@ const Profile: FunctionComponent = () => {
                           type="text"
                           ref={lastNameRef}
                         />
+                        <TextInputField
+                          disabled={true}
+                          label="PRIMARY EMAIL"
+                          isOptional={false}
+                          name="email"
+                          placeholder="john@mail.com"
+                          type="email"
+                          ref={emailRef}
+                        />
+                        <TextInputField
+                          label="ISNI"
+                          name="isni"
+                          placeholder="0000000000000000"
+                          ref={isniRef}
+                          tooltipText={
+                            "The ISNI is the ISO certified global standard number " +
+                            "for identifying contributors to creative works. You can check the " +
+                            "ISNI database to see if you have been registered, and if not you'll " +
+                            "need to generate your code with an ISNI Registration Agency in your country."
+                          }
+                        />
+                        <TextInputField
+                          label="IPI"
+                          name="ipi"
+                          placeholder="0000000000"
+                          ref={userIpiRef}
+                          tooltipText={
+                            "An IPI is a unique code assigned to songwriters, composers, " +
+                            "and music publishers. This information is optional; if you do not already have " +
+                            "an IPI or choose not to obtain one, leave this field blank."
+                          }
+                        />
                       </Stack>
-                      <TextInputField
-                        disabled={true}
-                        label="PRIMARY EMAIL"
-                        isOptional={false}
-                        name="email"
-                        placeholder="john@mail.com"
-                        type="email"
-                        ref={emailRef}
-                      />
                     </Stack>
                     <Stack rowGap={2}>
                       <Typography variant="h4" fontWeight="700">

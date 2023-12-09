@@ -31,3 +31,10 @@ export const REGEX_SIMPLE_DOMAIN = /([a-z0-9-]+\.[a-z]+)/i;
  */
 export const REGEX_WEBSITE_URL =
   /^(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9@:%._+~#=-]+\.[a-z]+\b([a-zA-Z0-9@:%_+~#?&/=.-]*)$/;
+
+/**
+ * An ISNI (International Standard Name Identifier) is a 16-digit identifier where
+ * the first 15 characters are digits and
+ * the last character can be either a digit or the letter 'X'.
+ */
+export const REGEX_ISNI_FORMAT = /^[0-9]{15}[0-9X]$/;

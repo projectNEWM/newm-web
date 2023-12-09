@@ -11,6 +11,7 @@ import {
   REGEX_9_TO_11_DIGITS,
   REGEX_EXACTLY_12_DIGITS,
   REGEX_EXACTLY_13_DIGITS,
+  REGEX_ISNI_FORMAT,
   REGEX_PASSWORD_REQUIREMENTS,
   REGEX_WEBSITE_URL,
 } from "@newm-web/utils";
@@ -170,9 +171,13 @@ export const commonYupValidation = {
     MAX_CHARACTER_COUNT,
     `Must be ${MAX_CHARACTER_COUNT} characters or less`
   ),
-  userIpi: Yup.string().matches(
+  ipi: Yup.string().matches(
     REGEX_9_TO_11_DIGITS,
     "Field should contain 9 to 11 digits"
+  ),
+  isni: Yup.string().matches(
+    REGEX_ISNI_FORMAT,
+    "Invalid ISNI format. The first 15 characters are digits and the last character can be either a digit or the letter 'X'."
   ),
   iswc: Yup.string().matches(
     REGEX_ISWC_FORMAT,
