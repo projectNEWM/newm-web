@@ -9,5 +9,6 @@ export * from "./lib/time";
 export * from "./lib/redux";
 export * from "./lib/regex";
 export * from "./lib/storybook";
+export * from "./lib/string";
 export * from "./lib/form";
 export * from "./lib/tests";

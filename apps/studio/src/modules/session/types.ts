@@ -30,6 +30,7 @@ export interface Profile {
   readonly appleMusicProfile?: string;
   readonly isni?: string;
   readonly ipi?: string;
+  readonly dspPlanSubscribed?: boolean;
 }
 
 export interface GetUserRequest {
@@ -147,5 +148,5 @@ export interface LinkedInLoginRequest {
 export enum VerificationStatus {
   Verified = "Verified",
   Pending = "Pending",
-  Unverified = "Unverified",
+  Unverified = "Unverified"
 }

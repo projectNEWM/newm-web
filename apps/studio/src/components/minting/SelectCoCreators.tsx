@@ -8,11 +8,15 @@ import {
   Typography,
 } from "@newm-web/elements";
 import { Formik, FormikProps } from "formik";
-import { Creditor, Featured, Owner } from "../../modules/song";
+import {
+  Creditor,
+  Featured,
+  Owner,
+  useGetMintSongEstimateQuery,
+} from "../../modules/song";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "@newm-web/theme";
-import { COLLABORATOR_FEE_IN_ADA } from "../../common";
-import { usePrevious } from "@newm-web/utils";
+import { formatPriceToDecimal, usePrevious } from "@newm-web/utils";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 
@@ -84,6 +88,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const prevValues = usePrevious(values);
+  const { data: songEstimate } = useGetMintSongEstimateQuery({
+    collaborators: 1,
+  });
 
   /**
    * Call onChange callbacks when form values change.
@@ -168,7 +175,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Typography variant="subtitle2" mt={1.5} mr={2}>
             {`For every additional artist who will receive royalties, the
-              fee to complete the minting process will increase by ~₳${COLLABORATOR_FEE_IN_ADA}.`}
+              fee to complete the minting process will increase by ~₳${
+                formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A"
+              }.`}
             <Tooltip
               title={
                 "This cost is increased with each additional artist because " +

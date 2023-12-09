@@ -1,4 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  DependencyList,
+  EffectCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -73,4 +80,34 @@ export const usePrevious = <T>(value: T) => {
   });
 
   return ref.current;
+};
+
+/**
+ * Used to run a useEffect but not run when the component first mounts. Similar
+ * to the class method componentDidUpdate.
+ *
+ * @example
+ * useEffectAfterMount(() => {
+ *   // do something on next update, not including initial render
+ * }, []);
+ *
+ * @param callback the callback to run during the next component update
+ * @param dependencies the dependencies to watch for changes
+ */
+export const useEffectAfterMount = (
+  callback: EffectCallback,
+  dependencies: DependencyList | undefined
+) => {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      return callback();
+    }
+    isMounted.current = true;
+  }, dependencies); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    isMounted.current = false;
+  }, []);
 };
