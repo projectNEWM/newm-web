@@ -182,10 +182,13 @@ export const mapCollaboratorsToCollaborations = (
  * Allows editing an owner if they are the user and there is more than
  * one collaborator, or if the collaborator has an editable status.
  */
-export const getIsOwnerEditable = (owner: Owner, totalNumOwners: number) => {
+export const getIsOwnerEditable = (
+  owner: Owner,
+  hasSomeoneRejected: boolean
+) => {
   const ownerStatus = owner.status;
   const isCreator = "isCreator" in owner && !!owner.isCreator;
-  const canEditOwnAmount = totalNumOwners > 1 && isCreator;
+  const canEditOwnAmount = hasSomeoneRejected && isCreator;
   const isEditableStatus = EDITABLE_COLLABORATOR_STATUSES.includes(ownerStatus);
 
   return canEditOwnAmount || isEditableStatus;

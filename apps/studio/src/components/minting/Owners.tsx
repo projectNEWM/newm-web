@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import {
+  CollaborationStatus,
   Owner,
   getIsOwnerEditable,
   useGetCollaboratorsQuery,
@@ -29,6 +30,9 @@ const Owners: FunctionComponent<OwnersProps> = ({
   isDeleteDisabled = false,
 }) => {
   const emails = owners.map((owner) => owner.email);
+  const hasSomeoneRejected = owners.some(
+    (owner) => owner.status === CollaborationStatus.Rejected
+  );
 
   const { data: collaborators } = useGetCollaboratorsQuery(
     {
@@ -77,7 +81,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
           owner.email,
           collaborators
         );
-        const isEditable = getIsOwnerEditable(owner, owners.length);
+        const isEditable = getIsOwnerEditable(owner, hasSomeoneRejected);
 
         return (
           <Stack
