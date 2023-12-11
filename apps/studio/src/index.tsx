@@ -5,6 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initializeSentry from "./sentryConfig";
 
+// code change
+
 initializeSentry();
 
 const isMac = navigator.userAgent.includes("Mac");
