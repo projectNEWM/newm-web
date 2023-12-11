@@ -2,7 +2,7 @@ name: Deploy NEWM Studio to Firebase Hosting on PR
 on:
   pull_request:
     paths:
-      - .github/workflows/firebase-hosting-pull-request.yml
+      - .github/workflows/firebase-hosting-pull-request-newm-studio.yml
       - apps/studio/**
       - packages/**
 jobs:
@@ -11,21 +11,20 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install firebase tools
-        run: |
-          npm install -g firebase-tools
-          firebase use staging --token ${{ secrets.FIREBASE_TOKEN }}
-
-      - name: Build app
-        run: |
-          npm install
-          npx nx build-with-sentry studio
+      - run: npm install
+      - run: npx nx build studio
         env:
           VITE_FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_ENV: staging
 
-      - name: Deploy to staging
-        run: firebase deploy --only hosting:staging --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_ARTIST_PORTAL }}"
+          target: staging
+          expires: 30d
