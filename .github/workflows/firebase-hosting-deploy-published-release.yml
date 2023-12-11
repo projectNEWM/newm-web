@@ -31,7 +31,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Studio deployed to production."
+              "text": "NEWM Studio updated in production. View at https://newm.studio."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
