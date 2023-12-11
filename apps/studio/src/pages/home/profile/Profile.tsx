@@ -11,7 +11,7 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  UploadImageField
+  UploadImageField,
 } from "@newm-web/elements";
 import {
   MAX_CHARACTER_COUNT,
@@ -20,12 +20,12 @@ import {
   REGEX_SOUNDCLOUD_PROFILE,
   REGEX_SPOTIFY_PROFILE,
   commonYupValidation,
-  useAppDispatch
+  useAppDispatch,
 } from "../../../common";
 import {
   formatUrlHttps,
   getUpdatedValues,
-  scrollToError
+  scrollToError,
 } from "@newm-web/utils";
 import { REGEX_SIMPLE_DOMAIN, useWindowDimensions } from "@newm-web/utils";
 import { useGetRolesQuery } from "../../../modules/content";
@@ -35,7 +35,7 @@ import {
   VerificationStatus,
   emptyProfile,
   useGetProfileQuery,
-  useUpdateProfileThunk
+  useUpdateProfileThunk,
 } from "../../../modules/session";
 import theme from "@newm-web/theme";
 import { setIsIdenfyModalOpen } from "../../../modules/ui";
@@ -85,15 +85,15 @@ const Profile: FunctionComponent = () => {
       soundCloudProfile,
       appleMusicProfile,
       isni,
-      ipi: userIpi
-    } = emptyProfile
+      ipi: userIpi,
+    } = emptyProfile,
   } = useGetProfileQuery();
 
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
   const { data: songData = [] } = useGetSongsQuery({
     ownerIds: ["me"],
-    limit: 1
+    limit: 1,
   });
 
   const genre = songData?.[0]?.genres?.[0] ?? "";
@@ -127,7 +127,7 @@ const Profile: FunctionComponent = () => {
     soundCloudProfile,
     appleMusicProfile,
     isni,
-    ipi: userIpi
+    ipi: userIpi,
   };
 
   const validationSchema = Yup.object({
@@ -143,7 +143,7 @@ const Profile: FunctionComponent = () => {
           `Must be ${MAX_CHARACTER_COUNT} characters or less`
         )
         .required("Company name is required"),
-      otherwise: Yup.string()
+      otherwise: Yup.string(),
     }),
     firstName: commonYupValidation.firstName,
     instagramUrl: commonYupValidation.websiteUrl,
@@ -172,7 +172,7 @@ const Profile: FunctionComponent = () => {
         'URL must be in the format "soundcloud.com/your-profile"'
       ),
     isni: commonYupValidation.isni,
-    ipi: commonYupValidation.ipi
+    ipi: commonYupValidation.ipi,
   });
 
   /**
@@ -188,7 +188,7 @@ const Profile: FunctionComponent = () => {
       "instagramUrl",
       "spotifyProfile",
       "appleMusicProfile",
-      "soundCloudProfile"
+      "soundCloudProfile",
     ];
 
     // Format the URLs with https:// if missing
@@ -219,7 +219,7 @@ const Profile: FunctionComponent = () => {
             spotifyProfile: values.spotifyProfile,
             appleMusicProfile: values.appleMusicProfile,
             soundCloudProfile: values.soundCloudProfile,
-            ...updatedValues
+            ...updatedValues,
           }
         : updatedValues
     );
@@ -232,7 +232,7 @@ const Profile: FunctionComponent = () => {
         marginX: [null, null, 3],
         paddingBottom: 8,
         overflow: "auto",
-        textAlign: ["center", "center", "initial"]
+        textAlign: ["center", "center", "initial"],
       }}
     >
       <Stack direction="row" justifyContent="space-between">
@@ -283,7 +283,7 @@ const Profile: FunctionComponent = () => {
             { error: errors.lastName, element: lastNameRef.current },
             { error: errors.companyName, element: companyNameRef.current },
             { error: errors.isni, element: isniRef.current },
-            { error: errors.ipi, element: userIpiRef.current }
+            { error: errors.ipi, element: userIpiRef.current },
           ]);
 
           return (
@@ -300,10 +300,10 @@ const Profile: FunctionComponent = () => {
                   right: "2px",
                   top: "10rem",
                   zIndex: 0,
-                  maxWidth: "99999px"
+                  maxWidth: "99999px",
                 }}
                 contentSx={{
-                  height: "200px"
+                  height: "200px",
                 }}
               />
 
@@ -335,7 +335,7 @@ const Profile: FunctionComponent = () => {
                         height: 200,
                         padding: 1,
                         marginTop: "-1.5rem",
-                        backgroundColor: theme.colors.grey700
+                        backgroundColor: theme.colors.grey700,
                       }}
                     />
 
@@ -391,7 +391,7 @@ const Profile: FunctionComponent = () => {
                         sx={{
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
-                          rowGap: 2
+                          rowGap: 2,
                         }}
                       >
                         <DropdownSelectField
@@ -432,7 +432,7 @@ const Profile: FunctionComponent = () => {
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
                           gap: 2,
-                          flexWrap: "wrap"
+                          flexWrap: "wrap",
                         }}
                       >
                         <TextInputField
@@ -472,7 +472,7 @@ const Profile: FunctionComponent = () => {
                           flexDirection: ["column", "column", "row"],
                           flexWrap: "wrap",
                           justifyContent: "space-between",
-                          gap: 2
+                          gap: 2,
                         }}
                       >
                         <TextInputField
@@ -513,7 +513,7 @@ const Profile: FunctionComponent = () => {
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
                           gap: 2,
-                          flexWrap: "wrap"
+                          flexWrap: "wrap",
                         }}
                       >
                         <TextInputField
@@ -597,7 +597,7 @@ const Profile: FunctionComponent = () => {
                             contentSx={{
                               borderRadius: "50%",
                               width: 60,
-                              height: 60
+                              height: 60,
                             }}
                           />
                           <TextInputField
@@ -616,7 +616,7 @@ const Profile: FunctionComponent = () => {
                     sx={{
                       maxWidth: ["340px", "340px", "700px"],
                       mx: ["auto", "auto", "unset"],
-                      my: 5
+                      my: 5,
                     }}
                   />
                   <Stack
@@ -624,7 +624,7 @@ const Profile: FunctionComponent = () => {
                       columnGap: 2,
                       flexDirection: [null, null, "row"],
                       mt: 5,
-                      rowGap: 2
+                      rowGap: 2,
                     }}
                   >
                     <Button
