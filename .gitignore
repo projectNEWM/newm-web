@@ -46,7 +46,6 @@ Thumbs.db
 # Firebase
 
 .firebase
-/firebase.json
 
 # Sensitive
 .env

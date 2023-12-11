@@ -20,9 +20,6 @@ jobs:
           VITE_ENV: ${{ secrets.REACT_APP_ENV }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      - name: Copy firebase.json to root directory
-        run: cp -a ./firebase/studio/staging/firebase.json firebase.json
-
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:
@@ -30,6 +27,7 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
           channelId: live
           projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_ARTIST_PORTAL }}"
+          target: staging
 
       - name: Send update to slack
         id: slack
