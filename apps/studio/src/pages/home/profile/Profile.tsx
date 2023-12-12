@@ -561,9 +561,10 @@ const Profile: FunctionComponent = () => {
                           placeholder="0000000000"
                           ref={userIpiRef}
                           tooltipText={
-                            "An IPI is a unique code assigned to songwriters, composers, " +
-                            "and music publishers. This information is optional; if you do not already have " +
-                            "an IPI or choose not to obtain one, leave this field blank."
+                            "An IPI is a nine-digit number used to identify songwriters, composers, and music " +
+                            "publishers; they are automatically assigned to rights holders through " +
+                            "membership to a PRO. This information is optional; if you do not already " +
+                            "have an IPI or choose not to obtain one, leave this field blank."
                           }
                         />
                       </Stack>
