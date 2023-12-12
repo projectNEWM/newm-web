@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import { Box, Drawer, IconButton, Link, Stack, useTheme } from "@mui/material";
-import { Typography } from "@newm-web/elements";
 import {
+  ProfileImage,
   SideBarHeader,
   SideBarNavLink,
-  ProfileImage,
+  Typography,
 } from "@newm-web/elements";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
@@ -25,16 +25,18 @@ import {
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
+import { useWindowDimensions } from "@newm-web/utils";
+import theme from "@newm-web/theme";
 
 interface SideBarProps {
-  isMobileOpen?: boolean;
   mobileVersion?: boolean;
   setMobileOpen: (field: boolean) => void;
 }
 
-export const SideBar: FunctionComponent<SideBarProps> = (
-  props: SideBarProps
-) => {
+export const SideBar: FunctionComponent<SideBarProps> = ({
+  mobileVersion,
+  setMobileOpen,
+}: SideBarProps) => {
   const theme = useTheme();
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
@@ -55,9 +57,9 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         overflowY: "auto",
       }}
     >
-      {props.mobileVersion && (
+      {mobileVersion && (
         <IconButton
-          onClick={() => props.setMobileOpen(false)}
+          onClick={() => setMobileOpen(false)}
           sx={{
             position: "absolute",
             top: "2rem",
@@ -85,7 +87,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
         <Box mt={4} mb={3} width="100%">
           <SideBarNavLink
-            onClick={() => props.setMobileOpen(false)}
+            onClick={() => setMobileOpen(false)}
             Icon={UploadIcon}
             label="UPLOAD A SONG"
             to="/home/upload-song"
@@ -97,14 +99,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={LibraryIcon}
               label="LIBRARY"
               to="/home/library"
             />
 
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={CollaboratorsIcon}
               label="COLLABORATORS"
               to="/home/collaborators"
@@ -117,7 +119,7 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={WalletIcon}
               label="WALLET"
               to="/home/wallet"
@@ -130,14 +132,14 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={ProfileIcon}
               label="PROFILE"
               to="/home/profile"
             />
 
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={SettingsIcon}
               label="SETTINGS"
               to="/home/settings"
@@ -150,19 +152,19 @@ export const SideBar: FunctionComponent<SideBarProps> = (
 
           <Stack mt={1.5} spacing={0.5} sx={{ width: "100%" }}>
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={FaqIcon}
               label="FAQ"
               href={NEWM_STUDIO_FAQ_URL}
             />
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={DiscordLogo}
               label="ASK THE COMMUNITY"
               href={NEWM_STUDIO_DISCORD_URL}
             />
             <SideBarNavLink
-              onClick={() => props.setMobileOpen(false)}
+              onClick={() => setMobileOpen(false)}
               Icon={SupportIcon}
               label="SUPPORT"
               href={NEWM_CLICKUP_FORM_URL}
@@ -199,59 +201,55 @@ interface ResponsiveSideBarProps {
   setMobileOpen: (field: boolean) => void;
 }
 
-const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
-  props: ResponsiveSideBarProps
-) => {
+const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = ({
+  isMobileOpen,
+  setMobileOpen,
+}: ResponsiveSideBarProps) => {
   const container =
     window !== undefined ? () => window.document.body : undefined;
 
-  return (
-    <>
-      <Drawer
-        container={container}
-        variant="temporary"
-        open={props.isMobileOpen}
-        onClose={() => props.setMobileOpen(false)}
-        ModalProps={{
-          keepMounted: true,
-        }}
+  const windowWidth = useWindowDimensions()?.width;
+
+  return windowWidth && windowWidth < theme.breakpoints.values.md ? (
+    <Drawer
+      container={container}
+      variant="temporary"
+      open={isMobileOpen}
+      onClose={() => setMobileOpen(false)}
+      ModalProps={{
+        keepMounted: true,
+      }}
+      sx={{
+        "& .MuiDrawer-paper": {
+          overflow: isMobileOpen ? "visible" : "hidden",
+          boxSizing: "border-box",
+        },
+      }}
+    >
+      <IconButton
+        onClick={() => setMobileOpen(false)}
         sx={{
-          display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": {
-            overflow: props.isMobileOpen ? "visible" : "hidden",
-            boxSizing: "border-box",
-          },
+          position: "absolute",
+          top: "2rem",
+          right: "-2.5rem",
         }}
       >
-        <IconButton
-          onClick={() => props.setMobileOpen(false)}
-          sx={{
-            position: "absolute",
-            top: "2rem",
-            right: "-2.5rem",
-          }}
-        >
-          <MenuOpenIcon sx={{ color: "white" }} />
-        </IconButton>
-        <SideBar
-          isMobileOpen
-          mobileVersion
-          setMobileOpen={props.setMobileOpen}
-        />
-      </Drawer>
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: "none", md: "block" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-          },
-        }}
-        open
-      >
-        <SideBar setMobileOpen={props.setMobileOpen} />
-      </Drawer>
-    </>
+        <MenuOpenIcon sx={{ color: "white" }} />
+      </IconButton>
+      <SideBar mobileVersion setMobileOpen={setMobileOpen} />
+    </Drawer>
+  ) : (
+    <Drawer
+      variant="permanent"
+      sx={{
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+        },
+      }}
+      open
+    >
+      <SideBar setMobileOpen={setMobileOpen} />
+    </Drawer>
   );
 };
 
