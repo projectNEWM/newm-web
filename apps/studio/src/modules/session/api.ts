@@ -310,7 +310,7 @@ export const extendedApi = newmApi.injectEndpoints({
 
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       query: () => ({
-        url: "/v1/idenfy/session",
+        url: "v1/idenfy/session",
         method: "GET"
       }),
 
