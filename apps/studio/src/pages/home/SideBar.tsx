@@ -7,7 +7,7 @@ import {
   ProfileImage,
 } from "@newm-web/elements";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
-import { DiscordLogo, NEWMLogoSmInverse } from "@newm-web/assets";
+import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
 import {
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
@@ -27,6 +27,7 @@ import {
 } from "../../common";
 
 interface SideBarProps {
+  isMobileOpen?: boolean;
   mobileVersion?: boolean;
   setMobileOpen: (field: boolean) => void;
 }
@@ -178,8 +179,15 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         px={2.5}
         width="100%"
       >
-        <Link href={NEWM_IO_URL} target="_blank" rel="noopener">
-          <NEWMLogoSmInverse />
+        <Link
+          alignItems="center"
+          display="flex"
+          justifyContent="center"
+          href={NEWM_IO_URL}
+          target="_blank"
+          rel="noopener"
+        >
+          <NEWMLogo height="40" width="40" />
         </Link>
       </Box>
     </Box>
@@ -225,7 +233,11 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = (
         >
           <MenuOpenIcon sx={{ color: "white" }} />
         </IconButton>
-        <SideBar mobileVersion setMobileOpen={props.setMobileOpen} />
+        <SideBar
+          isMobileOpen
+          mobileVersion
+          setMobileOpen={props.setMobileOpen}
+        />
       </Drawer>
       <Drawer
         variant="permanent"
