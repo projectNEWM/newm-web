@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, Drawer, IconButton, Stack, useTheme } from "@mui/material";
+import { Box, Drawer, IconButton, Link, Stack, useTheme } from "@mui/material";
 import { Typography } from "@newm-web/elements";
 import {
   SideBarHeader,
@@ -21,6 +21,7 @@ import {
 } from "@mui/icons-material";
 import {
   NEWM_CLICKUP_FORM_URL,
+  NEWM_IO_URL,
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
@@ -177,7 +178,9 @@ export const SideBar: FunctionComponent<SideBarProps> = (
         px={2.5}
         width="100%"
       >
-        <NEWMLogoSmInverse />
+        <Link href={NEWM_IO_URL} target="_blank" rel="noopener">
+          <NEWMLogoSmInverse />
+        </Link>
       </Box>
     </Box>
   );
