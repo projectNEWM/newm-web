@@ -5,6 +5,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initializeSentry from "./sentryConfig";
 
+// redirect from default firebase urls
+if (window.location.hostname.includes("newm-studio")) {
+  window.location.replace("https://newm.studio");
+}
+
 initializeSentry();
 
 const isMac = navigator.userAgent.includes("Mac");

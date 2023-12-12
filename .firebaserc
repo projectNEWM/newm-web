@@ -1,19 +1,19 @@
 {
   "projects": {
-    "production": "newm-studio",
-    "staging": "newm-artist-portal"
+    "studio-production": "newm-studio",
+    "studio-staging": "newm-artist-portal"
   },
   "targets": {
     "newm-studio": {
       "hosting": {
-        "production": [
+        "studio": [
           "newm-studio"
         ]
       }
     },
     "newm-artist-portal": {
       "hosting": {
-        "staging": [
+        "studio": [
           "newm-artist-portal"
         ]
       }
