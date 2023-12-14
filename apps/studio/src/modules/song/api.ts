@@ -618,7 +618,7 @@ export const extendedApi = newmApi.injectEndpoints({
     }),
     submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       query: (body) => ({
-        url: "/v1/cardano/submitTransaction",
+        url: "v1/cardano/submitTransaction",
         method: "POST",
         body,
       }),
@@ -639,7 +639,7 @@ export const extendedApi = newmApi.injectEndpoints({
     }),
     getEarliestReleaseDate: build.query<GetEarliestReleaseDateResponse, void>({
       query: () => ({
-        url: "/v1/distribution/earliest-release-date",
+        url: "v1/distribution/earliest-release-date",
         method: "GET",
       }),
 
