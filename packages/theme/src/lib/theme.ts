@@ -23,7 +23,6 @@ declare module "@mui/material/styles" {
       grey500: string;
       grey600: string;
       grey700: string;
-      lightGreen: string;
       magazine: string;
       music: string;
       partners: string;
@@ -79,7 +78,6 @@ declare module "@mui/material/styles" {
       grey500?: string;
       grey600?: string;
       grey700?: string;
-      lightGreen?: string;
       magazine?: string;
       music?: string;
       partners?: string;
@@ -169,7 +167,6 @@ const colors = {
   grey500: "#1C1C1E",
   grey600: "#121214",
   grey700: "#0A0A0A",
-  lightGreen: "#D1FAE5",
   magazine: "#FA554B",
   music: "#DC3CAA",
   partners: "#FF9637",

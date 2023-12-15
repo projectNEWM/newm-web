@@ -1,29 +1,10 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { Dialog } from "@newm-web/elements";
-import { JSX } from "react";
+import { Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import CloseIcon from "@mui/icons-material/Close";
-import { pricingPlanData } from "../../assets";
-import PricingPlanOption from "./PricingPlanOption";
-import { LeafFillIcon, SeedlingFillIcon, StarFillIcon } from "@newm-web/assets";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 import { useUpdateProfileThunk } from "../../modules/session";
-import { PricingPlanDetails } from "../../common";
 import { formatPriceToDecimal } from "@newm-web/utils";
-
-const ICON_SIZE = "20px";
-
-const PRICING_PLAN_ICON: Record<string, JSX.Element> = {
-  collaborator: (
-    <LeafFillIcon sx={{ color: theme.colors.music, fontSize: ICON_SIZE }} />
-  ),
-  artist: (
-    <SeedlingFillIcon sx={{ color: theme.colors.music, fontSize: ICON_SIZE }} />
-  ),
-  artistPlus: (
-    <StarFillIcon sx={{ color: theme.colors.music, fontSize: ICON_SIZE }} />
-  ),
-};
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Check } from "@mui/icons-material";
 
 interface PricingPlansDialogProps {
   readonly onClose: () => void;
@@ -33,108 +14,169 @@ interface PricingPlansDialogProps {
 const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
-  const handleOptionClick = (optionClicked: string) => {
-    if (optionClicked === "artist") {
-      updateProfile({ dspPlanSubscribed: true }).then(() => {
-        onClose();
-      });
-    } else {
+  const handleOptionClick = () => {
+    updateProfile({ dspPlanSubscribed: true }).then(() => {
       onClose();
-    }
+    });
   };
 
-  const { data: { dspPriceAda, dspPriceUsd } = {} } =
-    useGetMintSongEstimateQuery({
-      collaborators: 1,
-    });
+  const {
+    data: {
+      dspPriceAda,
+      dspPriceUsd,
+      mintPriceAda,
+      collabPerArtistPriceAda,
+    } = {},
+  } = useGetMintSongEstimateQuery({
+    collaborators: 1,
+  });
+
+  const dspFormattedPricingUsd = dspPriceUsd
+    ? `$${formatPriceToDecimal(dspPriceUsd)}/RELEASE`
+    : "N/A";
+
+  const dspFormattedPricingAda = dspPriceAda
+    ? `(~${formatPriceToDecimal(dspPriceAda)}₳/RELEASE)`
+    : undefined;
+
+  const collabFormattedPricing = collabPerArtistPriceAda
+    ? ` (~${formatPriceToDecimal(collabPerArtistPriceAda, 1)}₳/each)`
+    : "";
+
+  const totalMintFormattedPricing =
+    mintPriceAda && collabPerArtistPriceAda
+      ? ` (~${formatPriceToDecimal(
+          String(
+            parseFloat(mintPriceAda) + parseFloat(collabPerArtistPriceAda)
+          ),
+          1
+        )}₳/release)`
+      : "";
+
+  const pricingPlanCriteria = [
+    "Customize artist profile",
+    "Track catalog status",
+    "Accept/decline collaborations",
+    "Connect wallet to receive royalty splits",
+    "View collaborator details",
+    "Upload your music",
+    `Invite collaborators${collabFormattedPricing}`,
+    "Free EAN barcode & ISRCs",
+    "Distribute music to 130+ global platforms",
+    `Mint music${totalMintFormattedPricing}`,
+    "Automate royalty splits to collaborators",
+    "List your music on NEWMMarketplace (coming soon)",
+  ];
 
   return (
     <Dialog
       onClose={onClose}
       open={open}
-      fullScreen
       sx={{
-        margin: [0, 5],
+        "& .MuiPaper-root": {
+          backgroundColor: theme.colors.grey600,
+          border: `1px solid ${theme.colors.grey400}`,
+          borderRadius: "12px",
+        },
+
+        height: "100%",
       }}
     >
-      <IconButton
-        aria-label="close"
-        onClick={onClose}
-        sx={{
-          color: theme.colors.grey200,
-          p: 0,
-          position: "absolute",
-          right: "30px",
-          top: "30px",
-        }}
-      >
-        <CloseIcon sx={{ fontSize: "40px" }} />
-      </IconButton>
       <Box
         sx={{
-          alignItems: "center",
-          backgroundColor: theme.colors.black,
           display: "flex",
-          flex: 1,
           flexDirection: "column",
+          padding: 5,
+          position: "relative",
           justifyContent: "center",
-          padding: 7.5,
-          [theme.breakpoints.down("xl")]: {
-            padding: 5,
-          },
+          [theme.breakpoints.down("xl")]: { paddingX: 2 },
         }}
       >
-        <Stack sx={{ mb: 12, textAlign: "center" }}>
-          <Typography
-            align="center"
-            color="music"
-            fontWeight={500}
-            mb={1.5}
-            variant="subtitle1"
-          >
-            Pricing
-          </Typography>
-          <Typography variant="h3">WHAT SUITS YOU BEST?</Typography>
-        </Stack>
         <Stack
           sx={{
-            alignContent: "center",
+            alignItems: "center",
             display: "flex",
-            flexDirection: "row",
             gap: 4,
-            [theme.breakpoints.down("lg")]: {
-              flexDirection: "column",
-              gap: 10,
-            },
-            justifyContent: "center",
+            flex: 1,
           }}
         >
-          {pricingPlanData.pricingPlanOptions.map(
-            (pricingPlan: PricingPlanDetails) => {
-              return (
-                <PricingPlanOption
-                  {...pricingPlan}
-                  adaPricingEstimate={
-                    dspPriceAda && pricingPlan.id === "artist"
-                      ? `(~${formatPriceToDecimal(dspPriceAda)}₳/RELEASE)`
-                      : undefined
-                  }
-                  onOptionClick={() => handleOptionClick(pricingPlan.id)}
-                  key={pricingPlan.id}
-                  planIcon={{
-                    iconPxSize: ICON_SIZE,
-                    iconElement: PRICING_PLAN_ICON[pricingPlan.id],
-                  }}
-                  pricing={
-                    dspPriceUsd && pricingPlan.id === "artist"
-                      ? `$${formatPriceToDecimal(dspPriceUsd)}/RELEASE` || "N/A"
-                      : pricingPlan.pricing
-                  }
-                  hasOptionBeenSelected={isLoading}
-                />
-              );
-            }
-          )}
+          <Stack textAlign="center">
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+                pb: 4,
+                height: "40px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Box>
+                <Box
+                  component="span"
+                  sx={{ textDecoration: "line-through", mr: 1 }}
+                >
+                  $14/RELEASE
+                </Box>
+                {dspFormattedPricingUsd}
+              </Box>
+              <Typography variant="subtitle1">
+                {dspFormattedPricingAda}
+              </Typography>
+            </Typography>
+
+            <Stack>
+              <Typography variant="h2">The Artist</Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 500,
+                  [theme.breakpoints.up("lg")]: { height: "48px" },
+                  width: ["auto", "320px"],
+                }}
+              >
+                Release your music with NEWM and ensure correct royalty splits.
+              </Typography>
+            </Stack>
+          </Stack>
+
+          <Stack gap={1.25}>
+            {pricingPlanCriteria.map((criterion, index) => (
+              <Stack
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 1.5,
+                  [theme.breakpoints.down("xl")]: { paddingX: 3 },
+                }}
+                key={index}
+              >
+                <Check sx={{ color: theme.colors.green }} />
+
+                <Typography
+                  variant="body1"
+                  fontWeight={500}
+                  alignSelf={"center"}
+                >
+                  {criterion}
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
+
+          <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
+          <Button onClick={handleOptionClick} isLoading={isLoading}>
+            Get started
+          </Button>
+          <Button
+            variant="secondary"
+            color="music"
+            onClick={onClose}
+            isLoading={isLoading}
+          >
+            Cancel
+          </Button>
         </Stack>
       </Box>
     </Dialog>

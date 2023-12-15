@@ -14,16 +14,13 @@ import FoldersIcon from "./lib/images/FoldersIcon";
 import GlobalFill from "./lib/images/GlobalFill";
 import InfoCircleLine from "./lib/images/InfoCircleLine";
 import InstagramLogo from "./lib/images/InstagramLogo";
-import LeafFillIcon from "./lib/images/LeafFillIcon";
 import NEWMLogo from "./lib/images/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/images/NEWMLogoSmInverse";
 import Owner from "./lib/images/Owner";
 import PeopleIcon from "./lib/images/PeopleIcon";
 import PlayButton from "./lib/images/PlayButton";
-import SeedlingFillIcon from "./lib/images/SeedlingFillIcon";
 import SelectedCheckboxIcon from "./lib/images/SelectedCheckboxIcon";
 import SoundWave from "./lib/images/SoundWave";
-import StarFillIcon from "./lib/images/StarFillIcon";
 import TimeCircleLine from "./lib/images/TimeCircleLine";
 import TwitterLogo from "./lib/images/TwitterLogo";
 import UnselectedCheckboxIcon from "./lib/images/UnselectedCheckboxIcon";
@@ -48,20 +45,17 @@ export {
   GlobalFill,
   InfoCircleLine,
   InstagramLogo,
-  LeafFillIcon,
   NEWMLogo,
   NEWMLogoSmInverse,
   Owner,
   PeopleIcon,
   PlayButton,
-  SeedlingFillIcon,
   SelectedCheckboxIcon,
   SoundWave,
-  StarFillIcon,
   TimeCircleLine,
   TwitterLogo,
   UnselectedCheckboxIcon,
   UploadIcon,
   VerticalEllipsis,
-  WalletIcon
+  WalletIcon,
 };
