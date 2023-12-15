@@ -60,7 +60,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
     .replace(/, ([^,]*)$/, " & $1"); // replace last comma with an ampersand
 
   return (
-    <Dialog fullWidth={true} maxWidth={"lg"} onClose={onClose} open={open}>
+    <Dialog fullWidth={true} onClose={onClose} open={open}>
       <DialogTitle sx={{ pb: 1, pt: 3 }}>
         <Typography fontSize={20} fontWeight={800} variant="body2">
           PAYMENT SUMMARY
