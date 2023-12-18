@@ -20,8 +20,8 @@ export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
-  readonly handleBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
-  readonly handleChange?: (newValue: string) => void;
+  readonly onBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
+  readonly onValueChange?: (newValue: string) => void;
   readonly label?: string;
   readonly isOptional?: boolean;
   readonly name: string;
@@ -40,8 +40,8 @@ const DropdownSelect: ForwardRefRenderFunction<
   {
     disabled,
     errorMessage,
-    handleChange,
-    handleBlur,
+    onBlur,
+    onValueChange,
     label,
     name,
     noResultsText = "Nothing found",
@@ -68,8 +68,8 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
-      if (newValue === null || newValue === undefined) handleChange?.("");
-      else handleChange?.(newValue as string);
+      if (newValue === null || newValue === undefined) onValueChange?.("");
+      else onValueChange?.(newValue as string);
     },
     // Removes warning for empty string not being a valid option
     isOptionEqualToValue: (option, value) =>
@@ -97,7 +97,7 @@ const DropdownSelect: ForwardRefRenderFunction<
    * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
    */
   const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
-    handleBlur?.(event);
+    onBlur?.(event);
     inputProps.onBlur?.(event);
   };
 

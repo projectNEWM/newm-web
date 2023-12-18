@@ -52,6 +52,12 @@ const AdvancedSongDetails = () => {
     .toISOString()
     .split("T")[0];
 
+  const handleBarcodeTypeChange = (barcodeType: string) => {
+    if (barcodeType === NONE_OPTION || barcodeType === "") {
+      setFieldValue("barcodeNumber", "");
+    }
+  };
+
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
       {
@@ -201,6 +207,7 @@ const AdvancedSongDetails = () => {
           }
           placeholder="Select one"
           options={[NONE_OPTION, "EAN", "UPC", "JAN"]}
+          onValueChange={handleBarcodeTypeChange}
         />
         <TextInputField
           disabled={values.barcodeType === NONE_OPTION || !values.barcodeType}

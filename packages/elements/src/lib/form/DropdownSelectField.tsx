@@ -5,19 +5,29 @@ import DropdownSelect, { DropdownSelectProps } from "../DropdownSelect";
 const DropdownSelectField: ForwardRefRenderFunction<
   HTMLInputElement,
   DropdownSelectProps
-> = (props, ref) => (
-  <Field name={props.name}>
-    {({ field, form, meta }: FieldProps) => (
-      <DropdownSelect
-        {...field}
-        {...props}
-        errorMessage={meta.touched ? meta.error : ""}
-        handleBlur={form.handleBlur}
-        handleChange={form.handleChange(props.name)}
-        ref={ref}
-      />
-    )}
-  </Field>
-);
+> = (props, ref) => {
+  return (
+    <Field name={props.name}>
+      {({ field, form, meta }: FieldProps) => (
+        <DropdownSelect
+          {...field}
+          {...props}
+          errorMessage={meta.touched ? meta.error : ""}
+          onBlur={form.handleBlur}
+          onValueChange={(newValue) => {
+            // Call the onChange from the Dropdown Select Field
+            if (typeof props.onValueChange === "function") {
+              props.onValueChange(newValue);
+            }
+            // Call Formik's handleChange
+            const handleFormChange = form.handleChange(props.name);
+            handleFormChange(newValue);
+          }}
+          ref={ref}
+        />
+      )}
+    </Field>
+  );
+};
 
 export default forwardRef(DropdownSelectField);
