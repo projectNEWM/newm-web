@@ -1,42 +1,48 @@
+import { Box, Stack, useTheme } from "@mui/material";
+import {
+  Alert,
+  Button,
+  DropdownMultiSelectField,
+  DropdownSelectField,
+  ErrorMessage,
+  HorizontalLine,
+  SolidOutline,
+  SwitchInputField,
+  TextAreaField,
+  TextInputField,
+  Typography,
+  UploadImageField,
+  UploadSongField,
+} from "@newm-web/elements";
+import {
+  scrollToError,
+  useEffectAfterMount,
+  useExtractProperty,
+  useWindowDimensions,
+} from "@newm-web/utils";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Alert, Button, HorizontalLine, Typography } from "@newm-web/elements";
-import { Box, Stack, useTheme } from "@mui/material";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { useAppDispatch } from "../../../common";
+import { PlaySong, PricingPlansDialog } from "../../../components";
+import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "../../../modules/content";
 import {
+  emptyProfile,
+  useGetProfileQuery,
+  VerificationStatus,
+} from "../../../modules/session";
+import {
   Creditor,
   Featured,
   Owner,
   UploadSongRequest,
 } from "../../../modules/song";
-import { PlaySong, PricingPlansDialog } from "../../../components";
-import { SolidOutline } from "@newm-web/elements";
-import {
-  ErrorMessage,
-  DropdownMultiSelectField,
-  DropdownSelectField,
-  SwitchInputField,
-  TextAreaField,
-  TextInputField,
-  UploadImageField,
-  UploadSongField,
-} from "@newm-web/elements";
-import { useAppDispatch } from "../../../common";
-import { scrollToError, useEffectAfterMount } from "@newm-web/utils";
-import { useWindowDimensions } from "@newm-web/utils";
-import { useExtractProperty } from "@newm-web/utils";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
-import { useFormikContext } from "formik";
-import {
-  VerificationStatus,
-  emptyProfile,
-  useGetProfileQuery,
-} from "../../../modules/session";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
@@ -55,10 +61,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { wallet } = useConnectWallet();
 
   const audioRef = useRef<HTMLDivElement>(null);
+  const coCreatorsRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
-  const songDetailsRef = useRef<HTMLDivElement>(null);
-  const ownersRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const songDetailsRef = useRef<HTMLDivElement>(null);
 
   const {
     data: {
@@ -130,7 +136,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
         error: errors.description,
         element: descriptionRef.current,
       },
-      { error: errors.owners, element: ownersRef.current },
+      { error: errors.creditors, element: coCreatorsRef.current },
+      { error: errors.owners, element: coCreatorsRef.current },
     ]);
   }, [errors, isSubmitting]);
 
@@ -145,20 +152,20 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       <Stack direction="column" spacing={5}>
         <Stack
           sx={{
+            alignItems: ["center", "center", "unset"],
+            columnGap: [undefined, undefined, 1.5],
             display: "flex",
             flexDirection: ["column", "column", "row"],
-            columnGap: [undefined, undefined, 1.5],
-            rowGap: [2, null, 3],
-            maxWidth: [undefined, undefined, "700px"],
             marginBottom: 3,
-            alignItems: ["center", "center", "unset"],
+            maxWidth: [undefined, undefined, "700px"],
+            rowGap: [2, null, 3],
           }}
         >
           <Stack
+            maxWidth={theme.inputField.maxWidth}
             ref={audioRef}
             spacing={0.5}
             width="100%"
-            maxWidth={theme.inputField.maxWidth}
           >
             {isInEditMode ? (
               <>
@@ -168,11 +175,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
                 <SolidOutline
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
                     alignItems: "center",
+                    display: "flex",
                     flexGrow: 1,
                     height: "100px",
+                    justifyContent: "center",
                   }}
                 >
                   <PlaySong id={songId} />
@@ -202,8 +209,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             <UploadImageField
               changeImageButtonText="Change cover"
               emptyMessage="Drag and drop or browse your image"
-              isAspectRatioOneToOne
               hasPreviewOption
+              isAspectRatioOneToOne
               maxFileSizeMB={10}
               minDimensions={{ width: 1400, height: 1400 }}
               name="coverArtUrl"
@@ -227,26 +234,26 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           <Stack
             ref={songDetailsRef}
             sx={{
+              columnGap: [undefined, undefined, 1.5],
               display: "grid",
               gridTemplateColumns: ["repeat(1, 1fr)", null, "repeat(2, 1fr)"],
               rowGap: [2, null, 3],
-              columnGap: [undefined, undefined, 1.5],
             }}
           >
             <TextInputField
               isOptional={false}
-              name="title"
               label="SONG TITLE"
+              name="title"
               placeholder="Give your track a name..."
               widthType="full"
             />
 
             <DropdownMultiSelectField
-              label="GENRE"
               isOptional={false}
+              label="GENRE"
               name="genres"
-              placeholder="Select all that apply"
               options={genres}
+              placeholder="Select all that apply"
             />
 
             <DropdownSelectField
@@ -274,7 +281,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           <Stack spacing={3}>
             <Stack spacing={1.5}>
               <Box
-                ref={ownersRef}
+                ref={coCreatorsRef}
                 sx={{
                   backgroundColor: theme.colors.grey600,
                   border: `2px solid ${theme.colors.grey400}`,
@@ -282,27 +289,27 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 }}
               >
                 <SwitchInputField
-                  name="isMinting"
-                  title="DISTRIBUTE & MINT SONG"
-                  includeBorder={false}
                   description={
                     "Minting a song will create an NFT that reflects " +
                     "ownership, makes streaming royalties available for " +
                     "purchase, and enables royalty distribution to your account."
                   }
+                  includeBorder={false}
+                  name="isMinting"
                   onClick={() => {
                     if (!isArtistPricePlanSelected) handlePricingPlanOpen();
                   }}
+                  title="DISTRIBUTE & MINT SONG"
                 />
 
                 {isMintingVisible && (
                   <SelectCoCeators
-                    owners={values.owners}
                     creditors={values.creditors}
                     featured={values.featured}
-                    onChangeOwners={handleChangeOwners}
                     onChangeCreditors={handleChangeCreditors}
                     onChangeFeatured={handleChangeFeatured}
+                    onChangeOwners={handleChangeOwners}
+                    owners={values.owners}
                   />
                 )}
               </Box>
@@ -310,6 +317,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               {!!touched.owners && !!errors.owners && (
                 <Box mt={0.5}>
                   <ErrorMessage>{errors.owners as string}</ErrorMessage>
+                </Box>
+              )}
+
+              {!!touched.creditors && !!errors.creditors && (
+                <Box mt={0.5}>
+                  <ErrorMessage>{errors.creditors as string}</ErrorMessage>
                 </Box>
               )}
             </Stack>
@@ -320,10 +333,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 action={
                   <Button
                     aria-label="verify profile"
-                    variant="outlined"
                     color="yellow"
                     onClick={handleVerifyProfile}
                     sx={{ textTransform: "none" }}
+                    variant="outlined"
                   >
                     Verify profile
                   </Button>
@@ -341,8 +354,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
             {isMintingVisible && !wallet && (
               <Alert
-                sx={{ py: 2.5 }}
-                severity="warning"
                 action={
                   <Button
                     aria-label="connect wallet"
@@ -356,6 +367,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                     Connect wallet
                   </Button>
                 }
+                severity="warning"
+                sx={{ py: 2.5 }}
               >
                 <Typography mb={0.5} color="yellow">
                   Connect a wallet
@@ -371,9 +384,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             <HorizontalLine mb={5} />
 
             <Button
-              type="submit"
               disabled={isSubmitDisabled}
               isLoading={isSubmitting}
+              type="submit"
               width={
                 windowWidth && windowWidth > theme.breakpoints.values.md
                   ? "compact"

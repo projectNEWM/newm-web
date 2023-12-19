@@ -1,37 +1,44 @@
-import { useRef, useState } from "react";
-import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
-import { commonYupValidation, useAppDispatch } from "../../../common";
 import {
-  useWindowDimensions,
-  getUpdatedValues,
-  scrollToError,
-} from "@newm-web/utils";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { Alert, Button, HorizontalLine, Typography } from "@newm-web/elements";
+  Alert,
+  Button,
+  ErrorMessage,
+  HorizontalLine,
+  SwitchInputField,
+  Typography,
+} from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
-  CollaborationStatus,
-  Creditor,
-  Featured,
-  MintingStatus,
-  Owner,
-  emptySong,
-  useGenerateArtistAgreementThunk,
-  useGetCollaborationsQuery,
-  useGetSongQuery,
-  usePatchSongThunk,
-} from "../../../modules/song";
+  getUpdatedValues,
+  scrollToError,
+  useWindowDimensions,
+} from "@newm-web/utils";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { Formik, FormikValues } from "formik";
+import { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import * as Yup from "yup";
+import { commonYupValidation, useAppDispatch } from "../../../common";
 import { ConfirmContract } from "../../../components";
-import { ErrorMessage, SwitchInputField } from "@newm-web/elements";
+import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import { useGetRolesQuery } from "../../../modules/content";
 import {
   VerificationStatus,
   emptyProfile,
   useGetProfileQuery,
 } from "../../../modules/session";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
-import * as Yup from "yup";
+import {
+  CollaborationStatus,
+  Creditor,
+  emptySong,
+  Featured,
+  MintingStatus,
+  Owner,
+  useGenerateArtistAgreementThunk,
+  useGetCollaborationsQuery,
+  useGetSongQuery,
+  usePatchSongThunk,
+} from "../../../modules/song";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
@@ -39,11 +46,11 @@ import {
 import { SongRouteParams } from "./types";
 
 interface FormValues {
-  readonly isMinting: boolean;
-  readonly owners: Array<Owner>;
+  readonly consentsToContract: boolean;
   readonly creditors: Array<Creditor>;
   readonly featured: Array<Featured>;
-  readonly consentsToContract: boolean;
+  readonly isMinting: boolean;
+  readonly owners: Array<Owner>;
 }
 
 const MintSong = () => {
@@ -53,7 +60,7 @@ const MintSong = () => {
   const { wallet } = useConnectWallet();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const ownersRef = useRef<HTMLDivElement>(null);
+  const coCreatorsRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -89,8 +96,8 @@ const MintSong = () => {
   const owners: Array<Owner> = collabs
     .filter(({ royaltyRate }) => !!royaltyRate)
     .map((collab) => ({
-      id: collab.id,
       email: collab.email,
+      id: collab.id,
       isCreator: collab.email === email,
       isRightsOwner: true,
       percentage: collab.royaltyRate || 0,
@@ -102,10 +109,10 @@ const MintSong = () => {
   const creditors: Array<Creditor> = collabs
     .filter(({ credited }) => credited)
     .map((collab) => ({
-      id: collab.id,
       email: collab.email,
-      role: collab.role,
+      id: collab.id,
       isCredited: true,
+      role: collab.role,
       status: collab.status,
     }));
 
@@ -113,10 +120,10 @@ const MintSong = () => {
   const featured: Array<Featured> = collabs
     .filter(({ featured }) => featured)
     .map((collab) => ({
-      id: collab.id,
       email: collab.email,
-      role: collab.role,
+      id: collab.id,
       isFeatured: true,
+      role: collab.role,
       status: collab.status,
     }));
 
@@ -141,8 +148,8 @@ const MintSong = () => {
     : [
         {
           email,
-          role,
           isCredited: true,
+          role,
           status: CollaborationStatus.Editing,
         },
       ];
@@ -154,16 +161,19 @@ const MintSong = () => {
   const isMinting = collabs.length > 0;
 
   const initialValues: FormValues = {
-    isMinting,
-    owners: initialOwners,
+    consentsToContract: false,
     creditors: initialCreditors,
     featured: initialFeatured,
-    consentsToContract: false,
+    isMinting,
+    owners: initialOwners,
   };
 
+  const { data: roles = [] } = useGetRolesQuery();
+
   const validationSchema = Yup.object().shape({
-    owners: commonYupValidation.owners,
     consentsToContract: Yup.bool().required("This field is required"),
+    creditors: commonYupValidation.creditors(roles),
+    owners: commonYupValidation.owners,
   });
 
   const handleSubmitStep = async (values: FormValues) => {
@@ -173,12 +183,12 @@ const MintSong = () => {
       handleCompleteFirstStep();
     } else {
       await generateArtistAgreement({
-        songName: title,
-        companyName,
         artistName,
-        stageName,
-        songId,
+        companyName,
         saved: true,
+        songId,
+        songName: title,
+        stageName,
       });
 
       patchSong({ id: songId, ...updatedValues });
@@ -187,9 +197,9 @@ const MintSong = () => {
 
   const handleCompleteFirstStep = async () => {
     await generateArtistAgreement({
-      songName: title,
-      companyName,
       artistName,
+      companyName,
+      songName: title,
       stageName,
     });
 
@@ -251,19 +261,19 @@ const MintSong = () => {
       )}
 
       <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
         enableReinitialize={true}
+        initialValues={initialValues}
         onSubmit={handleSubmitForm}
+        validationSchema={validationSchema}
       >
         {({
+          dirty,
           errors,
           handleSubmit,
           isSubmitting,
           setFieldValue,
           touched,
           values,
-          dirty,
         }) => {
           // if minting has been initiated, only show save button if
           // collaborators have changed, otherwise only show if minting
@@ -284,7 +294,8 @@ const MintSong = () => {
           };
 
           scrollToError(errors, isSubmitting, [
-            { error: errors.owners, element: ownersRef.current },
+            { error: errors.creditors, element: coCreatorsRef.current },
+            { error: errors.owners, element: coCreatorsRef.current },
             {
               error: errors.consentsToContract,
               element: consentsToContractRef.current,
@@ -311,20 +322,28 @@ const MintSong = () => {
 
                       {values.isMinting && (
                         <SelectCoCeators
-                          owners={values.owners}
                           creditors={values.creditors}
                           featured={values.featured}
                           isAddDeleteDisabled={isMintingInitiated}
-                          onChangeOwners={handleChangeOwners}
                           onChangeCreditors={handleChangeCreditors}
                           onChangeFeatured={handleChangeFeatured}
+                          onChangeOwners={handleChangeOwners}
+                          owners={values.owners}
                         />
                       )}
                     </Box>
 
                     {!!touched.owners && !!errors.owners && (
-                      <Box mt={0.5} ref={ownersRef}>
+                      <Box mt={0.5} ref={coCreatorsRef}>
                         <ErrorMessage>{errors.owners as string}</ErrorMessage>
+                      </Box>
+                    )}
+
+                    {!!touched.creditors && !!errors.creditors && (
+                      <Box mt={0.5} ref={coCreatorsRef}>
+                        <ErrorMessage>
+                          {errors.creditors as string}
+                        </ErrorMessage>
                       </Box>
                     )}
 
@@ -334,10 +353,10 @@ const MintSong = () => {
                         action={
                           <Button
                             aria-label="close"
-                            variant="outlined"
                             color="yellow"
                             onClick={handleVerifyProfile}
                             sx={{ textTransform: "none" }}
+                            variant="outlined"
                           >
                             Verify profile
                           </Button>
@@ -405,9 +424,9 @@ const MintSong = () => {
 
                     {isStepOneButtonVisible && (
                       <Button
-                        onClick={() => handleSubmit()}
-                        isLoading={isLoading}
                         disabled={!isVerified || !wallet}
+                        isLoading={isLoading}
+                        onClick={() => handleSubmit()}
                         width={
                           windowWidth &&
                           windowWidth > theme.breakpoints.values.md
@@ -433,11 +452,11 @@ const MintSong = () => {
                   </Stack>
 
                   <ConfirmContract
-                    songTitle={title}
                     isCoCreator={values.owners.length > 1}
                     onConfirm={(value: boolean) =>
                       setFieldValue("consentsToContract", value)
                     }
+                    songTitle={title}
                   />
 
                   <HorizontalLine sx={{ my: 5 }} />
@@ -462,9 +481,9 @@ const MintSong = () => {
                     </Button>
 
                     <Button
-                      onClick={() => handleSubmit()}
                       disabled={!values.consentsToContract}
                       isLoading={isLoading}
+                      onClick={() => handleSubmit()}
                       width={
                         windowWidth && windowWidth > theme.breakpoints.values.md
                           ? "compact"

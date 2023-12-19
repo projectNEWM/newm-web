@@ -185,6 +185,15 @@ export const commonYupValidation = {
   ),
   consentsToContract: Yup.bool().required("This field is required"),
   publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
+  creditors: (roles: string[]) =>
+    Yup.array().when("isMinting", {
+      is: (value: boolean) => !!value,
+      then: Yup.array().test({
+        message: "Creditors must have a role",
+        test: (creditors = []) =>
+          creditors.every(({ role }) => roles.includes(role)),
+      }),
+    }),
   owners: Yup.array().when("isMinting", {
     is: (value: boolean) => !!value,
     then: Yup.array()
