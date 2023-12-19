@@ -81,3 +81,4 @@ nx storybook elements
 ## Additional resources
 
 - [Deploy to production](./docs/deploy-release.md)
+- [Git workflow](./docs/git-workflow.md)
