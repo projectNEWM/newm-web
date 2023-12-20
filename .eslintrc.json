@@ -1,7 +1,17 @@
 {
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/react",
+    "plugin:react/jsx-runtime"
+  ],
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "plugins": ["@nx", "@typescript-eslint", "import", "sort-keys-fix"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -24,7 +34,97 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "testing-library/prefer-screen-queries": 0,
+        "comma-dangle": [
+          "error",
+          {
+            "arrays": "always-multiline",
+            "exports": "only-multiline",
+            "functions": "never",
+            "imports": "only-multiline",
+            "objects": "only-multiline"
+          }
+        ],
+        "eol-last": "error",
+        "import/order": [
+          "warn",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "index",
+              "sibling",
+              "parent",
+              "internal"
+            ]
+          }
+        ],
+        "jsx-quotes": ["warn", "prefer-double"],
+        "max-len": [
+          "warn",
+          {
+            "code": 120,
+            "ignorePattern": "d=\"([\\s\\S]*?)\""
+          }
+        ],
+        "no-console": "warn",
+        "no-debugger": "warn",
+        "no-duplicate-imports": "warn",
+        "no-unused-vars": "off",
+        "object-curly-spacing": ["warn", "always"],
+        "quotes": ["warn", "double"],
+        "react/jsx-curly-spacing": [
+          "error",
+          {
+            "allowMultiline": true,
+            "children": {
+              "when": "always"
+            },
+            "spacing": {
+              "objectLiterals": "always"
+            },
+            "when": "always"
+          }
+        ],
+        "react/jsx-filename-extension": [
+          "error",
+          {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        ],
+        "react/jsx-sort-props": [
+          2,
+          {
+            "callbacksLast": true,
+            "shorthandFirst": false,
+            "shorthandLast": true,
+            "ignoreCase": true,
+            "noSortAlphabetically": false
+          }
+        ],
+        "react/prop-types": "warn",
+        "semi": "warn",
+        "sort-imports": [
+          "warn",
+          {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": true,
+            "ignoreMemberSort": false
+          }
+        ],
+        "sort-keys-fix/sort-keys-fix": [
+          "error",
+          "asc",
+          { "caseSensitive": true, "natural": false }
+        ]
+      },
+      "settings": {
+        "react": {
+          // Detect react version
+          "version": "detect"
+        }
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
