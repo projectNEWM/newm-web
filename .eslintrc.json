@@ -1,4 +1,16 @@
 {
+  "env": {
+    // Browser global variables like `window` etc.
+    "browser": true,
+    // CommonJS global variables and CommonJS scoping.Allows require, exports and module.
+    "commonjs": true,
+    // Enable all ECMAScript 6 features except for modules.
+    "es6": true,
+    // Jest global variables like `it` etc.
+    "jest": true,
+    // Defines things like process.env when generating through node
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -7,11 +19,29 @@
     "plugin:react-hooks/recommended",
     "plugin:jest/recommended",
     "plugin:testing-library/react",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:typescript-sort-keys/recommended",
+    "plugin:storybook/recommended"
   ],
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "@typescript-eslint", "import", "sort-keys-fix"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    // Allows for the parsing of modern ECMAScript features
+    "ecmaVersion": 2018,
+    // Allows for the use of imports
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@nx",
+    "@typescript-eslint",
+    "import",
+    "sort-keys-fix",
+    "typescript-sort-keys"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
