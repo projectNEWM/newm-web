@@ -1,6 +1,4 @@
-import { newmApi, Tags } from "../../api";
 import { CustomError, EmptyResponse } from "@newm-web/utils";
-import { setToastMessage } from "../../modules/ui";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
@@ -16,49 +14,221 @@ import {
   Request2FACode,
   ResetPasswordRequest,
   UpdateProfileRequest,
-  VerificationStatus
+  VerificationStatus,
 } from "./types";
 import { handleSocialLoginError } from "./thunks";
 import { receiveSuccessfullAuthentication } from "./slice";
+import { setToastMessage } from "../../modules/ui";
+import { Tags, newmApi } from "../../api";
 
 export const emptyProfile: Profile = {
-  id: "",
-  oauthId: "",
-  oauthType: "",
-  email: "",
-  firstName: "",
-  lastName: "",
-  nickname: "",
-  location: "",
-  pictureUrl: "",
-  bannerUrl: "",
-  role: "",
-  verificationStatus: VerificationStatus.Unverified,
-  biography: "",
-  instagramUrl: "",
-  companyIpRights: false,
-  twitterUrl: "",
-  websiteUrl: "",
-  spotifyProfile: "",
-  soundCloudProfile: "",
   appleMusicProfile: "",
+  bannerUrl: "",
+  biography: "",
+  companyIpRights: false,
   companyLogoUrl: "",
   companyName: "",
-  walletAddress: "",
-  isni: "",
+  dspPlanSubscribed: false,
+  email: "",
+  firstName: "",
+  id: "",
+  instagramUrl: "",
   ipi: "",
-  dspPlanSubscribed: false
+  isni: "",
+  lastName: "",
+  location: "",
+  nickname: "",
+  oauthId: "",
+  oauthType: "",
+  pictureUrl: "",
+  role: "",
+  soundCloudProfile: "",
+  spotifyProfile: "",
+  twitterUrl: "",
+  verificationStatus: VerificationStatus.Unverified,
+  walletAddress: "",
+  websiteUrl: "",
 };
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<NewmAuthResponse, LoginRequest>({
-      query: (body) => ({
-        url: "v1/auth/login",
-        method: "POST",
-        body
-      }),
+    changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while changing your password",
+              severity: "error",
+            })
+          );
+        }
+      },
 
+      query: (body) => ({
+        body,
+        method: "PATCH",
+        url: "v1/users/me",
+      }),
+    }),
+
+    createAccount: build.mutation<CreateAccountResponse, CreateAccountRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while creating your account",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/users",
+      }),
+    }),
+
+    deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while deleting your account",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "DELETE",
+        url: "v1/users/me",
+      }),
+    }),
+
+    facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch (error) {
+          dispatch(handleSocialLoginError(error));
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/auth/login/facebook",
+      }),
+    }),
+
+    getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message:
+                "There was an error creating an auth token, try again later.",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: () => ({
+        method: "GET",
+        url: "v1/idenfy/session",
+      }),
+    }),
+
+    getProfile: build.query<GetProfileResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error fetching your profile data",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Profile],
+
+      query: () => ({
+        method: "GET",
+        url: "v1/users/me",
+      }),
+    }),
+
+    getUser: build.query<GetProfileResponse, GetUserRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error fetching requested profile",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: ({ userId }) => ({
+        method: "GET",
+        url: `v1/users/${userId}`,
+      }),
+    }),
+
+    googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch (error) {
+          dispatch(handleSocialLoginError(error));
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/auth/login/google",
+      }),
+    }),
+
+    linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch (error) {
+          dispatch(handleSocialLoginError(error));
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/auth/login/linkedin",
+      }),
+    }),
+
+    login: build.mutation<NewmAuthResponse, LoginRequest>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -74,113 +244,63 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message: errorMessage,
-              severity: "error"
+              severity: "error",
             })
           );
         }
-      }
-    }),
+      },
 
-    googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       query: (body) => ({
-        url: "v1/auth/login/google",
+        body,
         method: "POST",
-        body
+        url: "v1/auth/login",
       }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      }
     }),
 
-    facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      query: (body) => ({
-        url: "v1/auth/login/facebook",
-        method: "POST",
-        body
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      }
-    }),
-
-    linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      query: (body) => ({
-        url: "v1/auth/login/linkedin",
-        method: "POST",
-        body
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      }
-    }),
-
-    getProfile: build.query<GetProfileResponse, void>({
-      query: () => ({
-        url: "v1/users/me",
-        method: "GET"
-      }),
-      providesTags: [Tags.Profile],
-
+    resetPassword: build.mutation<EmptyResponse, ResetPasswordRequest>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "There was an error fetching your profile data",
-              severity: "error"
+              message: "An error occurred while resetting your password",
+              severity: "error",
             })
           );
         }
-      }
+      },
+
+      query: (body) => ({
+        body,
+        method: "PUT",
+        url: "v1/users/password",
+      }),
     }),
 
-    getUser: build.query<GetProfileResponse, GetUserRequest>({
-      query: ({ userId }) => ({
-        url: `v1/users/${userId}`,
-        method: "GET"
-      }),
-
+    sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "There was an error fetching requested profile",
-              severity: "error"
+              message: "An error occurred while sending the verification email",
+              severity: "error",
             })
           );
         }
-      }
+      },
+
+      query: ({ email }) => ({
+        method: "GET",
+        params: { email },
+        url: "v1/auth/code",
+      }),
     }),
 
     updateProfile: build.mutation<EmptyResponse, UpdateProfileRequest>({
-      query: (body) => ({
-        url: "v1/users/me",
-        method: "PATCH",
-        body
-      }),
       invalidatesTags: [Tags.Profile],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -196,146 +316,26 @@ export const extendedApi = newmApi.injectEndpoints({
           dispatch(
             setToastMessage({
               message,
-              severity: "error"
+              severity: "error",
             })
           );
         }
-      }
-    }),
+      },
 
-    sendVerificationEmail: build.query<EmptyResponse, Request2FACode>({
-      query: ({ email }) => ({
-        url: "v1/auth/code",
-        method: "GET",
-        params: { email }
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while sending the verification email",
-              severity: "error"
-            })
-          );
-        }
-      }
-    }),
-
-    createAccount: build.mutation<CreateAccountResponse, CreateAccountRequest>({
       query: (body) => ({
-        url: "v1/users",
-        method: "POST",
-        body
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while creating your account",
-              severity: "error"
-            })
-          );
-        }
-      }
-    }),
-
-    deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
-      query: (body) => ({
-        url: "v1/users/me",
-        method: "DELETE",
-        body
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while deleting your account",
-              severity: "error"
-            })
-          );
-        }
-      }
-    }),
-
-    resetPassword: build.mutation<EmptyResponse, ResetPasswordRequest>({
-      query: (body) => ({
-        url: "v1/users/password",
-        method: "PUT",
-        body
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while resetting your password",
-              severity: "error"
-            })
-          );
-        }
-      }
-    }),
-
-    changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
-      query: (body) => ({
-        url: "v1/users/me",
+        body,
         method: "PATCH",
-        body
+        url: "v1/users/me",
       }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while changing your password",
-              severity: "error"
-            })
-          );
-        }
-      }
     }),
-
-    getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
-      query: () => ({
-        url: "v1/idenfy/session",
-        method: "GET"
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message:
-                "There was an error creating an auth token, try again later.",
-              severity: "error"
-            })
-          );
-        }
-      }
-    })
-  })
+  }),
 });
 
 export const {
   useGetUserQuery,
   useLoginMutation,
   useGetProfileQuery,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
 } = extendedApi;
 
 export default extendedApi;

@@ -9,19 +9,19 @@ import { useState } from "react";
 
 const TableDropdownSelect = () => {
   const StyledSelect = styled(Select)(({ theme }) => ({
-    "& .css-x2bp66-MuiSvgIcon-root-MuiSelect-icon": {
-      color: theme.colors.white,
-      transform: "scale(1.2)",
-      paddingBottom: 4,
-    },
-    "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
-      color: theme.colors.white,
-      transform: "scale(1.2)",
-      paddingBottom: "5px",
-    },
     "& .MuiSelect-iconOpen": {
       color: theme.colors.white,
       transform: "rotate(180deg)",
+    },
+    "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
+      color: theme.colors.white,
+      paddingBottom: "5px",
+      transform: "scale(1.2)",
+    },
+    "& .css-x2bp66-MuiSvgIcon-root-MuiSelect-icon": {
+      color: theme.colors.white,
+      paddingBottom: 4,
+      transform: "scale(1.2)",
     },
   }));
   const StyledMenuItem = styled(MenuItem)({
@@ -35,12 +35,12 @@ const TableDropdownSelect = () => {
   return (
     <Box>
       <StyledSelect
-        sx={ { fontSize: 12 } }
         color="info"
-        variant="standard"
-        value={ dropdownValue }
-        onChange={ handleDropdownChange }
         size="small"
+        sx={ { fontSize: 12 } }
+        value={ dropdownValue }
+        variant="standard"
+        onChange={ handleDropdownChange }
       >
         <StyledMenuItem value={ "ROYALTIES PER DAY" }>
           ROYALTIES PER DAY

@@ -21,15 +21,15 @@ const StyledTableCell = styled(TableCell)<TableCellProps>`
 `;
 
 interface TablePaginationProps {
-  numberOfRows: number;
-  page: number;
-  rowsPerPage: number;
-  lastRowOnPage: number;
-  handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
+  cellStyles?: SxProps;
   colSpan: number;
   color?: string;
+  handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
+  lastRowOnPage: number;
+  numberOfRows: number;
+  page: number;
   rows?: string;
-  cellStyles?: SxProps;
+  rowsPerPage: number;
 }
 
 const TablePagination = ({
@@ -44,40 +44,40 @@ const TablePagination = ({
   cellStyles,
 }: TablePaginationProps) => {
   return (
-    <TableFooter sx={{ backgroundColor: color }}>
+    <TableFooter sx={ { backgroundColor: color } }>
       <TableRow>
-        <StyledTableCell sx={cellStyles} colSpan={colSpan}>
+        <StyledTableCell colSpan={ colSpan } sx={ cellStyles }>
           <Box
-            sx={{
-              display: "flex",
-              justifyContent: { xs: "center", sm: "space-between" },
+            sx={ {
               alignItems: "center",
+              display: "flex",
+              justifyContent: { sm: "space-between", xs: "center" },
               mt: 0.5,
-            }}
+            } }
           >
             <Typography
-              variant="body1"
-              sx={{
+              sx={ {
+                display: { sm: "block", xs: "none" },
                 fontWeight: 500,
-                display: { xs: "none", sm: "block" },
-              }}
+              } }
+              variant="body1"
             >
-              Showing {(page - 1) * rowsPerPage + 1} to{" "}
-              {lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows} of{" "}
-              {numberOfRows} {rows}
+              Showing { (page - 1) * rowsPerPage + 1 } to{ " " }
+              { lastRowOnPage < numberOfRows ? lastRowOnPage : numberOfRows } of{ " " }
+              { numberOfRows } { rows }
             </Typography>
             <Pagination
-              variant="outlined"
-              shape="rounded"
-              page={page}
-              count={Math.ceil(numberOfRows / rowsPerPage)}
-              onChange={handlePageChange}
-              renderItem={(item) => (
+              count={ Math.ceil(numberOfRows / rowsPerPage) }
+              page={ page }
+              renderItem={ (item) => (
                 <PaginationItem
-                  slots={{ previous: ArrowLeftIcon, next: ArrowRightIcon }}
-                  {...item}
+                  slots={ { next: ArrowRightIcon, previous: ArrowLeftIcon } }
+                  { ...item }
                 />
-              )}
+              ) }
+              shape="rounded"
+              variant="outlined"
+              onChange={ handlePageChange }
             />
           </Box>
         </StyledTableCell>

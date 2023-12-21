@@ -1,10 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { CloudinaryUploadParams, CloudinaryUploadResponse } from "./types";
 import { baseUrls } from "../../buildParams";
 import { axiosBaseQuery } from "../../api/utils";
-import { CloudinaryUploadParams, CloudinaryUploadResponse } from "./types";
 
 const api = createApi({
-  reducerPath: "cloudinaryApi",
   baseQuery: axiosBaseQuery({
     baseUrl: baseUrls.cloudinary,
   }),
@@ -14,13 +13,14 @@ const api = createApi({
       CloudinaryUploadParams
     >({
       query: ({ onUploadProgress, ...body }) => ({
-        url: "v1_1/newm/image/upload",
-        method: "POST",
         body,
+        method: "POST",
         onUploadProgress,
+        url: "v1_1/newm/image/upload",
       }),
     }),
   }),
+  reducerPath: "cloudinaryApi",
 });
 
 export default api;

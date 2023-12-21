@@ -1,9 +1,9 @@
 const TwitterLogo = () => (
   <svg
-    width="18"
+    fill="none"
     height="14"
     viewBox="0 0 18 14"
-    fill="none"
+    width="18"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

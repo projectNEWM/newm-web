@@ -3,10 +3,10 @@ import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent } from "react";
 import { WizardForm } from "@newm-web/elements";
-import { commonYupValidation, useAppDispatch } from "../../common";
-import { createAccount, sendVerificationEmail } from "../../modules/session";
 import Verification from "./Verification";
 import Welcome from "./Welcome";
+import { commonYupValidation, useAppDispatch } from "../../common";
+import { createAccount, sendVerificationEmail } from "../../modules/session";
 
 interface AccountValues {
   readonly authCode: string;
@@ -19,10 +19,10 @@ const SignUp: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const initialValues: AccountValues = {
+    authCode: "",
+    confirmPassword: "",
     email: "",
     newPassword: "",
-    confirmPassword: "",
-    authCode: "",
   };
 
   /**
@@ -30,12 +30,12 @@ const SignUp: FunctionComponent = () => {
    */
   const validations = {
     authCode: Yup.string().required("Verification code is required"),
+    confirmPassword: commonYupValidation.confirmPassword.required(
+      "Confirm password is required"
+    ),
     email: commonYupValidation.email,
     newPassword: commonYupValidation.newPassword.required(
       "Password is required"
-    ),
-    confirmPassword: commonYupValidation.confirmPassword.required(
-      "Confirm password is required"
     ),
   };
 
@@ -57,7 +57,7 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
         backgroundColor: theme.colors.black,
         display: "flex",
         flex: 1,
@@ -66,23 +66,21 @@ const SignUp: FunctionComponent = () => {
         pt: 5,
         px: 2,
         textAlign: "center",
-      }}
+      } }
     >
       <Box width="100%">
         <WizardForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
+          initialValues={ initialValues }
           rootPath="sign-up"
-          validateOnMount={true}
-          routes={[
+          routes={ [
             {
               element: <Welcome />,
               onSubmitStep: handleVerificationEmail,
               path: "",
               validationSchema: Yup.object().shape({
+                confirmPassword: validations.confirmPassword,
                 email: validations.email,
                 newPassword: validations.newPassword,
-                confirmPassword: validations.confirmPassword,
               }),
             },
             {
@@ -92,7 +90,9 @@ const SignUp: FunctionComponent = () => {
                 authCode: validations.authCode,
               }),
             },
-          ]}
+          ] }
+          validateOnMount={ true }
+          onSubmit={ handleSubmit }
         />
       </Box>
     </Box>

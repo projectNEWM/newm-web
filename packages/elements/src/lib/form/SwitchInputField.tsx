@@ -4,12 +4,12 @@ import { FunctionComponent, ReactNode } from "react";
 import SwitchInput from "../SwitchInput";
 
 interface SwitchInputFieldProps extends SwitchProps {
-  readonly name: string;
-  readonly title: string;
+  readonly children?: ReactNode;
   readonly description?: string;
   readonly includeBorder?: boolean;
+  readonly name: string;
+  readonly title: string;
   readonly tooltipText?: string;
-  readonly children?: ReactNode;
 }
 
 const SwitchInputField: FunctionComponent<SwitchInputFieldProps> = ({
@@ -17,14 +17,14 @@ const SwitchInputField: FunctionComponent<SwitchInputFieldProps> = ({
   ...props
 }) => {
   return (
-    <Field name={name}>
-      {({ form, field }: FieldProps) => (
+    <Field name={ name }>
+      { ({ form, field }: FieldProps) => (
         <SwitchInput
-          checked={field.value}
-          onChange={() => form.setFieldValue(field.name, !field.value)}
-          {...props}
+          checked={ field.value }
+          onChange={ () => form.setFieldValue(field.name, !field.value) }
+          { ...props }
         />
-      )}
+      ) }
     </Field>
   );
 };

@@ -4,33 +4,33 @@ export interface SessionState {
 }
 
 export interface Profile {
-  readonly id: string;
-  readonly oauthType: string;
-  readonly oauthId: string;
+  readonly appleMusicProfile?: string;
+  readonly bannerUrl?: string;
+  readonly biography?: string;
+  readonly companyIpRights: boolean;
+  readonly companyLogoUrl?: string;
+  readonly companyName?: string;
+  readonly dspPlanSubscribed?: boolean;
   readonly email: string;
   readonly firstName: string;
-  readonly lastName: string;
-  readonly nickname?: string;
-  readonly pictureUrl?: string;
-  readonly bannerUrl?: string;
-  readonly location?: string;
-  readonly role: string;
   readonly genre?: string;
+  readonly id: string;
+  readonly instagramUrl?: string;
+  readonly ipi?: string;
+  readonly isni?: string;
+  readonly lastName: string;
+  readonly location?: string;
+  readonly nickname?: string;
+  readonly oauthId: string;
+  readonly oauthType: string;
+  readonly pictureUrl?: string;
+  readonly role: string;
+  readonly soundCloudProfile?: string;
+  readonly spotifyProfile?: string;
+  readonly twitterUrl?: string;
   readonly verificationStatus: Readonly<VerificationStatus>;
   readonly walletAddress?: string;
-  readonly biography?: string;
   readonly websiteUrl?: string;
-  readonly twitterUrl?: string;
-  readonly instagramUrl?: string;
-  readonly companyIpRights: boolean;
-  readonly companyName?: string;
-  readonly companyLogoUrl?: string;
-  readonly spotifyProfile?: string;
-  readonly soundCloudProfile?: string;
-  readonly appleMusicProfile?: string;
-  readonly isni?: string;
-  readonly ipi?: string;
-  readonly dspPlanSubscribed?: boolean;
 }
 
 export interface GetUserRequest {
@@ -55,11 +55,11 @@ export interface LoginRequest {
 
 export interface DecodedJwt {
   readonly aud: string;
-  readonly sub: string;
-  readonly iss: string;
   readonly exp: number;
-  readonly type: string;
+  readonly iss: string;
   readonly jti: string;
+  readonly sub: string;
+  readonly type: string;
 }
 
 export interface ProfileFormValues
@@ -78,20 +78,20 @@ export interface ProfileFormValues
     | "firstName"
     | "lastName"
   > {
-  readonly pictureUrl?: string | File;
   readonly bannerUrl?: string | File;
   readonly companyIpRights?: boolean;
   readonly companyLogoUrl?: string | File;
   readonly email?: string;
-  readonly role?: string;
   readonly firstName?: string;
   readonly lastName?: string;
+  readonly pictureUrl?: string | File;
+  readonly role?: string;
 }
 
 export interface UpdateProfileRequest extends Omit<ProfileFormValues, "email"> {
-  readonly newPassword?: string;
-  readonly confirmPassword?: string;
   readonly authCode?: number;
+  readonly confirmPassword?: string;
+  readonly newPassword?: string;
 }
 
 export type GetProfileResponse = Profile;
@@ -130,9 +130,9 @@ export interface ResetPasswordRequest {
 }
 
 export interface ChangePasswordRequest {
+  readonly confirmPassword: string;
   readonly currentPassword: string;
   readonly newPassword: string;
-  readonly confirmPassword: string;
 }
 
 export interface IdenfyTokenResponse {
@@ -146,7 +146,7 @@ export interface LinkedInLoginRequest {
 }
 
 export enum VerificationStatus {
-  Verified = "Verified",
   Pending = "Pending",
-  Unverified = "Unverified"
+  Unverified = "Unverified",
+  Verified = "Verified",
 }

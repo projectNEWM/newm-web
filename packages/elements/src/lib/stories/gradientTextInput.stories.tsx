@@ -3,17 +3,17 @@ import { Stack } from "@mui/material";
 import GradientTextInput from "../GradientTextInput";
 
 export default {
-  title: "Gradient Text Input",
   component: GradientTextInput,
+  title: "Gradient Text Input",
 };
 
 export const Variations = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <Stack mt={2} direction="column" spacing={4} display="flex">
-      <GradientTextInput textAlign="center" ref={inputRef} />
-      <GradientTextInput textAlign="center" errorMessage="With error message" />
+    <Stack direction="column" display="flex" mt={ 2 } spacing={ 4 }>
+      <GradientTextInput ref={ inputRef } textAlign="center" />
+      <GradientTextInput errorMessage="With error message" textAlign="center" />
     </Stack>
   );
 };

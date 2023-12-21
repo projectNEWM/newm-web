@@ -2,23 +2,23 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
+import { Button, Tooltip, Typography } from "@newm-web/elements";
+import { TextInputField } from "@newm-web/elements";
+import theme from "@newm-web/theme";
+import Details from "./Details";
+import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import {
   CollaborationStatus,
   Owner,
   getIsOwnerEditable,
   useGetCollaboratorsQuery,
 } from "../../modules/song";
-import { Button, Tooltip, Typography } from "@newm-web/elements";
-import { TextInputField } from "@newm-web/elements";
-import theme from "@newm-web/theme";
-import { emptyProfile, useGetProfileQuery } from "../../modules/session";
-import Details from "./Details";
 import { getCollaboratorInfo } from "../../modules/song";
 
 interface OwnersProps {
-  readonly owners: ReadonlyArray<Owner>;
   readonly isDeleteDisabled?: boolean;
   readonly onDelete: (owner: Owner, owners: ReadonlyArray<Owner>) => void;
+  readonly owners: ReadonlyArray<Owner>;
 }
 
 /**
@@ -48,7 +48,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
   return (
     <Box>
       <Stack flexDirection="row" justifyContent="space-between">
-        <Stack columnGap={1} mt={1.5} flexDirection="row">
+        <Stack columnGap={ 1 } flexDirection="row" mt={ 1.5 }>
           <Typography color="grey100" variant="h5">
             ROYALTY SPLIT HOLDERS
           </Typography>
@@ -59,13 +59,13 @@ const Owners: FunctionComponent<OwnersProps> = ({
               "what percentage?"
             }
           >
-            <IconButton sx={{ padding: 0 }}>
+            <IconButton sx={ { padding: 0 } }>
               <HelpIcon
-                sx={{
+                sx={ {
                   color: theme.colors.grey100,
                   height: "18px",
                   width: "18px",
-                }}
+                } }
               />
             </IconButton>
           </Tooltip>
@@ -76,7 +76,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
         </Typography>
       </Stack>
 
-      {owners.map((owner, idx) => {
+      { owners.map((owner, idx) => {
         const collaboratorInfo = getCollaboratorInfo(
           owner.email,
           collaborators
@@ -85,65 +85,65 @@ const Owners: FunctionComponent<OwnersProps> = ({
 
         return (
           <Stack
-            key={owner.email}
-            sx={{
+            key={ owner.email }
+            sx={ {
+              alignItems: "center",
+              columnGap: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center",
               mt: 1.5,
-              columnGap: 1,
-            }}
+            } }
           >
             <Details
-              email={owner.email}
-              status={owner.status}
-              pictureUrl={collaboratorInfo.pictureUrl}
-              firstName={collaboratorInfo.firstName}
-              lastName={collaboratorInfo.lastName}
-              showStatus={authorEmail !== owner.email}
+              email={ owner.email }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+              pictureUrl={ collaboratorInfo.pictureUrl }
+              showStatus={ authorEmail !== owner.email }
+              status={ owner.status }
             />
 
-            <Stack flexDirection="row" alignItems="center">
-              {isEditable ? (
+            <Stack alignItems="center" flexDirection="row">
+              { isEditable ? (
                 <Stack maxWidth="108px">
                   <TextInputField
-                    name={`owners[${idx}].percentage`}
                     aria-label="Ownership percentage"
-                    placeholder="%"
-                    type="number"
                     endAdornment={
                       <InputAdornment
                         position="start"
-                        sx={{
+                        sx={ {
                           color: theme.colors.white,
                           mx: 0.8,
-                        }}
+                        } }
                       >
                         <Typography>%</Typography>
                       </InputAdornment>
                     }
+                    name={ `owners[${idx}].percentage` }
+                    placeholder="%"
+                    type="number"
                   />
                 </Stack>
               ) : (
-                <Typography>{owner.percentage}%</Typography>
-              )}
+                <Typography>{ owner.percentage }%</Typography>
+              ) }
 
               <Button
                 color="white"
-                sx={{ ml: [1, 1, 3] }}
+                disabled={ owner.isCreator || isDeleteDisabled }
+                sx={ { ml: [1, 1, 3] } }
                 variant="secondary"
                 width="icon"
-                disabled={owner.isCreator || isDeleteDisabled}
-                onClick={() => {
+                onClick={ () => {
                   onDelete(owner, owners);
-                }}
+                } }
               >
-                <CloseIcon sx={{ color: theme.colors.white }} />
+                <CloseIcon sx={ { color: theme.colors.white } } />
               </Button>
             </Stack>
           </Stack>
         );
-      })}
+      }) }
     </Box>
   );
 };

@@ -48,27 +48,27 @@ const DeleteAccountDialog: FunctionComponent = () => {
 
   return (
     <>
-      <Button onClick={handleOpenDialog} variant="secondary" color="magazine">
+      <Button color="magazine" variant="secondary" onClick={ handleOpenDialog }>
         Delete account
       </Button>
-      <Dialog open={isModalOpen} onClose={handleCloseDialog}>
+      <Dialog open={ isModalOpen } onClose={ handleCloseDialog }>
         <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
+          initialValues={ initialValues }
+          validationSchema={ validationSchema }
+          onSubmit={ handleSubmit }
         >
-          {() => (
+          { () => (
             <Form>
               <Box
-                sx={{
+                sx={ {
                   display: "flex",
-                  justifyContent: "center",
                   flexDirection: "column",
+                  justifyContent: "center",
                   p: 3,
                   rowGap: 2,
-                }}
+                } }
               >
-                <Stack sx={{ rowGap: 1 }}>
+                <Stack sx={ { rowGap: 1 } }>
                   <Typography variant="body2">
                     You can still turn back...
                   </Typography>
@@ -80,45 +80,45 @@ const DeleteAccountDialog: FunctionComponent = () => {
                 </Stack>
 
                 <Stack
-                  sx={{
+                  sx={ {
                     display: "flex",
                     justifyContent: "start",
-                  }}
+                  } }
                 >
                   <TextInputField name="confirmationStatement" />
                 </Stack>
 
                 <Stack
-                  sx={{
+                  sx={ {
+                    alignItems: "end",
+                    columnGap: 1.5,
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "end",
-                    alignItems: "end",
-                    columnGap: 1.5,
                     pt: 1.5,
-                  }}
+                  } }
                 >
                   <Button
-                    disabled={isLoading}
-                    variant="secondary"
                     color="music"
+                    disabled={ isLoading }
+                    variant="secondary"
                     width="compact"
-                    onClick={handleCloseDialog}
+                    onClick={ handleCloseDialog }
                   >
                     Cancel
                   </Button>
                   <Button
-                    isLoading={isLoading}
-                    width="compact"
+                    isLoading={ isLoading }
+                    sx={ { background: theme.colors.red } }
                     type="submit"
-                    sx={{ background: theme.colors.red }}
+                    width="compact"
                   >
                     Delete account
                   </Button>
                 </Stack>
               </Box>
             </Form>
-          )}
+          ) }
         </Formik>
       </Dialog>
     </>

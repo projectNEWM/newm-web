@@ -6,17 +6,17 @@ const TableHead = () => {
     <MUITableHead>
       <TableRow>
         <TableHeadCell>SONG NAME</TableHeadCell>
-        <TableHeadCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+        <TableHeadCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
           MINTING
         </TableHeadCell>
-        <TableHeadCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
+        <TableHeadCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
           GENRE
         </TableHeadCell>
         <TableHeadCell
-          sx={{
+          sx={ {
+            display: { md: "table-cell", xs: "none" },
             textAlign: "end",
-            display: { xs: "none", md: "table-cell" },
-          }}
+          } }
         >
           LENGTH
         </TableHeadCell>

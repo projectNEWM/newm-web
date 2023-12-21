@@ -16,26 +16,26 @@ const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
   name,
   tags,
 }) => (
-  <Field name={name}>
-    {({ field, form }: FieldProps) => {
+  <Field name={ name }>
+    { ({ field, form }: FieldProps) => {
       const filteredTags = tags.filter(filterTags(field.value));
 
       return (
         <Box display="flex" flexWrap="wrap" justifyContent="center">
-          {filteredTags.map((tag) => (
+          { filteredTags.map((tag) => (
             <Button
-              key={tag}
-              sx={{ m: 1 }}
+              key={ tag }
+              sx={ { m: 1 } }
               variant="outlined"
               width="compact"
-              onClick={() => form.handleChange(name)(tag)}
+              onClick={ () => form.handleChange(name)(tag) }
             >
-              {tag}
+              { tag }
             </Button>
-          ))}
+          )) }
         </Box>
       );
-    }}
+    } }
   </Field>
 );
 

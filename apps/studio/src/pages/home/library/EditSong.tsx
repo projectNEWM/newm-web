@@ -9,6 +9,9 @@ import { useNavigate, useParams } from "react-router";
 import { Button } from "@newm-web/elements";
 import { ProfileImage } from "@newm-web/elements";
 import { WizardForm } from "@newm-web/elements";
+import { useExtractProperty } from "@newm-web/utils";
+import DeleteSongModal from "./DeleteSongModal";
+import { SongRouteParams } from "./types";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
@@ -29,12 +32,9 @@ import {
   useGetLanguagesQuery,
 } from "../../../modules/content";
 import { commonYupValidation } from "../../../common";
-import { useExtractProperty } from "@newm-web/utils";
 import AdvancedSongDetails from "../../../pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "../../../pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "../../../pages/home/uploadSong/ConfirmAgreement";
-import DeleteSongModal from "./DeleteSongModal";
-import { SongRouteParams } from "./types";
 
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -102,6 +102,7 @@ const EditSong: FunctionComponent = () => {
     )
     .map((collaboration) => ({
       email: collaboration.email,
+      isCreator: "isCreator" in collaboration && !!collaboration.isCreator,
       isRightsOwner: collaboration.royaltyRate
         ? collaboration.royaltyRate > 0
         : false,
@@ -111,15 +112,14 @@ const EditSong: FunctionComponent = () => {
           : 0,
       role: collaboration.role,
       status: collaboration.status,
-      isCreator: "isCreator" in collaboration && !!collaboration.isCreator,
     }));
 
   const creditors = collaborations
     .filter((collaboration) => collaboration.credited)
     .map((collaboration) => ({
       email: collaboration.email,
-      role: collaboration.role,
       isCredited: collaboration.credited,
+      role: collaboration.role,
       status: collaboration.status,
     }));
 
@@ -127,27 +127,42 @@ const EditSong: FunctionComponent = () => {
     .filter((collaboration) => collaboration.featured)
     .map((collaboration) => ({
       email: collaboration.email,
-      role: collaboration.role,
       isFeatured: collaboration.featured,
+      role: collaboration.role,
       status: collaboration.status,
     }));
 
   const initialValues: PatchSongRequest = {
-    id: songId,
-    coverArtUrl,
-    title,
-    genres: songGenres,
-    moods,
-    description,
-    compositionCopyrightYear,
+    artistName,
+    barcodeNumber,
+    barcodeType,
+    companyName,
     compositionCopyrightOwner,
-    phonographicCopyrightYear,
-    phonographicCopyrightOwner,
-    isrc,
-    releaseDate,
+    compositionCopyrightYear,
+    consentsToContract: false,
+    coverArtUrl,
+    creditors:
+      creditors.length > 0
+        ? creditors
+        : [
+            {
+              email,
+              isCredited: true,
+              role,
+              status: CollaborationStatus.Editing,
+            },
+          ],
+    description,
+    featured,
+    genres: songGenres,
+    id: songId,
+    ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
     isMinting: false,
+    isrc,
+    iswc,
     language,
+    moods,
     owners:
       owners.length > 0
         ? owners
@@ -161,27 +176,12 @@ const EditSong: FunctionComponent = () => {
               status: CollaborationStatus.Editing,
             },
           ],
-    creditors:
-      creditors.length > 0
-        ? creditors
-        : [
-            {
-              email,
-              role,
-              isCredited: true,
-              status: CollaborationStatus.Editing,
-            },
-          ],
-    featured,
-    consentsToContract: false,
-    companyName,
-    artistName,
-    stageName,
-    barcodeNumber,
-    barcodeType,
+    phonographicCopyrightOwner,
+    phonographicCopyrightYear,
     publicationDate,
-    iswc,
-    ipi: ipis?.join(", "),
+    releaseDate,
+    stageName,
+    title,
   };
 
   // TODO: show "Not found" content if not available for user
@@ -250,94 +250,90 @@ const EditSong: FunctionComponent = () => {
   }, []);
 
   const validations = {
+    barcodeNumber: commonYupValidation.barcodeNumber,
+    barcodeType: commonYupValidation.barcodeType,
+    consentsToContract: commonYupValidation.consentsToContract,
+    copyrightOwner: commonYupValidation.copyright,
+    copyrightYear: commonYupValidation.year,
     coverArtUrl: commonYupValidation.coverArtUrl,
-    title: commonYupValidation.title,
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genres),
+    ipi: commonYupValidation.ipi,
+    isrc: commonYupValidation.isrc(languageCodes),
+    iswc: commonYupValidation.iswc,
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
-    consentsToContract: commonYupValidation.consentsToContract,
-    isrc: commonYupValidation.isrc(languageCodes),
-    barcodeType: commonYupValidation.barcodeType,
-    barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyrightYear: commonYupValidation.year,
-    copyrightOwner: commonYupValidation.copyright,
-    ipi: commonYupValidation.ipi,
-    iswc: commonYupValidation.iswc,
+    title: commonYupValidation.title,
   };
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={2.5}>
+      <Stack alignItems="center" direction="row" gap={ 2.5 }>
         <Button
           color="white"
-          onClick={() => navigate(-1)}
           variant="outlined"
           width="icon"
+          onClick={ () => navigate(-1) }
         >
-          <ArrowBackIcon sx={{ color: "white" }} />
+          <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
         <ProfileImage
           alt="Song cover art"
           height="90px"
-          src={coverArtUrl}
+          src={ coverArtUrl }
           width="90px"
         />
-        {title && <Typography variant="h3">{title.toUpperCase()}</Typography>}
+        { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
           <Button
             color="white"
+            disabled={ !getIsSongDeletable(mintingStatus) }
+            sx={ { marginLeft: "auto" } }
             variant="outlined"
             width="icon"
-            disabled={!getIsSongDeletable(mintingStatus)}
-            sx={{ marginLeft: "auto" }}
-            onClick={() => {
+            onClick={ () => {
               setIsDeleteModalActive(true);
-            }}
+            } }
           >
-            <DeleteIcon fontSize="small" sx={{ color: "white" }} />
+            <DeleteIcon fontSize="small" sx={ { color: "white" } } />
           </Button>
 
-          {isDeleteModalActive && (
+          { isDeleteModalActive && (
             <DeleteSongModal
-              primaryAction={() => {
+              primaryAction={ () => {
                 deleteSong({ songId });
-              }}
-              secondaryAction={() => {
+              } }
+              secondaryAction={ () => {
                 setIsDeleteModalActive(false);
-              }}
+              } }
             />
-          )}
+          ) }
         </>
       </Stack>
-      <Box pt={5} pb={7}>
+      <Box pb={ 7 } pt={ 5 }>
         <WizardForm
-          initialValues={initialValues}
-          onSubmit={(values, helpers) =>
-            handleSubmit("confirm", values, helpers)
-          }
-          rootPath={`home/library/edit-song/${songId}`}
-          isProgressStepperVisible={true}
-          validateOnMount={true}
-          enableReinitialize={true}
-          routes={[
+          enableReinitialize={ true }
+          initialValues={ initialValues }
+          isProgressStepperVisible={ true }
+          rootPath={ `home/library/edit-song/${songId}` }
+          routes={ [
             {
-              element: <BasicSongDetails isInEditMode={true} />,
-              path: "",
-              progressStepTitle: "Basic details",
+              element: <BasicSongDetails isInEditMode={ true } />,
               navigateOnSubmitStep: false,
               onSubmitStep: (values, helpers) =>
                 handleSubmit("basic-details", values, helpers),
+              path: "",
+              progressStepTitle: "Basic details",
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
-                title: validations.title,
+                description: validations.description,
                 genres: validations.genres,
                 moods: validations.moods,
                 owners: validations.owners,
-                description: validations.description,
+                title: validations.title,
               }),
             },
             {
@@ -347,17 +343,17 @@ const EditSong: FunctionComponent = () => {
               path: "advanced-details",
               progressStepTitle: "Advanced details",
               validationSchema: Yup.object({
-                isrc: validations.isrc,
-                barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                compositionCopyrightYear: validations.copyrightYear,
+                barcodeType: validations.barcodeType,
                 compositionCopyrightOwner: validations.copyrightOwner,
-                phonographicCopyrightYear: validations.copyrightYear,
+                compositionCopyrightYear: validations.copyrightYear,
+                ipi: validations.ipi,
+                isrc: validations.isrc,
+                iswc: validations.iswc,
                 phonographicCopyrightOwner: validations.copyrightOwner,
+                phonographicCopyrightYear: validations.copyrightYear,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
-                ipi: validations.ipi,
-                iswc: validations.iswc,
               }),
             },
             {
@@ -368,7 +364,11 @@ const EditSong: FunctionComponent = () => {
                 consentsToContract: validations.consentsToContract,
               }),
             },
-          ]}
+          ] }
+          validateOnMount={ true }
+          onSubmit={ (values, helpers) =>
+            handleSubmit("confirm", values, helpers)
+          }
         />
       </Box>
     </>

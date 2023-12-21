@@ -2,8 +2,8 @@ import { ReactElement } from "react";
 
 export interface ValidateDimensionsParams {
   readonly imageUrl: string;
-  readonly minWidth: number;
   readonly minHeight: number;
+  readonly minWidth: number;
 }
 
 export interface WindowDimensions {
@@ -12,15 +12,15 @@ export interface WindowDimensions {
 }
 
 export interface UseWrappedThunkResponse<Returned> {
-  readonly isLoading: boolean;
   readonly data?: Returned;
+  readonly isLoading: boolean;
 }
 
 export type CustomError = {
   error: {
     data: {
-      code: number;
       cause: string;
+      code: number;
       description: string;
     };
   };
@@ -47,6 +47,6 @@ export interface WrapperProps {
 export type WidthType = "default" | "full";
 
 export interface FieldOptions {
-  error: unknown;
   element: HTMLDivElement | HTMLInputElement | HTMLTextAreaElement | null;
+  error: unknown;
 }

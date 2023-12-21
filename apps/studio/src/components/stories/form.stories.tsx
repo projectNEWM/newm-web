@@ -10,21 +10,22 @@ export default {
 };
 
 interface FormValues {
+  readonly email: string;
   readonly firstName: string;
   readonly lastName: string;
-  readonly email: string;
 }
 
 const initialValues: FormValues = {
+  email: "",
   firstName: "",
   lastName: "",
-  email: "",
 };
 
 /**
  * Validation schema using Yup
  */
 const ExampleSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
   firstName: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
@@ -33,7 +34,6 @@ const ExampleSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
 });
 
 const mockHandleSubmit = (
@@ -48,35 +48,35 @@ const mockHandleSubmit = (
 
 export const Example = () => {
   return (
-    <Box maxWidth={theme.inputField.maxWidth}>
-      <Box mb={2}>
+    <Box maxWidth={ theme.inputField.maxWidth }>
+      <Box mb={ 2 }>
         <Typography variant="h3">Example Form</Typography>
       </Box>
 
       <Formik
-        initialValues={initialValues}
-        validationSchema={ExampleSchema}
-        onSubmit={mockHandleSubmit}
+        initialValues={ initialValues }
+        validationSchema={ ExampleSchema }
+        onSubmit={ mockHandleSubmit }
       >
-        {() => (
+        { () => (
           <Form>
-            <Box mb={2}>
+            <Box mb={ 2 }>
               <TextInputField name="firstName" placeholder="First name" />
             </Box>
 
-            <Box mb={2}>
+            <Box mb={ 2 }>
               <TextInputField name="lastName" placeholder="Last name" />
             </Box>
 
-            <Box mb={2}>
+            <Box mb={ 2 }>
               <TextInputField name="email" placeholder="Email" />
             </Box>
 
-            <Button width="compact" type="submit">
+            <Button type="submit" width="compact">
               Submit
             </Button>
           </Form>
-        )}
+        ) }
       </Formik>
     </Box>
   );

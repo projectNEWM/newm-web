@@ -2,48 +2,48 @@ import { FunctionComponent } from "react";
 import { Box, Container } from "@mui/material";
 import { Button, Typography } from "@newm-web/elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
+import Portfolio from "./Portfolio";
 import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
-import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
-import Portfolio from "./Portfolio";
 
 const Wallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
 
   return (
-    <Container maxWidth={false}>
-      <Box ml={[null, null, 3]}>
+    <Container maxWidth={ false }>
+      <Box ml={ [null, null, 3] }>
         <Box
-          sx={{
+          sx={ {
+            alignItems: "center",
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
             mb: 5,
-          }}
+          } }
         >
-          <Typography variant="h3" fontWeight={800}>
+          <Typography fontWeight={ 800 } variant="h3">
             WALLET
           </Typography>
 
-          {wallet ? (
+          { wallet ? (
             <DisconnectWalletButton />
           ) : (
             <Button
-              sx={{ mr: [0, 4.75], mb: 5 }}
-              width="compact"
               gradient="crypto"
-              onClick={() => dispatch(setIsConnectWalletModalOpen(true))}
+              sx={ { mb: 5, mr: [0, 4.75] } }
+              width="compact"
+              onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
             >
               Connect Wallet
             </Button>
-          )}
+          ) }
         </Box>
 
-        <UnclaimedRoyalties unclaimedRoyalties={0} />
+        <UnclaimedRoyalties unclaimedRoyalties={ 0 } />
 
-        <Box mt={2.5}>
+        <Box mt={ 2.5 }>
           <Portfolio />
         </Box>
       </Box>

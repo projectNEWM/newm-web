@@ -1,7 +1,7 @@
 import type { AsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { useCallback, useState } from "react";
-import { UseWrappedThunkResponse } from "./types";
 import { useDispatch } from "react-redux";
+import { UseWrappedThunkResponse } from "./types";
 
 /**
  * Wraps a thunk so that it can be used as a hook that returns
@@ -35,7 +35,7 @@ export const asThunkHook = <Returned, Arg>(
       [dispatch, setIsLoading]
     );
 
-    return [callHook, { isLoading, data }];
+    return [callHook, { data, isLoading }];
   };
 
   return useWrappedThunk;

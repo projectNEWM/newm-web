@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import { newmApi, cloudinaryApi, lambdaApi } from "./api";
+import { cloudinaryApi, lambdaApi, newmApi } from "./api";
 import { playlistReducer } from "./modules/playlist";
 import { sessionReducer } from "./modules/session";
 import { songReducer } from "./modules/song";

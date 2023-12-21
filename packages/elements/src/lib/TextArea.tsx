@@ -9,17 +9,17 @@ import {
 import { Box, Stack, Typography } from "@mui/material";
 import styled from "styled-components";
 import theme from "@newm-web/theme";
-import ErrorMessage from "./styled/ErrorMessage";
 import { WidthType } from "@newm-web/utils";
+import ErrorMessage from "./styled/ErrorMessage";
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  readonly label?: string;
-  readonly errorMessage?: string;
-  readonly startAdornment?: JSX.Element;
   readonly endAdornment?: JSX.Element;
-  readonly widthType?: WidthType;
+  readonly errorMessage?: string;
   readonly isOptional?: boolean;
+  readonly label?: string;
+  readonly startAdornment?: JSX.Element;
+  readonly widthType?: WidthType;
 }
 
 const StyledRootElement = styled.div`
@@ -97,47 +97,44 @@ export const TextArea: ForwardRefRenderFunction<
     <Stack
       direction="column"
       spacing="4px"
-      sx={{
+      sx={ {
         opacity: disabled ? 0.5 : 1,
-        width: "100%",
         textAlign: "left",
+        width: "100%",
         [theme.breakpoints.down("md")]: {
           margin: "0 auto",
           maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         },
-      }}
+      } }
     >
-      {!!label && (
+      { !!label && (
         <Typography
-          color={theme.colors.grey100}
-          columnGap={0.5}
+          color={ theme.colors.grey100 }
+          columnGap={ 0.5 }
           display="flex"
-          fontWeight={500}
+          fontWeight={ 500 }
         >
-          {label}
+          { label }
 
-          {isOptional && (
+          { isOptional && (
             <Typography
-              color={theme.colors.grey400}
+              color={ theme.colors.grey400 }
               component="span"
               marginLeft="auto"
             >
               OPTIONAL
             </Typography>
-          )}
+          ) }
         </Typography>
-      )}
+      ) }
 
       <Box
+        alignItems="center"
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
-        alignItems="center"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        sx={{
-          borderWidth: theme.inputField.borderWidth,
-          borderStyle: "solid",
+        sx={ {
+          background: theme.colors.grey500,
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
@@ -145,27 +142,30 @@ export const TextArea: ForwardRefRenderFunction<
             isFocused
           ),
           borderRadius: "4px",
+          borderStyle: "solid",
+          borderWidth: theme.inputField.borderWidth,
           overflow: "hidden",
-          background: theme.colors.grey500,
-        }}
+        } }
+        onMouseEnter={ () => setIsHovered(true) }
+        onMouseLeave={ () => setIsHovered(false) }
       >
         <StyledRootElement>
-          {startAdornment}
+          { startAdornment }
 
           <StyledTextAreaElement
-            rows={2}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            disabled={disabled}
-            ref={ref}
-            {...rest}
+            disabled={ disabled }
+            ref={ ref }
+            rows={ 2 }
+            onBlur={ handleBlur }
+            onFocus={ handleFocus }
+            { ...rest }
           />
 
-          {endAdornment}
+          { endAdornment }
         </StyledRootElement>
       </Box>
 
-      {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
     </Stack>
   );
 };

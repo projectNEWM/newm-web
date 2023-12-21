@@ -8,10 +8,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { FunctionComponent, useEffect } from "react";
 
 interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
+  readonly isCloseButtonVisible?: boolean;
   readonly isOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly onClose: (event: React.SyntheticEvent<any> | Event) => void;
-  readonly isCloseButtonVisible?: boolean;
 }
 
 /**
@@ -37,9 +37,9 @@ const Modal: FunctionComponent<ModalProps> = ({
 
   return (
     <MuiModal
-      open={ isOpen }
-      sx={ { m: 2, mt: 1, mb: 10 } }
       disableAutoFocus={ true }
+      open={ isOpen }
+      sx={ { m: 2, mb: 10, mt: 1 } }
     >
       <Box display="flex" flex={ 1 } flexDirection="column" height="100%">
         { isCloseButtonVisible && (

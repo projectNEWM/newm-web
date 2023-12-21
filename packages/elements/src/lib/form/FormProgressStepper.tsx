@@ -60,48 +60,48 @@ const StepNumberIcon = styled(Box)`
  */
 const FormProgressStepper = ({
   activeStep,
-  stepTitles
+  stepTitles,
 }: FormStepperGridProps) => {
   return (
     <Box
-      display="flex"
-      flexDirection={["column", "column", "row"]}
-      maxWidth={[undefined, undefined, "700px"]}
-      gap={0.5}
-      mb={5}
-      justifyContent="center"
       alignItems="center"
+      display="flex"
+      flexDirection={ ["column", "column", "row"] }
+      gap={ 0.5 }
+      justifyContent="center"
+      maxWidth={ [undefined, undefined, "700px"] }
+      mb={ 5 }
     >
-      {stepTitles.map((stepTitle, index) => {
+      { stepTitles.map((stepTitle, index) => {
         const isStepCompleted = activeStep > index + 1;
         const stepColor = statusColor(activeStep, index);
 
         return (
           <StepBox
-            key={index}
-            boxColor={stepColor}
-            boxTitle={stepTitle}
-            justifyContent={["center", "center", "flex-start"]}
+            boxColor={ stepColor }
+            boxTitle={ stepTitle }
+            justifyContent={ ["center", "center", "flex-start"] }
+            key={ index }
           >
-            <Box display="flex" flexDirection="row" gap={1.5} pl={1.75}>
-              {isStepCompleted ? (
+            <Box display="flex" flexDirection="row" gap={ 1.5 } pl={ 1.75 }>
+              { isStepCompleted ? (
                 <CheckCircleOutline />
               ) : (
-                <StepNumberIcon> {index + 1}</StepNumberIcon>
-              )}
+                <StepNumberIcon> { index + 1 }</StepNumberIcon>
+              ) }
               <Typography
-                variant="subtitle2"
-                color={stepColor}
+                alignItems="center"
+                color={ stepColor }
                 display="flex"
                 justifyContent="center"
-                alignItems="center"
+                variant="subtitle2"
               >
-                {stepTitle}
+                { stepTitle }
               </Typography>
             </Box>
           </StepBox>
         );
-      })}
+      }) }
     </Box>
   );
 };

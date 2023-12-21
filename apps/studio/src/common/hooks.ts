@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { selectSession } from "../modules/session";
 import { useLocation, useNavigate } from "react-router-dom";
+import { selectSession } from "../modules/session";
 import type { AppDispatch, RootState } from "../store";
 
 /**

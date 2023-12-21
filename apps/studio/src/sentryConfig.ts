@@ -10,17 +10,20 @@ const initializeSentry = () => {
     integrations: [
       new Sentry.BrowserTracing(),
       new Sentry.Replay({
-        maskAllText: false,
-        maskAllInputs: false,
         blockAllMedia: false,
+        maskAllInputs: false,
+        maskAllText: false,
       }),
     ],
-    // For performance monitoring: capture all transactions during development but limit in production.
-    tracesSampleRate: isProd ? 0.1 : 1.0,
-    // For session replay: during development capture all sessions, but sample only a subset in production.
-    replaysSessionSampleRate: isProd ? 0.05 : 1.0,
+
     // Increase session capture rate specifically for sessions where errors occur.
     replaysOnErrorSampleRate: isProd ? 0.5 : 1.0,
+
+    // For session replay: during development capture all sessions, but sample only a subset in production.
+    replaysSessionSampleRate: isProd ? 0.05 : 1.0,
+
+    // For performance monitoring: capture all transactions during development but limit in production.
+    tracesSampleRate: isProd ? 0.1 : 1.0,
   });
 };
 

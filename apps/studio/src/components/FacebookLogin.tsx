@@ -2,16 +2,16 @@
  * Logs the user into the app using the Facebook Auth API.
  */
 
-import { useFacebookLoginThunk } from "../modules/session";
-import { setToastMessage } from "../modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import FacebookLoginHelper, {
   LoginResponse,
 } from "@greatsumini/react-facebook-login";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button } from "@newm-web/elements";
-import { useAppDispatch } from "../common";
 import { VITE_FACEBOOK_CLIENT_ID } from "@newm-web/env";
+import { useAppDispatch } from "../common";
+import { setToastMessage } from "../modules/ui";
+import { useFacebookLoginThunk } from "../modules/session";
 
 interface Props {
   readonly children?: ReactNode;
@@ -41,19 +41,19 @@ const FacebookLogin: FunctionComponent<Props> = ({ children }) => {
 
   return (
     <FacebookLoginHelper
-      appId={VITE_FACEBOOK_CLIENT_ID || ""}
-      onSuccess={handleFacebookLoginSuccess}
-      render={({ onClick }) => (
+      appId={ VITE_FACEBOOK_CLIENT_ID || "" }
+      render={ ({ onClick }) => (
         <Button
           aria-label="facebook authorization"
-          onClick={onClick}
-          variant="outlined"
           color="white"
-          startIcon={<FacebookIcon />}
+          startIcon={ <FacebookIcon /> }
+          variant="outlined"
+          onClick={ onClick }
         >
-          {children}
+          { children }
         </Button>
-      )}
+      ) }
+      onSuccess={ handleFacebookLoginSuccess }
     />
   );
 };

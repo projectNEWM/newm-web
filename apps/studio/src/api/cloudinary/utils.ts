@@ -1,9 +1,9 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { cloudinaryApi } from "../../api";
 import { getFileBinary } from "@newm-web/utils";
+import { CloudinaryUploadOptions } from "./types";
+import { cloudinaryApi } from "../../api";
 import { songApi } from "../../modules/song";
 import { OnUploadProgress } from "../../api/types";
-import { CloudinaryUploadOptions } from "./types";
 
 /**
  * Uploads an image to Cloudinary. Returns the response if
@@ -35,9 +35,9 @@ export const uploadToCloudinary = async (
       ...params,
       api_key: apiKey,
       file: imageBinaryStr,
+      onUploadProgress,
       signature,
       timestamp,
-      onUploadProgress,
     })
   );
 

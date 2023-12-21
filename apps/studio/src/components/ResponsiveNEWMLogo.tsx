@@ -9,8 +9,8 @@ const ResponsiveNEWMLogo: FunctionComponent = () => {
 
   return (
     <NEWMLogo
-      height={isBelowMediumBreakpoint ? "50" : undefined}
-      width={isBelowMediumBreakpoint ? "50" : undefined}
+      height={ isBelowMediumBreakpoint ? "50" : undefined }
+      width={ isBelowMediumBreakpoint ? "50" : undefined }
     />
   );
 };

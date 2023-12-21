@@ -4,42 +4,42 @@ import { Box, Stack, SvgIconProps } from "@mui/material";
 import theme from "@newm-web/theme";
 
 interface ButtonProps {
+  readonly children: ReactNode;
   readonly onClick?: VoidFunction;
   readonly style: CSSProperties;
-  readonly children: ReactNode;
 }
 
 interface LinkProps extends ButtonProps {
-  readonly to: string;
   readonly children: ReactNode;
+  readonly to: string;
 }
 
 interface AnchorProps extends ButtonProps {
-  readonly href: string;
   readonly children: ReactNode;
+  readonly href: string;
 }
 
 type WrapperProps = LinkProps | ButtonProps | AnchorProps;
 
 interface SideBarNavLinkProps {
-  readonly label: string;
   readonly Icon: React.ComponentType<SvgIconProps>;
-  readonly to?: string;
   readonly href?: string;
+  readonly label: string;
   readonly onClick?: VoidFunction;
+  readonly to?: string;
 }
 
 const Wrapper: FunctionComponent<WrapperProps> = ({ children, ...props }) => {
   if ("to" in props && props.to) {
-    return <Link {...props}>{children}</Link>;
+    return <Link { ...props }>{ children }</Link>;
   } else if ("href" in props && props.href) {
     return (
-      <a target="_blank" rel="noreferrer" {...props}>
-        {children}
+      <a rel="noreferrer" target="_blank" { ...props }>
+        { children }
       </a>
     );
   } else {
-    return <Box {...props}>{children}</Box>;
+    return <Box { ...props }>{ children }</Box>;
   }
 };
 
@@ -51,49 +51,49 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   onClick,
 }) => {
   const resolved = useResolvedPath(to || "");
-  const match = useMatch({ path: resolved.pathname, end: false });
+  const match = useMatch({ end: false, path: resolved.pathname });
   const isActiveLink = to && match;
 
   return (
     <Wrapper
-      onClick={onClick}
-      to={to}
-      href={href}
-      style={{
-        textDecoration: "none",
-        minWidth: "100%",
+      href={ href }
+      style={ {
         cursor: "pointer",
-      }}
+        minWidth: "100%",
+        textDecoration: "none",
+      } }
+      to={ to }
+      onClick={ onClick }
     >
       <Stack
+        data-testid="navStyled"
         direction="row"
-        spacing={2}
-        sx={{
-          fontSize: "12px",
-          lineHeight: "15px",
-          fontWeight: 600,
-          font: theme.typography.button.font,
+        spacing={ 2 }
+        sx={ {
+          "&:hover": {
+            background: theme.colors.activeBackground,
+            opacity: "1",
+          },
           alignItems: "center",
-          borderRadius: "6px",
-          padding: "12px 20px",
-          color: "white",
           background: isActiveLink
             ? theme.colors.activeBackground
             : "transparent",
-          opacity: isActiveLink ? 1 : 0.5,
-          transition: "background-color 0ms",
+          borderRadius: "6px",
+          color: "white",
           display: "flex",
-          textTransform: "none",
+          font: theme.typography.button.font,
+          fontSize: "12px",
+          fontWeight: 600,
           justifyContent: "flex-start",
-          "&:hover": {
-            opacity: "1",
-            background: theme.colors.activeBackground,
-          },
-        }}
-        data-testid="navStyled"
+          lineHeight: "15px",
+          opacity: isActiveLink ? 1 : 0.5,
+          padding: "12px 20px",
+          textTransform: "none",
+          transition: "background-color 0ms",
+        } }
       >
-        <Icon sx={{ fontSize: "18px" }} />
-        <span>{label}</span>
+        <Icon sx={ { fontSize: "18px" } } />
+        <span>{ label }</span>
       </Stack>
     </Wrapper>
   );

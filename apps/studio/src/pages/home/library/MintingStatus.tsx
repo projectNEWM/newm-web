@@ -1,67 +1,67 @@
 import { FunctionComponent } from "react";
 import { Theme } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
-import { MintingStatus as MintingStatusType } from "../../../modules/song";
-import { IconStatus } from "../../../components";
 import { InfoCircleLine, TimeCircleLine } from "@newm-web/assets";
 import theme from "@newm-web/theme";
+import { MintingStatus as MintingStatusType } from "../../../modules/song";
+import { IconStatus } from "../../../components";
 
 interface MintingStatusProps {
   readonly mintingStatus: MintingStatusType;
 }
 
 const UI_MINTING_STATUS: Record<MintingStatusType, string> = {
-  Undistributed: "Undistributed",
-  StreamTokenAgreementApproved: "Undistributed",
-  MintingPaymentRequested: "Undistributed",
-  MintingPaymentSubmitted: "Undistributed",
-  MintingPaymentReceived: "Undistributed",
+  ArweaveUploadException: "An error occurred",
   AwaitingAudioEncoding: "Undistributed",
   AwaitingCollaboratorApproval: "Awaiting Collaborator Approval",
-  ReadyToDistribute: "Distribution/Minting in Process",
-  SubmittedForDistribution: "Distribution/Minting in Process",
-  Distributed: "Distribution/Minting in Process",
-  Pending: "Distribution/Minting in Process",
   Declined: "Declined",
-  Minted: "Distributed & Minted",
-  MintingPaymentTimeout: "An error occurred",
-  MintingPaymentException: "An error occurred",
+  Distributed: "Distribution/Minting in Process",
   DistributionException: "An error occurred",
-  SubmittedForDistributionException: "An error occurred",
-  ArweaveUploadException: "An error occurred",
+  Minted: "Distributed & Minted",
   MintingException: "An error occurred",
+  MintingPaymentException: "An error occurred",
+  MintingPaymentReceived: "Undistributed",
+  MintingPaymentRequested: "Undistributed",
+  MintingPaymentSubmitted: "Undistributed",
+  MintingPaymentTimeout: "An error occurred",
+  Pending: "Distribution/Minting in Process",
+  ReadyToDistribute: "Distribution/Minting in Process",
+  StreamTokenAgreementApproved: "Undistributed",
+  SubmittedForDistribution: "Distribution/Minting in Process",
+  SubmittedForDistributionException: "An error occurred",
+  Undistributed: "Undistributed",
 };
 
 const STATUS_ICON_CONFIG: Record<
   string,
   {
-    icon: JSX.Element;
     color?: keyof Theme["colors"];
     fontColor?: keyof Theme["colors"];
+    icon: JSX.Element;
   }
 > = {
-  Undistributed: {
-    icon: <Close fontSize="medium" sx={{ color: theme.colors.grey200 }} />,
-    fontColor: "grey200",
+  "An error occurred": {
+    color: "red",
+    icon: <InfoCircleLine />,
   },
   "Awaiting Collaborator Approval": {
-    icon: <TimeCircleLine />,
     color: "yellow",
-  },
-  "Distribution/Minting in Process": {
     icon: <TimeCircleLine />,
-    color: "yellow",
   },
   Declined: {
-    icon: <InfoCircleLine />,
     color: "red",
+    icon: <InfoCircleLine />,
   },
   "Distributed & Minted": {
-    icon: <Check fontSize="medium" sx={{ color: theme.colors.green }} />,
+    icon: <Check fontSize="medium" sx={ { color: theme.colors.green } } />,
   },
-  "An error occurred": {
-    icon: <InfoCircleLine />,
-    color: "red",
+  "Distribution/Minting in Process": {
+    color: "yellow",
+    icon: <TimeCircleLine />,
+  },
+  Undistributed: {
+    fontColor: "grey200",
+    icon: <Close fontSize="medium" sx={ { color: theme.colors.grey200 } } />,
   },
 };
 
@@ -75,10 +75,10 @@ export const MintingStatus: FunctionComponent<MintingStatusProps> = ({
 
   return (
     <IconStatus
-      icon={config.icon}
-      iconColor={config.color}
-      fontColor={config.fontColor}
-      status={status}
+      fontColor={ config.fontColor }
+      icon={ config.icon }
+      iconColor={ config.color }
+      status={ status }
     />
   );
 };

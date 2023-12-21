@@ -4,16 +4,16 @@ import { FunctionComponent } from "react";
 const ProfileSkeleton: FunctionComponent = () => {
   return (
     <>
-      <Skeleton variant="rectangular" height={ 40 } />
+      <Skeleton height={ 40 } variant="rectangular" />
       <br />
-      <Skeleton variant="rectangular" height={ 200 } />
+      <Skeleton height={ 200 } variant="rectangular" />
       <br />
 
       <Stack
         alignItems="center"
         columnGap={ 3 }
-        rowGap={ 2 }
         flexDirection={ ["column", "column", "column", "row"] }
+        rowGap={ 2 }
       >
         <Skeleton
           sx={ { height: [100, 100, 200], width: [100, 100, 200] } }
@@ -33,7 +33,7 @@ const ProfileSkeleton: FunctionComponent = () => {
             variant="rectangular"
           />
           <br />
-          <Skeleton variant="rectangular" sx={ { width: [100, 150, 200] } } />
+          <Skeleton sx={ { width: [100, 150, 200] } } variant="rectangular" />
         </Stack>
         <Stack
           alignSelf={ [null, null, null, "flex-start"] }
@@ -42,9 +42,9 @@ const ProfileSkeleton: FunctionComponent = () => {
           justifyContent="flex-end"
           marginLeft={ [null, null, null, "auto"] }
         >
-          <Skeleton variant="rectangular" height={ 40 } width={ 40 } />
-          <Skeleton variant="rectangular" height={ 40 } width={ 40 } />
-          <Skeleton variant="rectangular" height={ 40 } width={ 40 } />
+          <Skeleton height={ 40 } variant="rectangular" width={ 40 } />
+          <Skeleton height={ 40 } variant="rectangular" width={ 40 } />
+          <Skeleton height={ 40 } variant="rectangular" width={ 40 } />
         </Stack>
       </Stack>
 
@@ -57,7 +57,7 @@ const ProfileSkeleton: FunctionComponent = () => {
         } }
       >
         { Array.from(new Array(20)).map((item, index) => (
-          <Stack key={ index } width={ [150, 200] } marginRight={ 0.5 } my={ 5 }>
+          <Stack key={ index } marginRight={ 0.5 } my={ 5 } width={ [150, 200] }>
             <Skeleton
               height={ 118 }
               sx={ { width: [150, 200] } }
