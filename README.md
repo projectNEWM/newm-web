@@ -28,6 +28,13 @@ The following commands will then run each app:
 - NEWM Studio: `nx serve studio` (runs at `http://localhost:3000`)
 - NEWM Marketplace: `nx serve marketplace` (runs at `http://localhost:4200`)
 
+### Formatting the apps and packages
+
+The following commands will format using prettier-eslint:
+
+- Single App or Package: `nx run <app-or-package>:format`
+- All Apps and Packages: `nx run-many -t format`
+
 ## Nx
 
 This repo leverages Nx for building apps and packages.

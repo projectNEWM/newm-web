@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "scripts": {
-    "format": "prettier-eslint --config .prettierrc.json --write \"**/*.{jsx,js,ts,tsx}\""
-  },
+  "scripts": {},
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",

@@ -24,6 +24,9 @@
         ]
       }
     },
+    "format": {
+      "command": "prettier-eslint --config .prettierrc.json --write \"packages/theme/**/*.{jsx,js,ts,tsx}\""
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
