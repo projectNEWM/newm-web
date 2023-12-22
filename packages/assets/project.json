@@ -12,9 +12,6 @@
         "lintFilePatterns": ["packages/assets/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "format": {
-      "command": "prettier-eslint --config .prettierrc.json --write \"packages/assets/**/*.{jsx,js,ts,tsx}\""
-    },
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],

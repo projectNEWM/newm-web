@@ -71,9 +71,6 @@
         "lintFilePatterns": ["apps/studio/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "format": {
-      "command": "prettier-eslint --config .prettierrc.json --write \"apps/studio/**/*.{jsx,js,ts,tsx}\""
-    },
     "storybook": {
       "executor": "@nx/storybook:storybook",
       "options": {

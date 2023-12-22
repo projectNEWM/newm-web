@@ -57,8 +57,5 @@
       }
     }
   },
-  "format": {
-    "command": "prettier-eslint --config .prettierrc.json --write \"apps/marketplace/**/*.{jsx,js,ts,tsx}\""
-  },
   "tags": []
 }
