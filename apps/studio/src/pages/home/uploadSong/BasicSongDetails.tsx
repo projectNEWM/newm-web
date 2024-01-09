@@ -1,32 +1,32 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Alert, Button, HorizontalLine, Typography } from "@newm-web/elements";
 import { Box, Stack, useTheme } from "@mui/material";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { SolidOutline } from "@newm-web/elements";
 import {
+  Alert,
+  Button,
   DropdownMultiSelectField,
   DropdownSelectField,
   ErrorMessage,
+  HorizontalLine,
+  SolidOutline,
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  Typography,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
-import { scrollToError, useEffectAfterMount } from "@newm-web/utils";
-import { useWindowDimensions } from "@newm-web/utils";
-import { useExtractProperty } from "@newm-web/utils";
+import {
+  scrollToError,
+  useEffectAfterMount,
+  useExtractProperty,
+  useWindowDimensions,
+} from "@newm-web/utils";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
-import {
-  Creditor,
-  Featured,
-  Owner,
-  UploadSongRequest,
-} from "../../../modules/song";
+import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
@@ -37,6 +37,12 @@ import {
   emptyProfile,
   useGetProfileQuery,
 } from "../../../modules/session";
+import {
+  Creditor,
+  Featured,
+  Owner,
+  UploadSongRequest,
+} from "../../../modules/song";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
@@ -55,10 +61,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { wallet } = useConnectWallet();
 
   const audioRef = useRef<HTMLDivElement>(null);
+  const coCreatorsRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
-  const songDetailsRef = useRef<HTMLDivElement>(null);
-  const ownersRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const songDetailsRef = useRef<HTMLDivElement>(null);
 
   const {
     data: {
@@ -130,7 +136,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
         element: descriptionRef.current,
         error: errors.description,
       },
-      { element: ownersRef.current, error: errors.owners },
+      { element: coCreatorsRef.current, error: errors.creditors },
+      { element: coCreatorsRef.current, error: errors.owners },
     ]);
   }, [errors, isSubmitting]);
 
@@ -274,7 +281,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           <Stack spacing={ 3 }>
             <Stack spacing={ 1.5 }>
               <Box
-                ref={ ownersRef }
+                ref={ coCreatorsRef }
                 sx={ {
                   backgroundColor: theme.colors.grey600,
                   border: `2px solid ${theme.colors.grey400}`,
@@ -310,6 +317,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               { !!touched.owners && !!errors.owners && (
                 <Box mt={ 0.5 }>
                   <ErrorMessage>{ errors.owners as string }</ErrorMessage>
+                </Box>
+              ) }
+
+              { !!touched.creditors && !!errors.creditors && (
+                <Box mt={ 0.5 }>
+                  <ErrorMessage>{ errors.creditors as string }</ErrorMessage>
                 </Box>
               ) }
             </Stack>

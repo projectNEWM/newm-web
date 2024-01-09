@@ -97,6 +97,15 @@ export const commonYupValidation = {
     `Must be ${MAX_CHARACTER_COUNT} characters or less`
   ),
   coverArtUrl: Yup.mixed().required("This field is required"),
+  creditors: (roles: string[]) =>
+    Yup.array().when("isMinting", {
+      is: (value: boolean) => !!value,
+      then: Yup.array().test({
+        message: "Creditors must have a role",
+        test: (creditors = []) =>
+          creditors.every(({ role }) => roles.includes(role)),
+      }),
+    }),
   description: Yup.string().max(
     MAX_CHARACTER_COUNT_LONG,
     `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`

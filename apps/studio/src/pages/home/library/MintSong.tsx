@@ -1,18 +1,33 @@
-import { useRef, useState } from "react";
-import { Formik, FormikValues } from "formik";
 import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
+import {
+  Alert,
+  Button,
+  ErrorMessage,
+  HorizontalLine,
+  SwitchInputField,
+  Typography,
+} from "@newm-web/elements";
+import theme from "@newm-web/theme";
 import {
   getUpdatedValues,
   scrollToError,
   useWindowDimensions,
 } from "@newm-web/utils";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { Alert, Button, HorizontalLine, Typography } from "@newm-web/elements";
-import theme from "@newm-web/theme";
-import { ErrorMessage, SwitchInputField } from "@newm-web/elements";
+import { Formik, FormikValues } from "formik";
+import { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { SongRouteParams } from "./types";
+import { commonYupValidation, useAppDispatch } from "../../../common";
+import { ConfirmContract } from "../../../components";
+import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import { useGetRolesQuery } from "../../../modules/content";
+import {
+  VerificationStatus,
+  emptyProfile,
+  useGetProfileQuery,
+} from "../../../modules/session";
 import {
   CollaborationStatus,
   Creditor,
@@ -25,18 +40,10 @@ import {
   useGetSongQuery,
   usePatchSongThunk,
 } from "../../../modules/song";
-import { ConfirmContract } from "../../../components";
-import {
-  VerificationStatus,
-  emptyProfile,
-  useGetProfileQuery,
-} from "../../../modules/session";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
 } from "../../../modules/ui";
-import { commonYupValidation, useAppDispatch } from "../../../common";
 
 interface FormValues {
   readonly consentsToContract: boolean;
@@ -53,7 +60,7 @@ const MintSong = () => {
   const { wallet } = useConnectWallet();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const ownersRef = useRef<HTMLDivElement>(null);
+  const coCreatorsRef = useRef<HTMLDivElement>(null);
   const consentsToContractRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -161,8 +168,11 @@ const MintSong = () => {
     owners: initialOwners,
   };
 
+  const { data: roles = [] } = useGetRolesQuery();
+
   const validationSchema = Yup.object().shape({
     consentsToContract: Yup.bool().required("This field is required"),
+    creditors: commonYupValidation.creditors(roles),
     owners: commonYupValidation.owners,
   });
 
@@ -257,13 +267,13 @@ const MintSong = () => {
         onSubmit={ handleSubmitForm }
       >
         { ({
+          dirty,
           errors,
           handleSubmit,
           isSubmitting,
           setFieldValue,
           touched,
           values,
-          dirty,
         }) => {
           // if minting has been initiated, only show save button if
           // collaborators have changed, otherwise only show if minting
@@ -284,7 +294,8 @@ const MintSong = () => {
           };
 
           scrollToError(errors, isSubmitting, [
-            { element: ownersRef.current, error: errors.owners },
+            { element: coCreatorsRef.current, error: errors.creditors },
+            { element: coCreatorsRef.current, error: errors.owners },
             {
               element: consentsToContractRef.current,
               error: errors.consentsToContract,
@@ -323,8 +334,16 @@ const MintSong = () => {
                     </Box>
 
                     { !!touched.owners && !!errors.owners && (
-                      <Box mt={ 0.5 } ref={ ownersRef }>
+                      <Box mt={ 0.5 } ref={ coCreatorsRef }>
                         <ErrorMessage>{ errors.owners as string }</ErrorMessage>
+                      </Box>
+                    ) }
+
+                    { !!touched.creditors && !!errors.creditors && (
+                      <Box mt={ 0.5 } ref={ coCreatorsRef }>
+                        <ErrorMessage>
+                          { errors.creditors as string }
+                        </ErrorMessage>
                       </Box>
                     ) }
 

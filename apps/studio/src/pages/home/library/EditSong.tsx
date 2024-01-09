@@ -1,17 +1,21 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { FormikHelpers, FormikValues } from "formik";
-import * as Yup from "yup";
-import { Box, Stack, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate, useParams } from "react-router";
-import { Button } from "@newm-web/elements";
-import { ProfileImage } from "@newm-web/elements";
-import { WizardForm } from "@newm-web/elements";
+import { Box, Stack, Typography } from "@mui/material";
+import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
 import { useExtractProperty } from "@newm-web/utils";
+import { FormikHelpers, FormikValues } from "formik";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import * as Yup from "yup";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
+import { commonYupValidation } from "../../../common";
+import {
+  useGetGenresQuery,
+  useGetLanguagesQuery,
+  useGetRolesQuery,
+} from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
@@ -27,11 +31,6 @@ import {
   usePatchSongThunk,
 } from "../../../modules/song";
 import { setToastMessage } from "../../../modules/ui";
-import {
-  useGetGenresQuery,
-  useGetLanguagesQuery,
-} from "../../../modules/content";
-import { commonYupValidation } from "../../../common";
 import AdvancedSongDetails from "../../../pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "../../../pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "../../../pages/home/uploadSong/ConfirmAgreement";
@@ -42,13 +41,14 @@ const EditSong: FunctionComponent = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
 
   const { data: genres = [] } = useGetGenresQuery();
+  const { data: roles = [] } = useGetRolesQuery();
   const {
     data: {
       companyName = "",
+      email,
       firstName = "",
       lastName = "",
       nickname: stageName = "",
-      email,
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
@@ -71,25 +71,25 @@ const EditSong: FunctionComponent = () => {
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const {
     data: {
-      title,
-      genres: songGenres,
-      moods,
-      coverArtUrl,
-      description,
-      language,
-      parentalAdvisory,
-      mintingStatus,
-      releaseDate,
-      publicationDate,
-      compositionCopyrightYear,
-      compositionCopyrightOwner,
-      phonographicCopyrightYear,
-      phonographicCopyrightOwner,
       barcodeNumber,
       barcodeType,
+      compositionCopyrightOwner,
+      compositionCopyrightYear,
+      coverArtUrl,
+      description,
+      genres: songGenres,
+      ipis,
       isrc,
       iswc,
-      ipis,
+      language,
+      mintingStatus,
+      moods,
+      parentalAdvisory,
+      phonographicCopyrightOwner,
+      phonographicCopyrightYear,
+      publicationDate,
+      releaseDate,
+      title,
     } = emptySong,
     error,
     isLoading: isGetSongLoading,
@@ -110,6 +110,7 @@ const EditSong: FunctionComponent = () => {
         collaboration.royaltyRate !== undefined
           ? +collaboration.royaltyRate
           : 0,
+
       role: collaboration.role,
       status: collaboration.status,
     }));
@@ -256,6 +257,7 @@ const EditSong: FunctionComponent = () => {
     copyrightOwner: commonYupValidation.copyright,
     copyrightYear: commonYupValidation.year,
     coverArtUrl: commonYupValidation.coverArtUrl,
+    creditors: commonYupValidation.creditors(roles),
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genres),
     ipi: commonYupValidation.ipi,
@@ -329,6 +331,7 @@ const EditSong: FunctionComponent = () => {
               progressStepTitle: "Basic details",
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
+                creditors: validations.creditors,
                 description: validations.description,
                 genres: validations.genres,
                 moods: validations.moods,

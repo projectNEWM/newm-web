@@ -1,16 +1,18 @@
+import { Box, Container } from "@mui/material";
+import { Typography, WizardForm } from "@newm-web/elements";
+import { useExtractProperty } from "@newm-web/utils";
+import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Box, Container } from "@mui/material";
-import { FormikHelpers, FormikValues } from "formik";
-import { useExtractProperty } from "@newm-web/utils";
-import { Typography, WizardForm } from "@newm-web/elements";
-import ConfirmAgreement from "./ConfirmAgreement";
-import BasicSongDetails from "./BasicSongDetails";
 import AdvancedSongDetails from "./AdvancedSongDetails";
+import BasicSongDetails from "./BasicSongDetails";
+import ConfirmAgreement from "./ConfirmAgreement";
+import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
+  useGetRolesQuery,
 } from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
@@ -20,21 +22,21 @@ import {
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "../../../modules/song";
-import { commonYupValidation } from "../../../common";
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const { data: genres = [] } = useGetGenresQuery();
+  const { data: roles = [] } = useGetRolesQuery();
   const {
     data: {
       companyName = "",
+      email,
       firstName = "",
+      ipi: userIpi,
       lastName = "",
       nickname: stageName = "",
-      email,
       role,
-      ipi: userIpi,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -153,6 +155,7 @@ const UploadSong: FunctionComponent = () => {
     copyrightOwner: commonYupValidation.copyright,
     copyrightYear: commonYupValidation.year,
     coverArtUrl: commonYupValidation.coverArtUrl,
+    creditors: commonYupValidation.creditors(roles),
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genres),
     ipi: commonYupValidation.ipi,
@@ -195,6 +198,7 @@ const UploadSong: FunctionComponent = () => {
               validationSchema: Yup.object().shape({
                 audio: validations.audio,
                 coverArtUrl: validations.coverArtUrl,
+                creditors: validations.creditors,
                 description: validations.description,
                 genres: validations.genres,
                 moods: validations.moods,
