@@ -5,6 +5,9 @@ import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import AdvancedSongDetails from "./AdvancedSongDetails";
+import BasicSongDetails from "./BasicSongDetails";
+import ConfirmAgreement from "./ConfirmAgreement";
 import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
@@ -19,9 +22,6 @@ import {
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "../../../modules/song";
-import AdvancedSongDetails from "./AdvancedSongDetails";
-import BasicSongDetails from "./BasicSongDetails";
-import ConfirmAgreement from "./ConfirmAgreement";
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -65,8 +65,8 @@ const UploadSong: FunctionComponent = () => {
     creditors: [
       {
         email,
-        role,
         isCredited: true,
+        role,
         status: CollaborationStatus.Editing,
       },
     ],
@@ -170,32 +170,31 @@ const UploadSong: FunctionComponent = () => {
 
   return (
     <Container
-      maxWidth={false}
-      sx={{
+      maxWidth={ false }
+      sx={ {
         marginBottom: 8,
         marginX: [null, null, 3],
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
-      }}
+      } }
     >
-      <Typography variant="h3" fontWeight={800}>
+      <Typography fontWeight={ 800 } variant="h3">
         UPLOAD A SONG
       </Typography>
 
-      <Box pt={5} pb={7}>
+      <Box pb={ 7 } pt={ 5 }>
         <WizardForm
-          enableReinitialize={true}
-          initialValues={initialValues}
-          isProgressStepperVisible={true}
-          onSubmit={handleSubmit}
+          enableReinitialize={ true }
+          initialValues={ initialValues }
+          isProgressStepperVisible={ true }
           rootPath="home/upload-song"
-          routes={[
+          routes={ [
             {
               element: <BasicSongDetails />,
+              navigateOnSubmitStep: false,
+              onSubmitStep: handleSongInfo,
               path: "",
               progressStepTitle: "Basic details",
-              onSubmitStep: handleSongInfo,
-              navigateOnSubmitStep: false,
               validationSchema: Yup.object().shape({
                 audio: validations.audio,
                 coverArtUrl: validations.coverArtUrl,
@@ -234,7 +233,8 @@ const UploadSong: FunctionComponent = () => {
                 consentsToContract: validations.consentsToContract,
               }),
             },
-          ]}
+          ] }
+          onSubmit={ handleSubmit }
         />
       </Box>
     </Container>

@@ -8,6 +8,8 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
+import DeleteSongModal from "./DeleteSongModal";
+import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
@@ -32,8 +34,6 @@ import { setToastMessage } from "../../../modules/ui";
 import AdvancedSongDetails from "../../../pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "../../../pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "../../../pages/home/uploadSong/ConfirmAgreement";
-import DeleteSongModal from "./DeleteSongModal";
-import { SongRouteParams } from "./types";
 
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -148,8 +148,8 @@ const EditSong: FunctionComponent = () => {
         : [
             {
               email,
-              role,
               isCredited: true,
+              role,
               status: CollaborationStatus.Editing,
             },
           ],
@@ -272,67 +272,63 @@ const EditSong: FunctionComponent = () => {
 
   return (
     <>
-      <Stack direction="row" alignItems="center" gap={2.5}>
+      <Stack alignItems="center" direction="row" gap={ 2.5 }>
         <Button
           color="white"
-          onClick={() => navigate(-1)}
           variant="outlined"
           width="icon"
+          onClick={ () => navigate(-1) }
         >
-          <ArrowBackIcon sx={{ color: "white" }} />
+          <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
         <ProfileImage
           alt="Song cover art"
           height="90px"
-          src={coverArtUrl}
+          src={ coverArtUrl }
           width="90px"
         />
-        {title && <Typography variant="h3">{title.toUpperCase()}</Typography>}
+        { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
           <Button
             color="white"
-            disabled={!getIsSongDeletable(mintingStatus)}
-            onClick={() => {
-              setIsDeleteModalActive(true);
-            }}
-            sx={{ marginLeft: "auto" }}
+            disabled={ !getIsSongDeletable(mintingStatus) }
+            sx={ { marginLeft: "auto" } }
             variant="outlined"
             width="icon"
+            onClick={ () => {
+              setIsDeleteModalActive(true);
+            } }
           >
-            <DeleteIcon fontSize="small" sx={{ color: "white" }} />
+            <DeleteIcon fontSize="small" sx={ { color: "white" } } />
           </Button>
 
-          {isDeleteModalActive && (
+          { isDeleteModalActive && (
             <DeleteSongModal
-              primaryAction={() => {
+              primaryAction={ () => {
                 deleteSong({ songId });
-              }}
-              secondaryAction={() => {
+              } }
+              secondaryAction={ () => {
                 setIsDeleteModalActive(false);
-              }}
+              } }
             />
-          )}
+          ) }
         </>
       </Stack>
-      <Box pt={5} pb={7}>
+      <Box pb={ 7 } pt={ 5 }>
         <WizardForm
-          initialValues={initialValues}
-          onSubmit={(values, helpers) =>
-            handleSubmit("confirm", values, helpers)
-          }
-          enableReinitialize={true}
-          isProgressStepperVisible={true}
-          rootPath={`home/library/edit-song/${songId}`}
-          validateOnMount={true}
-          routes={[
+          enableReinitialize={ true }
+          initialValues={ initialValues }
+          isProgressStepperVisible={ true }
+          rootPath={ `home/library/edit-song/${songId}` }
+          routes={ [
             {
-              element: <BasicSongDetails isInEditMode={true} />,
-              path: "",
-              progressStepTitle: "Basic details",
+              element: <BasicSongDetails isInEditMode={ true } />,
               navigateOnSubmitStep: false,
               onSubmitStep: (values, helpers) =>
                 handleSubmit("basic-details", values, helpers),
+              path: "",
+              progressStepTitle: "Basic details",
               validationSchema: Yup.object().shape({
                 coverArtUrl: validations.coverArtUrl,
                 creditors: validations.creditors,
@@ -371,7 +367,11 @@ const EditSong: FunctionComponent = () => {
                 consentsToContract: validations.consentsToContract,
               }),
             },
-          ]}
+          ] }
+          validateOnMount={ true }
+          onSubmit={ (values, helpers) =>
+            handleSubmit("confirm", values, helpers)
+          }
         />
       </Box>
     </>
