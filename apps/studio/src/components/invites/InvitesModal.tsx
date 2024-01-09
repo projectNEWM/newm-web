@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Button, Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import InvitesTable from "./InvitesTable";
 import {
   CollaborationStatus,
   getHasOwnershipInvite,
@@ -32,7 +33,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../common";
-import InvitesTable from "./InvitesTable";
 
 const { Verified } = VerificationStatus;
 
@@ -96,62 +96,62 @@ const InvitesModal: FunctionComponent = () => {
 
   return isInvitesModalOpen && invites.length ? (
     <Dialog
-      fullWidth={true}
-      maxWidth={"lg"}
-      open={isInvitesModalOpen}
-      onClose={() => dispatch(setIsInvitesModalOpen(false))}
+      fullWidth={ true }
+      maxWidth={ "lg" }
+      open={ isInvitesModalOpen }
+      onClose={ () => dispatch(setIsInvitesModalOpen(false)) }
     >
-      <DialogTitle sx={{ backgroundColor: theme.colors.grey500, pb: 1, pt: 3 }}>
+      <DialogTitle sx={ { backgroundColor: theme.colors.grey500, pb: 1, pt: 3 } }>
         <Typography variant="body2">Invitations pending</Typography>
       </DialogTitle>
-      <DialogContentText sx={{ backgroundColor: theme.colors.grey500, px: 3 }}>
+      <DialogContentText sx={ { backgroundColor: theme.colors.grey500, px: 3 } }>
         <Stack
-          alignItems={[null, null, "center"]}
-          columnGap={1}
-          flexDirection={[null, null, "row"]}
+          alignItems={ [null, null, "center"] }
+          columnGap={ 1 }
+          flexDirection={ [null, null, "row"] }
           justifyContent="space-between"
-          rowGap={2}
+          rowGap={ 2 }
         >
-          <Typography variant="subtitle1">{subtitleText}</Typography>
+          <Typography variant="subtitle1">{ subtitleText }</Typography>
 
-          <Stack direction="row" gap={3}>
-            {!isVerified && (
+          <Stack direction="row" gap={ 3 }>
+            { !isVerified && (
               <Button
                 color="yellow"
-                onClick={handleVerifyProfile}
-                sx={{ textTransform: "none" }}
+                sx={ { textTransform: "none" } }
                 variant="outlined"
                 width="compact"
+                onClick={ handleVerifyProfile }
               >
                 Verify profile
               </Button>
-            )}
+            ) }
 
-            {isWalletAddressRequired && (
+            { isWalletAddressRequired && (
               <Button
                 color="yellow"
-                onClick={handleConnectWallet}
-                sx={{ textTransform: "none" }}
+                sx={ { textTransform: "none" } }
                 variant="outlined"
                 width="compact"
+                onClick={ handleConnectWallet }
               >
                 Connect wallet
               </Button>
-            )}
+            ) }
           </Stack>
         </Stack>
       </DialogContentText>
-      <DialogContent sx={{ backgroundColor: theme.colors.grey500 }}>
-        <InvitesTable invites={invites} disabled={isAcceptButtonDisabled} />
+      <DialogContent sx={ { backgroundColor: theme.colors.grey500 } }>
+        <InvitesTable disabled={ isAcceptButtonDisabled } invites={ invites } />
       </DialogContent>
       <DialogActions
-        sx={{ backgroundColor: theme.colors.grey600, px: 3, py: 2 }}
+        sx={ { backgroundColor: theme.colors.grey600, px: 3, py: 2 } }
       >
         <Button
           color="music"
-          onClick={() => dispatch(setIsInvitesModalOpen(false))}
           variant="secondary"
           width="compact"
+          onClick={ () => dispatch(setIsInvitesModalOpen(false)) }
         >
           Close
         </Button>

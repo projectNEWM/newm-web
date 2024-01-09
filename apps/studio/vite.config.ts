@@ -6,20 +6,20 @@ import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
 export default defineConfig({
   cacheDir: "../../node_modules/.vite/studio",
 
-  server: {
-    port: 3000,
+  plugins: [react(), nxViteTsPaths()],
+
+  preview: {
     host: "localhost",
+    port: 4300,
+  },
+
+  server: {
     fs: {
       allow: [searchForWorkspaceRoot(process.cwd())],
     },
-  },
-
-  preview: {
-    port: 4300,
     host: "localhost",
+    port: 3000,
   },
-
-  plugins: [react(), nxViteTsPaths()],
 
   // Uncomment this if you are using workers.
   // worker: {

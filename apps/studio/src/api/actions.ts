@@ -4,10 +4,10 @@
  */
 
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { NewmAuthResponse } from "../modules/session";
 import { disconnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import Cookies from "js-cookie";
 import { cloudinaryApi, lambdaApi, newmApi } from "./index";
+import { NewmAuthResponse } from "../modules/session";
 
 export const logOutExpiredSession = createAsyncThunk(
   "session/logOut",

@@ -13,28 +13,29 @@ import {
 import theme from "@newm-web/theme";
 import { Dispatch, SetStateAction } from "react";
 import { Typography } from "@newm-web/elements";
-import { TableDropdownSelect } from "../../../components";
 import { TablePagination } from "@newm-web/elements";
-import { Song } from "../../../modules/song";
 import AllCaughtUp from "./AllCaughtUp";
+import { TableDropdownSelect } from "../../../components";
+import { Song } from "../../../modules/song";
 
 interface SongRoyaltiesListProps {
-  songRoyalties: ReadonlyArray<Song>;
-  rows: number;
-  page: number;
-  rowsPerPage: number;
   lastRowOnPage: number;
+  page: number;
+  rows: number;
+  rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
+  songRoyalties: ReadonlyArray<Song>;
   totalCountOfSongs: number;
 }
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
+  },
+
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 
@@ -77,85 +78,85 @@ export default function SongRoyaltiesList({
 
   if (songRoyalties) {
     return (
-      <Box sx={{ maxWidth: TABLE_WIDTH }}>
+      <Box sx={ { maxWidth: TABLE_WIDTH } }>
         <TableContainer
-          sx={{
+          sx={ {
             maxWidth: TABLE_WIDTH,
-          }}
+          } }
         >
-          <Table size="small" aria-label="Song List">
+          <Table aria-label="Song List" size="small">
             <TableHead>
               <TableRow>
                 <StyledTableCell>
-                  <Typography fontWeight={700} fontSize={12}>
+                  <Typography fontSize={ 12 } fontWeight={ 700 }>
                     SONG
                   </Typography>
                 </StyledTableCell>
-                <StyledTableCell align="right" sx={{ pr: 0 }}>
+                <StyledTableCell align="right" sx={ { pr: 0 } }>
                   <TableDropdownSelect />
                 </StyledTableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {songRoyalties.map((row, index) => (
+              { songRoyalties.map((row, index) => (
                 <StyledTableRow
-                  key={row.id}
+                  key={ row.id }
                   style={
                     (index + 1) % 2 ? { background: theme.colors.grey600 } : {}
                   }
                 >
                   <StyledTableCell>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={ { alignItems: "center", display: "flex" } }>
                       <img
-                        style={{
-                          borderRadius: "50%",
-                          width: "40px",
-                          height: "40px",
-                        }}
-                        src={getResizedAlbumCoverImageUrl(row.coverArtUrl)}
                         alt="Album cover"
+                        src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
+                        style={ {
+                          borderRadius: "50%",
+                          height: "40px",
+                          width: "40px",
+                        } }
                       />
                       <Box
-                        sx={{
+                        sx={ {
+                          maxWidth: { sm: "unset", xs: "200px" },
                           paddingLeft: "12px",
                           whiteSpace: "nowrap",
-                          maxWidth: { xs: "200px", sm: "unset" },
-                        }}
+                        } }
                       >
-                        <Typography fontWeight={500}>{row.title}</Typography>
+                        <Typography fontWeight={ 500 }>{ row.title }</Typography>
                       </Box>
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <Typography fontSize={12} fontWeight={700}>
+                    <Typography fontSize={ 12 } fontWeight={ 700 }>
                       --.--
                     </Typography>
                   </StyledTableCell>
                 </StyledTableRow>
-              ))}
+              )) }
             </TableBody>
 
-            {totalCountOfSongs > rows && (
+            { totalCountOfSongs > rows && (
               <TablePagination
-                numberOfRows={totalCountOfSongs}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                lastRowOnPage={lastRowOnPage}
-                handlePageChange={handlePageChange}
-                colSpan={3}
+                cellStyles={ { paddingTop: "12px" } }
+                colSpan={ 3 }
+                handlePageChange={ handlePageChange }
+                lastRowOnPage={ lastRowOnPage }
+                numberOfRows={ totalCountOfSongs }
+                page={ page }
                 rows="songs"
-                cellStyles={{ paddingTop: "12px" }}
+                rowsPerPage={ rowsPerPage }
               />
-            )}
+            ) }
           </Table>
         </TableContainer>
 
-        {songRoyalties.length === 0 ? (
-          <Box sx={{ pt: 1 }}>
+        { songRoyalties.length === 0 ? (
+          <Box sx={ { pt: 1 } }>
             <AllCaughtUp />
           </Box>
-        ) : null}
+        ) : null }
       </Box>
     );
   } else {

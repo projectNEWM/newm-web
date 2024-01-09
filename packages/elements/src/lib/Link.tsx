@@ -12,11 +12,11 @@ const Link: ForwardRefRenderFunction<HTMLElement, LinkProps> = (
   ref
 ) => {
   return (
-    <RouterLink to={ to } replace={ replace } style={ { textDecoration: "none" } }>
+    <RouterLink replace={ replace } style={ { textDecoration: "none" } } to={ to }>
       <Typography
         { ...typographyProps }
-        ref={ ref }
         color={ color }
+        ref={ ref }
         sx={ {
           textDecoration: "underline",
           ...sx,

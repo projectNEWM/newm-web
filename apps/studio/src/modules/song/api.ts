@@ -1,5 +1,3 @@
-import { newmApi, CloudinaryUploadOptions, Tags } from "../../api";
-import { setToastMessage } from "../../modules/ui";
 import { CustomError, EmptyResponse } from "@newm-web/utils";
 import {
   CborHexResponse,
@@ -38,255 +36,119 @@ import {
   UploadSongAudioResponse,
   UploadSongResponse,
 } from "./types";
+import { CloudinaryUploadOptions, Tags, newmApi } from "../../api";
+import { setToastMessage } from "../../modules/ui";
 import { getApiErrorStatus } from "../../api/utils";
 
 export const emptySong: Song = {
+  album: "",
   archived: true,
-  id: "",
-  ownerId: "",
-  createdAt: "",
-  title: "",
-  genres: [],
-  moods: [],
+  compositionCopyrightOwner: "",
+  compositionCopyrightYear: "",
   coverArtUrl: "",
+  coverRemixSample: false,
+  createdAt: "",
   description: "",
   duration: undefined,
-  streamUrl: "",
-  nftPolicyId: "",
-  nftName: "",
-  mintingStatus: MintingStatus.Pending,
-  marketplaceStatus: MarketplaceStatus.NotSelling,
-  lyricsUrl: "",
-  album: "",
-  language: "",
-  compositionCopyrightYear: "",
-  compositionCopyrightOwner: "",
-  phonographicCopyrightYear: "",
-  phonographicCopyrightOwner: "",
-  parentalAdvisory: "",
+  genres: [],
+  id: "",
+  ipis: [],
   isrc: "",
   iswc: "",
-  ipis: [],
-  releaseDate: "",
+  language: "",
+  lyricsUrl: "",
+  marketplaceStatus: MarketplaceStatus.NotSelling,
+  mintingStatus: MintingStatus.Pending,
+  moods: [],
+  nftName: "",
+  nftPolicyId: "",
+  ownerId: "",
+  parentalAdvisory: "",
+  phonographicCopyrightOwner: "",
+  phonographicCopyrightYear: "",
   publicationDate: "",
-  coverRemixSample: false,
+  releaseDate: "",
+  streamUrl: "",
+  title: "",
 };
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
-    getSong: build.query<Song, string>({
-      query: (id) => ({
-        url: `v1/songs/${id}`,
-        method: "GET",
-      }),
-      providesTags: [Tags.Song],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching song info",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getSongStream: build.query<GetSongStreamResponse, Song>({
-      query: (song) => ({
-        url: `v1/songs/${song.id}/stream`,
-        method: "GET",
-        credentials: "include",
-      }),
-      providesTags: [Tags.Song],
-
-      // transform the response to add the song to make it easy to couple the song with the stream info
-      transformResponse: (
-        value: GetSongStreamData,
-        _meta: GetSongStreamData,
-        song: Song
-      ): GetSongStreamResponse => {
-        return {
-          song: song,
-          streamData: value,
-        };
-      },
-
-      async onQueryStarted(song, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching stream info",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getSongs: build.query<GetSongsResponse, GetSongsRequest>({
-      query: (params) => {
-        const { genres, ids, ownerIds, mintingStatuses, ...restOfParams } =
-          params;
-
-        return {
-          url: "v1/songs",
-          method: "GET",
-          params: {
-            ...restOfParams,
-            ...(genres ? { genres: genres.join(",") } : {}),
-            ...(ids ? { ids: ids.join(",") } : {}),
-            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
-            ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(",") }
-              : {}),
-          },
-        };
-      },
-      providesTags: [Tags.Song],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching songs",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getSongCount: build.query<GetSongCountResponse, GetSongCountRequest>({
-      query: (params) => {
-        const {
-          genres,
-          ids,
-          ownerIds,
-          moods,
-          mintingStatuses,
-          ...restOfParams
-        } = params;
-
-        return {
-          url: "v1/songs/count",
-          method: "GET",
-          params: {
-            ...restOfParams,
-            ...(genres ? { genres: genres.join(",") } : {}),
-            ...(ids ? { ids: ids.join(",") } : {}),
-            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
-            ...(moods ? { moods: moods.join(",") } : {}),
-            ...(mintingStatuses
-              ? { mintingStatuses: mintingStatuses.join(",") }
-              : {}),
-          },
-        };
-      },
-      providesTags: [Tags.Song],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching song count",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    uploadSong: build.mutation<UploadSongResponse, PostSongRequest>({
-      query: (body) => ({
-        url: "v1/songs",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: [Tags.Song],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while uploading your song",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    uploadSongAudio: build.mutation<
-      UploadSongAudioResponse,
-      UploadSongAudioRequest
+    createCollaboration: build.mutation<
+      CreateCollaborationResponse,
+      CreateCollaborationRequest
     >({
-      query: ({ onUploadProgress, songId, ...body }) => ({
-        url: `v1/songs/${songId}/audio`,
-        method: "POST",
-        body: body.audio,
-        onUploadProgress,
-      }),
-      invalidatesTags: [Tags.Song],
-
-      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+      invalidatesTags: [Tags.Collaboration],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
-          let message =
-            "There was a problem with your audio file, contact support";
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while adding a collaborator",
+              severity: "error",
+            })
+          );
+        }
+      },
 
-          const customError = error as CustomError;
-
-          if (customError.error?.data?.cause) {
-            message = customError.error.data.cause;
-          }
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/collaborations",
+      }),
+    }),
+    createMintSongPayment: build.mutation<
+      CborHexResponse,
+      CreateMintSongPaymentRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          const status = getApiErrorStatus(error);
+          const message =
+            status === 402
+              ? "Please add funds to your wallet and try again"
+              : "An error occurred while submitting your payment";
 
           dispatch(
             setToastMessage({
-              heading: "Bad audio file",
               message,
               severity: "error",
             })
           );
         }
       },
-    }),
-    patchSong: build.mutation<void, PatchSongRequest>({
-      query: ({ id, ...body }) => ({
-        url: `v1/songs/${id}`,
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: [Tags.Song],
 
+      query: ({ songId, ...body }) => ({
+        body,
+        method: "POST",
+        url: `v1/songs/${songId}/mint/payment`,
+      }),
+    }),
+    deleteCollaboration: build.mutation<void, string>({
+      invalidatesTags: [Tags.Collaboration],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (error) {
+        } catch (err) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while updating your song",
+              message: "An error occurred while removing a collaborator",
               severity: "error",
             })
           );
         }
       },
+
+      query: (collaborationId) => ({
+        method: "DELETE",
+        url: `v1/collaborations/${collaborationId}`,
+      }),
     }),
     deleteSong: build.mutation<void, DeleteSongRequest>({
-      query: ({ songId, archived = true }) => ({
-        url: `v1/songs/${songId}`,
-        method: "PATCH",
-        body: { archived },
-      }),
       invalidatesTags: [Tags.Song],
-
       async onQueryStarted({ showToast = true }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -310,41 +172,17 @@ export const extendedApi = newmApi.injectEndpoints({
           }
         }
       },
-    }),
-    processStreamTokenAgreement: build.mutation<
-      EmptyResponse,
-      ProcessStreamTokenAgreementRequest
-    >({
-      query: ({ songId, ...body }) => ({
-        url: `v1/songs/${songId}/agreement`,
-        method: "PUT",
-        body,
-      }),
-      invalidatesTags: [Tags.Song, Tags.Collaboration],
 
-      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "There was an error accepting your agreement",
-              severity: "error",
-            })
-          );
-        }
-      },
+      query: ({ songId, archived = true }) => ({
+        body: { archived },
+        method: "PATCH",
+        url: `v1/songs/${songId}`,
+      }),
     }),
     getCloudinarySignature: build.mutation<
       CloudinarySignatureResponse,
       CloudinaryUploadOptions
     >({
-      query: (body) => ({
-        url: "v1/cloudinary/sign",
-        method: "POST",
-        body,
-      }),
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -357,26 +195,17 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/cloudinary/sign",
+      }),
     }),
     getCollaborations: build.query<
       GetCollaborationsResponse,
       GetCollaborationsRequest
     >({
-      query: (params) => {
-        const { ids, statuses, ...restOfParams } = params;
-
-        return {
-          url: "v1/collaborations",
-          method: "GET",
-          params: {
-            ...restOfParams,
-            ...(ids ? { ids: ids.join(",") } : {}),
-            ...(statuses ? { statuses: statuses.join(",") } : {}),
-          },
-        };
-      },
-      providesTags: [Tags.Collaboration],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -389,122 +218,26 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-    }),
-    createCollaboration: build.mutation<
-      CreateCollaborationResponse,
-      CreateCollaborationRequest
-    >({
-      query: (body) => ({
-        url: "v1/collaborations",
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: [Tags.Collaboration],
+      providesTags: [Tags.Collaboration],
 
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while adding a collaborator",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
-      query: ({ collaborationId, ...body }) => ({
-        url: `v1/collaborations/${collaborationId}`,
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: [Tags.Collaboration],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while updating a collaborator",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    deleteCollaboration: build.mutation<void, string>({
-      query: (collaborationId) => ({
-        url: `v1/collaborations/${collaborationId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [Tags.Collaboration],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (err) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while removing a collaborator",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getCollaborators: build.query<
-      GetCollaboratorsResponse,
-      GetCollaboratorsRequest
-    >({
       query: (params) => {
-        const { emails, songIds, ...restOfParams } = params;
+        const { ids, statuses, ...restOfParams } = params;
 
         return {
-          url: "v1/collaborations/collaborators",
           method: "GET",
           params: {
             ...restOfParams,
-            ...(emails ? { emails: emails.join(",") } : {}),
-            ...(songIds ? { songIds: songIds.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(statuses ? { statuses: statuses.join(",") } : {}),
           },
+          url: "v1/collaborations",
         };
-      },
-      providesTags: [Tags.Collaboration],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching collaborators",
-              severity: "error",
-            })
-          );
-        }
       },
     }),
     getCollaboratorCount: build.query<
       GetCollaboratorCountResponse,
       GetCollaboratorCountRequest
     >({
-      query: (params) => {
-        const { songIds, ...restOfParams } = params;
-
-        return {
-          url: "v1/collaborations/collaborators/count",
-          method: "GET",
-          params: {
-            ...restOfParams,
-            ...(songIds ? { songIds: songIds.join(",") } : {}),
-          },
-        };
-      },
-      providesTags: [Tags.Collaboration],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -517,15 +250,316 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
+      providesTags: [Tags.Collaboration],
+
+      query: (params) => {
+        const { songIds, ...restOfParams } = params;
+
+        return {
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
+          },
+          url: "v1/collaborations/collaborators/count",
+        };
+      },
+    }),
+    getCollaborators: build.query<
+      GetCollaboratorsResponse,
+      GetCollaboratorsRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching collaborators",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Collaboration],
+
+      query: (params) => {
+        const { emails, songIds, ...restOfParams } = params;
+
+        return {
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(emails ? { emails: emails.join(",") } : {}),
+            ...(songIds ? { songIds: songIds.join(",") } : {}),
+          },
+          url: "v1/collaborations/collaborators",
+        };
+      },
+    }),
+    getEarliestReleaseDate: build.query<GetEarliestReleaseDateResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching earliest release date",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: () => ({
+        method: "GET",
+        url: "v1/distribution/earliest-release-date",
+      }),
+    }),
+    getMintSongEstimate: build.query<
+      GetMintSongEstimateResponse,
+      GetMintSongEstimateRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching your estimate",
+              severity: "error",
+            })
+          );
+        }
+      },
+      query: (params) => ({
+        method: "GET",
+        params,
+        url: "v1/songs/mint/estimate",
+      }),
+    }),
+    getMintSongPayment: build.query<CborHexResponse, string>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching your payment",
+              severity: "error",
+            })
+          );
+        }
+      },
+      query: (songId) => ({
+        method: "GET",
+        songId,
+        url: `v1/songs/${songId}/mint/payment`,
+      }),
+    }),
+    getSong: build.query<Song, string>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching song info",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Song],
+
+      query: (id) => ({
+        method: "GET",
+        url: `v1/songs/${id}`,
+      }),
+    }),
+    getSongCount: build.query<GetSongCountResponse, GetSongCountRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching song count",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Song],
+
+      query: (params) => {
+        const {
+          genres,
+          ids,
+          ownerIds,
+          moods,
+          mintingStatuses,
+          ...restOfParams
+        } = params;
+
+        return {
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
+            ...(moods ? { moods: moods.join(",") } : {}),
+            ...(mintingStatuses
+              ? { mintingStatuses: mintingStatuses.join(",") }
+              : {}),
+          },
+          url: "v1/songs/count",
+        };
+      },
+    }),
+    getSongStream: build.query<GetSongStreamResponse, Song>({
+      async onQueryStarted(song, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching stream info",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Song],
+
+      query: (song) => ({
+        credentials: "include",
+        method: "GET",
+        url: `v1/songs/${song.id}/stream`,
+      }),
+
+      // transform the response to add the song to make it easy to couple the song with the stream info
+      transformResponse: (
+        value: GetSongStreamData,
+        _meta: GetSongStreamData,
+        song: Song
+      ): GetSongStreamResponse => {
+        return {
+          song: song,
+          streamData: value,
+        };
+      },
+    }),
+    getSongs: build.query<GetSongsResponse, GetSongsRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+      providesTags: [Tags.Song],
+
+      query: (params) => {
+        const { genres, ids, ownerIds, mintingStatuses, ...restOfParams } =
+          params;
+
+        return {
+          method: "GET",
+          params: {
+            ...restOfParams,
+            ...(genres ? { genres: genres.join(",") } : {}),
+            ...(ids ? { ids: ids.join(",") } : {}),
+            ...(ownerIds ? { ownerIds: ownerIds.join(",") } : {}),
+            ...(mintingStatuses
+              ? { mintingStatuses: mintingStatuses.join(",") }
+              : {}),
+          },
+          url: "v1/songs",
+        };
+      },
+    }),
+    getUserWalletSongs: build.query<
+      GetUserWalletSongsResponse,
+      GetUserWalletSongsRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (params) => {
+        const { utxoCborHexList, ...restOfParams } = params;
+
+        return {
+          body: utxoCborHexList,
+          method: "POST",
+          params: restOfParams,
+          url: "v1/cardano/songs",
+        };
+      },
+    }),
+    patchSong: build.mutation<void, PatchSongRequest>({
+      invalidatesTags: [Tags.Song],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while updating your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: ({ id, ...body }) => ({
+        body,
+        method: "PATCH",
+        url: `v1/songs/${id}`,
+      }),
+    }),
+    processStreamTokenAgreement: build.mutation<
+      EmptyResponse,
+      ProcessStreamTokenAgreementRequest
+    >({
+      invalidatesTags: [Tags.Song, Tags.Collaboration],
+      async onQueryStarted(_body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "There was an error accepting your agreement",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: ({ songId, ...body }) => ({
+        body,
+        method: "PUT",
+        url: `v1/songs/${songId}/agreement`,
+      }),
     }),
     replyToCollaboration: build.mutation<void, ReplyCollaborationRequest>({
-      query: ({ collaborationId, ...body }) => ({
-        url: `v1/collaborations/${collaborationId}/reply`,
-        method: "PUT",
-        body,
-      }),
       invalidatesTags: [Tags.Collaboration],
-
       async onQueryStarted({ accepted }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -545,13 +579,15 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-    }),
-    getMintSongPayment: build.query<CborHexResponse, string>({
-      query: (songId) => ({
-        url: `v1/songs/${songId}/mint/payment`,
-        method: "GET",
-        songId,
+
+      query: ({ collaborationId, ...body }) => ({
+        body,
+        method: "PUT",
+        url: `v1/collaborations/${collaborationId}/reply`,
       }),
+    }),
+    submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
+      invalidatesTags: [Tags.Song],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -564,125 +600,89 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-    }),
-    getMintSongEstimate: build.query<
-      GetMintSongEstimateResponse,
-      GetMintSongEstimateRequest
-    >({
-      query: (params) => ({
-        url: "v1/songs/mint/estimate",
-        method: "GET",
-        params,
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/cardano/submitTransaction",
       }),
+    }),
+    updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
+      invalidatesTags: [Tags.Collaboration],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching your estimate",
+              message: "An error occurred while updating a collaborator",
               severity: "error",
             })
           );
         }
       },
-    }),
-    createMintSongPayment: build.mutation<
-      CborHexResponse,
-      CreateMintSongPaymentRequest
-    >({
-      query: ({ songId, ...body }) => ({
-        url: `v1/songs/${songId}/mint/payment`,
-        method: "POST",
-        body,
-      }),
 
+      query: ({ collaborationId, ...body }) => ({
+        body,
+        method: "PATCH",
+        url: `v1/collaborations/${collaborationId}`,
+      }),
+    }),
+    uploadSong: build.mutation<UploadSongResponse, PostSongRequest>({
+      invalidatesTags: [Tags.Song],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
-          const status = getApiErrorStatus(error);
-          const message =
-            status === 402
-              ? "Please add funds to your wallet and try again"
-              : "An error occurred while submitting your payment";
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while uploading your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/songs",
+      }),
+    }),
+    uploadSongAudio: build.mutation<
+      UploadSongAudioResponse,
+      UploadSongAudioRequest
+    >({
+      invalidatesTags: [Tags.Song],
+      async onQueryStarted(_params, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          let message =
+            "There was a problem with your audio file, contact support";
+
+          const customError = error as CustomError;
+
+          if (customError.error?.data?.cause) {
+            message = customError.error.data.cause;
+          }
 
           dispatch(
             setToastMessage({
+              heading: "Bad audio file",
               message,
               severity: "error",
             })
           );
         }
       },
-    }),
-    submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
-      query: (body) => ({
-        url: "v1/cardano/submitTransaction",
+
+      query: ({ onUploadProgress, songId, ...body }) => ({
+        body: body.audio,
         method: "POST",
-        body,
+        onUploadProgress,
+        url: `v1/songs/${songId}/audio`,
       }),
-      invalidatesTags: [Tags.Song],
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching your payment",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getEarliestReleaseDate: build.query<GetEarliestReleaseDateResponse, void>({
-      query: () => ({
-        url: "v1/distribution/earliest-release-date",
-        method: "GET",
-      }),
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching earliest release date",
-              severity: "error",
-            })
-          );
-        }
-      },
-    }),
-    getUserWalletSongs: build.query<
-      GetUserWalletSongsResponse,
-      GetUserWalletSongsRequest
-    >({
-      query: (params) => {
-        const { utxoCborHexList, ...restOfParams } = params;
-
-        return {
-          url: "v1/cardano/songs",
-          method: "POST",
-          params: restOfParams,
-          body: utxoCborHexList,
-        };
-      },
-
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching songs",
-              severity: "error",
-            })
-          );
-        }
-      },
     }),
   }),
 });

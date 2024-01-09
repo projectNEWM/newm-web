@@ -5,13 +5,13 @@ function createData(
   royalties_accrued: number
 ) {
   id = id + 1;
-  return { id, song_name, song_cover_art, royalties_accrued };
+  return { id, royalties_accrued, song_cover_art, song_name };
 }
 export interface Royalties {
   id: number;
-  song_name: string;
-  song_cover_art: string;
   royalties_accrued: number;
+  song_cover_art: string;
+  song_name: string;
 }
 export interface RoyaltiesResponse {
   data: Royalties[];

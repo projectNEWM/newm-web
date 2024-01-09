@@ -4,19 +4,18 @@ import theme from "@newm-web/theme";
 import TextInput, { TextInput as UnwrappedTextInput } from "../TextInput";
 
 export default {
-  title: "Text Input",
   component: UnwrappedTextInput,
+  title: "Text Input",
 };
 
 export const Variations = () => (
   <Box maxWidth={ theme.inputField.maxWidth }>
-    <Stack mt={ 2 } direction="column" spacing={ 4 }>
+    <Stack direction="column" mt={ 2 } spacing={ 4 }>
       <TextInput label="With label" placeholder="Hint" />
 
       <TextInput placeholder="Without label" />
 
       <TextInput
-        placeholder="With icon"
         endAdornment={
           <IconButton sx={ { padding: 0, paddingRight: "1rem" } }>
             <VisibilityOutlinedIcon
@@ -25,13 +24,14 @@ export const Variations = () => (
             />
           </IconButton>
         }
+        placeholder="With icon"
       />
 
       <TextInput placeholder="Disabled" disabled />
 
       <TextInput
-        placeholder="With error"
         errorMessage="This is an error message"
+        placeholder="With error"
       />
     </Stack>
   </Box>

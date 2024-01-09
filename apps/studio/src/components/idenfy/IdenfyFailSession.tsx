@@ -14,25 +14,25 @@ const IdenfyFailSession: FunctionComponent = () => {
 
   return (
     <Stack
-      sx={{
+      sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
         flexGrow: 1,
-        justifyContent: "center"
-      }}
+        justifyContent: "center",
+      } }
     >
       <Typography variant="h1">OOPS!</Typography>
       <Typography
-        sx={{
+        sx={ {
           fontWeight: 400,
           my: [2, 3, 4],
-          px: [2, 3]
-        }}
+          px: [2, 3],
+        } }
       >
         Sorry, we couldn&apos;t verify your profile. Please check your email and
         review your details. Try again after 30 minutes.
       </Typography>
-      <Button onClick={handleClick}>Got it</Button>
+      <Button onClick={ handleClick }>Got it</Button>
     </Stack>
   );
 };

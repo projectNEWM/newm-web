@@ -1,6 +1,3 @@
-import Switch from "./Switch";
-import Tooltip from "./styled/Tooltip";
-import Typography from "./Typography";
 import {
   IconButton,
   Stack,
@@ -10,13 +7,16 @@ import {
 } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import HelpIcon from "@mui/icons-material/Help";
+import Switch from "./Switch";
+import Tooltip from "./styled/Tooltip";
+import Typography from "./Typography";
 
 export interface SwitchInputProps extends SwitchProps {
-  readonly title: string;
+  readonly children?: ReactNode;
   readonly description?: string;
   readonly includeBorder?: boolean;
+  readonly title: string;
   readonly tooltipText?: string;
-  readonly children?: ReactNode;
 }
 
 /**
@@ -41,49 +41,49 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
     : {};
 
   return (
-    <Stack sx={{ p: 2, ...borderStyles }}>
+    <Stack sx={ { p: 2, ...borderStyles } }>
       <Stack
-        sx={{
+        sx={ {
           alignItems: "center",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-        }}
+        } }
       >
-        <Stack pr={[0, 0, 4]}>
+        <Stack pr={ [0, 0, 4] }>
           <Stack display="flex" flexDirection="row">
             <Typography
-              pr={1}
               color="white"
-              variant={description ? "body1" : "subtitle1"}
+              pr={ 1 }
+              variant={ description ? "body1" : "subtitle1" }
             >
-              {title}
+              { title }
             </Typography>
 
-            {!!tooltipText && (
-              <Tooltip title={tooltipText}>
-                <IconButton sx={{ padding: [1, 1, 0] }}>
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: [1, 1, 0] } }>
                   <HelpIcon
-                    sx={{
+                    sx={ {
                       color: theme.colors.grey100,
                       height: "18px",
                       width: "18px",
-                    }}
+                    } }
                   />
                 </IconButton>
               </Tooltip>
-            )}
+            ) }
           </Stack>
 
-          {!!description && (
-            <Typography pt={0.75} pr={1} variant="subtitle2">
-              {description}
+          { !!description && (
+            <Typography pr={ 1 } pt={ 0.75 } variant="subtitle2">
+              { description }
             </Typography>
-          )}
+          ) }
         </Stack>
-        <Switch {...props} />
+        <Switch { ...props } />
       </Stack>
-      {props.checked ? children : null}
+      { props.checked ? children : null }
     </Stack>
   );
 };

@@ -18,10 +18,10 @@ const Owners: FunctionComponent = () => (
     } }
   >
     <Routes>
-      <Route path="/" element={ <OwnersList /> } />
-      <Route path="/:userId" element={ <Owner /> } />
+      <Route element={ <OwnersList /> } path="/" />
+      <Route element={ <Owner /> } path="/:userId" />
 
-      <Route path="*" element={ <Navigate to="/home/collaborators" replace /> } />
+      <Route element={ <Navigate to="/home/collaborators" replace /> } path="*" />
     </Routes>
   </Container>
 );

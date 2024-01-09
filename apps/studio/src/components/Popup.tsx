@@ -3,17 +3,17 @@ import { keyframes, styled } from "@mui/material/styles";
 
 interface PopupProps {
   children: React.ReactNode;
+  height: string;
   openPopup: boolean;
   setOpenPopup: (open: boolean) => void;
   width?: string;
-  height: string;
 }
 
 const Popup = (props: PopupProps) => {
   const { children, openPopup, width, height } = props;
 
   return (
-    <Dialog open={ openPopup } maxWidth={ false }>
+    <Dialog maxWidth={ false } open={ openPopup }>
       <StyledDialogContent
         sx={ {
           height: height,

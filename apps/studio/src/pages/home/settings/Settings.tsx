@@ -2,23 +2,23 @@ import { FunctionComponent } from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine } from "@newm-web/elements";
-import { LogoutButton } from "../../../components";
 import { PasswordInputField } from "@newm-web/elements";
-import {
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-  commonYupValidation,
-} from "../../../common";
 import { getUpdatedValues } from "@newm-web/utils";
 import { useWindowDimensions } from "@newm-web/utils";
 import * as Yup from "yup";
+import theme from "@newm-web/theme";
+import DeleteAccountDialog from "./DeleteAccountDialog";
 import {
   ChangePasswordRequest,
   emptyProfile,
   useChangePasswordThunk,
   useGetProfileQuery,
 } from "../../../modules/session";
-import theme from "@newm-web/theme";
-import DeleteAccountDialog from "./DeleteAccountDialog";
+import {
+  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
+  commonYupValidation,
+} from "../../../common";
+import { LogoutButton } from "../../../components";
 
 const Settings: FunctionComponent = () => {
   const windowWidth = useWindowDimensions()?.width;
@@ -31,9 +31,9 @@ const Settings: FunctionComponent = () => {
   const [changePassword, { isLoading }] = useChangePasswordThunk();
 
   const initialValues: ChangePasswordRequest = {
+    confirmPassword: "",
     currentPassword: "",
     newPassword: "",
-    confirmPassword: "",
   };
 
   /**
@@ -67,15 +67,15 @@ const Settings: FunctionComponent = () => {
    */
   const validationSchema = isSocialLogin
     ? Yup.object({
+        confirmPassword,
         newPassword: commonYupValidation.newPassword.required(
           "New password is required"
         ),
-        confirmPassword,
       })
     : Yup.object({
+        confirmPassword,
         currentPassword: Yup.string().required("Current password is required"),
         newPassword,
-        confirmPassword,
       });
 
   /**
@@ -92,30 +92,30 @@ const Settings: FunctionComponent = () => {
 
   return (
     <Container
-      maxWidth={false}
-      sx={{
+      maxWidth={ false }
+      sx={ {
         marginX: [null, null, 3],
-        paddingBottom: 8,
         overflow: "auto",
+        paddingBottom: 8,
         textAlign: ["center", "center", "initial"],
-      }}
+      } }
     >
-      <Stack direction="row" justifyContent="space-between" mb={8}>
-        <Typography variant="h3" fontWeight={800}>
+      <Stack direction="row" justifyContent="space-between" mb={ 8 }>
+        <Typography fontWeight={ 800 } variant="h3">
           SETTINGS
-        </Typography>{" "}
+        </Typography>{ " " }
         <Stack>
           <LogoutButton />
         </Stack>
       </Stack>
 
       <Formik
-        enableReinitialize={true}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
+        enableReinitialize={ true }
+        initialValues={ initialValues }
+        validationSchema={ validationSchema }
+        onSubmit={ handleSubmit }
       >
-        {({
+        { ({
           dirty,
           values: { currentPassword, newPassword, confirmPassword },
           handleReset,
@@ -129,49 +129,49 @@ const Settings: FunctionComponent = () => {
           return (
             <Form>
               <Box
-                sx={{
-                  maxWidth: { xs: "340px", lg: "700px" },
+                sx={ {
                   margin: "0 auto",
-                }}
+                  maxWidth: { lg: "700px", xs: "340px" },
+                } }
               >
-                <Stack rowGap={10}>
-                  <Stack rowGap={2}>
-                    <Typography variant="h4" fontWeight={700}>
+                <Stack rowGap={ 10 }>
+                  <Stack rowGap={ 2 }>
+                    <Typography fontWeight={ 700 } variant="h4">
                       CHANGE PASSWORD
                     </Typography>
-                    {isSocialLogin || isGetUserProfileLoading ? null : (
+                    { isSocialLogin || isGetUserProfileLoading ? null : (
                       <PasswordInputField
                         label="CURRENT PASSWORD"
                         name="currentPassword"
                         placeholder="Password"
-                        showEndAdornment={showEndAdornment}
+                        showEndAdornment={ showEndAdornment }
                       />
-                    )}
+                    ) }
 
                     <Stack
-                      sx={{
-                        flexDirection: { xs: "column", lg: "row" },
+                      sx={ {
+                        flexDirection: { lg: "row", xs: "column" },
                         justifyContent: "space-between",
                         rowGap: 2,
-                      }}
+                      } }
                     >
                       <PasswordInputField
                         label="NEW PASSWORD"
                         name="newPassword"
                         placeholder="New password"
-                        showEndAdornment={showEndAdornment}
+                        showEndAdornment={ showEndAdornment }
                       />
                       <PasswordInputField
                         label="RETYPE NEW PASSWORD"
                         name="confirmPassword"
                         placeholder="New password"
-                        showEndAdornment={showEndAdornment}
+                        showEndAdornment={ showEndAdornment }
                       />
                     </Stack>
                   </Stack>
-                  <Stack justifyContent="space-between" rowGap={2}>
-                    <Stack rowGap={0.5}>
-                      <Typography variant="h4" fontWeight={700}>
+                  <Stack justifyContent="space-between" rowGap={ 2 }>
+                    <Stack rowGap={ 0.5 }>
+                      <Typography fontWeight={ 700 } variant="h4">
                         DELETE ACCOUNT
                       </Typography>
                       <Typography variant="subtitle1">
@@ -181,18 +181,18 @@ const Settings: FunctionComponent = () => {
                     <DeleteAccountDialog />
                   </Stack>
 
-                  <Stack justifyContent="space-between" rowGap={2}>
-                    <Typography variant="h4" fontWeight={700}>
+                  <Stack justifyContent="space-between" rowGap={ 2 }>
+                    <Typography fontWeight={ 700 } variant="h4">
                       ABOUT
                     </Typography>
                     <Link
-                      href={NEWM_STUDIO_TERMS_OF_SERVICE_URL}
-                      target="_blank"
+                      color={ theme.colors.grey100 }
+                      href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
                       rel="noopener"
-                      color={theme.colors.grey100}
-                      variant="subtitle1"
+                      sx={ { alignSelf: ["center", "center", "flex-start"] } }
+                      target="_blank"
                       underline="none"
-                      sx={{ alignSelf: ["center", "center", "flex-start"] }}
+                      variant="subtitle1"
                     >
                       Terms of Service
                     </Link>
@@ -200,33 +200,33 @@ const Settings: FunctionComponent = () => {
                 </Stack>
 
                 <HorizontalLine
-                  sx={{
+                  sx={ {
                     mt: 5,
-                  }}
+                  } }
                 />
                 <Stack
-                  sx={{
+                  sx={ {
                     columnGap: 2,
-                    flexDirection: { sx: "null", lg: "row" },
+                    flexDirection: { lg: "row", sx: "null" },
                     mt: 5,
                     rowGap: 2,
-                  }}
+                  } }
                 >
                   <Button
-                    disabled={!dirty}
+                    color="music"
+                    disabled={ !dirty }
+                    variant="secondary"
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.lg
                         ? "compact"
                         : "default"
                     }
-                    variant="secondary"
-                    color="music"
-                    onClick={handleReset}
+                    onClick={ handleReset }
                   >
                     Cancel
                   </Button>
                   <Button
-                    isLoading={isLoading}
+                    isLoading={ isLoading }
                     type="submit"
                     width={
                       windowWidth && windowWidth > theme.breakpoints.values.lg
@@ -240,7 +240,7 @@ const Settings: FunctionComponent = () => {
               </Box>
             </Form>
           );
-        }}
+        } }
       </Formik>
     </Container>
   );

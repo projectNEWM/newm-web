@@ -1,11 +1,11 @@
 import theme from "@newm-web/theme";
-import { styled, css } from "@mui/material/styles";
+import { css, styled } from "@mui/material/styles";
 import { ReactNode } from "react";
 import { WidthType } from "@newm-web/utils";
 
 interface Props {
-  readonly widthType?: WidthType;
   readonly children?: ReactNode;
+  readonly widthType?: WidthType;
 }
 
 const NoResultsText = styled("span")`

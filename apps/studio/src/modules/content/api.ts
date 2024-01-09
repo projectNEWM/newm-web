@@ -1,13 +1,10 @@
-import { newmApi, Tags } from "../../api";
-import { setToastMessage } from "../../modules/ui";
 import { Genre, Language, Role } from "./types";
+import { Tags, newmApi } from "../../api";
+import { setToastMessage } from "../../modules/ui";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
     getGenres: build.query<string[], void>({
-      query: () => ({ url: "v1/distribution/genres", method: "GET" }),
-      providesTags: [Tags.Genres],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -20,6 +17,9 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
+      providesTags: [Tags.Genres],
+
+      query: () => ({ method: "GET", url: "v1/distribution/genres" }),
       transformResponse: (response: Genre[]) => {
         const extracted = response.map((genre) => genre.name);
 
@@ -27,32 +27,24 @@ export const extendedApi = newmApi.injectEndpoints({
         return extracted.sort((a, b) => a.localeCompare(b));
       },
     }),
-    getRoles: build.query<string[], void>({
-      query: () => ({ url: "v1/distribution/roles", method: "GET" }),
-      providesTags: [Tags.Roles],
-
+    getLanguages: build.query<Language[], void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching roles",
+              message: "An error occurred while fetching languages",
               severity: "error",
             })
           );
         }
       },
-      transformResponse: (response: Role[]) => {
-        const extracted = response.map((role) => role.name);
+      providesTags: [Tags.Languages],
 
-        // Sort alphabetically
-        return extracted.sort((a, b) => a.localeCompare(b));
-      },
+      query: () => ({ method: "GET", url: "v1/distribution/languages" }),
     }),
     getMoods: build.query<Array<string>, void>({
-      query: () => ({ url: "contents/predefined-moods.json", method: "GET" }),
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -65,22 +57,30 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-    }),
-    getLanguages: build.query<Language[], void>({
-      query: () => ({ url: "v1/distribution/languages", method: "GET" }),
-      providesTags: [Tags.Languages],
 
+      query: () => ({ method: "GET", url: "contents/predefined-moods.json" }),
+    }),
+    getRoles: build.query<string[], void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching languages",
+              message: "An error occurred while fetching roles",
               severity: "error",
             })
           );
         }
+      },
+      providesTags: [Tags.Roles],
+
+      query: () => ({ method: "GET", url: "v1/distribution/roles" }),
+      transformResponse: (response: Role[]) => {
+        const extracted = response.map((role) => role.name);
+
+        // Sort alphabetically
+        return extracted.sort((a, b) => a.localeCompare(b));
       },
     }),
   }),

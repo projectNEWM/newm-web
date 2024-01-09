@@ -1,21 +1,9 @@
 import { asThunkHook } from "@newm-web/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GenerateArtistAgreementBody, lambdaApi } from "../../api";
-import { history } from "../../common/history";
-import { uploadToCloudinary } from "../../api/cloudinary/utils";
-import {
-  clearProgressBarModal,
-  setIsProgressBarModalOpen,
-  setProgressBarModal,
-  setToastMessage,
-} from "../../modules/ui";
-import { sessionApi } from "../../modules/session";
-import { UploadSongError } from "../../common";
 import { isCloudinaryUrl } from "@newm-web/utils";
 import { SilentError } from "@newm-web/utils";
 import { sleep } from "@newm-web/utils";
 import { AxiosProgressEvent } from "axios";
-import { handleUploadProgress } from "../../modules/ui/utils";
 import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Collaboration,
@@ -38,6 +26,18 @@ import {
   mapCollaboratorsToCollaborations,
   submitMintSongPayment,
 } from "./utils";
+import { handleUploadProgress } from "../../modules/ui/utils";
+import { UploadSongError } from "../../common";
+import { sessionApi } from "../../modules/session";
+import {
+  clearProgressBarModal,
+  setIsProgressBarModalOpen,
+  setProgressBarModal,
+  setToastMessage,
+} from "../../modules/ui";
+import { uploadToCloudinary } from "../../api/cloudinary/utils";
+import { history } from "../../common/history";
+import { GenerateArtistAgreementBody, lambdaApi } from "../../api";
 
 /**
  * Retreive a Cloudinary signature, use the signature to upload
@@ -61,12 +61,12 @@ export const uploadSong = createAsyncThunk(
         const totalIncrement = body.isMinting ? 25 : 45;
 
         handleUploadProgress({
-          progress,
           baseProgress: 0,
-          totalIncrement,
-          message: "Uploading song image...",
           disclaimer: progressDisclaimer,
           dispatch,
+          message: "Uploading song image...",
+          progress,
+          totalIncrement,
         });
       };
 
@@ -96,9 +96,9 @@ export const uploadSong = createAsyncThunk(
 
       // Convert barcodeType to the value expected by the API
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
-        UPC: "Upc",
         EAN: "Ean",
         JAN: "Jan",
+        UPC: "Upc",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
@@ -113,32 +113,32 @@ export const uploadSong = createAsyncThunk(
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
-          title: body.title,
-          genres: body.genres,
-          moods: body.moods,
-          coverArtUrl,
-          lyricsUrl: body.lyricsUrl,
-          description: body.description,
           album: body.album,
-          track: body.track,
-          language: body.language,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          barcodeNumber: body.barcodeNumber || undefined,
+          barcodeType,
           compositionCopyrightOwner:
             body.compositionCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          parentalAdvisory,
-          barcodeType,
-          barcodeNumber: body.barcodeNumber || undefined,
+          compositionCopyrightYear:
+            body.compositionCopyrightYear || releaseYear,
+          coverArtUrl,
+          coverRemixSample: body.isCoverRemixSample,
+          description: body.description,
+          genres: body.genres,
+          ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
-          ipis,
-          releaseDate: body.releaseDate || undefined,
+          language: body.language,
+          lyricsUrl: body.lyricsUrl,
+          moods: body.moods,
+          parentalAdvisory,
+          phonographicCopyrightOwner:
+            body.phonographicCopyrightOwner || defaultCopyright,
+          phonographicCopyrightYear:
+            body.phonographicCopyrightYear || releaseYear,
           publicationDate: body.publicationDate || undefined,
-          coverRemixSample: body.isCoverRemixSample,
+          releaseDate: body.releaseDate || undefined,
+          title: body.title,
+          track: body.track,
         })
       );
 
@@ -152,20 +152,20 @@ export const uploadSong = createAsyncThunk(
         const totalIncrement = body.isMinting ? 50 : 50;
 
         handleUploadProgress({
-          progress,
           baseProgress,
-          totalIncrement,
-          message: "Uploading song audio...",
           disclaimer: progressDisclaimer,
           dispatch,
+          message: "Uploading song audio...",
+          progress,
+          totalIncrement,
         });
       };
 
       const uploadSongAudioResponse = await dispatch(
         songApi.endpoints.uploadSongAudio.initiate({
-          songId,
           audio: body.audio,
           onUploadProgress: onUploadSongProgress,
+          songId,
         })
       );
 
@@ -183,12 +183,12 @@ export const uploadSong = createAsyncThunk(
           collaborators.map((collaboration) => {
             return dispatch(
               songApi.endpoints.createCollaboration.initiate({
-                songId,
+                credited: collaboration.isCredited,
                 email: collaboration.email,
+                featured: collaboration.isFeatured,
                 role: collaboration.role,
                 royaltyRate: collaboration.royaltyRate,
-                credited: collaboration.isCredited,
-                featured: collaboration.isFeatured,
+                songId,
               })
             );
           })
@@ -200,10 +200,10 @@ export const uploadSong = createAsyncThunk(
 
         dispatch(
           setProgressBarModal({
-            progress: 85,
-            message: "Processing artist agreement...",
-            disclaimer: progressDisclaimer,
             animationSeconds: 4,
+            disclaimer: progressDisclaimer,
+            message: "Processing artist agreement...",
+            progress: 85,
           })
         );
 
@@ -222,8 +222,8 @@ export const uploadSong = createAsyncThunk(
 
         const processStreamTokenAgreementResponse = await dispatch(
           songApi.endpoints.processStreamTokenAgreement.initiate({
-            songId,
             accepted: body.consentsToContract,
+            songId,
           })
         );
 
@@ -233,12 +233,12 @@ export const uploadSong = createAsyncThunk(
 
         dispatch(
           setProgressBarModal({
-            progress: 95,
+            animationSeconds: 6,
+            disclaimer: progressDisclaimer,
             message:
               "Requesting minting payment. " +
               "Please sign transaction when prompted.",
-            disclaimer: progressDisclaimer,
-            animationSeconds: 6,
+            progress: 95,
           })
         );
 
@@ -248,13 +248,13 @@ export const uploadSong = createAsyncThunk(
       // display most recent status and allow progress animation to complete
       dispatch(
         setProgressBarModal({
-          progress: 100,
+          animationSeconds: 0.25,
+          disclaimer: progressDisclaimer,
           message: body.isMinting
             ? "Requesting minting payment. " +
               "Please sign transaction when prompted."
             : "Uploading song audio...",
-          disclaimer: progressDisclaimer,
-          animationSeconds: 0.25,
+          progress: 100,
         })
       );
       await sleep(250);
@@ -266,7 +266,7 @@ export const uploadSong = createAsyncThunk(
       if (songId) {
         try {
           await dispatch(
-            songApi.endpoints.deleteSong.initiate({ songId, showToast: false })
+            songApi.endpoints.deleteSong.initiate({ showToast: false, songId })
           );
         } catch (error) {
           // do nothing
@@ -389,9 +389,9 @@ export const patchSong = createAsyncThunk(
 
       // Convert barcodeType to the value expected by the API
       const barcodeTypeMapping: { [key: string]: string | undefined } = {
-        UPC: "Upc",
         EAN: "Ean",
         JAN: "Jan",
+        UPC: "Upc",
       };
 
       // if barcodeNumber isn't present, barcodeType shouldn't be provided
@@ -406,32 +406,32 @@ export const patchSong = createAsyncThunk(
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
-          id: body.id,
-          title: body.title,
-          genres: body.genres,
-          moods: body.moods,
-          lyricsUrl: body.lyricsUrl,
-          description: body.description,
           album: body.album,
-          track: body.track,
-          language: body.language,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          barcodeNumber: body.barcodeNumber || undefined,
+          barcodeType,
           compositionCopyrightOwner:
             body.compositionCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          parentalAdvisory,
-          barcodeType,
-          barcodeNumber: body.barcodeNumber || undefined,
+          compositionCopyrightYear:
+            body.compositionCopyrightYear || releaseYear,
+          coverArtUrl,
+          description: body.description,
+          genres: body.genres,
+          id: body.id,
+          ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
-          ipis,
-          releaseDate: body.releaseDate || undefined,
+          language: body.language,
+          lyricsUrl: body.lyricsUrl,
+          moods: body.moods,
+          parentalAdvisory,
+          phonographicCopyrightOwner:
+            body.phonographicCopyrightOwner || defaultCopyright,
+          phonographicCopyrightYear:
+            body.phonographicCopyrightYear || releaseYear,
           publicationDate: body.publicationDate || undefined,
-          coverArtUrl,
+          releaseDate: body.releaseDate || undefined,
+          title: body.title,
+          track: body.track,
         })
       );
 
@@ -444,10 +444,10 @@ export const patchSong = createAsyncThunk(
       ) {
         await dispatch(
           updateCollaborations({
-            id: body.id,
-            owners: body.owners || [],
             creditors: body.creditors || [],
             featured: body.featured || [],
+            id: body.id,
+            owners: body.owners || [],
           })
         );
       }
@@ -481,8 +481,8 @@ export const patchSong = createAsyncThunk(
         if (body.consentsToContract) {
           const processStreamTokenAgreementResponse = await dispatch(
             songApi.endpoints.processStreamTokenAgreement.initiate({
-              songId: body.id,
               accepted: body.consentsToContract,
+              songId: body.id,
             })
           );
 
@@ -635,12 +635,12 @@ export const updateCollaborations = createAsyncThunk(
         collabsToCreate.map((collaboration) => {
           return dispatch(
             songApi.endpoints.createCollaboration.initiate({
-              songId: body.id,
+              credited: collaboration.credited,
               email: collaboration.email,
+              featured: collaboration.featured,
               role: collaboration.role,
               royaltyRate: collaboration.royaltyRate,
-              credited: collaboration.credited,
-              featured: collaboration.featured,
+              songId: body.id,
             })
           );
         })
@@ -667,12 +667,12 @@ export const updateCollaborations = createAsyncThunk(
           return dispatch(
             songApi.endpoints.updateCollaboration.initiate({
               collaborationId: collaboration.id,
-              songId: body.id,
+              credited: collaboration.credited,
               email: collaboration.email,
+              featured: collaboration.featured,
               role: collaboration.role,
               royaltyRate: collaboration.royaltyRate,
-              credited: collaboration.credited,
-              featured: collaboration.featured,
+              songId: body.id,
             })
           );
         })

@@ -2,10 +2,10 @@ import { useFormikContext } from "formik";
 import { Box, useTheme } from "@mui/material";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
-import { UploadSongRequest } from "../../../modules/song";
 import { FunctionComponent, useState } from "react";
-import { ConfirmContract } from "../../../components";
 import PriceSummaryDialog from "./PriceSummaryDialog";
+import { UploadSongRequest } from "../../../modules/song";
+import { ConfirmContract } from "../../../components";
 
 const ConfirmAgreement: FunctionComponent = () => {
   const theme = useTheme();
@@ -21,36 +21,36 @@ const ConfirmAgreement: FunctionComponent = () => {
   };
 
   return (
-    <Box maxWidth={"500px"} marginX={["auto", "auto", "unset"]}>
-      <Typography mb={1.5}>
+    <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
+      <Typography mb={ 1.5 }>
         You&apos;re almost ready. Please review your ownership contract.
       </Typography>
 
       <ConfirmContract
-        songTitle={values.title}
-        isCoCreator={values.owners.length > 1}
-        onConfirm={handleConsentToContract}
+        isCoCreator={ values.owners.length > 1 }
+        songTitle={ values.title }
+        onConfirm={ handleConsentToContract }
       />
 
-      <Box mt={6}>
+      <Box mt={ 6 }>
         <Button
-          isLoading={isSubmitting}
-          disabled={!values.consentsToContract}
-          onClick={() => setIsPaymentSummaryOpen(!isPaymentSummaryOpen)}
+          disabled={ !values.consentsToContract }
+          isLoading={ isSubmitting }
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"
               : "default"
           }
+          onClick={ () => setIsPaymentSummaryOpen(!isPaymentSummaryOpen) }
         >
           Distribute & Mint
         </Button>
 
         <PriceSummaryDialog
-          open={isPaymentSummaryOpen}
-          onClose={() => {
+          open={ isPaymentSummaryOpen }
+          onClose={ () => {
             setIsPaymentSummaryOpen(false);
-          }}
+          } }
         />
       </Box>
     </Box>

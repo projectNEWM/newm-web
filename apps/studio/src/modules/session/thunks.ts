@@ -2,14 +2,6 @@ import { asThunkHook } from "@newm-web/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
-  setIsWalletEnvMismatchModalOpen,
-  setToastMessage,
-  setUpdateWalletAddressModal,
-} from "../../modules/ui";
-import { history } from "../../common/history";
-import { uploadToCloudinary } from "../../api/cloudinary/utils";
-import { newmApi, cloudinaryApi, lambdaApi } from "../../api";
-import {
   EnabledWallet,
   disconnectWallet,
   getWalletAddress,
@@ -27,6 +19,14 @@ import {
 } from "./types";
 import { setIsLoggedIn } from "./slice";
 import { getIsWalletEnvMismatch } from "./utils";
+import { cloudinaryApi, lambdaApi, newmApi } from "../../api";
+import { uploadToCloudinary } from "../../api/cloudinary/utils";
+import { history } from "../../common/history";
+import {
+  setIsWalletEnvMismatchModalOpen,
+  setToastMessage,
+  setUpdateWalletAddressModal,
+} from "../../modules/ui";
 
 /**
  * Updates the user's profile and fetches the updated data.
@@ -432,10 +432,10 @@ export const saveWalletAddress = createAsyncThunk(
     } catch (error) {
       dispatch(
         setUpdateWalletAddressModal({
+          isConfirmationRequired: false,
           message:
             "There was an error saving your wallet address to your " +
             "profile, please disconnect and reconnect your wallet.",
-          isConfirmationRequired: false,
         })
       );
     }

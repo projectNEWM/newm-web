@@ -2,8 +2,8 @@ import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { CircularProgress, Stack } from "@mui/material";
 import Cookies from "js-cookie";
 import { Modal } from "@newm-web/elements";
-import { getIdenfyAuthToken } from "../../modules/session";
 import theme from "@newm-web/theme";
+import { getIdenfyAuthToken } from "../../modules/session";
 import { selectUi, setIsIdenfyModalOpen } from "../../modules/ui";
 import { useAppDispatch, useAppSelector } from "../../common";
 
@@ -62,33 +62,33 @@ const IdenfyModal: FunctionComponent = () => {
   }, [isOpen, idenfyAuthToken, dispatch]);
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose}>
-      {idenfyAuthToken ? (
+    <Modal isOpen={ isOpen } onClose={ handleClose }>
+      { idenfyAuthToken ? (
         <iframe
           allow="camera"
-          allowFullScreen={true}
-          style={{
+          allowFullScreen={ true }
+          src={ `https://ui.idenfy.com/?authToken=${idenfyAuthToken}` }
+          style={ {
             border: "none",
             height: "100%",
             padding: "24px",
             width: "100%",
-          }}
-          src={`https://ui.idenfy.com/?authToken=${idenfyAuthToken}`}
+          } }
           title="iDenfy verification session"
         />
       ) : (
         <Stack
-          sx={{
+          sx={ {
             alignItems: "center",
             backgroundColor: theme.colors.black,
             height: "100%",
             justifyContent: "center",
             width: "100%",
-          }}
+          } }
         >
           <CircularProgress />
         </Stack>
-      )}
+      ) }
     </Modal>
   );
 };

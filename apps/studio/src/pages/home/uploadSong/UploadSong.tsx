@@ -1,14 +1,18 @@
+import { Box, Container } from "@mui/material";
+import { Typography, WizardForm } from "@newm-web/elements";
+import { useExtractProperty } from "@newm-web/utils";
+import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Box, Container } from "@mui/material";
-import { FormikHelpers, FormikValues } from "formik";
+import AdvancedSongDetails from "./AdvancedSongDetails";
+import BasicSongDetails from "./BasicSongDetails";
+import ConfirmAgreement from "./ConfirmAgreement";
 import { commonYupValidation } from "../../../common";
-import { useExtractProperty } from "@newm-web/utils";
-import { Typography, WizardForm } from "@newm-web/elements";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
+  useGetRolesQuery,
 } from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
@@ -18,23 +22,21 @@ import {
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "../../../modules/song";
-import ConfirmAgreement from "./ConfirmAgreement";
-import BasicSongDetails from "./BasicSongDetails";
-import AdvancedSongDetails from "./AdvancedSongDetails";
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const { data: genres = [] } = useGetGenresQuery();
+  const { data: roles = [] } = useGetRolesQuery();
   const {
     data: {
       companyName = "",
+      email,
       firstName = "",
+      ipi: userIpi,
       lastName = "",
       nickname: stageName = "",
-      email,
       role,
-      ipi: userIpi,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -51,20 +53,32 @@ const UploadSong: FunctionComponent = () => {
   const artistName = `${firstName} ${lastName}`;
 
   const initialValues: UploadSongRequest = {
-    coverArtUrl: "",
+    artistName,
     audio: undefined,
-    title: "",
-    genres: [],
-    moods: [],
-    description: "",
-    compositionCopyrightYear: undefined,
+    barcodeNumber: undefined,
+    barcodeType: undefined,
+    companyName,
     compositionCopyrightOwner: undefined,
-    phonographicCopyrightYear: undefined,
-    phonographicCopyrightOwner: undefined,
-    isrc: undefined,
-    releaseDate: undefined,
+    compositionCopyrightYear: undefined,
+    consentsToContract: false,
+    coverArtUrl: "",
+    creditors: [
+      {
+        email,
+        isCredited: true,
+        role,
+        status: CollaborationStatus.Editing,
+      },
+    ],
+    description: "",
+    featured: [],
+    genres: [],
+    ipi: userIpi,
+    isCoverRemixSample: false,
     isExplicit: false,
     isMinting: false,
+    isrc: undefined,
+    moods: [],
     owners: [
       {
         email,
@@ -75,24 +89,12 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
-    creditors: [
-      {
-        email,
-        role,
-        isCredited: true,
-        status: CollaborationStatus.Editing,
-      },
-    ],
-    featured: [],
-    consentsToContract: false,
-    companyName,
-    artistName,
-    stageName,
-    barcodeNumber: undefined,
-    barcodeType: undefined,
+    phonographicCopyrightOwner: undefined,
+    phonographicCopyrightYear: undefined,
     publicationDate: undefined,
-    isCoverRemixSample: false,
-    ipi: userIpi,
+    releaseDate: undefined,
+    stageName,
+    title: "",
   };
 
   // Navigate to advanced details if minting, otherwise upload song
@@ -114,9 +116,9 @@ const UploadSong: FunctionComponent = () => {
     helpers: FormikHelpers<FormikValues>
   ) => {
     await generateArtistAgreement({
-      songName: values.title,
-      companyName,
       artistName,
+      companyName,
+      songName: values.title,
       stageName,
     });
 
@@ -146,61 +148,62 @@ const UploadSong: FunctionComponent = () => {
   }, []);
 
   const validations = {
-    coverArtUrl: commonYupValidation.coverArtUrl,
     audio: commonYupValidation.audio,
-    title: commonYupValidation.title,
+    barcodeNumber: commonYupValidation.barcodeNumber,
+    barcodeType: commonYupValidation.barcodeType,
+    consentsToContract: commonYupValidation.consentsToContract,
+    copyrightOwner: commonYupValidation.copyright,
+    copyrightYear: commonYupValidation.year,
+    coverArtUrl: commonYupValidation.coverArtUrl,
+    creditors: commonYupValidation.creditors(roles),
     description: commonYupValidation.description,
     genres: commonYupValidation.genres(genres),
+    ipi: commonYupValidation.ipi,
+    isrc: commonYupValidation.isrc(languageCodes),
+    iswc: commonYupValidation.iswc,
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
-    consentsToContract: commonYupValidation.consentsToContract,
-    isrc: commonYupValidation.isrc(languageCodes),
-    barcodeType: commonYupValidation.barcodeType,
-    barcodeNumber: commonYupValidation.barcodeNumber,
     publicationDate: commonYupValidation.publicationDate,
     releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
-    copyrightYear: commonYupValidation.year,
-    copyrightOwner: commonYupValidation.copyright,
-    ipi: commonYupValidation.ipi,
-    iswc: commonYupValidation.iswc,
+    title: commonYupValidation.title,
   };
 
   return (
     <Container
-      maxWidth={false}
-      sx={{
-        marginX: [null, null, 3],
+      maxWidth={ false }
+      sx={ {
         marginBottom: 8,
+        marginX: [null, null, 3],
         overflow: "auto",
         textAlign: ["center", "center", "initial"],
-      }}
+      } }
     >
-      <Typography variant="h3" fontWeight={800}>
+      <Typography fontWeight={ 800 } variant="h3">
         UPLOAD A SONG
       </Typography>
 
-      <Box pt={5} pb={7}>
+      <Box pb={ 7 } pt={ 5 }>
         <WizardForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
+          enableReinitialize={ true }
+          initialValues={ initialValues }
+          isProgressStepperVisible={ true }
           rootPath="home/upload-song"
-          isProgressStepperVisible={true}
-          enableReinitialize={true}
-          routes={[
+          routes={ [
             {
               element: <BasicSongDetails />,
+              navigateOnSubmitStep: false,
+              onSubmitStep: handleSongInfo,
               path: "",
               progressStepTitle: "Basic details",
-              onSubmitStep: handleSongInfo,
-              navigateOnSubmitStep: false,
               validationSchema: Yup.object().shape({
-                coverArtUrl: validations.coverArtUrl,
                 audio: validations.audio,
-                title: validations.title,
+                coverArtUrl: validations.coverArtUrl,
+                creditors: validations.creditors,
+                description: validations.description,
                 genres: validations.genres,
                 moods: validations.moods,
                 owners: validations.owners,
-                description: validations.description,
+                title: validations.title,
               }),
             },
             {
@@ -209,17 +212,17 @@ const UploadSong: FunctionComponent = () => {
               path: "advanced-details",
               progressStepTitle: "Advanced details",
               validationSchema: Yup.object({
-                isrc: validations.isrc,
-                barcodeType: validations.barcodeType,
                 barcodeNumber: validations.barcodeNumber,
-                compositionCopyrightYear: validations.copyrightYear,
+                barcodeType: validations.barcodeType,
                 compositionCopyrightOwner: validations.copyrightOwner,
-                phonographicCopyrightYear: validations.copyrightYear,
+                compositionCopyrightYear: validations.copyrightYear,
+                ipi: validations.ipi,
+                isrc: validations.isrc,
+                iswc: validations.iswc,
                 phonographicCopyrightOwner: validations.copyrightOwner,
+                phonographicCopyrightYear: validations.copyrightYear,
                 publicationDate: validations.publicationDate,
                 releaseDate: validations.releaseDate,
-                ipi: validations.ipi,
-                iswc: validations.iswc,
               }),
             },
             {
@@ -230,7 +233,8 @@ const UploadSong: FunctionComponent = () => {
                 consentsToContract: validations.consentsToContract,
               }),
             },
-          ]}
+          ] }
+          onSubmit={ handleSubmit }
         />
       </Box>
     </Container>

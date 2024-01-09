@@ -1,6 +1,6 @@
-import { RootState } from "../store";
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 import { Song } from "../modules/song";
 
 export interface RenderProps extends RenderOptions {
@@ -9,19 +9,19 @@ export interface RenderProps extends RenderOptions {
 }
 
 export enum BarcodeType {
-  UPC = "UPC",
   EAN = "EAN",
   JAN = "JAN",
+  UPC = "UPC",
 }
 
 export interface BarcodeConfig {
-  regEx: RegExp;
   message: string;
+  regEx: RegExp;
 }
 
 export interface PlayerState {
   readonly currentPlayingSongId?: string;
-  readonly loadingSongId?: string;
   readonly isReadyToPlay: boolean;
+  readonly loadingSongId?: string;
   readonly song?: Song;
 }

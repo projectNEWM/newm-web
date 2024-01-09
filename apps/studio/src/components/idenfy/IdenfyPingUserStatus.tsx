@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { setToastMessage } from "../../modules/ui";
 import Cookies from "js-cookie";
+import { setToastMessage } from "../../modules/ui";
 import {
   VerificationStatus,
   emptyProfile,
@@ -21,7 +21,7 @@ const IdenfyModal: FunctionComponent = () => {
 
   const { data: { verificationStatus } = emptyProfile } = useGetProfileQuery(
     undefined,
-    { skip: !isLoggedIn, pollingInterval: currentPollingInterval }
+    { pollingInterval: currentPollingInterval, skip: !isLoggedIn }
   );
 
   const { verificationPingStartedAt } = useAppSelector(selectSession);

@@ -1,9 +1,9 @@
 const InstagramLogo = () => (
   <svg
-    width="20"
+    fill="none"
     height="20"
     viewBox="0 0 20 20"
-    fill="none"
+    width="20"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clipPath="url(#clip0_5609_11626)">
@@ -14,12 +14,12 @@ const InstagramLogo = () => (
     </g>
     <defs>
       <radialGradient
-        id="paint0_radial_5609_11626"
         cx="0"
         cy="0"
-        r="1"
-        gradientUnits="userSpaceOnUse"
         gradientTransform="translate(5.5 18) rotate(-53.6732) scale(21.1009)"
+        gradientUnits="userSpaceOnUse"
+        id="paint0_radial_5609_11626"
+        r="1"
       >
         <stop stopColor="#FAC168" />
         <stop offset="0.359375" stopColor="#EE5648" />
@@ -27,7 +27,7 @@ const InstagramLogo = () => (
         <stop offset="1" stopColor="#6153CF" />
       </radialGradient>
       <clipPath id="clip0_5609_11626">
-        <rect width="20" height="20" fill="white" />
+        <rect fill="white" height="20" width="20" />
       </clipPath>
     </defs>
   </svg>

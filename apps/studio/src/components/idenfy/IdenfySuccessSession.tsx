@@ -14,29 +14,29 @@ const IdenfySuccessSession: FunctionComponent = () => {
 
   return (
     <Stack
-      sx={{
+      sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
         flexGrow: 1,
-        justifyContent: "center"
-      }}
+        justifyContent: "center",
+      } }
     >
       <Typography variant="h1">THANK YOU!</Typography>
       <GradientTypography
-        style={{ ...theme.typography.emphasized }}
+        style={ { ...theme.typography.emphasized } }
         variant="h1"
       >
         You will be notified soon.
       </GradientTypography>
       <Typography
-        sx={{
+        sx={ {
           fontWeight: 400,
-          my: [2, 3, 4]
-        }}
+          my: [2, 3, 4],
+        } }
       >
         Get ready to mint your songs and claim royalties.
       </Typography>
-      <Button onClick={handleClick}>Got it</Button>
+      <Button onClick={ handleClick }>Got it</Button>
     </Stack>
   );
 };

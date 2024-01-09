@@ -4,10 +4,10 @@ import { FunctionComponent } from "react";
 
 const AllCaughtUp: FunctionComponent = () => {
   return (
-    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      <Typography fontWeight={400} fontSize={12}>
-        You&apos;re all caught up{" "}
-        <span role="img" aria-label="tada">
+    <Box sx={ { display: "flex", justifyContent: "center", width: "100%" } }>
+      <Typography fontSize={ 12 } fontWeight={ 400 }>
+        You&apos;re all caught up{ " " }
+        <span aria-label="tada" role="img">
           🎉
         </span>
       </Typography>

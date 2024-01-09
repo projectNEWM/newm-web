@@ -1,5 +1,5 @@
-import GradientTextInput from "../GradientTextInput";
 import { render } from "@testing-library/react";
+import GradientTextInput from "../GradientTextInput";
 
 describe("<GradientTextInput>", () => {
   it("renders the error message correctly", () => {

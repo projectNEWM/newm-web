@@ -16,19 +16,19 @@ const Begin: FunctionComponent = () => {
   }, [navigate]);
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={4}>
+    <Box alignItems="center" display="flex" flexDirection="column">
+      <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
 
-      <Typography variant="h1" sx={{ marginBottom: 1.5 }}>
+      <Typography sx={ { marginBottom: 1.5 } } variant="h1">
         Aaaaand you&apos;re in.
       </Typography>
 
-      <Box mt={1} mb={8}>
+      <Box mb={ 8 } mt={ 1 }>
         <GradientTypography
+          sx={ { ...theme.typography.emphasized } }
           variant="h1"
-          sx={{ ...theme.typography.emphasized }}
         >
           Let&apos;s set you up.
         </GradientTypography>

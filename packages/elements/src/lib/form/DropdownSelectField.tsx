@@ -7,14 +7,15 @@ const DropdownSelectField: ForwardRefRenderFunction<
   DropdownSelectProps
 > = (props, ref) => {
   return (
-    <Field name={props.name}>
-      {({ field, form, meta }: FieldProps) => (
+    <Field name={ props.name }>
+      { ({ field, form, meta }: FieldProps) => (
         <DropdownSelect
-          {...field}
-          {...props}
-          errorMessage={meta.touched ? meta.error : ""}
-          onBlur={form.handleBlur}
-          onValueChange={(newValue) => {
+          { ...field }
+          { ...props }
+          errorMessage={ meta.touched ? meta.error : "" }
+          ref={ ref }
+          onBlur={ form.handleBlur }
+          onValueChange={ (newValue) => {
             // Call the onChange from the Dropdown Select Field
             if (typeof props.onValueChange === "function") {
               props.onValueChange(newValue);
@@ -22,10 +23,9 @@ const DropdownSelectField: ForwardRefRenderFunction<
             // Call Formik's handleChange
             const handleFormChange = form.handleChange(props.name);
             handleFormChange(newValue);
-          }}
-          ref={ref}
+          } }
         />
-      )}
+      ) }
     </Field>
   );
 };

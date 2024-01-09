@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { IconButton, Stack } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
+import { Typography } from "@newm-web/elements";
+import theme from "@newm-web/theme";
+import { useWindowDimensions } from "@newm-web/utils";
+import { bgImage } from "@newm-web/assets";
+import { PlayerState, getResizedAlbumCoverImageUrl } from "../../../common";
 import {
   MintingStatus,
   Song,
@@ -12,11 +17,6 @@ import {
   useGetSongsQuery,
   useHlsJs,
 } from "../../../modules/song";
-import { Typography } from "@newm-web/elements";
-import theme from "@newm-web/theme";
-import { PlayerState, getResizedAlbumCoverImageUrl } from "../../../common";
-import { useWindowDimensions } from "@newm-web/utils";
-import { bgImage } from "@newm-web/assets";
 
 const Songs: FunctionComponent = () => {
   const limit = 25;
@@ -57,22 +57,22 @@ const Songs: FunctionComponent = () => {
       onPlaySong: ({ id }: Song) => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: id,
-        }));
-      },
-      onStopSong: () => {
-        setPlayerState((prevState) => ({
-          ...prevState,
           isReadyToPlay: false,
-          currentPlayingSongId: undefined,
         }));
       },
       onSongEnded: () => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: undefined,
+          isReadyToPlay: false,
+        }));
+      },
+      onStopSong: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          currentPlayingSongId: undefined,
+          isReadyToPlay: false,
         }));
       },
     }),
@@ -124,8 +124,8 @@ const Songs: FunctionComponent = () => {
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
+        song: fetchStreamDataResp.data?.song,
       }));
     }
   }, [
@@ -149,7 +149,7 @@ const Songs: FunctionComponent = () => {
 
   if (!songs.length && !songData.length && !isLoading) {
     return (
-      <Typography sx={{ marginTop: 8, textAlign: "center" }}>
+      <Typography sx={ { marginTop: 8, textAlign: "center" } }>
         This artist does not have any minted songs yet.
       </Typography>
     );
@@ -157,70 +157,70 @@ const Songs: FunctionComponent = () => {
 
   return (
     <Stack
-      columnGap={2}
+      columnGap={ 2 }
       flexDirection="row"
       flexWrap="wrap"
       justifyContent="center"
-      mt={7.5}
-      rowGap={3}
+      mt={ 7.5 }
+      rowGap={ 3 }
     >
-      {songs.map((song) => {
+      { songs.map((song) => {
         const genresString = song.genres.join(", ");
 
         return (
           <Stack
-            key={song.id}
-            sx={{ maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 }}
+            key={ song.id }
+            sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }
           >
-            <Stack display="grid" justifyItems="center" alignItems="center">
+            <Stack alignItems="center" display="grid" justifyItems="center">
               <img
                 alt="Song cover art"
-                height={isWidthAboveMd ? "260px" : "150px"}
-                width={isWidthAboveMd ? "260px" : "150px"}
+                height={ isWidthAboveMd ? "260px" : "150px" }
                 src={
                   song.coverArtUrl
                     ? getResizedAlbumCoverImageUrl(song.coverArtUrl, {
-                        width: 200,
                         height: 200,
+                        width: 200,
                       })
                     : bgImage
                 }
-                style={{
+                style={ {
                   borderRadius: "4px",
-                  objectFit: "cover",
                   gridArea: "1 / 1 / 2 / 2",
-                }}
+                  objectFit: "cover",
+                } }
+                width={ isWidthAboveMd ? "260px" : "150px" }
               />
-              {song?.streamUrl && (
+              { song?.streamUrl && (
                 <IconButton
-                  onClick={() => handleSongPlayPause(song)}
-                  sx={{
+                  sx={ {
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
                     color: theme.colors.white,
                     gridArea: "1 / 1 / 2 / 2",
-                    backgroundColor: "rgba(0, 0, 0, 0.3)",
-                  }}
+                  } }
+                  onClick={ () => handleSongPlayPause(song) }
                 >
-                  {song.id === playerState.currentPlayingSongId ? (
-                    <Stop sx={{ fontSize: isWidthAboveMd ? "60px" : "40px" }} />
+                  { song.id === playerState.currentPlayingSongId ? (
+                    <Stop sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
                   ) : (
                     <PlayArrow
-                      sx={{ fontSize: isWidthAboveMd ? "60px" : "40px" }}
+                      sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } }
                     />
-                  )}
+                  ) }
                 </IconButton>
-              )}
+              ) }
             </Stack>
-            <Typography variant="h4" fontWeight={700} mt={0.5}>
-              {song.title}
+            <Typography fontWeight={ 700 } mt={ 0.5 } variant="h4">
+              { song.title }
             </Typography>
-            <Typography variant="subtitle1" fontWeight={500}>
-              {genresString}
+            <Typography fontWeight={ 500 } variant="subtitle1">
+              { genresString }
             </Typography>
           </Stack>
         );
-      })}
-      <Stack ref={ref} flex="1 0 100%" textAlign="center">
-        {hasMore ? <Typography>Loading more songs...</Typography> : null}
+      }) }
+      <Stack flex="1 0 100%" ref={ ref } textAlign="center">
+        { hasMore ? <Typography>Loading more songs...</Typography> : null }
       </Stack>
     </Stack>
   );

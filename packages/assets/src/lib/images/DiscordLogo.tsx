@@ -1,10 +1,10 @@
 const DiscordLogo = () => (
   <svg
-    height={ 18 }
-    width={ 18 }
     fill="white"
+    height={ 18 }
     role="img"
     viewBox="0 0 24 24"
+    width={ 18 }
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>Discord</title>

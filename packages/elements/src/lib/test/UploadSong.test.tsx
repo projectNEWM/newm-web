@@ -30,9 +30,9 @@ describe("<UploadSong>", () => {
     it("displays instructions to upload a song", () => {
       const { getByText } = renderWithContext(
         <UploadSong
-          onBlur={jest.fn()}
-          onChange={jest.fn()}
-          onError={jest.fn()}
+          onBlur={ jest.fn() }
+          onChange={ jest.fn() }
+          onError={ jest.fn() }
         />
       );
 

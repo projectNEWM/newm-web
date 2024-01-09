@@ -12,12 +12,8 @@ import * as Yup from "yup";
 import FormProgressStepper from "./FormProgressStepper";
 
 interface FormRoute {
-  /** route corresponding to the step */
-  readonly path: string;
   /** The component for the step */
   readonly element: JSX.Element;
-  /** The validation schema for the step */
-  readonly validationSchema?: Yup.AnySchema;
   /** True if form should navigate to next step, defaults to true */
   readonly navigateOnSubmitStep?: boolean;
   /** Called when the step is submitted */
@@ -25,17 +21,21 @@ interface FormRoute {
     values: any, // eslint-disable-line
     helpers: FormikHelpers<FormikValues>
   ) => void | Promise<void>;
+  /** route corresponding to the step */
+  readonly path: string;
   /** The route title for the progress stepper */
   readonly progressStepTitle?: string;
+  /** The validation schema for the step */
+  readonly validationSchema?: Yup.AnySchema;
 }
 
 // eslint-disable-next-line
 interface WizardFormProps extends FormikConfig<any> {
-  readonly rootPath?: string;
-  readonly routes: ReadonlyArray<FormRoute>;
-
   /** Display progress stepper at top of page */
   readonly isProgressStepperVisible?: boolean;
+  readonly rootPath?: string;
+
+  readonly routes: ReadonlyArray<FormRoute>;
 }
 
 /**
@@ -112,28 +112,28 @@ const WizardForm: FunctionComponent<WizardFormProps> = ({
 
   return (
     <Formik
-      {...formikProps}
-      onSubmit={handleSubmit}
-      validationSchema={getValidationSchema}
+      { ...formikProps }
+      validationSchema={ getValidationSchema }
+      onSubmit={ handleSubmit }
     >
-      {() => (
-        <Form style={{ height: "100%" }} noValidate>
-          {isProgressStepperVisible && (
+      { () => (
+        <Form style={ { height: "100%" } } noValidate>
+          { isProgressStepperVisible && (
             <FormProgressStepper
-              activeStep={currentIndex + 1}
+              activeStep={ currentIndex + 1 }
               stepTitles={
                 routes.map((route) => route.progressStepTitle) as string[]
               }
             />
-          )}
+          ) }
 
           <Routes>
-            {routes.map(({ path, element }) => (
-              <Route key={path} path={path} element={element} />
-            ))}
+            { routes.map(({ path, element }) => (
+              <Route element={ element } key={ path } path={ path } />
+            )) }
           </Routes>
         </Form>
-      )}
+      ) }
     </Formik>
   );
 };

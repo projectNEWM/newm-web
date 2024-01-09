@@ -10,29 +10,29 @@ const NoSongsYet: FunctionComponent = () => {
 
   return (
     <Stack
-      sx={{
-        alignItems: "center"
-      }}
+      sx={ {
+        alignItems: "center",
+      } }
     >
       <Table>
         <TableHead />
       </Table>
       <Typography
+        sx={ { color: theme.colors.white, mb: 1.5, mt: [3, 3, 5] } }
         variant="subtitle2"
-        sx={{ color: theme.colors.white, mt: [3, 3, 5], mb: 1.5 }}
       >
         You haven&apos;t uploaded any songs yet!
       </Typography>
       <Button
         color="music"
-        onClick={() => navigate("/home/upload-song")}
         variant="secondary"
         width="compact"
+        onClick={ () => navigate("/home/upload-song") }
       >
         Upload your first song
       </Button>
 
-      <HorizontalLine sx={{ mt: [3, 3, 5] }} />
+      <HorizontalLine sx={ { mt: [3, 3, 5] } } />
     </Stack>
   );
 };

@@ -2,6 +2,11 @@ import { Theme, createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Theme {
+    button: {
+      fontSize: string;
+      fontWeight: number;
+      lineHeight: string;
+    };
     colors: {
       activeBackground: string;
       backdropBlur: string;
@@ -48,15 +53,15 @@ declare module "@mui/material/styles" {
       maxWidth: string;
       padding: string;
     };
-    button: {
-      fontSize: string;
-      lineHeight: string;
-      fontWeight: number;
-    };
   }
 
   // allow configuration using `createTheme`
   interface ThemeOptions {
+    button?: {
+      fontSize?: string;
+      fontWeight?: number;
+      lineHeight?: string;
+    };
     colors?: {
       activeBackground?: string;
       backdropBlur?: string;
@@ -94,19 +99,14 @@ declare module "@mui/material/styles" {
       partners?: string;
     };
     inputField?: {
-      fontFamily?: string;
-      fontStyle?: string;
-      fontSize?: string;
-      fontWeight?: number;
-      lineHeight?: string;
-      padding?: string;
       borderWidth?: string;
-      maxWidth?: string;
-    };
-    button?: {
+      fontFamily?: string;
       fontSize?: string;
-      lineHeight?: string;
+      fontStyle?: string;
       fontWeight?: number;
+      lineHeight?: string;
+      maxWidth?: string;
+      padding?: string;
     };
   }
 }
@@ -114,35 +114,35 @@ declare module "@mui/material/styles" {
 // declare typography custom types
 declare module "@mui/material/styles" {
   export interface TypographyVariants {
-    tabs: React.CSSProperties;
-    formHeader: React.CSSProperties;
     emphasized: React.CSSProperties;
-    fontWeightSemiBold: number;
     fontWeightExtraBold: number;
+    fontWeightSemiBold: number;
+    formHeader: React.CSSProperties;
+    tabs: React.CSSProperties;
   }
 
   export interface TypographyOptions {
-    fontWeightSemiBold: number;
     fontWeightExtraBold: number;
+    fontWeightSemiBold: number;
   }
 
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
-    tabs?: React.CSSProperties;
-    formHeader?: React.CSSProperties;
     emphasized: React.CSSProperties;
-    fontWeightSemiBold: number;
     fontWeightExtraBold: number;
+    fontWeightSemiBold: number;
+    formHeader?: React.CSSProperties;
+    tabs?: React.CSSProperties;
   }
 }
 
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
-    tabs: true;
-    formHeader: true;
-    fontWeightSemiBold: true;
     fontWeightExtraBold: true;
+    fontWeightSemiBold: true;
+    formHeader: true;
+    tabs: true;
   }
 }
 
@@ -179,25 +179,21 @@ const colors = {
  * Theme without responsive values
  */
 const theme = createTheme({
-  colors,
-  gradients: {
-    company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%);",
-    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
-    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
-    music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%);",
-    // eslint-disable-next-line max-len
-    newm: "linear-gradient(45.38deg, #FFC33C 14.22%, #FF6E32 28.39%, #F53C69 42.57%, #C341F0 56.74%, #5091EB 70.91%, #41BE91 85.83%);",
-    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
-  },
   breakpoints: {
     values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
       lg: 1280,
+      md: 960,
+      sm: 600,
       xl: 1600,
+      xs: 0,
     },
   },
+  button: {
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: "18px",
+  },
+  colors,
   components: {
     MuiUseMediaQuery: {
       defaultProps: {
@@ -207,140 +203,77 @@ const theme = createTheme({
     },
   },
 
-  inputField: {
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontSize: "16px",
-    fontWeight: 400,
-    lineHeight: "24px",
-    padding: "9px 13px",
-    borderWidth: "2px",
-    maxWidth: "340px",
+  gradients: {
+    company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%);",
+    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
+    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
+    music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%);",
+    // eslint-disable-next-line max-len
+    newm: "linear-gradient(45.38deg, #FFC33C 14.22%, #FF6E32 28.39%, #F53C69 42.57%, #C341F0 56.74%, #5091EB 70.91%, #41BE91 85.83%);",
+    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
   },
 
-  button: {
+  inputField: {
+    borderWidth: "2px",
+    fontFamily: "Inter",
     fontSize: "16px",
-    lineHeight: "18px",
-    fontWeight: 600,
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "24px",
+    maxWidth: "340px",
+    padding: "9px 13px",
   },
 
   palette: {
+    action: {
+      disabled: colors.white,
+    },
+
     background: {
       default: colors.black,
       paper: colors.black,
     },
-
+    error: {
+      main: colors.red,
+    },
+    info: {
+      main: colors.baseBlue,
+    },
     primary: {
       main: colors.basePink,
     },
     secondary: {
       main: colors.music,
     },
-    error: {
-      main: colors.red,
-    },
     success: {
       main: colors.green,
-    },
-    info: {
-      main: colors.baseBlue,
-    },
-    warning: {
-      main: colors.yellow,
-    },
-
-    action: {
-      disabled: colors.white,
     },
 
     text: {
       primary: colors.white,
       secondary: colors.grey100,
     },
+
+    warning: {
+      main: colors.yellow,
+    },
   },
 
   typography: {
-    // default fontFamily
-    fontFamily: "Inter",
-
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-    fontWeightSemiBold: 600,
-    fontWeightBold: 700,
-    fontWeightExtraBold: 800,
-
-    // customized font variants
-    h1: {
-      fontFamily: "Raleway",
-      fontStyle: "normal",
-      fontWeight: 800,
-      fontSize: "80px",
-      lineHeight: "96px",
-    },
-    h2: {
-      fontFamily: "Raleway",
-      fontStyle: "normal",
-      fontWeight: 800,
-      fontSize: "36px",
-      lineHeight: "46px",
-    },
-    h3: {
-      fontFamily: "Raleway",
-      fontStyle: "normal",
-      fontWeight: 800,
-      fontSize: "32px",
-      lineHeight: "38px",
-    },
-    h4: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "16px",
-      lineHeight: "20px",
-    },
-    h5: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 600,
-      fontSize: "12px",
-      lineHeight: "20px",
-    },
-    h6: {
-      fontFamily: "Inter",
-      fontSize: "10px",
-      fontStyle: "normal",
-      fontWeight: 700,
-      lineHeight: "14.52px",
-    },
     body1: {
       fontFamily: "Inter",
+      fontSize: "14px",
       fontStyle: "normal",
       fontWeight: 600,
-      fontSize: "14px",
       lineHeight: "20px",
     },
+
     body2: {
       fontFamily: "Inter",
+      fontSize: "18px",
       fontStyle: "normal",
       fontWeight: 500,
-      fontSize: "18px",
       lineHeight: "22px",
-    },
-    subtitle1: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 400,
-      fontSize: "14px",
-      lineHeight: "20px",
-      color: colors.grey100,
-    },
-    subtitle2: {
-      fontFamily: "Inter",
-      fontStyle: "normal",
-      fontWeight: 400,
-      fontSize: "12px",
-      lineHeight: "18px",
-      color: colors.grey100,
     },
 
     // custom font theme styles
@@ -348,6 +281,86 @@ const theme = createTheme({
       fontFamily: "DM Serif Text",
       fontStyle: "italic",
       fontWeight: 400,
+    },
+
+    // default fontFamily
+    fontFamily: "Inter",
+
+    fontWeightBold: 700,
+
+    fontWeightExtraBold: 800,
+
+    fontWeightMedium: 500,
+
+    fontWeightRegular: 400,
+
+    fontWeightSemiBold: 600,
+
+    // customized font variants
+    h1: {
+      fontFamily: "Raleway",
+      fontSize: "80px",
+      fontStyle: "normal",
+      fontWeight: 800,
+      lineHeight: "96px",
+    },
+
+    h2: {
+      fontFamily: "Raleway",
+      fontSize: "36px",
+      fontStyle: "normal",
+      fontWeight: 800,
+      lineHeight: "46px",
+    },
+
+    h3: {
+      fontFamily: "Raleway",
+      fontSize: "32px",
+      fontStyle: "normal",
+      fontWeight: 800,
+      lineHeight: "38px",
+    },
+
+    h4: {
+      fontFamily: "Inter",
+      fontSize: "16px",
+      fontStyle: "normal",
+      fontWeight: 600,
+      lineHeight: "20px",
+    },
+
+    h5: {
+      fontFamily: "Inter",
+      fontSize: "12px",
+      fontStyle: "normal",
+      fontWeight: 600,
+      lineHeight: "20px",
+    },
+
+    h6: {
+      fontFamily: "Inter",
+      fontSize: "10px",
+      fontStyle: "normal",
+      fontWeight: 700,
+      lineHeight: "14.52px",
+    },
+
+    subtitle1: {
+      color: colors.grey100,
+      fontFamily: "Inter",
+      fontSize: "14px",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "20px",
+    },
+
+    subtitle2: {
+      color: colors.grey100,
+      fontFamily: "Inter",
+      fontSize: "12px",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "18px",
     },
   },
 });

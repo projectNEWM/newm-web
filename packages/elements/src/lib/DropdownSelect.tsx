@@ -20,17 +20,17 @@ export interface DropdownSelectProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
   readonly disabled?: boolean;
   readonly errorMessage?: string;
+  readonly isOptional?: boolean;
+  readonly label?: string;
+  readonly name: string;
+  readonly noResultsText?: string;
   readonly onBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
   readonly onValueChange?: (newValue: string) => void;
-  readonly label?: string;
-  readonly isOptional?: boolean;
-  readonly name: string;
-  readonly tooltipText?: string;
-  readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
   readonly placeholder?: string;
-  readonly widthType?: WidthType;
   readonly tags?: ReadonlyArray<string>;
+  readonly tooltipText?: string;
+  readonly widthType?: WidthType;
 }
 
 const DropdownSelect: ForwardRefRenderFunction<
@@ -63,18 +63,20 @@ const DropdownSelect: ForwardRefRenderFunction<
     popupOpen,
     inputValue,
   } = useAutocomplete({
-    id: name,
+    clearOnBlur: true,
     getOptionLabel: (option) => option,
+
+    id: name,
+
+    // Removes warning for empty string not being a valid option
+    isOptionEqualToValue: (option, value) =>
+      value === "" ? true : option === value,
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
       if (newValue === null || newValue === undefined) onValueChange?.("");
       else onValueChange?.(newValue as string);
     },
-    // Removes warning for empty string not being a valid option
-    isOptionEqualToValue: (option, value) =>
-      value === "" ? true : option === value,
-    clearOnBlur: true,
     options,
     value: value as string,
   });
@@ -103,50 +105,50 @@ const DropdownSelect: ForwardRefRenderFunction<
 
   return (
     <Box
-      sx={{
+      sx={ {
         maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         position: "relative",
         width: "100%",
-      }}
+      } }
     >
-      <div {...getRootProps()}>
+      <div { ...getRootProps() }>
         <TextInput
-          {...rest}
-          {...inputProps}
-          disabled={disabled}
+          { ...rest }
+          { ...inputProps }
+          disabled={ disabled }
           endAdornment={
             <ArrowDropDownIcon
-              onClick={handleEndAdornmentClick}
               sx={
                 {
-                  cursor: "pointer",
                   color: theme.colors.white,
+                  cursor: "pointer",
                   transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                   transition: "transform 200ms ease-in",
                 } as React.CSSProperties
               }
+              onClick={ handleEndAdornmentClick }
             />
           }
-          errorMessage={errorMessage}
-          label={label}
-          name={name}
-          placeholder={placeholder}
-          onBlur={handleBlurEvents}
-          onKeyDown={preventFormSubmit}
+          errorMessage={ errorMessage }
+          label={ label }
+          name={ name }
+          placeholder={ placeholder }
+          onBlur={ handleBlurEvents }
+          onKeyDown={ preventFormSubmit }
         />
       </div>
 
-      {hasResults && (
-        <ResultsList {...getListboxProps()}>
-          {(groupedOptions as typeof options).map((option, index) => (
-            <li {...getOptionProps({ option, index })} key={index}>
-              {option}
+      { hasResults && (
+        <ResultsList { ...getListboxProps() }>
+          { (groupedOptions as typeof options).map((option, index) => (
+            <li { ...getOptionProps({ index, option }) } key={ index }>
+              { option }
             </li>
-          ))}
+          )) }
         </ResultsList>
-      )}
+      ) }
 
-      {showNoResults ? <NoResultsText>{noResultsText}</NoResultsText> : null}
+      { showNoResults ? <NoResultsText>{ noResultsText }</NoResultsText> : null }
     </Box>
   );
 };

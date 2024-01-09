@@ -2,9 +2,9 @@ import { FunctionComponent, useEffect, useRef } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "@newm-web/elements";
 import { FormikValues, useFormikContext } from "formik";
-import { ResponsiveNEWMLogo } from "../../components";
 import { FilteredTagsField, GradientTextInputField } from "@newm-web/elements";
 import { useUserDevice, useWindowDimensions } from "@newm-web/utils";
+import { ResponsiveNEWMLogo } from "../../components";
 
 interface AddProfileInformationProps {
   readonly fieldName: string;
@@ -75,70 +75,70 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
   }, [handleSubmit]);
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Box mb={4}>
+    <Box alignItems="center" display="flex" flexDirection="column">
+      <Box mb={ 4 }>
         <ResponsiveNEWMLogo />
       </Box>
-      <Typography variant="h1" sx={{ textAlign: "center" }}>
-        {prompt}
+      <Typography sx={ { textAlign: "center" } } variant="h1">
+        { prompt }
       </Typography>
-      <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
-        {subText}
+      <Typography sx={ { textAlign: "center" } } variant="subtitle1">
+        { subText }
       </Typography>
 
       <GradientTextInputField
-        ref={inputRef}
-        helperText={!isValid ? helperText : ""}
-        name={fieldName}
-        placeholder={isMobileOrTablet ? placeholder : undefined}
+        helperText={ !isValid ? helperText : "" }
+        name={ fieldName }
+        placeholder={ isMobileOrTablet ? placeholder : undefined }
+        ref={ inputRef }
         textAlign="center"
       />
 
-      <Box sx={{ mt: [2, 2, 4], width: "100%" }}>
-        {isValid || !tags ? (
+      <Box sx={ { mt: [2, 2, 4], width: "100%" } }>
+        { isValid || !tags ? (
           <Box
-            sx={{
+            sx={ {
               alignItems: "center",
               display: "flex",
               flexDirection: "column",
               mt: 2,
               width: "100%",
-            }}
+            } }
           >
             <Stack
-              sx={{
+              sx={ {
+                alignItems: "center",
                 display: ["flex", "flex", "block"],
                 flexDirection: ["column", "column", "row"],
                 gap: 2,
-                alignItems: "center",
                 mb: 1,
                 width: "100%",
-              }}
+              } }
             >
-              {isSkipButtonVisible && (
+              { isSkipButtonVisible && (
                 <Button
-                  ref={skipButtonRef}
                   color="music"
-                  sx={{
+                  ref={ skipButtonRef }
+                  sx={ {
                     mb: 1,
                     position: ["relative", "relative", "absolute"],
-                  }}
-                  onClick={() => handleSubmit()}
+                  } }
                   variant="secondary"
                   width={
                     windowWidth && windowWidth > theme.breakpoints.values.md
                       ? "compact"
                       : "default"
                   }
+                  onClick={ () => handleSubmit() }
                 >
                   Skip
                 </Button>
-              )}
+              ) }
 
               <Button
-                sx={{
+                sx={ {
                   left: [null, null, centerButtonOffset],
-                }}
+                } }
                 type="submit"
                 width={
                   windowWidth && windowWidth > theme.breakpoints.values.md
@@ -150,16 +150,16 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
               </Button>
             </Stack>
             <Typography
-              variant="h5"
               color="grey100"
-              sx={{ opacity: isValid ? 1 : 0.5 }}
+              sx={ { opacity: isValid ? 1 : 0.5 } }
+              variant="h5"
             >
               or press Enter
             </Typography>
           </Box>
         ) : (
-          <FilteredTagsField name={fieldName} tags={tags} />
-        )}
+          <FilteredTagsField name={ fieldName } tags={ tags } />
+        ) }
       </Box>
     </Box>
   );

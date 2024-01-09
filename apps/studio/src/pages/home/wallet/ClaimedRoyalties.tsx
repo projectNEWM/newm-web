@@ -14,37 +14,37 @@ export const ClaimedRoyalties = ({
 }: ClaimedRoyaltiesProps) => {
   return (
     <Box
-      sx={{
+      sx={ {
+        alignItems: "flex-start",
         backgroundColor: theme.colors.grey600,
-        padding: 2,
-        maxWidth: "400px",
         borderRadius: "8px",
         display: "flex",
         flexDirection: "row",
-        alignItems: "flex-start",
         gap: 1.5,
-      }}
+        maxWidth: "400px",
+        padding: 2,
+      } }
     >
-      <IconButton size="small" sx={{ p: 0 }}>
-        <CheckCircle fill={theme.colors.green} />
+      <IconButton size="small" sx={ { p: 0 } }>
+        <CheckCircle fill={ theme.colors.green } />
       </IconButton>
       <Box
-        sx={{
+        sx={ {
           display: "flex",
           flexDirection: "column",
-          paddingRight: [1, "unset"],
           gap: 0.5,
-        }}
+          paddingRight: [1, "unset"],
+        } }
       >
         <Stack
-          sx={{
+          sx={ {
             display: "flex",
             flexDirection: "row",
             paddingRight: [1, "unset"],
-          }}
+          } }
         >
-          <Stack direction="row" alignItems="center" gap={1}>
-            <Typography color={theme.colors.green} fontWeight={500}>
+          <Stack alignItems="center" direction="row" gap={ 1 }>
+            <Typography color={ theme.colors.green } fontWeight={ 500 }>
               No pending royalites to claim.
             </Typography>
 
@@ -55,14 +55,14 @@ export const ClaimedRoyalties = ({
                 "ready to claim here."
               }
             >
-              <IconButton sx={{ padding: 0 }}>
-                <HelpIcon sx={{ color: theme.colors.grey100 }} />
+              <IconButton sx={ { padding: 0 } }>
+                <HelpIcon sx={ { color: theme.colors.grey100 } } />
               </IconButton>
             </Tooltip>
           </Stack>
         </Stack>
-        <Typography variant="subtitle1" fontWeight={500}>
-          Total royalties claimed so far: {currency(claimedRoyalties).format()}
+        <Typography fontWeight={ 500 } variant="subtitle1">
+          Total royalties claimed so far: { currency(claimedRoyalties).format() }
         </Typography>
       </Box>
     </Box>

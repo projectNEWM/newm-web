@@ -1,11 +1,11 @@
+import { FunctionComponent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../common";
 import {
   emptyProfile,
   selectSession,
   useGetProfileQuery,
 } from "../modules/session";
-import { FunctionComponent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Redirects a user to the onboarding flow if they have not gone

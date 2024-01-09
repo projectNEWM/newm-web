@@ -2,9 +2,9 @@ import { SVGProps } from "react";
 
 const Owner = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width={ 32 }
-    height={ 38 }
     fill="none"
+    height={ 38 }
+    width={ 32 }
     xmlns="http://www.w3.org/2000/svg"
     { ...props }
   >
@@ -14,12 +14,12 @@ const Owner = (props: SVGProps<SVGSVGElement>) => (
     />
     <defs>
       <linearGradient
+        gradientUnits="userSpaceOnUse"
         id="a"
         x1={ 0.667 }
-        y1={ 37.408 }
         x2={ 39.615 }
+        y1={ 37.408 }
         y2={ 12.875 }
-        gradientUnits="userSpaceOnUse"
       >
         <stop stopColor="#C3C" />
         <stop offset={ 1 } stopColor="#F36" />
