@@ -1,5 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Stack } from "@mui/material";
+import { Button, Typography } from "@newm-web/elements";
+import OwnersTable from "./OwnersTable";
 import {
   CollaborationStatus,
   useFetchInvitesThunk,
@@ -7,10 +9,8 @@ import {
   useGetCollaboratorCountQuery,
 } from "../../../modules/song";
 import { selectUi, setIsInvitesModalOpen } from "../../../modules/ui";
-import { Button, Typography } from "@newm-web/elements";
 import { SearchBox } from "../../../components";
 import { useAppDispatch, useAppSelector } from "../../../common";
-import OwnersTable from "./OwnersTable";
 
 const OwnersList: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -24,8 +24,8 @@ const OwnersList: FunctionComponent = () => {
 
   const { data: { count: totalCollaborators = 0 } = {} } =
     useGetCollaboratorCountQuery({
-      phrase: query,
       excludeMe: true,
+      phrase: query,
     });
 
   const handleSearch = (searched: string) => {
@@ -39,33 +39,33 @@ const OwnersList: FunctionComponent = () => {
   return (
     <>
       <Stack
-        sx={{
-          justifyContent: "space-between",
+        sx={ {
           flexDirection: ["column", "row"],
-          rowGap: 2,
+          justifyContent: "space-between",
           pb: 4,
-        }}
+          rowGap: 2,
+        } }
       >
         <Typography variant="h3">COLLABORATORS</Typography>
-        {invites?.length ? (
+        { invites?.length ? (
           <Button
-            onClick={() => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen))}
             width="compact"
+            onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) }
           >
             Invitation pending
           </Button>
-        ) : null}
+        ) : null }
       </Stack>
 
-      {totalCollaborators || query ? (
+      { totalCollaborators || query ? (
         <SearchBox
           placeholder="Search by name or email"
-          query={query}
-          onSearch={handleSearch}
+          query={ query }
+          onSearch={ handleSearch }
         />
-      ) : null}
+      ) : null }
 
-      <OwnersTable totalCollaborators={totalCollaborators} query={query} />
+      <OwnersTable query={ query } totalCollaborators={ totalCollaborators } />
     </>
   );
 };

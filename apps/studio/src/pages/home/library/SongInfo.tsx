@@ -1,7 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router";
 import { useWindowDimensions } from "@newm-web/utils";
-import { PlaySong } from "../../../components";
 import { SolidOutline } from "@newm-web/elements";
 import {
   CopyrightInputField,
@@ -12,9 +11,10 @@ import {
 } from "@newm-web/elements";
 import { HorizontalLine, Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { emptySong, useGetSongQuery } from "../../../modules/song";
 import { Formik } from "formik";
 import { SongRouteParams } from "./types";
+import { emptySong, useGetSongQuery } from "../../../modules/song";
+import { PlaySong } from "../../../components";
 import { CoverRemixSample } from "../../../components";
 
 const SongInfo = () => {
@@ -46,122 +46,123 @@ const SongInfo = () => {
   } = useGetSongQuery(songId);
 
   const initialValues = {
-    id: songId,
-    coverArtUrl,
-    title,
-    genres: songGenres,
-    moods,
-    description,
-    compositionCopyrightYear,
-    compositionCopyrightOwner,
-    phonographicCopyrightYear,
-    phonographicCopyrightOwner,
-    isrc,
-    releaseDate,
-    isExplicit: parentalAdvisory === "Explicit",
-    isMinting: false,
-    language,
-    consentsToContract: false,
     barcodeNumber,
     barcodeType,
-    publicationDate,
-    iswc,
+    compositionCopyrightOwner,
+    compositionCopyrightYear,
+    consentsToContract: false,
+    coverArtUrl,
+    description,
+    genres: songGenres,
+    id: songId,
     ipi: ipis?.join(", "),
     isCoverRemixSample,
+    isExplicit: parentalAdvisory === "Explicit",
+    isMinting: false,
+    isrc,
+    iswc,
+    language,
+    moods,
+    phonographicCopyrightOwner,
+    phonographicCopyrightYear,
+    publicationDate,
+    releaseDate,
+    title,
   };
 
   return (
     <Box
-      sx={{
-        mt: 5,
-        textAlign:
-          windowWidth && windowWidth > theme.breakpoints.values.md
-            ? "left"
-            : "center",
+      sx={ {
         maxWidth: [
           theme.inputField.maxWidth,
           theme.inputField.maxWidth,
           "700px",
         ],
-      }}
+        mt: 5,
+        textAlign:
+          windowWidth && windowWidth > theme.breakpoints.values.md
+            ? "left"
+            : "center",
+      } }
     >
       <Formik
-        initialValues={initialValues}
+        enableReinitialize={ true }
+        initialValues={ initialValues }
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onSubmit={() => {}}
-        enableReinitialize={true}
+        onSubmit={ () => {} }
       >
-        {({ values }) => (
-          <Stack direction="column" spacing={5}>
-            <Typography variant="h4" fontWeight="700">
+        { ({ values }) => (
+          <Stack direction="column" spacing={ 5 }>
+            <Typography fontWeight="700" variant="h4">
               Basic Details
             </Typography>
             <Stack
-              sx={{
+              sx={ {
+                alignItems: ["center", "center", "unset"],
+                columnGap: [undefined, undefined, 1.5],
                 display: "flex",
                 flexDirection: ["column", "column", "row"],
-                columnGap: [undefined, undefined, 1.5],
-                rowGap: [2, null, 3],
-                maxWidth: [undefined, undefined, "700px"],
                 marginBottom: 3,
-                alignItems: ["center", "center", "unset"],
-              }}
+                maxWidth: [undefined, undefined, "700px"],
+                rowGap: [2, null, 3],
+              } }
             >
               <Stack
-                maxWidth={theme.inputField.maxWidth}
-                spacing={0.5}
+                maxWidth={ theme.inputField.maxWidth }
+                spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color="grey100" fontWeight={500}>
+                <Typography color="grey100" fontWeight={ 500 }>
                   SONG
                 </Typography>
 
                 <SolidOutline
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
+                  sx={ {
                     alignItems: "center",
+                    display: "flex",
                     flexGrow: 1,
                     height: "100px",
-                  }}
+                    justifyContent: "center",
+                  } }
                 >
-                  <PlaySong id={songId || ""} />
+                  <PlaySong id={ songId || "" } />
                 </SolidOutline>
               </Stack>
 
               <Stack
-                maxWidth={theme.inputField.maxWidth}
-                spacing={0.5}
+                maxWidth={ theme.inputField.maxWidth }
+                spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color="grey100" fontWeight={500}>
+                <Typography color="grey100" fontWeight={ 500 }>
                   SONG COVER ART
                 </Typography>
 
                 <UploadImageField
-                  rootSx={{ width: "100%", alignSelf: "center" }}
-                  name="coverArtUrl"
+                  allowImageChange={ false }
                   emptyMessage="Loading..."
-                  hasPreviewOption={true}
-                  allowImageChange={false}
+                  hasPreviewOption={ true }
+                  name="coverArtUrl"
+                  rootSx={ { alignSelf: "center", width: "100%" } }
                 />
               </Stack>
             </Stack>
             <Stack
-              spacing={3}
-              sx={{
+              spacing={ 3 }
+              sx={ {
+                alignSelf: ["center", "center", "unset"],
                 marginX: ["auto", "auto", "unset"],
                 maxWidth: [
                   theme.inputField.maxWidth,
                   theme.inputField.maxWidth,
                   "700px",
                 ],
-                alignSelf: ["center", "center", "unset"],
                 width: "100%",
-              }}
+              } }
             >
               <Stack
-                sx={{
+                sx={ {
+                  columnGap: [undefined, undefined, 1.5],
                   display: "grid",
                   gridTemplateColumns: [
                     "repeat(1, 1fr)",
@@ -169,65 +170,64 @@ const SongInfo = () => {
                     "repeat(2, 1fr)",
                   ],
                   rowGap: [2, null, 3],
-                  columnGap: [undefined, undefined, 1.5],
-                }}
+                } }
               >
                 <TextInputField
-                  disabled={true}
-                  isOptional={false}
+                  disabled={ true }
+                  isOptional={ false }
                   label="SONG TITLE"
                   name="title"
-                  title={values.title || ""}
+                  title={ values.title || "" }
                   widthType="full"
                 />
 
                 <TextInputField
-                  disabled={true}
-                  isOptional={false}
+                  disabled={ true }
+                  isOptional={ false }
                   label="GENRE"
                   name="genres"
-                  title={values.genres?.join(", ") || ""}
+                  title={ values.genres?.join(", ") || "" }
                 />
 
                 <TextInputField
-                  disabled={true}
+                  disabled={ true }
                   label="LANGUAGE"
                   name="language"
                 />
 
                 <TextInputField
-                  disabled={true}
+                  disabled={ true }
                   label="MOOD"
                   name="moods"
-                  title={values.moods?.join(", ") || ""}
+                  title={ values.moods?.join(", ") || "" }
                 />
               </Stack>
 
               <TextAreaField
-                disabled={true}
+                disabled={ true }
                 label="DESCRIPTION"
                 name="description"
-                title={values.description || ""}
+                title={ values.description || "" }
               />
 
               <Stack>
-                <HorizontalLine my={2} />
+                <HorizontalLine my={ 2 } />
               </Stack>
             </Stack>
-            <Typography variant="h4" fontWeight="700">
+            <Typography fontWeight="700" variant="h4">
               Advanced Details
             </Typography>
             <Stack
-              marginX={["auto", "auto", "unset"]}
-              maxWidth={[
+              marginX={ ["auto", "auto", "unset"] }
+              maxWidth={ [
                 theme.inputField.maxWidth,
                 theme.inputField.maxWidth,
                 "700px",
-              ]}
-              spacing={3}
+              ] }
+              spacing={ 3 }
             >
               <SwitchInputField
-                disabled={true}
+                disabled={ true }
                 name="isExplicit"
                 title="Does the song contain explicit content?"
                 tooltipText={
@@ -235,43 +235,42 @@ const SongInfo = () => {
                   "or depictions of sex, violence or substance abuse."
                 }
               />
-              <CoverRemixSample disabled={true} />
+              <CoverRemixSample disabled={ true } />
               <Stack
+                columnGap={ [undefined, undefined, 1.5] }
                 display="grid"
-                gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}
-                rowGap={[2, null, 3]}
-                columnGap={[undefined, undefined, 1.5]}
+                gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
+                rowGap={ [2, null, 3] }
               >
                 <TextInputField
-                  disabled={true}
-                  isOptional={false}
+                  disabled={ true }
+                  isOptional={ false }
                   label="SCHEDULE RELEASE DATE"
                   name="releaseDate"
-                  type="date"
                   tooltipText={
                     "When selecting a date to release your song on our " +
                     "platform, please remember to factor in approval from any " +
                     "contributors/featured artists as well as mint processing time " +
                     "which can take up to 15 days."
                   }
+                  type="date"
                 />
                 <TextInputField
-                  disabled={true}
-                  name="publicationDate"
+                  disabled={ true }
                   label="ORIGINAL PUBLICATION DATE"
-                  type="date"
+                  name="publicationDate"
                   tooltipText={
                     "If your song has already been launched on other platforms you " +
                     "may input the release date here, but it is not required."
                   }
+                  type="date"
                 />
                 <CopyrightInputField
-                  disabled={true}
-                  label="COMPOSITION COPYRIGHT"
-                  yearFieldName="compositionCopyrightYear"
-                  ownerFieldName="compositionCopyrightOwner"
                   copyrightType="composition"
-                  isOptional={false}
+                  disabled={ true }
+                  isOptional={ false }
+                  label="COMPOSITION COPYRIGHT"
+                  ownerFieldName="compositionCopyrightOwner"
                   placeholder=""
                   tooltipText={
                     "The copyright for a musical composition covers the " +
@@ -279,14 +278,14 @@ const SongInfo = () => {
                     "performance). It is typically owned by the songwriter " +
                     "and/or music publisher."
                   }
+                  yearFieldName="compositionCopyrightYear"
                 />
                 <CopyrightInputField
-                  disabled={true}
-                  label="SOUND RECORDING COPYRIGHT"
-                  yearFieldName="phonographicCopyrightYear"
-                  ownerFieldName="phonographicCopyrightOwner"
                   copyrightType="phonographic"
-                  isOptional={false}
+                  disabled={ true }
+                  isOptional={ false }
+                  label="SOUND RECORDING COPYRIGHT"
+                  ownerFieldName="phonographicCopyrightOwner"
                   placeholder=""
                   tooltipText={
                     "The copyright in a sound recording covers the " +
@@ -294,26 +293,27 @@ const SongInfo = () => {
                     "or lyrics of the song). It is typically owned by " +
                     "the artist and/or record label."
                   }
+                  yearFieldName="phonographicCopyrightYear"
                 />
                 <TextInputField
-                  disabled={true}
-                  name="barcodeType"
+                  disabled={ true }
                   label="RELEASE CODE TYPE"
+                  name="barcodeType"
                 />
                 <TextInputField
-                  disabled={true}
-                  name="barcodeNumber"
+                  disabled={ true }
                   label="RELEASE CODE NUMBER"
+                  name="barcodeNumber"
                   tooltipText={
                     "A release code number is a unique code that identifies " +
                     "your release."
                   }
                 />
                 <TextInputField
-                  disabled={true}
+                  disabled={ true }
                   label="ISRC"
                   mask="aa-***-99-99999"
-                  maskChar={null}
+                  maskChar={ null }
                   name="isrc"
                   tooltipText={
                     "An ISRC is a unique code that identifies this specific " +
@@ -321,7 +321,7 @@ const SongInfo = () => {
                   }
                 />
                 <TextInputField
-                  disabled={true}
+                  disabled={ true }
                   label="IPI"
                   name="ipi"
                   tooltipText={
@@ -331,10 +331,10 @@ const SongInfo = () => {
                   type="number"
                 />
                 <TextInputField
-                  disabled={true}
+                  disabled={ true }
                   label="ISWC"
                   mask="T-999999999-9"
-                  maskChar={null}
+                  maskChar={ null }
                   name="iswc"
                   tooltipText={
                     "An ISWC is the unique identification code of your song " +
@@ -344,7 +344,7 @@ const SongInfo = () => {
               </Stack>
             </Stack>
           </Stack>
-        )}
+        ) }
       </Formik>
     </Box>
   );

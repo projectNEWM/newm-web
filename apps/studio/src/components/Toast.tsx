@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { clearToastMessage, selectUi } from "../modules/ui";
 import { Alert, Snackbar, Typography, useTheme } from "@mui/material";
 import { CheckCircle, CloseCircleFill } from "@newm-web/assets";
+import { clearToastMessage, selectUi } from "../modules/ui";
 import { useAppDispatch, useAppSelector } from "../common";
 
 const Toast = () => {
@@ -25,58 +25,58 @@ const Toast = () => {
 
   return isOpen ? (
     <Snackbar
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      open={isOpen}
-      sx={{
+      anchorOrigin={ { horizontal: "right", vertical: "top" } }
+      autoHideDuration={ 6000 }
+      open={ isOpen }
+      sx={ {
         "&.MuiSnackbar-root": {
           left: [null, null, "32px"],
           right: [null, null, "32px"],
           top: "32px",
         },
-      }}
+      } }
+      onClose={ handleClose }
     >
       <Alert
-        iconMapping={{
+        iconMapping={ {
           error: <CloseCircleFill />,
-          success: <CheckCircle fill={theme.colors.green} />,
-        }}
-        onClose={handleClose}
-        severity={severity}
-        sx={{
+          success: <CheckCircle fill={ theme.colors.green } />,
+        } }
+        severity={ severity }
+        sx={ {
           "&.MuiAlert-root": {
-            alignItems: "center",
-            ".MuiAlert-message": {
-              paddingRight: [1, 2, 6],
-            },
-            ".MuiAlert-action": {
-              paddingTop: 0,
-            },
             "&.MuiAlert-outlined": {
-              color: theme.colors.white,
-              backgroundColor: theme.colors.black,
-              textAlign: "left",
-              ".MuiSvgIcon-root": {
-                color: theme.colors.white,
+              "&.MuiAlert-outlinedError": {
+                borderColor: theme.colors.red,
               },
               "&.MuiAlert-outlinedSuccess": {
                 borderColor: theme.colors.green,
               },
-              "&.MuiAlert-outlinedError": {
-                borderColor: theme.colors.red,
+              ".MuiSvgIcon-root": {
+                color: theme.colors.white,
               },
+              backgroundColor: theme.colors.black,
+              color: theme.colors.white,
+              textAlign: "left",
             },
+            ".MuiAlert-action": {
+              paddingTop: 0,
+            },
+            ".MuiAlert-message": {
+              paddingRight: [1, 2, 6],
+            },
+            alignItems: "center",
           },
-        }}
+        } }
         variant="outlined"
+        onClose={ handleClose }
       >
-        <Typography variant="h6">{heading}</Typography>
+        <Typography variant="h6">{ heading }</Typography>
         <Typography
-          sx={{ fontWeight: "400", marginTop: heading ? 1 : 0 }}
+          sx={ { fontWeight: "400", marginTop: heading ? 1 : 0 } }
           variant="h6"
         >
-          {message}
+          { message }
         </Typography>
       </Alert>
     </Snackbar>

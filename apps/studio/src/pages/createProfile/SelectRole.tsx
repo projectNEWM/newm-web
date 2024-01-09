@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { AddProfileInformation } from "../../components";
 import { useFormikContext } from "formik";
+import { AddProfileInformation } from "../../components";
 import { useGetRolesQuery } from "../../modules/content";
 import { ProfileFormValues } from "../../modules/session";
 
@@ -16,8 +16,8 @@ const SelectRole: FunctionComponent = () => {
       fieldName="role"
       helperText="Type or select a role"
       placeholder="role"
-      prompt={`What's your main role, ${nickname ? nickname : firstName}?`}
-      tags={roles}
+      prompt={ `What's your main role, ${nickname ? nickname : firstName}?` }
+      tags={ roles }
     />
   );
 };

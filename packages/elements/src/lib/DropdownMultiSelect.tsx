@@ -30,11 +30,11 @@ export interface DropdownMultiSelectProps
 
   readonly label?: string;
   readonly name: string;
-  readonly tooltipText?: string;
   readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
-  readonly value?: Array<string>;
   readonly placeholder?: string;
+  readonly tooltipText?: string;
+  readonly value?: Array<string>;
   readonly widthType?: WidthType;
 }
 
@@ -68,15 +68,15 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     inputValue,
     value: selected,
   } = useAutocomplete({
-    id: name,
-    getOptionLabel: (option) => option,
-    multiple: true,
     disableCloseOnSelect: true,
-    options,
-    value: value as Array<string>,
+    getOptionLabel: (option) => option,
+    id: name,
+    multiple: true,
     onChange: (event, newValue) => {
       handleChange?.(event, newValue);
     },
+    options,
+    value: value as Array<string>,
   });
 
   const getDisplayValue = () => {
@@ -125,62 +125,62 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
   };
 
   return (
-    <Box sx={{ position: "relative" }}>
-      <div {...getRootProps()}>
-        <Stack direction="row" alignItems="center">
+    <Box sx={ { position: "relative" } }>
+      <div { ...getRootProps() }>
+        <Stack alignItems="center" direction="row">
           <TextInput
-            {...rest}
-            {...inputProps}
-            style={{
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-            }}
-            disabled={disabled}
-            label={label}
-            value={popupOpen ? inputValue : displayValue}
-            placeholder={popupOpen ? "Search" : placeholder}
+            { ...rest }
+            { ...inputProps }
+            disabled={ disabled }
             endAdornment={
               <ArrowDropDownIcon
-                onClick={handleEndAdornmentClick}
-                sx={{
-                  cursor: "pointer",
+                sx={ {
                   color: theme.colors.white,
+                  cursor: "pointer",
                   transform: popupOpen ? "rotate(-180deg)" : "rotate(0deg)",
                   transition: "transform 200ms ease-in",
-                }}
+                } }
+                onClick={ handleEndAdornmentClick }
               />
             }
-            errorMessage={errorMessage}
-            name={name}
-            onBlur={handleBlurEvents}
-            onKeyDown={handleKeydown}
+            errorMessage={ errorMessage }
+            label={ label }
+            name={ name }
+            placeholder={ popupOpen ? "Search" : placeholder }
+            style={ {
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            } }
+            value={ popupOpen ? inputValue : displayValue }
+            onBlur={ handleBlurEvents }
+            onKeyDown={ handleKeydown }
           />
         </Stack>
       </div>
 
-      {hasResults && (
-        <ResultsList {...getListboxProps()}>
-          {(groupedOptions as typeof options).map((option, index) => {
+      { hasResults && (
+        <ResultsList { ...getListboxProps() }>
+          { (groupedOptions as typeof options).map((option, index) => {
             const isSelected = selected.includes(option);
 
             return (
-              <li {...getOptionProps({ option, index })} key={index}>
-                <Stack direction="row" spacing={1}>
-                  {isSelected ? (
+              <li { ...getOptionProps({ index, option }) } key={ index }>
+                <Stack direction="row" spacing={ 1 }>
+                  { isSelected ? (
                     <SelectedCheckboxIcon />
                   ) : (
                     <UnselectedCheckboxIcon />
-                  )}
-                  <span>{option}</span>
+                  ) }
+                  <span>{ option }</span>
                 </Stack>
               </li>
             );
-          })}
+          }) }
         </ResultsList>
-      )}
+      ) }
 
-      {showNoResults ? <NoResultsText>{noResultsText}</NoResultsText> : null}
+      { showNoResults ? <NoResultsText>{ noResultsText }</NoResultsText> : null }
     </Box>
   );
 };

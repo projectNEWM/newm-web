@@ -1,12 +1,12 @@
-import { renderWithContext } from "./utils/render";
 import { withFormik } from "@newm-web/utils";
+import { renderWithContext } from "./utils/render";
 import FilteredTagsField from "../form/FilteredTagsField";
 
 describe("<FilteredTagsField />", () => {
   it("displays all tags if form value is blank", () => {
     const { queryByText } = renderWithContext(
       withFormik(
-        <FilteredTagsField name="example" tags={["hello", "world"]} />,
+        <FilteredTagsField name="example" tags={ ["hello", "world"] } />,
         {
           initialValues: { example: "" },
           onSubmit: jest.fn(),
@@ -21,7 +21,7 @@ describe("<FilteredTagsField />", () => {
   it("only displays matching tags if form value is present", () => {
     const { queryByText } = renderWithContext(
       withFormik(
-        <FilteredTagsField name="example" tags={["hello", "world"]} />,
+        <FilteredTagsField name="example" tags={ ["hello", "world"] } />,
         {
           initialValues: { example: "he" },
           onSubmit: jest.fn(),
@@ -36,7 +36,7 @@ describe("<FilteredTagsField />", () => {
   it("does not display any tags if form value is equal to a tag", () => {
     const { queryByText } = renderWithContext(
       withFormik(
-        <FilteredTagsField name="example" tags={["hello", "world"]} />,
+        <FilteredTagsField name="example" tags={ ["hello", "world"] } />,
         {
           initialValues: { example: "hello" },
           onSubmit: jest.fn(),

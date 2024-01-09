@@ -2,14 +2,14 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
 import { Button, Typography } from "@newm-web/elements";
+import { DropdownSelectField } from "@newm-web/elements";
+import Details from "./Details";
 import {
   Creditor,
   getIsCreditorEditable,
   useGetCollaboratorsQuery,
 } from "../../modules/song";
-import { DropdownSelectField } from "@newm-web/elements";
 import { useGetRolesQuery } from "../../modules/content";
-import Details from "./Details";
 import { getCollaboratorInfo } from "../../modules/song";
 
 interface CreditorsProps {
@@ -44,7 +44,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
   return (
     <Box>
-      <Stack flexDirection="row" justifyContent="space-between" mb={-0.5}>
+      <Stack flexDirection="row" justifyContent="space-between" mb={ -0.5 }>
         <Typography color="grey100" variant="h5">
           CREDITS TO SHOW ON SONG DETAIL
         </Typography>
@@ -53,7 +53,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
         </Typography>
       </Stack>
 
-      {creditors.map((creditor, idx) => {
+      { creditors.map((creditor, idx) => {
         const isEditable = getIsCreditorEditable(creditor);
         const collaboratorInfo = getCollaboratorInfo(
           creditor.email,
@@ -62,54 +62,54 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
 
         return (
           <Stack
-            key={creditor.email}
-            sx={{
+            key={ creditor.email }
+            sx={ {
               alignItems: "center",
+              columnGap: 1,
               flexDirection: "row",
               justifyContent: "space-between",
               mt: 2,
               rowGap: 2,
-              columnGap: 1,
-            }}
+            } }
           >
             <Details
-              email={creditor.email}
-              pictureUrl={collaboratorInfo.pictureUrl}
-              firstName={collaboratorInfo.firstName}
-              lastName={collaboratorInfo.lastName}
+              email={ creditor.email }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+              pictureUrl={ collaboratorInfo.pictureUrl }
             />
 
-            <Stack direction="row" alignItems="center">
-              {isEditable ? (
+            <Stack alignItems="center" direction="row">
+              { isEditable ? (
                 <DropdownSelectField
-                  isOptional={false}
-                  name={`creditors[${idx}].role`}
-                  options={roles}
+                  isOptional={ false }
+                  name={ `creditors[${idx}].role` }
+                  options={ roles }
                   placeholder="Select role"
                   widthType="full"
                 />
               ) : (
-                <Typography color="white" fontWeight={500}>
-                  {creditor.role}
+                <Typography color="white" fontWeight={ 500 }>
+                  { creditor.role }
                 </Typography>
-              )}
+              ) }
 
               <Button
                 color="white"
-                sx={{ ml: [1, 1, 3] }}
+                disabled={ isDeleteDisabled }
+                sx={ { ml: [1, 1, 3] } }
                 variant="secondary"
-                disabled={isDeleteDisabled}
                 width="icon"
-                onClick={() => {
+                onClick={ () => {
                   onDelete(creditor, creditors);
-                }}
+                } }
               >
-                <CloseIcon sx={{ color: theme.colors.white }} />
+                <CloseIcon sx={ { color: theme.colors.white } } />
               </Button>
             </Stack>
           </Stack>
         );
-      })}
+      }) }
     </Box>
   );
 };

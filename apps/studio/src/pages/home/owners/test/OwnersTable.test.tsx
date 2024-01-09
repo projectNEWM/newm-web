@@ -40,7 +40,7 @@ describe("OwnersTable should", () => {
       isLoading: true,
     });
 
-    render(<OwnersTable query="" totalCollaborators={10} />);
+    render(<OwnersTable query="" totalCollaborators={ 10 } />);
 
     expect(screen.getByTestId("table-skeleton")).toBeInTheDocument();
 
@@ -51,14 +51,14 @@ describe("OwnersTable should", () => {
 
   it("render no owners yet message when there are no collaborators and no query", () => {
     (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      data: [],
       isLoading: false,
       isSuccess: true,
-      data: [],
     });
 
     render(
       <Router>
-        <OwnersTable query="" totalCollaborators={0} />
+        <OwnersTable query="" totalCollaborators={ 0 } />
       </Router>
     );
 
@@ -71,12 +71,12 @@ describe("OwnersTable should", () => {
 
   it("not render collaborators when there are no collaborators and query is provided", () => {
     (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      data: [],
       isLoading: false,
       isSuccess: true,
-      data: [],
     });
 
-    render(<OwnersTable query="example" totalCollaborators={0} />);
+    render(<OwnersTable query="example" totalCollaborators={ 0 } />);
 
     expect(
       screen.getByText("No collaborators matched your search.")
@@ -86,12 +86,12 @@ describe("OwnersTable should", () => {
 
   it("render collaborators table when data is available", () => {
     (useGetCollaboratorsQuery as jest.Mock).mockReturnValue({
+      data: collaboratorsData,
       isLoading: false,
       isSuccess: true,
-      data: collaboratorsData,
     });
 
-    render(<OwnersTable query="" totalCollaborators={2} />);
+    render(<OwnersTable query="" totalCollaborators={ 2 } />);
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("5 songs")).toBeInTheDocument();

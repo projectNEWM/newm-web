@@ -1,10 +1,10 @@
 const mockFile = {
+  lastModified: 1234567890,
   name: "hello-world.txt",
+  preview: "",
   size: 1000,
   type: "",
   webkitRelativePath: "/",
-  lastModified: 1234567890,
-  preview: "",
   prototype: {} as any, // eslint-disable-line
   arrayBuffer: (() => {}) as any, // eslint-disable-line
   slice: (() => {}) as any, // eslint-disable-line

@@ -10,17 +10,17 @@ const CheckboxField: ForwardRefRenderFunction<
   ref: any // eslint-disable-line
 ) => {
   return (
-    <Field name={props.name}>
-      {({ field, meta }: FieldProps) => {
+    <Field name={ props.name }>
+      { ({ field, meta }: FieldProps) => {
         return (
           <Checkbox
-            ref={ref}
-            errorMessage={meta.touched ? meta.error : ""}
-            {...field}
-            {...props}
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            { ...field }
+            { ...props }
           />
         );
-      }}
+      } }
     </Field>
   );
 };

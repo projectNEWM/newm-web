@@ -30,29 +30,29 @@ const Alert: FunctionComponent<AlertProps> = ({
       <Collapse in={ open }>
         <MUIAlert
           action={
-            <Box sx={ { display: "flex", height: "100%", alignItems: "center" } }>
+            <Box sx={ { alignItems: "center", display: "flex", height: "100%" } }>
               { action }
             </Box>
           }
-          severity={ severity }
           iconMapping={ iconMapping }
+          severity={ severity }
           sx={ {
-            backgroundColor: theme.colors.grey600,
-            borderRadius: "6px",
-            p: "8px 16px",
+            ".MuiAlert-action": {
+              mr: 0,
+              p: 0,
+            },
             ".MuiAlert-icon": {
               alignItems: "center",
-            },
-            ".MuiSvgIcon-root": {
-              color: "inherit",
             },
             ".MuiAlert-message": {
               paddingRight: 1,
             },
-            ".MuiAlert-action": {
-              p: 0,
-              mr: 0,
+            ".MuiSvgIcon-root": {
+              color: "inherit",
             },
+            backgroundColor: theme.colors.grey600,
+            borderRadius: "6px",
+            p: "8px 16px",
             ...sx,
           } }
           { ...rest }

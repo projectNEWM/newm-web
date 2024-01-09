@@ -7,17 +7,17 @@ const TextAreaField: ForwardRefRenderFunction<
   TextAreaProps
 > = (props, ref) => {
   return (
-    <Field name={props.name}>
-      {({ field, meta }: FieldProps) => {
+    <Field name={ props.name }>
+      { ({ field, meta }: FieldProps) => {
         return (
           <TextArea
-            errorMessage={meta.touched ? meta.error : ""}
-            ref={ref}
-            {...field}
-            {...props}
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            { ...field }
+            { ...props }
           />
         );
-      }}
+      } }
     </Field>
   );
 };

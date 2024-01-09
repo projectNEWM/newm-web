@@ -3,33 +3,33 @@ import { Button } from "@newm-web/elements";
 import { FunctionComponent } from "react";
 
 interface SelectWalletItemProps {
-  readonly name: string;
   readonly logo: string;
+  readonly name: string;
   readonly onClick: VoidFunction;
 }
 
 const SelectWalletItem: FunctionComponent<SelectWalletItemProps> = ({
   name,
   logo,
-  onClick
+  onClick,
 }) => {
   return (
     <Button
-      key={name}
-      onClick={onClick}
+      color="white"
+      key={ name }
+      sx={ { justifyContent: "flex-start", opacity: 1 } }
       variant="outlined"
       width="full"
-      color="white"
-      sx={{ opacity: 1, justifyContent: "flex-start" }}
+      onClick={ onClick }
     >
       <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="flex-start"
         alignItems="center"
+        direction="row"
+        justifyContent="flex-start"
+        spacing={ 2 }
       >
-        <img alt={`${name} logo`} src={logo} width={30} height={30} />
-        <span>{name}</span>
+        <img alt={ `${name} logo` } height={ 30 } src={ logo } width={ 30 } />
+        <span>{ name }</span>
       </Stack>
     </Button>
   );

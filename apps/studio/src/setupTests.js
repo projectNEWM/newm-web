@@ -7,7 +7,7 @@ jest.mock("@newm-web/env", () => ({
   VITE_LINKEDIN_CLIENT_ID: "EXAMPLE_ID",
   NX_CLOUD_ACCESS_TOKEN: "EXAMPLE_TOKEN",
   NODE_ENV: "test",
-  VITE_ENV: "test",
+  VITE_ENV: "test"
 }));
 
 jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
@@ -20,11 +20,11 @@ jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
     isLoading: false,
     getAddress: jest.fn(),
     getBalance: jest.fn(),
-    getSupportedWallets: jest.fn(),
-  })),
+    getSupportedWallets: jest.fn()
+  }))
 }));
 
 jest.mock("react-audio-visualize", () => ({
   ...jest.requireActual("react-audio-visualize"),
-  AudioVisualizer: jest.fn(),
+  AudioVisualizer: jest.fn()
 }));

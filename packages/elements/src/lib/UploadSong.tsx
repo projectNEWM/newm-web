@@ -24,14 +24,14 @@ import SolidOutline from "./styled/SolidOutline";
 interface UploadSongProps {
   readonly errorMessage?: string;
   readonly file?: File;
-  readonly onChange: (file: File) => void;
   readonly onBlur: VoidFunction;
+  readonly onChange: (file: File) => void;
   readonly onError: (message: string) => void;
 }
 
 interface SongProgressOverlayProps {
-  readonly progress: number;
   readonly isPlaying: boolean;
+  readonly progress: number;
 }
 
 const AUDIO_MIN_DURATION_SEC = 30;
@@ -157,12 +157,12 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleDrop,
-    multiple: false,
     accept: {
       "audio/flac": [".flac"],
       "audio/wav": [".wav"],
     },
+    multiple: false,
+    onDrop: handleDrop,
   });
 
   /**
@@ -174,16 +174,16 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
 
       const binary = (await getFileBinary(file)) as string;
       const howler = new Howl({
-        src: binary,
-        onplay: () => setIsSongPlaying(true),
         onend: () => {
           setIsSongPlaying(false);
           setSongProgress(0);
         },
+        onplay: () => setIsSongPlaying(true),
         onstop: () => {
           setIsSongPlaying(false);
           setSongProgress(0);
         },
+        src: binary,
       });
 
       setSong(howler);
@@ -215,134 +215,134 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   }, [song]);
 
   return (
-    <Stack direction="column" spacing={1} alignItems="center">
+    <Stack alignItems="center" direction="column" spacing={ 1 }>
       <Box
-        {...getRootProps()}
-        sx={{
+        { ...getRootProps() }
+        sx={ {
+          cursor: "pointer",
           display: "flex",
           flexDirection: "column",
           flexGrow: 1,
           height: 100,
-          width: "100%",
           maxWidth: theme.inputField.maxWidth,
-          cursor: "pointer",
-        }}
+          width: "100%",
+        } }
       >
-        <input {...getInputProps()} />
+        <input { ...getInputProps() } />
 
-        {file ? (
+        { file ? (
           <SolidOutline
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
+            sx={ {
               alignItems: "center",
+              display: "flex",
               flexGrow: 1,
-            }}
+              justifyContent: "center",
+            } }
+            onMouseEnter={ () => setIsHovering(true) }
+            onMouseLeave={ () => setIsHovering(false) }
           >
             <Box position="relative">
               <AudioVisualizer
-                ref={visualizerRef}
-                blob={file}
-                width={338}
-                height={90}
-                barWidth={1}
-                gap={0}
-                barColor={theme.colors.grey100}
-                style={{ opacity: 0.2, marginLeft: 2 }}
+                barColor={ theme.colors.grey100 }
+                barWidth={ 1 }
+                blob={ file }
+                gap={ 0 }
+                height={ 90 }
+                ref={ visualizerRef }
+                style={ { marginLeft: 2, opacity: 0.2 } }
+                width={ 338 }
               />
 
               <Box
-                position="absolute"
+                alignItems="stretch"
+                bottom={ 0 }
                 display="flex"
-                top={0}
-                right={0}
-                bottom={0}
-                left={0}
-                width="100%"
                 height="100%"
                 justifyContent="center"
-                alignItems="stretch"
-                zIndex={10}
+                left={ 0 }
+                position="absolute"
+                right={ 0 }
+                top={ 0 }
+                width="100%"
+                zIndex={ 10 }
               >
                 <SongProgressOverlay
-                  progress={songProgress}
-                  isPlaying={isSongPlaying}
+                  isPlaying={ isSongPlaying }
+                  progress={ songProgress }
                 />
 
-                {isHovering ? (
+                { isHovering ? (
                   <Box
                     display="flex"
+                    flex={ 1 }
                     justifyContent="space-between"
-                    flex={1}
                     mx="2px"
                   >
                     <Box
-                      display="flex"
-                      flex={1}
-                      justifyContent="center"
                       alignItems="center"
-                      sx={{
+                      display="flex"
+                      flex={ 1 }
+                      justifyContent="center"
+                      sx={ {
                         "&:hover": {
                           backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
-                      }}
+                      } }
                     >
                       <IconMessage
-                        icon={<ChangeCircleIcon />}
+                        icon={ <ChangeCircleIcon /> }
                         message="Change song"
                       />
                     </Box>
 
                     <Box
-                      display="flex"
-                      flex={1}
-                      justifyContent="center"
                       alignItems="center"
-                      onClick={isSongPlaying ? handleStopSong : handlePlaySong}
-                      sx={{
+                      display="flex"
+                      flex={ 1 }
+                      justifyContent="center"
+                      sx={ {
                         "&:hover": {
                           backgroundColor: "rgba(0, 0, 0, 0.4)",
                         },
-                      }}
+                      } }
+                      onClick={ isSongPlaying ? handleStopSong : handlePlaySong }
                     >
-                      {isSongPlaying ? (
-                        <IconMessage icon={<StopIcon />} message="Stop song" />
+                      { isSongPlaying ? (
+                        <IconMessage icon={ <StopIcon /> } message="Stop song" />
                       ) : (
                         <IconMessage
-                          icon={<PlayArrowIcon />}
+                          icon={ <PlayArrowIcon /> }
                           message="Play song"
                         />
-                      )}
+                      ) }
                     </Box>
                   </Box>
                 ) : isDragActive ? (
                   <IconMessage
-                    icon={<ChangeCircleIcon />}
+                    icon={ <ChangeCircleIcon /> }
                     message="Drop your song here"
                   />
                 ) : (
                   <IconMessage
-                    icon={<CheckCircle fill={theme.colors.green} />}
-                    message={file.name}
+                    icon={ <CheckCircle fill={ theme.colors.green } /> }
+                    message={ file.name }
                   />
-                )}
+                ) }
               </Box>
             </Box>
           </SolidOutline>
         ) : (
-          <DashedOutline sx={{ display: "flex", flexGrow: 1 }}>
+          <DashedOutline sx={ { display: "flex", flexGrow: 1 } }>
             <IconMessage
-              icon={<AddSong />}
+              icon={ <AddSong /> }
               message="Drag and drop or browse your song"
               subtitle=".flac, .wav"
             />
           </DashedOutline>
-        )}
+        ) }
       </Box>
 
-      <ErrorMessage align="center">{errorMessage}</ErrorMessage>
+      <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
     </Stack>
   );
 };
@@ -357,18 +357,18 @@ const SongProgressOverlay: FunctionComponent<SongProgressOverlayProps> = ({
 
   return (
     <Box
-      position="absolute"
-      top={0}
-      bottom={0}
-      left={0}
-      width={progressPercentage}
+      bottom={ 0 }
+      left={ 0 }
       marginLeft="2px"
-      zIndex={-10}
-      sx={{
-        opacity: 0.5,
+      position="absolute"
+      sx={ {
         backgroundColor: theme.colors.black,
+        opacity: 0.5,
         transition: isPlaying ? "width 1s linear" : "width 0",
-      }}
+      } }
+      top={ 0 }
+      width={ progressPercentage }
+      zIndex={ -10 }
     />
   );
 };

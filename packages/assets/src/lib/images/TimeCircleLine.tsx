@@ -1,9 +1,9 @@
 const TimeCircleLine = () => (
   <svg
-    width="24"
+    fill="none"
     height="24"
     viewBox="0 0 24 24"
-    fill="none"
+    width="24"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clipPath="url(#clip0_1023_8179)">
@@ -16,7 +16,7 @@ const TimeCircleLine = () => (
     </g>
     <defs>
       <clipPath id="clip0_1023_8179">
-        <rect width="24" height="24" fill="white" />
+        <rect fill="white" height="24" width="24" />
       </clipPath>
     </defs>
   </svg>

@@ -3,8 +3,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { TextInputProps } from "../TextInput";
 import TextInputField from "./TextInputField";
+import { TextInputProps } from "../TextInput";
 
 interface PasswordInputFieldProps extends TextInputProps {
   readonly externalMaskPassword?: boolean;
@@ -39,17 +39,17 @@ const PasswordInputField: FunctionComponent<PasswordInputFieldProps> = ({
         showEndAdornment ? (
           <IconButton
             aria-label="Change password field visible status"
-            onClick={handlePressEndAdornment || togglePasswordMask}
+            onClick={ handlePressEndAdornment || togglePasswordMask }
           >
-            <PasswordIcon sx={{ color: theme.colors.white }} />
+            <PasswordIcon sx={ { color: theme.colors.white } } />
           </IconButton>
         ) : undefined
       }
-      placeholder={placeholder}
-      type={isMasked ? "password" : "text"}
-      isOptional={false}
+      isOptional={ false }
+      placeholder={ placeholder }
+      type={ isMasked ? "password" : "text" }
       data-sentry-mask
-      {...rest}
+      { ...rest }
     />
   );
 };

@@ -24,18 +24,18 @@ export interface GetSongsRequest {
   readonly genres?: string[];
   readonly ids?: string[];
   readonly limit?: number;
+  readonly mintingStatuses?: MintingStatus[];
   readonly newerThan?: string;
   readonly offset?: number;
   readonly olderThan?: string;
   readonly ownerIds?: string[];
   readonly phrase?: string;
   readonly sortOrder?: SortOrder;
-  readonly mintingStatuses?: MintingStatus[];
 }
 
 export interface Owner {
-  id?: string;
   email: string;
+  id?: string;
   isCreator: boolean;
   isRightsOwner: boolean;
   percentage: number;
@@ -44,72 +44,73 @@ export interface Owner {
 }
 
 export interface Creditor {
-  id?: string;
   email: string;
-  role: string;
+  id?: string;
   isCredited: boolean;
+  role: string;
   status: CollaborationStatus;
 }
 
 export interface Featured {
-  id?: string;
   email: string;
-  role: string;
+  id?: string;
   isFeatured: boolean;
+  role: string;
   status: CollaborationStatus;
 }
 
 export interface Collaborator {
   readonly email: string;
-  readonly role: string;
-  readonly royaltyRate?: number;
   readonly isCredited: boolean;
   readonly isFeatured: boolean;
+  readonly role: string;
+  readonly royaltyRate?: number;
 }
 
 /**
  * PostSong as stored in the NEWM API.
  */
 export interface PostSongRequest {
-  readonly title: string;
-  readonly genres: ReadonlyArray<string>;
-  readonly moods?: ReadonlyArray<string>;
-  readonly coverArtUrl?: string;
-  readonly lyricsUrl?: string;
-  readonly description?: string;
   readonly album?: string;
-  readonly track?: number;
-  readonly language?: string;
-  readonly compositionCopyrightYear?: string;
-  readonly compositionCopyrightOwner?: string;
-  readonly phonographicCopyrightYear?: string;
-  readonly phonographicCopyrightOwner?: string;
-  readonly parentalAdvisory?: string;
-  readonly barcodeType?: string;
   readonly barcodeNumber?: string;
+  readonly barcodeType?: string;
+  readonly compositionCopyrightOwner?: string;
+  readonly compositionCopyrightYear?: string;
+  readonly coverArtUrl?: string;
+  readonly coverRemixSample?: boolean;
+  readonly description?: string;
+  readonly genres: ReadonlyArray<string>;
+  readonly ipis?: ReadonlyArray<string>;
   readonly isrc?: string;
   readonly iswc?: string;
-  readonly ipis?: ReadonlyArray<string>;
-  readonly releaseDate?: string;
+  readonly language?: string;
+  readonly lyricsUrl?: string;
+  readonly moods?: ReadonlyArray<string>;
+  readonly parentalAdvisory?: string;
+  readonly phonographicCopyrightOwner?: string;
+  readonly phonographicCopyrightYear?: string;
   readonly publicationDate?: string;
-  readonly coverRemixSample?: boolean;
+  readonly releaseDate?: string;
+  readonly title: string;
+  readonly track?: number;
 }
 
 export interface UploadSongRequest
   extends Omit<PostSongRequest, "coverArtUrl"> {
+  readonly artistName: string;
+  readonly audio?: any;
+  readonly companyName: string;
+  readonly consentsToContract: boolean;
   readonly coverArtUrl?: string | File;
-  readonly audio?: any; // eslint-disable-line
+  readonly creditors: Array<Creditor>;
+  readonly featured: Array<Featured>;
+  readonly ipi?: string;
+  readonly isCoverRemixSample?: boolean;
+  // eslint-disable-line
   readonly isExplicit: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
-  readonly creditors: Array<Creditor>;
-  readonly featured: Array<Featured>;
-  readonly consentsToContract: boolean;
-  readonly companyName: string;
-  readonly artistName: string;
   readonly stageName: string;
-  readonly ipi?: string;
-  readonly isCoverRemixSample?: boolean;
 }
 
 export interface UploadSongResponse {
@@ -117,23 +118,23 @@ export interface UploadSongResponse {
 }
 
 export interface UploadSongAudioRequest {
-  readonly songId: string;
   readonly audio: File;
   readonly onUploadProgress?: OnUploadProgress;
+  readonly songId: string;
 }
 
 export interface UploadSongAudioResponse {
-  readonly url: string;
-  readonly mimeType: string;
-  readonly fileSize: number;
   readonly duration: number;
+  readonly fileSize: number;
+  readonly mimeType: string;
   readonly sampleRate: number;
+  readonly url: string;
 }
 
 export interface DeleteSongRequest {
   readonly archived?: boolean;
-  readonly songId: string;
   readonly showToast?: boolean;
+  readonly songId: string;
 }
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
@@ -142,17 +143,17 @@ export interface PatchSongRequest extends Partial<UploadSongRequest> {
 }
 
 export interface UpdateCollaborationsRequest {
-  readonly id: string;
-  readonly owners: ReadonlyArray<Owner>;
   readonly creditors: ReadonlyArray<Creditor>;
   readonly featured: ReadonlyArray<Featured>;
+  readonly id: string;
+  readonly owners: ReadonlyArray<Owner>;
 }
 
 export interface CloudinarySignatureResponse {
+  readonly apiKey: string;
+  readonly cloudName: string;
   readonly signature: string;
   readonly timestamp: number;
-  readonly cloudName: string;
-  readonly apiKey: string;
 }
 
 export enum MintingStatus {
@@ -178,42 +179,42 @@ export enum MintingStatus {
 }
 
 export enum MarketplaceStatus {
-  Selling = "Selling",
   NotSelling = "NotSelling",
+  Selling = "Selling",
 }
 export interface Song {
-  readonly archived: boolean;
-  readonly id: string;
-  readonly ownerId: string;
-  readonly createdAt: string;
-  readonly title: string;
-  readonly genres: ReadonlyArray<string>;
-  readonly moods?: ReadonlyArray<string>;
-  readonly coverArtUrl?: string;
-  readonly lyricsUrl?: string;
-  readonly description?: string;
   readonly album?: string;
-  readonly track?: number;
-  readonly language?: string;
-  readonly compositionCopyrightYear: string;
+  readonly archived: boolean;
+  readonly barcodeNumber?: string;
+  readonly barcodeType?: string;
   readonly compositionCopyrightOwner: string;
-  readonly phonographicCopyrightYear: string;
-  readonly phonographicCopyrightOwner: string;
-  readonly parentalAdvisory?: string;
+  readonly compositionCopyrightYear: string;
+  readonly coverArtUrl?: string;
+  readonly coverRemixSample?: boolean;
+  readonly createdAt: string;
+  readonly description?: string;
+  readonly duration?: number;
+  readonly genres: ReadonlyArray<string>;
+  readonly id: string;
+  readonly ipis?: ReadonlyArray<string>;
   readonly isrc?: string;
   readonly iswc?: string;
-  readonly ipis?: ReadonlyArray<string>;
-  readonly releaseDate?: string;
-  readonly publicationDate?: string;
-  readonly duration?: number;
-  readonly streamUrl?: string;
-  readonly nftPolicyId?: string;
-  readonly nftName?: string;
-  readonly mintingStatus: MintingStatus;
+  readonly language?: string;
+  readonly lyricsUrl?: string;
   readonly marketplaceStatus: MarketplaceStatus;
-  readonly barcodeType?: string;
-  readonly barcodeNumber?: string;
-  readonly coverRemixSample?: boolean;
+  readonly mintingStatus: MintingStatus;
+  readonly moods?: ReadonlyArray<string>;
+  readonly nftName?: string;
+  readonly nftPolicyId?: string;
+  readonly ownerId: string;
+  readonly parentalAdvisory?: string;
+  readonly phonographicCopyrightOwner: string;
+  readonly phonographicCopyrightYear: string;
+  readonly publicationDate?: string;
+  readonly releaseDate?: string;
+  readonly streamUrl?: string;
+  readonly title: string;
+  readonly track?: number;
 }
 
 export interface Artist {
@@ -240,14 +241,14 @@ export interface UseHlsJsResult {
 }
 
 export interface GetSongCountRequest {
-  phrase?: string;
-  ids?: string[];
-  ownerIds?: string[];
   genres?: string[];
-  moods?: string[];
-  olderThan?: string;
-  newerThan?: string;
+  ids?: string[];
   mintingStatuses?: MintingStatus[];
+  moods?: string[];
+  newerThan?: string;
+  olderThan?: string;
+  ownerIds?: string[];
+  phrase?: string;
 }
 
 export interface GetSongCountResponse {
@@ -255,22 +256,22 @@ export interface GetSongCountResponse {
 }
 
 export enum CollaborationStatus {
-  Editing = "Editing",
-  Waiting = "Waiting",
-  Rejected = "Rejected",
   Accepted = "Accepted",
+  Editing = "Editing",
+  Rejected = "Rejected",
+  Waiting = "Waiting",
 }
 
 export interface GetCollaborationsRequest {
-  readonly offset?: number;
-  readonly limit?: number;
+  readonly emails?: string;
   readonly ids?: string[];
+  readonly inbound?: boolean;
+  readonly limit?: number;
+  readonly newerThan?: string;
+  readonly offset?: number;
+  readonly olderThan?: string;
   readonly songIds?: string;
   readonly sortOrder?: SortOrder;
-  readonly emails?: string;
-  readonly olderThan?: string;
-  readonly newerThan?: string;
-  readonly inbound?: boolean;
   readonly statuses?: CollaborationStatus[];
 }
 
@@ -278,14 +279,14 @@ export interface GetCollaborationsRequest {
  * Collaboration as stored in the NEWM API.
  */
 export interface Collaboration {
-  readonly id: string;
   readonly createdAt: string;
-  readonly songId: string;
+  readonly credited: boolean;
   readonly email: string;
+  readonly featured: boolean;
+  readonly id: string;
   readonly role: string;
   readonly royaltyRate?: number;
-  readonly credited: boolean;
-  readonly featured: boolean;
+  readonly songId: string;
   readonly status: CollaborationStatus;
 }
 
@@ -305,12 +306,12 @@ export interface Invite {
 export type GetCollaborationsResponse = ReadonlyArray<Collaboration>;
 
 export interface CreateCollaborationRequest {
-  readonly songId: string;
+  readonly credited: boolean;
   readonly email: string;
+  readonly featured: boolean;
   readonly role: string;
   readonly royaltyRate?: number;
-  readonly credited: boolean;
-  readonly featured: boolean;
+  readonly songId: string;
 }
 
 export interface UpdateCollaborationRequest
@@ -323,16 +324,16 @@ export interface CreateCollaborationResponse {
 }
 
 export interface CollaboratorInfo {
-  id?: string;
+  biography?: string;
   createdAt?: string;
+  email?: string;
   firstName?: string;
+  genre?: string;
+  id?: string;
   lastName?: string;
   pictureUrl?: string;
   role?: string;
-  genre?: string;
-  biography?: string;
   walletAddress?: string;
-  email?: string;
 }
 
 export interface Collaborators {
@@ -342,21 +343,21 @@ export interface Collaborators {
 }
 
 export interface GetCollaboratorsRequest {
+  readonly emails?: string[];
   readonly excludeMe?: boolean;
   readonly limit?: number;
   readonly offset?: number;
   readonly phrase?: string;
   readonly songIds?: string[];
   readonly sortOrder?: SortOrder;
-  readonly emails?: string[];
 }
 
 export type GetCollaboratorsResponse = Array<Collaborators>;
 
 export interface GetCollaboratorCountRequest {
+  excludeMe?: boolean;
   phrase?: string;
   songIds?: string[];
-  excludeMe?: boolean;
 }
 
 export interface GetCollaboratorCountResponse {
@@ -364,8 +365,8 @@ export interface GetCollaboratorCountResponse {
 }
 
 export interface ReplyCollaborationRequest {
-  collaborationId: string;
   accepted: boolean;
+  collaborationId: string;
 }
 export interface ProcessStreamTokenAgreementRequest {
   accepted: boolean;
@@ -373,14 +374,14 @@ export interface ProcessStreamTokenAgreementRequest {
 }
 
 export interface CreateMintSongPaymentRequest {
-  readonly songId: string;
   readonly changeAddress: string;
+  readonly songId: string;
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
 export interface SubmitTransactionRequest {
-  readonly songId: string;
   readonly cborHex: string;
+  readonly songId: string;
 }
 
 export interface CborHexResponse {
@@ -392,22 +393,22 @@ export interface GetEarliestReleaseDateResponse {
 }
 
 export interface GetUserWalletSongsRequest {
-  readonly offset?: number;
   readonly limit?: number;
+  readonly offset?: number;
   readonly sortOrder?: SortOrder;
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
 interface WalletSong {
-  readonly token_amount: number;
   readonly song: Song;
+  readonly token_amount: number;
 }
 
 export interface GetUserWalletSongsResponse {
-  readonly total: number;
-  readonly offset: number;
   readonly limit: number;
+  readonly offset: number;
   readonly songs: WalletSong[];
+  readonly total: number;
 }
 
 export interface GetMintSongEstimateRequest {
@@ -415,16 +416,16 @@ export interface GetMintSongEstimateRequest {
 }
 
 export interface GetMintSongEstimateResponse {
-  readonly dspPriceUsd: string;
-  readonly cborHex: string;
   readonly adaPrice: string;
-  readonly usdPrice: string;
-  readonly dspPriceAda: string;
-  readonly mintPriceAda: string;
-  readonly mintPriceUsd: string;
-  readonly collabPriceAda: string;
-  readonly collabPriceUsd: string;
+  readonly cborHex: string;
   readonly collabPerArtistPriceAda: string;
   readonly collabPerArtistPriceUsd: string;
+  readonly collabPriceAda: string;
+  readonly collabPriceUsd: string;
+  readonly dspPriceAda: string;
+  readonly dspPriceUsd: string;
+  readonly mintPriceAda: string;
+  readonly mintPriceUsd: string;
   readonly usdAdaExchangeRate: string;
+  readonly usdPrice: string;
 }

@@ -3,22 +3,22 @@ import { Box, Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { FormikHelpers, FormikValues } from "formik";
 import theme from "@newm-web/theme";
-import { ResponsiveNEWMLogo } from "../../components";
 import { WizardForm } from "@newm-web/elements";
-import { commonYupValidation, useAppDispatch } from "../../common";
-import { resetPassword, sendVerificationEmail } from "../../modules/session";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
+import { resetPassword, sendVerificationEmail } from "../../modules/session";
+import { commonYupValidation, useAppDispatch } from "../../common";
+import { ResponsiveNEWMLogo } from "../../components";
 
 const ForgotPassword: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const initialValues = {
+    authCode: "",
+    confirmPassword: "",
     email: "",
     newPassword: "",
-    confirmPassword: "",
-    authCode: "",
   };
 
   const handleSubmit = ({
@@ -40,26 +40,24 @@ const ForgotPassword: FunctionComponent = () => {
 
   return (
     <Container
-      maxWidth={false}
-      sx={{
+      maxWidth={ false }
+      sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
         display: "flex",
         flexDirection: "column",
         pt: 7.5,
         px: 2,
-      }}
+      } }
     >
       <Box>
         <ResponsiveNEWMLogo />
       </Box>
 
       <WizardForm
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
+        initialValues={ initialValues }
         rootPath="forgot-password"
-        validateOnMount={true}
-        routes={[
+        routes={ [
           {
             element: <InitiateReset />,
             onSubmitStep: handleVerificationEmail,
@@ -79,15 +77,17 @@ const ForgotPassword: FunctionComponent = () => {
             element: <ResetPassword />,
             path: "reset",
             validationSchema: Yup.object().shape({
-              newPassword: commonYupValidation.newPassword.required(
-                "Password is required"
-              ),
               confirmPassword: commonYupValidation.confirmPassword.required(
                 "Confirm password is required"
               ),
+              newPassword: commonYupValidation.newPassword.required(
+                "Password is required"
+              ),
             }),
           },
-        ]}
+        ] }
+        validateOnMount={ true }
+        onSubmit={ handleSubmit }
       />
     </Container>
   );

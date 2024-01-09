@@ -1,10 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseUrls } from "../../buildParams";
-import { setToastMessage } from "../../modules/ui";
 import {
   GenerateArtistAgreementBody,
   GenerateArtistAgreementResponse,
 } from "./types";
+import { baseUrls } from "../../buildParams";
+import { setToastMessage } from "../../modules/ui";
 import { baseQuery as newmBaseQuery } from "../newm/api";
 import {
   axiosBaseQuery,
@@ -18,19 +18,12 @@ const baseQuery = axiosBaseQuery({
 });
 
 const api = createApi({
-  reducerPath: "lambdaApi",
   baseQuery: fetchBaseQueryWithReauth(baseQuery, newmBaseQuery),
   endpoints: (build) => ({
     generateArtistAgreement: build.mutation<
       GenerateArtistAgreementResponse,
       GenerateArtistAgreementBody
     >({
-      query: (body) => ({
-        url: "generate-artist-agreement/",
-        method: "POST",
-        body,
-      }),
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -43,8 +36,15 @@ const api = createApi({
           );
         }
       },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "generate-artist-agreement/",
+      }),
     }),
   }),
+  reducerPath: "lambdaApi",
 });
 
 export default api;

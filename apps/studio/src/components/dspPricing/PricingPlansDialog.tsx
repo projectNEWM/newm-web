@@ -1,10 +1,10 @@
 import { Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { useGetMintSongEstimateQuery } from "../../modules/song";
-import { useUpdateProfileThunk } from "../../modules/session";
 import { formatPriceToDecimal } from "@newm-web/utils";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Check } from "@mui/icons-material";
+import { useUpdateProfileThunk } from "../../modules/session";
+import { useGetMintSongEstimateQuery } from "../../modules/song";
 
 interface PricingPlansDialogProps {
   readonly onClose: () => void;
@@ -70,9 +70,8 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
 
   return (
     <Dialog
-      onClose={onClose}
-      open={open}
-      sx={{
+      open={ open }
+      sx={ {
         "& .MuiPaper-root": {
           backgroundColor: theme.colors.grey600,
           border: `1px solid ${theme.colors.grey400}`,
@@ -80,100 +79,101 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
         },
 
         height: "100%",
-      }}
+      } }
+      onClose={ onClose }
     >
       <Box
-        sx={{
+        sx={ {
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           padding: 5,
           position: "relative",
-          justifyContent: "center",
           [theme.breakpoints.down("xl")]: { paddingX: 2 },
-        }}
+        } }
       >
         <Stack
-          sx={{
+          sx={ {
             alignItems: "center",
             display: "flex",
-            gap: 4,
             flex: 1,
-          }}
+            gap: 4,
+          } }
         >
           <Stack textAlign="center">
             <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 700,
-                pb: 4,
-                height: "40px",
+              sx={ {
                 display: "flex",
-                justifyContent: "center",
                 flexDirection: "column",
-              }}
+                fontWeight: 700,
+                height: "40px",
+                justifyContent: "center",
+                pb: 4,
+              } }
+              variant="h4"
             >
               <Box>
                 <Box
                   component="span"
-                  sx={{ textDecoration: "line-through", mr: 1 }}
+                  sx={ { mr: 1, textDecoration: "line-through" } }
                 >
                   $14/RELEASE
                 </Box>
-                {dspFormattedPricingUsd}
+                { dspFormattedPricingUsd }
               </Box>
               <Typography variant="subtitle1">
-                {dspFormattedPricingAda}
+                { dspFormattedPricingAda }
               </Typography>
             </Typography>
 
             <Stack>
               <Typography variant="h2">The Artist</Typography>
               <Typography
-                variant="subtitle1"
-                sx={{
+                sx={ {
                   fontWeight: 500,
                   [theme.breakpoints.up("lg")]: { height: "48px" },
                   width: ["auto", "320px"],
-                }}
+                } }
+                variant="subtitle1"
               >
                 Release your music with NEWM and ensure correct royalty splits.
               </Typography>
             </Stack>
           </Stack>
 
-          <Stack gap={1.25}>
-            {pricingPlanCriteria.map((criterion, index) => (
+          <Stack gap={ 1.25 }>
+            { pricingPlanCriteria.map((criterion, index) => (
               <Stack
-                sx={{
+                key={ index }
+                sx={ {
                   display: "flex",
                   flexDirection: "row",
                   gap: 1.5,
                   [theme.breakpoints.down("xl")]: { paddingX: 3 },
-                }}
-                key={index}
+                } }
               >
-                <Check sx={{ color: theme.colors.green }} />
+                <Check sx={ { color: theme.colors.green } } />
 
                 <Typography
+                  alignSelf={ "center" }
+                  fontWeight={ 500 }
                   variant="body1"
-                  fontWeight={500}
-                  alignSelf={"center"}
                 >
-                  {criterion}
+                  { criterion }
                 </Typography>
               </Stack>
-            ))}
+            )) }
           </Stack>
 
-          <Divider sx={{ width: "70%" }} color={theme.colors.grey400} />
-          <Button onClick={handleOptionClick} isLoading={isLoading}>
+          <Divider color={ theme.colors.grey400 } sx={ { width: "70%" } } />
+          <Button isLoading={ isLoading } onClick={ handleOptionClick }>
             Get started
           </Button>
           <Button
-            variant="secondary"
             color="music"
-            onClick={onClose}
-            isLoading={isLoading}
+            isLoading={ isLoading }
+            variant="secondary"
+            onClick={ onClose }
           >
             Cancel
           </Button>

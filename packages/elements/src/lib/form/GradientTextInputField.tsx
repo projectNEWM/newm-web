@@ -8,8 +8,8 @@ const GradientTextInputField: ForwardRefRenderFunction<
   GradientTextInputProps
 > = (props, ref) => {
   return (
-    <Field name={props.name}>
-      {({ field: { onBlur, ...field }, meta }: FieldProps) => {
+    <Field name={ props.name }>
+      { ({ field: { onBlur, ...field }, meta }: FieldProps) => {
         /**
          * Add a slight delay to the on blur functionality because
          * validations used in the app for this field can be slow.
@@ -24,14 +24,14 @@ const GradientTextInputField: ForwardRefRenderFunction<
 
         return (
           <GradientTextInput
-            errorMessage={meta.touched ? meta.error : ""}
-            onBlur={handleBlur}
-            ref={ref}
-            {...field}
-            {...props}
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            onBlur={ handleBlur }
+            { ...field }
+            { ...props }
           />
         );
-      }}
+      } }
     </Field>
   );
 };

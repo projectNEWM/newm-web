@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { Stack, Typography } from "@mui/material";
+import { IconMessage } from "@newm-web/elements";
 import {
   Song,
   useFetchSongStreamThunk,
@@ -9,7 +10,6 @@ import {
   useHlsJs,
 } from "../modules/song";
 import { PlayerState } from "../common";
-import { IconMessage } from "@newm-web/elements";
 
 interface PlaySongProps {
   readonly id: string;
@@ -29,22 +29,22 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
       onPlaySong: ({ id }: Song) => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: id,
-        }));
-      },
-      onStopSong: () => {
-        setPlayerState((prevState) => ({
-          ...prevState,
           isReadyToPlay: false,
-          currentPlayingSongId: undefined,
         }));
       },
       onSongEnded: () => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: undefined,
+          isReadyToPlay: false,
+        }));
+      },
+      onStopSong: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          currentPlayingSongId: undefined,
+          isReadyToPlay: false,
         }));
       },
     }),
@@ -82,8 +82,8 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
+        song: fetchStreamDataResp.data?.song,
       }));
     }
   }, [
@@ -117,13 +117,13 @@ const PlaySong: FunctionComponent<PlaySongProps> = ({ id }) => {
   if (isLoading) return null;
 
   return song?.streamUrl ? (
-    <Stack sx={{ cursor: "pointer", width: "100%", height: "100%" }}>
+    <Stack sx={ { cursor: "pointer", height: "100%", width: "100%" } }>
       <IconMessage
         icon={
           playerState.currentPlayingSongId ? <StopIcon /> : <PlayArrowIcon />
         }
-        message={playerState.currentPlayingSongId ? "Stop song" : "Play song"}
-        onClick={() => handleSongPlayPause(song)}
+        message={ playerState.currentPlayingSongId ? "Stop song" : "Play song" }
+        onClick={ () => handleSongPlayPause(song) }
       />
     </Stack>
   ) : (

@@ -10,9 +10,9 @@ describe("<PasswordInputField>", () => {
   jest.spyOn(Formik, "useFormikContext").mockImplementation(
     () =>
       ({
+        handleSubmit: jest.fn(),
         isValid: false,
         setFieldTouched: jest.fn(),
-        handleSubmit: jest.fn(),
       } as never)
   );
 
@@ -27,7 +27,7 @@ describe("<PasswordInputField>", () => {
     };
 
     return renderWithContext(
-      withFormik(<PasswordInputField {...props} />, {
+      withFormik(<PasswordInputField { ...props } />, {
         initialValues: { name: "" },
         onSubmit: jest.fn(),
       })
@@ -49,7 +49,7 @@ describe("<PasswordInputField>", () => {
     expect(screen.queryByTestId("VisibilityIcon")).not.toBeInTheDocument();
   });
 
-  it("is able to toggle password mask when clicked", () => {
+  it("is able to toggle password mask when clicked", async () => {
     renderComponent();
 
     const passwordInput = screen.getByPlaceholderText("password placeholder");
@@ -57,14 +57,14 @@ describe("<PasswordInputField>", () => {
 
     expect(passwordInput).toHaveAttribute("type", "password");
 
-    userEvent.click(maskIcon);
+    await userEvent.click(maskIcon);
 
     expect(passwordInput).toHaveAttribute("type", "text");
     expect(maskIcon).not.toBeInTheDocument();
     expect(screen.getByTestId("VisibilityOffIcon")).toBeInTheDocument();
   });
 
-  it("does not toggle mask when custom handler provided", () => {
+  it("does not toggle mask when custom handler provided", async () => {
     const mockHandlePressEndAdornment = jest.fn();
     renderComponent({
       externalMaskPassword: true,
@@ -76,7 +76,7 @@ describe("<PasswordInputField>", () => {
     expect(maskIcon).toBeInTheDocument();
     expect(mockHandlePressEndAdornment).not.toHaveBeenCalled();
 
-    userEvent.click(maskIcon);
+    await userEvent.click(maskIcon);
 
     expect(maskIcon).toBeInTheDocument();
     expect(mockHandlePressEndAdornment).toHaveBeenCalled();

@@ -1,5 +1,12 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { LinkedInCallback } from "react-linkedin-login-oauth2";
+import { Provider } from "react-redux";
+import { Navigate, Route, Routes } from "react-router-dom";
+import theme from "@newm-web/theme";
+import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { VITE_GOOGLE_CLIENT_ID } from "@newm-web/env";
 import {
   Background,
   ConnectWalletModal,
@@ -19,28 +26,21 @@ import Home from "./pages/home";
 import SignUp from "./pages/signUp";
 import ForgotPassword from "./pages/forgotPassword";
 import CreateProfile from "./pages/createProfile";
-import { LinkedInCallback } from "react-linkedin-login-oauth2";
-import { Provider } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
-import theme from "@newm-web/theme";
 import BrowserRouter from "./common/BrowserRouter";
 import { history } from "./common/history";
-import { PersistGate } from "redux-persist/integration/react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import OnboardingRedirect from "./components/OnboardingRedirect";
 import ScrollToTop from "./components/ScrollToTop";
 import store, { persistor } from "./store";
-import { VITE_GOOGLE_CLIENT_ID } from "@newm-web/env";
 import "./App.css";
 
 const App = () => {
   const googleClientID = VITE_GOOGLE_CLIENT_ID || "";
 
   return (
-    <ThemeProvider theme={theme}>
-      <GoogleOAuthProvider clientId={googleClientID}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+    <ThemeProvider theme={ theme }>
+      <GoogleOAuthProvider clientId={ googleClientID }>
+        <Provider store={ store }>
+          <PersistGate loading={ null } persistor={ persistor }>
             <Toast />
             <CssBaseline />
             <IdenfyPingUserStatus />
@@ -53,49 +53,49 @@ const App = () => {
             <ScrollToTop />
 
             <Background>
-              <BrowserRouter history={history}>
+              <BrowserRouter history={ history }>
                 <OnboardingRedirect />
 
                 <Routes>
-                  <Route path="/" element={<Navigate to="home" replace />} />
+                  <Route element={ <Navigate to="home" replace /> } path="/" />
 
-                  <Route path="linkedin" element={<LinkedInCallback />} />
+                  <Route element={ <LinkedInCallback /> } path="linkedin" />
 
-                  <Route path="login" element={<Login />} />
+                  <Route element={ <Login /> } path="login" />
 
                   <Route
+                    element={ <ForgotPassword /> }
                     path="forgot-password/*"
-                    element={<ForgotPassword />}
                   />
 
-                  <Route path="sign-up/*" element={<SignUp />} />
+                  <Route element={ <SignUp /> } path="sign-up/*" />
 
                   <Route
+                    element={ <IdenfySuccessSession /> }
                     path="idenfy-success-session"
-                    element={<IdenfySuccessSession />}
                   />
 
                   <Route
+                    element={ <IdenfyFailSession /> }
                     path="idenfy-fail-session"
-                    element={<IdenfyFailSession />}
                   />
 
                   <Route
-                    path="home/*"
                     element={
                       <PrivateRoute>
                         <Home />
                       </PrivateRoute>
                     }
+                    path="home/*"
                   />
 
                   <Route
-                    path="create-profile/*"
                     element={
                       <PrivateRoute>
                         <CreateProfile />
                       </PrivateRoute>
                     }
+                    path="create-profile/*"
                   />
                 </Routes>
               </BrowserRouter>
