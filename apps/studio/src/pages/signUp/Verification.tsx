@@ -2,12 +2,12 @@ import { FunctionComponent, useState } from "react";
 import {
   Button,
   GradientTypography,
-  Typography,
   TextInputField,
+  Typography,
 } from "@newm-web/elements";
-import { ResponsiveNEWMLogo } from "../../components";
 import { FormikValues, useFormikContext } from "formik";
 import { Box, Stack, useTheme } from "@mui/material";
+import { ResponsiveNEWMLogo } from "../../components";
 import { sendVerificationEmail } from "../../modules/session";
 import { useAppDispatch } from "../../common";
 
@@ -27,40 +27,40 @@ const Verification: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,
         height: "100%",
         justifyContent: "space-between",
-      }}
+      } }
     >
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Box mb={4}>
+      <Box alignItems="center" display="flex" flexDirection="column">
+        <Box mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
-        <Typography variant="h1" mb={1.5}>
+        <Typography mb={ 1.5 } variant="h1">
           Check your email!
         </Typography>
         <GradientTypography
           id="verificationLabel"
+          mb={ 7.5 }
+          style={ { ...theme.typography.emphasized } }
           variant="h1"
-          mb={7.5}
-          style={{ ...theme.typography.emphasized }}
         >
           Enter your verification code below:
         </GradientTypography>
         <Stack
-          spacing={1.5}
-          mb={7.5}
           margin="0 auto"
-          maxWidth={theme.inputField.maxWidth}
+          maxWidth={ theme.inputField.maxWidth }
+          mb={ 7.5 }
+          spacing={ 1.5 }
           width="100%"
         >
           <TextInputField
             aria-labelledby="verificationLabel"
-            isOptional={false}
+            isOptional={ false }
             name="authCode"
             placeholder="Verification Code"
             type="text"
@@ -69,19 +69,19 @@ const Verification: FunctionComponent = () => {
         </Stack>
       </Box>
 
-      <Box pb={4} mt={2}>
-        {showResendLink ? (
-          <Typography color="grey100" fontWeight={500}>
+      <Box mt={ 2 } pb={ 4 }>
+        { showResendLink ? (
+          <Typography color="grey100" fontWeight={ 500 }>
             Didn&apos;t receive an email?
             <button
-              onClick={handleEmailResend}
-              style={{
+              style={ {
                 backgroundColor: "initial",
                 border: "none",
                 borderRadius: 0,
                 color: "white",
                 font: "inherit",
-              }}
+              } }
+              onClick={ handleEmailResend }
             >
               Click here to resend
             </button>
@@ -90,7 +90,7 @@ const Verification: FunctionComponent = () => {
           <Typography>
             Email re-sent. Don&apos;t forget to check your spam folder.
           </Typography>
-        )}
+        ) }
       </Box>
     </Box>
   );

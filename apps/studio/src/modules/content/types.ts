@@ -4,8 +4,8 @@ export interface Genre {
 }
 
 export interface Role {
-  readonly role_id: number;
   readonly name: string;
+  readonly role_id: number;
 }
 
 export interface Language {

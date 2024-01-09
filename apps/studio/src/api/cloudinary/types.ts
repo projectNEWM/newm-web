@@ -7,9 +7,9 @@ export interface CloudinaryUploadOptions {
 export interface CloudinaryUploadParams extends CloudinaryUploadOptions {
   readonly api_key: string;
   readonly file: string | ArrayBuffer | null;
+  readonly onUploadProgress?: OnUploadProgress;
   readonly signature: string;
   readonly timestamp: number;
-  readonly onUploadProgress?: OnUploadProgress;
 }
 
 export interface CloudinaryUploadResponse {
@@ -17,6 +17,15 @@ export interface CloudinaryUploadResponse {
   readonly asset_id: string;
   readonly bytes: number;
   readonly created_at: string;
+  readonly eager?: ReadonlyArray<{
+    readonly bytes: number;
+    readonly format: string;
+    readonly height: number;
+    readonly secure_url: string;
+    readonly transformation: string;
+    readonly url: string;
+    readonly width: number;
+  }>;
   readonly etag: string;
   readonly format: string;
   readonly height: number;
@@ -31,13 +40,4 @@ export interface CloudinaryUploadResponse {
   readonly version: number;
   readonly version_id: string;
   readonly width: number;
-  readonly eager?: ReadonlyArray<{
-    readonly bytes: number;
-    readonly format: string;
-    readonly height: number;
-    readonly secure_url: string;
-    readonly transformation: string;
-    readonly url: string;
-    readonly width: number;
-  }>;
 }

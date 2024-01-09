@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@newm-web/theme";
-import { useGetCollaboratorsQuery } from "../../../modules/song";
 import { useWindowDimensions } from "@newm-web/utils";
 import {
   TableCell,
@@ -18,9 +17,10 @@ import {
   TablePagination,
   TableSkeleton,
 } from "@newm-web/elements";
-import { history } from "../../../common/history";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoOwnersYet from "./NoOwnersYet";
+import { history } from "../../../common/history";
+import { useGetCollaboratorsQuery } from "../../../modules/song";
 
 interface OwnersTableProps {
   query: string;
@@ -57,10 +57,10 @@ export default function OwnersTable({
     isLoading,
     isSuccess,
   } = useGetCollaboratorsQuery({
-    offset: (page - 1) * rowsPerPage,
-    limit: collaboratorsToRequest,
-    phrase: query,
     excludeMe: true,
+    limit: collaboratorsToRequest,
+    offset: (page - 1) * rowsPerPage,
+    phrase: query,
   });
 
   const handlePageChange = (
@@ -115,18 +115,18 @@ export default function OwnersTable({
 
   return collaboratorsData?.length ? (
     <TableContainer>
-      <Table size="small" aria-label="Song List">
+      <Table aria-label="Song List" size="small">
         <TableHead>
           <TableRow>
-            <TableHeadCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+            <TableHeadCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
               COLLABORATORS
             </TableHeadCell>
             <TableHeadCell>OWNER OF</TableHeadCell>
-            <TableHeadCell sx={{ textAlign: "end" }}>EMAIL</TableHeadCell>
+            <TableHeadCell sx={ { textAlign: "end" } }>EMAIL</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {collaboratorsData.map(
+          { collaboratorsData.map(
             (
               {
                 email,
@@ -141,94 +141,94 @@ export default function OwnersTable({
               index
             ) => (
               <TableRow
-                key={id || index}
-                onClick={id ? () => handleNavigateToOwner(id) : undefined}
-                onKeyDown={id ? (event) => handleKeyDown(event, id) : undefined}
-                tabIndex={id ? 0 : undefined}
+                key={ id || index }
                 sx={
                   id
                     ? {
-                        cursor: "pointer",
-                        WebkitTapHighlightColor: "transparent",
                         "&:hover, &:focus": {
                           background: theme.colors.activeBackground,
                         },
+                        WebkitTapHighlightColor: "transparent",
+                        cursor: "pointer",
                       }
                     : undefined
                 }
+                tabIndex={ id ? 0 : undefined }
+                onClick={ id ? () => handleNavigateToOwner(id) : undefined }
+                onKeyDown={ id ? (event) => handleKeyDown(event, id) : undefined }
               >
-                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                <TableCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
                   <Stack
-                    sx={{
-                      flexDirection: "row",
+                    sx={ {
                       alignItems: "center",
                       columnGap: 1.5,
+                      flexDirection: "row",
                       whiteSpace: "nowrap",
-                    }}
+                    } }
                   >
-                    {pictureUrl ? (
+                    { pictureUrl ? (
                       <img
-                        style={{
-                          borderRadius: "50%",
-                          width: "40px",
-                          height: "40px",
-                        }}
-                        src={pictureUrl}
                         alt="Profile"
+                        src={ pictureUrl }
+                        style={ {
+                          borderRadius: "50%",
+                          height: "40px",
+                          width: "40px",
+                        } }
                       />
                     ) : (
-                      <Stack direction="row" gap={1} alignItems="center">
+                      <Stack alignItems="center" direction="row" gap={ 1 }>
                         <AccountCircleIcon
-                          sx={{
+                          sx={ {
                             color: theme.colors.grey200,
                             fontSize: "46px",
                             marginLeft: "-2px",
-                          }}
+                          } }
                         />
 
-                        <Typography fontWeight={400} fontStyle="italic">
+                        <Typography fontStyle="italic" fontWeight={ 400 }>
                           Waiting on account creation
                         </Typography>
                       </Stack>
-                    )}
-                    {firstName && lastName ? `${firstName} ${lastName}` : null}
+                    ) }
+                    { firstName && lastName ? `${firstName} ${lastName}` : null }
                   </Stack>
                 </TableCell>
                 <TableCell>
                   <Box
-                    sx={{
-                      display: "flex",
+                    sx={ {
                       alignItems: "center",
+                      display: "flex",
                       whiteSpace: "nowrap",
-                    }}
+                    } }
                   >
-                    {`${songCount} song${songCount > 1 ? "s" : ""}`}
+                    { `${songCount} song${songCount > 1 ? "s" : ""}` }
                   </Box>
                 </TableCell>
                 <TableCell
-                  sx={{
+                  sx={ {
                     textAlign: "end",
                     whiteSpace: "nowrap",
-                  }}
+                  } }
                 >
-                  {email}
+                  { email }
                 </TableCell>
               </TableRow>
             )
-          )}
+          ) }
         </TableBody>
-        {totalCollaborators > collaboratorsData.length && (
+        { totalCollaborators > collaboratorsData.length && (
           <TablePagination
-            numberOfRows={totalCollaborators}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            lastRowOnPage={lastRowOnPage}
-            handlePageChange={handlePageChange}
-            colSpan={3}
+            cellStyles={ { paddingTop: "12px" } }
+            colSpan={ 3 }
+            handlePageChange={ handlePageChange }
+            lastRowOnPage={ lastRowOnPage }
+            numberOfRows={ totalCollaborators }
+            page={ page }
             rows="collaborators"
-            cellStyles={{ paddingTop: "12px" }}
+            rowsPerPage={ rowsPerPage }
           />
-        )}
+        ) }
       </Table>
     </TableContainer>
   ) : (

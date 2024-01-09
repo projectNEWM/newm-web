@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Button from "../Button"
+import Button from "../Button";
 
 export default {
   component: Button,
@@ -54,7 +54,7 @@ export const Icon: StoryFn = (args) => (
       { ...args }
       startIcon={
         <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
+          style={ { backgroundColor: "yellow", height: "20px", width: "20px" } }
         ></div>
       }
     >
@@ -64,7 +64,7 @@ export const Icon: StoryFn = (args) => (
       { ...args }
       endIcon={
         <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
+          style={ { backgroundColor: "yellow", height: "20px", width: "20px" } }
         ></div>
       }
     >
@@ -72,14 +72,14 @@ export const Icon: StoryFn = (args) => (
     </Button>
     <Button
       { ...args }
-      startIcon={
-        <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
-        ></div>
-      }
       endIcon={
         <div
-          style={ { height: "20px", width: "20px", backgroundColor: "yellow" } }
+          style={ { backgroundColor: "yellow", height: "20px", width: "20px" } }
+        ></div>
+      }
+      startIcon={
+        <div
+          style={ { backgroundColor: "yellow", height: "20px", width: "20px" } }
         ></div>
       }
     >

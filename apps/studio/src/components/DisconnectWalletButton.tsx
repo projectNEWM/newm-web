@@ -1,6 +1,5 @@
 import { Box, Divider, Stack, useTheme } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { useAppDispatch, useAppSelector } from "../common";
 import { Typography } from "@newm-web/elements";
 import currency from "currency.js";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -9,6 +8,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../common";
 import { setIsConnectWalletModalOpen } from "../modules/ui";
 import {
   selectWallet,
@@ -111,87 +111,87 @@ const DisconnectWalletButton: FunctionComponent = () => {
 
   return (
     <Stack
-      ref={parentRef}
-      position="relative"
-      direction="column"
-      gap={1}
       alignItems="flex-end"
+      direction="column"
+      gap={ 1 }
+      position="relative"
+      ref={ parentRef }
     >
       <Stack
         direction="row"
-        onClick={handleClickButton}
-        sx={{
-          pl: 2,
-          pr: 1.2,
-          py: 1,
+        sx={ {
           alignItems: "center",
           border: `2px solid ${theme.colors.white}`,
           borderRadius: "4px",
           cursor: "pointer",
-        }}
+          pl: 2,
+          pr: 1.2,
+          py: 1,
+        } }
+        onClick={ handleClickButton }
       >
-        <Stack direction={["column", "column", "row"]} gap={1}>
-          <Typography>{walletBalance} ₳</Typography>
-          <Typography sx={{ display: ["none", "none", "flex"] }}>|</Typography>
-          <Typography>{truncatedAddress}</Typography>
+        <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
+          <Typography>{ walletBalance } ₳</Typography>
+          <Typography sx={ { display: ["none", "none", "flex"] } }>|</Typography>
+          <Typography>{ truncatedAddress }</Typography>
         </Stack>
 
-        <Box justifyContent="center" alignItems="center" lineHeight="0px">
-          {isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+        <Box alignItems="center" justifyContent="center" lineHeight="0px">
+          { isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
         </Box>
       </Stack>
 
-      {isDropdownOpen && (
+      { isDropdownOpen && (
         <Stack
-          top={parentHeight + 8}
-          position="absolute"
           direction="column"
           divider={
-            <Divider flexItem sx={{ borderColor: theme.colors.grey500 }} />
+            <Divider sx={ { borderColor: theme.colors.grey500 } } flexItem />
           }
-          sx={{
+          position="absolute"
+          sx={ {
             alignItems: "flex-start",
             backgroundColor: theme.colors.grey600,
             border: `2px solid ${theme.colors.grey500}`,
             borderRadius: "4px",
             zIndex: 10,
-          }}
+          } }
+          top={ parentHeight + 8 }
         >
-          <Stack direction="row" alignItems="flex-start" gap={1} p={2}>
-            <Typography fontWeight={500} sx={{ color: theme.colors.grey200 }}>
-              {ellipsedAddress}
+          <Stack alignItems="flex-start" direction="row" gap={ 1 } p={ 2 }>
+            <Typography fontWeight={ 500 } sx={ { color: theme.colors.grey200 } }>
+              { ellipsedAddress }
             </Typography>
 
-            {isCopied ? (
-              <DoneIcon fontSize="small" sx={{ color: theme.colors.green }} />
+            { isCopied ? (
+              <DoneIcon fontSize="small" sx={ { color: theme.colors.green } } />
             ) : (
               <ContentCopyIcon
                 fontSize="small"
-                sx={{ cursor: "pointer", color: theme.colors.grey200 }}
-                onClick={handleClickCopyIcon}
+                sx={ { color: theme.colors.grey200, cursor: "pointer" } }
+                onClick={ handleClickCopyIcon }
               />
-            )}
+            ) }
           </Stack>
 
           <Stack
-            direction="row"
             alignItems="center"
-            gap={1}
-            p={2}
-            onClick={handleDisconnectWallet}
-            sx={{
-              cursor: "pointer",
+            direction="row"
+            gap={ 1 }
+            p={ 2 }
+            sx={ {
               "&:hover": { backgroundColor: theme.colors.grey500 },
-            }}
+              cursor: "pointer",
+            } }
             width="100%"
+            onClick={ handleDisconnectWallet }
           >
-            <LogoutIcon fontSize="small" sx={{ color: theme.colors.white }} />
-            <Typography sx={{ color: theme.colors.white }}>
+            <LogoutIcon fontSize="small" sx={ { color: theme.colors.white } } />
+            <Typography sx={ { color: theme.colors.white } }>
               Disconnect
             </Typography>
           </Stack>
         </Stack>
-      )}
+      ) }
     </Stack>
   );
 };

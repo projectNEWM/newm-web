@@ -6,10 +6,10 @@
 
 import { FunctionComponent, ReactNode } from "react";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
-import { useLinkedInLoginThunk } from "../modules/session";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { Button } from "@newm-web/elements";
 import { VITE_LINKEDIN_CLIENT_ID } from "@newm-web/env";
+import { useLinkedInLoginThunk } from "../modules/session";
 
 interface Props {
   readonly children?: ReactNode;
@@ -22,22 +22,22 @@ const LinkedInLogin: FunctionComponent<Props> = ({ children }) => {
 
   const { linkedInLogin } = useLinkedIn({
     clientId: VITE_LINKEDIN_CLIENT_ID || "",
-    redirectUri,
-    scope: "r_liteprofile r_emailaddress",
     onSuccess: (code) => {
       logIn({ code, redirectUri });
     },
+    redirectUri,
+    scope: "r_liteprofile r_emailaddress",
   });
 
   return (
     <Button
       aria-label="linkedin authorization"
-      onClick={linkedInLogin}
-      variant="outlined"
       color="white"
-      startIcon={<LinkedInIcon />}
+      startIcon={ <LinkedInIcon /> }
+      variant="outlined"
+      onClick={ linkedInLogin }
     >
-      {children}
+      { children }
     </Button>
   );
 };

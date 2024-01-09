@@ -24,30 +24,30 @@ const VerifyEmail: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
         height: "100%",
         justifyContent: "space-between",
-      }}
+      } }
     >
       <Box
-        sx={{
+        sx={ {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
           textAlign: "center",
-        }}
+        } }
       >
-        <Typography maxWidth={800} mt={4} variant="h1">
+        <Typography maxWidth={ 800 } mt={ 4 } variant="h1">
           Check your email!
         </Typography>
 
         <GradientTypography
           id="verificationLabel"
-          mb={4}
-          style={{ ...theme.typography.emphasized }}
+          mb={ 4 }
+          style={ { ...theme.typography.emphasized } }
           variant="h1"
         >
           Enter your verification code below:
@@ -55,30 +55,30 @@ const VerifyEmail: FunctionComponent = () => {
 
         <TextInputField
           aria-labelledby="verificationLabel"
-          isOptional={false}
+          isOptional={ false }
           name="authCode"
           placeholder="Verification Code"
           type="text"
         />
 
-        <Button sx={{ mt: 2 }} type="submit">
+        <Button sx={ { mt: 2 } } type="submit">
           Reset password
         </Button>
       </Box>
 
-      <Box my={4} textAlign="center">
-        {showResendLink ? (
-          <Typography color="grey100" fontWeight={500}>
+      <Box my={ 4 } textAlign="center">
+        { showResendLink ? (
+          <Typography color="grey100" fontWeight={ 500 }>
             Didn&apos;t receive an email?
             <button
-              onClick={handleEmailResend}
-              style={{
+              style={ {
                 backgroundColor: "initial",
                 border: "none",
                 borderRadius: 0,
                 color: "white",
                 font: "inherit",
-              }}
+              } }
+              onClick={ handleEmailResend }
             >
               Click here to resend
             </button>
@@ -87,7 +87,7 @@ const VerifyEmail: FunctionComponent = () => {
           <Typography>
             Email re-sent. Don&apos;t forget to check your spam folder.
           </Typography>
-        )}
+        ) }
       </Box>
     </Box>
   );

@@ -1,10 +1,10 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import Cookies from "js-cookie";
-import { RootState } from "../store";
 import { Mutex } from "async-mutex";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { AxiosBaseQueryParams, BaseQuery } from "./types";
 import { logOutExpiredSession, receiveRefreshToken } from "./actions";
+import { RootState } from "../store";
 import { NewmAuthResponse } from "../modules/session";
 
 const mutex = new Mutex();
@@ -50,11 +50,11 @@ export const fetchBaseQueryWithReauth = (
           // get new access and refresh token
           const refreshResult = await baseQueryForRefresh(
             {
-              url: "v1/auth/refresh",
-              method: "GET",
               headers: {
                 Authorization: `Bearer ${refreshToken}`,
               },
+              method: "GET",
+              url: "v1/auth/refresh",
             },
             api,
             extraOptions
@@ -115,12 +115,12 @@ export const axiosBaseQuery = (
       });
 
       const result = await axiosInstance({
-        url: baseUrl + url,
-        method,
         data: body,
-        params,
         headers,
+        method,
         onUploadProgress,
+        params,
+        url: baseUrl + url,
       });
 
       return { data: result.data };
@@ -129,8 +129,8 @@ export const axiosBaseQuery = (
 
       return {
         error: {
-          status: err.response?.status,
           data: err.response?.data || err.message,
+          status: err.response?.status,
         },
       };
     }

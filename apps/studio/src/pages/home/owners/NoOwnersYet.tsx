@@ -9,29 +9,29 @@ const NoOwnersYet: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
+        alignItems: "center",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
         minHeight: "100%",
-        rowGap: 2
-      }}
+        rowGap: 2,
+      } }
     >
       <Owner />
 
-      <Typography fontWeight="bold" fontSize="16px">
+      <Typography fontSize="16px" fontWeight="bold">
         There are no collaborators yet.
       </Typography>
-      <Typography fontWeight="regular" fontSize="14x">
+      <Typography fontSize="14x" fontWeight="regular">
         After minting, the co-creators and co-owners of your songs will appear
         here.
       </Typography>
       <Button
         color="music"
-        onClick={() => navigate("/home/upload-song")}
         variant="secondary"
         width="compact"
+        onClick={ () => navigate("/home/upload-song") }
       >
         Upload your first song
       </Button>

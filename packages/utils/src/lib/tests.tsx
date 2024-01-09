@@ -7,8 +7,8 @@ export const withFormik = (
   props: FormikConfig<StringMap>
 ) => {
   return (
-    <Formik {...props}>
-      <Form>{element}</Form>
+    <Formik { ...props }>
+      <Form>{ element }</Form>
     </Formik>
   );
 };

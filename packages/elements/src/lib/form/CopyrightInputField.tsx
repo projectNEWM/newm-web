@@ -1,7 +1,4 @@
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
-import TextInput, { TextInputProps } from "../TextInput";
-import Tooltip from "../styled/Tooltip";
-import ErrorMessage from "../styled/ErrorMessage";
 import { ForwardRefRenderFunction, forwardRef } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 import {
@@ -11,11 +8,14 @@ import {
   FormikTouched,
   useFormikContext,
 } from "formik";
+import TextInput, { TextInputProps } from "../TextInput";
+import Tooltip from "../styled/Tooltip";
+import ErrorMessage from "../styled/ErrorMessage";
 
 interface Props extends Omit<TextInputProps, "startAdornment"> {
-  readonly yearFieldName: string;
-  readonly ownerFieldName: string;
   readonly copyrightType?: "composition" | "phonographic";
+  readonly ownerFieldName: string;
+  readonly yearFieldName: string;
 }
 
 /**
@@ -47,94 +47,94 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
   const errorMessage = errors[yearErrorsKey] || errors[ownerErrorsKey];
 
   return (
-    <Stack direction="column" spacing={1} ref={ref}>
+    <Stack direction="column" ref={ ref } spacing={ 1 }>
       <Stack direction="row" justifyContent="space-between">
         <Typography
-          sx={{
-            textTransform: "uppercase",
-            fontWeight: 500,
+          sx={ {
             color: theme.colors.grey100,
+            fontWeight: 500,
             opacity: rest.disabled ? 0.5 : 1,
-          }}
+            textTransform: "uppercase",
+          } }
         >
           <Stack direction="row" spacing="4px">
-            <Box>{label}</Box>
+            <Box>{ label }</Box>
 
-            {!!tooltipText && (
-              <Tooltip title={tooltipText}>
-                <IconButton sx={{ padding: 0 }}>
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: 0 } }>
                   <HelpIcon
-                    sx={{
+                    sx={ {
                       color: theme.colors.grey100,
                       height: "18px",
                       width: "18px",
-                    }}
+                    } }
                   />
                 </IconButton>
               </Tooltip>
-            )}
+            ) }
           </Stack>
         </Typography>
 
-        {isOptional && (
+        { isOptional && (
           <Typography
-            sx={{
-              opacity: rest.disabled ? 0.5 : 1,
-              color: theme.colors.grey400,
-            }}
             component="span"
             marginLeft="auto"
+            sx={ {
+              color: theme.colors.grey400,
+              opacity: rest.disabled ? 0.5 : 1,
+            } }
           >
             OPTIONAL
           </Typography>
-        )}
+        ) }
       </Stack>
 
-      <Stack direction="row" spacing={1}>
+      <Stack direction="row" spacing={ 1 }>
         <Box maxWidth="7.5em">
-          <Field name={yearFieldName}>
-            {({ field, meta }: FieldProps) => (
+          <Field name={ yearFieldName }>
+            { ({ field, meta }: FieldProps) => (
               <TextInput
+                errorMessage={ meta.touched ? meta.error : "" }
+                isOptional={ false }
+                mask="9999"
+                maskChar={ null }
+                placeholder={ new Date().getFullYear().toString() }
+                shouldDisplayErrorMessage={ false }
                 startAdornment={
-                  <Box px={1} justifyContent="center" alignItems="center">
-                    <Typography fontSize={20}>
-                      {copyrightType === "composition" ? (
+                  <Box alignItems="center" justifyContent="center" px={ 1 }>
+                    <Typography fontSize={ 20 }>
+                      { copyrightType === "composition" ? (
                         <span>&copy;</span>
                       ) : (
                         <span>&#8471;</span>
-                      )}
+                      ) }
                     </Typography>
                   </Box>
                 }
-                errorMessage={meta.touched ? meta.error : ""}
-                mask="9999"
-                maskChar={null}
-                placeholder={new Date().getFullYear().toString()}
-                isOptional={false}
-                shouldDisplayErrorMessage={false}
-                {...field}
-                {...rest}
+                { ...field }
+                { ...rest }
               />
-            )}
+            ) }
           </Field>
         </Box>
 
-        <Field name={ownerFieldName}>
-          {({ field, meta }: FieldProps) => (
+        <Field name={ ownerFieldName }>
+          { ({ field, meta }: FieldProps) => (
             <TextInput
-              errorMessage={meta.touched ? meta.error : ""}
-              endAdornment={endAdornment}
+              endAdornment={ endAdornment }
+              errorMessage={ meta.touched ? meta.error : "" }
+              isOptional={ false }
               placeholder="Owner Name"
-              isOptional={false}
-              shouldDisplayErrorMessage={false}
-              {...field}
-              {...rest}
+              shouldDisplayErrorMessage={ false }
+              { ...field }
+              { ...rest }
             />
-          )}
+          ) }
         </Field>
       </Stack>
 
-      {isTouched && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      { isTouched && errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
     </Stack>
   );
 };

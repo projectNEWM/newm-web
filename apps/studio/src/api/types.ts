@@ -5,12 +5,12 @@ export type OnUploadProgress = (event: AxiosProgressEvent) => void;
 
 export type BaseQuery = BaseQueryFn<
   {
-    url: string;
-    method: AxiosRequestConfig["method"];
     body?: AxiosRequestConfig["data"];
-    params?: AxiosRequestConfig["params"];
     headers?: AxiosRequestConfig["headers"];
+    method: AxiosRequestConfig["method"];
     onUploadProgress?: OnUploadProgress;
+    params?: AxiosRequestConfig["params"];
+    url: string;
   },
   unknown,
   unknown

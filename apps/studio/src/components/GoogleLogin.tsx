@@ -2,12 +2,12 @@
  * Logs the user into the app using the Google Auth API.
  */
 
-import { useGoogleLoginThunk } from "../modules/session";
-import { setToastMessage } from "../modules/ui";
 import { FunctionComponent, ReactNode } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Button } from "@newm-web/elements";
+import { setToastMessage } from "../modules/ui";
+import { useGoogleLoginThunk } from "../modules/session";
 import { useAppDispatch } from "../common";
 
 interface Props {
@@ -37,12 +37,12 @@ const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
   return (
     <Button
       aria-label="google authorization"
-      onClick={() => handleLogin()}
-      variant="outlined"
       color="white"
-      startIcon={<GoogleIcon />}
+      startIcon={ <GoogleIcon /> }
+      variant="outlined"
+      onClick={ () => handleLogin() }
     >
-      {children}
+      { children }
     </Button>
   );
 };

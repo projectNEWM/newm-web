@@ -1,10 +1,10 @@
 import { FunctionComponent, useEffect } from "react";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { Modal } from "@newm-web/elements";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useAppDispatch, useAppSelector } from "../common";
 import { selectUi, setIsWalletEnvMismatchModalOpen } from "../modules/ui";
 import { getIsWalletEnvMismatch } from "../modules/session";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 /**
  * Prompts a user to select the correct wallet environment to
@@ -35,16 +35,16 @@ const WalletEnvMismatchModal: FunctionComponent = () => {
   }, [dispatch, wallet]);
 
   return (
-    <Modal isOpen={isWalletEnvMismatchModalOpen} onClose={handleClose}>
-      <Box display="flex" flex={1} justifyContent="center" alignItems="center">
+    <Modal isOpen={ isWalletEnvMismatchModalOpen } onClose={ handleClose }>
+      <Box alignItems="center" display="flex" flex={ 1 } justifyContent="center">
         <Stack
-          gap={2}
-          sx={{
-            padding: 2,
+          gap={ 2 }
+          sx={ {
             background: theme.colors.grey600,
-            textAlign: "left",
             maxWidth: "85%",
-          }}
+            padding: 2,
+            textAlign: "left",
+          } }
         >
           <Typography>
             There is a mismatch between the environment for your connected

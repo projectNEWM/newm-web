@@ -1,19 +1,19 @@
 import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import {
-  ProfileFormValues,
-  useUpdateInitialProfileThunk,
-} from "../../modules/session";
 import { WizardForm } from "@newm-web/elements";
-import { commonYupValidation } from "../../common";
 import * as Yup from "yup";
-import { useGetRolesQuery } from "../../modules/content";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
 import Complete from "./Complete";
 import AddFirstName from "./AddFirstName";
 import AddLastName from "./AddLastName";
+import { useGetRolesQuery } from "../../modules/content";
+import { commonYupValidation } from "../../common";
+import {
+  ProfileFormValues,
+  useUpdateInitialProfileThunk,
+} from "../../modules/session";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
@@ -25,19 +25,19 @@ const CreateProfile: FunctionComponent = () => {
    * Initial form values.
    */
   const initialValues: ProfileFormValues = {
-    role: "",
     firstName: "",
     lastName: "",
+    role: "",
   };
 
   /**
    * Yup validations for all form fields.
    */
   const validations = {
-    nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roles),
     firstName: commonYupValidation.firstName,
     lastName: commonYupValidation.lastName,
+    nickname: commonYupValidation.nickname,
+    role: commonYupValidation.role(roles),
   };
 
   /**
@@ -49,7 +49,7 @@ const CreateProfile: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
         backgroundColor: theme.colors.black,
         display: "flex",
         flex: 1,
@@ -57,52 +57,52 @@ const CreateProfile: FunctionComponent = () => {
         pt: 7.5,
         px: 2,
         textAlign: "center",
-      }}
+      } }
     >
       <Container maxWidth="xl">
         <WizardForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validateOnMount={true}
+          initialValues={ initialValues }
           rootPath="create-profile"
-          routes={[
+          routes={ [
             {
-              path: "",
               element: <Begin />,
+              path: "",
             },
             {
-              path: "what-is-your-first-name",
               element: <AddFirstName />,
+              path: "what-is-your-first-name",
               validationSchema: Yup.object().shape({
                 firstName: validations.firstName,
               }),
             },
             {
-              path: "what-is-your-last-name",
               element: <AddLastName />,
+              path: "what-is-your-last-name",
               validationSchema: Yup.object().shape({
                 lastName: validations.lastName,
               }),
             },
             {
-              path: "what-should-we-call-you",
               element: <SelectNickname />,
+              path: "what-should-we-call-you",
               validationSchema: Yup.object().shape({
                 nickname: validations.nickname,
               }),
             },
             {
-              path: "what-is-your-role",
               element: <SelectRole />,
+              path: "what-is-your-role",
               validationSchema: Yup.object().shape({
                 role: validations.role,
               }),
             },
             {
-              path: "complete",
               element: <Complete />,
+              path: "complete",
             },
-          ]}
+          ] }
+          validateOnMount={ true }
+          onSubmit={ handleSubmit }
         />
       </Container>
     </Box>

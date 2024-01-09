@@ -11,20 +11,6 @@ const initialState: SessionState = {
 };
 
 const sessionSlice = createSlice({
-  initialState,
-  name: "session",
-  reducers: {
-    receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
-    startVerificationTimer: (state) => {
-      state.verificationPingStartedAt = new Date().getTime();
-    },
-    removeVerificationTimer: (state) => {
-      state.verificationPingStartedAt = undefined;
-    },
-    setIsLoggedIn: (state, { payload }) => {
-      state.isLoggedIn = payload;
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(receiveRefreshToken, (state, payload) => {
       handleSuccessfulAuthentication(state, payload);
@@ -32,6 +18,20 @@ const sessionSlice = createSlice({
     builder.addCase(logOutExpiredSession.fulfilled, (state) => {
       state.isLoggedIn = false;
     });
+  },
+  initialState,
+  name: "session",
+  reducers: {
+    receiveSuccessfullAuthentication: handleSuccessfulAuthentication,
+    removeVerificationTimer: (state) => {
+      state.verificationPingStartedAt = undefined;
+    },
+    setIsLoggedIn: (state, { payload }) => {
+      state.isLoggedIn = payload;
+    },
+    startVerificationTimer: (state) => {
+      state.verificationPingStartedAt = new Date().getTime();
+    },
   },
 });
 

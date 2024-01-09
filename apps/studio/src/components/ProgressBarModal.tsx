@@ -1,14 +1,14 @@
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { useAppDispatch } from "../common";
 import { Modal } from "@newm-web/elements";
+import { FunctionComponent } from "react";
+import { useSelector } from "react-redux";
+import ProgressBar from "./ProgressBar";
 import {
   clearProgressBarModal,
   selectUi,
   setIsProgressBarModalOpen,
 } from "../modules/ui";
-import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
-import ProgressBar from "./ProgressBar";
+import { useAppDispatch } from "../common";
 
 const ProgressBarModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -26,34 +26,34 @@ const ProgressBarModal: FunctionComponent = () => {
 
   return (
     <Modal
-      isOpen={isProgressBarModalOpen}
-      isCloseButtonVisible={false}
-      onClose={handleClose}
+      isCloseButtonVisible={ false }
+      isOpen={ isProgressBarModalOpen }
+      onClose={ handleClose }
     >
-      <Box display="flex" flex={1} justifyContent="center" alignItems="center">
+      <Box alignItems="center" display="flex" flex={ 1 } justifyContent="center">
         <Stack
-          gap={2}
-          sx={{
-            padding: 2,
-            width: "90%",
+          gap={ 2 }
+          sx={ {
             background: theme.colors.grey600,
+            padding: 2,
             textAlign: "center",
-          }}
+            width: "90%",
+          } }
         >
           <ProgressBar
-            progress={progress}
-            animationSeconds={animationSeconds}
+            animationSeconds={ animationSeconds }
+            progress={ progress }
           />
 
-          <Stack gap={1}>
+          <Stack gap={ 1 }>
             <Typography
+              sx={ { color: theme.colors.white, fontStyle: "italic" } }
               variant="subtitle1"
-              sx={{ color: theme.colors.white, fontStyle: "italic" }}
             >
-              {message}
+              { message }
             </Typography>
 
-            {!!disclaimer && <Typography>{disclaimer}</Typography>}
+            { !!disclaimer && <Typography>{ disclaimer }</Typography> }
           </Stack>
         </Stack>
       </Box>

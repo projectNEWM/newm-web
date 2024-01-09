@@ -5,8 +5,8 @@ export interface SongState {
 }
 
 export interface Playlist {
+  coverImageUrl: string;
   id: string;
   name: string;
-  coverImageUrl: string;
   songIds: ReadonlyArray<string>;
 }

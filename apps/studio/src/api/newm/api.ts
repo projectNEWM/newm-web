@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseUrls } from "../../buildParams";
 import { Tags } from "./types";
+import { baseUrls } from "../../buildParams";
 import {
   axiosBaseQuery,
   fetchBaseQueryWithReauth,
@@ -13,6 +13,8 @@ export const baseQuery = axiosBaseQuery({
 });
 
 const api = createApi({
+  baseQuery: fetchBaseQueryWithReauth(baseQuery),
+  endpoints: () => ({}),
   reducerPath: "newmApi",
   tagTypes: [
     Tags.Collaboration,
@@ -22,8 +24,6 @@ const api = createApi({
     Tags.Roles,
     Tags.Song,
   ],
-  baseQuery: fetchBaseQueryWithReauth(baseQuery),
-  endpoints: () => ({}),
 });
 
 export default api;

@@ -1,8 +1,8 @@
 const VerticalEllipsis = () => (
   <svg
-    width={ 4 }
     height={ 15 }
     viewBox="0 0 4 15"
+    width={ 4 }
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

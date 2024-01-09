@@ -12,10 +12,10 @@ describe("<UploadImage>", () => {
       const { queryByText } = renderWithContext(
         <UploadImage
           emptyMessage="Drag and drop or browse your image"
-          file={mockFile}
-          onChange={jest.fn()}
-          onBlur={jest.fn()}
-          onError={jest.fn()}
+          file={ mockFile }
+          onBlur={ jest.fn() }
+          onChange={ jest.fn() }
+          onError={ jest.fn() }
         />
       );
 
@@ -28,9 +28,9 @@ describe("<UploadImage>", () => {
       const { getByText } = renderWithContext(
         <UploadImage
           emptyMessage="Drag and drop or browse your image"
-          onChange={jest.fn()}
-          onBlur={jest.fn()}
-          onError={jest.fn()}
+          onBlur={ jest.fn() }
+          onChange={ jest.fn() }
+          onError={ jest.fn() }
         />
       );
 

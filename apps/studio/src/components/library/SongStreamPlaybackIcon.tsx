@@ -17,9 +17,9 @@ const SongStreamPlaybackIcon: FunctionComponent<
 > = ({ isSongPlaying, isSongUploaded }) => {
   const renderSongPlaybackIcon = (): JSX.Element => {
     if (isSongPlaying) {
-      return <Stop sx={{ color: theme.colors.white }} />;
+      return <Stop sx={ { color: theme.colors.white } } />;
     } else {
-      return <PlayArrow sx={{ color: theme.colors.white }} />;
+      return <PlayArrow sx={ { color: theme.colors.white } } />;
     }
   };
 
@@ -31,7 +31,7 @@ const SongStreamPlaybackIcon: FunctionComponent<
           "minutes to complete the process."
         }
       >
-        <CircularProgress disableShrink size={24} color="secondary" />
+        <CircularProgress color="secondary" size={ 24 } disableShrink />
       </Tooltip>
     );
   };

@@ -4,31 +4,31 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import theme from "@newm-web/theme";
 
 interface SearchBoxProps {
-  query: string;
   onSearch: (searched: string) => void;
   placeholder?: string;
+  query: string;
 }
 export const SearchBox = ({
   query,
   onSearch,
-  placeholder = ""
+  placeholder = "",
 }: SearchBoxProps) => {
   return (
-    <Box sx={{ pb: 3, maxWidth: "340px" }}>
+    <Box sx={ { maxWidth: "340px", pb: 3 } }>
       <TextInput
-        value={query}
-        isOptional={false}
-        onChange={(e) => onSearch(e.target.value)}
+        isOptional={ false }
+        placeholder={ placeholder }
         startAdornment={
           <SearchRoundedIcon
             fontSize="large"
-            sx={{
+            sx={ {
               color: theme.colors.grey100,
-              paddingLeft: "8px"
-            }}
+              paddingLeft: "8px",
+            } }
           />
         }
-        placeholder={placeholder}
+        value={ query }
+        onChange={ (e) => onSearch(e.target.value) }
       />
     </Box>
   );

@@ -2,9 +2,9 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { EnabledWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { isProd } from "../../buildParams";
 import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
+import { isProd } from "../../buildParams";
 
 export const sendVerificationEmail = (email: string) => {
   return sessionApi.endpoints.sendVerificationEmail.initiate(

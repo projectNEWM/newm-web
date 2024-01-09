@@ -8,12 +8,12 @@ import { IconMessage, Modal } from "@newm-web/elements";
 import { FunctionComponent, useRef, useState } from "react";
 
 interface ViewPdfProps {
+  /** Encoded base64 string of PDF file */
+  readonly data: string;
   /** True if the PDF has been viewed */
   readonly isViewed?: boolean;
   /** Called when the agreement is previewed or downloaded */
   readonly onViewPDF?: VoidFunction;
-  /** Encoded base64 string of PDF file */
-  readonly data: string;
   /** Preview image for PDF file */
   readonly preview: string;
 }
@@ -54,81 +54,81 @@ const ViewPDF: FunctionComponent<ViewPdfProps> = ({
     <>
       <Box>
         <a
-          ref={linkRef}
-          style={{ display: "none" }}
-          href={agreementData}
           download="artist-agreement.pdf"
+          href={ agreementData }
+          ref={ linkRef }
+          style={ { display: "none" } }
         >
           Download
         </a>
 
         <SolidOutline
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          sx={{
-            height: 100,
-            display: "flex",
-            justifyContent: "space-between",
+          sx={ {
             alignItems: "stretch",
             background: [
               "linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.9))",
               `url(${preview})`,
             ].join(", "),
             backgroundSize: "cover",
-            flexGrow: 1,
             cursor: "pointer",
-          }}
+            display: "flex",
+            flexGrow: 1,
+            height: 100,
+            justifyContent: "space-between",
+          } }
+          onMouseEnter={ () => setIsHovering(true) }
+          onMouseLeave={ () => setIsHovering(false) }
         >
-          {isHovered ? (
-            <Stack direction="row" flex={1} alignItems="stretch">
-              {[
+          { isHovered ? (
+            <Stack alignItems="stretch" direction="row" flex={ 1 }>
+              { [
                 {
-                  icon: <PreviewIcon sx={{ color: colors.white }} />,
+                  icon: <PreviewIcon sx={ { color: colors.white } } />,
                   message: "Preview",
                   onClick: handlePreview,
                 },
                 {
-                  icon: <DownloadIcon sx={{ color: colors.white }} />,
+                  icon: <DownloadIcon sx={ { color: colors.white } } />,
                   message: "Download",
                   onClick: handleDownload,
                 },
               ].map(({ icon, message, onClick }) => (
                 <Box
-                  key={`agreement-option-${message}`}
-                  onClick={onClick}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flex: 1,
+                  key={ `agreement-option-${message}` }
+                  sx={ {
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.6)",
                     },
-                  }}
+                    alignItems: "center",
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "center",
+                  } }
+                  onClick={ onClick }
                 >
-                  <IconMessage icon={icon} message={message} />
+                  <IconMessage icon={ icon } message={ message } />
                 </Box>
-              ))}
+              )) }
             </Stack>
           ) : isViewed ? (
             <IconMessage
-              icon={<CheckCircleIcon sx={{ color: colors.green }} />}
+              icon={ <CheckCircleIcon sx={ { color: colors.green } } /> }
               message="Document read"
             />
           ) : (
             <IconMessage
-              icon={<LaunchIcon sx={{ color: colors.white }} />}
+              icon={ <LaunchIcon sx={ { color: colors.white } } /> }
               message="View contract"
             />
-          )}
+          ) }
         </SolidOutline>
       </Box>
 
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <Modal isOpen={ isModalOpen } onClose={ handleCloseModal }>
         <object
           aria-label="Artist agreement"
-          style={{ height: "100%", width: "100%" }}
-          data={`data:application/pdf;base64,${data}`}
+          data={ `data:application/pdf;base64,${data}` }
+          style={ { height: "100%", width: "100%" } }
           type="application/pdf"
         />
       </Modal>

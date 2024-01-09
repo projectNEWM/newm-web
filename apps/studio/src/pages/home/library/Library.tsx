@@ -9,21 +9,21 @@ const Library: FunctionComponent = () => (
   <Container
     maxWidth={ false }
     sx={ {
-      mx: [null, null, 3],
       display: "flex",
       flexDirection: "column",
       flexGrow: 1,
       flexWrap: "nowrap",
-      width: "auto",
+      mx: [null, null, 3],
       pb: 8,
+      width: "auto",
     } }
   >
     <Routes>
-      <Route path="/" element={ <Discography /> } />
-      <Route path="edit-song/:songId*" element={ <EditSong /> } />
-      <Route path="view-details/:songId" element={ <ViewDetails /> } />
+      <Route element={ <Discography /> } path="/" />
+      <Route element={ <EditSong /> } path="edit-song/:songId*" />
+      <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
-      <Route path="*" element={ <Navigate to="/home/library" replace /> } />
+      <Route element={ <Navigate to="/home/library" replace /> } path="*" />
     </Routes>
   </Container>
 );

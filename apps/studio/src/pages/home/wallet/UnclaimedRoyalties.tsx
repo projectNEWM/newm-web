@@ -9,30 +9,30 @@ interface UnclaimedRoyaltiesProps {
 }
 
 export const UnclaimedRoyalties = ({
-  unclaimedRoyalties
+  unclaimedRoyalties,
 }: UnclaimedRoyaltiesProps) => {
   return (
     <Box
-      sx={{
+      sx={ {
         backgroundColor: theme.colors.grey600,
-        padding: 2.5,
-        maxWidth: "400px",
-        minHeight: "100px",
         borderRadius: "8px",
         display: "flex",
-        justifyContent: "space-between"
-      }}
+        justifyContent: "space-between",
+        maxWidth: "400px",
+        minHeight: "100px",
+        padding: 2.5,
+      } }
     >
       <Box
-        sx={{
+        sx={ {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          paddingRight: [1, "unset"]
-        }}
+          paddingRight: [1, "unset"],
+        } }
       >
-        <Stack direction="row" alignItems="center" gap={1}>
-          <Typography color="grey100" fontSize={12}>
+        <Stack alignItems="center" direction="row" gap={ 1 }>
+          <Typography color="grey100" fontSize={ 12 }>
             ROYALTIES ACCRUED SO FAR
           </Typography>
 
@@ -43,24 +43,24 @@ export const UnclaimedRoyalties = ({
               "following the launch of the Stream Token Marketplace."
             }
           >
-            <IconButton sx={{ padding: 0 }}>
-              <HelpIcon sx={{ color: theme.colors.grey100 }} />
+            <IconButton sx={ { padding: 0 } }>
+              <HelpIcon sx={ { color: theme.colors.grey100 } } />
             </IconButton>
           </Tooltip>
         </Stack>
 
-        <Typography fontSize="28px" fontWeight={700}>
-          {currency(unclaimedRoyalties).format()}
+        <Typography fontSize="28px" fontWeight={ 700 }>
+          { currency(unclaimedRoyalties).format() }
         </Typography>
       </Box>
-      <Tooltip title={"Feature coming soon"}>
-        <Box sx={{ alignSelf: "center" }}>
+      <Tooltip title={ "Feature coming soon" }>
+        <Box sx={ { alignSelf: "center" } }>
           <Button
             color="white"
+            disabled={ unclaimedRoyalties === 0 }
+            sx={ { alignSelf: "center" } }
             variant="outlined"
             width="compact"
-            disabled={unclaimedRoyalties === 0}
-            sx={{ alignSelf: "center" }}
           >
             Claim now
           </Button>

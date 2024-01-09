@@ -4,11 +4,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ReactElement } from "react";
-import { reducer } from "../store";
 import theme from "@newm-web/theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { RenderProps } from "./types";
 import { WrapperProps } from "@newm-web/utils";
+import { RenderProps } from "./types";
+import { reducer } from "../store";
 
 /**
  * Wraps the element being tested with Theme, Provider, and
@@ -25,7 +25,7 @@ export const renderWithContext = (
   ui: ReactElement,
   {
     preloadedState = {},
-    store = configureStore({ reducer, preloadedState }),
+    store = configureStore({ preloadedState, reducer }),
     ...renderOptions
   }: RenderProps = {
     preloadedState: {},
@@ -34,10 +34,10 @@ export const renderWithContext = (
 ) => {
   const Wrapper = ({ children }: WrapperProps) => {
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={ theme }>
         <GoogleOAuthProvider clientId="">
-          <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
+          <Provider store={ store }>
+            <BrowserRouter>{ children }</BrowserRouter>
           </Provider>
         </GoogleOAuthProvider>
       </ThemeProvider>

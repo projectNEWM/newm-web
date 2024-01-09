@@ -2,9 +2,9 @@ import { FunctionComponent } from "react";
 import { Box, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@newm-web/elements";
-import { Featured, useGetCollaboratorsQuery } from "../../modules/song";
 import theme from "@newm-web/theme";
 import Details from "./Details";
+import { Featured, useGetCollaboratorsQuery } from "../../modules/song";
 import { getCollaboratorInfo } from "../../modules/song";
 
 interface FeaturedArtistsProps {
@@ -37,7 +37,7 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
 
   return (
     <Box>
-      {featured.map((featuredArtist) => {
+      { featured.map((featuredArtist) => {
         const collaboratorInfo = getCollaboratorInfo(
           featuredArtist.email,
           collaborators
@@ -45,37 +45,37 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
 
         return (
           <Stack
-            key={featuredArtist.email}
-            sx={{
+            key={ featuredArtist.email }
+            sx={ {
+              alignItems: "center",
+              columnGap: 1,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center",
               mt: 2,
-              columnGap: 1,
-            }}
+            } }
           >
             <Details
-              email={featuredArtist.email}
-              pictureUrl={collaboratorInfo.pictureUrl}
-              firstName={collaboratorInfo.firstName}
-              lastName={collaboratorInfo.lastName}
+              email={ featuredArtist.email }
+              firstName={ collaboratorInfo.firstName }
+              lastName={ collaboratorInfo.lastName }
+              pictureUrl={ collaboratorInfo.pictureUrl }
             />
 
             <Button
               color="white"
-              sx={{ ml: [1, 1, 3] }}
-              disabled={isDeleteDisabled}
+              disabled={ isDeleteDisabled }
+              sx={ { ml: [1, 1, 3] } }
               variant="secondary"
               width="icon"
-              onClick={() => {
+              onClick={ () => {
                 onDelete(featuredArtist, featured);
-              }}
+              } }
             >
-              <CloseIcon sx={{ color: theme.colors.white }} />
+              <CloseIcon sx={ { color: theme.colors.white } } />
             </Button>
           </Stack>
         );
-      })}
+      }) }
     </Box>
   );
 };
