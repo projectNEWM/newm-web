@@ -8,27 +8,27 @@ import {
 import theme from "@newm-web/theme";
 
 export interface CommonProps extends Omit<MUIButtonProps, "color" | "variant"> {
-  readonly isLoading?: boolean;
-  readonly width?: "compact" | "default" | "full" | "icon";
-  readonly target?: string;
   readonly href?: string;
+  readonly isLoading?: boolean;
+  readonly target?: string;
+  readonly width?: "compact" | "default" | "full" | "icon";
 }
 
 type ConditionalProps =
   | {
+      readonly color?: never;
+      readonly gradient?: keyof Theme["gradients"];
       readonly variant?: never;
-      readonly gradient?: keyof Theme["gradients"];
-      readonly color?: never;
     }
   | {
+      readonly color?: never;
+      readonly gradient?: keyof Theme["gradients"];
       readonly variant?: "primary";
-      readonly gradient?: keyof Theme["gradients"];
-      readonly color?: never;
     }
   | {
-      readonly variant?: "secondary" | "outlined";
       readonly color?: keyof Theme["colors"];
       readonly gradient?: never;
+      readonly variant?: "secondary" | "outlined";
     };
 
 export type ButtonProps = CommonProps & ConditionalProps;
@@ -57,8 +57,8 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
       maxWidth: "max-content",
     },
     default: {
-      width: "100%",
       maxWidth: "340px",
+      width: "100%",
     },
     full: {
       width: "100%",
@@ -72,28 +72,28 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   };
 
   const variantStyles = {
+    outlined: {
+      "&:hover": {
+        background: theme.colors.activeBackground,
+      },
+      border: `2px solid ${theme.colors[color]}`,
+    },
     primary: {
+      "&.Mui-disabled": {
+        color: theme.colors.white,
+      },
       background: theme.gradients[gradient],
       color: theme.colors.white,
       px: 2.25,
       py: 1.25,
-      "&.Mui-disabled": {
-        color: theme.colors.white,
-      },
     },
     secondary: {
-      backgroundColor: theme.colors.black,
-      border: `2px solid ${theme.colors.grey500}`,
       "&:hover": {
         backgroundColor: theme.colors.black,
         borderColor: theme.colors.grey300,
       },
-    },
-    outlined: {
-      border: `2px solid ${theme.colors[color]}`,
-      "&:hover": {
-        background: theme.colors.activeBackground,
-      },
+      backgroundColor: theme.colors.black,
+      border: `2px solid ${theme.colors.grey500}`,
     },
   };
 
@@ -101,6 +101,9 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
     <MUIButton
       disabled={ isLoading || disabled }
       sx={ {
+        "&.Mui-disabled": {
+          color: theme.colors[color],
+        },
         color: theme.colors[color],
         fontWeight: theme.typography.fontWeightSemiBold,
         height: "max-content",
@@ -111,9 +114,6 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
         px: 2,
         py: 1,
         textTransform: "none",
-        "&.Mui-disabled": {
-          color: theme.colors[color],
-        },
         ...widthStyles[width],
         ...variantStyles[variant],
         ...sx,
@@ -123,12 +123,12 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
     >
       { isLoading ? (
         <CircularProgress
-          disableShrink
           size={ 20 }
           sx={ {
             color:
               variant === "primary" ? theme.colors.white : theme.colors[color],
           } }
+          disableShrink
         />
       ) : (
         children

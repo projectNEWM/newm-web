@@ -7,19 +7,19 @@ const DropdownMultiSelectField: ForwardRefRenderFunction<
   HTMLInputElement,
   DropdownSelectProps
 > = (props, ref) => (
-  <Field name={props.name}>
-    {({ field, form, meta }: FieldProps) => (
+  <Field name={ props.name }>
+    { ({ field, form, meta }: FieldProps) => (
       <DropdownMultiSelect
-        {...field}
-        {...props}
-        errorMessage={meta.touched ? meta.error : ""}
-        handleBlur={form.handleBlur}
-        handleChange={(event: SyntheticEvent, value: ReadonlyArray<string>) => {
+        { ...field }
+        { ...props }
+        errorMessage={ meta.touched ? meta.error : "" }
+        handleBlur={ form.handleBlur }
+        handleChange={ (event: SyntheticEvent, value: ReadonlyArray<string>) => {
           form.setFieldValue(field.name, value);
-        }}
-        ref={ref}
+        } }
+        ref={ ref }
       />
-    )}
+    ) }
   </Field>
 );
 

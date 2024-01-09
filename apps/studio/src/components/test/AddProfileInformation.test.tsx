@@ -1,6 +1,6 @@
-import { renderWithContext } from "../../common";
 import { withFormik } from "@newm-web/utils";
 import * as Formik from "formik";
+import { renderWithContext } from "../../common";
 import AddProfileInformation from "../createProfile/AddProfileInformation";
 
 describe("<AddProfileInformation />", () => {
@@ -10,9 +10,9 @@ describe("<AddProfileInformation />", () => {
         jest.spyOn(Formik, "useFormikContext").mockImplementation(
           () =>
             ({
+              handleSubmit: jest.fn(),
               isValid: false,
               setFieldTouched: jest.fn(),
-              handleSubmit: jest.fn(),
             } as any) // eslint-disable-line
         );
 
@@ -21,7 +21,7 @@ describe("<AddProfileInformation />", () => {
             <AddProfileInformation
               fieldName="example"
               prompt="example-prompt"
-              tags={["hello", "world"]}
+              tags={ ["hello", "world"] }
             />,
             {
               initialValues: { example: "" },

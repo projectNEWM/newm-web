@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { selectSession } from "../modules/session";
 import { Navigate, useLocation } from "react-router-dom";
+import { selectSession } from "../modules/session";
 import { useAppSelector } from "../common";
 
 type PrivateRouteProps = {
@@ -14,7 +14,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({ children }) => {
   return isLoggedIn ? (
     children
   ) : (
-    <Navigate replace state={{ from: location }} to={"/login"} />
+    <Navigate state={ { from: location } } to={ "/login" } replace />
   );
 };
 

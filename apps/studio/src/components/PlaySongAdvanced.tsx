@@ -19,14 +19,14 @@ const PlaySongAdvanced: FunctionComponent<PlaySongAdvancedProps> = ({
 }) => {
   return song && song.streamUrl ? (
     <Stack
-      sx={{
+      sx={ {
         alignItems: "center",
         justifyContent: "center",
         ...contentSx,
-      }}
+      } }
     >
-      <IconButton color="inherit" onClick={() => onPlayPause(song)}>
-        {isPlaying ? <StopIcon /> : <PlayArrowIcon />}
+      <IconButton color="inherit" onClick={ () => onPlayPause(song) }>
+        { isPlaying ? <StopIcon /> : <PlayArrowIcon /> }
       </IconButton>
     </Stack>
   ) : null;

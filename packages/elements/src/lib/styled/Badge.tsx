@@ -2,8 +2,8 @@ import { Theme, styled } from "@mui/material/styles";
 import theme from "@newm-web/theme";
 
 export interface BadgeProps {
-  readonly children: React.ReactNode;
   readonly bgColor?: keyof Theme["colors"];
+  readonly children: React.ReactNode;
   readonly textColor?: keyof Theme["colors"];
 }
 

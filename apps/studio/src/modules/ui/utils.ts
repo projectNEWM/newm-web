@@ -17,10 +17,10 @@ export const handleUploadProgress = ({
 
   dispatch(
     setProgressBarModal({
-      progress: currentTotalProgress,
-      message,
-      disclaimer,
       animationSeconds: 1,
+      disclaimer,
+      message,
+      progress: currentTotalProgress,
     })
   );
 };

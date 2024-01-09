@@ -4,9 +4,9 @@ import { Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
 export interface IconStatusProps {
+  readonly fontColor?: keyof Theme["colors"];
   readonly icon: JSX.Element;
   readonly iconColor?: keyof Theme["colors"];
-  readonly fontColor?: keyof Theme["colors"];
   readonly status: string | undefined;
 }
 
@@ -17,22 +17,22 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   icon,
   iconColor = "music",
   fontColor = "white",
-  status
+  status,
 }) => (
   <Stack
-    sx={{
-      display: "flex",
-      gap: 1,
-      flexDirection: "row",
+    sx={ {
+      alignItems: "center",
       color: theme.colors[iconColor],
+      display: "flex",
+      flexDirection: "row",
+      gap: 1,
       justifyContent: "center",
-      alignItems: "center"
-    }}
+    } }
   >
-    {icon}
+    { icon }
 
-    <Typography color={fontColor} fontWeight={400}>
-      {status}
+    <Typography color={ fontColor } fontWeight={ 400 }>
+      { status }
     </Typography>
   </Stack>
 );

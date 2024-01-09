@@ -2,59 +2,44 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UIState } from "./types";
 
 const initialState: UIState = {
+  isConnectWalletModalOpen: false,
+  isIdenfyModalOpen: false,
+  isInvitesModalOpen: false,
+  isProgressBarModalOpen: false,
+  isWalletEnvMismatchModalOpen: false,
+  progressBarModal: {
+    animationSeconds: 0,
+    disclaimer: "",
+    message: "",
+    progress: 0,
+  },
   toast: {
     heading: "",
     message: "",
     severity: "error",
   },
-  progressBarModal: {
-    progress: 0,
-    message: "",
-    disclaimer: "",
-    animationSeconds: 0,
-  },
   updateWalletAddressModal: {
-    message: "",
     isConfirmationRequired: false,
+    message: "",
   },
-  isProgressBarModalOpen: false,
-  isIdenfyModalOpen: false,
-  isConnectWalletModalOpen: false,
-  isInvitesModalOpen: false,
-  isWalletEnvMismatchModalOpen: false,
 };
 
 const uiSlice = createSlice({
   initialState,
   name: "ui",
   reducers: {
+    clearProgressBarModal: (state) => {
+      state.progressBarModal = {
+        animationSeconds: 0,
+        disclaimer: "",
+        message: "",
+        progress: 0,
+      };
+    },
     clearToastMessage: (state) => {
       state.toast.heading = "";
       state.toast.message = "";
       state.toast.severity = "error";
-    },
-    setToastMessage: (state, { payload }: PayloadAction<UIState["toast"]>) => {
-      state.toast = payload;
-    },
-    clearProgressBarModal: (state) => {
-      state.progressBarModal = {
-        progress: 0,
-        message: "",
-        disclaimer: "",
-        animationSeconds: 0,
-      };
-    },
-    setProgressBarModal: (
-      state,
-      { payload }: PayloadAction<UIState["progressBarModal"]>
-    ) => {
-      state.progressBarModal = payload;
-    },
-    setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
-      state.isProgressBarModalOpen = payload;
-    },
-    setIsIdenfyModalOpen: (state, { payload }: PayloadAction<boolean>) => {
-      state.isIdenfyModalOpen = payload;
     },
     setIsConnectWalletModalOpen: (
       state,
@@ -62,20 +47,35 @@ const uiSlice = createSlice({
     ) => {
       state.isConnectWalletModalOpen = payload;
     },
+    setIsIdenfyModalOpen: (state, { payload }: PayloadAction<boolean>) => {
+      state.isIdenfyModalOpen = payload;
+    },
     setIsInvitesModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isInvitesModalOpen = payload;
     },
-    setUpdateWalletAddressModal: (
-      state,
-      { payload }: PayloadAction<UIState["updateWalletAddressModal"]>
-    ) => {
-      state.updateWalletAddressModal = payload;
+    setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
+      state.isProgressBarModalOpen = payload;
     },
     setIsWalletEnvMismatchModalOpen: (
       state,
       { payload }: PayloadAction<boolean>
     ) => {
       state.isWalletEnvMismatchModalOpen = payload;
+    },
+    setProgressBarModal: (
+      state,
+      { payload }: PayloadAction<UIState["progressBarModal"]>
+    ) => {
+      state.progressBarModal = payload;
+    },
+    setToastMessage: (state, { payload }: PayloadAction<UIState["toast"]>) => {
+      state.toast = payload;
+    },
+    setUpdateWalletAddressModal: (
+      state,
+      { payload }: PayloadAction<UIState["updateWalletAddressModal"]>
+    ) => {
+      state.updateWalletAddressModal = payload;
     },
   },
 });

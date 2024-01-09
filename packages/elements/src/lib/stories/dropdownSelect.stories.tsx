@@ -12,20 +12,20 @@ const options = [
 ];
 
 export default {
-  title: "Dropdown Select",
   component: DropdownSelect,
+  title: "Dropdown Select",
 };
 
 export const Variations = () => (
-  <Stack mt={ 2 } direction="row" spacing={ 4 }>
+  <Stack direction="row" mt={ 2 } spacing={ 4 }>
     <DropdownSelect label="With label" name="withLabel" options={ options } />
 
     <DropdownSelect
       label="Disabled"
       name="disabled"
+      options={ options }
       placeholder="Disabled"
       disabled
-      options={ options }
     />
 
     <DropdownSelect

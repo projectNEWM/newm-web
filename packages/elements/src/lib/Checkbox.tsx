@@ -26,23 +26,27 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   return (
-    <Stack direction="row" gap={1.5} alignItems="flex-start">
+    <Stack alignItems="flex-start" direction="row" gap={ 1.5 }>
       <MUICheckbox
-        aria-describedby={ariaDescribedBy}
-        checked={checked}
-        inputRef={ref}
+        aria-describedby={ ariaDescribedBy }
+        checked={ checked }
+        checkedIcon={ <CheckboxIcon /> }
         icon={
           <Box
-            sx={{
+            sx={ {
               border: `2px solid ${theme.colors.grey400}`,
               borderRadius: "2px",
               height: "20px",
               width: "20px",
-            }}
+            } }
           />
         }
-        checkedIcon={<CheckboxIcon />}
-        sx={{
+        inputRef={ ref }
+        sx={ {
+          "&.Mui-checked": {
+            backgroundColor: theme.colors.music,
+          },
+
           "&.MuiCheckbox-root": {
             backgroundColor: theme.colors.grey600,
             borderRadius: "2px",
@@ -52,28 +56,24 @@ const Checkbox: ForwardRefRenderFunction<HTMLInputElement, CheckboxProps> = (
             p: 0,
           },
 
-          "&.Mui-checked": {
-            backgroundColor: theme.colors.music,
-          },
-
           ...sx,
-        }}
-        {...rest}
+        } }
+        { ...rest }
       />
 
       <Stack direction="column">
-        {typeof label === "string" ? (
+        { typeof label === "string" ? (
           <Typography
+            sx={ { color: theme.colors.white, fontSize: 12 } }
             variant="subtitle1"
-            sx={{ color: theme.colors.white, fontSize: 12 }}
           >
-            {label}
+            { label }
           </Typography>
         ) : (
           label
-        )}
+        ) }
 
-        {!!errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+        { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
       </Stack>
     </Stack>
   );

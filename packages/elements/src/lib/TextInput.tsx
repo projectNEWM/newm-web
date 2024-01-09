@@ -12,21 +12,21 @@ import HelpIcon from "@mui/icons-material/Help";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
 import theme from "@newm-web/theme";
-import ErrorMessage from "./styled/ErrorMessage";
 import { WidthType } from "@newm-web/utils";
+import ErrorMessage from "./styled/ErrorMessage";
 import Tooltip from "./styled/Tooltip";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
   readonly isOptional?: boolean;
-  readonly tooltipText?: ReactNode;
   readonly label?: string;
-  readonly startAdornment?: JSX.Element;
-  readonly widthType?: WidthType;
   readonly mask?: string | Array<string | RegExp>;
   readonly maskChar?: string | null;
   readonly shouldDisplayErrorMessage?: boolean;
+  readonly startAdornment?: JSX.Element;
+  readonly tooltipText?: ReactNode;
+  readonly widthType?: WidthType;
 }
 
 const StyledRootElement = styled.div`
@@ -109,7 +109,7 @@ export const TextInput: ForwardRefRenderFunction<
 
   // eslint-disable-next-line
   const InputElement = (mask ? StyledMaskedInput : StyledInput) as any;
-  const maskedProps = mask ? { mask, maskChar, inputRef: ref } : {};
+  const maskedProps = mask ? { inputRef: ref, mask, maskChar } : {};
 
   /**
    * Calls any onFocus prop being passed and then updates local state
@@ -137,62 +137,60 @@ export const TextInput: ForwardRefRenderFunction<
     <Stack
       direction="column"
       spacing="4px"
-      sx={{
+      sx={ {
         margin: ["0 auto", "0 auto", "0"],
         maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         opacity: disabled ? 0.5 : 1,
         textAlign: "left",
         width: "100%",
-      }}
+      } }
     >
-      {!!label && (
+      { !!label && (
         <Typography
-          color={theme.colors.grey100}
-          columnGap={0.5}
+          color={ theme.colors.grey100 }
+          columnGap={ 0.5 }
           display="flex"
-          fontWeight={500}
+          fontWeight={ 500 }
         >
           <>
-            <Typography sx={{ textTransform: "uppercase", fontWeight: 500 }}>
-              {label}
+            <Typography sx={ { fontWeight: 500, textTransform: "uppercase" } }>
+              { label }
             </Typography>
 
-            {!!tooltipText && (
-              <Tooltip title={tooltipText}>
-                <IconButton sx={{ padding: 0 }}>
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: 0 } }>
                   <HelpIcon
-                    sx={{
+                    sx={ {
                       color: theme.colors.grey100,
                       height: "18px",
                       width: "18px",
-                    }}
+                    } }
                   />
                 </IconButton>
               </Tooltip>
-            )}
+            ) }
 
-            {isOptional && (
+            { isOptional && (
               <Typography
-                color={theme.colors.grey400}
+                color={ theme.colors.grey400 }
                 component="span"
                 marginLeft="auto"
               >
                 OPTIONAL
               </Typography>
-            )}
+            ) }
           </>
         </Typography>
-      )}
+      ) }
 
       <Box
+        alignItems="center"
         display="flex"
         flexDirection="row"
-        alignItems="center"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        sx={{
-          borderWidth: theme.inputField.borderWidth,
-          borderStyle: "solid",
+        maxWidth={ theme.inputField.maxWidth }
+        sx={ {
+          background: theme.colors.grey500,
           borderColor: getBorderColor(
             !!errorMessage,
             disabled,
@@ -200,30 +198,32 @@ export const TextInput: ForwardRefRenderFunction<
             isFocused
           ),
           borderRadius: "4px",
+          borderStyle: "solid",
+          borderWidth: theme.inputField.borderWidth,
           overflow: "hidden",
-          background: theme.colors.grey500,
-        }}
-        maxWidth={theme.inputField.maxWidth}
+        } }
+        onMouseEnter={ () => setIsHovered(true) }
+        onMouseLeave={ () => setIsHovered(false) }
       >
         <StyledRootElement>
-          {startAdornment}
+          { startAdornment }
 
           <InputElement
-            {...rest}
-            {...maskedProps}
-            disabled={disabled}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            ref={ref}
+            { ...rest }
+            { ...maskedProps }
+            disabled={ disabled }
+            ref={ ref }
+            onBlur={ handleBlur }
+            onFocus={ handleFocus }
           />
 
-          {endAdornment}
+          { endAdornment }
         </StyledRootElement>
       </Box>
 
-      {!!errorMessage && shouldDisplayErrorMessage && (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
-      )}
+      { !!errorMessage && shouldDisplayErrorMessage && (
+        <ErrorMessage>{ errorMessage }</ErrorMessage>
+      ) }
     </Stack>
   );
 };

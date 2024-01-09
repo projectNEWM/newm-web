@@ -44,8 +44,8 @@ export const scrollToError = (
     const errorField = fields.find((field) => field.error && field.element);
 
     errorField?.element?.scrollIntoView({
-      block: "center",
       behavior: "smooth",
+      block: "center",
     });
   }
 };

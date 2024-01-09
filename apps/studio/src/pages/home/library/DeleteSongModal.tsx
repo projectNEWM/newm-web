@@ -10,10 +10,10 @@ interface DeleteSongModalProps {
 
 const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
   primaryAction,
-  secondaryAction
+  secondaryAction,
 }) => (
   <Stack
-    sx={{
+    sx={ {
       alignItems: "center",
       backgroundColor: "black",
       bottom: 0,
@@ -23,19 +23,19 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
       position: "fixed",
       right: 0,
       top: 0,
-      zIndex: 9999
-    }}
+      zIndex: 9999,
+    } }
   >
-    <Stack p={2}>
+    <Stack p={ 2 }>
       <Stack
-        sx={{
+        sx={ {
           backgroundColor: theme.colors.grey500,
           borderTopLeftRadius: "8px",
           borderTopRightRadius: "8px",
           maxWidth: "512px",
           padding: "24px 24px 16px",
-          rowGap: 1
-        }}
+          rowGap: 1,
+        } }
       >
         <Typography variant="body2">Delete Song</Typography>
         <Typography variant="subtitle1">
@@ -44,25 +44,25 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
         </Typography>
       </Stack>
       <Stack
-        sx={{
+        sx={ {
           backgroundColor: theme.colors.grey600,
           borderBottomLeftRadius: "8px",
           borderBottomRightRadius: "8px",
           columnGap: 1.5,
           flexDirection: "row",
           justifyContent: "end",
-          padding: "12px 24px"
-        }}
+          padding: "12px 24px",
+        } }
       >
         <Button
           color="music"
-          onClick={secondaryAction}
           variant="secondary"
           width="compact"
+          onClick={ secondaryAction }
         >
           Cancel
         </Button>
-        <Button onClick={primaryAction} width="compact">
+        <Button width="compact" onClick={ primaryAction }>
           Yes
         </Button>
       </Stack>

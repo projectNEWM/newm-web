@@ -6,7 +6,6 @@ import {
   SideBarNavLink,
   Typography,
 } from "@newm-web/elements";
-import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
 import {
   PeopleAlt as CollaboratorsIcon,
@@ -19,14 +18,15 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
+import { useWindowDimensions } from "@newm-web/utils";
+import theme from "@newm-web/theme";
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
-import { useWindowDimensions } from "@newm-web/utils";
-import theme from "@newm-web/theme";
+import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -44,130 +44,130 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 
   return (
     <Box
-      sx={{
+      sx={ {
         background: theme.colors.black,
         borderRight: `2px solid ${theme.colors.grey600}`,
         display: "flex",
-        height: "100%",
-        width: theme.spacing(28.75),
-        minWidth: theme.spacing(28.75),
         flexDirection: "column",
+        height: "100%",
         justifyContent: "space-between",
-        padding: 1.25,
+        minWidth: theme.spacing(28.75),
         overflowY: "auto",
-      }}
+        padding: 1.25,
+        width: theme.spacing(28.75),
+      } }
     >
-      {mobileVersion && (
+      { mobileVersion && (
         <IconButton
-          onClick={() => setMobileOpen(false)}
-          sx={{
+          sx={ {
             position: "absolute",
-            top: "2rem",
             right: "-2.5rem",
-          }}
+            top: "2rem",
+          } }
+          onClick={ () => setMobileOpen(false) }
         >
-          <MenuOpenIcon sx={{ color: "white" }} />
+          <MenuOpenIcon sx={ { color: "white" } } />
         </IconButton>
-      )}
+      ) }
 
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Stack mt={3.5} spacing={2}>
-          {!!pictureUrl && (
+      <Box alignItems="center" display="flex" flexDirection="column">
+        <Stack mt={ 3.5 } spacing={ 2 }>
+          { !!pictureUrl && (
             <ProfileImage
-              src={pictureUrl}
               aria-label="profile image"
               referrerPolicy="no-referrer"
+              src={ pictureUrl }
             />
-          )}
+          ) }
 
-          <Typography variant="h4" fontWeight={700} align="center">
-            {nickname ? nickname : firstName + " " + lastName}
+          <Typography align="center" fontWeight={ 700 } variant="h4">
+            { nickname ? nickname : firstName + " " + lastName }
           </Typography>
         </Stack>
 
-        <Box mt={4} mb={3} width="100%">
+        <Box mb={ 3 } mt={ 4 } width="100%">
           <SideBarNavLink
-            onClick={() => setMobileOpen(false)}
-            Icon={UploadIcon}
+            Icon={ UploadIcon }
             label="UPLOAD A SONG"
             to="/home/upload-song"
+            onClick={ () => setMobileOpen(false) }
           />
 
-          <Box mt={3.5} ml={2.5}>
+          <Box ml={ 2.5 } mt={ 3.5 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={LibraryIcon}
+              Icon={ LibraryIcon }
               label="LIBRARY"
               to="/home/library"
+              onClick={ () => setMobileOpen(false) }
             />
 
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={CollaboratorsIcon}
+              Icon={ CollaboratorsIcon }
               label="COLLABORATORS"
               to="/home/collaborators"
+              onClick={ () => setMobileOpen(false) }
             />
           </Stack>
 
-          <Box mt={3.5} ml={2.5}>
+          <Box ml={ 2.5 } mt={ 3.5 }>
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={WalletIcon}
+              Icon={ WalletIcon }
               label="WALLET"
               to="/home/wallet"
+              onClick={ () => setMobileOpen(false) }
             />
           </Stack>
 
-          <Box mt={3.5} ml={2.5}>
+          <Box ml={ 2.5 } mt={ 3.5 }>
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
-          <Stack mt={0.75} spacing={0.5} sx={{ width: "100%" }}>
+          <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={ProfileIcon}
+              Icon={ ProfileIcon }
               label="PROFILE"
               to="/home/profile"
+              onClick={ () => setMobileOpen(false) }
             />
 
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={SettingsIcon}
+              Icon={ SettingsIcon }
               label="SETTINGS"
               to="/home/settings"
+              onClick={ () => setMobileOpen(false) }
             />
           </Stack>
 
-          <Box mt={4} ml={2.5}>
+          <Box ml={ 2.5 } mt={ 4 }>
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
-          <Stack mt={1.5} spacing={0.5} sx={{ width: "100%" }}>
+          <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={FaqIcon}
+              href={ NEWM_STUDIO_FAQ_URL }
+              Icon={ FaqIcon }
               label="FAQ"
-              href={NEWM_STUDIO_FAQ_URL}
+              onClick={ () => setMobileOpen(false) }
             />
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={DiscordLogo}
+              href={ NEWM_STUDIO_DISCORD_URL }
+              Icon={ DiscordLogo }
               label="ASK THE COMMUNITY"
-              href={NEWM_STUDIO_DISCORD_URL}
+              onClick={ () => setMobileOpen(false) }
             />
             <SideBarNavLink
-              onClick={() => setMobileOpen(false)}
-              Icon={SupportIcon}
+              href={ NEWM_CLICKUP_FORM_URL }
+              Icon={ SupportIcon }
               label="SUPPORT"
-              href={NEWM_CLICKUP_FORM_URL}
+              onClick={ () => setMobileOpen(false) }
             />
           </Stack>
         </Box>
@@ -177,17 +177,17 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         alignItems="center"
         display="flex"
         justifyContent="space-between"
-        pb={2.5}
-        px={2.5}
+        pb={ 2.5 }
+        px={ 2.5 }
         width="100%"
       >
         <Link
           alignItems="center"
           display="flex"
+          href={ NEWM_IO_URL }
           justifyContent="center"
-          href={NEWM_IO_URL}
-          target="_blank"
           rel="noopener"
+          target="_blank"
         >
           <NEWMLogo height="40" width="40" />
         </Link>
@@ -212,43 +212,43 @@ const ResponsiveSideBar: FunctionComponent<ResponsiveSideBarProps> = ({
 
   return windowWidth && windowWidth < theme.breakpoints.values.md ? (
     <Drawer
-      container={container}
-      variant="temporary"
-      open={isMobileOpen}
-      onClose={() => setMobileOpen(false)}
-      ModalProps={{
+      container={ container }
+      ModalProps={ {
         keepMounted: true,
-      }}
-      sx={{
+      } }
+      open={ isMobileOpen }
+      sx={ {
         "& .MuiDrawer-paper": {
-          overflow: isMobileOpen ? "visible" : "hidden",
           boxSizing: "border-box",
+          overflow: isMobileOpen ? "visible" : "hidden",
         },
-      }}
+      } }
+      variant="temporary"
+      onClose={ () => setMobileOpen(false) }
     >
       <IconButton
-        onClick={() => setMobileOpen(false)}
-        sx={{
+        sx={ {
           position: "absolute",
-          top: "2rem",
           right: "-2.5rem",
-        }}
+          top: "2rem",
+        } }
+        onClick={ () => setMobileOpen(false) }
       >
-        <MenuOpenIcon sx={{ color: "white" }} />
+        <MenuOpenIcon sx={ { color: "white" } } />
       </IconButton>
-      <SideBar mobileVersion setMobileOpen={setMobileOpen} />
+      <SideBar setMobileOpen={ setMobileOpen } mobileVersion />
     </Drawer>
   ) : (
     <Drawer
-      variant="permanent"
-      sx={{
+      sx={ {
         "& .MuiDrawer-paper": {
           boxSizing: "border-box",
         },
-      }}
+      } }
+      variant="permanent"
       open
     >
-      <SideBar setMobileOpen={setMobileOpen} />
+      <SideBar setMobileOpen={ setMobileOpen } />
     </Drawer>
   );
 };

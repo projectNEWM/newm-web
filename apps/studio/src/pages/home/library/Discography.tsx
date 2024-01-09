@@ -1,8 +1,8 @@
 import { FunctionComponent, useState } from "react";
-import { SearchBox } from "../../../components";
-import { useGetSongCountQuery } from "../../../modules/song";
 import { Typography } from "@newm-web/elements";
 import SongList from "./SongList";
+import { SearchBox } from "../../../components";
+import { useGetSongCountQuery } from "../../../modules/song";
 
 const Discography: FunctionComponent = () => {
   const [query, setQuery] = useState("");
@@ -18,19 +18,19 @@ const Discography: FunctionComponent = () => {
 
   return (
     <>
-      <Typography sx={{ pb: 4 }} variant="h3">
+      <Typography sx={ { pb: 4 } } variant="h3">
         LIBRARY
       </Typography>
 
-      {totalCountOfSongs || query ? (
+      { totalCountOfSongs || query ? (
         <SearchBox
           placeholder="Search songs"
-          query={query}
-          onSearch={handleSearch}
+          query={ query }
+          onSearch={ handleSearch }
         />
-      ) : null}
+      ) : null }
 
-      <SongList totalCountOfSongs={totalCountOfSongs} query={query} />
+      <SongList query={ query } totalCountOfSongs={ totalCountOfSongs } />
     </>
   );
 };

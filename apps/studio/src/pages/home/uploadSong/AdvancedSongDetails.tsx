@@ -1,12 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
-import {
-  MIN_DISTRIBUTION_TIME,
-  NEWM_STUDIO_FAQ_URL,
-  NONE_OPTION,
-} from "../../../common";
-import { useWindowDimensions, scrollToError } from "@newm-web/utils";
+import { scrollToError, useWindowDimensions } from "@newm-web/utils";
 import {
   CopyrightInputField,
   DropdownSelectField,
@@ -14,11 +9,16 @@ import {
   TextInputField,
 } from "@newm-web/elements";
 import { Button, HorizontalLine } from "@newm-web/elements";
+import theme from "@newm-web/theme";
 import {
   UploadSongRequest,
   useGetEarliestReleaseDateQuery,
 } from "../../../modules/song";
-import theme from "@newm-web/theme";
+import {
+  MIN_DISTRIBUTION_TIME,
+  NEWM_STUDIO_FAQ_URL,
+  NONE_OPTION,
+} from "../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import { CoverRemixSample } from "../../../components";
 
@@ -55,53 +55,53 @@ const AdvancedSongDetails = () => {
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
       {
-        error: errors.releaseDate,
         element: releaseDateRef.current,
+        error: errors.releaseDate,
       },
       {
-        error: errors.publicationDate,
         element: publicationDateRef.current,
+        error: errors.publicationDate,
       },
       {
+        element: compositionCopyrightRef.current,
         error: errors.compositionCopyrightYear,
-        element: compositionCopyrightRef.current,
       },
       {
+        element: compositionCopyrightRef.current,
         error: errors.compositionCopyrightOwner,
-        element: compositionCopyrightRef.current,
       },
       {
+        element: phonographicCopyrightRef.current,
         error: errors.phonographicCopyrightYear,
-        element: phonographicCopyrightRef.current,
       },
       {
+        element: phonographicCopyrightRef.current,
         error: errors.phonographicCopyrightOwner,
-        element: phonographicCopyrightRef.current,
       },
       {
-        error: errors.isrc,
         element: isrcRef.current?.getInputDOMNode(),
+        error: errors.isrc,
       },
       {
-        error: errors.barcodeNumber,
         element: barcodeNumberRef.current,
+        error: errors.barcodeNumber,
       },
       {
-        error: errors.ipi,
         element: ipiRef.current,
+        error: errors.ipi,
       },
       {
-        error: errors.iswc,
         element: iswcRef.current,
+        error: errors.iswc,
       },
     ]);
   }, [errors, isSubmitting, isrcRef]);
 
   return (
     <Stack
-      marginX={["auto", "auto", "unset"]}
-      maxWidth={["340px", "340px", "700px"]}
-      spacing={3}
+      marginX={ ["auto", "auto", "unset"] }
+      maxWidth={ ["340px", "340px", "700px"] }
+      spacing={ 3 }
     >
       <SwitchInputField
         name="isExplicit"
@@ -113,101 +113,101 @@ const AdvancedSongDetails = () => {
       />
       <CoverRemixSample />
       <Stack
+        columnGap={ [undefined, undefined, 1.5] }
         display="grid"
-        gridTemplateColumns={["repeat(1, 1fr)", null, "repeat(2, 1fr)"]}
-        rowGap={[2, null, 3]}
-        columnGap={[undefined, undefined, 1.5]}
+        gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
+        rowGap={ [2, null, 3] }
       >
         <TextInputField
-          isOptional={false}
+          isOptional={ false }
           label="SCHEDULE RELEASE DATE"
-          min={earliestReleaseDate ? earliestReleaseDate : minDistributionDate}
+          min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
           name="releaseDate"
           placeholder="Select a day"
-          ref={releaseDateRef}
-          type="date"
+          ref={ releaseDateRef }
           tooltipText={
             "When selecting a date to release your song on our " +
             "platform, please remember to factor in approval from any " +
             "contributors/featured artists as well as mint processing time " +
             "which can take up to 15 days."
           }
+          type="date"
         />
         <TextInputField
-          name="publicationDate"
           label="ORIGINAL PUBLICATION DATE"
-          type="date"
+          max={ new Date().toISOString().split("T")[0] }
+          name="publicationDate"
           placeholder="Select a day"
-          ref={publicationDateRef}
+          ref={ publicationDateRef }
           tooltipText={
             "If your song has already been launched on other platforms you " +
             "may input the release date here, but it is not required."
           }
-          max={new Date().toISOString().split("T")[0]}
+          type="date"
         />
         <CopyrightInputField
-          ref={compositionCopyrightRef}
-          label="COMPOSITION COPYRIGHT"
-          yearFieldName="compositionCopyrightYear"
-          ownerFieldName="compositionCopyrightOwner"
           copyrightType="composition"
+          label="COMPOSITION COPYRIGHT"
+          ownerFieldName="compositionCopyrightOwner"
+          ref={ compositionCopyrightRef }
           tooltipText={
             <span>
               The copyright for a musical composition covers the music and
               lyrics of a song (not the recorded performance). It is typically
               owned by the songwriter and/or music publisher. If you are not the
-              copyright holder of the song composition, please review{" "}
+              copyright holder of the song composition, please review{ " " }
               <Link
-                href={NEWM_STUDIO_FAQ_URL}
+                href={ NEWM_STUDIO_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 copyright requirements
-              </Link>{" "}
+              </Link>{ " " }
               in our FAQ.
             </span>
           }
+          yearFieldName="compositionCopyrightYear"
         />
         <CopyrightInputField
-          ref={phonographicCopyrightRef}
-          label="SOUND RECORDING COPYRIGHT"
-          yearFieldName="phonographicCopyrightYear"
-          ownerFieldName="phonographicCopyrightOwner"
           copyrightType="phonographic"
+          label="SOUND RECORDING COPYRIGHT"
+          ownerFieldName="phonographicCopyrightOwner"
+          ref={ phonographicCopyrightRef }
           tooltipText={
             <span>
               The copyright in a sound recording covers the recording itself (it
               does not cover the music or lyrics of the song). It is typically
               owned by the artist and/or record label. If you are not the
-              copyright holder of the sound recording, please review{" "}
+              copyright holder of the sound recording, please review{ " " }
               <Link
-                href={NEWM_STUDIO_FAQ_URL}
+                href={ NEWM_STUDIO_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 copyright requirements
-              </Link>{" "}
+              </Link>{ " " }
               in our FAQ.
             </span>
           }
+          yearFieldName="phonographicCopyrightYear"
         />
         <DropdownSelectField
-          name="barcodeType"
           label="RELEASE CODE TYPE"
+          name="barcodeType"
+          options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
+          placeholder="Select one"
           tooltipText={
             "If you already have a release code, select the code type here " +
             "and enter the code in the next field. If not, leave this field " +
             "blank and an EAN release code will be auto-generated for you."
           }
-          placeholder="Select one"
-          options={[NONE_OPTION, "EAN", "UPC", "JAN"]}
         />
         <TextInputField
-          disabled={values.barcodeType === NONE_OPTION || !values.barcodeType}
-          name="barcodeNumber"
+          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
           label="RELEASE CODE NUMBER"
+          name="barcodeNumber"
           placeholder="0000000000"
-          ref={barcodeNumberRef}
+          ref={ barcodeNumberRef }
           tooltipText={
             "A release code number is a unique code that identifies your " +
             "release. If you do not already have one, leave this field blank, " +
@@ -217,16 +217,16 @@ const AdvancedSongDetails = () => {
         <TextInputField
           label="ISRC"
           mask="aa-***-99-99999"
-          maskChar={null}
+          maskChar={ null }
           name="isrc"
           placeholder="AA-AAA-00-00000"
-          ref={isrcRef}
+          ref={ isrcRef }
           tooltipText={
             "An ISRC is a unique code that identifies this specific " +
             "recording. If you do not already have one, leave this field " +
             "blank, and one will be generated for you."
           }
-          onChange={(event) =>
+          onChange={ (event) =>
             setFieldValue("isrc", event.target.value.toUpperCase())
           }
         />
@@ -234,7 +234,7 @@ const AdvancedSongDetails = () => {
           label="IPI"
           name="ipi"
           placeholder="000000000"
-          ref={ipiRef}
+          ref={ ipiRef }
           tooltipText={
             "An IPI is a nine-digit number used to identify songwriters, " +
             "composers, and music publishers; they are automatically assigned " +
@@ -247,10 +247,10 @@ const AdvancedSongDetails = () => {
         <TextInputField
           label="ISWC"
           mask="T-999999999-9"
-          maskChar={null}
+          maskChar={ null }
           name="iswc"
           placeholder="T-000000000-0"
-          ref={iswcRef}
+          ref={ iswcRef }
           tooltipText={
             "An ISWC is the unique identification code of your song " +
             "(unlike ISRC which is linked to  the specific recording). " +
@@ -262,11 +262,11 @@ const AdvancedSongDetails = () => {
       </Stack>
 
       <Box>
-        <HorizontalLine mb={5} />
+        <HorizontalLine mb={ 5 } />
 
         <Button
+          isLoading={ isSubmitting }
           type="submit"
-          isLoading={isSubmitting}
           width={
             windowWidth && windowWidth > theme.breakpoints.values.md
               ? "compact"

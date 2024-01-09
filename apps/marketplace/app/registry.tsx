@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useServerInsertedHTML } from 'next/navigation';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import React, { useState } from "react";
+import { useServerInsertedHTML } from "next/navigation";
+import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 
 export function StyledComponentsRegistry({
   children,
@@ -20,14 +20,14 @@ export function StyledComponentsRegistry({
     // See: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/65021
     (styledComponentsStyleSheet.instance as any).clearTag();
 
-    return <>{styles}</>;
+    return <>{ styles }</>;
   });
 
-  if (typeof window !== 'undefined') return <>{children}</>;
+  if (typeof window !== "undefined") return <>{ children }</>;
 
   return (
-    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children}
+    <StyleSheetManager sheet={ styledComponentsStyleSheet.instance }>
+      { children }
     </StyleSheetManager>
   );
 }

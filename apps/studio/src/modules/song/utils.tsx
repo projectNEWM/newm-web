@@ -83,11 +83,11 @@ export const generateCollaborators = (
 
     return {
       email,
-      role: collaborator.role,
-      royaltyRate: collaborator.percentage,
+      isCreator: !!collaborator.isCreator,
       isCredited: !!collaborator.isCredited,
       isFeatured: !!collaborator.isFeatured,
-      isCreator: !!collaborator.isCreator,
+      role: collaborator.role,
+      royaltyRate: collaborator.percentage,
     };
   });
 };
@@ -169,12 +169,12 @@ export const mapCollaboratorsToCollaborations = (
   collaborators: ReadonlyArray<Collaborator>
 ) => {
   return collaborators.map((collaborator) => ({
-    songId,
+    credited: collaborator.isCredited,
     email: collaborator.email,
+    featured: collaborator.isFeatured,
     role: collaborator.role,
     royaltyRate: collaborator.royaltyRate || 0,
-    credited: collaborator.isCredited,
-    featured: collaborator.isFeatured,
+    songId,
   }));
 };
 
@@ -307,8 +307,8 @@ export const submitMintSongPayment = async (
 
   const createPaymentResp = await dispatch(
     songApi.endpoints.createMintSongPayment.initiate({
-      songId,
       changeAddress,
+      songId,
       utxoCborHexList,
     })
   );
@@ -323,8 +323,8 @@ export const submitMintSongPayment = async (
 
   const txResp = await dispatch(
     songApi.endpoints.submitMintSongPayment.initiate({
-      songId,
       cborHex: signedTx,
+      songId,
     })
   );
 
@@ -361,9 +361,9 @@ export const getCollaboratorInfo = (
   if (!collaborator?.user) return {};
 
   return {
+    email: collaborator.email,
     firstName: collaborator.user.firstName,
     lastName: collaborator.user.lastName,
     pictureUrl: collaborator.user.pictureUrl,
-    email: collaborator.email,
   };
 };

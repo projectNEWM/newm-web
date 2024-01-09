@@ -30,14 +30,15 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
   const initialValues = {
     email: "",
     isCreator: false,
-    isRightsOwner: false,
     isCredited: false,
+    isRightsOwner: false,
     role: "",
     status: CollaborationStatus.Editing,
   };
 
   const validationSchema = Yup.object().shape({
     email: commonYupValidation.email,
+    isCreator: Yup.boolean(),
     isCredited: Yup.boolean()
       .required()
       .test(
@@ -49,103 +50,102 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
           testContext.parent.isFeatured
       ),
     isRightsOwner: Yup.boolean(),
-    isCreator: Yup.boolean(),
     role: commonYupValidation.role(roles),
   });
 
   return (
     <Dialog
       aria-labelledby="modal-title"
+      open={ open }
       fullWidth
-      onClose={onClose}
-      open={open}
+      onClose={ onClose }
     >
       <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
+        initialValues={ initialValues }
+        validationSchema={ validationSchema }
+        onSubmit={ onSubmit }
       >
-        {({ errors, touched }) => (
+        { ({ errors, touched }) => (
           <Form>
             <Box
-              sx={{
+              sx={ {
                 display: "flex",
                 flexDirection: "column",
                 p: 2,
                 rowGap: 2,
-              }}
+              } }
             >
-              <Typography variant="body2" id="modal-title">
+              <Typography id="modal-title" variant="body2">
                 Add new
               </Typography>
 
               <TextInputField
-                isOptional={false}
+                isOptional={ false }
                 label="EMAIL"
                 name="email"
                 placeholder="john.smith@gmail.com"
                 widthType="full"
               />
 
-              <HorizontalLine mt={2} />
+              <HorizontalLine mt={ 2 } />
 
               <SwitchInputField
+                description={ "Is this individual a featured artist?" }
                 name="isFeatured"
                 title="FEATURED ARTIST"
-                description={"Is this individual a featured artist?"}
               />
 
               <SwitchInputField
+                description="Should this person receive a percentage of royalties generated?"
                 name="isRightsOwner"
                 title="ROYALTY SPLITS"
-                description="Should this person receive a percentage of royalties generated?"
               />
 
               <SwitchInputField
-                name="isCredited"
-                title="CREDITS"
                 description={
                   "Did they have a role in making the song? Enable to credit " +
                   "them as a contributor."
                 }
+                name="isCredited"
+                title="CREDITS"
               />
 
-              {touched.isCredited && errors.isCredited ? (
-                <Typography variant="h5" color="error">
-                  {errors.isCredited}
+              { touched.isCredited && errors.isCredited ? (
+                <Typography color="error" variant="h5">
+                  { errors.isCredited }
                 </Typography>
-              ) : null}
+              ) : null }
 
               <DropdownSelectField
+                isOptional={ false }
                 label="ROLE"
-                isOptional={false}
                 name="role"
-                options={roles}
+                options={ roles }
                 placeholder="Select role"
                 widthType="full"
               />
 
-              <HorizontalLine mt={2} />
+              <HorizontalLine mt={ 2 } />
 
               <Stack
-                sx={{
+                sx={ {
                   alignItems: "center",
                   columnGap: 3,
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "flex-end",
-                }}
+                } }
               >
-                <Button variant="outlined" width="compact" onClick={onClose}>
+                <Button variant="outlined" width="compact" onClick={ onClose }>
                   Cancel
                 </Button>
-                <Button width="compact" type="submit">
+                <Button type="submit" width="compact">
                   Add
                 </Button>
               </Stack>
             </Box>
           </Form>
-        )}
+        ) }
       </Formik>
     </Dialog>
   );

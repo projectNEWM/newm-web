@@ -9,16 +9,16 @@ function createData(
   songName?: string
 ) {
   id = id + 1;
-  return { id, description, date, time, amount, songName, iconImgUrl };
+  return { amount, date, description, iconImgUrl, id, songName, time };
 }
 export interface Transaction {
-  id: number;
-  description: string;
-  date: string;
-  time: string;
   amount: number;
-  songName?: string;
+  date: string;
+  description: string;
   iconImgUrl?: string;
+  id: number;
+  songName?: string;
+  time: string;
 }
 export interface TransactionsResponse {
   data: Transaction[];

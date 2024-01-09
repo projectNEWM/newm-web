@@ -2,10 +2,10 @@ import { Box, useTheme } from "@mui/material";
 import { FunctionComponent, useEffect, useState } from "react";
 
 interface Props {
-  /* Number between 1 and 100 representing the target progress percentage */
-  readonly progress: number;
   /* Amount of seconds that animation should last */
   readonly animationSeconds?: number;
+  /* Number between 1 and 100 representing the target progress percentage */
+  readonly progress: number;
 }
 
 const ProgressBar: FunctionComponent<Props> = ({
@@ -26,20 +26,20 @@ const ProgressBar: FunctionComponent<Props> = ({
   return (
     <Box
       sx={ {
-        width: "100%",
         backgroundColor: theme.colors.grey400,
         borderRadius: 1.5,
         overflow: "hidden",
         padding: 1,
+        width: "100%",
       } }
     >
       <Box
         sx={ {
-          height: "2rem",
-          width: animatedProgressPercentage,
           backgroundColor: theme.colors.music,
           borderRadius: 1,
+          height: "2rem",
           transition: `width ${animationSeconds}s ease-out`,
+          width: animatedProgressPercentage,
         } }
       />
     </Box>

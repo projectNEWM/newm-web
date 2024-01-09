@@ -4,11 +4,11 @@ import Typography from "./Typography";
 import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {
+  readonly errorMessage?: string;
   readonly icon: JSX.Element;
   readonly message?: string;
-  readonly subtitle?: string;
-  readonly errorMessage?: string;
   readonly onClick?: MouseEventHandler;
+  readonly subtitle?: string;
 }
 
 /**
@@ -22,29 +22,29 @@ const IconMessage: FunctionComponent<IconMessageProps> = ({
   onClick,
 }) => (
   <Stack
-    spacing={message || subtitle || errorMessage ? 1 : 0}
     direction="column"
-    onClick={onClick}
-    sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
+    spacing={ message || subtitle || errorMessage ? 1 : 0 }
+    sx={ { alignItems: "center", flexGrow: 1, justifyContent: "center" } }
+    onClick={ onClick }
   >
-    {icon}
+    { icon }
 
     <Stack>
-      {!!message && (
-        <Typography variant="h5" textAlign="center" fontWeight={400}>
-          {message}
+      { !!message && (
+        <Typography fontWeight={ 400 } textAlign="center" variant="h5">
+          { message }
         </Typography>
-      )}
+      ) }
 
-      {!!subtitle && (
-        <Typography variant="subtitle2" textAlign="center">
-          {subtitle}
+      { !!subtitle && (
+        <Typography textAlign="center" variant="subtitle2">
+          { subtitle }
         </Typography>
-      )}
+      ) }
 
-      {!!errorMessage && (
-        <ErrorMessage align="center">{errorMessage}</ErrorMessage>
-      )}
+      { !!errorMessage && (
+        <ErrorMessage align="center">{ errorMessage }</ErrorMessage>
+      ) }
     </Stack>
   </Stack>
 );

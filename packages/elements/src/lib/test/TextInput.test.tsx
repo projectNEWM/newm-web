@@ -4,7 +4,7 @@ import TextInput from "../TextInput";
 describe("<TextInput>", () => {
   it("renders the content correctly", () => {
     const { queryByText } = render(
-      <TextInput label="Example label" errorMessage="Example error message" />
+      <TextInput errorMessage="Example error message" label="Example label" />
     );
 
     expect(queryByText("Example label")).toBeTruthy();

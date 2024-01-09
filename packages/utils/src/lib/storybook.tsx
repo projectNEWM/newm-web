@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "@newm-web/theme";
 
 export const withContext = (Story: StoryFn) => (
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={ theme }>
     <CssBaseline />
     <Story />
   </ThemeProvider>

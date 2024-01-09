@@ -3,8 +3,8 @@ import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { SortOrder, useGetUserWalletSongsThunk } from "../../../modules/song";
 import SongRoyaltiesList from "./SongRoyaltiesList";
+import { SortOrder, useGetUserWalletSongsThunk } from "../../../modules/song";
 
 const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
@@ -29,8 +29,8 @@ const Portfolio: FunctionComponent = () => {
 
   useEffect(() => {
     getUserWalletSongs({
-      offset: pageIdx * skeletonRows,
       limit: skeletonRows,
+      offset: pageIdx * skeletonRows,
       sortOrder: SortOrder.Desc,
     });
   }, [getUserWalletSongs, pageIdx, skeletonRows]);
@@ -52,26 +52,26 @@ const Portfolio: FunctionComponent = () => {
   }, [windowHeight]);
 
   return (
-    <Box ref={skeletonRef} pt={2} pb={8}>
-      {isLoading ? (
+    <Box pb={ 8 } pt={ 2 } ref={ skeletonRef }>
+      { isLoading ? (
         <TableSkeleton
           cols={
             windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2
           }
-          rows={skeletonRows}
-          maxWidth={maxListWidth}
+          maxWidth={ maxListWidth }
+          rows={ skeletonRows }
         />
       ) : (
         <SongRoyaltiesList
-          songRoyalties={songs}
-          rows={songs.length}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          lastRowOnPage={lastRowOnPage}
-          setPage={setPage}
-          totalCountOfSongs={walletSongsResponse?.data?.total || 0}
+          lastRowOnPage={ lastRowOnPage }
+          page={ page }
+          rows={ songs.length }
+          rowsPerPage={ rowsPerPage }
+          setPage={ setPage }
+          songRoyalties={ songs }
+          totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
         />
-      )}
+      ) }
     </Box>
   );
 };

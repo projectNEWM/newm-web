@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { styled, css } from "@mui/material/styles";
+import { css, styled } from "@mui/material/styles";
 import theme from "@newm-web/theme";
 import { WidthType } from "@newm-web/utils";
 

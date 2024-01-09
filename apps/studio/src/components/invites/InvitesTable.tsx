@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { TableCell, TableHeadCell } from "@newm-web/elements";
+import theme from "@newm-web/theme";
 import {
   PlayerState,
   getResizedAlbumCoverImageUrl,
   useAppDispatch,
 } from "../../common";
 import { PlaySongAdvanced } from "../../components";
-import { TableCell, TableHeadCell } from "@newm-web/elements";
-import theme from "@newm-web/theme";
 import {
   Invite,
   Song,
@@ -30,8 +30,8 @@ import {
 } from "../../modules/song";
 
 interface InvitesTableProps {
-  invites: Invite[];
   disabled?: boolean;
+  invites: Invite[];
 }
 
 const InvitesTable: FunctionComponent<InvitesTableProps> = ({
@@ -81,22 +81,22 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
       onPlaySong: ({ id }: Song) => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: id,
-        }));
-      },
-      onStopSong: () => {
-        setPlayerState((prevState) => ({
-          ...prevState,
           isReadyToPlay: false,
-          currentPlayingSongId: undefined,
         }));
       },
       onSongEnded: () => {
         setPlayerState((prevState) => ({
           ...prevState,
-          isReadyToPlay: false,
           currentPlayingSongId: undefined,
+          isReadyToPlay: false,
+        }));
+      },
+      onStopSong: () => {
+        setPlayerState((prevState) => ({
+          ...prevState,
+          currentPlayingSongId: undefined,
+          isReadyToPlay: false,
         }));
       },
     }),
@@ -125,8 +125,8 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
   const handleDecline = async (collaborationId: string) => {
     dispatch(
       songApi.endpoints.replyToCollaboration.initiate({
-        collaborationId,
         accepted: false,
+        collaborationId,
       })
     );
   };
@@ -134,8 +134,8 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
   const handleAccept = (collaborationId: string) => {
     dispatch(
       songApi.endpoints.replyToCollaboration.initiate({
-        collaborationId,
         accepted: true,
+        collaborationId,
       })
     );
   };
@@ -152,8 +152,8 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
     ) {
       setPlayerState((prevState) => ({
         ...prevState,
-        song: fetchStreamDataResp.data?.song,
         isReadyToPlay: true,
+        song: fetchStreamDataResp.data?.song,
       }));
     }
   }, [
@@ -188,20 +188,20 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
 
   return (
     <TableContainer
-      sx={{
-        maxHeight: "65vh",
+      sx={ {
         backgroundColor: theme.colors.black,
         borderRadius: "8px",
-      }}
+        maxHeight: "65vh",
+      } }
     >
-      <Table size="small" aria-label="Song list">
+      <Table aria-label="Song list" size="small">
         <TableHead
-          sx={{
+          sx={ {
+            backgroundColor: theme.colors.black,
             position: "sticky",
             top: "0",
-            backgroundColor: theme.colors.black,
             zIndex: 5,
-          }}
+          } }
         >
           <TableRow>
             <TableHeadCell>SONG NAME</TableHeadCell>
@@ -209,11 +209,11 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
             <TableHeadCell>YOUR ROLE</TableHeadCell>
             <TableHeadCell>LENGTH</TableHeadCell>
             <TableHeadCell>SPLIT</TableHeadCell>
-            <TableHeadCell sx={{ textAlign: "end" }}>ACTION</TableHeadCell>
+            <TableHeadCell sx={ { textAlign: "end" } }>ACTION</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {invites.map(
+          { invites.map(
             ({
               collaborationId,
               coverArtUrl,
@@ -230,126 +230,126 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
               const song = songData.find((song) => song.id === songId);
 
               return (
-                <TableRow key={collaborationId}>
+                <TableRow key={ collaborationId }>
                   <TableCell>
                     <Stack
-                      sx={{
-                        flexDirection: "row",
+                      sx={ {
                         alignItems: "center",
                         columnGap: 1.5,
+                        flexDirection: "row",
                         whiteSpace: "nowrap",
-                      }}
+                      } }
                     >
                       <PlaySongAdvanced
-                        song={song}
-                        isPlaying={songId === playerState.currentPlayingSongId}
-                        onPlayPause={handleSongPlayPause}
+                        isPlaying={ songId === playerState.currentPlayingSongId }
+                        song={ song }
+                        onPlayPause={ handleSongPlayPause }
                       />
-                      {coverArtUrl ? (
+                      { coverArtUrl ? (
                         <img
-                          style={{
+                          alt="Song cover"
+                          src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
+                            height: 50,
+                            width: 50,
+                          }) }
+                          style={ {
                             borderRadius: "4px",
                             height: "40px",
                             width: "40px",
-                          }}
-                          src={getResizedAlbumCoverImageUrl(coverArtUrl, {
-                            width: 50,
-                            height: 50,
-                          })}
-                          alt="Song cover"
+                          } }
                         />
                       ) : (
-                        <Stack sx={{ height: "40px", width: "40px" }}></Stack>
-                      )}
-                      {title}
+                        <Stack sx={ { height: "40px", width: "40px" } }></Stack>
+                      ) }
+                      { title }
                     </Stack>
                   </TableCell>
                   <TableCell>
                     <Stack
-                      sx={{
-                        flexDirection: "row",
+                      sx={ {
                         alignItems: "center",
                         columnGap: 1.5,
+                        flexDirection: "row",
                         whiteSpace: "nowrap",
-                      }}
+                      } }
                     >
-                      {pictureUrl ? (
+                      { pictureUrl ? (
                         <img
-                          style={{
-                            borderRadius: "50%",
-                            width: "40px",
-                            height: "40px",
-                          }}
-                          src={pictureUrl}
                           alt="Profile"
+                          src={ pictureUrl }
+                          style={ {
+                            borderRadius: "50%",
+                            height: "40px",
+                            width: "40px",
+                          } }
                         />
                       ) : (
-                        <Stack sx={{ height: "40px", width: "40px" }}></Stack>
-                      )}
-                      {firstName && lastName
+                        <Stack sx={ { height: "40px", width: "40px" } }></Stack>
+                      ) }
+                      { firstName && lastName
                         ? `${firstName} ${lastName}`
-                        : null}
+                        : null }
                     </Stack>
                   </TableCell>
-                  <TableCell>{role}</TableCell>
+                  <TableCell>{ role }</TableCell>
                   <TableCell>
-                    {duration
+                    { duration
                       ? convertMillisecondsToSongFormat(duration)
-                      : "--:--"}
+                      : "--:--" }
                   </TableCell>
-                  <TableCell>{`${royaltyRate}%`}</TableCell>
+                  <TableCell>{ `${royaltyRate}%` }</TableCell>
                   <TableCell>
-                    {status === "Waiting" ? (
+                    { status === "Waiting" ? (
                       <Stack
+                        columnGap={ 2 }
                         flexDirection="row"
-                        columnGap={2}
                         justifyContent="end"
                       >
                         <IconButton
-                          aria-label={`Decline ${title} song collaboration`}
-                          disabled={disabled}
-                          onClick={() => handleDecline(collaborationId)}
-                          sx={{
-                            backgroundColor: theme.colors.red,
-                            borderRadius: "8px",
+                          aria-label={ `Decline ${title} song collaboration` }
+                          disabled={ disabled }
+                          sx={ {
+                            "&.Mui-disabled": {
+                              opacity: 0.5,
+                            },
                             "&:hover, &.Mui-disabled": {
                               backgroundColor: theme.colors.red,
                               opacity: 0.9,
                             },
+                            backgroundColor: theme.colors.red,
+                            borderRadius: "8px",
+                          } }
+                          onClick={ () => handleDecline(collaborationId) }
+                        >
+                          <CloseIcon sx={ { color: theme.colors.white } } />
+                        </IconButton>
+                        <IconButton
+                          aria-label={ `Accept ${title} song collaboration` }
+                          disabled={ disabled }
+                          sx={ {
                             "&.Mui-disabled": {
                               opacity: 0.5,
                             },
-                          }}
-                        >
-                          <CloseIcon sx={{ color: theme.colors.white }} />
-                        </IconButton>
-                        <IconButton
-                          aria-label={`Accept ${title} song collaboration`}
-                          disabled={disabled}
-                          onClick={() => handleAccept(collaborationId)}
-                          sx={{
-                            backgroundColor: theme.colors.green,
-                            borderRadius: "8px",
                             "&:hover, &.Mui-disabled": {
                               backgroundColor: theme.colors.green,
                               opacity: 0.9,
                             },
-                            "&.Mui-disabled": {
-                              opacity: 0.5,
-                            },
-                          }}
+                            backgroundColor: theme.colors.green,
+                            borderRadius: "8px",
+                          } }
+                          onClick={ () => handleAccept(collaborationId) }
                         >
-                          <CheckIcon sx={{ color: theme.colors.white }} />
+                          <CheckIcon sx={ { color: theme.colors.white } } />
                         </IconButton>
                       </Stack>
                     ) : (
                       status
-                    )}
+                    ) }
                   </TableCell>
                 </TableRow>
               );
             }
-          )}
+          ) }
         </TableBody>
       </Table>
     </TableContainer>

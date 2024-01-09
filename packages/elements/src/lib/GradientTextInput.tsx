@@ -90,11 +90,11 @@ const GradientTextInput: ForwardRefRenderFunction<
     <Stack direction="column" spacing="0">
       <StyledRootElement>
         <StyledInputElement
-          hasError={ !!errorMessage }
-          textAlign={ textAlign }
-          autoCorrect="off"
-          spellCheck="false"
           autoComplete="off"
+          autoCorrect="off"
+          hasError={ !!errorMessage }
+          spellCheck="false"
+          textAlign={ textAlign }
           { ...rest }
           ref={ ref }
         />
@@ -102,14 +102,14 @@ const GradientTextInput: ForwardRefRenderFunction<
 
       { errorMessage ? (
         <Typography
-          variant="h5"
-          textAlign={ textAlign }
           sx={ { color: theme.colors.red } }
+          textAlign={ textAlign }
+          variant="h5"
         >
           { errorMessage }
         </Typography>
       ) : helperText ? (
-        <Typography variant="h5" textAlign={ textAlign } color="grey100">
+        <Typography color="grey100" textAlign={ textAlign } variant="h5">
           { helperText }
         </Typography>
       ) : undefined }

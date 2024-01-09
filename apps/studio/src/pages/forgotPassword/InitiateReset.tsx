@@ -8,28 +8,28 @@ const InitiateReset: FunctionComponent = () => {
 
   return (
     <Box
-      sx={{
+      sx={ {
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
-        textAlign: "center",
         mb: 8,
-      }}
+        textAlign: "center",
+      } }
     >
-      <Typography mt={4} maxWidth={800} variant="h1">
+      <Typography maxWidth={ 800 } mt={ 4 } variant="h1">
         Enter your email to reset your password
       </Typography>
 
       <Stack
-        spacing={1.5}
-        my={7.5}
+        maxWidth={ theme.inputField.maxWidth }
         mx="auto"
-        maxWidth={theme.inputField.maxWidth}
+        my={ 7.5 }
+        spacing={ 1.5 }
         width="100%"
       >
         <TextInputField
           aria-label="Enter email to reset password"
-          isOptional={false}
+          isOptional={ false }
           name="email"
           placeholder="Your email"
           type="text"

@@ -9,7 +9,7 @@ export const renderWithContext = (
   options: RenderOptions = {}
 ) => {
   const Wrapper = ({ children }: WrapperProps) => {
-    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+    return <ThemeProvider theme={ theme }>{ children }</ThemeProvider>;
   };
 
   return render(ui, { wrapper: Wrapper, ...options });

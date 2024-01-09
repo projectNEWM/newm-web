@@ -10,10 +10,10 @@ import theme from "@newm-web/theme";
 const PaperInput = styled(Paper)({
   alignItems: "center",
   backgroundColor: theme.colors.grey500,
-  borderWidth: theme.inputField.borderWidth,
-  borderStyle: "solid",
   borderColor: theme.colors.grey400,
   borderRadius: "9px",
+  borderStyle: "solid",
+  borderWidth: theme.inputField.borderWidth,
   boxShadow: `inset 0px 3px 6px ${theme.colors.black}`,
   color: theme.colors.grey100,
   display: "flex",
