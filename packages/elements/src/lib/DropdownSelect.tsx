@@ -74,8 +74,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
-      if (newValue === null || newValue === undefined) onValueChange?.("");
-      else onValueChange?.(newValue as string);
+      onValueChange?.(newValue ?? "");
     },
     options,
     value: value as string,

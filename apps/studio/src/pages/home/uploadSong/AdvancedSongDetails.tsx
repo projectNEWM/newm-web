@@ -53,11 +53,11 @@ const AdvancedSongDetails = () => {
     .toISOString()
     .split("T")[0];
 
-  const handleBarcodeTypeChange = (barcodeType: string) => {
-    if (barcodeType === NONE_OPTION || barcodeType === "") {
+  useEffect(() => {
+    if (values.barcodeType === NONE_OPTION || values.barcodeType === "") {
       setFieldValue("barcodeNumber", "");
     }
-  };
+  }, [setFieldValue, values.barcodeType]);
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
@@ -208,7 +208,6 @@ const AdvancedSongDetails = () => {
             "and enter the code in the next field. If not, leave this field " +
             "blank and an EAN release code will be auto-generated for you."
           }
-          onValueChange={ handleBarcodeTypeChange }
         />
         <TextInputField
           disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
