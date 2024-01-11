@@ -29,6 +29,7 @@ import CreateProfile from "./pages/createProfile";
 import BrowserRouter from "./common/BrowserRouter";
 import { history } from "./common/history";
 import OnboardingRedirect from "./components/OnboardingRedirect";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import ScrollToTop from "./components/ScrollToTop";
 import store, { persistor } from "./store";
 import "./App.css";
@@ -54,6 +55,7 @@ const App = () => {
 
             <Background>
               <BrowserRouter history={ history }>
+                <GoogleAnalytics />
                 <OnboardingRedirect />
 
                 <Routes>
