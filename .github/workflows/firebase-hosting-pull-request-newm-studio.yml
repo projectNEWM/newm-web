@@ -18,6 +18,7 @@ jobs:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_ENV: staging
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
