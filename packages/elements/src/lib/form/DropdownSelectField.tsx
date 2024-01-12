@@ -1,10 +1,24 @@
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { ForwardRefRenderFunction, HTMLProps, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
-import DropdownSelect, { DropdownSelectProps } from "../DropdownSelect";
+import { WidthType } from "@newm-web/utils";
+import DropdownSelect from "../DropdownSelect";
+
+export interface DropdownSelectFieldProps
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+  readonly disabled?: boolean;
+  readonly isOptional?: boolean;
+  readonly label?: string;
+  readonly name: string;
+  readonly noResultsText?: string;
+  readonly options: ReadonlyArray<string>;
+  readonly placeholder?: string;
+  readonly tooltipText?: string;
+  readonly widthType?: WidthType;
+}
 
 const DropdownSelectField: ForwardRefRenderFunction<
   HTMLInputElement,
-  DropdownSelectProps
+  DropdownSelectFieldProps
 > = (props, ref) => {
   return (
     <Field name={ props.name }>
@@ -14,16 +28,7 @@ const DropdownSelectField: ForwardRefRenderFunction<
           { ...props }
           errorMessage={ meta.touched ? meta.error : "" }
           ref={ ref }
-          onBlur={ form.handleBlur }
-          onValueChange={ (newValue) => {
-            // Call the onChange from the Dropdown Select Field
-            if (typeof props.onValueChange === "function") {
-              props.onValueChange(newValue);
-            }
-            // Call Formik's handleChange
-            const handleFormChange = form.handleChange(props.name);
-            handleFormChange(newValue);
-          } }
+          onChangeValue={ form.handleChange(props.name) }
         />
       ) }
     </Field>

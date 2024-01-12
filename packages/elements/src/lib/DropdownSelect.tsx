@@ -1,8 +1,6 @@
 import {
-  FocusEvent,
   ForwardRefRenderFunction,
   ForwardedRef,
-  HTMLProps,
   KeyboardEvent,
   MouseEventHandler,
   forwardRef,
@@ -11,26 +9,14 @@ import { useAutocomplete } from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "@newm-web/theme";
 import { Box } from "@mui/material";
-import { WidthType } from "@newm-web/utils";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsText";
+import { DropdownSelectFieldProps } from "./form/DropdownSelectField";
 
-export interface DropdownSelectProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
-  readonly disabled?: boolean;
+interface DropdownSelectProps extends DropdownSelectFieldProps {
   readonly errorMessage?: string;
-  readonly isOptional?: boolean;
-  readonly label?: string;
-  readonly name: string;
-  readonly noResultsText?: string;
-  readonly onBlur?: (event: FocusEvent<HTMLInputElement, Element>) => void;
-  readonly onValueChange?: (newValue: string) => void;
-  readonly options: ReadonlyArray<string>;
-  readonly placeholder?: string;
-  readonly tags?: ReadonlyArray<string>;
-  readonly tooltipText?: string;
-  readonly widthType?: WidthType;
+  readonly onChangeValue?: (newValue: string) => void;
 }
 
 const DropdownSelect: ForwardRefRenderFunction<
@@ -40,8 +26,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   {
     disabled,
     errorMessage,
-    onBlur,
-    onValueChange,
+    onChangeValue,
     label,
     name,
     noResultsText = "Nothing found",
@@ -65,16 +50,14 @@ const DropdownSelect: ForwardRefRenderFunction<
   } = useAutocomplete({
     clearOnBlur: true,
     getOptionLabel: (option) => option,
-
     id: name,
-
     // Removes warning for empty string not being a valid option
     isOptionEqualToValue: (option, value) =>
       value === "" ? true : option === value,
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
-      onValueChange?.(newValue ?? "");
+      onChangeValue?.(newValue ?? "");
     },
     options,
     value: value as string,
@@ -92,14 +75,6 @@ const DropdownSelect: ForwardRefRenderFunction<
    */
   const preventFormSubmit = (event: KeyboardEvent): void => {
     if (event.key === "Enter" && inputValue !== value) event.preventDefault();
-  };
-
-  /**
-   * Consolidates onBlur events for Formik Field and MUI's useAutocomplete.
-   */
-  const handleBlurEvents = (event: FocusEvent<HTMLInputElement, Element>) => {
-    onBlur?.(event);
-    inputProps.onBlur?.(event);
   };
 
   return (
@@ -132,7 +107,6 @@ const DropdownSelect: ForwardRefRenderFunction<
           label={ label }
           name={ name }
           placeholder={ placeholder }
-          onBlur={ handleBlurEvents }
           onKeyDown={ preventFormSubmit }
         />
       </div>
