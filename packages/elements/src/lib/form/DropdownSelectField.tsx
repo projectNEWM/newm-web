@@ -4,7 +4,7 @@ import { WidthType } from "@newm-web/utils";
 import DropdownSelect from "../DropdownSelect";
 
 export interface DropdownSelectFieldProps
-  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
+  extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "onChange"> {
   readonly disabled?: boolean;
   readonly isOptional?: boolean;
   readonly label?: string;
@@ -28,7 +28,9 @@ const DropdownSelectField: ForwardRefRenderFunction<
           { ...props }
           errorMessage={ meta.touched ? meta.error : "" }
           ref={ ref }
-          onChangeValue={ form.handleChange(props.name) }
+          onChange={ (event, newValue) => {
+            form.handleChange(props.name)(newValue);
+          } }
         />
       ) }
     </Field>

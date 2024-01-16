@@ -3,6 +3,7 @@ import {
   ForwardedRef,
   KeyboardEvent,
   MouseEventHandler,
+  SyntheticEvent,
   forwardRef,
 } from "react";
 import { useAutocomplete } from "@mui/base/useAutocomplete";
@@ -16,7 +17,10 @@ import { DropdownSelectFieldProps } from "./form/DropdownSelectField";
 
 interface DropdownSelectProps extends DropdownSelectFieldProps {
   readonly errorMessage?: string;
-  readonly onChangeValue?: (newValue: string) => void;
+  readonly onChange?: (
+    event: SyntheticEvent<Element, Event>,
+    newValue: string
+  ) => void;
 }
 
 const DropdownSelect: ForwardRefRenderFunction<
@@ -26,7 +30,7 @@ const DropdownSelect: ForwardRefRenderFunction<
   {
     disabled,
     errorMessage,
-    onChangeValue,
+    onChange,
     label,
     name,
     noResultsText = "Nothing found",
@@ -57,7 +61,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     onChange: (event, newValue) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
-      onChangeValue?.(newValue ?? "");
+      onChange?.(event, newValue ?? "");
     },
     options,
     value: value as string,
