@@ -3,8 +3,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LaunchIcon from "@mui/icons-material/Launch";
 import PreviewIcon from "@mui/icons-material/PictureInPictureAlt";
 import DownloadIcon from "@mui/icons-material/FileDownload";
-import { SolidOutline } from "@newm-web/elements";
-import { IconMessage, Modal } from "@newm-web/elements";
+import { IconMessage, Modal, SolidOutline } from "@newm-web/elements";
 import { FunctionComponent, useRef, useState } from "react";
 
 interface ViewPdfProps {

@@ -1,14 +1,15 @@
 import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
+import { Box, Link, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProfileImage } from "@newm-web/elements";
-import { Button } from "@newm-web/elements";
+import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
+import { NEWM_SUPPORT_EMAIL } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
   MintingStatus,
@@ -108,6 +109,31 @@ const ViewDetails: FunctionComponent = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
+        <Tooltip
+          title={
+            <span>
+              To delete a song for which minting and distribution is in process
+              or has completed, please send a deletion request email to{ " " }
+              <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
+                { NEWM_SUPPORT_EMAIL }
+              </Link>
+              . Please note that artists not holding 100% of Stream Tokens for a
+              given track are unable to cease minting and distribution.
+            </span>
+          }
+        >
+          <Stack ml="auto">
+            <Button
+              color="white"
+              disabled={ true }
+              sx={ { marginLeft: "auto" } }
+              variant="outlined"
+              width="icon"
+            >
+              <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+            </Button>
+          </Stack>
+        </Tooltip>
       </Stack>
 
       <Box pb={ 7 } pt={ 5 }>

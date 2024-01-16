@@ -1,8 +1,12 @@
 import { FunctionComponent, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues, useFormikContext } from "formik";
-import { Button, GradientTypography, Typography } from "@newm-web/elements";
-import { TextInputField } from "@newm-web/elements";
+import {
+  Button,
+  GradientTypography,
+  TextInputField,
+  Typography,
+} from "@newm-web/elements";
 import { sendVerificationEmail } from "../../modules/session";
 import { useAppDispatch } from "../../common";
 

@@ -1,21 +1,21 @@
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router";
 import { useWindowDimensions } from "@newm-web/utils";
-import { SolidOutline } from "@newm-web/elements";
 import {
   CopyrightInputField,
+  HorizontalLine,
+  SolidOutline,
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  Typography,
   UploadImageField,
 } from "@newm-web/elements";
-import { HorizontalLine, Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { Formik } from "formik";
 import { SongRouteParams } from "./types";
 import { emptySong, useGetSongQuery } from "../../../modules/song";
-import { PlaySong } from "../../../components";
-import { CoverRemixSample } from "../../../components";
+import { CoverRemixSample, PlaySong } from "../../../components";
 
 const SongInfo = () => {
   const windowWidth = useWindowDimensions()?.width;

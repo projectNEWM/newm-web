@@ -1,9 +1,8 @@
 import { Box, Stack } from "@mui/material";
-import { HorizontalLine, Typography } from "@newm-web/elements";
+import { CheckboxField, HorizontalLine, Typography } from "@newm-web/elements";
 import { Formik, FormikProps } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { artistAgreementPreview } from "@newm-web/assets";
-import { CheckboxField } from "@newm-web/elements";
 import { selectSong } from "../../modules/song";
 import { useAppSelector } from "../../common";
 import ViewPDF from "../ViewPDF";

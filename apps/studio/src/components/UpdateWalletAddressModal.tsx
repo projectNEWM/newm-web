@@ -1,12 +1,11 @@
 import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import { Button } from "@newm-web/elements";
+import { Button, Modal } from "@newm-web/elements";
 import {
   getWalletAddress,
   useConnectWallet,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { Modal } from "@newm-web/elements";
 import { useAppDispatch } from "../common";
 import { updateProfile } from "../modules/session";
 import { selectUi, setUpdateWalletAddressModal } from "../modules/ui";

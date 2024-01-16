@@ -3,12 +3,13 @@ import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
 import { scrollToError, useWindowDimensions } from "@newm-web/utils";
 import {
+  Button,
   CopyrightInputField,
   DropdownSelectField,
+  HorizontalLine,
   SwitchInputField,
   TextInputField,
 } from "@newm-web/elements";
-import { Button, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
   UploadSongRequest,
