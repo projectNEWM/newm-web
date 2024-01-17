@@ -1,16 +1,15 @@
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
-import { DropdownSelectField } from "@newm-web/elements";
+import { Button, DropdownSelectField, Typography } from "@newm-web/elements";
 import Details from "./Details";
 import {
   Creditor,
+  getCollaboratorInfo,
   getIsCreditorEditable,
   useGetCollaboratorsQuery,
 } from "../../modules/song";
 import { useGetRolesQuery } from "../../modules/content";
-import { getCollaboratorInfo } from "../../modules/song";
 
 interface CreditorsProps {
   readonly creditors: ReadonlyArray<Creditor>;

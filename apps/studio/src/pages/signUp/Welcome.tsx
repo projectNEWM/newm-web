@@ -1,8 +1,13 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, HorizontalLine, Typography } from "@newm-web/elements";
+import {
+  Button,
+  HorizontalLine,
+  PasswordInputField,
+  TextInputField,
+  Typography,
+} from "@newm-web/elements";
 import { FunctionComponent, useState } from "react";
 import { FormikValues, useFormikContext } from "formik";
-import { PasswordInputField, TextInputField } from "@newm-web/elements";
 import { useAuthenticatedRedirect } from "../../common";
 import { history } from "../../common/history";
 import {

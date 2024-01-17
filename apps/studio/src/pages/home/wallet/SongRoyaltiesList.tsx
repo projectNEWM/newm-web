@@ -12,8 +12,7 @@ import {
 } from "@mui/material";
 import theme from "@newm-web/theme";
 import { Dispatch, SetStateAction } from "react";
-import { Typography } from "@newm-web/elements";
-import { TablePagination } from "@newm-web/elements";
+import { TablePagination, Typography } from "@newm-web/elements";
 import AllCaughtUp from "./AllCaughtUp";
 import { TableDropdownSelect } from "../../../components";
 import { Song } from "../../../modules/song";

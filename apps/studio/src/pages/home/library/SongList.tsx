@@ -12,10 +12,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "@newm-web/theme";
-import { Button, Tooltip } from "@newm-web/elements";
-import { isMoreThanThresholdSecondsLater } from "@newm-web/utils";
-import { useWindowDimensions } from "@newm-web/utils";
-import { TableCell, TablePagination, TableSkeleton } from "@newm-web/elements";
+import {
+  Button,
+  TableCell,
+  TablePagination,
+  TableSkeleton,
+  Tooltip,
+} from "@newm-web/elements";
+import {
+  isMoreThanThresholdSecondsLater,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import { useNavigate } from "react-router-dom";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";

@@ -4,20 +4,23 @@ import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Button, HorizontalLine, Tooltip } from "@newm-web/elements";
 import {
+  Button,
   DropdownSelectField,
+  HorizontalLine,
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  Tooltip,
   UploadImageField,
 } from "@newm-web/elements";
 import {
+  REGEX_SIMPLE_DOMAIN,
   formatUrlHttps,
   getUpdatedValues,
   scrollToError,
+  useWindowDimensions,
 } from "@newm-web/utils";
-import { REGEX_SIMPLE_DOMAIN, useWindowDimensions } from "@newm-web/utils";
 import theme from "@newm-web/theme";
 import {
   MAX_CHARACTER_COUNT,

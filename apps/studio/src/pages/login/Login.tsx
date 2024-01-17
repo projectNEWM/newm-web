@@ -1,8 +1,14 @@
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, HorizontalLine, Link, Typography } from "@newm-web/elements";
+import {
+  Button,
+  HorizontalLine,
+  Link,
+  PasswordInputField,
+  TextInputField,
+  Typography,
+} from "@newm-web/elements";
 import { FunctionComponent, MouseEventHandler, useState } from "react";
 import { Form, Formik, FormikValues } from "formik";
-import { PasswordInputField, TextInputField } from "@newm-web/elements";
 import * as Yup from "yup";
 import { commonYupValidation, useAuthenticatedRedirect } from "../../common";
 import { history } from "../../common/history";

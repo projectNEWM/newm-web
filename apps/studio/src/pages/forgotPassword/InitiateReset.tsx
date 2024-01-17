@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
-import { Button, Typography } from "@newm-web/elements";
-import { TextInputField } from "@newm-web/elements";
+import { Button, TextInputField, Typography } from "@newm-web/elements";
 import { Box, Stack, useTheme } from "@mui/material";
 
 const InitiateReset: FunctionComponent = () => {

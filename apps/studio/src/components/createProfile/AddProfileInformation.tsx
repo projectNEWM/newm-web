@@ -1,8 +1,12 @@
 import { FunctionComponent, useEffect, useRef } from "react";
 import { Box, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
 import { FormikValues, useFormikContext } from "formik";
-import { FilteredTagsField, GradientTextInputField } from "@newm-web/elements";
+import {
+  Button,
+  FilteredTagsField,
+  GradientTextInputField,
+  Typography,
+} from "@newm-web/elements";
 import { useUserDevice, useWindowDimensions } from "@newm-web/utils";
 import { ResponsiveNEWMLogo } from "../../components";
 

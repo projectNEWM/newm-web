@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
-import { Form, Formik, FormikHelpers } from "formik";
-import { Button, Typography } from "@newm-web/elements";
 import * as Yup from "yup";
 import theme from "@newm-web/theme";
-import { TextInputField } from "@newm-web/elements";
+import { Box, Typography } from "@mui/material";
+import { Form, Formik, FormikHelpers } from "formik";
+import Button from "../Button";
+import TextInputField from "../form/TextInputField";
 
 export default {
   title: "Form",

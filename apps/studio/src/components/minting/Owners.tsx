@@ -2,18 +2,22 @@ import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
-import { Button, Tooltip, Typography } from "@newm-web/elements";
-import { TextInputField } from "@newm-web/elements";
+import {
+  Button,
+  TextInputField,
+  Tooltip,
+  Typography,
+} from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import Details from "./Details";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import {
   CollaborationStatus,
   Owner,
+  getCollaboratorInfo,
   getIsOwnerEditable,
   useGetCollaboratorsQuery,
 } from "../../modules/song";
-import { getCollaboratorInfo } from "../../modules/song";
 
 interface OwnersProps {
   readonly isDeleteDisabled?: boolean;
