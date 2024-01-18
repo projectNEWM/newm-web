@@ -1,6 +1,5 @@
 import { Box, Container } from "@mui/material";
 import { Typography, WizardForm } from "@newm-web/elements";
-import { useExtractProperty } from "@newm-web/utils";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +10,7 @@ import ConfirmAgreement from "./ConfirmAgreement";
 import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
-  useGetLanguagesQuery,
+  useGetISRCCountryCodesQuery,
   useGetRolesQuery,
 } from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
@@ -39,8 +38,7 @@ const UploadSong: FunctionComponent = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = useExtractProperty(languages, "language_code", false);
+  const { data: languageCodes = [] } = useGetISRCCountryCodesQuery();
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
       // endpoint throws error if user hasn't added first name

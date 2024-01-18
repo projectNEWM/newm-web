@@ -2,7 +2,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Stack, Typography } from "@mui/material";
 import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
-import { useExtractProperty } from "@newm-web/utils";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -13,7 +12,7 @@ import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
-  useGetLanguagesQuery,
+  useGetISRCCountryCodesQuery,
   useGetRolesQuery,
 } from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
@@ -52,8 +51,7 @@ const EditSong: FunctionComponent = () => {
       role,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const { data: languages = [] } = useGetLanguagesQuery();
-  const languageCodes = useExtractProperty(languages, "language_code", false);
+  const { data: languageCodes = [] } = useGetISRCCountryCodesQuery();
 
   const { data: collaborations = [] } = useGetCollaborationsQuery({
     songIds: songId,
