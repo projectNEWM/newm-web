@@ -27,6 +27,22 @@ export const extendedApi = newmApi.injectEndpoints({
         return extracted.sort((a, b) => a.localeCompare(b));
       },
     }),
+    getISRCCountryCodes: build.query<string[], void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching ISRC country codes",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: () => ({ method: "GET", url: "contents/isrc-country-codes.json" }),
+    }),
     getLanguages: build.query<Language[], void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -88,6 +104,7 @@ export const extendedApi = newmApi.injectEndpoints({
 
 export const {
   useGetGenresQuery,
+  useGetISRCCountryCodesQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
   useGetRolesQuery,

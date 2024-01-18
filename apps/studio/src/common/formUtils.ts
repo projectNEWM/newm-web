@@ -145,7 +145,7 @@ export const commonYupValidation = {
       .test("is-valid-country-code", "The country code is invalid", (value) => {
         if (!value) return true;
 
-        const countryCode = value.substring(0, 2).toLowerCase();
+        const countryCode = value.substring(0, 2).toUpperCase();
         return languageCodes.includes(countryCode);
       }),
   iswc: Yup.string().matches(
