@@ -4,7 +4,13 @@ import { Button, Typography } from "@newm-web/elements";
 import { Owner } from "@newm-web/assets";
 import { useNavigate } from "react-router-dom";
 
-const NoOwnersYet: FunctionComponent = () => {
+interface NoOwnersYetProps {
+  totalCountOfSongs: number;
+}
+
+const NoOwnersYet: FunctionComponent<NoOwnersYetProps> = ({
+  totalCountOfSongs,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -33,7 +39,9 @@ const NoOwnersYet: FunctionComponent = () => {
         width="compact"
         onClick={ () => navigate("/home/upload-song") }
       >
-        Upload your first song
+        { totalCountOfSongs === 0
+          ? "Upload your first song"
+          : "Invite other collaborators" }
       </Button>
     </Box>
   );
