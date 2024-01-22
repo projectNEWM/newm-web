@@ -73,6 +73,8 @@ export default function OwnersTable({
     ownerIds: ["me"],
   });
 
+  const hasSongsUploaded = totalCountOfSongs > 0;
+
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
     page: number
@@ -120,7 +122,7 @@ export default function OwnersTable({
   }
 
   if (isSuccess && collaboratorsData?.length === 0 && !query) {
-    return <NoOwnersYet totalCountOfSongs={ totalCountOfSongs } />;
+    return <NoOwnersYet hasSongsUploaded={ hasSongsUploaded } />;
   }
 
   return collaboratorsData?.length ? (
