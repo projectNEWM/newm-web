@@ -20,7 +20,10 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoOwnersYet from "./NoOwnersYet";
 import { history } from "../../../common/history";
-import { useGetCollaboratorsQuery } from "../../../modules/song";
+import {
+  useGetCollaboratorsQuery,
+  useGetSongCountQuery,
+} from "../../../modules/song";
 
 interface OwnersTableProps {
   query: string;
@@ -54,7 +57,7 @@ export default function OwnersTable({
 
   const {
     data: collaboratorsData = [],
-    isLoading,
+    isLoading: isLoadingCollaboratorsData,
     isSuccess,
   } = useGetCollaboratorsQuery({
     excludeMe: true,
@@ -62,6 +65,15 @@ export default function OwnersTable({
     offset: (page - 1) * rowsPerPage,
     phrase: query,
   });
+
+  const {
+    data: { count: totalCountOfSongs = 0 } = {},
+    isLoading: isLoadingTotalCountOfSongs,
+  } = useGetSongCountQuery({
+    ownerIds: ["me"],
+  });
+
+  const hasSongsUploaded = totalCountOfSongs > 0;
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
@@ -99,7 +111,7 @@ export default function OwnersTable({
     }
   }, [viewportHeight]);
 
-  if (isLoading) {
+  if (isLoadingCollaboratorsData || isLoadingTotalCountOfSongs) {
     return (
       <TableSkeleton
         cols={
@@ -110,7 +122,7 @@ export default function OwnersTable({
   }
 
   if (isSuccess && collaboratorsData?.length === 0 && !query) {
-    return <NoOwnersYet />;
+    return <NoOwnersYet hasSongsUploaded={ hasSongsUploaded } />;
   }
 
   return collaboratorsData?.length ? (
