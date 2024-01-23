@@ -347,7 +347,7 @@ const MintSong = () => {
                       </Box>
                     ) }
 
-                    { values.isMinting && !isVerified && (
+                    { !isMintingInitiated && values.isMinting && !isVerified && (
                       <Alert
                         action={
                           <Button
@@ -376,7 +376,7 @@ const MintSong = () => {
                       </Alert>
                     ) }
 
-                    { values.isMinting && !wallet && (
+                    { !isMintingInitiated && values.isMinting && !wallet && (
                       <Alert
                         action={
                           <Button
@@ -424,7 +424,9 @@ const MintSong = () => {
 
                     { isStepOneButtonVisible && (
                       <Button
-                        disabled={ !isVerified || !wallet }
+                        disabled={
+                          !isMintingInitiated && (!isVerified || !wallet)
+                        }
                         isLoading={ isLoading }
                         width={
                           windowWidth &&
