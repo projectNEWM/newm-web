@@ -219,7 +219,7 @@ export const commonYupValidation = {
     return Yup.date()
       .required("This field is required")
       .min(
-        new Date(minReleaseDate.getTime() - 24 * 60 * 60 * 1000),
+        new Date(minReleaseDate.getTime()),
         `Release date must be on or after ${
           minReleaseDate.toISOString().split("T")[0]
         }`
