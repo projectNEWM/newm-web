@@ -281,6 +281,12 @@ const MintSong = () => {
             ? dirty
             : values.isMinting;
 
+          // if minting has been toggled but mint hasn't been initiated
+          const isMintingFormVisible = !isMintingInitiated && values.isMinting;
+
+          const isStepOneButtonDisabled =
+            isMintingFormVisible && (!isVerified || !wallet);
+
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
             setFieldValue("owners", values);
           };
@@ -347,7 +353,7 @@ const MintSong = () => {
                       </Box>
                     ) }
 
-                    { !isMintingInitiated && values.isMinting && !isVerified && (
+                    { isMintingFormVisible && !isVerified && (
                       <Alert
                         action={
                           <Button
@@ -376,7 +382,7 @@ const MintSong = () => {
                       </Alert>
                     ) }
 
-                    { !isMintingInitiated && values.isMinting && !wallet && (
+                    { isMintingFormVisible && !wallet && (
                       <Alert
                         action={
                           <Button
@@ -424,9 +430,7 @@ const MintSong = () => {
 
                     { isStepOneButtonVisible && (
                       <Button
-                        disabled={
-                          !isMintingInitiated && (!isVerified || !wallet)
-                        }
+                        disabled={ isStepOneButtonDisabled }
                         isLoading={ isLoading }
                         width={
                           windowWidth &&
