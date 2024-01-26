@@ -10,12 +10,7 @@ import { FunctionComponent, useState } from "react";
 import { FormikValues, useFormikContext } from "formik";
 import { useAuthenticatedRedirect } from "../../common";
 import { history } from "../../common/history";
-import {
-  FacebookLogin,
-  GoogleLogin,
-  LinkedInLogin,
-  ResponsiveNEWMLogo,
-} from "../../components";
+import { GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
@@ -96,8 +91,6 @@ const SignUp: FunctionComponent = () => {
 
       <Stack alignItems="center" my={ 3 } pb={ 8 } spacing={ 2 } width="100%">
         <GoogleLogin>Join with Google</GoogleLogin>
-        <FacebookLogin>Join with Facebook</FacebookLogin>
-        <LinkedInLogin>Join with Linkedin</LinkedInLogin>
       </Stack>
     </Box>
   );

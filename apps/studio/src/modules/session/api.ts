@@ -115,23 +115,6 @@ export const extendedApi = newmApi.injectEndpoints({
       }),
     }),
 
-    facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      },
-
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/facebook",
-      }),
-    }),
-
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -208,23 +191,6 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: "v1/auth/login/google",
-      }),
-    }),
-
-    linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      },
-
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/linkedin",
       }),
     }),
 
