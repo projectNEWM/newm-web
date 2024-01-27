@@ -172,6 +172,7 @@ export enum MintingStatus {
   MintingPaymentTimeout = "MintingPaymentTimeout",
   Pending = "Pending",
   ReadyToDistribute = "ReadyToDistribute",
+  Released = "Released",
   StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
   SubmittedForDistribution = "SubmittedForDistribution",
   SubmittedForDistributionException = "SubmittedForDistributionException",

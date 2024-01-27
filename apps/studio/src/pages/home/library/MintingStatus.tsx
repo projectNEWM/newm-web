@@ -26,6 +26,7 @@ const UI_MINTING_STATUS: Record<MintingStatusType, string> = {
   MintingPaymentTimeout: "An error occurred",
   Pending: "Distribution/Minting in Process",
   ReadyToDistribute: "Distribution/Minting in Process",
+  Released: "Minted and Released",
   StreamTokenAgreementApproved: "Undistributed",
   SubmittedForDistribution: "Distribution/Minting in Process",
   SubmittedForDistributionException: "An error occurred",
@@ -58,6 +59,9 @@ const STATUS_ICON_CONFIG: Record<
   "Distribution/Minting in Process": {
     color: "yellow",
     icon: <TimeCircleLine />,
+  },
+  "Minted and Released": {
+    icon: <Check fontSize="medium" sx={ { color: theme.colors.green } } />,
   },
   Undistributed: {
     fontColor: "grey200",
