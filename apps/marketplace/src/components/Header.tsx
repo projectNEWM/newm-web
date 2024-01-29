@@ -16,7 +16,7 @@ const Header: FunctionComponent = () => {
         justifyContent: "space-between",
       } }
     >
-      <NEWMMarketplaceLogo />
+      <NEWMMarketplaceLogo sx={ { height: "64px", width: "168px" } } />
     </Grid>
   );
 };
