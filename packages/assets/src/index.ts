@@ -16,7 +16,7 @@ import InfoCircleLine from "./lib/images/InfoCircleLine";
 import InstagramLogo from "./lib/images/InstagramLogo";
 import NEWMLogo from "./lib/images/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/images/NEWMLogoSmInverse";
-import NEWMMarketplaceLogo from "./lib/images/NewmMarketplaceLogo";
+import NEWMMarketplaceLogo from "./lib/images/NEWMMarketplaceLogo";
 import Owner from "./lib/images/Owner";
 import PeopleIcon from "./lib/images/PeopleIcon";
 import PlayButton from "./lib/images/PlayButton";
