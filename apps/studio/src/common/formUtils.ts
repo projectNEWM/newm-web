@@ -209,17 +209,25 @@ export const commonYupValidation = {
   password: Yup.string().required("Password is required"),
   publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
   releaseDate: (releaseDate: string | undefined) => {
-    // If releaseDate is provided, use it.
-    // Otherwise, use the minimum time for EVEARA to distribute from now.
+    // This is necessary to avoid time zone discrepancies,
+    // as Date object uses the local time zone by default.
+    const parseDateAsUTC = (dateString: string) => {
+      const [year, month, day] = dateString.split("-");
+      return new Date(
+        Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
+      );
+    };
+
     const minReleaseDate = releaseDate
-      ? new Date(releaseDate)
+      ? parseDateAsUTC(releaseDate)
       : new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000);
 
-    // Yup min validation is not inclusive, subtract 1 day from release date.
+    // The comparison is done using the ISO string format to ensure consistent behavior
+    // across different time zones.
     return Yup.date()
       .required("This field is required")
       .min(
-        new Date(minReleaseDate.getTime()),
+        minReleaseDate.toISOString().split("T")[0], // Compare using ISO format
         `Release date must be on or after ${
           minReleaseDate.toISOString().split("T")[0]
         }`
