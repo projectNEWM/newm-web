@@ -26,6 +26,7 @@ const UI_MINTING_STATUS: Record<MintingStatusType, string> = {
   MintingPaymentTimeout: "An error occurred",
   Pending: "Distribution/Minting in Process",
   ReadyToDistribute: "Distribution/Minting in Process",
+  ReleaseCheckException: "An error occurred",
   Released: "Minted and Released",
   StreamTokenAgreementApproved: "Undistributed",
   SubmittedForDistribution: "Distribution/Minting in Process",
