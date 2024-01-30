@@ -82,3 +82,4 @@ nx storybook elements
 
 - [Deploy to production](./docs/deploy-release.md)
 - [Git workflow](./docs/git-workflow.md)
+- [Material UI and Next.js integration](./docs/mui-nextjs-integration.md)
