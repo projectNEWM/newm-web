@@ -209,17 +209,8 @@ export const commonYupValidation = {
   password: Yup.string().required("Password is required"),
   publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
   releaseDate: (releaseDate: string | undefined) => {
-    // This is necessary to avoid time zone discrepancies,
-    // as Date object uses the local time zone by default.
-    const parseDateAsUTC = (dateString: string) => {
-      const [year, month, day] = dateString.split("-");
-      return new Date(
-        Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
-      );
-    };
-
     const minReleaseDate = releaseDate
-      ? parseDateAsUTC(releaseDate)
+      ? new Date(releaseDate)
       : new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000);
 
     // The comparison is done using the ISO string format to ensure consistent behavior
