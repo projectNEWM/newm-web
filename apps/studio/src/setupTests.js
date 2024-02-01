@@ -2,6 +2,7 @@
 import "@testing-library/jest-dom";
 
 jest.mock("@newm-web/env", () => ({
+  VITE_APPLE_CLIENT_ID: "EXAMPLE_ID",
   VITE_GOOGLE_CLIENT_ID: "EXAMPLE_ID",
   NX_CLOUD_ACCESS_TOKEN: "EXAMPLE_TOKEN",
   NODE_ENV: "test",

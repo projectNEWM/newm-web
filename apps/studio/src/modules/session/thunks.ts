@@ -12,6 +12,7 @@ import {
   CreateAccountRequest,
   DeleteAccountRequest,
   LoginRequest,
+  NewmOAuthRequest,
   ProfileFormValues,
   ResetPasswordRequest,
 } from "./types";
@@ -128,6 +129,21 @@ export const login = createAsyncThunk(
   async (body: LoginRequest, { dispatch }) => {
     const loginResponse = await dispatch(
       sessionApi.endpoints.login.initiate(body)
+    );
+
+    if ("error" in loginResponse) return;
+
+    history.push("/home/upload-song");
+  }
+);
+/**
+ * Logs in using Apple and navigates to the library page.
+ */
+export const appleLogin = createAsyncThunk(
+  "session/appleLogin",
+  async ({ code, redirectUri }: NewmOAuthRequest, { dispatch }) => {
+    const loginResponse = dispatch(
+      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri })
     );
 
     if ("error" in loginResponse) return;
@@ -407,6 +423,7 @@ export const saveWalletAddress = createAsyncThunk(
 
 export const useLoginThunk = asThunkHook(login);
 export const useGoogleLoginThunk = asThunkHook(googleLogin);
+export const useAppleLoginThunk = asThunkHook(appleLogin);
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);
 export const useChangePasswordThunk = asThunkHook(changePassword);

@@ -12,7 +12,7 @@ import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { commonYupValidation, useAuthenticatedRedirect } from "../../common";
 import { history } from "../../common/history";
-import { GoogleLogin, ResponsiveNEWMLogo } from "../../components";
+import { AppleLogin, GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 import { useLoginThunk } from "../../modules/session";
 
 const Login: FunctionComponent = () => {
@@ -140,6 +140,7 @@ const Login: FunctionComponent = () => {
 
       <Stack alignItems="center" my={ 2 } pb={ 8 } spacing={ 2 } width="100%">
         <GoogleLogin>Continue with Google</GoogleLogin>
+        <AppleLogin>Continue with Apple</AppleLogin>
       </Stack>
     </Box>
   );

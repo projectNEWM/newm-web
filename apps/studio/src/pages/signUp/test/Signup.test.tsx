@@ -14,5 +14,6 @@ describe("<SignUp />", () => {
     const { getByLabelText } = renderWithContext(<SignUp />);
 
     expect(getByLabelText("google authorization")).toBeTruthy();
+    expect(getByLabelText("apple authorization")).toBeTruthy();
   });
 });

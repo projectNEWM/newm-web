@@ -1,3 +1,4 @@
+export const VITE_APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
 export const VITE_GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export const VITE_GA_STUDIO_ID = import.meta.env.VITE_GA_STUDIO_ID;
 export const VITE_ENV = import.meta.env.VITE_ENV;

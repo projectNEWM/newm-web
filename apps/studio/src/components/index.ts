@@ -8,6 +8,7 @@ export { default as ConnectWalletModal } from "./ConnectWalletModal";
 export { CoverRemixSample } from "./minting/CoverRemixSample";
 export { default as DisconnectWalletButton } from "./DisconnectWalletButton";
 export { default as WalletEnvMismatchModal } from "./WalletEnvMismatchModal";
+export { default as AppleLogin } from "./AppleLogin";
 export { default as GoogleLogin } from "./GoogleLogin";
 export * from "./idenfy";
 export { default as InvitesModal } from "./invites/InvitesModal";
