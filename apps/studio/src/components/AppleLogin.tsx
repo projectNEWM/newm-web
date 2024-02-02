@@ -24,7 +24,7 @@ const AppleLogin: FunctionComponent<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
   const [logIn] = useAppleLoginThunk();
 
-  const redirectUri = `${window.location.origin}/apple`;
+  const redirectUri = `${window.location.href}`;
 
   const handleLogin = () =>
     appleAuthHelpers.signIn({
