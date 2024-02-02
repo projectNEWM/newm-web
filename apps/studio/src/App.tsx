@@ -1,6 +1,5 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { LinkedInCallback } from "react-linkedin-login-oauth2";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import theme from "@newm-web/theme";
@@ -60,8 +59,6 @@ const App = () => {
 
                 <Routes>
                   <Route element={ <Navigate to="home" replace /> } path="/" />
-
-                  <Route element={ <LinkedInCallback /> } path="linkedin" />
 
                   <Route element={ <Login /> } path="login" />
 

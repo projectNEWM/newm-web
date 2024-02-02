@@ -2,9 +2,8 @@
 import "@testing-library/jest-dom";
 
 jest.mock("@newm-web/env", () => ({
-  VITE_FACEBOOK_CLIENT_ID: "EXAMPLE_ID",
+  VITE_APPLE_CLIENT_ID: "EXAMPLE_ID",
   VITE_GOOGLE_CLIENT_ID: "EXAMPLE_ID",
-  VITE_LINKEDIN_CLIENT_ID: "EXAMPLE_ID",
   NX_CLOUD_ACCESS_TOKEN: "EXAMPLE_TOKEN",
   NODE_ENV: "test",
   VITE_ENV: "test"

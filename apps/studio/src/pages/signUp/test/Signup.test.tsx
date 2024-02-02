@@ -11,10 +11,9 @@ jest.mock("react-router-dom", () => ({
 
 describe("<SignUp />", () => {
   it("renders social login buttons", () => {
-    const { queryByLabelText } = renderWithContext(<SignUp />);
+    const { getByLabelText } = renderWithContext(<SignUp />);
 
-    expect(queryByLabelText("google authorization")).toBeTruthy();
-    expect(queryByLabelText("facebook authorization")).toBeTruthy();
-    expect(queryByLabelText("linkedin authorization")).toBeTruthy();
+    expect(getByLabelText("google authorization")).toBeTruthy();
+    expect(getByLabelText("apple authorization")).toBeTruthy();
   });
 });

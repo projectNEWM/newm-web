@@ -1,4 +1,4 @@
-import { asThunkHook } from "@newm-web/utils";
+import { SilentError, asThunkHook } from "@newm-web/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
@@ -6,14 +6,13 @@ import {
   disconnectWallet,
   getWalletAddress,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { SilentError } from "@newm-web/utils";
 import { extendedApi as sessionApi } from "./api";
 import {
   ChangePasswordRequest,
   CreateAccountRequest,
   DeleteAccountRequest,
-  LinkedInLoginRequest,
   LoginRequest,
+  NewmOAuthRequest,
   ProfileFormValues,
   ResetPasswordRequest,
 } from "./types";
@@ -137,6 +136,21 @@ export const login = createAsyncThunk(
     history.push("/home/upload-song");
   }
 );
+/**
+ * Logs in using Apple and navigates to the library page.
+ */
+export const appleLogin = createAsyncThunk(
+  "session/appleLogin",
+  async ({ code, redirectUri }: NewmOAuthRequest, { dispatch }) => {
+    const loginResponse = dispatch(
+      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri })
+    );
+
+    if ("error" in loginResponse) return;
+
+    history.push("/home/upload-song");
+  }
+);
 
 /**
  * Logs in using Google and navigates to the library page.
@@ -146,41 +160,6 @@ export const googleLogin = createAsyncThunk(
   async (accessToken: string, { dispatch }) => {
     const loginResponse = dispatch(
       sessionApi.endpoints.googleLogin.initiate({ accessToken })
-    );
-
-    if ("error" in loginResponse) return;
-
-    history.push("/home/upload-song");
-  }
-);
-
-/**
- * Logs in using Facebook and navigates to the library page.
- */
-export const facebookLogin = createAsyncThunk(
-  "session/facebookLogin",
-  async (accessToken: string, { dispatch }) => {
-    const loginResponse = dispatch(
-      sessionApi.endpoints.facebookLogin.initiate({ accessToken })
-    );
-
-    if ("error" in loginResponse) return;
-
-    history.push("/home/upload-song");
-  }
-);
-
-/**
- * Logs in using LinkedIn and navigates to the library page.
- */
-export const linkedInLogin = createAsyncThunk(
-  "session/linkedInLogin",
-  async ({ code, redirectUri }: LinkedInLoginRequest, { dispatch }) => {
-    const loginResponse = dispatch(
-      sessionApi.endpoints.linkedInLogin.initiate({
-        code,
-        redirectUri,
-      })
     );
 
     if ("error" in loginResponse) return;
@@ -444,8 +423,7 @@ export const saveWalletAddress = createAsyncThunk(
 
 export const useLoginThunk = asThunkHook(login);
 export const useGoogleLoginThunk = asThunkHook(googleLogin);
-export const useFacebookLoginThunk = asThunkHook(facebookLogin);
-export const useLinkedInLoginThunk = asThunkHook(linkedInLogin);
+export const useAppleLoginThunk = asThunkHook(appleLogin);
 export const useUpdateProfileThunk = asThunkHook(updateProfile);
 export const useUpdateInitialProfileThunk = asThunkHook(updateInitialProfile);
 export const useChangePasswordThunk = asThunkHook(changePassword);

@@ -140,11 +140,6 @@ export interface IdenfyTokenResponse {
   readonly expiryTime: number;
 }
 
-export interface LinkedInLoginRequest {
-  readonly code: string;
-  readonly redirectUri: string;
-}
-
 export enum VerificationStatus {
   Pending = "Pending",
   Unverified = "Unverified",

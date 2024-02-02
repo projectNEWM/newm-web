@@ -52,6 +52,23 @@ export const emptyProfile: Profile = {
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
+    appleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(receiveSuccessfullAuthentication(data));
+        } catch (error) {
+          dispatch(handleSocialLoginError(error));
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/auth/login/apple",
+      }),
+    }),
+
     changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -115,23 +132,6 @@ export const extendedApi = newmApi.injectEndpoints({
       }),
     }),
 
-    facebookLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      },
-
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/facebook",
-      }),
-    }),
-
     getIdenfyAuthToken: build.query<IdenfyTokenResponse, void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -173,7 +173,6 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/users/me",
       }),
     }),
-
     getUser: build.query<GetProfileResponse, GetUserRequest>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -193,7 +192,6 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `v1/users/${userId}`,
       }),
     }),
-
     googleLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -208,23 +206,6 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: "v1/auth/login/google",
-      }),
-    }),
-
-    linkedInLogin: build.mutation<NewmAuthResponse, NewmOAuthRequest>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(receiveSuccessfullAuthentication(data));
-        } catch (error) {
-          dispatch(handleSocialLoginError(error));
-        }
-      },
-
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/linkedin",
       }),
     }),
 
