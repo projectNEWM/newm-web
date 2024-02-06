@@ -49,6 +49,9 @@ const DisconnectWalletButton: FunctionComponent<
     setIsCopied(true);
   };
 
+  /**
+   * Called when the user presses the dropdown disconnect button.
+   */
   const handleDisconnect = () => {
     setIsDropdownOpen(false);
     onDisconnect?.();

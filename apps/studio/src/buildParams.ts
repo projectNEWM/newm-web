@@ -1,7 +1,9 @@
 import { isProd } from "@newm-web/env";
 
-// Change the second value to enable Redux logging in development
-export const enableReduxLogging = !isProd && false;
+// change the value to true to enable Redux logging in staging
+const isReduxLoggingEnabledInStaging = false;
+
+export const isReduxLoggingEnabled = !isProd && isReduxLoggingEnabledInStaging;
 
 export const baseUrls: Record<string, string> = {
   cloudinary: "https://api.cloudinary.com/",
