@@ -13,7 +13,7 @@
     "@mui/material-nextjs": "^5.15.6",
     "@newm.io/cardano-dapp-wallet-connector": "^1.0.11",
     "@react-oauth/google": "^0.11.0",
-    "@reduxjs/toolkit": "^1.7.2",
+    "@reduxjs/toolkit": "^2.1.0",
     "@sentry/cli": "^2.21.2",
     "@sentry/react": "7.72.0",
     "@swc/helpers": "~0.5.2",
