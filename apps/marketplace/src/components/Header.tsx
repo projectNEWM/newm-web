@@ -1,5 +1,6 @@
 import { Grid, useTheme } from "@mui/material";
 import { NEWMMarketplaceLogo } from "@newm-web/assets";
+import { ConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent } from "react";
 
 const Header: FunctionComponent = () => {
@@ -17,6 +18,8 @@ const Header: FunctionComponent = () => {
       } }
     >
       <NEWMMarketplaceLogo sx={ { height: "64px", width: "168px" } } />
+
+      <ConnectWallet />
     </Grid>
   );
 };
