@@ -1,4 +1,8 @@
-import { SilentError, asThunkHook } from "@newm-web/utils";
+import {
+  SilentError,
+  asThunkHook,
+  getIsWalletEnvMismatch,
+} from "@newm-web/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
@@ -17,7 +21,6 @@ import {
   ResetPasswordRequest,
 } from "./types";
 import { setIsLoggedIn } from "./slice";
-import { getIsWalletEnvMismatch } from "./utils";
 import { cloudinaryApi, lambdaApi, newmApi } from "../../api";
 import { uploadToCloudinary } from "../../api/cloudinary/utils";
 import { history } from "../../common/history";

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import Hls from "hls.js";
+import { isProd } from "@newm-web/env";
 import { Song, UseHlsJsParams, UseHlsJsResult } from "./types";
 import { emptySong, useGetSongQuery } from "./api";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
-import { isProd } from "../../buildParams";
 
 /**
  * Hook to abstract hls.js functionality.

@@ -1,11 +1,10 @@
 import { FunctionComponent, useEffect } from "react";
-import { VITE_GA_STUDIO_ID } from "@newm-web/env";
+import { GA_STUDIO_ID, isProd } from "@newm-web/env";
 import ReactGA from "react-ga4";
 import { useLocation } from "react-router-dom";
-import { isProd } from "../buildParams";
 
-if (isProd && VITE_GA_STUDIO_ID) {
-  ReactGA.initialize(VITE_GA_STUDIO_ID);
+if (isProd && GA_STUDIO_ID) {
+  ReactGA.initialize(GA_STUDIO_ID);
 }
 
 const GoogleAnalytics: FunctionComponent = () => {

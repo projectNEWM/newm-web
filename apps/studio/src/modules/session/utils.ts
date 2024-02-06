@@ -1,10 +1,8 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import { EnabledWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import sessionApi from "./api";
 import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
-import { isProd } from "../../buildParams";
 
 export const sendVerificationEmail = (email: string) => {
   return sessionApi.endpoints.sendVerificationEmail.initiate(
@@ -26,11 +24,4 @@ export const handleSuccessfulAuthentication = (
   Cookies.set("refreshToken", refreshToken, { expires: refreshTokenExpDate });
 
   state.isLoggedIn = true;
-};
-
-export const getIsWalletEnvMismatch = async (wallet: EnabledWallet) => {
-  const networkId = await wallet.getNetworkId();
-  const isWalletProd = networkId === 1;
-
-  return isProd !== isWalletProd;
 };

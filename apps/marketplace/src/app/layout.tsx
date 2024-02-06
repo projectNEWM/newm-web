@@ -4,7 +4,9 @@ import { ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
-import Header from "../components/Header";
+import { Provider } from "react-redux";
+import Header from "../components/header/Header";
+import store from "../store";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -13,12 +15,33 @@ interface RootLayoutProps {
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link
+          crossOrigin="anonymous"
+          href="https://fonts.gstatic.com"
+          rel="preconnect"
+        />
+        <link
+          href={
+            "https://fonts.googleapis.com/css2?" +
+            "family=DM+Serif+Text:ital@0;1&" +
+            "family=Inter:wght@400;500;600;700;800&" +
+            "family=Raleway:wght@400;500;600;700;800&" +
+            "display=swap"
+          }
+          rel="stylesheet"
+        />
+      </head>
+
       <body style={ { backgroundColor: theme.colors.black } }>
         <AppRouterCacheProvider options={ { enableCssLayer: true } }>
-          <ThemeProvider theme={ theme }>
-            <Header />
-            { children }
-          </ThemeProvider>
+          <Provider store={ store }>
+            <ThemeProvider theme={ theme }>
+              <Header />
+              { children }
+            </ThemeProvider>
+          </Provider>
         </AppRouterCacheProvider>
       </body>
     </html>

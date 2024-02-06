@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@newm-web/assets": ["packages/assets/src/index.ts"],
+      "@newm-web/components": ["packages/components/src/index.ts"],
       "@newm-web/elements": ["packages/elements/src/index.ts"],
       "@newm-web/env": ["packages/env/src/index.ts"],
       "@newm-web/theme": ["packages/theme/src/index.ts"],

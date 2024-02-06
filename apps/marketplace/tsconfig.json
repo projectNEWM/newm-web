@@ -25,7 +25,8 @@
     "**/*.jsx",
     "../../apps/marketplace/.next/types/**/*.ts",
     "../../dist/apps/marketplace/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "next.config.js"
   ],
   "exclude": [
     "node_modules",

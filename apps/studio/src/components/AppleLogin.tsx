@@ -10,7 +10,7 @@ import {
 } from "react-apple-signin-auth";
 import AppleIcon from "@mui/icons-material/Apple";
 import { Button } from "@newm-web/elements";
-import { VITE_APPLE_CLIENT_ID } from "@newm-web/env";
+import { APPLE_CLIENT_ID } from "@newm-web/env";
 import { setToastMessage } from "../modules/ui";
 import { useAppleLoginThunk } from "../modules/session";
 import { useAppDispatch } from "../common";
@@ -29,7 +29,7 @@ const AppleLogin: FunctionComponent<Props> = ({ children }) => {
   const handleLogin = () =>
     appleAuthHelpers.signIn({
       authOptions: {
-        clientId: VITE_APPLE_CLIENT_ID || "",
+        clientId: APPLE_CLIENT_ID,
         redirectURI: redirectUri,
         scope: "name email",
         usePopup: true,

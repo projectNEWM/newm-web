@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import theme from "@newm-web/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { VITE_GOOGLE_CLIENT_ID } from "@newm-web/env";
+import { GOOGLE_CLIENT_ID } from "@newm-web/env";
 import {
   Background,
   ConnectWalletModal,
@@ -34,7 +34,7 @@ import store, { persistor } from "./store";
 import "./App.css";
 
 const App = () => {
-  const googleClientID = VITE_GOOGLE_CLIENT_ID || "";
+  const googleClientID = GOOGLE_CLIENT_ID;
 
   return (
     <ThemeProvider theme={ theme }>
