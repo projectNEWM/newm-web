@@ -7,7 +7,7 @@ import { cloudinaryApi, lambdaApi, newmApi } from "./api";
 import { playlistReducer } from "./modules/playlist";
 import { sessionReducer } from "./modules/session";
 import { songReducer } from "./modules/song";
-import { enableReduxLogging } from "./buildParams";
+import { isReduxLoggingEnabled } from "./buildParams";
 import { uiReducer } from "./modules/ui";
 import { walletReducer } from "./modules/wallet";
 
@@ -37,7 +37,9 @@ const store = configureStore({
       cloudinaryApi.middleware
     );
 
-    return enableReduxLogging ? baseMiddleware.prepend(logger) : baseMiddleware;
+    return isReduxLoggingEnabled
+      ? baseMiddleware.prepend(logger)
+      : baseMiddleware;
   },
   reducer,
 });
