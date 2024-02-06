@@ -8,5 +8,5 @@ export default {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   coverageDirectory: "../../coverage/packages/elements",
-  setupTestFrameworkScriptFile: "<rootDir>/src/setupTests",
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests"],
 };
