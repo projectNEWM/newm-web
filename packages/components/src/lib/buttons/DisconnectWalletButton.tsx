@@ -10,7 +10,7 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 interface DisconnectWalletButtonProps {
   readonly address?: string;
   readonly balance?: string;
-  readonly onDisconnect?: () => void;
+  readonly onDisconnect?: VoidFunction;
 }
 
 /**
