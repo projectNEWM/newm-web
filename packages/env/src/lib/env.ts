@@ -2,8 +2,6 @@
  * References the correct public environment variable.
  */
 const getAppEnvVar = (name: string): string => {
-  if (!name) return "";
-
   switch (name) {
     case "APPLE_CLIENT_ID":
       return typeof process !== "undefined"

@@ -16,7 +16,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   const { wallet, getBalance, getAddress } = useConnectWallet();
 
   /**
-   * Resets wallet values and opens disconnect wallet modal
+   * Opens disconnect wallet modal
    */
   const handleDisconnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
