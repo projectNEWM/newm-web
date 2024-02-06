@@ -1,14 +1,15 @@
 import { Grid, useTheme } from "@mui/material";
 import { NEWMMarketplaceLogo } from "@newm-web/assets";
-import { ConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent } from "react";
+import ConnectWallet from "./ConnectWallet";
 
 const Header: FunctionComponent = () => {
   const theme = useTheme();
 
   return (
     <Grid
-      p={ 4 }
+      px={ [3, 7.5] }
+      py={ [2.5, 4] }
       sx={ {
         alignItems: "center",
         borderBottom: `2px solid ${theme.colors.grey500}`,

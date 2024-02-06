@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { isProd } from "./buildParams";
+import { isProd } from "@newm-web/env";
 
 const initializeSentry = () => {
   Sentry.init({

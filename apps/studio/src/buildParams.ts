@@ -1,6 +1,4 @@
-import { NODE_ENV, VITE_ENV } from "@newm-web/env";
-
-export const isProd = NODE_ENV === "production" && VITE_ENV === "production";
+import { isProd } from "@newm-web/env";
 
 // Change the second value to enable Redux logging in development
 export const enableReduxLogging = !isProd && false;

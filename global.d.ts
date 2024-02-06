@@ -17,7 +17,3 @@ declare module "cloudinary-react";
 declare module "styled-components";
 declare module "moment-duration-format";
 declare module "moment";
-
-interface Window {
-  readonly cardano?: any; // eslint-disable-line
-}
