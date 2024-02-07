@@ -1,9 +1,9 @@
-name: Deploy NEWM Studio to Firebase Hosting on PR
+name: Deploy NEWM Marketplace to Firebase Hosting on PR
 on:
   pull_request:
     paths:
-      - .github/workflows/firebase-hosting-pull-request-newm-studio.yml
-      - apps/studio/**
+      - .github/workflows/firebase-hosting-pull-request-newm-marketplace.yml
+      - apps/marketplace/**
       - packages/**
 jobs:
   build_and_preview:
@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npx nx build studio
+      - run: npx nx build marketplace
         env:
-          VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
-          VITE_ENV: staging
+          NEXT_PUBLIC_ENV: staging
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
@@ -26,5 +26,5 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
           projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_ARTIST_PORTAL }}"
-          target: studio
+          target: marketplace
           expires: 30d
