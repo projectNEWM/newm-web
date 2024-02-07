@@ -10,6 +10,17 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "target": "marketplace",
+      "public": "dist/apps/marketplace/.next",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }

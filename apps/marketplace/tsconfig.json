@@ -16,7 +16,11 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node",
+      "vite/client"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -26,7 +30,8 @@
     "../../apps/marketplace/.next/types/**/*.ts",
     "../../dist/apps/marketplace/.next/types/**/*.ts",
     "next-env.d.ts",
-    "next.config.js"
+    "next.config.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
