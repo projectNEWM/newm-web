@@ -165,11 +165,15 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           onClose={ handlePricingPlanClose }
         />
       ) }
-      <Stack direction="column" spacing={ 5 }>
+      <Stack direction="column" spacing={ 3 }>
         { shouldShowOutletsWarning && (
           <Stack
             alignSelf={ ["center", "center", "unset"] }
-            maxWidth={ [undefined, theme.inputField.maxWidth, "700px"] }
+            maxWidth={ [
+              theme.inputField.maxWidth,
+              theme.inputField.maxWidth,
+              "700px",
+            ] }
           >
             <Alert
               action={
