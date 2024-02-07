@@ -39,5 +39,5 @@ jobs:
               "text": "NEWM Marketplace updated in staging. View at https://fan.square.newm.io."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MARKETPLACE_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

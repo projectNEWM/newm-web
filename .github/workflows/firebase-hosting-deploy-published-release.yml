@@ -35,5 +35,5 @@ jobs:
               "text": "NEWM Studio updated in production. View at https://newm.studio."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
