@@ -70,7 +70,7 @@ const FormProgressStepper = ({
       gap={ 0.5 }
       justifyContent="center"
       maxWidth={ [undefined, undefined, "700px"] }
-      mb={ 5 }
+      mb={ 3 }
     >
       { stepTitles.map((stepTitle, index) => {
         const isStepCompleted = activeStep > index + 1;

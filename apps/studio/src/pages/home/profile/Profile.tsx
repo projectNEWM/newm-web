@@ -1,5 +1,13 @@
-import { FunctionComponent, useRef } from "react";
-import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
+import { FunctionComponent, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  Box,
+  Container,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Form, Formik } from "formik";
@@ -25,6 +33,7 @@ import theme from "@newm-web/theme";
 import {
   MAX_CHARACTER_COUNT,
   MAX_CHARACTER_COUNT_LONG,
+  NEWM_STUDIO_FAQ_URL,
   REGEX_APPLE_MUSIC_PROFILE,
   REGEX_SOUNDCLOUD_PROFILE,
   REGEX_SPOTIFY_PROFILE,
@@ -45,15 +54,9 @@ import { setIsIdenfyModalOpen } from "../../../modules/ui";
 
 const { Unverified, Pending, Verified } = VerificationStatus;
 
-const OUTLET_PROFILE_TOOLTIP_TEXT =
-  "In order to mint your music you must ensure that your " +
-  "outlet profile artist name aligns with your NEWM Studio 'stage name' or, in the absence " +
-  "of a stage name, matches your first and last name. If these names are not " +
-  "consistent, please update your outlet " +
-  "profiles to reflect your chosen artist name on this platform.";
-
 const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
+  const { state } = useLocation();
 
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -62,6 +65,7 @@ const Profile: FunctionComponent = () => {
   const roleRef = useRef<HTMLDivElement>(null);
   const isniRef = useRef<HTMLInputElement>(null);
   const userIpiRef = useRef<HTMLInputElement>(null);
+  const outletProfilesRef = useRef<HTMLDivElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
@@ -227,6 +231,15 @@ const Profile: FunctionComponent = () => {
         : updatedValues
     );
   };
+
+  useEffect(() => {
+    if (state?.scrollToOutlets && outletProfilesRef.current) {
+      outletProfilesRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [state?.scrollToOutlets]);
 
   return (
     <Container
@@ -460,14 +473,23 @@ const Profile: FunctionComponent = () => {
                     </Stack>
 
                     <Stack rowGap={ 2 }>
-                      <Stack rowGap={ 0.5 }>
+                      <Stack ref={ outletProfilesRef } rowGap={ 0.5 }>
                         <Typography fontWeight="700" variant="h4">
                           OUTLET PROFILES
                         </Typography>
                         <Typography variant="subtitle2">
-                          Connecting your outlet profile ensures that your music
-                          will be associated with your designated artist page on
-                          each platform following distribution.
+                          Linking your artist profile ensures your music will be
+                          linked to your designated artist page on each platform
+                          post-distribution. For details on finding your outlet
+                          profile and other requirements,{ " " }
+                          <Link
+                            href={ NEWM_STUDIO_FAQ_URL }
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            refer to our FAQ
+                          </Link>
+                          .
                         </Typography>
                       </Stack>
                       <Stack
@@ -482,21 +504,54 @@ const Profile: FunctionComponent = () => {
                           label="SPOTIFY"
                           name="spotifyProfile"
                           placeholder="Spotify Profile URL"
-                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
+                          tooltipText={
+                            <Typography fontWeight={ 500 }>
+                              To find your artist profile URL, go to your artist
+                              profile, click the 3 dots, select
+                              &quot;Share&quot; then hit &quot;Copy link to
+                              artist&quot; and{ " " }
+                              <Typography component="span" fontWeight={ 700 }>
+                                paste the full URL
+                              </Typography>{ " " }
+                              in the text box here.
+                            </Typography>
+                          }
                           type="text"
                         />
                         <TextInputField
                           label="SOUNDCLOUD"
                           name="soundCloudProfile"
                           placeholder="SoundCloud Profile URL"
-                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
+                          tooltipText={
+                            <Typography fontWeight={ 500 }>
+                              To find your artist profile URL, log into your
+                              account on a web browser, go to your Artist
+                              profile, click &quot;Share&quot; and copy the link
+                              and{ " " }
+                              <Typography component="span" fontWeight={ 700 }>
+                                paste the full URL
+                              </Typography>{ " " }
+                              in the text box here.
+                            </Typography>
+                          }
                           type="text"
                         />
                         <TextInputField
                           label="APPLE MUSIC"
                           name="appleMusicProfile"
                           placeholder="Apple Music URL"
-                          tooltipText={ OUTLET_PROFILE_TOOLTIP_TEXT }
+                          tooltipText={
+                            <Typography fontWeight={ 500 }>
+                              To find your artist profile URL, go to your Artist
+                              Page and click on the 3 dots below your profile
+                              picture. Then select &quot;Share&quot; from the
+                              menu, click &quot;Copy Link&quot; and{ " " }
+                              <Typography component="span" fontWeight={ 700 }>
+                                paste the full URL
+                              </Typography>{ " " }
+                              in the text box here.
+                            </Typography>
+                          }
                           type="text"
                         />
                       </Stack>

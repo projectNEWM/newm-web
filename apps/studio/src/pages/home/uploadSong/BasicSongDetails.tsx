@@ -23,7 +23,7 @@ import {
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
@@ -57,6 +57,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   isInEditMode,
 }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
 
@@ -70,12 +71,15 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     data: {
       verificationStatus,
       dspPlanSubscribed: isArtistPricePlanSelected,
+      spotifyProfile,
+      appleMusicProfile,
     } = emptyProfile,
   } = useGetProfileQuery();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
+  const shouldShowOutletsWarning = !appleMusicProfile && !spotifyProfile;
 
   const languageOptions = useExtractProperty(languages, "language_name");
 
@@ -149,7 +153,49 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           onClose={ handlePricingPlanClose }
         />
       ) }
-      <Stack direction="column" spacing={ 5 }>
+      <Stack direction="column" spacing={ 3 }>
+        { shouldShowOutletsWarning && (
+          <Stack
+            alignSelf={ ["center", "center", "unset"] }
+            maxWidth={ [
+              theme.inputField.maxWidth,
+              theme.inputField.maxWidth,
+              "700px",
+            ] }
+          >
+            <Alert
+              action={
+                <Button
+                  color="yellow"
+                  sx={ { textTransform: "none" } }
+                  variant="outlined"
+                  onClick={ () =>
+                    navigate("/home/profile", {
+                      state: { scrollToOutlets: true },
+                    })
+                  }
+                >
+                  Go to profile
+                </Button>
+              }
+              severity="warning"
+            >
+              <Typography color="yellow" mb={ 0.5 }>
+                Outlet Profile Information Missing
+              </Typography>
+              <Typography
+                color="yellow"
+                fontWeight={ 400 }
+                maxWidth="460px"
+                variant="subtitle1"
+              >
+                Please add your outlet profile URLs to your artist profile. If
+                you&apos;re a first-time distributor, or do not have an outlet
+                profile, disregard this message.
+              </Typography>
+            </Alert>
+          </Stack>
+        ) }
         <Stack
           sx={ {
             alignItems: ["center", "center", "unset"],
