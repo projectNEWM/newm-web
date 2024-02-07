@@ -1,4 +1,5 @@
-import { FunctionComponent, useRef } from "react";
+import { FunctionComponent, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Box,
   Container,
@@ -55,6 +56,7 @@ const { Unverified, Pending, Verified } = VerificationStatus;
 
 const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
+  const { state } = useLocation();
 
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -63,6 +65,7 @@ const Profile: FunctionComponent = () => {
   const roleRef = useRef<HTMLDivElement>(null);
   const isniRef = useRef<HTMLInputElement>(null);
   const userIpiRef = useRef<HTMLInputElement>(null);
+  const outletProfilesRef = useRef<HTMLDivElement>(null);
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
@@ -228,6 +231,15 @@ const Profile: FunctionComponent = () => {
         : updatedValues
     );
   };
+
+  useEffect(() => {
+    if (state?.scrollToOutlets && outletProfilesRef.current) {
+      outletProfilesRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [state?.scrollToOutlets]);
 
   return (
     <Container
@@ -461,19 +473,15 @@ const Profile: FunctionComponent = () => {
                     </Stack>
 
                     <Stack rowGap={ 2 }>
-                      <Stack rowGap={ 0.5 }>
-                        <Typography
-                          fontWeight="700"
-                          id="outlet-profiles"
-                          variant="h4"
-                        >
+                      <Stack ref={ outletProfilesRef } rowGap={ 0.5 }>
+                        <Typography fontWeight="700" variant="h4">
                           OUTLET PROFILES
                         </Typography>
                         <Typography variant="subtitle2">
                           Linking your artist profile ensures your music will be
                           linked to your designated artist page on each platform
                           post-distribution. For details on finding your outlet
-                          profile and other requirements,
+                          profile and other requirements,{ " " }
                           <Link
                             href={ NEWM_STUDIO_FAQ_URL }
                             rel="noopener noreferrer"

@@ -128,18 +128,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     dispatch(setIsIdenfyModalOpen(true));
   };
 
-  const handleNavigateProfile = () => {
-    navigate("/home/profile");
-
-    setTimeout(() => {
-      const element = document.getElementById("outlet-profiles");
-
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 0);
-  };
-
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
       { element: audioRef.current, error: errors.audio },
@@ -181,7 +169,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   color="yellow"
                   sx={ { textTransform: "none" } }
                   variant="outlined"
-                  onClick={ handleNavigateProfile }
+                  onClick={ () =>
+                    navigate("/home/profile", {
+                      state: { scrollToOutlets: true },
+                    })
+                  }
                 >
                   Go to profile
                 </Button>
