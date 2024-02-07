@@ -4,6 +4,7 @@ on:
     paths:
       - .github/workflows/firebase-hosting-pull-request-newm-marketplace.yml
       - apps/marketplace/**
+      - packages/**
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
