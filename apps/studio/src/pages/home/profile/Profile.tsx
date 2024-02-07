@@ -236,7 +236,6 @@ const Profile: FunctionComponent = () => {
     if (state?.scrollToOutlets && outletProfilesRef.current) {
       outletProfilesRef.current.scrollIntoView({
         behavior: "smooth",
-        block: "center",
       });
     }
   }, [state?.scrollToOutlets]);
