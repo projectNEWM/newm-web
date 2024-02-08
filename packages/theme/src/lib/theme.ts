@@ -115,6 +115,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/styles" {
   export interface TypographyVariants {
     emphasized: React.CSSProperties;
+    externalLinks: React.CSSProperties;
     fontWeightExtraBold: number;
     fontWeightSemiBold: number;
     formHeader: React.CSSProperties;
@@ -129,6 +130,7 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
     emphasized: React.CSSProperties;
+    externalLinks: React.CSSProperties;
     fontWeightExtraBold: number;
     fontWeightSemiBold: number;
     formHeader?: React.CSSProperties;
@@ -139,6 +141,7 @@ declare module "@mui/material/styles" {
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
+    externalLinks: true;
     fontWeightExtraBold: true;
     fontWeightSemiBold: true;
     formHeader: true;
@@ -260,6 +263,39 @@ const theme = createTheme({
   },
 
   typography: {
+    // custom font theme styles
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    emphasized: {
+      fontFamily: "DM Serif Text",
+      fontStyle: "italic",
+      fontWeight: 400,
+    },
+
+    externalLinks: {
+      color: colors.grey100,
+      fontFamily: "Inter",
+      fontSize: "16px",
+      fontStyle: "normal",
+      fontWeight: 600,
+      lineHeight: "23px",
+    },
+
+    // default fontFamily
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    fontFamily: "Inter",
+
+    fontWeightBold: 700,
+
+    fontWeightExtraBold: 800,
+
+    fontWeightMedium: 500,
+
+    fontWeightRegular: 400,
+
+    fontWeightSemiBold: 600,
+
+    // customized font variants
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
     body1: {
       fontFamily: "Inter",
       fontSize: "14px",
@@ -275,28 +311,6 @@ const theme = createTheme({
       fontWeight: 500,
       lineHeight: "22px",
     },
-
-    // custom font theme styles
-    emphasized: {
-      fontFamily: "DM Serif Text",
-      fontStyle: "italic",
-      fontWeight: 400,
-    },
-
-    // default fontFamily
-    fontFamily: "Inter",
-
-    fontWeightBold: 700,
-
-    fontWeightExtraBold: 800,
-
-    fontWeightMedium: 500,
-
-    fontWeightRegular: 400,
-
-    fontWeightSemiBold: 600,
-
-    // customized font variants
     h1: {
       fontFamily: "Raleway",
       fontSize: "80px",
