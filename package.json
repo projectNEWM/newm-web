@@ -88,7 +88,7 @@
     "@types/redux-logger": "^3.0.9",
     "@types/styled-components": "5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
+    "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "~4.0.0",
     "@vitest/coverage-v8": "~0.34.6",
     "@vitest/ui": "~0.34.6",
