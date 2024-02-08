@@ -28,6 +28,7 @@ import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
 import UploadIcon from "./lib/icons/UploadIcon";
 import VerticalEllipsis from "./lib/icons/VerticalEllipsis";
 import WalletIcon from "./lib/icons/WalletIcon";
+import XLogo from "./lib/icons/XLogo";
 
 export {
   AddSong,
@@ -60,4 +61,5 @@ export {
   UploadIcon,
   VerticalEllipsis,
   WalletIcon,
+  XLogo,
 };

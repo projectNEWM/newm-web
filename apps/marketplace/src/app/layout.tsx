@@ -7,6 +7,7 @@ import theme from "@newm-web/theme";
 import { Provider } from "react-redux";
 import Header from "../components/header/Header";
 import store from "../store";
+import Footer from "../components/footer/Footer";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -34,12 +35,17 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
         />
       </head>
 
-      <body style={ { backgroundColor: theme.colors.black } }>
+      <body
+        style={ {
+          backgroundColor: theme.colors.black,
+        } }
+      >
         <AppRouterCacheProvider options={ { enableCssLayer: true } }>
           <Provider store={ store }>
             <ThemeProvider theme={ theme }>
               <Header />
               { children }
+              <Footer />
             </ThemeProvider>
           </Provider>
         </AppRouterCacheProvider>
