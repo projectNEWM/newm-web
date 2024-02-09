@@ -23,9 +23,11 @@ export const REGEX_JAN_FORMAT = /^(49|45)\d{1,11}$/;
 
 /**
  * Regular expression to match URLs with the specified domain followed by a path.
+ * Optionally match the scheme "http://" or "https://", optionally followed by "www.",
+ * then ensure the URL includes the specified domain and a "/" followed by any characters except for spaces
  */
 const generateRegexForDomainWithPath = (domain: string): RegExp => {
-  return new RegExp(`${domain}/.+`, "i");
+  return new RegExp(`^(https?:\\/\\/(www\\.)?)?${domain.replace(/\./g, "\\.")}(\\/[^\\s]+)`, "i");
 };
 
 export const REGEX_SPOTIFY_PROFILE =
