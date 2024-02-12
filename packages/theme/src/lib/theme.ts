@@ -115,7 +115,6 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/styles" {
   export interface TypographyVariants {
     emphasized: React.CSSProperties;
-    externalLinks: React.CSSProperties;
     fontWeightExtraBold: number;
     fontWeightSemiBold: number;
     formHeader: React.CSSProperties;
@@ -130,7 +129,6 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   export interface TypographyVariantsOptions {
     emphasized: React.CSSProperties;
-    externalLinks: React.CSSProperties;
     fontWeightExtraBold: number;
     fontWeightSemiBold: number;
     formHeader?: React.CSSProperties;
@@ -141,7 +139,6 @@ declare module "@mui/material/styles" {
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   export interface TypographyPropsVariantOverrides {
-    externalLinks: true;
     fontWeightExtraBold: true;
     fontWeightSemiBold: true;
     formHeader: true;
@@ -269,15 +266,6 @@ const theme = createTheme({
       fontFamily: "DM Serif Text",
       fontStyle: "italic",
       fontWeight: 400,
-    },
-
-    externalLinks: {
-      color: colors.grey100,
-      fontFamily: "Inter",
-      fontSize: "16px",
-      fontStyle: "normal",
-      fontWeight: 600,
-      lineHeight: "23px",
     },
 
     // default fontFamily

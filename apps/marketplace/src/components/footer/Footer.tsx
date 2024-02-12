@@ -1,7 +1,8 @@
 import { Telegram } from "@mui/icons-material";
-import { Box, Grid, Link, Typography, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import { DiscordLogo, NEWMLogo, XLogo } from "@newm-web/assets";
 import { FunctionComponent } from "react";
+import FooterLink from "./FooterLink";
 import {
   NEWM_DISCORD_URL,
   NEWM_IO_URL,
@@ -37,37 +38,23 @@ const Footer: FunctionComponent = () => {
           gap: [2, 4],
         } }
       >
-        <Link href={ NEWM_IO_URL } rel="noopener" target="_blank">
+        <FooterLink href={ NEWM_IO_URL }>
           <NEWMLogo height="40" width="40" />
-        </Link>
-        <Typography
-          component="div"
+        </FooterLink>
+        <Box
           sx={ {
             alignItems: "center",
             display: "flex",
             flexDirection: ["column", "row"],
             gap: [2, 4],
           } }
-          variant="externalLinks"
         >
-          <Link
-            href={ NEWM_MARKETPLACE_SUPPORT_URL }
-            rel="noopener"
-            target="_blank"
-          >
-            Support
-          </Link>
-          <Link
-            href={ NEWM_MARKETPLACE_TERMS_OF_SERVICE_URL }
-            rel="noopener"
-            target="_blank"
-          >
+          <FooterLink href={ NEWM_MARKETPLACE_SUPPORT_URL }>Support</FooterLink>
+          <FooterLink href={ NEWM_MARKETPLACE_TERMS_OF_SERVICE_URL }>
             Terms of Service
-          </Link>
-          <Link href={ NEWM_MARKETPLACE_FAQ_URL } rel="noopener" target="_blank">
-            FAQ
-          </Link>
-        </Typography>
+          </FooterLink>
+          <FooterLink href={ NEWM_MARKETPLACE_FAQ_URL }>FAQ</FooterLink>
+        </Box>
       </Box>
       <Box
         sx={ {
@@ -77,15 +64,15 @@ const Footer: FunctionComponent = () => {
           justifyContent: "center",
         } }
       >
-        <Link href={ NEWM_TELEGRAM_URL } rel="noopener" target="_blank">
+        <FooterLink href={ NEWM_TELEGRAM_URL }>
           <Telegram sx={ { color: "#34ACE1" } } />
-        </Link>
-        <Link href={ NEWM_DISCORD_URL } rel="noopener" target="_blank">
-          <DiscordLogo sx={ { color: " #5865F2" } } />
-        </Link>
-        <Link href={ NEWM_X_URL } rel="noopener" target="_blank">
+        </FooterLink>
+        <FooterLink href={ NEWM_DISCORD_URL }>
+          <DiscordLogo sx={ { color: "#5865F2" } } />
+        </FooterLink>
+        <FooterLink href={ NEWM_X_URL }>
           <XLogo />
-        </Link>
+        </FooterLink>
       </Box>
     </Grid>
   );
