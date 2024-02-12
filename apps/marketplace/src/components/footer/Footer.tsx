@@ -17,6 +17,7 @@ const Footer: FunctionComponent = () => {
 
   return (
     <Grid
+      component="footer"
       px={ [2, 5, 10] }
       py={ [2.5, 3] }
       sx={ {
