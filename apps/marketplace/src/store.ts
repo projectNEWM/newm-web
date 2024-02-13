@@ -11,7 +11,7 @@ const store = configureStore({
     const baseMiddleware = getDefaultMiddleware();
 
     return isReduxLoggingEnabled
-      ? baseMiddleware.prepend(logger as any) // eslint-disable-line
+      ? baseMiddleware.prepend(logger)
       : baseMiddleware;
   },
   reducer,

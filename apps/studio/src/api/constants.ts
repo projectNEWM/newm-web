@@ -1,6 +1,6 @@
 /**
- * Maps RTKQuery API endpoint names with action name
- * that back-end expects for recaptcha action argument.
+ * Maps RTKQuery API endpoint names with name that
+ * back-end expects for recaptcha action argument.
  */
 export const recaptchaEndpointActionMap: Record<string, string> = {
   appleLogin: "login_apple",

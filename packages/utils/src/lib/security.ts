@@ -3,25 +3,17 @@ import { ReCaptchaInstance, load } from "recaptcha-v3";
 
 let recaptcha: ReCaptchaInstance | undefined;
 
-const initializeRecaptcha = async () => {
+/**
+ * Initializes recaptcha if it hasn't been initialized yet
+ * and returns a recaptcha token.
+ */
+export const executeRecaptcha = async (action: string) => {
   if (!RECAPTCHA_SITE_KEY) {
     throw new Error("Missing Recaptcha site key environment variable");
   }
 
-  recaptcha = await load(RECAPTCHA_SITE_KEY, { autoHideBadge: true });
-};
-
-/**
- * Initializes Recaptcha if it hasn't been initialized yet
- * and returns a Recaptcha token.
- */
-export const executeRecaptcha = async (action: string) => {
   if (!recaptcha) {
-    await initializeRecaptcha();
-  }
-
-  if (!recaptcha) {
-    throw new Error("Recaptcha failed to initialize");
+    recaptcha = await load(RECAPTCHA_SITE_KEY, { autoHideBadge: true });
   }
 
   return await recaptcha.execute(action);
