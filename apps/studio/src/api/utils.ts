@@ -5,6 +5,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { executeRecaptcha } from "@newm-web/utils";
 import { AxiosBaseQueryParams, BaseQuery } from "./types";
 import { logOutExpiredSession, receiveRefreshToken } from "./actions";
+import { recaptchaEndpointActionMap } from "./constants";
 import { RootState } from "../store";
 import { NewmAuthResponse } from "../modules/session";
 
@@ -163,11 +164,12 @@ export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
   const { endpoint } = api;
   const state = api.getState() as RootState;
   const { isLoggedIn } = state.session;
+  const action = recaptchaEndpointActionMap[endpoint] || endpoint;
 
   if (!isLoggedIn) {
     return {
       "g-recaptcha-platform": "Web",
-      "g-recaptcha-token": await executeRecaptcha(endpoint),
+      "g-recaptcha-token": await executeRecaptcha(action),
     };
   }
 
