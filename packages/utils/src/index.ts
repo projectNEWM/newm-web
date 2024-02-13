@@ -8,6 +8,7 @@ export * from "./lib/hooks";
 export * from "./lib/time";
 export * from "./lib/redux";
 export * from "./lib/regex";
+export * from "./lib/security";
 export * from "./lib/storybook";
 export * from "./lib/string";
 export * from "./lib/form";

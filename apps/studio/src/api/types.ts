@@ -21,5 +21,5 @@ export interface AxiosBaseQueryParams {
   readonly prepareHeaders?: (
     api: BaseQueryApi,
     headers?: AxiosRequestConfig["headers"]
-  ) => AxiosRequestConfig["headers"];
+  ) => Promise<AxiosRequestConfig["headers"]>;
 }

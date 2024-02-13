@@ -2,6 +2,7 @@ import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import Cookies from "js-cookie";
 import { Mutex } from "async-mutex";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { executeRecaptcha } from "@newm-web/utils";
 import { AxiosBaseQueryParams, BaseQuery } from "./types";
 import { logOutExpiredSession, receiveRefreshToken } from "./actions";
 import { RootState } from "../store";
@@ -94,7 +95,7 @@ export const axiosBaseQuery = (
   ) => {
     try {
       const axiosInstance = axios.create({
-        headers: prepareHeaders ? prepareHeaders(api, headers) : headers,
+        headers: prepareHeaders ? await prepareHeaders(api, headers) : headers,
 
         // convert array params to comma separated strings
         paramsSerializer: (params) => {
@@ -138,13 +139,10 @@ export const axiosBaseQuery = (
 };
 
 /**
- * Adds auth header to requests. Can be overwritten by an auth
- * header present in a specific request.
+ * Gets NEWM service auth header. Can be overwritten by an auth
+ * header present for a specific request.
  */
-export const prepareAuthHeader = (
-  api: BaseQueryApi,
-  headers: AxiosRequestConfig["headers"]
-) => {
+export const getAuthHeaders = (api: BaseQueryApi) => {
   const state = api.getState() as RootState;
   const { isLoggedIn } = state.session;
   const accessToken = Cookies.get("accessToken");
@@ -152,11 +150,45 @@ export const prepareAuthHeader = (
   if (isLoggedIn && accessToken) {
     return {
       Authorization: `Bearer ${accessToken}`,
-      ...headers,
     };
   }
 
-  return headers;
+  return {};
+};
+
+/**
+ * Returns recaptcha headers for unauthenticated requests.
+ */
+export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
+  const { endpoint } = api;
+  const state = api.getState() as RootState;
+  const { isLoggedIn } = state.session;
+
+  if (!isLoggedIn) {
+    return {
+      "g-recaptcha-platform": "Web",
+      "g-recaptcha-token": await executeRecaptcha(endpoint),
+    };
+  }
+
+  return {};
+};
+
+/**
+ * Adds necessary authentication headers to requests.
+ */
+export const prepareHeaders = async (
+  api: BaseQueryApi,
+  headers: AxiosRequestConfig["headers"]
+) => {
+  const authHeaders = getAuthHeaders(api);
+  const recaptchaHeaders = await getRecaptchaHeaders(api);
+
+  return {
+    ...authHeaders,
+    ...recaptchaHeaders,
+    ...headers,
+  };
 };
 
 export const getApiErrorStatus = (err: unknown) => {

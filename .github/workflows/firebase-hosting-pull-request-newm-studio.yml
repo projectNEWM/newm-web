@@ -16,8 +16,9 @@ jobs:
         env:
           VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: staging
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
