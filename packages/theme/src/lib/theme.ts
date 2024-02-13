@@ -260,6 +260,30 @@ const theme = createTheme({
   },
 
   typography: {
+    // custom font theme styles
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    emphasized: {
+      fontFamily: "DM Serif Text",
+      fontStyle: "italic",
+      fontWeight: 400,
+    },
+
+    // default fontFamily
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+    fontFamily: "Inter",
+
+    fontWeightBold: 700,
+
+    fontWeightExtraBold: 800,
+
+    fontWeightMedium: 500,
+
+    fontWeightRegular: 400,
+
+    fontWeightSemiBold: 600,
+
+    // customized font variants
+    // eslint-disable-next-line sort-keys-fix/sort-keys-fix
     body1: {
       fontFamily: "Inter",
       fontSize: "14px",
@@ -275,28 +299,6 @@ const theme = createTheme({
       fontWeight: 500,
       lineHeight: "22px",
     },
-
-    // custom font theme styles
-    emphasized: {
-      fontFamily: "DM Serif Text",
-      fontStyle: "italic",
-      fontWeight: 400,
-    },
-
-    // default fontFamily
-    fontFamily: "Inter",
-
-    fontWeightBold: 700,
-
-    fontWeightExtraBold: 800,
-
-    fontWeightMedium: 500,
-
-    fontWeightRegular: 400,
-
-    fontWeightSemiBold: 600,
-
-    // customized font variants
     h1: {
       fontFamily: "Raleway",
       fontSize: "80px",
