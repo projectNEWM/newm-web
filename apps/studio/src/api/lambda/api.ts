@@ -9,12 +9,12 @@ import { baseQuery as newmBaseQuery } from "../newm/api";
 import {
   axiosBaseQuery,
   fetchBaseQueryWithReauth,
-  prepareAuthHeader,
+  prepareHeaders,
 } from "../utils";
 
 const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.lambda,
-  prepareHeaders: prepareAuthHeader,
+  prepareHeaders,
 });
 
 const api = createApi({

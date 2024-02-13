@@ -4,12 +4,12 @@ import { baseUrls } from "../../buildParams";
 import {
   axiosBaseQuery,
   fetchBaseQueryWithReauth,
-  prepareAuthHeader,
+  prepareHeaders,
 } from "../utils";
 
 export const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.newm,
-  prepareHeaders: prepareAuthHeader,
+  prepareHeaders,
 });
 
 const api = createApi({
