@@ -34,7 +34,7 @@ interface SongProgressOverlayProps {
   readonly progress: number;
 }
 
-const AUDIO_MIN_DURATION_SEC = 30;
+const AUDIO_MIN_DURATION_SEC = 60;
 const AUDIO_MIN_FILE_SIZE_MB = 1;
 const AUDIO_MAX_FILE_SIZE_GB = 1;
 
@@ -131,13 +131,15 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         const isAudioDurationValid = async (value: File) => {
           const audioBuffer = await createAudioBuffer(value);
 
-          return audioBuffer.duration >= AUDIO_MIN_DURATION_SEC;
+          return audioBuffer.duration > AUDIO_MIN_DURATION_SEC;
         };
 
         const isValidAudioDuration = await isAudioDurationValid(firstFile);
 
         if (!isValidAudioDuration) {
-          throw new Error(`Must be at least ${AUDIO_MIN_DURATION_SEC} seconds`);
+          throw new Error(`
+            The track must be greater than ${AUDIO_MIN_DURATION_SEC} seconds in duration to be released as a single.
+          `);
         }
 
         onChange(firstFile);
