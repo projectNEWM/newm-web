@@ -63,7 +63,7 @@ const Wallet: FunctionComponent = () => {
             alignItems: "center",
             display: "flex",
             justifyContent: "space-between",
-            marginBottom: 5,
+            mb: 5,
           } }
         >
           <Typography fontWeight={ 800 } variant="h3">
