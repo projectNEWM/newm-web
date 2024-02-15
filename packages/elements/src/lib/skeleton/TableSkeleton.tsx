@@ -2,13 +2,13 @@ import theme from "@newm-web/theme";
 import { Box, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
-interface SkeletonTableProps {
+interface TableSkeletonProps {
   cols?: number;
   maxWidth?: string | number;
   rows?: number;
 }
 
-const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
+export const TableSkeleton: FunctionComponent<TableSkeletonProps> = ({
   cols = 3,
   rows = 10,
   maxWidth = 1200,
@@ -57,5 +57,3 @@ const SkeletonTable: FunctionComponent<SkeletonTableProps> = ({
     </Box>
   );
 };
-
-export default SkeletonTable;

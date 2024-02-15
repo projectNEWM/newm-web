@@ -11,22 +11,19 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { TableCell, TableHeadCell } from "@newm-web/elements";
+import { getResizedAlbumCoverImageUrl, useHlsJs } from "@newm-web/utils";
 import theme from "@newm-web/theme";
-import {
-  PlayerState,
-  getResizedAlbumCoverImageUrl,
-  useAppDispatch,
-} from "../../common";
+import { PlayerState, Song } from "@newm-web/types";
+
+import { useAppDispatch } from "../../common";
 import { PlaySongAdvanced } from "../../components";
 import {
   Invite,
-  Song,
   convertMillisecondsToSongFormat,
   songApi,
   useFetchSongStreamThunk,
   useGetCollaborationsQuery,
   useGetSongsQuery,
-  useHlsJs,
 } from "../../modules/song";
 
 interface InvitesTableProps {

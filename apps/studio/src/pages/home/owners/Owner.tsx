@@ -3,15 +3,20 @@ import { useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Stack } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { GlobalFill, TwitterLogo } from "@newm-web/assets";
-import { InstagramLogo } from "@newm-web/assets";
-import { bgImage } from "@newm-web/assets";
+import {
+  GlobalFill,
+  InstagramLogo,
+  TwitterLogo,
+  bgImage,
+} from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import { useWindowDimensions } from "@newm-web/utils";
+import {
+  getResizedAlbumCoverImageUrl,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
-import { getResizedAlbumCoverImageUrl } from "../../../common";
 import { history } from "../../../common/history";
 import { VerificationStatus, useGetUserQuery } from "../../../modules/session";
 import { ProfileSkeleton } from "../../../components";

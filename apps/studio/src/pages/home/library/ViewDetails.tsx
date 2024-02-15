@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { MintingStatus } from "@newm-web/types";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
 import { NEWM_SUPPORT_EMAIL } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
-  MintingStatus,
   emptySong,
   useGetSongQuery,
   useHasSongAccess,

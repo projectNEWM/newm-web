@@ -13,6 +13,7 @@ import {
   scrollToError,
   useWindowDimensions,
 } from "@newm-web/utils";
+import { MintingStatus } from "@newm-web/types";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Formik, FormikValues } from "formik";
 import { useRef, useState } from "react";
@@ -32,7 +33,6 @@ import {
   CollaborationStatus,
   Creditor,
   Featured,
-  MintingStatus,
   Owner,
   emptySong,
   useGenerateArtistAgreementThunk,

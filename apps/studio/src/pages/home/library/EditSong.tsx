@@ -7,6 +7,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
+import { MintingStatus } from "@newm-web/types";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
@@ -18,7 +19,6 @@ import {
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
-  MintingStatus,
   PatchSongRequest,
   emptySong,
   getIsSongDeletable,

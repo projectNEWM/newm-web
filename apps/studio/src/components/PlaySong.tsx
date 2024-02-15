@@ -3,13 +3,9 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { Stack, Typography } from "@mui/material";
 import { IconMessage } from "@newm-web/elements";
-import {
-  Song,
-  useFetchSongStreamThunk,
-  useGetSongQuery,
-  useHlsJs,
-} from "../modules/song";
-import { PlayerState } from "../common";
+import { PlayerState, Song } from "@newm-web/types";
+import { useHlsJs } from "@newm-web/utils";
+import { useFetchSongStreamThunk, useGetSongQuery } from "../modules/song";
 
 interface PlaySongProps {
   readonly id: string;

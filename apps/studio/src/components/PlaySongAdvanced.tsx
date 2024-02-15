@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { IconButton, Stack, SxProps } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
-import { Song } from "../modules/song";
+import { Song } from "@newm-web/types";
 
 interface PlaySongAdvancedProps {
   readonly contentSx?: SxProps;

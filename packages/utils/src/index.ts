@@ -14,3 +14,4 @@ export * from "./lib/string";
 export * from "./lib/form";
 export * from "./lib/tests";
 export * from "./lib/wallet";
+export * from "./lib/image";

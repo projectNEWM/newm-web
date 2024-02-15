@@ -11,11 +11,12 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@newm-web/theme";
+import { getResizedAlbumCoverImageUrl } from "@newm-web/utils";
+import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
 import { TablePagination, Typography } from "@newm-web/elements";
 import AllCaughtUp from "./AllCaughtUp";
 import { TableDropdownSelect } from "../../../components";
-import { Song } from "../../../modules/song";
 
 interface SongRoyaltiesListProps {
   lastRowOnPage: number;
@@ -61,20 +62,6 @@ export default function SongRoyaltiesList({
     setPage(page);
   };
 
-  const getResizedAlbumCoverImageUrl = (url: string | undefined) => {
-    if (!url) {
-      return "";
-    } else if (url.split("/")[2] === "res.cloudinary.com") {
-      // replace upload params with smaller dimensions
-      return url.replace(
-        /upload\/[\w,]+\//,
-        "upload/w_56,h_56,c_fill,r_max,q_auto,f_auto/"
-      );
-    } else {
-      return url;
-    }
-  };
-
   if (songRoyalties) {
     return (
       <Box sx={ { maxWidth: TABLE_WIDTH } }>
@@ -112,8 +99,6 @@ export default function SongRoyaltiesList({
                         src={ getResizedAlbumCoverImageUrl(row.coverArtUrl) }
                         style={ {
                           borderRadius: "50%",
-                          height: "40px",
-                          width: "40px",
                         } }
                       />
                       <Box

@@ -1,4 +1,5 @@
 import { CustomError, EmptyResponse } from "@newm-web/utils";
+import { MarketplaceStatus, MintingStatus, Song } from "@newm-web/types";
 import {
   CborHexResponse,
   CloudinarySignatureResponse,
@@ -23,13 +24,10 @@ import {
   GetSongsResponse,
   GetUserWalletSongsRequest,
   GetUserWalletSongsResponse,
-  MarketplaceStatus,
-  MintingStatus,
   PatchSongRequest,
   PostSongRequest,
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
-  Song,
   SubmitTransactionRequest,
   UpdateCollaborationRequest,
   UploadSongAudioRequest,
