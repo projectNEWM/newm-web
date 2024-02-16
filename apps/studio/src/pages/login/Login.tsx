@@ -75,7 +75,7 @@ const Login: FunctionComponent = () => {
       </Stack>
 
       <Typography sx={ { mt: [4, 4, 5] } } variant="h1">
-        Welcome back
+        Welcome
       </Typography>
       <Formik
         initialValues={ { email: "", password: "" } }

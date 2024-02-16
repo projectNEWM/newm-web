@@ -3,8 +3,9 @@ import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { SortOrder } from "@newm-web/types";
 import SongRoyaltiesList from "./SongRoyaltiesList";
-import { SortOrder, useGetUserWalletSongsThunk } from "../../../modules/song";
+import { useGetUserWalletSongsThunk } from "../../../modules/song";
 
 const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;

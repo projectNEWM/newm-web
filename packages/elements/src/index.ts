@@ -56,6 +56,6 @@ export { default as UploadImage } from "./lib/UploadImage";
 export * from "./lib/UploadImage";
 export { default as UploadSong } from "./lib/UploadSong";
 export * from "./lib/UploadSong";
-export { default as TableSkeleton } from "./lib/skeleton/TableSkeleton";
+export * from "./lib/skeleton";
 export { default as SideBarNavLink } from "./lib/SideBarNavLink";
 export { default as SideBarHeader } from "./lib/SideBarHeader";

@@ -3,7 +3,7 @@ import { Theme } from "@mui/material";
 import { Check, Close } from "@mui/icons-material";
 import { InfoCircleLine, TimeCircleLine } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import { MintingStatus as MintingStatusType } from "../../../modules/song";
+import { MintingStatus as MintingStatusType } from "@newm-web/types";
 import { IconStatus } from "../../../components";
 
 interface MintingStatusProps {
