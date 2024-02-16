@@ -1,17 +1,19 @@
-import { asThunkHook } from "@newm-web/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { isCloudinaryUrl } from "@newm-web/utils";
-import { SilentError } from "@newm-web/utils";
-import { sleep } from "@newm-web/utils";
 import { AxiosProgressEvent } from "axios";
 import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  SilentError,
+  asThunkHook,
+  isCloudinaryUrl,
+  sleep,
+} from "@newm-web/utils";
+import { Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
   GetUserWalletSongsRequest,
   PatchSongRequest,
-  Song,
   UpdateCollaborationsRequest,
   UploadSongRequest,
 } from "./types";

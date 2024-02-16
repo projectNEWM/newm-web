@@ -20,28 +20,27 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import {
+  getResizedAlbumCoverImageUrl,
   isMoreThanThresholdSecondsLater,
+  useHlsJs,
   useWindowDimensions,
 } from "@newm-web/utils";
+import {
+  MintingStatus as MintingStatusType,
+  Song,
+  SortOrder,
+} from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
 import { MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
 import { SongStreamPlaybackIcon } from "../../../components";
 import {
-  MintingStatus as MintingStatusType,
-  Song,
-  SortOrder,
   convertMillisecondsToSongFormat,
   useFetchSongStreamThunk,
   useGetSongsQuery,
-  useHlsJs,
 } from "../../../modules/song";
-import {
-  NEWM_SUPPORT_EMAIL,
-  PlayerState,
-  getResizedAlbumCoverImageUrl,
-} from "../../../common";
+import { NEWM_SUPPORT_EMAIL, PlayerState } from "../../../common";
 
 interface SongListProps {
   query: string;

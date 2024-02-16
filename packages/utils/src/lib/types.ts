@@ -1,3 +1,4 @@
+import { Song } from "@newm-web/types";
 import { ReactElement } from "react";
 
 export interface ValidateDimensionsParams {
@@ -7,8 +8,8 @@ export interface ValidateDimensionsParams {
 }
 
 export interface WindowDimensions {
-  readonly height: number;
-  readonly width: number;
+  readonly height?: number;
+  readonly width?: number;
 }
 
 export interface UseWrappedThunkResponse<Returned> {
@@ -49,4 +50,15 @@ export type WidthType = "default" | "full";
 export interface FieldOptions {
   element: HTMLDivElement | HTMLInputElement | HTMLTextAreaElement | null;
   error: unknown;
+}
+
+export interface UseHlsJsParams {
+  readonly onPlaySong?: (song: Song) => void;
+  readonly onStopSong?: (song?: Song) => void;
+  readonly onSongEnded?: (event: Event) => any; // eslint-disable-line
+}
+
+export interface UseHlsJsResult {
+  readonly playSong: (song: Song) => void;
+  readonly stopSong: (song?: Song) => void;
 }

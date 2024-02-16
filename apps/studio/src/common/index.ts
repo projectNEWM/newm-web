@@ -3,7 +3,6 @@ export * from "./formUtils";
 export * from "./hooks";
 export * from "./mockConstants";
 export * from "./testUtils";
-export * from "./fileUtils";
 export * from "./mockConstants";
 export * from "./regex";
 export * from "./errors";

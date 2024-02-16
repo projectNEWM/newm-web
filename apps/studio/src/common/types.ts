@@ -1,7 +1,8 @@
 import { RenderOptions } from "@testing-library/react";
 import { EnhancedStore } from "@reduxjs/toolkit";
+import { Song } from "@newm-web/types";
+
 import { RootState } from "../store";
-import { Song } from "../modules/song";
 
 export interface RenderProps extends RenderOptions {
   readonly preloadedState?: Partial<RootState>;

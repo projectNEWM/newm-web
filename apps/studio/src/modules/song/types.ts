@@ -1,3 +1,4 @@
+import { MintingStatus, Song, SortOrder } from "@newm-web/types";
 import { OnUploadProgress } from "../../api/types";
 
 export interface SongState {
@@ -13,11 +14,6 @@ export interface GetSongStreamResponse {
 
 export interface GetSongStreamData {
   readonly url: string;
-}
-
-export enum SortOrder {
-  Asc = "asc",
-  Desc = "desc",
 }
 
 export interface GetSongsRequest {
@@ -156,69 +152,6 @@ export interface CloudinarySignatureResponse {
   readonly timestamp: number;
 }
 
-export enum MintingStatus {
-  ArweaveUploadException = "ArweaveUploadException",
-  AwaitingAudioEncoding = "AwaitingAudioEncoding",
-  AwaitingCollaboratorApproval = "AwaitingCollaboratorApproval",
-  Declined = "Declined",
-  Distributed = "Distributed",
-  DistributionException = "DistributionException",
-  Minted = "Minted",
-  MintingException = "MintingException",
-  MintingPaymentException = "MintingPaymentException",
-  MintingPaymentReceived = "MintingPaymentReceived",
-  MintingPaymentRequested = "MintingPaymentRequested",
-  MintingPaymentSubmitted = "MintingPaymentSubmitted",
-  MintingPaymentTimeout = "MintingPaymentTimeout",
-  Pending = "Pending",
-  ReadyToDistribute = "ReadyToDistribute",
-  ReleaseCheckException = "ReleaseCheckException",
-  Released = "Released",
-  StreamTokenAgreementApproved = "StreamTokenAgreementApproved",
-  SubmittedForDistribution = "SubmittedForDistribution",
-  SubmittedForDistributionException = "SubmittedForDistributionException",
-  Undistributed = "Undistributed",
-}
-
-export enum MarketplaceStatus {
-  NotSelling = "NotSelling",
-  Selling = "Selling",
-}
-export interface Song {
-  readonly album?: string;
-  readonly archived: boolean;
-  readonly barcodeNumber?: string;
-  readonly barcodeType?: string;
-  readonly compositionCopyrightOwner: string;
-  readonly compositionCopyrightYear: string;
-  readonly coverArtUrl?: string;
-  readonly coverRemixSample?: boolean;
-  readonly createdAt: string;
-  readonly description?: string;
-  readonly duration?: number;
-  readonly genres: ReadonlyArray<string>;
-  readonly id: string;
-  readonly ipis?: ReadonlyArray<string>;
-  readonly isrc?: string;
-  readonly iswc?: string;
-  readonly language?: string;
-  readonly lyricsUrl?: string;
-  readonly marketplaceStatus: MarketplaceStatus;
-  readonly mintingStatus: MintingStatus;
-  readonly moods?: ReadonlyArray<string>;
-  readonly nftName?: string;
-  readonly nftPolicyId?: string;
-  readonly ownerId: string;
-  readonly parentalAdvisory?: string;
-  readonly phonographicCopyrightOwner: string;
-  readonly phonographicCopyrightYear: string;
-  readonly publicationDate?: string;
-  readonly releaseDate?: string;
-  readonly streamUrl?: string;
-  readonly title: string;
-  readonly track?: number;
-}
-
 export interface Artist {
   readonly bio: string;
   readonly name: string;
@@ -229,17 +162,6 @@ export interface Contributor {
   readonly name: string;
   readonly role: string;
   readonly stake: number;
-}
-
-export interface UseHlsJsParams {
-  readonly onPlaySong?: (song: Song) => void;
-  readonly onStopSong?: (song?: Song) => void;
-  readonly onSongEnded?: (event: Event) => any; // eslint-disable-line
-}
-
-export interface UseHlsJsResult {
-  readonly playSong: (song: Song) => void;
-  readonly stopSong: (song?: Song) => void;
 }
 
 export interface GetSongCountRequest {

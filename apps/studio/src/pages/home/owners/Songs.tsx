@@ -1,21 +1,15 @@
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { IconButton, Stack } from "@mui/material";
-import { PlayArrow, Stop } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 import { Typography } from "@newm-web/elements";
-import theme from "@newm-web/theme";
-import { useWindowDimensions } from "@newm-web/utils";
-import { bgImage } from "@newm-web/assets";
-import { PlayerState, getResizedAlbumCoverImageUrl } from "../../../common";
+import { SongCard } from "@newm-web/components";
+import { useHlsJs } from "@newm-web/utils";
+import { MintingStatus, PlayerState, Song, SortOrder } from "@newm-web/types";
 import {
-  MintingStatus,
-  Song,
-  SortOrder,
   useFetchSongStreamThunk,
   useGetSongCountQuery,
   useGetSongsQuery,
-  useHlsJs,
 } from "../../../modules/song";
 
 const Songs: FunctionComponent = () => {
@@ -31,14 +25,10 @@ const Songs: FunctionComponent = () => {
   });
   const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
 
-  const windowWidth = useWindowDimensions()?.width;
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
     mintingStatuses,
     ownerIds: [userId],
   });
-
-  const isWidthAboveMd =
-    windowWidth && windowWidth > theme.breakpoints.values.md;
 
   const { data: songData = [], isLoading } = useGetSongsQuery({
     limit,
@@ -168,55 +158,16 @@ const Songs: FunctionComponent = () => {
         const genresString = song.genres.join(", ");
 
         return (
-          <Stack
+          <SongCard
+            coverArtUrl={ song.coverArtUrl }
+            isPlayable={ !!song.streamUrl }
+            isPlaying={ song.id === playerState.currentPlayingSongId }
             key={ song.id }
-            sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }
-          >
-            <Stack alignItems="center" display="grid" justifyItems="center">
-              <img
-                alt="Song cover art"
-                height={ isWidthAboveMd ? "260px" : "150px" }
-                src={
-                  song.coverArtUrl
-                    ? getResizedAlbumCoverImageUrl(song.coverArtUrl, {
-                        height: 200,
-                        width: 200,
-                      })
-                    : bgImage
-                }
-                style={ {
-                  borderRadius: "4px",
-                  gridArea: "1 / 1 / 2 / 2",
-                  objectFit: "cover",
-                } }
-                width={ isWidthAboveMd ? "260px" : "150px" }
-              />
-              { song?.streamUrl && (
-                <IconButton
-                  sx={ {
-                    backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    color: theme.colors.white,
-                    gridArea: "1 / 1 / 2 / 2",
-                  } }
-                  onClick={ () => handleSongPlayPause(song) }
-                >
-                  { song.id === playerState.currentPlayingSongId ? (
-                    <Stop sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
-                  ) : (
-                    <PlayArrow
-                      sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } }
-                    />
-                  ) }
-                </IconButton>
-              ) }
-            </Stack>
-            <Typography fontWeight={ 700 } mt={ 0.5 } variant="h4">
-              { song.title }
-            </Typography>
-            <Typography fontWeight={ 500 } variant="subtitle1">
-              { genresString }
-            </Typography>
-          </Stack>
+            songId={ song.id }
+            subtitle={ genresString }
+            title={ song.title }
+            onPlayPauseClick={ () => handleSongPlayPause(song) }
+          />
         );
       }) }
       <Stack flex="1 0 100%" ref={ ref } textAlign="center">
