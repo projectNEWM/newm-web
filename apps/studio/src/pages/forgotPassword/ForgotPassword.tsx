@@ -31,10 +31,10 @@ const ForgotPassword: FunctionComponent = () => {
   };
 
   const handleVerificationEmail = (
-    values: FormikValues,
+    { email }: FormikValues,
     { setSubmitting }: FormikHelpers<FormikValues>
   ): void => {
-    dispatch(sendVerificationEmail(values.email));
+    dispatch(sendVerificationEmail({ email, mustExists: true }));
     setSubmitting(false);
   };
 

@@ -21,7 +21,7 @@ const VerifyEmail: FunctionComponent = () => {
   const handleEmailResend = () => {
     setShowResendLink(false);
 
-    dispatch(sendVerificationEmail(email));
+    dispatch(sendVerificationEmail({ email, mustExists: true }));
 
     setTimeout(() => setShowResendLink(true), 10000);
   };

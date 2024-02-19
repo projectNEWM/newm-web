@@ -273,9 +273,9 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: ({ email }) => ({
+      query: ({ email, mustExists }) => ({
         method: "GET",
-        params: { email },
+        params: { email, mustExists },
         url: "v1/auth/code",
       }),
     }),
