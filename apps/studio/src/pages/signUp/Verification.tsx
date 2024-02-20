@@ -20,7 +20,7 @@ const Verification: FunctionComponent = () => {
   const handleEmailResend = () => {
     setShowResendLink(false);
 
-    dispatch(sendVerificationEmail(values.email));
+    dispatch(sendVerificationEmail({ email: values.email, mustExists: false }));
 
     setTimeout(() => setShowResendLink(true), 10000);
   };

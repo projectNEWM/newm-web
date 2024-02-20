@@ -2,11 +2,19 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import sessionApi from "./api";
-import { DecodedJwt, NewmAuthResponse, SessionState } from "./types";
+import {
+  DecodedJwt,
+  NewmAuthResponse,
+  Request2FACode,
+  SessionState,
+} from "./types";
 
-export const sendVerificationEmail = (email: string) => {
+export const sendVerificationEmail = ({
+  email,
+  mustExists,
+}: Request2FACode) => {
   return sessionApi.endpoints.sendVerificationEmail.initiate(
-    { email },
+    { email, mustExists },
     { forceRefetch: true }
   );
 };
