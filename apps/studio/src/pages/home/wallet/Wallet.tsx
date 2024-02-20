@@ -1,4 +1,10 @@
-import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
+import {
+  FunctionComponent,
+  ReactNode,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import {
   Box,
   Container,
@@ -18,6 +24,7 @@ import { NoPendingEarnings } from "./NoPendingEarnings";
 import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
+import { useGetUserWalletSongsThunk } from "../../../modules/song";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -55,6 +62,18 @@ const colorMap: ColorMap = {
 const Wallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
+  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
+    useGetUserWalletSongsThunk();
+
+  const songs =
+    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+
+  useEffect(() => {
+    getUserWalletSongs({
+      limit: 1,
+      offset: 0,
+    });
+  }, [getUserWalletSongs, wallet]);
 
   const [tab, setTab] = useState(0);
   const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(0);
@@ -91,7 +110,7 @@ const Wallet: FunctionComponent = () => {
           ) }
         </Box>
 
-        { unclaimedRoyalties ? (
+        { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
           <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
         ) : (
           <NoPendingEarnings />

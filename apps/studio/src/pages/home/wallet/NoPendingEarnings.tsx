@@ -19,7 +19,7 @@ export const NoPendingEarnings: FunctionComponent = () => (
       <Typography color={ theme.colors.green } fontWeight={ 500 }>
         No pending earnings to claim
       </Typography>
-      <Typography color="grey200" fontWeight={ 500 }>
+      <Typography color={ theme.colors.grey200 } fontWeight={ 500 }>
         Total earnings accrued so far: ##.##Ɲ (~$#.##)
       </Typography>
     </Stack>

@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { SortOrder } from "@newm-web/types";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import SongRoyaltiesList from "./SongRoyaltiesList";
 import { EmptyPortfolio } from "./EmptyPortfolio";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
@@ -23,6 +24,7 @@ const Portfolio: FunctionComponent = () => {
   const pageIdx = page - 1;
   const lastRowOnPage = pageIdx * rowsPerPage + rowsPerPage;
 
+  const { wallet } = useConnectWallet();
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
 
@@ -35,7 +37,7 @@ const Portfolio: FunctionComponent = () => {
       offset: pageIdx * skeletonRows,
       sortOrder: SortOrder.Desc,
     });
-  }, [getUserWalletSongs, pageIdx, skeletonRows]);
+  }, [getUserWalletSongs, pageIdx, skeletonRows, wallet]);
 
   useEffect(() => {
     const skeletonYPos = skeletonRef.current?.offsetTop || 0;
