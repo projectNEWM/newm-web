@@ -98,6 +98,7 @@ export type GetProfileResponse = Profile;
 
 export interface Request2FACode {
   readonly email: string;
+  readonly mustExists?: boolean;
 }
 
 export interface CreateAccountRequest {
