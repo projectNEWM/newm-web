@@ -31,7 +31,6 @@ const TabPanel: FunctionComponent<TabPanelProps> = ({
       aria-labelledby={ `tab-${index}` }
       hidden={ value !== index }
       id={ `tabpanel-${index}` }
-      mb={ 2 }
       role="tabpanel"
     >
       { value === index && children }
