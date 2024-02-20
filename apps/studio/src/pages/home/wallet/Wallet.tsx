@@ -1,11 +1,20 @@
 import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Container, Stack, Tab, Tabs, Theme } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import {
+  Box,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Theme,
+  Typography,
+} from "@mui/material";
+import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
+import { NoPendingEarnings } from "./NoPendingEarnings";
 import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
@@ -82,8 +91,10 @@ const Wallet: FunctionComponent = () => {
           ) }
         </Box>
 
-        { !!unclaimedRoyalties && (
+        { unclaimedRoyalties ? (
           <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
+        ) : (
+          <NoPendingEarnings />
         ) }
 
         <Box mt={ 5 } pb={ 5 }>
