@@ -25,8 +25,10 @@ const Portfolio: FunctionComponent = () => {
   const lastRowOnPage = pageIdx * rowsPerPage + rowsPerPage;
 
   const { wallet } = useConnectWallet();
-  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
-    useGetUserWalletSongsThunk();
+  const [
+    getUserWalletSongs,
+    { data: walletSongsResponse, isLoading, isSuccess },
+  ] = useGetUserWalletSongsThunk();
 
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
@@ -65,7 +67,7 @@ const Portfolio: FunctionComponent = () => {
     );
   }
 
-  if (!isLoading && !songs.length) {
+  if (isSuccess && songs?.length === 0) {
     return <EmptyPortfolio />;
   }
 

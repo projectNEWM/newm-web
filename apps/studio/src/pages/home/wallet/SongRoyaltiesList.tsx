@@ -15,7 +15,6 @@ import { getResizedAlbumCoverImageUrl } from "@newm-web/utils";
 import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
 import { TablePagination, Typography } from "@newm-web/elements";
-import AllCaughtUp from "./AllCaughtUp";
 import { TableDropdownSelect } from "../../../components";
 
 interface SongRoyaltiesListProps {
@@ -62,7 +61,7 @@ export default function SongRoyaltiesList({
     setPage(page);
   };
 
-  if (songRoyalties) {
+  if (songRoyalties.length) {
     return (
       <Box sx={ { maxWidth: TABLE_WIDTH } }>
         <TableContainer
@@ -135,12 +134,6 @@ export default function SongRoyaltiesList({
             ) }
           </Table>
         </TableContainer>
-
-        { songRoyalties.length === 0 ? (
-          <Box sx={ { pt: 1 } }>
-            <AllCaughtUp />
-          </Box>
-        ) : null }
       </Box>
     );
   } else {
