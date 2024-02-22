@@ -70,10 +70,12 @@ const VerifyEmail: FunctionComponent = () => {
         </Button>
       </Box>
 
-      <Box my={ 4 } textAlign="center">
+      <Box maxWidth={ 400 } my={ 4 } textAlign="center">
         { showResendLink ? (
           <Typography color="grey100" fontWeight={ 500 }>
-            Didn&apos;t receive an email?
+            If you do not receive the notification within a few minutes and
+            you&apos;ve confirmed entering the right email address, try checking
+            your “spam” folder or
             <button
               style={ {
                 backgroundColor: "initial",
@@ -89,7 +91,8 @@ const VerifyEmail: FunctionComponent = () => {
           </Typography>
         ) : (
           <Typography>
-            Email re-sent. Don&apos;t forget to check your spam folder.
+            Email re-sent. Don&apos;t forget to check your &ldquo;spam&rdquo;
+            folder.
           </Typography>
         ) }
       </Box>
