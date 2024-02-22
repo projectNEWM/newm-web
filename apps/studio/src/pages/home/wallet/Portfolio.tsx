@@ -4,7 +4,9 @@ import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { SortOrder } from "@newm-web/types";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import SongRoyaltiesList from "./SongRoyaltiesList";
+import { EmptyPortfolio } from "./EmptyPortfolio";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
 
 const Portfolio: FunctionComponent = () => {
@@ -22,8 +24,11 @@ const Portfolio: FunctionComponent = () => {
   const pageIdx = page - 1;
   const lastRowOnPage = pageIdx * rowsPerPage + rowsPerPage;
 
-  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
-    useGetUserWalletSongsThunk();
+  const { wallet } = useConnectWallet();
+  const [
+    getUserWalletSongs,
+    { data: walletSongsResponse, isLoading, isSuccess },
+  ] = useGetUserWalletSongsThunk();
 
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
@@ -34,7 +39,7 @@ const Portfolio: FunctionComponent = () => {
       offset: pageIdx * skeletonRows,
       sortOrder: SortOrder.Desc,
     });
-  }, [getUserWalletSongs, pageIdx, skeletonRows]);
+  }, [getUserWalletSongs, pageIdx, skeletonRows, wallet]);
 
   useEffect(() => {
     const skeletonYPos = skeletonRef.current?.offsetTop || 0;
@@ -52,27 +57,31 @@ const Portfolio: FunctionComponent = () => {
     setRowsPerPage(rowsToRender);
   }, [windowHeight]);
 
+  if (isLoading) {
+    return (
+      <TableSkeleton
+        cols={ windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2 }
+        maxWidth={ maxListWidth }
+        rows={ skeletonRows }
+      />
+    );
+  }
+
+  if (isSuccess && songs?.length === 0) {
+    return <EmptyPortfolio />;
+  }
+
   return (
-    <Box pb={ 8 } pt={ 2 } ref={ skeletonRef }>
-      { isLoading ? (
-        <TableSkeleton
-          cols={
-            windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2
-          }
-          maxWidth={ maxListWidth }
-          rows={ skeletonRows }
-        />
-      ) : (
-        <SongRoyaltiesList
-          lastRowOnPage={ lastRowOnPage }
-          page={ page }
-          rows={ songs.length }
-          rowsPerPage={ rowsPerPage }
-          setPage={ setPage }
-          songRoyalties={ songs }
-          totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
-        />
-      ) }
+    <Box mt={ 2 } pb={ 8 } pt={ 2 } ref={ skeletonRef }>
+      <SongRoyaltiesList
+        lastRowOnPage={ lastRowOnPage }
+        page={ page }
+        rows={ songs.length }
+        rowsPerPage={ rowsPerPage }
+        setPage={ setPage }
+        songRoyalties={ songs }
+        totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
+      />
     </Box>
   );
 };
