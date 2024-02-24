@@ -19,6 +19,7 @@ import Tooltip from "./styled/Tooltip";
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
+  readonly helperText?: string;
   readonly isOptional?: boolean;
   readonly label?: string;
   readonly mask?: string | Array<string | RegExp>;
@@ -100,12 +101,14 @@ export const TextInput: ForwardRefRenderFunction<
     tooltipText = "",
     widthType = "default",
     shouldDisplayErrorMessage = true,
+    helperText,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const shouldShowErrorMessage = !!errorMessage && shouldDisplayErrorMessage;
 
   // eslint-disable-next-line
   const InputElement = (mask ? StyledMaskedInput : StyledInput) as any;
@@ -131,6 +134,15 @@ export const TextInput: ForwardRefRenderFunction<
     }
 
     setIsFocused(false);
+  };
+
+  const renderHelperOrErrorMessage = () => {
+    if (shouldShowErrorMessage) {
+      return <ErrorMessage>{ errorMessage }</ErrorMessage>;
+    } else if (helperText && !shouldShowErrorMessage) {
+      return <Typography variant="subtitle2">{ helperText }</Typography>;
+    }
+    return null;
   };
 
   return (
@@ -221,9 +233,7 @@ export const TextInput: ForwardRefRenderFunction<
         </StyledRootElement>
       </Box>
 
-      { !!errorMessage && shouldDisplayErrorMessage && (
-        <ErrorMessage>{ errorMessage }</ErrorMessage>
-      ) }
+      { renderHelperOrErrorMessage() }
     </Stack>
   );
 };

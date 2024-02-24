@@ -1,12 +1,7 @@
 import { FunctionComponent, useState } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { FormikValues, useFormikContext } from "formik";
-import {
-  Button,
-  GradientTypography,
-  TextInputField,
-  Typography,
-} from "@newm-web/elements";
+import { Button, GradientTypography, TextInputField } from "@newm-web/elements";
 import { sendVerificationEmail } from "../../modules/session";
 import { useAppDispatch } from "../../common";
 
@@ -70,16 +65,19 @@ const VerifyEmail: FunctionComponent = () => {
         </Button>
       </Box>
 
-      <Box my={ 4 } textAlign="center">
+      <Box maxWidth={ 400 } my={ 4 } textAlign="center">
         { showResendLink ? (
-          <Typography color="grey100" fontWeight={ 500 }>
-            Didn&apos;t receive an email?
+          <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+            If you do not receive the notification within a few minutes and
+            you&apos;ve confirmed entering the right email address, try checking
+            your “spam” folder or
             <button
               style={ {
                 backgroundColor: "initial",
                 border: "none",
                 borderRadius: 0,
                 color: "white",
+                cursor: "pointer",
                 font: "inherit",
               } }
               onClick={ handleEmailResend }
@@ -89,7 +87,8 @@ const VerifyEmail: FunctionComponent = () => {
           </Typography>
         ) : (
           <Typography>
-            Email re-sent. Don&apos;t forget to check your spam folder.
+            Email re-sent. Don&apos;t forget to check your &ldquo;spam&rdquo;
+            folder.
           </Typography>
         ) }
       </Box>
