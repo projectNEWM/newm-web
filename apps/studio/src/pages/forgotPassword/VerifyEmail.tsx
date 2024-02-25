@@ -79,11 +79,13 @@ const VerifyEmail: FunctionComponent = () => {
                 color: "white",
                 cursor: "pointer",
                 font: "inherit",
+                paddingRight: 0,
               } }
               onClick={ handleEmailResend }
             >
-              Click here to resend
+              click here to resend
             </button>
+            .
           </Typography>
         ) : (
           <Typography>
