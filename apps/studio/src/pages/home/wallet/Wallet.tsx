@@ -49,7 +49,7 @@ const Wallet: FunctionComponent = () => {
   const { wallet } = useConnectWallet();
 
   const [tab, setTab] = useState(0);
-  const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(0);
+  const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(1);
 
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
