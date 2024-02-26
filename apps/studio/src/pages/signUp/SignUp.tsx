@@ -39,8 +39,8 @@ const SignUp: FunctionComponent = () => {
     ),
   };
 
-  const handleVerificationEmail = (values: FormikValues): void => {
-    dispatch(sendVerificationEmail(values.email));
+  const handleVerificationEmail = ({ email }: FormikValues): void => {
+    dispatch(sendVerificationEmail({ email, mustExists: false }));
   };
 
   /**

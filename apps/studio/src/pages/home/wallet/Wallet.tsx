@@ -1,14 +1,30 @@
-import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Container, Stack, Tab, Tabs, Theme } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import {
+  FunctionComponent,
+  ReactNode,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Box,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Theme,
+  Typography,
+} from "@mui/material";
+import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
+import { NoPendingEarnings } from "./NoPendingEarnings";
 import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
+import { useGetUserWalletSongsThunk } from "../../../modules/song";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -31,7 +47,6 @@ const TabPanel: FunctionComponent<TabPanelProps> = ({
       aria-labelledby={ `tab-${index}` }
       hidden={ value !== index }
       id={ `tabpanel-${index}` }
-      mb={ 2 }
       role="tabpanel"
     >
       { value === index && children }
@@ -47,6 +62,18 @@ const colorMap: ColorMap = {
 const Wallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { wallet } = useConnectWallet();
+  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
+    useGetUserWalletSongsThunk();
+
+  const songs =
+    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+
+  useEffect(() => {
+    getUserWalletSongs({
+      limit: 1,
+      offset: 0,
+    });
+  }, [getUserWalletSongs, wallet]);
 
   const [tab, setTab] = useState(0);
   const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(1);
@@ -83,8 +110,10 @@ const Wallet: FunctionComponent = () => {
           ) }
         </Box>
 
-        { !!unclaimedRoyalties && (
+        { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
           <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
+        ) : (
+          <NoPendingEarnings />
         ) }
 
         <Box mt={ 5 } pb={ 5 }>
