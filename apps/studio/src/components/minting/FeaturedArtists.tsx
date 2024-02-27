@@ -4,8 +4,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import Details from "./Details";
-import { Featured, useGetCollaboratorsQuery } from "../../modules/song";
-import { getCollaboratorInfo } from "../../modules/song";
+import {
+  Featured,
+  getCollaboratorInfo,
+  useGetCollaboratorsQuery,
+} from "../../modules/song";
 
 interface FeaturedArtistsProps {
   readonly featured: ReadonlyArray<Featured>;
