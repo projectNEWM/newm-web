@@ -76,7 +76,7 @@ const Wallet: FunctionComponent = () => {
   }, [getUserWalletSongs, wallet]);
 
   const [tab, setTab] = useState(0);
-  const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(0);
+  const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(1);
 
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
