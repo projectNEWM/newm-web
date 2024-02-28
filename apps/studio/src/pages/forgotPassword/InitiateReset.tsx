@@ -28,6 +28,10 @@ const InitiateReset: FunctionComponent = () => {
       >
         <TextInputField
           aria-label="Enter email to reset password"
+          helperText={
+            "If an account associated with the " +
+            "email you enter exists, a verification code will be sent to you."
+          }
           isOptional={ false }
           name="email"
           placeholder="Your email"
