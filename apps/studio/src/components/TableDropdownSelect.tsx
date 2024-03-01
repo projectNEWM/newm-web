@@ -5,55 +5,58 @@ import {
   SelectChangeEvent,
   styled,
 } from "@mui/material";
-import { useState } from "react";
+import { FunctionComponent } from "react";
 
-const TableDropdownSelect = () => {
+export interface TableDropdownMenuParameters {
+  readonly label: string;
+  readonly value: string;
+}
+
+interface TableDropdownSelectProps {
+  readonly menuItems: ReadonlyArray<TableDropdownMenuParameters>;
+  readonly onChange?: (value: string) => void;
+  readonly selectedValue: string;
+}
+
+const TableDropdownSelect: FunctionComponent<TableDropdownSelectProps> = ({
+  selectedValue,
+  menuItems,
+  onChange,
+}) => {
   const StyledSelect = styled(Select)(({ theme }) => ({
-    "& .MuiSelect-iconOpen": {
+    "& .MuiSelect-icon": {
       color: theme.colors.white,
-      transform: "rotate(180deg)",
     },
-    "& .c.css-zsouyz-MuiSvgIcon-root-MuiSelect-icon": {
-      color: theme.colors.white,
-      paddingBottom: "5px",
-      transform: "scale(1.2)",
-    },
-    "& .css-x2bp66-MuiSvgIcon-root-MuiSelect-icon": {
-      color: theme.colors.white,
-      paddingBottom: 4,
-      transform: "scale(1.2)",
-    },
+    fontSize: "12px",
   }));
-  const StyledMenuItem = styled(MenuItem)({
-    fontSize: 12,
-  });
-  const [dropdownValue, setDropdownValue] = useState("ROYALTIES PER WEEK");
+
+  const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    "&.Mui-selected": {
+      backgroundColor: theme.colors.activeBackground,
+    },
+    "&.MuiMenuItem-root:hover": {
+      backgroundColor: theme.colors.activeBackground,
+    },
+    fontSize: "12px",
+  }));
 
   const handleDropdownChange = (event: SelectChangeEvent<unknown>) => {
-    setDropdownValue(event.target.value as string);
+    onChange?.(event.target.value as string);
   };
   return (
     <Box>
       <StyledSelect
         color="info"
         size="small"
-        sx={ { fontSize: 12 } }
-        value={ dropdownValue }
+        value={ selectedValue }
         variant="standard"
         onChange={ handleDropdownChange }
       >
-        <StyledMenuItem value={ "ROYALTIES PER DAY" }>
-          ROYALTIES PER DAY
-        </StyledMenuItem>
-        <StyledMenuItem value={ "ROYALTIES PER WEEK" }>
-          ROYALTIES PER WEEK
-        </StyledMenuItem>
-        <StyledMenuItem value={ "ROYALTIES PER MONTH" }>
-          ROYALTIES PER MONTH
-        </StyledMenuItem>
-        <StyledMenuItem value={ "ROYALTIES PER YEAR" }>
-          ROYALTIES PER YEAR
-        </StyledMenuItem>
+        { menuItems.map((menuItem) => (
+          <StyledMenuItem key={ menuItem.value } value={ menuItem.value }>
+            { menuItem.label.toUpperCase() }
+          </StyledMenuItem>
+        )) }
       </StyledSelect>
     </Box>
   );
