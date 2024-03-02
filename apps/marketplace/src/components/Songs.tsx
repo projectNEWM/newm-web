@@ -8,10 +8,12 @@ import { SongCard } from "@newm-web/components";
 
 const Songs: FunctionComponent = () => {
   return (
-    <Stack alignItems="center" mt={ 10 }>
+    <Stack alignItems="center" mt={ [7.5, 7.5, 10] }>
       { tempSongData.length ? (
         <>
-          <Typography variant="h3">JUST RELEASED</Typography>
+          <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
+            JUST RELEASED
+          </Typography>
           <Stack
             sx={ {
               columnGap: 2,

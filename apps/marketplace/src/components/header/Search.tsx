@@ -34,7 +34,7 @@ export const Search = () => {
     >
       { () => (
         <Form style={ { maxWidth: "500px", width: "100%" } }>
-          <Stack alignItems="center" direction="row">
+          <Stack alignItems="center" direction="row" px={ [2, 2, 0] }>
             <TextInputField
               endAdornment={
                 <IconButton
