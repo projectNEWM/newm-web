@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import Header from "../components/header/Header";
 import store from "../store";
 import Footer from "../components/footer/Footer";
+import { StyledComponentsRegistry } from "../common";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -40,15 +41,17 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           backgroundColor: theme.colors.black,
         } }
       >
-        <AppRouterCacheProvider options={ { enableCssLayer: true } }>
-          <Provider store={ store }>
-            <ThemeProvider theme={ theme }>
-              <Header />
-              { children }
-              <Footer />
-            </ThemeProvider>
-          </Provider>
-        </AppRouterCacheProvider>
+        <StyledComponentsRegistry>
+          <AppRouterCacheProvider options={ { enableCssLayer: true } }>
+            <Provider store={ store }>
+              <ThemeProvider theme={ theme }>
+                <Header />
+                { children }
+                <Footer />
+              </ThemeProvider>
+            </Provider>
+          </AppRouterCacheProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

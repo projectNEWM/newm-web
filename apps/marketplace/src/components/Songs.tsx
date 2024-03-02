@@ -13,12 +13,17 @@ const Songs: FunctionComponent = () => {
         <>
           <Typography variant="h3">JUST RELEASED</Typography>
           <Stack
-            columnGap={ 2 }
-            flexDirection="row"
-            flexWrap="wrap"
-            justifyContent="center"
-            mt={ 5 }
-            rowGap={ 3 }
+            sx={ {
+              columnGap: 2,
+              display: "grid",
+              gridAutoFlow: "column",
+              gridTemplateRows: "auto auto",
+              maxWidth: "100%",
+              mt: 5,
+              overflowX: "auto",
+              pb: 2.5,
+              rowGap: 3,
+            } }
           >
             { tempSongData.map((song) => {
               const genresString = song.genres.join(", ");
@@ -29,7 +34,6 @@ const Songs: FunctionComponent = () => {
                   isPlayable={ !!song.streamUrl }
                   key={ song.id }
                   price={ song.price }
-                  songId={ song.id }
                   subtitle={ genresString }
                   title={ song.title }
                   // eslint-disable-next-line @typescript-eslint/no-empty-function

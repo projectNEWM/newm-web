@@ -55,6 +55,7 @@ export interface Song {
   readonly parentalAdvisory?: string;
   readonly phonographicCopyrightOwner: string;
   readonly phonographicCopyrightYear: string;
+  readonly price?: string; //TODO: Update name after key added to song endpoint
   readonly publicationDate?: string;
   readonly releaseDate?: string;
   readonly streamUrl?: string;
