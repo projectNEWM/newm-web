@@ -24,6 +24,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { MintingStatus } from "@newm-web/types";
 import { useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
@@ -42,6 +43,8 @@ import {
   Featured,
   Owner,
   UploadSongRequest,
+  emptySong,
+  useGetSongQuery,
 } from "../../../modules/song";
 import {
   setIsConnectWalletModalOpen,
@@ -79,6 +82,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
+  const { data: song = emptySong } = useGetSongQuery(songId);
   const shouldShowOutletsWarning = !appleMusicProfile || !spotifyProfile;
 
   const languageOptions = useExtractProperty(languages, "language_name");
@@ -287,6 +291,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             } }
           >
             <TextInputField
+              disabled={ song.mintingStatus === MintingStatus.Declined }
               isOptional={ false }
               label="SONG TITLE"
               name="title"
@@ -352,6 +357,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   <SelectCoCeators
                     creditors={ values.creditors }
                     featured={ values.featured }
+                    isAddDeleteDisabled={
+                      song.mintingStatus === MintingStatus.Declined
+                    }
                     owners={ values.owners }
                     onChangeCreditors={ handleChangeCreditors }
                     onChangeFeatured={ handleChangeFeatured }

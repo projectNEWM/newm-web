@@ -7,10 +7,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
-import { MintingStatus } from "@newm-web/types";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
-import { commonYupValidation } from "../../../common";
+import { commonYupValidation, isSongEditable } from "../../../common";
 import {
   useGetGenresQuery,
   useGetISRCCountryCodesQuery,
@@ -201,7 +200,7 @@ const EditSong: FunctionComponent = () => {
    * Redirect if user manually navigates
    * to edit page after minting process started.
    */
-  if (!isLoading && mintingStatus !== MintingStatus.Undistributed) {
+  if (!isLoading && !isSongEditable(mintingStatus)) {
     navigate(`/home/library/view-details/${songId}`, { replace: true });
   }
 

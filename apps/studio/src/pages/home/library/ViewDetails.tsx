@@ -6,11 +6,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { MintingStatus } from "@newm-web/types";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
-import { NEWM_SUPPORT_EMAIL } from "../../../common";
+import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
   emptySong,
@@ -87,7 +86,7 @@ const ViewDetails: FunctionComponent = () => {
   /**
    * Redirect if user manually navigates to this page before minting is complete
    */
-  if (!isLoading && mintingStatus === MintingStatus.Undistributed) {
+  if (!isLoading && isSongEditable(mintingStatus)) {
     navigate(`/home/library/edit-song/${songId}`, { replace: true });
   }
 

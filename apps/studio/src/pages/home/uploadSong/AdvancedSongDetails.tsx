@@ -11,9 +11,13 @@ import {
   TextInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { useParams } from "react-router-dom";
+import { MintingStatus } from "@newm-web/types";
 import {
   UploadSongRequest,
+  emptySong,
   useGetEarliestReleaseDateQuery,
+  useGetSongQuery,
 } from "../../../modules/song";
 import {
   MIN_DISTRIBUTION_TIME,
@@ -22,9 +26,12 @@ import {
 } from "../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import { CoverRemixSample } from "../../../components";
+import { SongRouteParams } from "../library/types";
 
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
+  const { songId } = useParams<"songId">() as SongRouteParams;
+  const { data: song = emptySong } = useGetSongQuery(songId);
 
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -154,6 +161,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="composition"
+          disabled={ song.mintingStatus === MintingStatus.Declined }
           label="COMPOSITION COPYRIGHT"
           ownerFieldName="compositionCopyrightOwner"
           ref={ compositionCopyrightRef }
@@ -177,6 +185,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="phonographic"
+          disabled={ song.mintingStatus === MintingStatus.Declined }
           label="SOUND RECORDING COPYRIGHT"
           ownerFieldName="phonographicCopyrightOwner"
           ref={ phonographicCopyrightRef }
@@ -199,6 +208,7 @@ const AdvancedSongDetails = () => {
           yearFieldName="phonographicCopyrightYear"
         />
         <DropdownSelectField
+          disabled={ song.mintingStatus === MintingStatus.Declined }
           label="RELEASE CODE TYPE"
           name="barcodeType"
           options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
@@ -210,7 +220,11 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
-          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
+          disabled={
+            values.barcodeType === NONE_OPTION ||
+            !values.barcodeType ||
+            song.mintingStatus === MintingStatus.Declined
+          }
           label="RELEASE CODE NUMBER"
           name="barcodeNumber"
           placeholder="0000000000"
@@ -222,6 +236,7 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
+          disabled={ song.mintingStatus === MintingStatus.Declined }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }
