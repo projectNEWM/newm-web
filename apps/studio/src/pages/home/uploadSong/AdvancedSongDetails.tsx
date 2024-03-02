@@ -31,7 +31,7 @@ import { SongRouteParams } from "../library/types";
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
-  const { data: song = emptySong } = useGetSongQuery(songId);
+  const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
 
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

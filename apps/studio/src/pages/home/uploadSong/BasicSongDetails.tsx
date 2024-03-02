@@ -82,7 +82,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
-  const { data: song = emptySong } = useGetSongQuery(songId);
+  const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
   const shouldShowOutletsWarning = !appleMusicProfile || !spotifyProfile;
 
   const languageOptions = useExtractProperty(languages, "language_name");
