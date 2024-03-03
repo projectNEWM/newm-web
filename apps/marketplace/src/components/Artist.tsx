@@ -1,7 +1,8 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import Image from "next/image";
 import { FunctionComponent } from "react";
+import { Clickable } from "@newm-web/elements";
 import ArtistSkeleton from "./skeletons/ArtistSkeleton";
 
 interface ArtistProps {
@@ -32,12 +33,17 @@ const Artist: FunctionComponent<ArtistProps> = ({
   }
 
   return (
-    <Stack
-      direction={ orientation }
-      sx={ { cursor: "pointer" } }
+    <Clickable
+      aria-label={ `${title}-artist-profile` }
       onClick={ () => onSelectArtist(title) }
     >
-      <Box pb={ 2 } px={ 3.5 }>
+      <Stack
+        columnGap={ 3.5 }
+        direction={ orientation }
+        p={ 2 }
+        rowGap={ 2 }
+        sx={ { cursor: "pointer" } }
+      >
         <Image
           alt={ `${title}-artist-profile` }
           height={ 200 }
@@ -48,21 +54,21 @@ const Artist: FunctionComponent<ArtistProps> = ({
           style={ { borderRadius: "50%", maxWidth: "100%" } }
           width={ 200 }
         />
-      </Box>
-      <Stack
-        justifyContent="center"
-        spacing={ 0.25 }
-        textAlign={ orientation === "row" ? "start" : "center" }
-      >
-        <Typography variant="h4">{ title }</Typography>
-        <Typography
-          sx={ { color: theme.colors.grey100, fontWeight: 400 } }
-          variant="h4"
+        <Stack
+          justifyContent="center"
+          spacing={ 0.25 }
+          textAlign={ orientation === "row" ? "start" : "center" }
         >
-          { subtitle }
-        </Typography>
+          <Typography variant="h4">{ title }</Typography>
+          <Typography
+            sx={ { color: theme.colors.grey100, fontWeight: 400 } }
+            variant="h4"
+          >
+            { subtitle }
+          </Typography>
+        </Stack>
       </Stack>
-    </Stack>
+    </Clickable>
   );
 };
 

@@ -21,11 +21,13 @@ const ArtistSpotlight: FunctionComponent = () => {
   return (
     <Stack mb={ 4 }>
       <Stack alignItems="center" mb={ 5 } mt={ 20 }>
-        <Typography variant="h3">ARTIST SPOTLIGHT</Typography>
+        <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
+          ARTIST SPOTLIGHT
+        </Typography>
       </Stack>
 
-      <Grid justifyContent="center" container>
-        { tempArtistData.map(({ imageUrl, name, songCount }) => {
+      <Grid columnGap={ 7 } justifyContent="center" rowGap={ 4 } container>
+        { tempArtistData.map(({ imageUrl, name, songCount }, idx) => {
           return (
             <Grid
               display="flex"

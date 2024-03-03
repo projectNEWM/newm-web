@@ -9,7 +9,7 @@ const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
   orientation,
 }) => (
   <Stack spacing={ 0.25 }>
-    <Box pb={ 2 } px={ 3.5 }>
+    <Box>
       <Skeleton height={ 200 } variant="circular" width={ 200 } />
     </Box>
 

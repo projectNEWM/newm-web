@@ -5,6 +5,7 @@ export { default as Button } from "./lib/Button";
 export * from "./lib/Button";
 export { default as Checkbox } from "./lib/Checkbox";
 export * from "./lib/Checkbox";
+export { default as Clickable } from "./lib/styled/Clickable";
 export { default as Dialog } from "./lib/styled/Dialog";
 export { default as DropdownSelect } from "./lib/DropdownSelect";
 export * from "./lib/DropdownSelect";
