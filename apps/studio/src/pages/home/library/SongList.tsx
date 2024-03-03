@@ -20,8 +20,8 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import {
-  getResizedAlbumCoverImageUrl,
   isMoreThanThresholdSecondsLater,
+  resizeCloudinaryImage,
   useHlsJs,
   useWindowDimensions,
 } from "@newm-web/utils";
@@ -363,7 +363,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     ) }
                     <img
                       alt="Album cover"
-                      src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
+                      src={ resizeCloudinaryImage(song.coverArtUrl) }
                       style={ {
                         borderRadius: "4px",
                         height: "40px",
