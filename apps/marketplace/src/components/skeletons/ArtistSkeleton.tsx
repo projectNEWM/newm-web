@@ -10,7 +10,10 @@ const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
 }) => (
   <Stack spacing={ 1.25 }>
     <Box>
-      <Skeleton height={ 200 } variant="circular" width={ 200 } />
+      <Skeleton
+        sx={ { height: [150, 150, 200], width: [150, 150, 200] } }
+        variant="circular"
+      />
     </Box>
 
     <Stack

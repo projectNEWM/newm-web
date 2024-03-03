@@ -1,6 +1,5 @@
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { resizeCloudinaryImage } from "@newm-web/utils";
-import Image from "next/image";
 import { FunctionComponent } from "react";
 import { Clickable } from "@newm-web/elements";
 import ArtistSkeleton from "./skeletons/ArtistSkeleton";
@@ -43,15 +42,16 @@ const Artist: FunctionComponent<ArtistProps> = ({
         rowGap={ 2 }
         sx={ { cursor: "pointer" } }
       >
-        <Image
+        <Box
           alt={ `${title}-artist-profile` }
-          height={ 200 }
+          component="img"
+          height={ [150, 150, 200] }
           src={ resizeCloudinaryImage(imageUrl, {
             height: 200,
             width: 200,
           }) }
           style={ { borderRadius: "50%", maxWidth: "100%" } }
-          width={ 200 }
+          width={ [150, 150, 200] }
         />
         <Stack
           justifyContent="center"

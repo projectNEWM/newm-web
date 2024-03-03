@@ -26,7 +26,7 @@ const ArtistSpotlight: FunctionComponent = () => {
         </Typography>
       </Stack>
 
-      <Grid columnGap={ 15 } justifyContent="center" rowGap={ 5 } container>
+      <Grid columnGap={ [5, 5, 15] } justifyContent="center" rowGap={ 5 } container>
         { tempArtistData.map(({ imageUrl, name, songCount }, idx) => {
           return (
             <Grid display="flex" key={ imageUrl } sx={ { cursor: "pointer" } }>
