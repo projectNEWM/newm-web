@@ -8,7 +8,7 @@ interface ArtistSkeletonProps {
 const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
   orientation,
 }) => (
-  <Stack spacing={ 0.25 }>
+  <Stack spacing={ 1.25 }>
     <Box>
       <Skeleton height={ 200 } variant="circular" width={ 200 } />
     </Box>
@@ -16,6 +16,7 @@ const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
     <Stack
       alignItems={ orientation === "column" ? "center" : "row" }
       direction={ orientation }
+      spacing={ 0.25 }
     >
       <Skeleton height={ 30 } width={ 100 } />
       <Skeleton height={ 20 } width={ 60 } />
