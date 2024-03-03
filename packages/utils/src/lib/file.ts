@@ -98,11 +98,9 @@ export const isCloudinaryUrl = (url: string) => {
  * @returns
  */
 export const resizeCloudinaryImage = (
-  url: string,
+  url = "",
   options: ResizeImageOptions = { height: 40, width: 40 }
 ) => {
-  if (!url) return "";
-
   if (!isCloudinaryUrl(url)) return url;
 
   const renderOptions = url.match(/upload\/(.*?)\//);
