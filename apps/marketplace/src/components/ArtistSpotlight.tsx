@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import Artist from "./Artist";
 
-const Artists: FunctionComponent = () => {
+const ArtistSpotlight: FunctionComponent = () => {
   // TEMP: simulate data loading
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,7 +50,7 @@ const Artists: FunctionComponent = () => {
   );
 };
 
-export default Artists;
+export default ArtistSpotlight;
 
 const tempArtistData = [
   {

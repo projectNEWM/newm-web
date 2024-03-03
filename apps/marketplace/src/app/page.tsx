@@ -2,13 +2,13 @@
 import { FunctionComponent } from "react";
 import { Container } from "@mui/material";
 import Songs from "../components/Songs";
-import Artists from "../components/Artists";
+import ArtistSpotlight from "../components/ArtistSpotlight";
 
 const Home: FunctionComponent = () => {
   return (
     <Container sx={ { flexGrow: 1 } }>
       <Songs />
-      <Artists />
+      <ArtistSpotlight />
     </Container>
   );
 };
