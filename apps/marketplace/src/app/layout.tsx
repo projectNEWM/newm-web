@@ -5,9 +5,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
 import { Provider } from "react-redux";
-import Header from "../components/header/Header";
+import { Footer, Header } from "../components";
 import store from "../store";
-import Footer from "../components/footer/Footer";
 
 interface RootLayoutProps {
   readonly children: ReactNode;

@@ -19,23 +19,17 @@ const ArtistSpotlight: FunctionComponent = () => {
   }, []);
 
   return (
-    <Stack mb={ 4 }>
+    <Stack mb={ 8 }>
       <Stack alignItems="center" mb={ 5 } mt={ 20 }>
         <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
           ARTIST SPOTLIGHT
         </Typography>
       </Stack>
 
-      <Grid columnGap={ 7 } justifyContent="center" rowGap={ 4 } container>
+      <Grid columnGap={ 15 } justifyContent="center" rowGap={ 5 } container>
         { tempArtistData.map(({ imageUrl, name, songCount }, idx) => {
           return (
-            <Grid
-              display="flex"
-              key={ imageUrl }
-              mb={ 5 }
-              pr={ 2 }
-              sx={ { cursor: "pointer" } }
-            >
+            <Grid display="flex" key={ imageUrl } sx={ { cursor: "pointer" } }>
               <Artist
                 imageUrl={ imageUrl }
                 isLoading={ isLoading }

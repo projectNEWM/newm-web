@@ -40,7 +40,6 @@ const Artist: FunctionComponent<ArtistProps> = ({
       <Stack
         columnGap={ 3.5 }
         direction={ orientation }
-        p={ 2 }
         rowGap={ 2 }
         sx={ { cursor: "pointer" } }
       >

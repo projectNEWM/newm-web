@@ -1,8 +1,7 @@
 "use client";
 import { FunctionComponent } from "react";
 import { Container } from "@mui/material";
-import Songs from "../components/Songs";
-import ArtistSpotlight from "../components/ArtistSpotlight";
+import { ArtistSpotlight, Songs } from "../components";
 
 const Home: FunctionComponent = () => {
   return (
