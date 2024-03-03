@@ -36,12 +36,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
       aria-label={ `${title}-artist-profile` }
       onClick={ () => onSelectArtist(title) }
     >
-      <Stack
-        columnGap={ 3.5 }
-        direction={ orientation }
-        rowGap={ 2 }
-        sx={ { cursor: "pointer" } }
-      >
+      <Stack columnGap={ 3.5 } direction={ orientation } rowGap={ 2 }>
         <Box
           alt={ `${title}-artist-profile` }
           component="img"

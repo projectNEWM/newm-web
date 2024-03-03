@@ -6,6 +6,7 @@ const Clickable = styled("button")`
   color: inherit;
   margin: 0;
   padding: 0;
+  cursor: pointer;
   border-radius: 8px;
   &:hover * {
     text-decoration: underline;
