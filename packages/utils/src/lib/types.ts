@@ -62,3 +62,8 @@ export interface UseHlsJsResult {
   readonly playSong: (song: Song) => void;
   readonly stopSong: (song?: Song) => void;
 }
+
+export interface ResizeImageOptions {
+  readonly height: number;
+  readonly width: number;
+}

@@ -1,4 +1,8 @@
-import { ResizeOptions, ValidateDimensionsParams } from "./types";
+import {
+  ResizeImageOptions,
+  ResizeOptions,
+  ValidateDimensionsParams,
+} from "./types";
 
 /**
  * Checks if the aspect ratio of an image is 1:1.
@@ -82,6 +86,31 @@ export const getFileBinary = async (
 
 export const isCloudinaryUrl = (url: string) => {
   return url.split("/")[2] === "res.cloudinary.com";
+};
+
+/**
+ * Replaces any resize params present in a cloudinary image
+ * url with new width and height params. If no resize params
+ * are present, resize params are added in correct place.
+ */
+export const resizeCloudinaryImage = (
+  url: string,
+  options: ResizeImageOptions
+) => {
+  if (!isCloudinaryUrl(url)) return url;
+
+  const renderOptions = url.match(/upload\/(.*?)\//);
+  if (!renderOptions) return url;
+
+  const matched = renderOptions[0];
+  // if no resize params, captured text in url wil match v123...
+  const isNotResizeParams = matched.match(/v\d+/);
+  const textToReplace = isNotResizeParams ? "upload/" : matched;
+
+  return url.replace(
+    textToReplace,
+    `upload/w_${options.width},h_${options.height},c_fill,q_auto,f_auto/`
+  );
 };
 
 /**
