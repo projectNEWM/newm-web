@@ -126,7 +126,8 @@
   },
   "engineStrict": true,
   "engines": {
-    "node": ">=18.19.0 <21"
+    "node": ">=18.19.0 <19",
+    "npm": ">=10.2.3 <11"
   },
   "browserslist": {
     "production": [
