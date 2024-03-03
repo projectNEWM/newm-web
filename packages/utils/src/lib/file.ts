@@ -103,7 +103,7 @@ export const resizeCloudinaryImage = (
   if (!renderOptions) return url;
 
   const matched = renderOptions[0];
-  // if no resize params, captured text in url wil match v123...
+  // if no resize params in cloudinary url, captured text will match v123...
   const isNotResizeParams = matched.match(/v\d+/);
   const textToReplace = isNotResizeParams ? "upload/" : matched;
 
