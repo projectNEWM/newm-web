@@ -7,7 +7,7 @@ import {
   isCloudinaryUrl,
   sleep,
 } from "@newm-web/utils";
-import { Song } from "@newm-web/types";
+import { MintingStatus, Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
@@ -439,10 +439,11 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      const isDeclined = body.mintingStatus === MintingStatus.Declined;
+
       if (
-        body.owners?.length ||
-        body.creditors?.length ||
-        body.featured?.length
+        !isDeclined &&
+        (body.owners?.length || body.creditors?.length || body.featured?.length)
       ) {
         await dispatch(
           updateCollaborations({

@@ -212,6 +212,7 @@ const EditSong: FunctionComponent = () => {
     const patchValues = {
       ...values,
       isMinting: false,
+      mintingStatus,
       shouldRedirect: false,
     };
 
