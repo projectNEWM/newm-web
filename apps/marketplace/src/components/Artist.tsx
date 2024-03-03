@@ -39,7 +39,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
     >
       <Box pb={ 2 } px={ 3.5 }>
         <Image
-          alt="example-artist"
+          alt={ `${title}-artist-profile` }
           height={ 200 }
           src={ resizeCloudinaryImage(imageUrl, {
             height: 200,
