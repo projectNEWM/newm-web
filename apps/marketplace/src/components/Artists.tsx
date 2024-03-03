@@ -19,7 +19,7 @@ const Artists: FunctionComponent = () => {
   }, []);
 
   return (
-    <Stack>
+    <Stack mb={ 4 }>
       <Stack alignItems="center" mb={ 5 } mt={ 20 }>
         <Typography variant="h3">ARTIST SPOTLIGHT</Typography>
       </Stack>
@@ -53,6 +53,18 @@ const Artists: FunctionComponent = () => {
 export default Artists;
 
 const tempArtistData = [
+  {
+    imageUrl:
+      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+    name: "Lorem Ipsum",
+    songCount: 4,
+  },
+  {
+    imageUrl:
+      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
+    name: "Lorem Ipsum",
+    songCount: 4,
+  },
   {
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
