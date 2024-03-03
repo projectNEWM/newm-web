@@ -1,8 +1,4 @@
-import {
-  ResizeImageOptions,
-  ResizeOptions,
-  ValidateDimensionsParams,
-} from "./types";
+import { ResizeImageOptions, ValidateDimensionsParams } from "./types";
 
 /**
  * Checks if the aspect ratio of an image is 1:1.

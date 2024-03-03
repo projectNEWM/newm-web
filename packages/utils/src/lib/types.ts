@@ -28,11 +28,6 @@ export type CustomError = {
   status: number;
 };
 
-export interface ResizeOptions {
-  height: number;
-  width: number;
-}
-
 export interface EmptyResponse {
   readonly data: null;
 }
