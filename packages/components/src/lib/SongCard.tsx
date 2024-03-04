@@ -18,7 +18,6 @@ interface SongCardProps {
   onSubtitleClick?: () => void;
   onTitleClick?: () => void;
   price?: string;
-  songId: string;
   subtitle: string;
   title: string;
 }
@@ -33,7 +32,6 @@ export const SongCard = ({
   onPriceClick,
   onSubtitleClick,
   price,
-  songId,
   subtitle,
 }: SongCardProps) => {
   const theme = useTheme();

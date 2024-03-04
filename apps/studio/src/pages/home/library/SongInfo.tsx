@@ -178,7 +178,6 @@ const SongInfo = () => {
                   label="SONG TITLE"
                   name="title"
                   title={ values.title || "" }
-                  widthType="full"
                 />
 
                 <TextInputField
