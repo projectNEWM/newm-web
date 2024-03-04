@@ -74,22 +74,35 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 display: "flex",
                 flexDirection: "column",
                 p: 2,
-                rowGap: 2,
+                rowGap: 2.5,
               } }
             >
               <Typography id="modal-title" variant="body2">
                 Add new
               </Typography>
 
-              <TextInputField
-                isOptional={ false }
-                label="EMAIL"
-                name="email"
-                placeholder="john.smith@gmail.com"
-                widthType="full"
-              />
+              <Stack
+                columnGap={ 2 }
+                direction={ ["column", "row", "row"] }
+                rowGap={ 2 }
+              >
+                <TextInputField
+                  isOptional={ false }
+                  label="EMAIL"
+                  name="email"
+                  placeholder="john.smith@gmail.com"
+                />
 
-              <HorizontalLine mt={ 2 } />
+                <DropdownSelectField
+                  isOptional={ false }
+                  label="ROLE"
+                  name="role"
+                  options={ roles }
+                  placeholder="Select role"
+                />
+              </Stack>
+
+              <HorizontalLine />
 
               <SwitchInputField
                 description={ "Is this individual a featured artist?" }
@@ -118,16 +131,7 @@ const AddOwnerModal: FunctionComponent<AddOwnerModalProps> = ({
                 </Typography>
               ) : null }
 
-              <DropdownSelectField
-                isOptional={ false }
-                label="ROLE"
-                name="role"
-                options={ roles }
-                placeholder="Select role"
-                widthType="full"
-              />
-
-              <HorizontalLine mt={ 2 } />
+              <HorizontalLine />
 
               <Stack
                 sx={ {

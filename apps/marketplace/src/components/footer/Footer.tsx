@@ -11,7 +11,7 @@ import {
   NEWM_MARKETPLACE_TERMS_OF_SERVICE_URL,
   NEWM_TELEGRAM_URL,
   NEWM_X_URL,
-} from "../../common/constants";
+} from "../../common";
 
 const Footer: FunctionComponent = () => {
   const theme = useTheme();
