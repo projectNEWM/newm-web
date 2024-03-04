@@ -130,7 +130,7 @@ export const commonYupValidation = {
         includesGenres(genreOptions, genre)
       )
       .min(1, "At least one genre is required")
-      .max(5, "Maximum of 5 genres allowed"),
+      .max(2, "Maximum of two genres allowed"),
   ipi: Yup.string().matches(
     REGEX_9_TO_11_DIGITS,
     "Field should contain 9 to 11 digits"
