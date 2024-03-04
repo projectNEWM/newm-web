@@ -4,7 +4,7 @@ import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
   getImageSrc,
-  getResizedAlbumCoverImageUrl,
+  resizeCloudinaryImage,
   useWindowDimensions,
 } from "@newm-web/utils";
 import { SongCardSkeleton } from "@newm-web/elements";
@@ -96,7 +96,7 @@ export const SongCard = ({
           height={ isWidthAboveMd ? 260 : 150 }
           src={
             coverArtUrl
-              ? getResizedAlbumCoverImageUrl(coverArtUrl, {
+              ? resizeCloudinaryImage(coverArtUrl, {
                   height: 200,
                   width: 200,
                 })
