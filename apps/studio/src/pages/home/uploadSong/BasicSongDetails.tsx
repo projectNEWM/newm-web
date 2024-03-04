@@ -296,7 +296,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               label="SONG TITLE"
               name="title"
               placeholder="Give your track a name..."
-              widthType="full"
             />
 
             <DropdownMultiSelectField
