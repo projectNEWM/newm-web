@@ -178,38 +178,43 @@ export default function OwnersTable({
                       whiteSpace: "nowrap",
                     } }
                   >
-                    <Stack alignItems="center" direction="row" gap={ 1 }>
-                      { pictureUrl ? (
-                        <img
-                          alt="Profile"
-                          src={ resizeCloudinaryImage(pictureUrl, {
-                            height: 80,
-                            width: 80,
-                          }) }
-                          style={ {
-                            borderRadius: "50%",
-                            height: "40px",
-                            width: "40px",
-                          } }
-                        />
-                      ) : (
+                    { pictureUrl ? (
+                      <img
+                        alt="profile"
+                        src={ resizeCloudinaryImage(pictureUrl, {
+                          height: 80,
+                          width: 80,
+                        }) }
+                        style={ {
+                          borderRadius: "50%",
+                          height: "40px",
+                          width: "40px",
+                        } }
+                      />
+                    ) : (
+                      <Box
+                        alignItems="center"
+                        display="flex"
+                        height="40px"
+                        justifyContent="center"
+                        width="40px"
+                      >
                         <AccountCircleIcon
                           sx={ {
                             color: theme.colors.grey200,
                             fontSize: "46px",
-                            marginLeft: "-2px",
                           } }
                         />
-                      ) }
+                      </Box>
+                    ) }
 
-                      { email ? (
-                        `${firstName} ${lastName}`
-                      ) : (
-                        <Typography fontStyle="italic" fontWeight={ 400 }>
-                          Waiting on account creation
-                        </Typography>
-                      ) }
-                    </Stack>
+                    { id ? (
+                      `${firstName} ${lastName}`
+                    ) : (
+                      <Typography fontStyle="italic" fontWeight={ 400 }>
+                        Waiting on account creation
+                      </Typography>
+                    ) }
                   </Stack>
                 </TableCell>
                 <TableCell>

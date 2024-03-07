@@ -283,7 +283,7 @@ const EditSong: FunctionComponent = () => {
         <ProfileImage
           alt="Song cover art"
           height="90px"
-          src={ resizeCloudinaryImage(coverArtUrl, { height: 90, width: 90 }) }
+          src={ resizeCloudinaryImage(coverArtUrl, { height: 180, width: 180 }) }
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
