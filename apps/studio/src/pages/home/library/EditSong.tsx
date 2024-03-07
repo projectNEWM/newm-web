@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { MintingStatus } from "@newm-web/types";
+import { resizeCloudinaryImage } from "@newm-web/utils";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
@@ -282,7 +283,7 @@ const EditSong: FunctionComponent = () => {
         <ProfileImage
           alt="Song cover art"
           height="90px"
-          src={ coverArtUrl }
+          src={ resizeCloudinaryImage(coverArtUrl, { height: 180, width: 180 }) }
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }

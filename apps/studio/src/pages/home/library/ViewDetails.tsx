@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { MintingStatus } from "@newm-web/types";
+import { resizeCloudinaryImage } from "@newm-web/utils";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
@@ -105,7 +106,7 @@ const ViewDetails: FunctionComponent = () => {
         <ProfileImage
           alt="Song cover art"
           height="90px"
-          src={ coverArtUrl }
+          src={ resizeCloudinaryImage(coverArtUrl, { height: 180, width: 180 }) }
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
