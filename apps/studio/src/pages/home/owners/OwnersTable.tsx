@@ -180,7 +180,7 @@ export default function OwnersTable({
                   >
                     { pictureUrl ? (
                       <img
-                        alt="profile"
+                        alt="Profile"
                         src={ resizeCloudinaryImage(pictureUrl, {
                           height: 80,
                           width: 80,
