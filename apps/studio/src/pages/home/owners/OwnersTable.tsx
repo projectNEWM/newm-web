@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@newm-web/theme";
-import { useWindowDimensions } from "@newm-web/utils";
+import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import {
   TableCell,
   TableHeadCell,
@@ -178,18 +178,21 @@ export default function OwnersTable({
                       whiteSpace: "nowrap",
                     } }
                   >
-                    { pictureUrl ? (
-                      <img
-                        alt="Profile"
-                        src={ pictureUrl }
-                        style={ {
-                          borderRadius: "50%",
-                          height: "40px",
-                          width: "40px",
-                        } }
-                      />
-                    ) : (
-                      <Stack alignItems="center" direction="row" gap={ 1 }>
+                    <Stack alignItems="center" direction="row" gap={ 1 }>
+                      { pictureUrl ? (
+                        <img
+                          alt="Profile"
+                          src={ resizeCloudinaryImage(pictureUrl, {
+                            height: 80,
+                            width: 80,
+                          }) }
+                          style={ {
+                            borderRadius: "50%",
+                            height: "40px",
+                            width: "40px",
+                          } }
+                        />
+                      ) : (
                         <AccountCircleIcon
                           sx={ {
                             color: theme.colors.grey200,
@@ -197,13 +200,16 @@ export default function OwnersTable({
                             marginLeft: "-2px",
                           } }
                         />
+                      ) }
 
+                      { email ? (
+                        `${firstName} ${lastName}`
+                      ) : (
                         <Typography fontStyle="italic" fontWeight={ 400 }>
                           Waiting on account creation
                         </Typography>
-                      </Stack>
-                    ) }
-                    { firstName && lastName ? `${firstName} ${lastName}` : null }
+                      ) }
+                    </Stack>
                   </Stack>
                 </TableCell>
                 <TableCell>
