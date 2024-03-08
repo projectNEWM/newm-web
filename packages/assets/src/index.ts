@@ -24,6 +24,7 @@ import PlayButton from "./lib/icons/PlayButton";
 import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
 import SoundWave from "./lib/icons/SoundWave";
 import Suitcase from "./lib/icons/Suitcase";
+import Search from "./lib/icons/Search";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
 import TwitterLogo from "./lib/icons/TwitterLogo";
 import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
@@ -57,6 +58,7 @@ export {
   PeopleIcon,
   PlayButton,
   SelectedCheckboxIcon,
+  Search,
   SoundWave,
   Suitcase,
   TimeCircleLine,

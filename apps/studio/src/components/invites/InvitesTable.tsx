@@ -11,7 +11,7 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { TableCell, TableHeadCell } from "@newm-web/elements";
-import { getResizedAlbumCoverImageUrl, useHlsJs } from "@newm-web/utils";
+import { resizeCloudinaryImage, useHlsJs } from "@newm-web/utils";
 import theme from "@newm-web/theme";
 import { PlayerState, Song } from "@newm-web/types";
 
@@ -245,7 +245,7 @@ const InvitesTable: FunctionComponent<InvitesTableProps> = ({
                       { coverArtUrl ? (
                         <img
                           alt="Song cover"
-                          src={ getResizedAlbumCoverImageUrl(coverArtUrl, {
+                          src={ resizeCloudinaryImage(coverArtUrl, {
                             height: 50,
                             width: 50,
                           }) }
