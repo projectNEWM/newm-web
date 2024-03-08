@@ -3,9 +3,9 @@ import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { SortOrder } from "@newm-web/types";
+import { Song, SortOrder } from "@newm-web/types";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import SongRoyaltiesList from "./SongRoyaltiesList";
+import SongRoyaltiesList, { SongRoyalties } from "./SongRoyaltiesList";
 import { EmptyPortfolio } from "./EmptyPortfolio";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
 
@@ -32,6 +32,33 @@ const Portfolio: FunctionComponent = () => {
 
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+
+  /* TODO: This is a temporary function to generate random royalties for the 
+  songs. Song title length is used as a temp unique differentiator to generate 
+  royalties. The song title length conditionals will be replaced with data from 
+  the backend earnings table. */
+  const getTempSongRoyalties = (songs: Song[]): SongRoyalties[] => {
+    const testDateFilter = new Date(2024, 3, 1);
+    const tempRoyaltyAmount = 0.35;
+    return songs.map((song) => {
+      if (song.title.length % 2 === 0) {
+        return {
+          royaltyAmount: tempRoyaltyAmount + song.title.length,
+          royaltyCreatedAt: new Date(
+            testDateFilter.getTime() +
+              Math.random() * (new Date().getTime() - testDateFilter.getTime())
+          ),
+          song,
+        };
+      } else {
+        // Return 0 for songs with no Royalties, temp use odd song title lengths
+        return {
+          royaltyAmount: 0,
+          song,
+        };
+      }
+    });
+  };
 
   useEffect(() => {
     getUserWalletSongs({
@@ -79,7 +106,7 @@ const Portfolio: FunctionComponent = () => {
         rows={ songs.length }
         rowsPerPage={ rowsPerPage }
         setPage={ setPage }
-        songRoyalties={ songs }
+        songRoyalties={ getTempSongRoyalties(songs) }
         totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
       />
     </Box>

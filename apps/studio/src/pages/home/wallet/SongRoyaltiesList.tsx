@@ -23,13 +23,19 @@ import {
 } from "../../../components";
 import { useAppDispatch, useAppSelector } from "../../../common";
 
+export interface SongRoyalties {
+  royaltyAmount: number;
+  royaltyCreatedAt?: Date;
+  song: Song;
+}
+
 interface SongRoyaltiesListProps {
   lastRowOnPage: number;
   page: number;
   rows: number;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
-  songRoyalties: ReadonlyArray<Song>;
+  songRoyalties: Array<SongRoyalties>;
   totalCountOfSongs: number;
 }
 
@@ -108,41 +114,48 @@ export default function SongRoyaltiesList({
             </TableHead>
 
             <TableBody>
-              { songRoyalties.map((song) => (
-                <StyledTableRow key={ song.id }>
-                  <StyledTableCell>
-                    <Box sx={ { alignItems: "center", display: "flex" } }>
-                      <img
-                        alt="Album cover"
-                        src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
-                        style={ {
-                          borderRadius: "50%",
-                        } }
-                      />
-                      <Box
-                        sx={ {
-                          maxWidth: { sm: "unset", xs: "200px" },
-                          paddingLeft: "12px",
-                          whiteSpace: "nowrap",
-                        } }
-                      >
-                        <Typography fontWeight={ 500 }>{ song.title }</Typography>
+              { songRoyalties
+                .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
+                .map((songRoyalty) => (
+                  <StyledTableRow key={ songRoyalty.song.id }>
+                    <StyledTableCell>
+                      <Box sx={ { alignItems: "center", display: "flex" } }>
+                        <img
+                          alt="Album cover"
+                          src={ getResizedAlbumCoverImageUrl(
+                            songRoyalty.song.coverArtUrl
+                          ) }
+                          style={ {
+                            borderRadius: "50%",
+                          } }
+                        />
+                        <Box
+                          sx={ {
+                            maxWidth: { sm: "unset", xs: "200px" },
+                            paddingLeft: "12px",
+                            whiteSpace: "nowrap",
+                          } }
+                        >
+                          <Typography fontWeight={ 500 }>
+                            { songRoyalty.song.title }
+                          </Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <Typography fontSize={ 12 } fontWeight={ 700 }>
-                      { currency(0, {
-                        pattern: "#!",
-                        symbol: "Ɲ",
-                      }).format() }
-                    </Typography>
-                  </StyledTableCell>
-                </StyledTableRow>
-              )) }
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <Typography fontSize={ 12 } fontWeight={ 700 }>
+                        { currency(songRoyalty.royaltyAmount, {
+                          pattern: "#!",
+                          symbol: "Ɲ",
+                        }).format() }
+                      </Typography>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                )) }
             </TableBody>
 
             { totalCountOfSongs > rows && (
+              // TODO: Figure out pagination with sorted Royalty Earnings data
               <TablePagination
                 cellStyles={ { paddingTop: "12px" } }
                 colSpan={ 3 }
