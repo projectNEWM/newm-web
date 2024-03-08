@@ -95,6 +95,7 @@ export default function SongRoyaltiesList({
             maxWidth: TABLE_WIDTH,
           } }
         >
+          { /* TODO: Add filtering on dates */ }
           <Table aria-label="Song List" size="small">
             <TableHead>
               <TableRow>
@@ -114,48 +115,45 @@ export default function SongRoyaltiesList({
             </TableHead>
 
             <TableBody>
-              { songRoyalties
-                .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
-                .map((songRoyalty) => (
-                  <StyledTableRow key={ songRoyalty.song.id }>
-                    <StyledTableCell>
-                      <Box sx={ { alignItems: "center", display: "flex" } }>
-                        <img
-                          alt="Album cover"
-                          src={ getResizedAlbumCoverImageUrl(
-                            songRoyalty.song.coverArtUrl
-                          ) }
-                          style={ {
-                            borderRadius: "50%",
-                          } }
-                        />
-                        <Box
-                          sx={ {
-                            maxWidth: { sm: "unset", xs: "200px" },
-                            paddingLeft: "12px",
-                            whiteSpace: "nowrap",
-                          } }
-                        >
-                          <Typography fontWeight={ 500 }>
-                            { songRoyalty.song.title }
-                          </Typography>
-                        </Box>
+              { songRoyalties.map((songRoyalty) => (
+                <StyledTableRow key={ songRoyalty.song.id }>
+                  <StyledTableCell>
+                    <Box sx={ { alignItems: "center", display: "flex" } }>
+                      <img
+                        alt="Album cover"
+                        src={ getResizedAlbumCoverImageUrl(
+                          songRoyalty.song.coverArtUrl
+                        ) }
+                        style={ {
+                          borderRadius: "50%",
+                        } }
+                      />
+                      <Box
+                        sx={ {
+                          maxWidth: { sm: "unset", xs: "200px" },
+                          paddingLeft: "12px",
+                          whiteSpace: "nowrap",
+                        } }
+                      >
+                        <Typography fontWeight={ 500 }>
+                          { songRoyalty.song.title }
+                        </Typography>
                       </Box>
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      <Typography fontSize={ 12 } fontWeight={ 700 }>
-                        { currency(songRoyalty.royaltyAmount, {
-                          pattern: "#!",
-                          symbol: "Ɲ",
-                        }).format() }
-                      </Typography>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                )) }
+                    </Box>
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Typography fontSize={ 12 } fontWeight={ 700 }>
+                      { currency(songRoyalty.royaltyAmount, {
+                        pattern: "#!",
+                        symbol: "Ɲ",
+                      }).format() }
+                    </Typography>
+                  </StyledTableCell>
+                </StyledTableRow>
+              )) }
             </TableBody>
 
             { totalCountOfSongs > rows && (
-              // TODO: Figure out pagination with sorted Royalty Earnings data
               <TablePagination
                 cellStyles={ { paddingTop: "12px" } }
                 colSpan={ 3 }

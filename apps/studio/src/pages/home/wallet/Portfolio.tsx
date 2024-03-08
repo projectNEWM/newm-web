@@ -33,40 +33,45 @@ const Portfolio: FunctionComponent = () => {
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
 
+  const [songRoyalties, setSongRoyalties] = useState<SongRoyalties[]>([]);
   /* TODO: This is a temporary function to generate random royalties for the 
   songs. Song title length is used as a temp unique differentiator to generate 
   royalties. The song title length conditionals will be replaced with data from 
   the backend earnings table. */
-  const getTempSongRoyalties = (songs: Song[]): SongRoyalties[] => {
+  const getTempSongRoyalties = (
+    songs: Song[],
+    rowsToRender: number
+  ): SongRoyalties[] => {
     const testDateFilter = new Date(2024, 3, 1);
     const tempRoyaltyAmount = 0.35;
-    return songs.map((song) => {
-      if (song.title.length % 2 === 0) {
-        return {
-          royaltyAmount: tempRoyaltyAmount + song.title.length,
-          royaltyCreatedAt: new Date(
-            testDateFilter.getTime() +
-              Math.random() * (new Date().getTime() - testDateFilter.getTime())
-          ),
-          song,
-        };
-      } else {
-        // Return 0 for songs with no Royalties, temp use odd song title lengths
-        return {
-          royaltyAmount: 0,
-          song,
-        };
-      }
-    });
+    return songs
+      .map((song) => {
+        if (song.title.length % 2 === 0) {
+          return {
+            royaltyAmount: tempRoyaltyAmount + song.title.length,
+            royaltyCreatedAt: new Date(
+              testDateFilter.getTime() +
+                Math.random() *
+                  (new Date().getTime() - testDateFilter.getTime())
+            ),
+            song,
+          };
+        } else {
+          // Return 0 for songs with no Royalties, temp use odd song title lengths
+          return {
+            royaltyAmount: 0,
+            song,
+          };
+        }
+      })
+      .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
+      .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
   };
 
   useEffect(() => {
-    getUserWalletSongs({
-      limit: skeletonRows,
-      offset: pageIdx * skeletonRows,
-      sortOrder: SortOrder.Desc,
-    });
-  }, [getUserWalletSongs, pageIdx, skeletonRows, wallet]);
+    // Pagination was removed as Song creation date is not used as sorting criteria
+    getUserWalletSongs({});
+  }, [getUserWalletSongs, wallet]);
 
   useEffect(() => {
     const skeletonYPos = skeletonRef.current?.offsetTop || 0;
@@ -82,7 +87,9 @@ const Portfolio: FunctionComponent = () => {
 
     setSkeletonRows(rowsToRender);
     setRowsPerPage(rowsToRender);
-  }, [windowHeight]);
+    // TODO: Temp to handle pagination for Song Royalties
+    setSongRoyalties(getTempSongRoyalties(songs, rowsToRender));
+  }, [songs, windowHeight]);
 
   if (isLoading) {
     return (
@@ -103,10 +110,10 @@ const Portfolio: FunctionComponent = () => {
       <SongRoyaltiesList
         lastRowOnPage={ lastRowOnPage }
         page={ page }
-        rows={ songs.length }
+        rows={ songRoyalties.length }
         rowsPerPage={ rowsPerPage }
         setPage={ setPage }
-        songRoyalties={ getTempSongRoyalties(songs) }
+        songRoyalties={ songRoyalties }
         totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
       />
     </Box>
