@@ -14,7 +14,8 @@ export const EmptyPortfolio: FunctionComponent = () => {
         Your portfolio is empty
       </Typography>
       <Typography fontSize="14px" fontWeight={ 400 } variant="h4">
-        All distributed and minted songs will be shown here
+        Only songs with stream tokens held in your connected wallet will be
+        shown here
       </Typography>
       <Button
         color="music"
@@ -23,7 +24,7 @@ export const EmptyPortfolio: FunctionComponent = () => {
         width="compact"
         onClick={ () => navigate("/home/upload-song") }
       >
-        Distribute & mint your first song!
+        Distribute & mint songs!
       </Button>
     </Stack>
   );
