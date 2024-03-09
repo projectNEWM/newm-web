@@ -18,7 +18,7 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
-import { useWindowDimensions } from "@newm-web/utils";
+import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import theme from "@newm-web/theme";
 import {
   NEWM_CLICKUP_FORM_URL,
@@ -76,7 +76,10 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             <ProfileImage
               aria-label="profile image"
               referrerPolicy="no-referrer"
-              src={ pictureUrl }
+              src={ resizeCloudinaryImage(pictureUrl, {
+                height: 280,
+                width: 280,
+              }) }
             />
           ) }
 

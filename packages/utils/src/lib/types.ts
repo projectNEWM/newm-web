@@ -28,11 +28,6 @@ export type CustomError = {
   status: number;
 };
 
-export interface ResizeOptions {
-  height: number;
-  width: number;
-}
-
 export interface EmptyResponse {
   readonly data: null;
 }
@@ -61,4 +56,9 @@ export interface UseHlsJsParams {
 export interface UseHlsJsResult {
   readonly playSong: (song: Song) => void;
   readonly stopSong: (song?: Song) => void;
+}
+
+export interface ResizeImageOptions {
+  readonly height: number;
+  readonly width: number;
 }

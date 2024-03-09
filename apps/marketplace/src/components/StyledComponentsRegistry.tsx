@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
 
-export const StyledComponentsRegistry = ({
+const StyledComponentsRegistry = ({
   children,
 }: {
   children: React.ReactNode;
@@ -33,3 +33,5 @@ export const StyledComponentsRegistry = ({
     </StyleSheetManager>
   );
 };
+
+export default StyledComponentsRegistry;

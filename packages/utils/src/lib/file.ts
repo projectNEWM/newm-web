@@ -1,4 +1,4 @@
-import { ResizeOptions, ValidateDimensionsParams } from "./types";
+import { ResizeImageOptions, ValidateDimensionsParams } from "./types";
 
 /**
  * Checks if the aspect ratio of an image is 1:1.
@@ -85,32 +85,30 @@ export const isCloudinaryUrl = (url: string) => {
 };
 
 /**
- * Modifies image URL to the provided dimensions, if a cloudinary image is provided.
+ * Replaces any resize params present in a cloudinary image
+ * url with new width and height params. If no resize params
+ * are present, resize params are added in correct place.
  *
- * @param {string | undefined} url - The original URL of image.
- * @param {ResizeOptions} options - The desired dimensions for the image. Default is { height: 40, width: 40 }.
- *
- * @returns {string} The URL of the resized image, or the original URL if resizing is not applicable.
- * Returns an empty string if the URL is undefined.
+ * @param url
+ * @param options
+ * @returns
  */
-export const getResizedAlbumCoverImageUrl = (
-  url: string | undefined,
-  options: ResizeOptions = { height: 40, width: 40 }
+export const resizeCloudinaryImage = (
+  url = "",
+  options: ResizeImageOptions = { height: 40, width: 40 }
 ) => {
-  if (!url) {
-    return "";
-  }
+  if (!isCloudinaryUrl(url)) return url;
 
-  if (!isCloudinaryUrl(url)) {
-    return url;
-  }
+  const renderOptions = url.match(/upload\/(.*?)\//);
+  if (!renderOptions) return url;
 
-  const transformation = url.includes("upload/c_fit,w_5000,h_5000")
-    ? "upload/c_limit,w_4000,h_4000"
-    : "upload/";
+  const matched = renderOptions[0];
+  // if no resize params in url, captured text will match upload/v123.../
+  const isNotResizeParams = matched.match(/^upload\/v\d+\/$/);
+  const textToReplace = isNotResizeParams ? "upload/" : matched;
 
   return url.replace(
-    transformation,
+    textToReplace,
     `upload/w_${options.width},h_${options.height},c_fill,q_auto,f_auto/`
   );
 };
