@@ -584,6 +584,24 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `v1/collaborations/${collaborationId}/reply`,
       }),
     }),
+    reprocessSong: build.query<void, string>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while reprocessing your song",
+              severity: "error",
+            })
+          );
+        }
+      },
+      query: (songId) => ({
+        method: "POST",
+        url: `v1/songs/${songId}/redistribute`,
+      }),
+    }),
     submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       invalidatesTags: [Tags.Song],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {

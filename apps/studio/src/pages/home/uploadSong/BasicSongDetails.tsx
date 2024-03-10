@@ -291,7 +291,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             } }
           >
             <TextInputField
-              disabled={ song.mintingStatus === MintingStatus.Declined }
               isOptional={ false }
               label="SONG TITLE"
               name="title"

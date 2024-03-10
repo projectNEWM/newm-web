@@ -491,7 +491,16 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          await submitMintSongPayment(body.id, dispatch);
+          // If declined, don't collect payment again
+          if (isDeclined) {
+            const reprocessSongResp = await dispatch(
+              songApi.endpoints.reprocessSong.initiate(body.id)
+            );
+
+            if ("error" in reprocessSongResp) return;
+          } else {
+            await submitMintSongPayment(body.id, dispatch);
+          }
         }
       }
 

@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Link, Stack, Tooltip, Typography } from "@mui/material";
 import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -8,9 +8,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { resizeCloudinaryImage } from "@newm-web/utils";
+import { MintingStatus } from "@newm-web/types";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
-import { commonYupValidation, isSongEditable } from "../../../common";
+import {
+  NEWM_SUPPORT_EMAIL,
+  commonYupValidation,
+  isSongEditable,
+} from "../../../common";
 import {
   useGetGenresQuery,
   useGetISRCCountryCodesQuery,
@@ -157,7 +162,7 @@ const EditSong: FunctionComponent = () => {
     id: songId,
     ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
-    isMinting: false,
+    isMinting: isSongEditable(mintingStatus),
     isrc,
     iswc,
     language,
@@ -289,18 +294,35 @@ const EditSong: FunctionComponent = () => {
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
-          <Button
-            color="white"
-            disabled={ !getIsSongDeletable(mintingStatus) }
-            sx={ { marginLeft: "auto" } }
-            variant="outlined"
-            width="icon"
-            onClick={ () => {
-              setIsDeleteModalActive(true);
-            } }
+          <Tooltip
+            title={
+              <span>
+                To delete a song for which minting and distribution is in
+                process or has completed, please send a deletion request email
+                to{ " " }
+                <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
+                  { NEWM_SUPPORT_EMAIL }
+                </Link>
+                . Please note that artists not holding 100% of Stream Tokens for
+                a given track are unable to cease minting and distribution.
+              </span>
+            }
           >
-            <DeleteIcon fontSize="small" sx={ { color: "white" } } />
-          </Button>
+            <Stack ml="auto">
+              <Button
+                color="white"
+                disabled={ !getIsSongDeletable(mintingStatus) }
+                sx={ { marginLeft: "auto" } }
+                variant="outlined"
+                width="icon"
+                onClick={ () => {
+                  setIsDeleteModalActive(true);
+                } }
+              >
+                <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+              </Button>
+            </Stack>
+          </Tooltip>
 
           { isDeleteModalActive && (
             <DeleteSongModal
@@ -359,7 +381,13 @@ const EditSong: FunctionComponent = () => {
               }),
             },
             {
-              element: <ConfirmAgreement />,
+              element: (
+                <ConfirmAgreement
+                  shouldShowPriceSummary={
+                    mintingStatus !== MintingStatus.Declined
+                  }
+                />
+              ),
               path: "confirm",
               progressStepTitle: "Distribute & Mint",
               validationSchema: Yup.object().shape({
