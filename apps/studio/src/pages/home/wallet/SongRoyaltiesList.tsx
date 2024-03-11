@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from "../../../common";
 
 export interface SongRoyalties {
   royaltyAmount: number;
-  royaltyCreatedAt?: Date;
+  royaltyCreatedAt?: number;
   song: Song;
 }
 
@@ -45,6 +45,15 @@ const royaltyPeriodFilters: ReadonlyArray<TableDropdownMenuParameters> = [
   { label: "Royalty Earnings: Past Month", value: "Month" },
   { label: "Royalty Earnings: Past Year", value: "Year" },
 ];
+
+// create record with the number of days for royalty period filter option
+const royaltyPeriodFilterDays: Record<string, number> = {
+  All: 0,
+  Week: 604800000,
+  // eslint-disable-next-line sort-keys-fix/sort-keys-fix
+  Month: 2592000000,
+  Year: 31536000000,
+};
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border
@@ -87,6 +96,17 @@ export default function SongRoyaltiesList({
     dispatch(setWalletPortfolioTableFilter(tableFilter));
   };
 
+  const isWithinFilterPeriod = (royaltiesCreatedDate: number | undefined) => {
+    const filterPeriod = royaltyPeriodFilterDays[walletPortfolioTableFilter];
+    if (walletPortfolioTableFilter === "All") {
+      return true;
+    } else if (royaltiesCreatedDate) {
+      return royaltiesCreatedDate >= Date.now() - filterPeriod;
+    } else {
+      return false;
+    }
+  };
+
   if (songRoyalties.length) {
     return (
       <Box sx={ { maxWidth: TABLE_WIDTH } }>
@@ -115,42 +135,45 @@ export default function SongRoyaltiesList({
             </TableHead>
 
             <TableBody>
-              { songRoyalties.map((songRoyalty) => (
-                <StyledTableRow key={ songRoyalty.song.id }>
-                  <StyledTableCell>
-                    <Box sx={ { alignItems: "center", display: "flex" } }>
-                      <img
-                        alt="Album cover"
-                        src={ getResizedAlbumCoverImageUrl(
-                          songRoyalty.song.coverArtUrl
-                        ) }
-                        style={ {
-                          borderRadius: "50%",
-                        } }
-                      />
-                      <Box
-                        sx={ {
-                          maxWidth: { sm: "unset", xs: "200px" },
-                          paddingLeft: "12px",
-                          whiteSpace: "nowrap",
-                        } }
-                      >
-                        <Typography fontWeight={ 500 }>
-                          { songRoyalty.song.title }
+              { songRoyalties.map(
+                (songRoyalty) =>
+                  isWithinFilterPeriod(songRoyalty.royaltyCreatedAt) && (
+                    <StyledTableRow key={ songRoyalty.song.id }>
+                      <StyledTableCell>
+                        <Box sx={ { alignItems: "center", display: "flex" } }>
+                          <img
+                            alt="Album cover"
+                            src={ getResizedAlbumCoverImageUrl(
+                              songRoyalty.song.coverArtUrl
+                            ) }
+                            style={ {
+                              borderRadius: "50%",
+                            } }
+                          />
+                          <Box
+                            sx={ {
+                              maxWidth: { sm: "unset", xs: "200px" },
+                              paddingLeft: "12px",
+                              whiteSpace: "nowrap",
+                            } }
+                          >
+                            <Typography fontWeight={ 500 }>
+                              { songRoyalty.song.title }
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        <Typography fontSize={ 12 } fontWeight={ 700 }>
+                          { currency(songRoyalty.royaltyAmount, {
+                            pattern: "#!",
+                            symbol: "Ɲ",
+                          }).format() }
                         </Typography>
-                      </Box>
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <Typography fontSize={ 12 } fontWeight={ 700 }>
-                      { currency(songRoyalty.royaltyAmount, {
-                        pattern: "#!",
-                        symbol: "Ɲ",
-                      }).format() }
-                    </Typography>
-                  </StyledTableCell>
-                </StyledTableRow>
-              )) }
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  )
+              ) }
             </TableBody>
 
             { totalCountOfSongs > rows && (

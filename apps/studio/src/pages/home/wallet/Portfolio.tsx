@@ -49,7 +49,7 @@ const Portfolio: FunctionComponent = () => {
   the backend earnings table. */
   const createTempSongRoyalties = useCallback(
     (songs: Song[], rowsToRender: number): SongRoyalties[] => {
-      const testDateFilter = new Date(2024, 3, 1);
+      const testDateFilter = new Date(2024, 0, 1);
       const tempRoyaltyAmount = 0.35;
       return songs
         .map((song) => {
@@ -58,9 +58,8 @@ const Portfolio: FunctionComponent = () => {
               royaltyAmount: tempRoyaltyAmount + song.title.length,
               royaltyCreatedAt: new Date(
                 testDateFilter.getTime() +
-                  Math.random() *
-                    (new Date().getTime() - testDateFilter.getTime())
-              ),
+                  Math.random() * (Date.now() - testDateFilter.getTime())
+              ).getTime(),
               song,
             };
           } else {
