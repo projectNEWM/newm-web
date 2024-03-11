@@ -1,9 +1,16 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { Song, SortOrder } from "@newm-web/types";
+import { Song } from "@newm-web/types";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import SongRoyaltiesList, { SongRoyalties } from "./SongRoyaltiesList";
 import { EmptyPortfolio } from "./EmptyPortfolio";
@@ -30,43 +37,45 @@ const Portfolio: FunctionComponent = () => {
     { data: walletSongsResponse, isLoading, isSuccess },
   ] = useGetUserWalletSongsThunk();
 
-  const songs =
-    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+  const songs = useMemo(
+    () => walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [],
+    [walletSongsResponse?.data?.songs]
+  );
 
   const [songRoyalties, setSongRoyalties] = useState<SongRoyalties[]>([]);
-  /* TODO: This is a temporary function to generate random royalties for the 
+  /* TODO: This is a temporary function to generate test royalties for the 
   songs. Song title length is used as a temp unique differentiator to generate 
   royalties. The song title length conditionals will be replaced with data from 
   the backend earnings table. */
-  const getTempSongRoyalties = (
-    songs: Song[],
-    rowsToRender: number
-  ): SongRoyalties[] => {
-    const testDateFilter = new Date(2024, 3, 1);
-    const tempRoyaltyAmount = 0.35;
-    return songs
-      .map((song) => {
-        if (song.title.length % 2 === 0) {
-          return {
-            royaltyAmount: tempRoyaltyAmount + song.title.length,
-            royaltyCreatedAt: new Date(
-              testDateFilter.getTime() +
-                Math.random() *
-                  (new Date().getTime() - testDateFilter.getTime())
-            ),
-            song,
-          };
-        } else {
-          // Return 0 for songs with no Royalties, temp use odd song title lengths
-          return {
-            royaltyAmount: 0,
-            song,
-          };
-        }
-      })
-      .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
-      .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
-  };
+  const createTempSongRoyalties = useCallback(
+    (songs: Song[], rowsToRender: number): SongRoyalties[] => {
+      const testDateFilter = new Date(2024, 3, 1);
+      const tempRoyaltyAmount = 0.35;
+      return songs
+        .map((song) => {
+          if (song.title.length % 2 === 0) {
+            return {
+              royaltyAmount: tempRoyaltyAmount + song.title.length,
+              royaltyCreatedAt: new Date(
+                testDateFilter.getTime() +
+                  Math.random() *
+                    (new Date().getTime() - testDateFilter.getTime())
+              ),
+              song,
+            };
+          } else {
+            // Return 0 for songs with no Royalties, temp use odd song title lengths
+            return {
+              royaltyAmount: 0,
+              song,
+            };
+          }
+        })
+        .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
+        .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
+    },
+    [pageIdx, skeletonRows]
+  );
 
   useEffect(() => {
     // Pagination was removed as Song creation date is not used as sorting criteria
@@ -88,8 +97,8 @@ const Portfolio: FunctionComponent = () => {
     setSkeletonRows(rowsToRender);
     setRowsPerPage(rowsToRender);
     // TODO: Temp to handle pagination for Song Royalties
-    setSongRoyalties(getTempSongRoyalties(songs, rowsToRender));
-  }, [songs, windowHeight]);
+    setSongRoyalties(createTempSongRoyalties(songs, rowsToRender));
+  }, [createTempSongRoyalties, songs, windowHeight]);
 
   if (isLoading) {
     return (
