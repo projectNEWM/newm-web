@@ -38,39 +38,31 @@ export const isWithinFilterPeriod = (
  * temp unique differentiator to generate royalties. The song title length
  * conditionals are in place of the backend earnings table query. The current
  * assumption is that the query will be for one song ID and return each earning
- * event in individual objects within an array. The object shape will be most
- * likely { earning: number, createdAt: number }.
+ * event in individual objects within an array.
  */
-export const createTempSongRoyaltyQuery = (
+export const createTempSongEarningsQueryData = (
   song: Song
 ): WalletSongsEarningsData => {
-  // sets the date three months back to get enough variance in the test data
-  const testDateFilter = new Date(Date.now() - 7776000000);
-  const tempRoyaltyAmount = 0.35;
+  const tempRoyaltyAmount = 0.01;
   // use song title length as a unique differentiator to generate royalties
   if (song.title.length % 2 === 0) {
     return {
       earningsData: [
         {
           amount: tempRoyaltyAmount + song.title.length,
-          createdAt: new Date(
-            testDateFilter.getTime() +
-              Math.random() * (Date.now() - testDateFilter.getTime())
-          ).getTime(),
+          createdAt: Date.now() - royaltyPeriodFilterDays["Week"],
         },
         {
           amount: tempRoyaltyAmount + song.title.length,
-          createdAt: new Date(
-            testDateFilter.getTime() +
-              Math.random() * (Date.now() - testDateFilter.getTime())
-          ).getTime(),
+          createdAt: Date.now() - royaltyPeriodFilterDays["Month"],
         },
         {
           amount: tempRoyaltyAmount + song.title.length,
-          createdAt: new Date(
-            testDateFilter.getTime() +
-              Math.random() * (Date.now() - testDateFilter.getTime())
-          ).getTime(),
+          createdAt: Date.now() - royaltyPeriodFilterDays["Year"],
+        },
+        {
+          amount: tempRoyaltyAmount + song.title.length,
+          createdAt: Date.now() - royaltyPeriodFilterDays["Year"] - 60000,
         },
       ],
       song,

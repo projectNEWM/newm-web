@@ -7,7 +7,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import SongRoyaltiesList, { TotalSongRoyalty } from "./SongRoyaltiesList";
 import { EmptyPortfolio } from "./EmptyPortfolio";
 import {
-  createTempSongRoyaltyQuery,
+  createTempSongEarningsQueryData,
   isWithinFilterPeriod,
 } from "./songRoyaltiesUtils";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
@@ -68,7 +68,7 @@ const Portfolio: FunctionComponent = () => {
 
     // TODO: Creates temporary earnings in place of backend table query
     const walletSongsEarnings = songs.map((song) =>
-      createTempSongRoyaltyQuery(song)
+      createTempSongEarningsQueryData(song)
     );
 
     const combinedEarnings = walletSongsEarnings
