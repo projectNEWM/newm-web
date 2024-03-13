@@ -200,7 +200,6 @@ export const TextInput: ForwardRefRenderFunction<
         alignItems="center"
         display="flex"
         flexDirection="row"
-        maxWidth={ theme.inputField.maxWidth }
         sx={ {
           background: theme.colors.grey500,
           borderColor: getBorderColor(
@@ -212,6 +211,7 @@ export const TextInput: ForwardRefRenderFunction<
           borderRadius: "4px",
           borderStyle: "solid",
           borderWidth: theme.inputField.borderWidth,
+          maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
           overflow: "hidden",
         } }
         onMouseEnter={ () => setIsHovered(true) }

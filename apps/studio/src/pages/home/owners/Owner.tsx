@@ -10,10 +10,7 @@ import {
   bgImage,
 } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import {
-  getResizedAlbumCoverImageUrl,
-  useWindowDimensions,
-} from "@newm-web/utils";
+import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
@@ -100,7 +97,7 @@ const Owner: FunctionComponent = () => {
           height={ isWidthAboveSm ? "200px" : "100px" }
           src={
             pictureUrl
-              ? getResizedAlbumCoverImageUrl(pictureUrl, {
+              ? resizeCloudinaryImage(pictureUrl, {
                   height: 200,
                   width: 200,
                 })

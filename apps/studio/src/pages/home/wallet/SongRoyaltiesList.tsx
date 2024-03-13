@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 import theme from "@newm-web/theme";
-import { getResizedAlbumCoverImageUrl } from "@newm-web/utils";
+import { resizeCloudinaryImage } from "@newm-web/utils";
 import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
 import { TablePagination, Typography } from "@newm-web/elements";
@@ -119,7 +119,7 @@ export default function SongRoyaltiesList({
                     <Box sx={ { alignItems: "center", display: "flex" } }>
                       <img
                         alt="Album cover"
-                        src={ getResizedAlbumCoverImageUrl(song.coverArtUrl) }
+                        src={ resizeCloudinaryImage(song.coverArtUrl) }
                         style={ {
                           borderRadius: "50%",
                         } }

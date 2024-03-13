@@ -163,7 +163,6 @@ const Songs: FunctionComponent = () => {
             isPlayable={ !!song.streamUrl }
             isPlaying={ song.id === playerState.currentPlayingSongId }
             key={ song.id }
-            songId={ song.id }
             subtitle={ genresString }
             title={ song.title }
             onPlayPauseClick={ () => handleSongPlayPause(song) }

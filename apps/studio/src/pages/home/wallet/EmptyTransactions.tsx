@@ -9,7 +9,7 @@ export const EmptyTransactions: FunctionComponent = () => (
       No transactions found
     </Typography>
     <Typography fontSize="14px" fontWeight={ 400 } variant="h4">
-      All future transactions will be listed here
+      All future transactions made with the connected wallet will be listed here
     </Typography>
   </Stack>
 );

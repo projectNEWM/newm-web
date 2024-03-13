@@ -85,7 +85,6 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                   name={ `creditors[${idx}].role` }
                   options={ roles }
                   placeholder="Select role"
-                  widthType="full"
                 />
               ) : (
                 <Typography color="white" fontWeight={ 500 }>

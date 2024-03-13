@@ -8,7 +8,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm install
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
       - run: npx nx run-many -t test
 
       - uses: codecov/codecov-action@v1

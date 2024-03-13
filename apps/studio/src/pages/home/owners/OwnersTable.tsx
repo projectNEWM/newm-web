@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "@newm-web/theme";
-import { useWindowDimensions } from "@newm-web/utils";
+import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import {
   TableCell,
   TableHeadCell,
@@ -181,7 +181,10 @@ export default function OwnersTable({
                     { pictureUrl ? (
                       <img
                         alt="Profile"
-                        src={ pictureUrl }
+                        src={ resizeCloudinaryImage(pictureUrl, {
+                          height: 80,
+                          width: 80,
+                        }) }
                         style={ {
                           borderRadius: "50%",
                           height: "40px",
@@ -189,21 +192,29 @@ export default function OwnersTable({
                         } }
                       />
                     ) : (
-                      <Stack alignItems="center" direction="row" gap={ 1 }>
+                      <Box
+                        alignItems="center"
+                        display="flex"
+                        height="40px"
+                        justifyContent="center"
+                        width="40px"
+                      >
                         <AccountCircleIcon
                           sx={ {
                             color: theme.colors.grey200,
                             fontSize: "46px",
-                            marginLeft: "-2px",
                           } }
                         />
-
-                        <Typography fontStyle="italic" fontWeight={ 400 }>
-                          Waiting on account creation
-                        </Typography>
-                      </Stack>
+                      </Box>
                     ) }
-                    { firstName && lastName ? `${firstName} ${lastName}` : null }
+
+                    { id ? (
+                      `${firstName} ${lastName}`
+                    ) : (
+                      <Typography fontStyle="italic" fontWeight={ 400 }>
+                        Waiting on account creation
+                      </Typography>
+                    ) }
                   </Stack>
                 </TableCell>
                 <TableCell>
