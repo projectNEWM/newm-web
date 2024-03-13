@@ -1,20 +1,18 @@
-import {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, useEffect, useMemo, useRef, useState } from "react";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { Song } from "@newm-web/types";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import SongRoyaltiesList, { SongRoyalties } from "./SongRoyaltiesList";
+import SongRoyaltiesList, { TotalSongRoyalty } from "./SongRoyaltiesList";
 import { EmptyPortfolio } from "./EmptyPortfolio";
+import {
+  createTempSongRoyaltyQuery,
+  isWithinFilterPeriod,
+} from "./songRoyaltiesUtils";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
+import { useAppSelector } from "../../../common";
+import { selectUi } from "../../../modules/ui";
 
 const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
@@ -42,39 +40,11 @@ const Portfolio: FunctionComponent = () => {
     [walletSongsResponse?.data?.songs]
   );
 
-  const [songRoyalties, setSongRoyalties] = useState<SongRoyalties[]>([]);
-  /* TODO: This is a temporary function to generate test royalties for the 
-  songs. Song title length is used as a temp unique differentiator to generate 
-  royalties. The song title length conditionals will be replaced with data from 
-  the backend earnings table. */
-  const createTempSongRoyalties = useCallback(
-    (songs: Song[], rowsToRender: number): SongRoyalties[] => {
-      const testDateFilter = new Date(2024, 0, 1);
-      const tempRoyaltyAmount = 0.35;
-      return songs
-        .map((song) => {
-          if (song.title.length % 2 === 0) {
-            return {
-              royaltyAmount: tempRoyaltyAmount + song.title.length,
-              royaltyCreatedAt: new Date(
-                testDateFilter.getTime() +
-                  Math.random() * (Date.now() - testDateFilter.getTime())
-              ).getTime(),
-              song,
-            };
-          } else {
-            // Return 0 for songs with no Royalties, temp use odd song title lengths
-            return {
-              royaltyAmount: 0,
-              song,
-            };
-          }
-        })
-        .sort((a, b) => b?.royaltyAmount - a?.royaltyAmount)
-        .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
-    },
-    [pageIdx, skeletonRows]
-  );
+  const [walletSongsRoyaltyCombined, setWalletSongsRoyaltyCombined] = useState<
+    TotalSongRoyalty[]
+  >([]);
+
+  const { walletPortfolioTableFilter } = useAppSelector(selectUi);
 
   useEffect(() => {
     // Pagination was removed as Song creation date is not used as sorting criteria
@@ -95,9 +65,36 @@ const Portfolio: FunctionComponent = () => {
 
     setSkeletonRows(rowsToRender);
     setRowsPerPage(rowsToRender);
-    // TODO: Temp to handle pagination for Song Royalties
-    setSongRoyalties(createTempSongRoyalties(songs, rowsToRender));
-  }, [createTempSongRoyalties, songs, windowHeight]);
+
+    // TODO: Creates temporary earnings in place of backend table query
+    const walletSongsEarnings = songs.map((song) =>
+      createTempSongRoyaltyQuery(song)
+    );
+
+    const combinedEarnings = walletSongsEarnings
+      .map((songEarning) => {
+        const totalRoyaltyAmount = songEarning.earningsData
+          // filter out earnings that are not within the filter period
+          .filter((songEarning) =>
+            isWithinFilterPeriod(
+              songEarning.createdAt,
+              walletPortfolioTableFilter
+            )
+          )
+          // combine earnings within the filter period
+          .reduce((acc, curr) => acc + curr.amount, 0);
+        return {
+          song: songEarning.song,
+          totalRoyaltyAmount,
+        };
+      })
+      // Sort filtered songs by descending totalRoyaltyAmount
+      .sort((a, b) => b?.totalRoyaltyAmount - a?.totalRoyaltyAmount)
+      // handle pagination for song earnings
+      .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
+
+    setWalletSongsRoyaltyCombined(combinedEarnings);
+  }, [pageIdx, skeletonRows, songs, walletPortfolioTableFilter, windowHeight]);
 
   if (isLoading) {
     return (
@@ -118,10 +115,10 @@ const Portfolio: FunctionComponent = () => {
       <SongRoyaltiesList
         lastRowOnPage={ lastRowOnPage }
         page={ page }
-        rows={ songRoyalties.length }
+        rows={ walletSongsRoyaltyCombined.length }
         rowsPerPage={ rowsPerPage }
         setPage={ setPage }
-        songRoyalties={ songRoyalties }
+        songRoyalties={ walletSongsRoyaltyCombined }
         totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
       />
     </Box>
