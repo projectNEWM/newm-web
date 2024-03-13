@@ -106,7 +106,7 @@ export default function SongRoyaltiesList({
                   <TableDropdownSelect
                     menuItems={ royaltyPeriodFilters }
                     selectedValue={ walletPortfolioTableFilter }
-                    onChange={ handleRoyaltyPeriodChange }
+                    onDropdownChange={ handleRoyaltyPeriodChange }
                   />
                 </StyledTableCell>
               </TableRow>

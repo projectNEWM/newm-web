@@ -14,14 +14,14 @@ export interface TableDropdownMenuParameters {
 
 interface TableDropdownSelectProps {
   readonly menuItems: ReadonlyArray<TableDropdownMenuParameters>;
-  readonly onChange?: (value: string) => void;
+  readonly onDropdownChange?: (value: string) => void;
   readonly selectedValue: string;
 }
 
 const TableDropdownSelect: FunctionComponent<TableDropdownSelectProps> = ({
   selectedValue,
   menuItems,
-  onChange,
+  onDropdownChange,
 }) => {
   const StyledSelect = styled(Select)(({ theme }) => ({
     "& .MuiSelect-icon": {
@@ -41,7 +41,7 @@ const TableDropdownSelect: FunctionComponent<TableDropdownSelectProps> = ({
   }));
 
   const handleDropdownChange = (event: SelectChangeEvent<unknown>) => {
-    onChange?.(event.target.value as string);
+    onDropdownChange?.(event.target.value as string);
   };
   return (
     <Box>
