@@ -96,6 +96,10 @@ const Portfolio: FunctionComponent = () => {
     setWalletSongsRoyaltyCombined(combinedEarnings);
   }, [pageIdx, skeletonRows, songs, walletPortfolioTableFilter, windowHeight]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [walletPortfolioTableFilter, windowHeight]);
+
   if (isLoading) {
     return (
       <TableSkeleton
