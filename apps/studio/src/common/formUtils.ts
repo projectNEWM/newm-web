@@ -71,6 +71,9 @@ export const getBarcodeRegex = (barcodeType: BarcodeType): BarcodeConfig => {
 };
 
 export const commonYupValidation = {
+  agreesToCoverArtGuidelines: Yup.bool()
+    .required("This field is required")
+    .oneOf([true], "You must agree to the cover art guidelines"),
   audio: Yup.mixed().required("This field is required"),
   barcodeNumber: Yup.string().when("barcodeType", {
     is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,

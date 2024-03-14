@@ -1,7 +1,8 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Link, Stack, useTheme } from "@mui/material";
 import {
   Alert,
   Button,
+  CheckboxField,
   DropdownMultiSelectField,
   DropdownSelectField,
   ErrorMessage,
@@ -24,7 +25,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../common";
+import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import {
@@ -64,6 +65,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const audioRef = useRef<HTMLDivElement>(null);
   const coCreatorsRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
+  const agreesToCoverArtGuidelinesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const songDetailsRef = useRef<HTMLDivElement>(null);
 
@@ -87,9 +89,15 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
-
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    isSubmitting,
+    dirty,
+    initialValues,
+  } = useFormikContext<UploadSongRequest>();
   // DSP pricing plan mint song toggling
 
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
@@ -108,9 +116,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     }
   }, [isArtistPricePlanSelected, isPricingPlansOpen, setFieldValue]);
 
+  const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
 
-  const isSubmitDisabled = isMintingVisible && (!wallet || !isVerified);
+  const isSubmitDisabled =
+    !values.agreesToCoverArtGuidelines &&
+    isMintingVisible &&
+    (!wallet || !isVerified);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -133,6 +145,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       { element: audioRef.current, error: errors.audio },
       { element: coverArtUrlRef.current, error: errors.coverArtUrl },
       {
+        element: agreesToCoverArtGuidelinesRef.current,
+        error: errors.agreesToCoverArtGuidelines,
+      },
+      {
         element: songDetailsRef.current,
         error: errors.title || errors.genres || errors.moods,
       },
@@ -144,6 +160,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       { element: coCreatorsRef.current, error: errors.owners },
     ]);
   }, [errors, isSubmitting]);
+
+  useEffect(() => {
+    if (hasCoverArtChanged) {
+      setFieldValue("agreesToCoverArtGuidelines", false);
+    }
+  }, [setFieldValue, hasCoverArtChanged]);
 
   return (
     <Stack>
@@ -277,6 +299,37 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             ],
           } }
         >
+          { hasCoverArtChanged && (
+            <CheckboxField
+              checked={
+                (isInEditMode && !dirty) || values.agreesToCoverArtGuidelines
+              }
+              label={
+                <Typography
+                  sx={ {
+                    color: "white",
+                    fontSize: 12,
+                  } }
+                  variant="subtitle1"
+                >
+                  I confirm that the cover art meets the specified guidelines,
+                  and submitting cover art that does not comply may result in a
+                  declined track distribution. For a full list of these
+                  guidelines, please see our{ " " }
+                  <Link
+                    href={ NEWM_STUDIO_FAQ_URL }
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    FAQ
+                  </Link>
+                  .
+                </Typography>
+              }
+              name="agreesToCoverArtGuidelines"
+              ref={ agreesToCoverArtGuidelinesRef }
+            />
+          ) }
           <Stack
             ref={ songDetailsRef }
             sx={ {

@@ -133,6 +133,7 @@ const EditSong: FunctionComponent = () => {
     }));
 
   const initialValues: PatchSongRequest = {
+    agreesToCoverArtGuidelines: true,
     artistName,
     barcodeNumber,
     barcodeType,
@@ -250,6 +251,7 @@ const EditSong: FunctionComponent = () => {
   }, []);
 
   const validations = {
+    agreesToCoverArtGuidelines: commonYupValidation.agreesToCoverArtGuidelines,
     barcodeNumber: commonYupValidation.barcodeNumber,
     barcodeType: commonYupValidation.barcodeType,
     consentsToContract: commonYupValidation.consentsToContract,
@@ -329,6 +331,8 @@ const EditSong: FunctionComponent = () => {
               path: "",
               progressStepTitle: "Basic details",
               validationSchema: Yup.object().shape({
+                agreesToCoverArtGuidelines:
+                  validations.agreesToCoverArtGuidelines,
                 coverArtUrl: validations.coverArtUrl,
                 creditors: validations.creditors,
                 description: validations.description,

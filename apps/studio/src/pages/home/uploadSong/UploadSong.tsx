@@ -51,6 +51,7 @@ const UploadSong: FunctionComponent = () => {
   const artistName = `${firstName} ${lastName}`;
 
   const initialValues: UploadSongRequest = {
+    agreesToCoverArtGuidelines: false,
     artistName,
     audio: undefined,
     barcodeNumber: undefined,
@@ -146,6 +147,7 @@ const UploadSong: FunctionComponent = () => {
   }, []);
 
   const validations = {
+    agreesToCoverArtGuidelines: commonYupValidation.agreesToCoverArtGuidelines,
     audio: commonYupValidation.audio,
     barcodeNumber: commonYupValidation.barcodeNumber,
     barcodeType: commonYupValidation.barcodeType,
@@ -194,6 +196,8 @@ const UploadSong: FunctionComponent = () => {
               path: "",
               progressStepTitle: "Basic details",
               validationSchema: Yup.object().shape({
+                agreesToCoverArtGuidelines:
+                  validations.agreesToCoverArtGuidelines,
                 audio: validations.audio,
                 coverArtUrl: validations.coverArtUrl,
                 creditors: validations.creditors,
