@@ -33,6 +33,8 @@ const AdvancedSongDetails = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
   const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
 
+  const isDeclined = song.mintingStatus === MintingStatus.Declined;
+
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
@@ -133,6 +135,7 @@ const AdvancedSongDetails = () => {
         rowGap={ [2, null, 3] }
       >
         <TextInputField
+          disabled={ isDeclined }
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
           min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
@@ -161,7 +164,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="composition"
-          disabled={ song.mintingStatus === MintingStatus.Declined }
+          disabled={ isDeclined }
           label="COMPOSITION COPYRIGHT"
           ownerFieldName="compositionCopyrightOwner"
           ref={ compositionCopyrightRef }
@@ -185,7 +188,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="phonographic"
-          disabled={ song.mintingStatus === MintingStatus.Declined }
+          disabled={ isDeclined }
           label="SOUND RECORDING COPYRIGHT"
           ownerFieldName="phonographicCopyrightOwner"
           ref={ phonographicCopyrightRef }
@@ -208,7 +211,7 @@ const AdvancedSongDetails = () => {
           yearFieldName="phonographicCopyrightYear"
         />
         <DropdownSelectField
-          disabled={ song.mintingStatus === MintingStatus.Declined }
+          disabled={ isDeclined }
           label="RELEASE CODE TYPE"
           name="barcodeType"
           options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
@@ -223,7 +226,7 @@ const AdvancedSongDetails = () => {
           disabled={
             values.barcodeType === NONE_OPTION ||
             !values.barcodeType ||
-            song.mintingStatus === MintingStatus.Declined
+            isDeclined
           }
           label="RELEASE CODE NUMBER"
           name="barcodeNumber"
@@ -236,7 +239,7 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
-          disabled={ song.mintingStatus === MintingStatus.Declined }
+          disabled={ isDeclined }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }

@@ -98,6 +98,8 @@ const EditSong: FunctionComponent = () => {
     isLoading: isGetSongLoading,
   } = useGetSongQuery(songId);
 
+  const isDeclined = mintingStatus === MintingStatus.Declined;
+
   const owners = collaborations
     .filter(
       (collaboration) =>
@@ -270,7 +272,10 @@ const EditSong: FunctionComponent = () => {
     moods: commonYupValidation.moods,
     owners: commonYupValidation.owners,
     publicationDate: commonYupValidation.publicationDate,
-    releaseDate: commonYupValidation.releaseDate(earliestReleaseDate),
+    releaseDate: commonYupValidation.releaseDate(
+      earliestReleaseDate,
+      isDeclined
+    ),
     title: commonYupValidation.title,
   };
 
@@ -382,11 +387,7 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: (
-                <ConfirmAgreement
-                  shouldShowPriceSummary={
-                    mintingStatus !== MintingStatus.Declined
-                  }
-                />
+                <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
               ),
               path: "confirm",
               progressStepTitle: "Distribute & Mint",

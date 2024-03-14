@@ -208,7 +208,12 @@ export const commonYupValidation = {
   }),
   password: Yup.string().required("Password is required"),
   publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
-  releaseDate: (releaseDate: string | undefined) => {
+  releaseDate: (releaseDate: string | undefined, skipValidation = false) => {
+    // Skip validation since user will not have control for this field
+    if (skipValidation) {
+      return Yup.mixed().notRequired();
+    }
+
     const minReleaseDate = releaseDate
       ? new Date(releaseDate)
       : new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000);
