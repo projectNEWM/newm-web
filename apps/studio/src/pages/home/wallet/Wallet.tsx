@@ -21,7 +21,10 @@ import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
-import { setIsConnectWalletModalOpen } from "../../../modules/ui";
+import {
+  resetWalletPortfolioTableFilter,
+  setIsConnectWalletModalOpen,
+} from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
@@ -67,6 +70,13 @@ const Wallet: FunctionComponent = () => {
 
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+
+  //Reset Portfolio Table Filter to view all royalty earnings on page navigation
+  useEffect(() => {
+    return () => {
+      dispatch(resetWalletPortfolioTableFilter());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     getUserWalletSongs({
