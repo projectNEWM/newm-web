@@ -18,9 +18,16 @@ interface SongCardProps {
   onSubtitleClick?: () => void;
   onTitleClick?: () => void;
   price?: string;
-  subtitle: string;
-  title: string;
+  size?: "Small" | "Large";
+  subtitle?: string;
+  title?: string;
 }
+
+// create a record for the song card size, small is 260 x 260, large is 400 x 400
+const songCardSize: Record<string, number> = {
+  Large: 400,
+  Small: 260,
+};
 
 export const SongCard = ({
   coverArtUrl,
@@ -33,6 +40,7 @@ export const SongCard = ({
   onSubtitleClick,
   price,
   subtitle,
+  size = "Small",
 }: SongCardProps) => {
   const theme = useTheme();
   const windowWidth = useWindowDimensions()?.width;
@@ -89,16 +97,21 @@ export const SongCard = ({
   }
 
   return (
-    <Stack sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }>
+    <Stack
+      sx={ {
+        maxWidth: ["150px", "150px", `${songCardSize[size]}px`],
+        rowGap: 0.5,
+      } }
+    >
       <Stack alignItems="center" display="grid" justifyItems="center">
         <img
           alt="Song cover art"
-          height={ isWidthAboveMd ? 260 : 150 }
+          height={ isWidthAboveMd ? songCardSize[size] : 150 }
           src={
             coverArtUrl
               ? resizeCloudinaryImage(coverArtUrl, {
-                  height: 200,
-                  width: 200,
+                  height: songCardSize[size],
+                  width: songCardSize[size],
                 })
               : getImageSrc(bgImage)
           }
@@ -107,7 +120,7 @@ export const SongCard = ({
             gridArea: "1 / 1 / 2 / 2",
             objectFit: "cover",
           } }
-          width={ isWidthAboveMd ? 260 : 150 }
+          width={ isWidthAboveMd ? songCardSize[size] : 150 }
         />
         { isPlayable && (
           <IconButton
@@ -159,48 +172,54 @@ export const SongCard = ({
           </Stack>
         ) }
       </Stack>
-      <Typography
-        fontWeight={ 700 }
-        mt={ 0.5 }
-        role={ onTitleClick ? "button" : undefined }
-        sx={
-          onTitleClick
-            ? {
-                "&:hover": { textDecoration: "underline" },
-                cursor: "pointer",
-                width: "fit-content",
-              }
-            : undefined
-        }
-        tabIndex={ onTitleClick ? 0 : undefined }
-        variant="h4"
-        onClick={ onTitleClick ? handleTitleClick : undefined }
-        onKeyDown={ onTitleClick ? handleKeyPress(handleTitleClick) : undefined }
-      >
-        { title }
-      </Typography>
-      <Typography
-        fontWeight={ 500 }
-        mt={ 0.5 }
-        role={ onSubtitleClick ? "button" : undefined }
-        sx={
-          onSubtitleClick
-            ? {
-                "&:hover": { textDecoration: "underline" },
-                cursor: "pointer",
-                width: "fit-content",
-              }
-            : undefined
-        }
-        tabIndex={ onSubtitleClick ? 0 : undefined }
-        variant="subtitle1"
-        onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
-        onKeyDown={
-          onSubtitleClick ? handleKeyPress(handleSubtitleClick) : undefined
-        }
-      >
-        { subtitle }
-      </Typography>
+      { title && (
+        <Typography
+          fontWeight={ 700 }
+          mt={ 0.5 }
+          role={ onTitleClick ? "button" : undefined }
+          sx={
+            onTitleClick
+              ? {
+                  "&:hover": { textDecoration: "underline" },
+                  cursor: "pointer",
+                  width: "fit-content",
+                }
+              : undefined
+          }
+          tabIndex={ onTitleClick ? 0 : undefined }
+          variant="h4"
+          onClick={ onTitleClick ? handleTitleClick : undefined }
+          onKeyDown={
+            onTitleClick ? handleKeyPress(handleTitleClick) : undefined
+          }
+        >
+          { title }
+        </Typography>
+      ) }
+      { subtitle && (
+        <Typography
+          fontWeight={ 500 }
+          mt={ 0.5 }
+          role={ onSubtitleClick ? "button" : undefined }
+          sx={
+            onSubtitleClick
+              ? {
+                  "&:hover": { textDecoration: "underline" },
+                  cursor: "pointer",
+                  width: "fit-content",
+                }
+              : undefined
+          }
+          tabIndex={ onSubtitleClick ? 0 : undefined }
+          variant="subtitle1"
+          onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
+          onKeyDown={
+            onSubtitleClick ? handleKeyPress(handleSubtitleClick) : undefined
+          }
+        >
+          { subtitle }
+        </Typography>
+      ) }
     </Stack>
   );
 };
