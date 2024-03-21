@@ -84,7 +84,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { songId } = useParams<"songId">() as SongRouteParams;
   const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
   const shouldShowOutletsWarning = !appleMusicProfile || !spotifyProfile;
-
+  const isDeclined = song.mintingStatus === MintingStatus.Declined;
   const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
@@ -343,6 +343,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                     "ownership, makes streaming royalties available for " +
                     "purchase, and enables royalty distribution to your account."
                   }
+                  disabled={ isDeclined }
                   includeBorder={ false }
                   name="isMinting"
                   title="DISTRIBUTE & MINT SONG"
@@ -355,9 +356,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   <SelectCoCeators
                     creditors={ values.creditors }
                     featured={ values.featured }
-                    isAddDeleteDisabled={
-                      song.mintingStatus === MintingStatus.Declined
-                    }
+                    isAddDeleteDisabled={ isDeclined }
                     owners={ values.owners }
                     onChangeCreditors={ handleChangeCreditors }
                     onChangeFeatured={ handleChangeFeatured }
