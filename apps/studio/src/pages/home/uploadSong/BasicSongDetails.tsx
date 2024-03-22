@@ -25,6 +25,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { MintingStatus } from "@newm-web/types";
 import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
@@ -43,6 +44,8 @@ import {
   Featured,
   Owner,
   UploadSongRequest,
+  emptySong,
+  useGetSongQuery,
 } from "../../../modules/song";
 import {
   setIsConnectWalletModalOpen,
@@ -81,8 +84,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
+  const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
   const shouldShowOutletsWarning = !appleMusicProfile || !spotifyProfile;
-
+  const isDeclined = song.mintingStatus === MintingStatus.Declined;
   const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
@@ -392,6 +396,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                     "ownership, makes streaming royalties available for " +
                     "purchase, and enables royalty distribution to your account."
                   }
+                  disabled={ isDeclined }
                   includeBorder={ false }
                   name="isMinting"
                   title="DISTRIBUTE & MINT SONG"
@@ -404,6 +409,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   <SelectCoCeators
                     creditors={ values.creditors }
                     featured={ values.featured }
+                    isAddDeleteDisabled={ isDeclined }
                     owners={ values.owners }
                     onChangeCreditors={ handleChangeCreditors }
                     onChangeFeatured={ handleChangeFeatured }
