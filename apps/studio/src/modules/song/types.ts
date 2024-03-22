@@ -93,6 +93,7 @@ export interface PostSongRequest {
 
 export interface UploadSongRequest
   extends Omit<PostSongRequest, "coverArtUrl"> {
+  readonly agreesToCoverArtGuidelines?: boolean;
   readonly artistName: string;
   readonly audio?: any;
   readonly companyName: string;
