@@ -7,7 +7,7 @@ import {
   isCloudinaryUrl,
   sleep,
 } from "@newm-web/utils";
-import { Song } from "@newm-web/types";
+import { MintingStatus, Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
@@ -439,10 +439,11 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      const isDeclined = body.mintingStatus === MintingStatus.Declined;
+
       if (
-        body.owners?.length ||
-        body.creditors?.length ||
-        body.featured?.length
+        !isDeclined &&
+        (body.owners?.length || body.creditors?.length || body.featured?.length)
       ) {
         await dispatch(
           updateCollaborations({
@@ -490,7 +491,16 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          await submitMintSongPayment(body.id, dispatch);
+          // If declined, don't collect payment again
+          if (isDeclined) {
+            const reprocessSongResp = await dispatch(
+              songApi.endpoints.reprocessSong.initiate(body.id)
+            );
+
+            if ("error" in reprocessSongResp) return;
+          } else {
+            await submitMintSongPayment(body.id, dispatch);
+          }
         }
       }
 

@@ -135,6 +135,7 @@ export interface DeleteSongRequest {
 
 export interface PatchSongRequest extends Partial<UploadSongRequest> {
   readonly id: string;
+  readonly mintingStatus?: MintingStatus;
   readonly shouldRedirect?: boolean;
 }
 
