@@ -10,7 +10,7 @@ import { Button } from "@newm-web/elements";
 import LanguageIcon from "@mui/icons-material/Language";
 import { FunctionComponent } from "react";
 
-interface SocialsProps {
+export interface SocialsProps {
   readonly instagramUrl?: string;
   readonly itunesUrl?: string;
   readonly soundCloudUrl?: string;
@@ -30,7 +30,7 @@ const Socials: FunctionComponent<SocialsProps> = ({
   const theme = useTheme();
 
   return (
-    <Stack direction="row" mt={ 2.5 } spacing={ 1 }>
+    <Stack direction="row" spacing={ 1 }>
       { websiteUrl !== undefined && (
         <Button
           aria-label="artist website"
