@@ -7,7 +7,7 @@ import ArtistSkeleton from "./skeletons/ArtistSkeleton";
 interface ArtistProps {
   readonly imageUrl: string;
   readonly isLoading: boolean;
-  readonly onSelectArtist: (param: string) => void;
+  readonly onSelectArtist: VoidFunction;
   readonly orientation: "row" | "column";
   readonly subtitle: string;
   readonly title: string;
@@ -34,7 +34,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
   return (
     <Clickable
       aria-label={ `${title}-artist-profile` }
-      onClick={ () => onSelectArtist(title) }
+      onClick={ () => onSelectArtist() }
     >
       <Stack columnGap={ 3.5 } direction={ orientation } rowGap={ 2 }>
         <Box
@@ -54,12 +54,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
           textAlign={ orientation === "row" ? "start" : "center" }
         >
           <Typography variant="h4">{ title }</Typography>
-          <Typography
-            sx={ { color: theme.colors.grey100, fontWeight: 400 } }
-            variant="h4"
-          >
-            { subtitle }
-          </Typography>
+          <Typography variant="subtitle1">{ subtitle }</Typography>
         </Stack>
       </Stack>
     </Clickable>

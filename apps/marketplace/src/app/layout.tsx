@@ -5,7 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
 import { Provider } from "react-redux";
-import { Footer, Header, StyledComponentsRegistry } from "../components";
+import { Footer, StyledComponentsRegistry } from "../components";
 import store from "../store";
 
 interface RootLayoutProps {
@@ -43,7 +43,6 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <Header />
                 { children }
                 <Footer />
               </ThemeProvider>

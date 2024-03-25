@@ -1,14 +1,16 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import Artist from "./Artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
+  const router = useRouter();
+
   // TEMP: simulate data loading
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleSelectArtist = (name: string) => {
-    // placeholder
-    console.log("artist selected: ", name); // eslint-disable-line
+  const handleSelectArtist = (id: string) => {
+    router.push(`artist/${id}`);
   };
 
   // TEMP: simulate data loading
@@ -27,7 +29,7 @@ const ArtistSpotlight: FunctionComponent = () => {
       </Stack>
 
       <Grid columnGap={ [5, 5, 15] } justifyContent="center" rowGap={ 5 } container>
-        { tempArtistData.map(({ imageUrl, name, songCount }, idx) => {
+        { tempArtistData.map(({ id, imageUrl, name, songCount }, idx) => {
           return (
             <Grid display="flex" key={ imageUrl } sx={ { cursor: "pointer" } }>
               <Artist
@@ -36,7 +38,7 @@ const ArtistSpotlight: FunctionComponent = () => {
                 orientation="column"
                 subtitle={ `${songCount} songs` }
                 title={ name }
-                onSelectArtist={ handleSelectArtist }
+                onSelectArtist={ () => handleSelectArtist(id) }
               />
             </Grid>
           );
@@ -50,48 +52,56 @@ export default ArtistSpotlight;
 
 const tempArtistData = [
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
     name: "Lorem Ipsum",
     songCount: 4,
   },
   {
+    id: "abcd1234",
     imageUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
     name: "Lorem Ipsum",
