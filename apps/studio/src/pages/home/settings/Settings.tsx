@@ -128,7 +128,7 @@ const Settings: FunctionComponent = () => {
             <Form>
               <Box
                 sx={ {
-                  margin: "0 auto",
+                  margin: ["0 auto", "0 auto", "0"],
                   maxWidth: { lg: "700px", xs: "340px" },
                 } }
               >
