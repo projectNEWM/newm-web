@@ -124,9 +124,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
 
   const isSubmitDisabled =
-    !values.agreesToCoverArtGuidelines &&
-    isMintingVisible &&
-    (!wallet || !isVerified);
+    !values.agreesToCoverArtGuidelines ||
+    (isMintingVisible && (!wallet || !isVerified));
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
