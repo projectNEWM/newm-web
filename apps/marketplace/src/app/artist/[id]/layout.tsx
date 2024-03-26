@@ -1,4 +1,5 @@
 import { FunctionComponent, ReactNode } from "react";
+import { mockArtists } from "../../../temp/data";
 
 interface ArtistLayoutProps {
   readonly children: ReactNode;
@@ -13,11 +14,3 @@ const Layout: FunctionComponent<ArtistLayoutProps> = ({ children }) => {
 };
 
 export default Layout;
-
-const mockArtists = [
-  {
-    firstName: "Johnny",
-    id: "abcd1234",
-    lastName: "Appleseed",
-  },
-];

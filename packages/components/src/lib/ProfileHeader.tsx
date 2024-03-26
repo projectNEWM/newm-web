@@ -26,24 +26,24 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
 }) => {
   const theme = useTheme();
 
-  const isBelowLgBreakpoint = useBetterMediaQuery(
-    `(max-width: ${theme.breakpoints.values.lg}px)`
+  const isBelowMdBreakpoint = useBetterMediaQuery(
+    `(max-width: ${theme.breakpoints.values.md}px)`
   );
 
   return (
     <Stack
-      alignItems={ ["center", "center", "center", "flex-start"] }
-      direction={ ["column", "column", "column", "row"] }
+      alignItems={ ["center", "center", "flex-start"] }
+      direction={ ["column", "column", "row"] }
       justifyContent="space-between"
-      mt={ [-12.5, -12.5, -12.5, 0] }
+      mt={ [-12.5, -12.5, 0] }
       px={ 2.5 }
     >
       <Stack
         alignItems="center"
-        direction={ ["column", "column", "column", "row"] }
+        direction={ ["column", "column", "row"] }
         spacing={ 4 }
       >
-        <Box pb={ 1 } position="relative" top={ [0, 0, 0, theme.spacing(-2)] }>
+        <Box pb={ 1 } position="relative" top={ [0, 0, theme.spacing(-2)] }>
           <ProfileImage
             height={ 200 }
             src={ resizeCloudinaryImage(profileImageUrl, {
@@ -55,7 +55,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         </Box>
 
         <Stack
-          alignItems={ ["center", "center", "center", "flex-start"] }
+          alignItems={ ["center", "center", "flex-start"] }
           direction="column"
           px={ 5 }
           spacing={ 0.5 }
@@ -63,7 +63,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
           <Stack alignItems="center" direction="row" spacing={ 1.5 }>
             <Typography
               fontSize={ ["24px", "24px", "24px", "32px"] }
-              textAlign={ ["center", "center", "center", "left"] }
+              textAlign={ ["center", "center", "left"] }
               textTransform="uppercase"
               variant="h3"
             >
@@ -75,7 +75,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
                     <CheckCircle
                       sx={ {
                         color: theme.colors.green,
-                        mb: [-0.5, -0.5, -0.5, "-0.5px"],
+                        mb: [-0.5, -0.5, "-0.5px"],
                       } }
                     />
                   </Box>
@@ -91,7 +91,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
             { location }
           </Typography>
 
-          { !isBelowLgBreakpoint && (
+          { !isBelowMdBreakpoint && (
             <Box pt={ 3.5 }>
               <Button
                 color="music"
@@ -117,7 +117,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         />
       </Box>
 
-      { isBelowLgBreakpoint && (
+      { isBelowMdBreakpoint && (
         <Box alignSelf="stretch" pt={ 1.5 }>
           <Button
             color="music"

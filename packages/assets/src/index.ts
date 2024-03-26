@@ -24,7 +24,7 @@ import PlayButton from "./lib/icons/PlayButton";
 import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
 import SoundWave from "./lib/icons/SoundWave";
 import Search from "./lib/icons/Search";
-import SoundCloudLogo from "./lib/icons/ItunesLogo copy";
+import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
 import SpotifyLogo from "./lib/icons/SpotifyLogo";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
 import TwitterLogo from "./lib/icons/TwitterLogo";

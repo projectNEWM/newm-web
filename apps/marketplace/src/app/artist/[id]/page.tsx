@@ -17,25 +17,22 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
-  // temp data
-  const artist = mockArtist;
-
   const isBelowSmBreakpoint = useBetterMediaQuery(
     `(max-width: ${theme.breakpoints.values.sm}px)`
   );
 
-  const resizedCoverImage = resizeCloudinaryImage(artist.coverImageUrl, {
+  const resizedCoverImage = resizeCloudinaryImage(mockArtist.coverImageUrl, {
     height: 200,
     width: 1600,
   });
 
   const socials = {
-    instagramUrl: artist.instagramUrl,
-    itunesUrl: artist.itunesUrl,
-    soundCloudUrl: artist.soundCloudUrl,
-    spotifyUrl: artist.spotifyUrl,
-    websiteUrl: artist.websiteUrl,
-    xUrl: artist.xUrl,
+    instagramUrl: mockArtist.instagramUrl,
+    itunesUrl: mockArtist.itunesUrl,
+    soundCloudUrl: mockArtist.soundCloudUrl,
+    spotifyUrl: mockArtist.spotifyUrl,
+    websiteUrl: mockArtist.websiteUrl,
+    xUrl: mockArtist.xUrl,
   };
 
   return (
@@ -56,18 +53,18 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 
       <Container sx={ { flexGrow: 1 } }>
         <ProfileHeader
-          firstName={ artist.firstName }
-          isVerified={ artist.isVerified }
-          lastName={ artist.lastName }
-          location={ artist.location }
-          profileImageUrl={ artist.profileImageUrl }
+          firstName={ mockArtist.firstName }
+          isVerified={ mockArtist.isVerified }
+          lastName={ mockArtist.lastName }
+          location={ mockArtist.location }
+          profileImageUrl={ mockArtist.profileImageUrl }
           socials={ {
-            instagramUrl: artist.instagramUrl,
-            itunesUrl: artist.itunesUrl,
-            soundCloudUrl: artist.soundCloudUrl,
-            spotifyUrl: artist.spotifyUrl,
-            websiteUrl: artist.websiteUrl,
-            xUrl: artist.xUrl,
+            instagramUrl: mockArtist.instagramUrl,
+            itunesUrl: mockArtist.itunesUrl,
+            soundCloudUrl: mockArtist.soundCloudUrl,
+            spotifyUrl: mockArtist.spotifyUrl,
+            websiteUrl: mockArtist.websiteUrl,
+            xUrl: mockArtist.xUrl,
           } }
           onClickAbout={ () => setIsAboutModalOpen(true) }
         />
@@ -76,11 +73,11 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
       <ProfileModal
         isCloseButtonVisible={ false }
         isOpen={ isAboutModalOpen }
-        name={ `${artist.firstName} ${artist.lastName}` }
+        name={ `${mockArtist.firstName} ${mockArtist.lastName}` }
         socials={ socials }
         onClose={ () => setIsAboutModalOpen(false) }
       >
-        <Typography variant="subtitle1">{ artist.description }</Typography>
+        <Typography variant="subtitle1">{ mockArtist.description }</Typography>
       </ProfileModal>
     </Stack>
   );
