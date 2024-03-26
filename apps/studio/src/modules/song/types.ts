@@ -68,6 +68,7 @@ export interface Collaborator {
  */
 export interface PostSongRequest {
   readonly album?: string;
+  readonly archived?: boolean;
   readonly barcodeNumber?: string;
   readonly barcodeType?: string;
   readonly compositionCopyrightOwner?: string;
@@ -76,6 +77,7 @@ export interface PostSongRequest {
   readonly coverRemixSample?: boolean;
   readonly description?: string;
   readonly genres: ReadonlyArray<string>;
+  readonly instrumental?: boolean;
   readonly ipis?: ReadonlyArray<string>;
   readonly isrc?: string;
   readonly iswc?: string;
@@ -91,9 +93,22 @@ export interface PostSongRequest {
   readonly track?: number;
 }
 
-export interface UploadSongRequest
-  extends Omit<PostSongRequest, "coverArtUrl"> {
-  readonly agreesToCoverArtGuidelines?: boolean;
+/**
+ * PatchSong as stored in the NEWM API.
+ */
+export interface PatchSongRequest
+  extends Omit<PostSongRequest, "title" | "genres"> {
+  readonly genres?: ReadonlyArray<string>;
+  readonly id: string;
+  readonly title?: string;
+}
+
+/**
+ * Type for thunk request to upload a song.
+ * It does not have to be the same as the API request.
+ */
+export interface UploadSongThunkRequest
+  extends Omit<PostSongRequest, "instrumental" | "coverArtUrl"> {
   readonly artistName: string;
   readonly audio?: any;
   readonly companyName: string;
@@ -103,11 +118,36 @@ export interface UploadSongRequest
   readonly featured: Array<Featured>;
   readonly ipi?: string;
   readonly isCoverRemixSample?: boolean;
-  // eslint-disable-line
   readonly isExplicit: boolean;
+  readonly isInstrumental?: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
   readonly stageName: string;
+}
+
+/**
+ * Type for thunk request to patch a song.
+ * It does not have to be the same as the API request.
+ */
+export interface PatchSongThunkRequest
+  extends Omit<PatchSongRequest, "instrumental" | "coverArtUrl">,
+    Pick<
+      UploadSongThunkRequest,
+      | "artistName"
+      | "companyName"
+      | "consentsToContract"
+      | "coverArtUrl"
+      | "creditors"
+      | "featured"
+      | "ipi"
+      | "isExplicit"
+      | "isInstrumental"
+      | "isMinting"
+      | "owners"
+      | "stageName"
+    > {
+  readonly mintingStatus?: MintingStatus;
+  readonly shouldRedirect?: boolean;
 }
 
 export interface UploadSongResponse {
@@ -132,12 +172,6 @@ export interface DeleteSongRequest {
   readonly archived?: boolean;
   readonly showToast?: boolean;
   readonly songId: string;
-}
-
-export interface PatchSongRequest extends Partial<UploadSongRequest> {
-  readonly id: string;
-  readonly mintingStatus?: MintingStatus;
-  readonly shouldRedirect?: boolean;
 }
 
 export interface UpdateCollaborationsRequest {

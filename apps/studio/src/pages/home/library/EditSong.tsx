@@ -24,7 +24,7 @@ import {
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
-  PatchSongRequest,
+  PatchSongThunkRequest,
   emptySong,
   getIsSongDeletable,
   useDeleteSongThunk,
@@ -38,6 +38,10 @@ import { setToastMessage } from "../../../modules/ui";
 import AdvancedSongDetails from "../../../pages/home/uploadSong/AdvancedSongDetails";
 import BasicSongDetails from "../../../pages/home/uploadSong/BasicSongDetails";
 import ConfirmAgreement from "../../../pages/home/uploadSong/ConfirmAgreement";
+
+interface EditSongFormValues extends PatchSongThunkRequest {
+  agreesToCoverArtGuidelines?: boolean;
+}
 
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -81,6 +85,7 @@ const EditSong: FunctionComponent = () => {
       coverArtUrl,
       description,
       genres: songGenres,
+      instrumental,
       ipis,
       isrc,
       iswc,
@@ -138,7 +143,7 @@ const EditSong: FunctionComponent = () => {
       status: collaboration.status,
     }));
 
-  const initialValues: PatchSongRequest = {
+  const initialValues: EditSongFormValues = {
     agreesToCoverArtGuidelines: true,
     artistName,
     barcodeNumber,
@@ -165,6 +170,7 @@ const EditSong: FunctionComponent = () => {
     id: songId,
     ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
+    isInstrumental: instrumental,
     isMinting: isSongEditable(mintingStatus),
     isrc,
     iswc,
@@ -215,7 +221,7 @@ const EditSong: FunctionComponent = () => {
 
   const handleSubmit = async (
     step: "basic-details" | "advanced-details" | "confirm",
-    values: PatchSongRequest,
+    values: EditSongFormValues,
     helpers: FormikHelpers<FormikValues>
   ) => {
     const patchValues = {

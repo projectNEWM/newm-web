@@ -14,7 +14,7 @@ import theme from "@newm-web/theme";
 import { useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
 import {
-  UploadSongRequest,
+  UploadSongThunkRequest,
   emptySong,
   useGetEarliestReleaseDateQuery,
   useGetSongQuery,
@@ -47,7 +47,7 @@ const AdvancedSongDetails = () => {
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors, values } =
-    useFormikContext<UploadSongRequest>();
+    useFormikContext<UploadSongThunkRequest>();
 
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
@@ -119,6 +119,15 @@ const AdvancedSongDetails = () => {
       maxWidth={ ["340px", "340px", "700px"] }
       spacing={ 3 }
     >
+      <SwitchInputField
+        name="isInstrumental"
+        title="Is this song an instrumental?"
+        tooltipText={
+          "Songs without voices or lyrics should be indicated as an " +
+          "instrumental. Failure to accurately label the song will " +
+          "result in a declined distribution submission."
+        }
+      />
       <SwitchInputField
         name="isExplicit"
         title="Does the song contain explicit content?"

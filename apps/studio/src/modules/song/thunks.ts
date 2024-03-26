@@ -13,9 +13,9 @@ import {
   CollaborationStatus,
   DeleteSongRequest,
   GetUserWalletSongsRequest,
-  PatchSongRequest,
+  PatchSongThunkRequest,
   UpdateCollaborationsRequest,
-  UploadSongRequest,
+  UploadSongThunkRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
@@ -49,7 +49,7 @@ import { GenerateArtistAgreementBody, lambdaApi } from "../../api";
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
-  async (body: UploadSongRequest, { dispatch }) => {
+  async (body: UploadSongThunkRequest, { dispatch }) => {
     let songId = "";
     const progressDisclaimer =
       "Please do not refresh the page or navigate away while the " +
@@ -126,6 +126,7 @@ export const uploadSong = createAsyncThunk(
           coverRemixSample: body.isCoverRemixSample,
           description: body.description,
           genres: body.genres,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
@@ -358,7 +359,7 @@ export const generateArtistAgreement = createAsyncThunk(
  */
 export const patchSong = createAsyncThunk(
   "song/patchSong",
-  async (body: PatchSongRequest, { dispatch }) => {
+  async (body: PatchSongThunkRequest, { dispatch }) => {
     try {
       let coverArtUrl: string | undefined;
 
@@ -419,6 +420,7 @@ export const patchSong = createAsyncThunk(
           description: body.description,
           genres: body.genres,
           id: body.id,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,

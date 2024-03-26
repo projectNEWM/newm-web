@@ -4,7 +4,7 @@ import { useWindowDimensions } from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
 import { FunctionComponent, useState } from "react";
 import PriceSummaryDialog from "./PriceSummaryDialog";
-import { UploadSongRequest } from "../../../modules/song";
+import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
 
 interface ConfirmAgreementProps {
@@ -18,7 +18,7 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
 
   const { values, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
+    useFormikContext<UploadSongThunkRequest>();
 
   const windowWidth = useWindowDimensions()?.width;
 

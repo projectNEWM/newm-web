@@ -16,11 +16,15 @@ import {
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
-  UploadSongRequest,
+  UploadSongThunkRequest,
   useGenerateArtistAgreementThunk,
   useGetEarliestReleaseDateQuery,
   useUploadSongThunk,
 } from "../../../modules/song";
+
+export interface UploadSongFormValues extends UploadSongThunkRequest {
+  agreesToCoverArtGuidelines?: boolean;
+}
 
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -50,7 +54,7 @@ const UploadSong: FunctionComponent = () => {
 
   const artistName = `${firstName} ${lastName}`;
 
-  const initialValues: UploadSongRequest = {
+  const initialValues: UploadSongFormValues = {
     agreesToCoverArtGuidelines: false,
     artistName,
     audio: undefined,
@@ -75,6 +79,7 @@ const UploadSong: FunctionComponent = () => {
     ipi: userIpi,
     isCoverRemixSample: false,
     isExplicit: false,
+    isInstrumental: false,
     isMinting: false,
     isrc: undefined,
     moods: [],
@@ -98,7 +103,7 @@ const UploadSong: FunctionComponent = () => {
 
   // Navigate to advanced details if minting, otherwise upload song
   const handleSongInfo = async (
-    values: UploadSongRequest,
+    values: UploadSongThunkRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
     if (values.isMinting) {
@@ -111,7 +116,7 @@ const UploadSong: FunctionComponent = () => {
 
   // Prepare Artist Agreement for confirmation page
   const handleAdvancedDetails = async (
-    values: UploadSongRequest,
+    values: UploadSongThunkRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
     await generateArtistAgreement({
@@ -125,7 +130,7 @@ const UploadSong: FunctionComponent = () => {
   };
 
   const handleSubmit = async (
-    values: UploadSongRequest,
+    values: UploadSongThunkRequest,
     helpers: FormikHelpers<FormikValues>
   ) => {
     await uploadSong(values);

@@ -50,6 +50,7 @@ export const emptySong: Song = {
   duration: undefined,
   genres: [],
   id: "",
+  instrumental: false,
   ipis: [],
   isrc: "",
   iswc: "",
