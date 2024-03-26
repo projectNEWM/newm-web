@@ -169,7 +169,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             <SideBarNavLink
               href={ NEWM_CLICKUP_FORM_URL }
               Icon={ SupportIcon }
-              label="SUPPORT"
+              label="SUBMIT A TICKET"
               onClick={ () => setMobileOpen(false) }
             />
           </Stack>
