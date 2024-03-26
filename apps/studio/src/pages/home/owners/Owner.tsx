@@ -1,17 +1,10 @@
 import { FunctionComponent, useState } from "react";
 import { useParams } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Stack } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import {
-  GlobalFill,
-  InstagramLogo,
-  TwitterLogo,
-  bgImage,
-} from "@newm-web/assets";
+import { Box } from "@mui/material";
+import { bgImage } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
-import { Button, Typography } from "@newm-web/elements";
+import { ItemHeader, ProfileHeader } from "@newm-web/components";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
 import { history } from "../../../common/history";
@@ -38,167 +31,66 @@ const Owner: FunctionComponent = () => {
     bannerUrl,
     biography,
     firstName,
-    instagramUrl,
+    instagramUrl = "",
     lastName,
-    location,
+    location = "",
     nickname,
-    pictureUrl,
+    pictureUrl = "",
     role,
-    twitterUrl,
+    twitterUrl = "",
     verificationStatus,
-    websiteUrl,
+    websiteUrl = "",
   } = ownerData;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
   const isWidthAboveSm =
     windowWidth && windowWidth > theme.breakpoints.values.sm;
 
+  const socials = {
+    instagramUrl,
+    websiteUrl,
+    xUrl: twitterUrl,
+  };
+
+  const optimizedBannerImageUrl = bannerUrl
+    ? resizeCloudinaryImage(bannerUrl, { height: 200, width: 1600 })
+    : bgImage;
+
   return (
     <>
-      <Stack
+      <Box pb={ 4 }>
+        <ItemHeader title="ARTIST PAGE" onGoBack={ history.back } />
+      </Box>
+
+      <Box
+        aria-label="Artist banner"
         sx={ {
-          columnGap: 2,
-          flexDirection: ["column", "row"],
-          pb: 4,
-          rowGap: 2,
+          backgroundImage: `url(${optimizedBannerImageUrl})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          height: isWidthAboveSm ? "200px" : "130px",
+          width: "100%",
         } }
-      >
-        <Button
-          color="white"
-          variant="outlined"
-          width="icon"
-          onClick={ () => history.back() }
-        >
-          <ArrowBackIcon sx={ { color: "white" } } />
-        </Button>
-        <Typography variant="h3">ARTIST PAGE</Typography>
-      </Stack>
-      <img
-        alt="Artist banner"
-        src={ bannerUrl ? bannerUrl : bgImage }
-        style={ {
-          maxHeight: isWidthAboveSm ? "200px" : "100px",
-          objectFit: "cover",
-        } }
-        width="100%"
       />
 
-      <Stack
-        sx={ {
-          alignItems: "center",
-          columnGap: 5,
-          flexDirection: [null, null, "column", "row"],
-          mt: -3.5,
-          mx: 5,
-        } }
-      >
-        <img
-          alt="Artist profile"
-          height={ isWidthAboveSm ? "200px" : "100px" }
-          src={
-            pictureUrl
-              ? resizeCloudinaryImage(pictureUrl, {
-                  height: 200,
-                  width: 200,
-                })
-              : bgImage
-          }
-          style={ { borderRadius: "50%", objectFit: "cover" } }
-          width={ isWidthAboveSm ? "200px" : "100px" }
-        />
+      <ProfileHeader
+        firstName={ firstName }
+        isVerified={ isVerified }
+        lastName={ lastName }
+        location={ location }
+        profileImageUrl={ pictureUrl }
+        socials={ socials }
+        onClickAbout={ () => setIsModalOpen(!isModalOpen) }
+      />
 
-        <Stack
-          sx={ {
-            alignItems: ["center", "center", "center", "initial"],
-            alignSelf: [null, null, null, "flex-end"],
-            mt: [2, 2, 2, 3.5],
-          } }
-        >
-          <Stack
-            alignItems="center"
-            direction="row"
-            gap={ 1.5 }
-            justifyContent={ ["center", "center", "center", "flex-start"] }
-            textAlign={ ["center", "center", "center", "left"] }
-          >
-            <Typography fontWeight="700" variant="h3">
-              { firstName || lastName
-                ? `${firstName} ${lastName}`.toUpperCase()
-                : "Name Unavailable" }
-            </Typography>
-            { isVerified ? <CheckCircleIcon color="success" /> : null }
-          </Stack>
-          { location && (
-            <Typography
-              mt={ 0.5 }
-              textAlign={ ["center", "center", "center", "left"] }
-              variant="subtitle1"
-            >
-              { location }
-            </Typography>
-          ) }
-          <Stack
-            sx={ { columnGap: 1.5, flexDirection: "row", mt: [2, 2, 2, 3.5] } }
-          >
-            <Button
-              color="music"
-              disabled={ !(biography || role) }
-              variant="secondary"
-              width="compact"
-              onClick={ () => setIsModalOpen(!isModalOpen) }
-            >
-              About
-            </Button>
-          </Stack>
-        </Stack>
-
-        <Stack
-          sx={ {
-            alignSelf: [null, null, null, "flex-start"],
-            columnGap: 1.5,
-            flexDirection: "row",
-            ml: [null, null, null, "auto"],
-            mt: [2, 2, 2, 6],
-          } }
-        >
-          <Button
-            disabled={ !websiteUrl }
-            href={ websiteUrl }
-            rel="noopener noreferrer"
-            target="_blank"
-            variant="secondary"
-            width="icon"
-          >
-            <GlobalFill />
-          </Button>
-          <Button
-            disabled={ !twitterUrl }
-            href={ twitterUrl }
-            rel="noopener noreferrer"
-            target="_blank"
-            variant="secondary"
-            width="icon"
-          >
-            <TwitterLogo />
-          </Button>
-          <Button
-            disabled={ !instagramUrl }
-            href={ instagramUrl }
-            rel="noopener noreferrer"
-            target="_blank"
-            variant="secondary"
-            width="icon"
-          >
-            <InstagramLogo />
-          </Button>
-        </Stack>
-      </Stack>
       <Songs />
+
       <OwnerModal
         biography={ biography }
         nickname={ nickname }
         open={ isModalOpen }
         role={ role }
+        socials={ socials }
         onClose={ () => setIsModalOpen(false) }
       />
     </>

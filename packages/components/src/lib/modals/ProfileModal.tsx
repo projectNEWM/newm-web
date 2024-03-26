@@ -1,25 +1,30 @@
-import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
-import { Socials, SocialsProps } from "@newm-web/components";
+import { Container, Stack, Typography, useTheme } from "@mui/material";
 import { Button, Modal, ModalProps } from "@newm-web/elements";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
+import Socials, { SocialsProps } from "../Socials";
 
-interface AboutArtistModalProps extends Omit<ModalProps, "children"> {
-  readonly content: string;
+interface ProfileModalProps extends Omit<ModalProps, "children"> {
+  readonly children: ReactNode;
   readonly name: string;
   readonly socials: SocialsProps;
 }
 
-const AboutArtistModal: FunctionComponent<AboutArtistModalProps> = ({
+const ProfileModal: FunctionComponent<ProfileModalProps> = ({
   name,
   isOpen,
   onClose,
   socials,
-  content,
+  children,
+  isCloseButtonVisible = false,
 }) => {
   const theme = useTheme();
 
   return (
-    <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ onClose }>
+    <Modal
+      isCloseButtonVisible={ isCloseButtonVisible }
+      isOpen={ isOpen }
+      onClose={ onClose }
+    >
       <Container
         maxWidth="sm"
         sx={ { alignItems: "center", display: "flex", height: "100vh" } }
@@ -32,7 +37,7 @@ const AboutArtistModal: FunctionComponent<AboutArtistModalProps> = ({
             sx={ { borderBottom: `2px solid ${theme.colors.black}` } }
           >
             <Typography variant="body2">About { name }</Typography>
-            <Typography variant="subtitle1">{ content }</Typography>
+            { children }
           </Stack>
 
           <Stack direction="row" justifyContent="space-between" p={ 1.5 }>
@@ -52,4 +57,4 @@ const AboutArtistModal: FunctionComponent<AboutArtistModalProps> = ({
   );
 };
 
-export default AboutArtistModal;
+export default ProfileModal;

@@ -1,11 +1,9 @@
 "use client";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { resizeCloudinaryImage } from "@newm-web/utils";
-import { ProfileHeader } from "@newm-web/components";
-import { Modal } from "@newm-web/elements";
-import AboutArtistModal from "apps/marketplace/src/components/AboutArtistModal";
-import { ItemHeader } from "../../../components";
+import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
+import { ItemHeader, ProfileHeader, ProfileModal } from "@newm-web/components";
+import { useRouter } from "next/navigation";
 
 interface ArtistProps {
   readonly params: {
@@ -14,12 +12,17 @@ interface ArtistProps {
 }
 
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
+  const router = useRouter();
+  const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
+  const isAboveSmBreakpoint = useBetterMediaQuery(
+    `(min-width: ${theme.breakpoints.values.sm}px)`
+  );
 
   // temp data
   const artist = mockArtists[0];
 
-  // const profileImageSize = 200;
   const resizedCoverImage = resizeCloudinaryImage(artist.coverImageUrl, {
     height: 200,
     width: 1600,
@@ -36,14 +39,16 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 
   return (
     <Stack direction="column">
-      <ItemHeader title="ARTIST PAGE" />
+      <Box px={ [2, 2, 7.5] } py={ [2, 2, 7.5] }>
+        <ItemHeader title="ARTIST PAGE" onGoBack={ router.back } />
+      </Box>
 
       <Box
         sx={ {
           backgroundImage: `url(${resizedCoverImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
-          height: "200px",
+          height: isAboveSmBreakpoint ? "200px" : "130px",
           width: "100%",
         } }
       />
@@ -51,6 +56,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
       <Container sx={ { flexGrow: 1 } }>
         <ProfileHeader
           firstName={ artist.firstName }
+          isVerified={ artist.isVerified }
           lastName={ artist.lastName }
           location={ artist.location }
           profileImageUrl={ artist.profileImageUrl }
@@ -66,14 +72,15 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
         />
       </Container>
 
-      <AboutArtistModal
-        content={ artist.description }
+      <ProfileModal
         isCloseButtonVisible={ false }
         isOpen={ isAboutModalOpen }
         name={ `${artist.firstName} ${artist.lastName}` }
         socials={ socials }
         onClose={ () => setIsAboutModalOpen(false) }
-      />
+      >
+        <Typography variant="subtitle1">{ artist.description }</Typography>
+      </ProfileModal>
     </Stack>
   );
 };
