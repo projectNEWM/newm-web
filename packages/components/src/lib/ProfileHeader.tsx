@@ -62,7 +62,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         >
           <Stack alignItems="center" direction="row" spacing={ 1.5 }>
             <Typography
-              fontSize={ ["24px", "24px", "24px", "32px"] }
+              fontSize={ ["24px", "24px", "32px"] }
               textAlign={ ["center", "center", "left"] }
               textTransform="uppercase"
               variant="h3"
