@@ -4,6 +4,7 @@ import { FunctionComponent, useState } from "react";
 import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { ItemHeader, ProfileHeader, ProfileModal } from "@newm-web/components";
 import { useRouter } from "next/navigation";
+import { mockArtist } from "../../../temp/data";
 
 interface ArtistProps {
   readonly params: {
@@ -16,12 +17,12 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
-  const isAboveSmBreakpoint = useBetterMediaQuery(
-    `(min-width: ${theme.breakpoints.values.sm}px)`
-  );
-
   // temp data
-  const artist = mockArtists[0];
+  const artist = mockArtist;
+
+  const isBelowSmBreakpoint = useBetterMediaQuery(
+    `(max-width: ${theme.breakpoints.values.sm}px)`
+  );
 
   const resizedCoverImage = resizeCloudinaryImage(artist.coverImageUrl, {
     height: 200,
@@ -48,7 +49,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
           backgroundImage: `url(${resizedCoverImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
-          height: isAboveSmBreakpoint ? "200px" : "130px",
+          height: isBelowSmBreakpoint ? "130px" : "200px",
           width: "100%",
         } }
       />
@@ -86,29 +87,3 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 };
 
 export default Artist;
-
-const mockArtists = [
-  {
-    coverImageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1680991027/cvjbuze1tqft5srafmzg.jpg",
-    description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-      velit esse cillum dolore eu fugiat nulla pariatur.`,
-    firstName: "Johnny",
-    id: "abcd1234",
-    instagramUrl: "",
-    isVerified: true,
-    itunesUrl: "",
-    lastName: "Appleseed",
-    location: "Barcelona, Spain",
-    profileImageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
-    soundCloudUrl: "https://www.example.com",
-    spotifyUrl: "https://www.example.com",
-    websiteUrl: "https://www.example.com",
-    xUrl: "https://www.example.com",
-  },
-];

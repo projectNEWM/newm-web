@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { FunctionComponent } from "react";
 import { Clickable } from "@newm-web/elements";
@@ -25,8 +25,6 @@ const Artist: FunctionComponent<ArtistProps> = ({
   orientation,
   onSelectArtist,
 }) => {
-  const theme = useTheme();
-
   if (isLoading) {
     return <ArtistSkeleton orientation={ orientation } />;
   }
