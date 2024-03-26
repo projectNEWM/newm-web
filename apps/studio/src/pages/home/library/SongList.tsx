@@ -32,7 +32,6 @@ import {
   SortOrder,
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
-import { min } from "moment";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
