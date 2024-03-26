@@ -212,7 +212,7 @@ export default function OwnersTable({
                       `${firstName} ${lastName}`
                     ) : (
                       <Typography fontStyle="italic" fontWeight={ 400 }>
-                        Waiting on account creation
+                        Waiting on collaborator&apos;s acceptance
                       </Typography>
                     ) }
                   </Stack>
