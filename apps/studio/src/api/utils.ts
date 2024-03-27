@@ -39,8 +39,7 @@ export const fetchBaseQueryWithReauth = (
       result.error &&
       typeof result.error === "object" &&
       "status" in result.error &&
-      result.error.status === 401 &&
-      refreshToken
+      result.error.status === 401
     ) {
       // check whether the mutex is unlocked before attempting refresh
       if (!mutex.isLocked()) {
