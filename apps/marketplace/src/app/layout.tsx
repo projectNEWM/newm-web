@@ -43,12 +43,8 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <Stack
-                  direction="column"
-                  flexGrow={ 1 }
-                  justifyContent="space-between"
-                >
-                  <Stack direction="column" justifyContent="flex-start">
+                <Stack flexGrow={ 1 } justifyContent="space-between">
+                  <Stack justifyContent="flex-start">
                     <Header />
                     { children }
                   </Stack>
