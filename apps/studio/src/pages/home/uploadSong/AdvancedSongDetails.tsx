@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
-import { scrollToError, useWindowDimensions } from "@newm-web/utils";
+import {
+  isValueInArray,
+  scrollToError,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import {
   Button,
   CopyrightInputField,
@@ -14,7 +18,7 @@ import theme from "@newm-web/theme";
 import { useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
 import {
-  UploadSongRequest,
+  UploadSongThunkRequest,
   emptySong,
   useGetEarliestReleaseDateQuery,
   useGetSongQuery,
@@ -47,7 +51,7 @@ const AdvancedSongDetails = () => {
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors, values } =
-    useFormikContext<UploadSongRequest>();
+    useFormikContext<UploadSongThunkRequest>();
 
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
@@ -67,6 +71,12 @@ const AdvancedSongDetails = () => {
       setFieldValue("barcodeNumber", "");
     }
   }, [setFieldValue, values.barcodeType]);
+
+  useEffect(() => {
+    if (isValueInArray("instrumental", values.genres)) {
+      setFieldValue("isInstrumental", true);
+    }
+  }, [setFieldValue, values.genres]);
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
@@ -119,6 +129,15 @@ const AdvancedSongDetails = () => {
       maxWidth={ ["340px", "340px", "700px"] }
       spacing={ 3 }
     >
+      <SwitchInputField
+        name="isInstrumental"
+        title="Is this song an instrumental?"
+        tooltipText={
+          "Songs without voices or lyrics should be indicated as an " +
+          "instrumental. Failure to accurately label the song will " +
+          "result in a declined distribution submission."
+        }
+      />
       <SwitchInputField
         name="isExplicit"
         title="Does the song contain explicit content?"

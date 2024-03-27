@@ -3,7 +3,7 @@ import { Link, Typography } from "@mui/material";
 import { useFormikContext } from "formik";
 import { Alert, HorizontalLine, SwitchInputField } from "@newm-web/elements";
 import { NEWM_STUDIO_FAQ_URL, NEWM_SUPPORT_EMAIL } from "../../common";
-import { UploadSongRequest } from "../../modules/song";
+import { UploadSongThunkRequest } from "../../modules/song";
 
 interface CoverRemixSampleProps {
   disabled?: boolean;
@@ -12,7 +12,7 @@ interface CoverRemixSampleProps {
 export const CoverRemixSample: FunctionComponent<CoverRemixSampleProps> = ({
   disabled = false,
 }) => {
-  const { values } = useFormikContext<UploadSongRequest>();
+  const { values } = useFormikContext<UploadSongThunkRequest>();
 
   return (
     <SwitchInputField

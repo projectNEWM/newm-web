@@ -26,6 +26,7 @@ import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
+import { UploadSongFormValues } from "./UploadSong";
 import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
@@ -43,7 +44,6 @@ import {
   Creditor,
   Featured,
   Owner,
-  UploadSongRequest,
   emptySong,
   useGetSongQuery,
 } from "../../../modules/song";
@@ -101,7 +101,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     isSubmitting,
     dirty,
     initialValues,
-  } = useFormikContext<UploadSongRequest>();
+  } = useFormikContext<UploadSongFormValues>();
   // DSP pricing plan mint song toggling
 
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
