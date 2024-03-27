@@ -47,14 +47,14 @@ const OwnersList: FunctionComponent = () => {
         } }
       >
         <Typography variant="h3">COLLABORATORS</Typography>
-        { invites?.length ? (
+        { !!invites?.length && (
           <Button
             width="compact"
             onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) }
           >
             Invitation pending
           </Button>
-        ) : null }
+        ) }
       </Stack>
 
       { totalCollaborators || query ? (

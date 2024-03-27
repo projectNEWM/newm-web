@@ -1,14 +1,17 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import Artist from "./Artist";
+import { mockArtists } from "../temp/data";
 
 const ArtistSpotlight: FunctionComponent = () => {
+  const router = useRouter();
+
   // TEMP: simulate data loading
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleSelectArtist = (name: string) => {
-    // placeholder
-    console.log("artist selected: ", name); // eslint-disable-line
+  const handleSelectArtist = (id: string) => {
+    router.push(`artist/${id}`);
   };
 
   // TEMP: simulate data loading
@@ -27,74 +30,25 @@ const ArtistSpotlight: FunctionComponent = () => {
       </Stack>
 
       <Grid columnGap={ [5, 5, 15] } justifyContent="center" rowGap={ 5 } container>
-        { tempArtistData.map(({ imageUrl, name, songCount }, idx) => {
-          return (
-            <Grid display="flex" key={ imageUrl } sx={ { cursor: "pointer" } }>
-              <Artist
-                imageUrl={ imageUrl }
-                isLoading={ isLoading }
-                orientation="column"
-                subtitle={ `${songCount} songs` }
-                title={ name }
-                onSelectArtist={ handleSelectArtist }
-              />
-            </Grid>
-          );
-        }) }
+        { mockArtists.map(
+          ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
+            return (
+              <Grid display="flex" key={ id + idx } sx={ { cursor: "pointer" } }>
+                <Artist
+                  imageUrl={ profileImageUrl }
+                  isLoading={ isLoading }
+                  orientation="column"
+                  subtitle={ `${songCount} songs` }
+                  title={ `${firstName} ${lastName}` }
+                  onSelectArtist={ () => handleSelectArtist(id) }
+                />
+              </Grid>
+            );
+          }
+        ) }
       </Grid>
     </Stack>
   );
 };
 
 export default ArtistSpotlight;
-
-const tempArtistData = [
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-  {
-    imageUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
-    name: "Lorem Ipsum",
-    songCount: 4,
-  },
-];

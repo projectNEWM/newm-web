@@ -1,6 +1,6 @@
 "use client";
 import "../global.css";
-import { ThemeProvider } from "@mui/material";
+import { Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
@@ -43,9 +43,13 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <Header />
-                { children }
-                <Footer />
+                <Stack flexGrow={ 1 } justifyContent="space-between">
+                  <Stack justifyContent="flex-start">
+                    <Header />
+                    { children }
+                  </Stack>
+                  <Footer />
+                </Stack>
               </ThemeProvider>
             </Provider>
           </AppRouterCacheProvider>
