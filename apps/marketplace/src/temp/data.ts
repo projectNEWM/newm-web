@@ -23,21 +23,15 @@ export const mockArtist = {
   xUrl: "https://www.example.com",
 };
 
-export const mockArtists = (() => {
-  const list = [];
-
-  for (let i = 0; i < 8; i++) {
-    list.push({
-      ...mockArtist,
-      profileImageUrl:
-        i % 2 == 0
-          ? "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg"
-          : "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
-    });
-  }
-
-  return list;
-})();
+export const mockArtists = Array(8)
+  .fill(null)
+  .map((_, idx) => ({
+    ...mockArtist,
+    profileImageUrl:
+      idx % 2 == 0
+        ? "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg"
+        : "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
+  }));
 
 export const mockSongs = [
   {

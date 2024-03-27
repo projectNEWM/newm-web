@@ -42,6 +42,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
       </Box>
 
       <Box
+        aria-label="Artist banner"
         sx={ {
           backgroundImage: `url(${resizedCoverImage})`,
           backgroundPosition: "center",
@@ -58,20 +59,12 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
           lastName={ mockArtist.lastName }
           location={ mockArtist.location }
           profileImageUrl={ mockArtist.profileImageUrl }
-          socials={ {
-            instagramUrl: mockArtist.instagramUrl,
-            itunesUrl: mockArtist.itunesUrl,
-            soundCloudUrl: mockArtist.soundCloudUrl,
-            spotifyUrl: mockArtist.spotifyUrl,
-            websiteUrl: mockArtist.websiteUrl,
-            xUrl: mockArtist.xUrl,
-          } }
+          socials={ socials }
           onClickAbout={ () => setIsAboutModalOpen(true) }
         />
       </Container>
 
       <ProfileModal
-        isCloseButtonVisible={ false }
         isOpen={ isAboutModalOpen }
         name={ `${mockArtist.firstName} ${mockArtist.lastName}` }
         socials={ socials }

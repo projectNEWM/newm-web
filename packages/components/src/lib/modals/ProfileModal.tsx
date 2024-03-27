@@ -3,7 +3,8 @@ import { Button, Modal, ModalProps } from "@newm-web/elements";
 import { FunctionComponent, ReactNode } from "react";
 import Socials, { SocialsProps } from "../Socials";
 
-interface ProfileModalProps extends Omit<ModalProps, "children"> {
+interface ProfileModalProps
+  extends Omit<ModalProps, "isCloseButtonVisible" | "children"> {
   readonly children: ReactNode;
   readonly name: string;
   readonly socials: SocialsProps;
@@ -15,16 +16,11 @@ const ProfileModal: FunctionComponent<ProfileModalProps> = ({
   onClose,
   socials,
   children,
-  isCloseButtonVisible = false,
 }) => {
   const theme = useTheme();
 
   return (
-    <Modal
-      isCloseButtonVisible={ isCloseButtonVisible }
-      isOpen={ isOpen }
-      onClose={ onClose }
-    >
+    <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ onClose }>
       <Container
         maxWidth="sm"
         sx={ { alignItems: "center", display: "flex", height: "100vh" } }

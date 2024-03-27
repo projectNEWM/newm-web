@@ -19,6 +19,10 @@ export interface SocialsProps {
   readonly xUrl?: string;
 }
 
+/**
+ * Displays social links. Links with undefined values won't be
+ * rendered, and links with empty string values will appear as disabled.
+ */
 const Socials: FunctionComponent<SocialsProps> = ({
   instagramUrl,
   itunesUrl,

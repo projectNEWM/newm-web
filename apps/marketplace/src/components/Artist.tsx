@@ -30,10 +30,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
   }
 
   return (
-    <Clickable
-      aria-label={ `${title}-artist-profile` }
-      onClick={ () => onSelectArtist() }
-    >
+    <Clickable aria-label={ `${title}-artist-profile` } onClick={ onSelectArtist }>
       <Stack columnGap={ 3.5 } direction={ orientation } rowGap={ 2 }>
         <Box
           alt={ `${title}-artist-profile` }
