@@ -6,4 +6,5 @@ export * from "./testUtils";
 export * from "./mockConstants";
 export * from "./regex";
 export * from "./errors";
+export * from "./song";
 export * from "./types";

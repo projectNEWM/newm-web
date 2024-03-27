@@ -12,7 +12,7 @@ import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { formatPriceToDecimal } from "@newm-web/utils";
 import {
-  UploadSongRequest,
+  UploadSongThunkRequest,
   getCollaboratorInfo,
   useGetCollaboratorsQuery,
   useGetMintSongEstimateQuery,
@@ -27,7 +27,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
   open,
   onClose,
 }) => {
-  const { values, submitForm } = useFormikContext<UploadSongRequest>();
+  const { values, submitForm } = useFormikContext<UploadSongThunkRequest>();
   const { data: songEstimate } = useGetMintSongEstimateQuery({
     collaborators: values.owners.length,
   });

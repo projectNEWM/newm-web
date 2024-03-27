@@ -18,6 +18,7 @@ export { default as HorizontalLine } from "./lib/styled/HorizontalLine";
 export { default as Link } from "./lib/Link";
 export { default as NoResultsText } from "./lib/styled/NoResultsText";
 export { default as Modal } from "./lib/Modal";
+export * from "./lib/Modal";
 export { default as ResultsList } from "./lib/styled/ResultsList";
 export { default as Switch } from "./lib/Switch";
 export { default as SwitchInput } from "./lib/SwitchInput";

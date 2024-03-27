@@ -15,6 +15,7 @@ import FoldersIcon from "./lib/icons/FoldersIcon";
 import GlobalFill from "./lib/icons/GlobalFill";
 import InfoCircleLine from "./lib/icons/InfoCircleLine";
 import InstagramLogo from "./lib/icons/InstagramLogo";
+import ItunesLogo from "./lib/icons/ItunesLogo";
 import NEWMLogo from "./lib/icons/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/icons/NEWMLogoSmInverse";
 import NEWMMarketplaceLogo from "./lib/icons/NEWMMarketplaceLogo";
@@ -25,6 +26,8 @@ import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
 import SoundWave from "./lib/icons/SoundWave";
 import Suitcase from "./lib/icons/Suitcase";
 import Search from "./lib/icons/Search";
+import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
+import SpotifyLogo from "./lib/icons/SpotifyLogo";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
 import TwitterLogo from "./lib/icons/TwitterLogo";
 import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
@@ -51,6 +54,7 @@ export {
   GlobalFill,
   InfoCircleLine,
   InstagramLogo,
+  ItunesLogo,
   NEWMLogo,
   NEWMLogoSmInverse,
   NEWMMarketplaceLogo,
@@ -59,7 +63,9 @@ export {
   PlayButton,
   SelectedCheckboxIcon,
   Search,
+  SoundCloudLogo,
   SoundWave,
+  SpotifyLogo,
   Suitcase,
   TimeCircleLine,
   TwitterLogo,

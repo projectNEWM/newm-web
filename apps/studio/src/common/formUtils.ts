@@ -71,6 +71,9 @@ export const getBarcodeRegex = (barcodeType: BarcodeType): BarcodeConfig => {
 };
 
 export const commonYupValidation = {
+  agreesToCoverArtGuidelines: Yup.bool()
+    .required("This field is required")
+    .oneOf([true], "You must agree to the cover art guidelines"),
   audio: Yup.mixed().required("This field is required"),
   barcodeNumber: Yup.string().when("barcodeType", {
     is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
@@ -208,7 +211,12 @@ export const commonYupValidation = {
   }),
   password: Yup.string().required("Password is required"),
   publicationDate: Yup.date().max(new Date(), "Cannot be a future date"),
-  releaseDate: (releaseDate: string | undefined) => {
+  releaseDate: (releaseDate: string | undefined, skipValidation = false) => {
+    // Skip validation since user will not have control for this field
+    if (skipValidation) {
+      return Yup.mixed().notRequired();
+    }
+
     const minReleaseDate = releaseDate
       ? new Date(releaseDate)
       : new Date(Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000);

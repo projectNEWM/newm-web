@@ -259,3 +259,31 @@ export const useHlsJs = ({
 
   return result;
 };
+
+/**
+ * MUI "useMediaQuery" alternative that works with Next.js.
+ * Source: https://observablehq.com/@werehamster/avoiding-hydration-mismatch-when-using-react-hooks.
+ *
+ * @example
+ *  const isAboveMdBreakpoint = useBetterMediaQuery(
+ *    `(min-width: ${theme.breakpoints.values.md}px`
+ *  );
+ */
+export const useBetterMediaQuery = (mediaQueryString: string) => {
+  const [matches, setMatches] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mediaQueryList = window.matchMedia(mediaQueryString);
+
+    const listener = () => setMatches(!!mediaQueryList.matches);
+    mediaQueryList.addEventListener("change", listener);
+
+    listener();
+
+    return () => {
+      mediaQueryList.removeEventListener("change", listener);
+    };
+  }, [mediaQueryString]);
+
+  return matches;
+};
