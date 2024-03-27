@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
-import { scrollToError, useWindowDimensions } from "@newm-web/utils";
+import {
+  isValueInArray,
+  scrollToError,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import {
   Button,
   CopyrightInputField,
@@ -67,6 +71,12 @@ const AdvancedSongDetails = () => {
       setFieldValue("barcodeNumber", "");
     }
   }, [setFieldValue, values.barcodeType]);
+
+  useEffect(() => {
+    if (isValueInArray("instrumental", values.genres)) {
+      setFieldValue("isInstrumental", true);
+    }
+  }, [setFieldValue, values.genres]);
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
