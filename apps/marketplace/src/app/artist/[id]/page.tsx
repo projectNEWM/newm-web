@@ -2,8 +2,7 @@
 import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
-import { ItemHeader, ProfileHeader, ProfileModal } from "@newm-web/components";
-import { useRouter } from "next/navigation";
+import { ProfileHeader, ProfileModal } from "@newm-web/components";
 import { mockArtist } from "../../../temp/data";
 
 interface ArtistProps {
@@ -13,7 +12,6 @@ interface ArtistProps {
 }
 
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
-  const router = useRouter();
   const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
@@ -37,10 +35,6 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 
   return (
     <Stack direction="column">
-      <Box px={ [2, 2, 7.5] } py={ [2, 2, 7.5] }>
-        <ItemHeader title="ARTIST PAGE" onGoBack={ router.back } />
-      </Box>
-
       <Box
         aria-label="Artist banner"
         sx={ {

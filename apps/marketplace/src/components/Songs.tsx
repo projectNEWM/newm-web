@@ -9,7 +9,7 @@ import { mockSongs } from "../temp/data";
 
 const Songs: FunctionComponent = () => {
   return (
-    <Stack alignItems="center" mt={ [7.5, 7.5, 10] }>
+    <Stack alignItems="center" mt={ [7.5, 5.5, 10] }>
       { mockSongs.length ? (
         <>
           <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
