@@ -16,6 +16,7 @@ import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
 import { TablePagination, Typography } from "@newm-web/elements";
 import currency from "currency.js";
+import AllCaughtUp from "./AllCaughtUp";
 import { selectUi, setWalletPortfolioTableFilter } from "../../../modules/ui";
 import {
   TableDropdownMenuParameters,
@@ -74,6 +75,7 @@ export default function SongRoyaltiesList({
   const dispatch = useAppDispatch();
 
   const TABLE_WIDTH = 700;
+  const isLastRowOnPageVisible = lastRowOnPage >= totalCountOfSongs;
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -146,7 +148,6 @@ export default function SongRoyaltiesList({
                 </StyledTableRow>
               )) }
             </TableBody>
-
             { totalCountOfSongs > rows && (
               <TablePagination
                 cellStyles={ { paddingTop: "12px" } }
@@ -161,6 +162,12 @@ export default function SongRoyaltiesList({
             ) }
           </Table>
         </TableContainer>
+
+        { isLastRowOnPageVisible && (
+          <Box sx={ { pt: 2 } }>
+            <AllCaughtUp />
+          </Box>
+        ) }
       </Box>
     );
   } else {
