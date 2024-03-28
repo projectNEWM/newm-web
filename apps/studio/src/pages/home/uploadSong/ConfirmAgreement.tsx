@@ -2,7 +2,7 @@ import { useFormikContext } from "formik";
 import { Box, useTheme } from "@mui/material";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Button, Typography } from "@newm-web/elements";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import PriceSummaryDialog from "./PriceSummaryDialog";
 import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
@@ -31,6 +31,13 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
       setIsPaymentSummaryOpen(!isPaymentSummaryOpen);
     }
   };
+
+  // Reset consent to contract when unmounting
+  useEffect(() => {
+    return () => {
+      setFieldValue("consentsToContract", false);
+    };
+  }, [setFieldValue]);
 
   return (
     <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
