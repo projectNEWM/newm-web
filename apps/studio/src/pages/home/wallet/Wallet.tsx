@@ -14,17 +14,14 @@ import {
   Theme,
   Typography,
 } from "@mui/material";
-import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
-import {
-  resetWalletPortfolioTableFilter,
-  setIsConnectWalletModalOpen,
-} from "../../../modules/ui";
+import { NoConnectedWallet } from "./NoConnectedWallet";
+import { resetWalletPortfolioTableFilter } from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
@@ -92,6 +89,10 @@ const Wallet: FunctionComponent = () => {
     setTab(nextTab);
   };
 
+  if (!wallet) {
+    return <NoConnectedWallet />;
+  }
+
   return (
     <Container maxWidth={ false }>
       <Box mx={ [null, null, 1.5] }>
@@ -106,18 +107,7 @@ const Wallet: FunctionComponent = () => {
           <Typography fontWeight={ 800 } variant="h3">
             WALLET
           </Typography>
-
-          { wallet ? (
-            <DisconnectWalletButton />
-          ) : (
-            <Button
-              gradient="crypto"
-              width="compact"
-              onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
-            >
-              Connect Wallet
-            </Button>
-          ) }
+          <DisconnectWalletButton />
         </Box>
 
         { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
