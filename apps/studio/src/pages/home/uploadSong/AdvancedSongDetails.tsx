@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useFormikContext } from "formik";
 import { Box, Link, Stack } from "@mui/material";
-import { scrollToError, useWindowDimensions } from "@newm-web/utils";
+import {
+  isValueInArray,
+  scrollToError,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import {
   Button,
   CopyrightInputField,
@@ -11,9 +15,13 @@ import {
   TextInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { useParams } from "react-router-dom";
+import { MintingStatus } from "@newm-web/types";
 import {
-  UploadSongRequest,
+  UploadSongThunkRequest,
+  emptySong,
   useGetEarliestReleaseDateQuery,
+  useGetSongQuery,
 } from "../../../modules/song";
 import {
   MIN_DISTRIBUTION_TIME,
@@ -22,9 +30,14 @@ import {
 } from "../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import { CoverRemixSample } from "../../../components";
+import { SongRouteParams } from "../library/types";
 
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
+  const { songId } = useParams<"songId">() as SongRouteParams;
+  const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
+
+  const isDeclined = song.mintingStatus === MintingStatus.Declined;
 
   const windowWidth = useWindowDimensions()?.width;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,7 +51,7 @@ const AdvancedSongDetails = () => {
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
   const { isSubmitting, setFieldValue, errors, values } =
-    useFormikContext<UploadSongRequest>();
+    useFormikContext<UploadSongThunkRequest>();
 
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery(undefined, {
@@ -58,6 +71,12 @@ const AdvancedSongDetails = () => {
       setFieldValue("barcodeNumber", "");
     }
   }, [setFieldValue, values.barcodeType]);
+
+  useEffect(() => {
+    if (isValueInArray("instrumental", values.genres)) {
+      setFieldValue("isInstrumental", true);
+    }
+  }, [setFieldValue, values.genres]);
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
@@ -111,6 +130,15 @@ const AdvancedSongDetails = () => {
       spacing={ 3 }
     >
       <SwitchInputField
+        name="isInstrumental"
+        title="Is this song an instrumental?"
+        tooltipText={
+          "Songs without voices or lyrics should be indicated as an " +
+          "instrumental. Failure to accurately label the song will " +
+          "result in a declined distribution submission."
+        }
+      />
+      <SwitchInputField
         name="isExplicit"
         title="Does the song contain explicit content?"
         tooltipText={
@@ -126,6 +154,7 @@ const AdvancedSongDetails = () => {
         rowGap={ [2, null, 3] }
       >
         <TextInputField
+          disabled={ isDeclined }
           isOptional={ false }
           label="SCHEDULE RELEASE DATE"
           min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
@@ -154,6 +183,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="composition"
+          disabled={ isDeclined }
           label="COMPOSITION COPYRIGHT"
           ownerFieldName="compositionCopyrightOwner"
           ref={ compositionCopyrightRef }
@@ -177,6 +207,7 @@ const AdvancedSongDetails = () => {
         />
         <CopyrightInputField
           copyrightType="phonographic"
+          disabled={ isDeclined }
           label="SOUND RECORDING COPYRIGHT"
           ownerFieldName="phonographicCopyrightOwner"
           ref={ phonographicCopyrightRef }
@@ -199,6 +230,7 @@ const AdvancedSongDetails = () => {
           yearFieldName="phonographicCopyrightYear"
         />
         <DropdownSelectField
+          disabled={ isDeclined }
           label="RELEASE CODE TYPE"
           name="barcodeType"
           options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
@@ -210,7 +242,11 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
-          disabled={ values.barcodeType === NONE_OPTION || !values.barcodeType }
+          disabled={
+            values.barcodeType === NONE_OPTION ||
+            !values.barcodeType ||
+            isDeclined
+          }
           label="RELEASE CODE NUMBER"
           name="barcodeNumber"
           placeholder="0000000000"
@@ -222,6 +258,7 @@ const AdvancedSongDetails = () => {
           }
         />
         <TextInputField
+          disabled={ isDeclined }
           label="ISRC"
           mask="aa-***-99-99999"
           maskChar={ null }

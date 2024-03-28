@@ -46,6 +46,7 @@ const Header: FunctionComponent = () => {
             alignItems: "center",
             flex: 1,
             flexBasis: ["100%", "100%", "auto"],
+            mb: [2, 4, 0],
             mt: [0, 2, 3.5],
             order: [4, 4, 2],
           } }

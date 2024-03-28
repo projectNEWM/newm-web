@@ -1,6 +1,14 @@
 export * from "./lib/buttons/DisconnectWalletButton";
 export { default as DisconnectWalletButton } from "./lib/buttons/DisconnectWalletButton";
 export * from "./lib/modals/WalletEnvMismatchModal";
+export { default as ItemHeader } from "./lib/ItemHeader";
+export * from "./lib/ItemHeader";
+export { default as ProfileHeader } from "./lib/ProfileHeader";
+export * from "./lib/ProfileHeader";
+export { default as ProfileModal } from "./lib/modals/ProfileModal";
+export * from "./lib/modals/ProfileModal";
+export { default as Socials } from "./lib/Socials";
+export * from "./lib/Socials";
 export { default as WalletEnvMismatchModal } from "./lib/modals/WalletEnvMismatchModal";
 export * from "./lib/modals/WalletModal";
 export { default as WalletModal } from "./lib/modals/WalletModal";

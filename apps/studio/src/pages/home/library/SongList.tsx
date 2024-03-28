@@ -40,7 +40,11 @@ import {
   useFetchSongStreamThunk,
   useGetSongsQuery,
 } from "../../../modules/song";
-import { NEWM_SUPPORT_EMAIL, PlayerState } from "../../../common";
+import {
+  NEWM_SUPPORT_EMAIL,
+  PlayerState,
+  isSongEditable as isSongEditableUtil,
+} from "../../../common";
 
 interface SongListProps {
   query: string;
@@ -211,15 +215,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const handleRowClick = (
     event: MouseEvent<HTMLButtonElement | HTMLTableRowElement>,
-    {
-      songId,
-      hasStartedMintingProcess,
-    }: { hasStartedMintingProcess: boolean; songId: string }
+    { songId, isSongEditable }: { isSongEditable: boolean; songId: string }
   ) => {
     event.stopPropagation();
-    navigate(
-      `${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`
-    );
+    navigate(`${isSongEditable ? "edit-song" : "view-details"}/${songId}`);
   };
 
   const handlePageChange = (
@@ -293,8 +292,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         <TableHead />
         <TableBody>
           { songData.map((song) => {
-            const hasStartedMintingProcess =
-              song.mintingStatus !== MintingStatusType.Undistributed;
+            const isSongEditable = isSongEditableUtil(song.mintingStatus);
 
             const isSongStale =
               isMoreThanThresholdSecondsLater(song.createdAt, 1200) &&
@@ -319,7 +317,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     ? undefined
                     : (event) =>
                         handleRowClick(event, {
-                          hasStartedMintingProcess,
+                          isSongEditable,
                           songId: song.id,
                         })
                 }
@@ -428,15 +426,15 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                       width="icon"
                       onClick={ (event) =>
                         handleRowClick(event, {
-                          hasStartedMintingProcess,
+                          isSongEditable,
                           songId: song.id,
                         })
                       }
                     >
-                      { hasStartedMintingProcess ? (
-                        <VisibilityIcon sx={ { color: theme.colors.music } } />
-                      ) : (
+                      { isSongEditable ? (
                         <EditIcon sx={ { color: theme.colors.music } } />
+                      ) : (
+                        <VisibilityIcon sx={ { color: theme.colors.music } } />
                       ) }
                     </Button>
                   ) }

@@ -40,6 +40,7 @@ const SongInfo = () => {
       barcodeType,
       isrc,
       iswc,
+      instrumental: isInstrumental,
       ipis,
       coverRemixSample: isCoverRemixSample,
     } = emptySong,
@@ -58,6 +59,7 @@ const SongInfo = () => {
     ipi: ipis?.join(", "),
     isCoverRemixSample,
     isExplicit: parentalAdvisory === "Explicit",
+    isInstrumental,
     isMinting: false,
     isrc,
     iswc,
@@ -225,6 +227,16 @@ const SongInfo = () => {
               ] }
               spacing={ 3 }
             >
+              <SwitchInputField
+                disabled={ true }
+                name="isInstrumental"
+                title="Is this song an instrumental?"
+                tooltipText={
+                  "Songs without voices or lyrics should be indicated as an " +
+                  "instrumental. Failure to accurately label the song will " +
+                  "result in a declined distribution submission."
+                }
+              />
               <SwitchInputField
                 disabled={ true }
                 name="isExplicit"

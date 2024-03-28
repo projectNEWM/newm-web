@@ -7,15 +7,15 @@ import {
   isCloudinaryUrl,
   sleep,
 } from "@newm-web/utils";
-import { Song } from "@newm-web/types";
+import { MintingStatus, Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
   GetUserWalletSongsRequest,
-  PatchSongRequest,
+  PatchSongThunkRequest,
   UpdateCollaborationsRequest,
-  UploadSongRequest,
+  UploadSongThunkRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
@@ -49,7 +49,7 @@ import { GenerateArtistAgreementBody, lambdaApi } from "../../api";
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
-  async (body: UploadSongRequest, { dispatch }) => {
+  async (body: UploadSongThunkRequest, { dispatch }) => {
     let songId = "";
     const progressDisclaimer =
       "Please do not refresh the page or navigate away while the " +
@@ -126,6 +126,7 @@ export const uploadSong = createAsyncThunk(
           coverRemixSample: body.isCoverRemixSample,
           description: body.description,
           genres: body.genres,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
@@ -358,7 +359,7 @@ export const generateArtistAgreement = createAsyncThunk(
  */
 export const patchSong = createAsyncThunk(
   "song/patchSong",
-  async (body: PatchSongRequest, { dispatch }) => {
+  async (body: PatchSongThunkRequest, { dispatch }) => {
     try {
       let coverArtUrl: string | undefined;
 
@@ -419,6 +420,7 @@ export const patchSong = createAsyncThunk(
           description: body.description,
           genres: body.genres,
           id: body.id,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
@@ -439,10 +441,11 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      const isDeclined = body.mintingStatus === MintingStatus.Declined;
+
       if (
-        body.owners?.length ||
-        body.creditors?.length ||
-        body.featured?.length
+        !isDeclined &&
+        (body.owners?.length || body.creditors?.length || body.featured?.length)
       ) {
         await dispatch(
           updateCollaborations({
@@ -490,7 +493,16 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          await submitMintSongPayment(body.id, dispatch);
+          // If declined, don't collect payment again
+          if (isDeclined) {
+            const reprocessSongResp = await dispatch(
+              songApi.endpoints.reprocessSong.initiate(body.id)
+            );
+
+            if ("error" in reprocessSongResp) return;
+          } else {
+            await submitMintSongPayment(body.id, dispatch);
+          }
         }
       }
 

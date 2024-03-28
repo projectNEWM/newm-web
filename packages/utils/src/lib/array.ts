@@ -28,3 +28,15 @@ export const useExtractProperty = <
       : extracted;
   }, [items, property, shouldSort]);
 };
+
+/**
+ * Checks if an array includes a specific value, ignoring case sensitivity.
+ */
+export const isValueInArray = (
+  value: string,
+  array: readonly string[]
+): boolean => {
+  const lowerCaseValue = value.toLowerCase();
+
+  return array.some((item) => item.toLowerCase() === lowerCaseValue);
+};

@@ -7,7 +7,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { FunctionComponent, useEffect } from "react";
 
-interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
+export interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
   readonly isCloseButtonVisible?: boolean;
   readonly isOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
