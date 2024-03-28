@@ -22,6 +22,7 @@ const initialState: UIState = {
     isConfirmationRequired: false,
     message: "",
   },
+  walletPortfolioTableFilter: "All",
 };
 
 const uiSlice = createSlice({
@@ -40,6 +41,10 @@ const uiSlice = createSlice({
       state.toast.heading = "";
       state.toast.message = "";
       state.toast.severity = "error";
+    },
+    resetWalletPortfolioTableFilter: (state) => {
+      state.walletPortfolioTableFilter =
+        initialState.walletPortfolioTableFilter;
     },
     setIsConnectWalletModalOpen: (
       state,
@@ -77,6 +82,9 @@ const uiSlice = createSlice({
     ) => {
       state.updateWalletAddressModal = payload;
     },
+    setWalletPortfolioTableFilter: (state, action: PayloadAction<string>) => {
+      state.walletPortfolioTableFilter = action.payload;
+    },
   },
 });
 
@@ -91,6 +99,8 @@ export const {
   setIsConnectWalletModalOpen,
   setIsInvitesModalOpen,
   setIsWalletEnvMismatchModalOpen,
+  setWalletPortfolioTableFilter,
+  resetWalletPortfolioTableFilter,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

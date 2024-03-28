@@ -21,6 +21,7 @@ export interface UIState {
     isConfirmationRequired: boolean;
     message: string;
   };
+  walletPortfolioTableFilter: string;
 }
 
 export interface UploadProgressParams {

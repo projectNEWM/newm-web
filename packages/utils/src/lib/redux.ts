@@ -5,11 +5,11 @@ import { UseWrappedThunkResponse } from "./types";
 
 /**
  * Wraps a thunk so that it can be used as a hook that returns
- * a function to call the thunk as well as the loading status
- * and the thunk return value.
+ * a function to call the thunk as well as the loading status,
+ * the thunk return value, success and error status.
  *
- * @param thunk thunk that should be wrapped with the hook
- * @returns a function that returns the touple: [wrapped thunk, { loading, data }]
+ * @param thunk Thunk that should be wrapped with the hook.
+ * @returns A function that returns the tuple: [wrapped thunk, { data, isError, isLoading, isSuccess }]
  */
 export const asThunkHook = <Returned, Arg>(
   thunk: AsyncThunk<Returned, Arg, Record<string, unknown>>
@@ -19,6 +19,8 @@ export const asThunkHook = <Returned, Arg>(
     UseWrappedThunkResponse<Returned>
   ] => {
     const [data, setData] = useState<Returned>();
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
@@ -26,16 +28,28 @@ export const asThunkHook = <Returned, Arg>(
     const callHook = useCallback(
       async (arg: Arg) => {
         setIsLoading(true);
-        const action = thunk(arg) as any; // eslint-disable-line
-        const result = (await dispatch(action)) as PayloadAction<Returned>;
+        try {
+          const action = thunk(arg) as any; // eslint-disable-line
+          const result = (await dispatch(action)) as PayloadAction<Returned>;
 
-        setData(result.payload);
-        setIsLoading(false);
+          // Check if the thunk execution was successful
+          if (thunk.fulfilled.match(result)) {
+            setData(result.payload);
+            setIsSuccess(true);
+          } else {
+            setIsSuccess(false);
+          }
+        } catch (error) {
+          setIsError(true);
+          setIsSuccess(false);
+        } finally {
+          setIsLoading(false);
+        }
       },
-      [dispatch, setIsLoading]
+      [dispatch, setIsError, setIsLoading, setIsSuccess]
     );
 
-    return [callHook, { data, isLoading }];
+    return [callHook, { data, isError, isLoading, isSuccess }];
   };
 
   return useWrappedThunk;
