@@ -3,7 +3,11 @@ import { Container, Stack } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { FunctionComponent } from "react";
 
-const SingleSong: FunctionComponent = () => {
+interface SingleSongProps {
+  params: { songId: string };
+}
+
+const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   return (
     // Route it to use tempSongs to create unique slugs for each temp song using dynamic routes
     //https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
