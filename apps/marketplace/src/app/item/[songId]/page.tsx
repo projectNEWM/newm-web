@@ -1,22 +1,37 @@
 "use client";
 import { Container, Stack } from "@mui/material";
 import { SongCard } from "@newm-web/components";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
+import { mockSongs } from "../../../temp/data";
+import { ItemSkeleton } from "../../../components";
 
 interface SingleSongProps {
-  params: { songId: string };
+  readonly params: {
+    readonly songId: string;
+  };
 }
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
+  // TEMP: simulate data loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  // TEMP: simulate data loading
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return <ItemSkeleton />;
+  }
+
   return (
-    // Route it to use tempSongs to create unique slugs for each temp song using dynamic routes
-    //https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
     <Container sx={ { flexGrow: 1, mt: 5 } }>
       <Stack alignItems="center" mt={ 2.5 }>
-        { /* TODO: Create preview progress bar using a test song */ }
         <SongCard
           coverArtUrl={
-            "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png"
+            mockSongs.find((song) => song.id === params.songId)?.coverArtUrl
           }
           isPlayable={ true }
           price="3.0"
