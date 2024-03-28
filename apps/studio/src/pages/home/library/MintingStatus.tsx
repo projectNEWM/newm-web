@@ -34,6 +34,17 @@ const UI_MINTING_STATUS: Record<MintingStatusType, string> = {
   Undistributed: "Undistributed",
 };
 
+// Indicates all "An error occurred" statuses. Used externally to determine tooltip content.
+export const ErrorOccurredMintingStatuses = [
+  MintingStatusType.ArweaveUploadException,
+  MintingStatusType.DistributionException,
+  MintingStatusType.MintingException,
+  MintingStatusType.MintingPaymentException,
+  MintingStatusType.MintingPaymentTimeout,
+  MintingStatusType.ReleaseCheckException,
+  MintingStatusType.SubmittedForDistributionException,
+];
+
 const STATUS_ICON_CONFIG: Record<
   string,
   {
