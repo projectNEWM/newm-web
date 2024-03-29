@@ -8,7 +8,7 @@ interface ArtistSkeletonProps {
 const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
   orientation,
 }) => (
-  <Stack spacing={ 1.25 }>
+  <Stack p={ 1.5 } spacing={ 1.25 }>
     <Box>
       <Skeleton
         sx={ { height: [150, 150, 200], width: [150, 150, 200] } }

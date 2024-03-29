@@ -23,13 +23,13 @@ const ArtistSpotlight: FunctionComponent = () => {
 
   return (
     <Stack mb={ 8 }>
-      <Stack alignItems="center" mb={ 5 } mt={ 20 }>
+      <Stack alignItems="center" mb={ 3.5 } mt={ 20 }>
         <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
           ARTIST SPOTLIGHT
         </Typography>
       </Stack>
 
-      <Grid columnGap={ [5, 5, 15] } justifyContent="center" rowGap={ 5 } container>
+      <Grid columnGap={ 1.5 } justifyContent="center" rowGap={ 5 } container>
         { mockArtists.map(
           ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
             return (

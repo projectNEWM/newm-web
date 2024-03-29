@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { mockSongs } from "../temp/data";
 /**
@@ -15,18 +15,13 @@ const Songs: FunctionComponent = () => {
           <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
             JUST RELEASED
           </Typography>
-          <Stack
-            sx={ {
-              columnGap: 2,
-              display: "grid",
-              gridAutoFlow: "column",
-              gridTemplateRows: "auto auto",
-              maxWidth: "100%",
-              mt: 5,
-              overflowX: "auto",
-              pb: 2.5,
-              rowGap: 3,
-            } }
+          <Grid
+            columnGap={ 1 }
+            justifyContent="center"
+            pb={ 2.5 }
+            pt={ 3.5 }
+            rowGap={ 1.5 }
+            container
           >
             { mockSongs.map((song) => {
               const genresString = song.genres.join(", ");
@@ -40,15 +35,15 @@ const Songs: FunctionComponent = () => {
                   subtitle={ genresString }
                   title={ song.title }
                   // eslint-disable-next-line @typescript-eslint/no-empty-function
+                  onCardClick={ () => {} }
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function
                   onPriceClick={ () => {} }
                   // eslint-disable-next-line @typescript-eslint/no-empty-function
                   onSubtitleClick={ () => {} }
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onTitleClick={ () => {} }
                 />
               );
             }) }
-          </Stack>
+          </Grid>
         </>
       ) : (
         <Typography sx={ { marginTop: 8, textAlign: "center" } }>

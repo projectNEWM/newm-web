@@ -23,7 +23,7 @@ export const mockArtist = {
   xUrl: "https://www.example.com",
 };
 
-export const mockArtists = Array(8)
+export const mockArtists = Array(10)
   .fill(null)
   .map((_, idx) => ({
     ...mockArtist,
