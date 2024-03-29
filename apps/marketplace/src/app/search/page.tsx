@@ -40,11 +40,11 @@ const Search = () => {
           subtitle="Luis Viton"
           title="The Forest Fall"
           // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onCardClick={ () => {} }
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           onPriceClick={ () => {} }
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onSubtitleClick={ () => {} }
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onTitleClick={ () => {} }
         />
       </Stack>
     </Container>

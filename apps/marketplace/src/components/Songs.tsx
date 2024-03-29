@@ -1,6 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
+import { useRouter } from "next/navigation";
 import { mockSongs } from "../temp/data";
 
 interface SongsProps {
@@ -13,7 +14,13 @@ interface SongsProps {
  * see studio/src/pages/home/owners/Songs.tsx
  */
 const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleTitleClick = (id: string) => {
+    router.push(`/item/${id}`);
+  };
 
   /**
    * TEMP: simulate loading
@@ -51,7 +58,7 @@ const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
                     subtitle={ genresString }
                     title={ song.title }
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onCardClick={ () => {} }
+                    onCardClick={ () => handleTitleClick(song.id) }
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
                     onPriceClick={ () => {} }
                     // eslint-disable-next-line @typescript-eslint/no-empty-function

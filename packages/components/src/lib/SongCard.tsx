@@ -15,8 +15,8 @@ interface SongCardProps {
   readonly onPriceClick?: () => void;
   readonly onSubtitleClick?: () => void;
   readonly price?: string;
-  readonly subtitle: string;
-  readonly title: string;
+  readonly subtitle?: string;
+  readonly title?: string;
 }
 
 export const SongCard = ({
@@ -124,7 +124,7 @@ export const SongCard = ({
             right={ 0 }
             top={ 0 }
           >
-            { isPlayable && (
+            { !!isPlayable && (
               <IconButton
                 aria-label={ `${isPlaying ? "Stop" : "Play"} song` }
                 sx={ {
@@ -146,7 +146,7 @@ export const SongCard = ({
                 ) }
               </IconButton>
             ) }
-            { price && (
+            { !!price && (
               <Stack
                 left={ 0 }
                 position="absolute"
@@ -182,30 +182,34 @@ export const SongCard = ({
             ) }
           </Box>
         </Stack>
-        <Typography fontWeight={ 700 } mt={ 0.5 } textAlign="left" variant="h4">
-          { title }
-        </Typography>
-        <Typography
-          fontWeight={ 500 }
-          mt={ 0.5 }
-          role={ onSubtitleClick ? "button" : undefined }
-          sx={
-            onSubtitleClick
-              ? {
-                  "&:hover": { textDecoration: "underline" },
-                  cursor: "pointer",
-                  width: "fit-content",
-                }
-              : undefined
-          }
-          tabIndex={ onSubtitleClick ? 0 : undefined }
-          textAlign="left"
-          variant="subtitle1"
-          onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
-          onKeyDown={ handleKeyPress(handleSubtitleClick) }
-        >
-          { subtitle }
-        </Typography>
+        { !!title && (
+          <Typography fontWeight={ 700 } mt={ 0.5 } textAlign="left" variant="h4">
+            { title }
+          </Typography>
+        ) }
+        { !!subtitle && (
+          <Typography
+            fontWeight={ 500 }
+            mt={ 0.5 }
+            role={ onSubtitleClick ? "button" : undefined }
+            sx={
+              onSubtitleClick
+                ? {
+                    "&:hover": { textDecoration: "underline" },
+                    cursor: "pointer",
+                    width: "fit-content",
+                  }
+                : undefined
+            }
+            tabIndex={ onSubtitleClick ? 0 : undefined }
+            textAlign="left"
+            variant="subtitle1"
+            onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
+            onKeyDown={ handleKeyPress(handleSubtitleClick) }
+          >
+            { subtitle }
+          </Typography>
+        ) }
       </Stack>
     </Clickable>
   );
