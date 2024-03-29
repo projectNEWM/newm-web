@@ -34,30 +34,34 @@ export const SongCard = ({
 }: SongCardProps) => {
   const theme = useTheme();
 
-  const handleCardClick = () => {
+  const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     onCardClick?.();
   };
 
   const handlePlayPauseClick = (event: MouseEvent | KeyboardEvent) => {
+    event.preventDefault();
     event.stopPropagation();
     onPlayPauseClick?.();
   };
 
   const handlePriceClick = (event: MouseEvent | KeyboardEvent) => {
+    event.preventDefault();
     event.stopPropagation();
     onPriceClick?.();
   };
 
   const handleSubtitleClick = (event: MouseEvent | KeyboardEvent) => {
+    event.preventDefault();
     event.stopPropagation();
     onSubtitleClick?.();
   };
 
   const handleKeyPress = useCallback(
-    (action?: (event: MouseEvent | KeyboardEvent) => void) =>
+    (action?: (e: MouseEvent | KeyboardEvent) => void) =>
       (event: KeyboardEvent) => {
         if ((event.key === "Enter" || event.key === " ") && action) {
-          event.stopPropagation();
           action(event);
         }
       },
@@ -68,7 +72,6 @@ export const SongCard = ({
     alignSelf: "start",
     background: "rgba(0, 0, 0, 0.4)",
     borderRadius: "6px",
-    gridArea: "1 / 1 / 2 / 2",
     justifySelf: "end",
     margin: [0.5, 1],
     px: 1,
@@ -134,6 +137,7 @@ export const SongCard = ({
                   transition: "transform 100ms",
                 } }
                 onClick={ handlePlayPauseClick }
+                onKeyDown={ handleKeyPress(handlePlayPauseClick) }
               >
                 { isPlaying ? (
                   <Stop sx={ { fontSize: ["40px", "40px", "60px"] } } />

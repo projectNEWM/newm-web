@@ -1,21 +1,28 @@
 import { Box, BoxProps, useTheme } from "@mui/material";
-import { FunctionComponent, KeyboardEventHandler, ReactNode } from "react";
+import {
+  FunctionComponent,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEvent,
+  ReactNode,
+} from "react";
 
 interface ClickableProps extends BoxProps {
   readonly children: ReactNode;
-  readonly onClick?: () => void;
+  readonly onClick?: (event: MouseEvent | KeyboardEvent) => void;
 }
 
 const Clickable: FunctionComponent<ClickableProps> = ({
   onClick,
   children,
+  sx,
+  ...rest
 }) => {
   const theme = useTheme();
 
-  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.stopPropagation();
-      onClick?.();
+  const handleKeyPress: KeyboardEventHandler = (event) => {
+    if (event.key === "Enter") {
+      onClick?.(event);
     }
   };
 
@@ -29,10 +36,12 @@ const Clickable: FunctionComponent<ClickableProps> = ({
         borderRadius: theme.spacing(1),
         cursor: onClick ? "pointer" : "default",
         padding: theme.spacing(1.5),
+        ...sx,
       } }
       tabIndex={ onClick ? 0 : undefined }
       onClick={ onClick }
       onKeyDown={ handleKeyPress }
+      { ...rest }
     >
       { children }
     </Box>

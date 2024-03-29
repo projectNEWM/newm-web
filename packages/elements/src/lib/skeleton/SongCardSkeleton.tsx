@@ -6,11 +6,6 @@ const SongCardSkeleton: FunctionComponent = () => (
     <img
       alt="Square placeholder"
       src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-      style={ {
-        borderRadius: "4px",
-        gridArea: "1 / 1 / 2 / 2",
-        objectFit: "cover",
-      } }
       width="100%"
     />
 
