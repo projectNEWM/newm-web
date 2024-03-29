@@ -90,7 +90,7 @@ export const SongCard = ({
         position: "relative",
         width: "100%",
       } }
-      onClick={ handleCardClick }
+      onClick={ onCardClick ? handleCardClick : undefined }
     >
       <Stack sx={ { rowGap: 0.5 } } width="100%">
         <Stack alignItems="center" justifyItems="center" position="relative">
@@ -136,7 +136,7 @@ export const SongCard = ({
                   color: theme.colors.white,
                   transition: "transform 100ms",
                 } }
-                onClick={ handlePlayPauseClick }
+                onClick={ onPlayPauseClick ? handlePlayPauseClick : undefined }
                 onKeyDown={ handleKeyPress(handlePlayPauseClick) }
               >
                 { isPlaying ? (
