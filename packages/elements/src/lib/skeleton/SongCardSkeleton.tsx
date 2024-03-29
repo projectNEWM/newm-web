@@ -1,9 +1,32 @@
-import { Skeleton, Stack } from "@mui/material";
+import { Box, Skeleton, Stack } from "@mui/material";
+import { FunctionComponent } from "react";
 
-export const SongCardSkeleton = () => (
-  <Stack p={ 1.5 }>
-    <Skeleton height={ 260 } variant="rectangular" width={ 260 } />
-    <Skeleton height={ 30 } width={ 100 } />
-    <Skeleton height={ 20 } width={ 60 } />
+const SongCardSkeleton: FunctionComponent = () => (
+  <Stack mb={ 6.25 } position="relative">
+    <img
+      alt="Square placeholder"
+      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      style={ {
+        borderRadius: "4px",
+        gridArea: "1 / 1 / 2 / 2",
+        objectFit: "cover",
+      } }
+      width="100%"
+    />
+
+    <Box
+      bottom={ 0 }
+      left={ 0 }
+      padding={ 1.5 }
+      position="absolute"
+      right={ 0 }
+      top={ 0 }
+    >
+      <Skeleton height="100%" variant="rectangular" width="100%" />
+      <Skeleton height={ 30 } width={ 100 } />
+      <Skeleton height={ 20 } width={ 60 } />
+    </Box>
   </Stack>
 );
+
+export default SongCardSkeleton;

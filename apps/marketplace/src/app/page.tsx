@@ -1,12 +1,16 @@
 "use client";
 import { FunctionComponent } from "react";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { ArtistSpotlight, Songs } from "../components";
+import { mockSongs } from "../temp/data";
 
 const Home: FunctionComponent = () => {
   return (
     <Container sx={ { flexGrow: 1 } }>
-      <Songs />
+      <Box mt={ [7.5, 5.5, 10] }>
+        <Songs songs={ mockSongs } title="JUST RELEASED" />
+      </Box>
+
       <ArtistSpotlight />
     </Container>
   );

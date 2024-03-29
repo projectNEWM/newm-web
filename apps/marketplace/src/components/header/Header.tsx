@@ -35,6 +35,7 @@ const Header: FunctionComponent = () => {
               cursor: "pointer",
               minHeight: ["48px", "64px", "64px"],
               minWidth: ["126px", "168px", "168px"],
+              outline: 0,
             } }
             tabIndex={ 0 }
             onClick={ () => router.push("/") }

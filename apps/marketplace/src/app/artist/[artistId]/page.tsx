@@ -3,7 +3,8 @@ import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
-import { mockArtist } from "../../../temp/data";
+import { Songs } from "../../../components";
+import { mockArtist, mockSongs } from "../../../temp/data";
 
 interface ArtistProps {
   readonly params: {
@@ -56,6 +57,10 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
           socials={ socials }
           onClickAbout={ () => setIsAboutModalOpen(true) }
         />
+
+        <Box mt={ 7 }>
+          <Songs songs={ mockSongs } />
+        </Box>
       </Container>
 
       <ProfileModal
