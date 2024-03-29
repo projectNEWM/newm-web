@@ -3,7 +3,7 @@ import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
-import { Songs } from "../../../components";
+import { SimilarArtists, Songs } from "../../../components";
 import { mockArtist, mockSongs } from "../../../temp/data";
 
 interface ArtistProps {
@@ -61,6 +61,8 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
         <Box mt={ 7 }>
           <Songs songs={ mockSongs } />
         </Box>
+
+        <SimilarArtists />
       </Container>
 
       <ProfileModal

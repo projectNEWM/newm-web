@@ -8,7 +8,7 @@ export const mockArtist = {
     commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
     velit esse cillum dolore eu fugiat nulla pariatur.`,
   firstName: "Johnny",
-  id: "abcd1234",
+  id: "123",
   instagramUrl: "",
   isVerified: true,
   itunesUrl: "",
@@ -24,9 +24,10 @@ export const mockArtist = {
 };
 
 export const mockArtists = Array(10)
-  .fill(null)
-  .map((_, idx) => ({
-    ...mockArtist,
+  .fill(mockArtist)
+  .map((artist, idx) => ({
+    ...artist,
+    id: artist.id + idx,
     profileImageUrl:
       idx % 2 == 0
         ? "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg"

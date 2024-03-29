@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Artist from "./Artist";
 import { mockArtists } from "../temp/data";
 
-const ArtistSpotlight: FunctionComponent = () => {
+const SimilarArtists: FunctionComponent = () => {
   const router = useRouter();
 
   // TEMP: simulate data loading
@@ -25,30 +25,32 @@ const ArtistSpotlight: FunctionComponent = () => {
     <Stack mb={ 8 }>
       <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
         <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
-          ARTIST SPOTLIGHT
+          SIMILAR ARTISTS
         </Typography>
       </Stack>
 
       <Grid columnGap={ 1.5 } justifyContent="center" rowGap={ 5 } container>
-        { mockArtists.map(
-          ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
-            return (
-              <Grid display="flex" key={ id }>
-                <Artist
-                  imageUrl={ profileImageUrl }
-                  isLoading={ isLoading }
-                  orientation="column"
-                  subtitle={ `${songCount} songs` }
-                  title={ `${firstName} ${lastName}` }
-                  onSelectArtist={ () => handleSelectArtist(id) }
-                />
-              </Grid>
-            );
-          }
-        ) }
+        { mockArtists
+          .slice(0, 6)
+          .map(
+            ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
+              return (
+                <Grid display="flex" key={ id } item>
+                  <Artist
+                    imageUrl={ profileImageUrl }
+                    isLoading={ isLoading }
+                    orientation="row"
+                    subtitle={ `${songCount} songs` }
+                    title={ `${firstName} ${lastName}` }
+                    onSelectArtist={ () => handleSelectArtist(id) }
+                  />
+                </Grid>
+              );
+            }
+          ) }
       </Grid>
     </Stack>
   );
 };
 
-export default ArtistSpotlight;
+export default SimilarArtists;
