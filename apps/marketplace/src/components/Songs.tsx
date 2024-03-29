@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
+import { useRouter } from "next/navigation";
 import { mockSongs } from "../temp/data";
 /**
  * TODO: Implement useGetSongsQuery and playback functionality,
@@ -8,6 +9,12 @@ import { mockSongs } from "../temp/data";
  */
 
 const Songs: FunctionComponent = () => {
+  const router = useRouter();
+
+  const handleTitleClick = (id: string) => {
+    router.push(`/item/${id}`);
+  };
+
   return (
     <Stack alignItems="center" mt={ [7.5, 5.5, 10] }>
       { mockSongs.length ? (
@@ -44,7 +51,7 @@ const Songs: FunctionComponent = () => {
                   // eslint-disable-next-line @typescript-eslint/no-empty-function
                   onSubtitleClick={ () => {} }
                   // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onTitleClick={ () => {} }
+                  onTitleClick={ () => handleTitleClick(song.id) }
                 />
               );
             }) }
