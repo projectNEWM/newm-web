@@ -1,10 +1,11 @@
 import { Box, BoxProps, useTheme } from "@mui/material";
 import {
-  FunctionComponent,
+  ForwardRefRenderFunction,
   KeyboardEvent,
   KeyboardEventHandler,
   MouseEvent,
   ReactNode,
+  forwardRef,
 } from "react";
 
 interface ClickableProps extends BoxProps {
@@ -12,12 +13,10 @@ interface ClickableProps extends BoxProps {
   readonly onClick?: (event: MouseEvent | KeyboardEvent) => void;
 }
 
-const Clickable: FunctionComponent<ClickableProps> = ({
-  onClick,
-  children,
-  sx,
-  ...rest
-}) => {
+const Clickable: ForwardRefRenderFunction<HTMLDivElement, ClickableProps> = (
+  { onClick, children, sx, ...rest },
+  ref
+) => {
   const theme = useTheme();
 
   const handleKeyPress: KeyboardEventHandler = (event) => {
@@ -28,6 +27,7 @@ const Clickable: FunctionComponent<ClickableProps> = ({
 
   return (
     <Box
+      ref={ ref }
       role={ onClick ? "button" : undefined }
       sx={ {
         "&:hover": {
@@ -48,4 +48,4 @@ const Clickable: FunctionComponent<ClickableProps> = ({
   );
 };
 
-export default Clickable;
+export default forwardRef(Clickable);

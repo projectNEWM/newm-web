@@ -33,7 +33,7 @@ const ArtistSpotlight: FunctionComponent = () => {
         { mockArtists.map(
           ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
             return (
-              <Grid display="flex" key={ id }>
+              <Grid display="flex" key={ id } item>
                 <Artist
                   imageUrl={ profileImageUrl }
                   isLoading={ isLoading }
