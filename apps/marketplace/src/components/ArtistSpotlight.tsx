@@ -40,7 +40,7 @@ const ArtistSpotlight: FunctionComponent = () => {
                 lg={ 2.4 }
                 md={ 3 }
                 sm={ 4 }
-                xs={ 12 }
+                xs={ 6 }
                 item
               >
                 <Artist
