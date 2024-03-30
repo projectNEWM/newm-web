@@ -1,11 +1,4 @@
-import {
-  type KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
@@ -40,7 +33,6 @@ export const SongCard = ({
   isLoading = true,
 }: SongCardProps) => {
   const theme = useTheme();
-  const [isPlayButtonHidden, setIsPlayButtonHidden] = useState(true);
   const imageRef = useRef<HTMLImageElement>(null);
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
@@ -76,18 +68,6 @@ export const SongCard = ({
       },
     []
   );
-
-  /**
-   * Add small delay to hide play button jumping into position
-   * due to dynamically sized image.
-   */
-  useEffect(() => {
-    if (!isLoading) {
-      setTimeout(() => {
-        setIsPlayButtonHidden(false);
-      }, 200);
-    }
-  }, [isLoading]);
 
   const commonPriceStyles = {
     alignSelf: "start",
@@ -161,7 +141,6 @@ export const SongCard = ({
                   },
                   backgroundColor: "rgba(0, 0, 0, 0.3)",
                   color: theme.colors.white,
-                  opacity: isPlayButtonHidden ? 0 : 1,
                   transition: "transform 100ms",
                 } }
                 onClick={ onPlayPauseClick ? handlePlayPauseClick : undefined }
