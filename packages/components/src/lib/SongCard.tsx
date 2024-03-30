@@ -1,4 +1,4 @@
-import { type KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
+import { type KeyboardEvent, MouseEvent, useCallback } from "react";
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
@@ -33,7 +33,6 @@ export const SongCard = ({
   isLoading = true,
 }: SongCardProps) => {
   const theme = useTheme();
-  const imageRef = useRef<HTMLImageElement>(null);
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
     event.preventDefault();
@@ -104,12 +103,11 @@ export const SongCard = ({
             aria-label="Song cover art"
             component="img"
             height="100%"
-            ref={ imageRef }
             src={
               coverArtUrl
                 ? resizeCloudinaryImage(coverArtUrl, {
-                    height: 200,
-                    width: 200,
+                    height: 400,
+                    width: 400,
                   })
                 : getImageSrc(bgImage)
             }
