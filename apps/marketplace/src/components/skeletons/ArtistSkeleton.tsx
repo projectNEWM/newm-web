@@ -8,20 +8,23 @@ interface ArtistSkeletonProps {
 const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
   orientation,
 }) => (
-  <Stack p={ 1.5 } spacing={ 1.25 }>
-    <Box>
-      <Skeleton
-        sx={ { height: [150, 150, 200], width: [150, 150, 200] } }
-        variant="circular"
-      />
-    </Box>
+  <Stack
+    direction={ orientation }
+    p={ 1.5 }
+    spacing={ orientation === "column" ? 1.25 : 4 }
+  >
+    <Skeleton
+      sx={ { height: [150, 150, 200], width: [150, 150, 200] } }
+      variant="circular"
+    />
 
     <Stack
-      alignItems={ orientation === "column" ? "center" : "row" }
-      direction={ orientation }
+      alignItems={ orientation === "column" ? "center" : "flex-start" }
+      direction="column"
+      justifyContent="center"
       spacing={ 0.25 }
     >
-      <Skeleton height={ 30 } width={ 100 } />
+      <Skeleton height={ 30 } width={ 120 } />
       <Skeleton height={ 20 } width={ 60 } />
     </Stack>
   </Stack>

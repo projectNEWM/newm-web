@@ -29,13 +29,13 @@ const SimilarArtists: FunctionComponent = () => {
         </Typography>
       </Stack>
 
-      <Grid columnGap={ 1.5 } justifyContent="center" rowGap={ 5 } container>
+      <Grid justifyContent="center" rowGap={ 5 } container>
         { mockArtists
           .slice(0, 6)
           .map(
             ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
               return (
-                <Grid display="flex" key={ id } item>
+                <Grid key={ id } lg={ 4 } sm={ 6 } xs={ 12 } item>
                   <Artist
                     imageUrl={ profileImageUrl }
                     isLoading={ isLoading }

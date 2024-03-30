@@ -29,11 +29,20 @@ const ArtistSpotlight: FunctionComponent = () => {
         </Typography>
       </Stack>
 
-      <Grid columnGap={ 1.5 } justifyContent="center" rowGap={ 5 } container>
+      <Grid justifyContent="center" rowGap={ 5 } container>
         { mockArtists.map(
           ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
             return (
-              <Grid display="flex" key={ id } item>
+              <Grid
+                display="flex"
+                justifyContent="center"
+                key={ id }
+                lg={ 2.4 }
+                md={ 3 }
+                sm={ 4 }
+                xs={ 12 }
+                item
+              >
                 <Artist
                   imageUrl={ profileImageUrl }
                   isLoading={ isLoading }
