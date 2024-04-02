@@ -32,7 +32,7 @@ export const asThunkHook = <Returned, Arg>(
         setData(result.payload);
         setIsLoading(false);
       },
-      [dispatch, setIsLoading]
+      [dispatch]
     );
 
     return [callHook, { data, isLoading }];
