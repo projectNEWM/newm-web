@@ -22,8 +22,8 @@ export const NoConnectedWallet = () => {
         Connect your wallet
       </Typography>
       <Typography variant="subtitle1">
-        Connecting your wallet will enable you to claim your accrued royalties
-        and stream token sale earnings and to view your transaction history.
+        Connecting your wallet will enable you to claim your accrued royalties,
+        stream token sale earnings, and view your transaction history.
       </Typography>
       <Button
         gradient="crypto"
