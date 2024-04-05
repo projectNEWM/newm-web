@@ -31,7 +31,7 @@ const ResponsiveImage: FunctionComponent<ResponsiveImageProps> = ({
       <Box
         component="img"
         height="100%"
-        style={ { display: isImageLoaded ? "inline-block" : "none" } }
+        sx={ { ...sx, display: isImageLoaded ? "inline-block" : "none" } }
         width="100%"
         onLoad={ () => setIsImageLoaded(true) }
         { ...rest }
