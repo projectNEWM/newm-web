@@ -1,8 +1,8 @@
 import { Box, BoxProps } from "@mui/material";
 import { FunctionComponent, HTMLProps, useState } from "react";
 
-type ResponsiveImageProps = HTMLProps<HTMLImageElement> &
-  Omit<BoxProps, "width" | "height">;
+type ResponsiveImagePropsBase = BoxProps & HTMLProps<HTMLImageElement>;
+type ResponsiveImageProps = Omit<ResponsiveImagePropsBase, "width" | "height">;
 
 /**
  * A square shaped image that will fit the width of its container.
