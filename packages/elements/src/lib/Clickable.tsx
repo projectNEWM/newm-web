@@ -31,7 +31,7 @@ const Clickable: ForwardRefRenderFunction<HTMLDivElement, ClickableProps> = (
       role={ onClick ? "button" : undefined }
       sx={ {
         "&:hover": {
-          backgroundColor: onClick ? "rgba(256, 256, 256, 0.05)" : "inherit",
+          backgroundColor: onClick ? "rgba(256, 256, 256, 0.075)" : "inherit",
         },
         borderRadius: theme.spacing(1),
         cursor: onClick ? "pointer" : "default",

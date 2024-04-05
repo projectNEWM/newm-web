@@ -1,12 +1,17 @@
-import { type KeyboardEvent, MouseEvent, useCallback } from "react";
+import { type KeyboardEvent, MouseEvent, useCallback, useState } from "react";
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import { getImageSrc, resizeCloudinaryImage } from "@newm-web/utils";
-import { Clickable, SongCardSkeleton } from "@newm-web/elements";
+import {
+  Clickable,
+  ResponsiveImage,
+  SongCardSkeleton,
+} from "@newm-web/elements";
 
 interface SongCardProps {
   readonly coverArtUrl?: string;
+  readonly imageDimensions?: number;
   readonly isLoading?: boolean;
   readonly isPlayable?: boolean;
   readonly isPlaying?: boolean;
@@ -20,6 +25,7 @@ interface SongCardProps {
 }
 
 export const SongCard = ({
+  imageDimensions = 400,
   coverArtUrl,
   title,
   isPlayable,
@@ -30,7 +36,7 @@ export const SongCard = ({
   onSubtitleClick,
   price,
   subtitle,
-  isLoading = true,
+  isLoading = false,
 }: SongCardProps) => {
   const theme = useTheme();
 
@@ -95,27 +101,25 @@ export const SongCard = ({
         position: "relative",
         width: "100%",
       } }
-      onClick={ onCardClick ? handleCardClick : undefined }
+      onClick={ handleCardClick }
+      onKeyDown={ handleKeyPress(handleCardClick) }
     >
       <Stack sx={ { rowGap: 0.5 } } width="100%">
         <Stack alignItems="center" justifyItems="center" position="relative">
-          <Box
+          <ResponsiveImage
             aria-label="Song cover art"
-            component="img"
-            height="100%"
             src={
               coverArtUrl
                 ? resizeCloudinaryImage(coverArtUrl, {
-                    height: 400,
-                    width: 400,
+                    height: imageDimensions,
+                    width: imageDimensions,
                   })
                 : getImageSrc(bgImage)
             }
-            style={ {
+            sx={ {
               borderRadius: "4px",
               objectFit: "cover",
             } }
-            width="100%"
           />
 
           <Box
@@ -141,7 +145,7 @@ export const SongCard = ({
                   color: theme.colors.white,
                   transition: "transform 100ms",
                 } }
-                onClick={ onPlayPauseClick ? handlePlayPauseClick : undefined }
+                onClick={ handlePlayPauseClick }
                 onKeyDown={ handleKeyPress(handlePlayPauseClick) }
               >
                 { isPlaying ? (
@@ -177,7 +181,7 @@ export const SongCard = ({
                 }
                 tabIndex={ onPriceClick ? 0 : undefined }
                 top={ 0 }
-                onClick={ onPriceClick ? handlePriceClick : undefined }
+                onClick={ handlePriceClick }
                 onKeyDown={ handleKeyPress(handlePriceClick) }
               >
                 <Typography fontWeight={ 700 } variant="h4">
@@ -209,7 +213,7 @@ export const SongCard = ({
             tabIndex={ onSubtitleClick ? 0 : undefined }
             textAlign="left"
             variant="subtitle1"
-            onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
+            onClick={ handleSubtitleClick }
             onKeyDown={ handleKeyPress(handleSubtitleClick) }
           >
             { subtitle }

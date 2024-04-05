@@ -35,45 +35,47 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   };
 
   return (
-    <Stack direction="column">
-      <Box
-        aria-label="Artist banner"
-        sx={ {
-          backgroundImage: `url(${resizedCoverImage})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          height: isBelowSmBreakpoint ? "130px" : "200px",
-          width: "100%",
-        } }
-      />
-
-      <Container sx={ { flexGrow: 1 } }>
-        <ProfileHeader
-          firstName={ mockArtist.firstName }
-          isVerified={ mockArtist.isVerified }
-          lastName={ mockArtist.lastName }
-          location={ mockArtist.location }
-          profileImageUrl={ mockArtist.profileImageUrl }
-          socials={ socials }
-          onClickAbout={ () => setIsAboutModalOpen(true) }
+    <>
+      <Stack direction="column">
+        <Box
+          aria-label="Artist banner"
+          sx={ {
+            backgroundImage: `url(${resizedCoverImage})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            height: isBelowSmBreakpoint ? "130px" : "200px",
+            width: "100%",
+          } }
         />
 
-        <Box mt={ 7 }>
-          <Songs songs={ mockSongs } />
-        </Box>
+        <Container sx={ { flexGrow: 1 } }>
+          <ProfileHeader
+            firstName={ mockArtist.firstName }
+            isVerified={ mockArtist.isVerified }
+            lastName={ mockArtist.lastName }
+            location={ mockArtist.location }
+            profileImageUrl={ mockArtist.profileImageUrl }
+            socials={ socials }
+            onClickAbout={ () => setIsAboutModalOpen(true) }
+          />
 
-        <SimilarArtists />
-      </Container>
+          <Box mt={ 7 }>
+            <Songs songs={ mockSongs } />
+          </Box>
 
-      <ProfileModal
-        isOpen={ isAboutModalOpen }
-        name={ `${mockArtist.firstName} ${mockArtist.lastName}` }
-        socials={ socials }
-        onClose={ () => setIsAboutModalOpen(false) }
-      >
-        <Typography variant="subtitle1">{ mockArtist.description }</Typography>
-      </ProfileModal>
-    </Stack>
+          <SimilarArtists />
+        </Container>
+
+        <ProfileModal
+          isOpen={ isAboutModalOpen }
+          name={ `${mockArtist.firstName} ${mockArtist.lastName}` }
+          socials={ socials }
+          onClose={ () => setIsAboutModalOpen(false) }
+        >
+          <Typography variant="subtitle1">{ mockArtist.description }</Typography>
+        </ProfileModal>
+      </Stack>
+    </>
   );
 };
 

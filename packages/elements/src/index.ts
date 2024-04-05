@@ -48,6 +48,7 @@ export { default as FilteredTagsField } from "./lib/form/FilteredTagsField";
 export { default as FormProgressStepper } from "./lib/form/FormProgressStepper";
 export { default as GradientTextInputField } from "./lib/form/GradientTextInputField";
 export { default as PasswordInputField } from "./lib/form/PasswordInputField";
+export { default as ResponsiveImage } from "./lib/ResponsiveImage";
 export { default as TextAreaField } from "./lib/form/TextAreaField";
 export { default as TextInputField } from "./lib/form/TextInputField";
 export { default as UploadImageField } from "./lib/form/UploadImageField";
