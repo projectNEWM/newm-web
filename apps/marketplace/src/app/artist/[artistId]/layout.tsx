@@ -6,7 +6,7 @@ interface ArtistLayoutProps {
 }
 
 export const generateStaticParams = async () => {
-  return mockArtists.map(({ id }) => ({ id }));
+  return mockArtists.map(({ id }) => ({ artistId: id }));
 };
 
 const Layout: FunctionComponent<ArtistLayoutProps> = ({ children }) => {

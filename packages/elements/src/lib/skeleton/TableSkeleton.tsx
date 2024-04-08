@@ -8,7 +8,7 @@ interface TableSkeletonProps {
   rows?: number;
 }
 
-export const TableSkeleton: FunctionComponent<TableSkeletonProps> = ({
+const TableSkeleton: FunctionComponent<TableSkeletonProps> = ({
   cols = 3,
   rows = 10,
   maxWidth = 1200,
@@ -57,3 +57,5 @@ export const TableSkeleton: FunctionComponent<TableSkeletonProps> = ({
     </Box>
   );
 };
+
+export default TableSkeleton;

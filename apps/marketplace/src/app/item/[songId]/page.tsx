@@ -27,21 +27,21 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   }
 
   return (
-    <Container sx={ { flexGrow: 1, mt: 5 } }>
-      <Stack alignItems="center" mt={ 2.5 }>
+    <Container maxWidth="md" sx={ { flexGrow: 1, mt: 5 } }>
+      <Stack mt={ 2.5 } width={ 400 }>
         <SongCard
           coverArtUrl={
             mockSongs.find((song) => song.id === params.songId)?.coverArtUrl
           }
+          imageDimensions={ 480 }
           isPlayable={ true }
-          price="3.0"
-          size="Large"
+          price={ mockSongs[0].price }
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onCardClick={ () => {} }
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onPriceClick={ () => {} }
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           onSubtitleClick={ () => {} }
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onTitleClick={ () => {} }
         />
       </Stack>
     </Container>

@@ -37,8 +37,8 @@ const Artist: FunctionComponent<ArtistProps> = ({
           component="img"
           height={ [150, 150, 200] }
           src={ resizeCloudinaryImage(imageUrl, {
-            height: 200,
-            width: 200,
+            height: 280,
+            width: 280,
           }) }
           style={ { borderRadius: "50%", maxWidth: "100%" } }
           width={ [150, 150, 200] }
