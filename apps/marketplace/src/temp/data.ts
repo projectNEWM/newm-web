@@ -38,8 +38,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    isExplicit: true,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -48,8 +55,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df581",
+    isExplicit: false,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -58,8 +72,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df582",
+    isExplicit: true,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -68,8 +89,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699544008/xrcmyar9m09mk3l9mo1o.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df583",
+    isExplicit: false,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -78,8 +106,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699580048/aw7w0kielduse0z4vavi.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df584",
+    isExplicit: true,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -88,8 +123,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1701892098/rka1mlzzad6ohrcfqef3.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df585",
+    isExplicit: false,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -98,8 +140,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df586",
+    isExplicit: true,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
@@ -108,8 +157,15 @@ export const mockSongs = [
   {
     coverArtUrl:
       "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
+    description: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur.`,
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df587",
+    isExplicit: false,
     price: "3.0",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
