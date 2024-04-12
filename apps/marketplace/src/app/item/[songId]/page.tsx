@@ -14,7 +14,6 @@ interface SingleSongProps {
 }
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
-  // TEMP: simulate data loading
   const [isLoading, setIsLoading] = useState(true);
   const songData = mockSongs.find((song) => song.id === params.songId);
 
