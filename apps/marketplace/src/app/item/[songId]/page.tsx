@@ -33,7 +33,6 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
       <Stack
         alignItems={ ["center", "center", "start"] }
         direction={ ["column", "column", "row"] }
-        display="flex"
       >
         <Box mb={ [2, 2, 0] } mr={ [0, 0, 5] } width={ [240, 240, 400] }>
           <SongCard

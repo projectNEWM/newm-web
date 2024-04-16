@@ -6,7 +6,6 @@ const ItemSkeleton: FunctionComponent = () => (
     <Stack
       alignItems={ ["center", "center", "start"] }
       direction={ ["column", "column", "row"] }
-      display="flex"
     >
       <Box
         height={ [240, 240, 400] }
