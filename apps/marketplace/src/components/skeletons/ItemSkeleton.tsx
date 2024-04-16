@@ -29,15 +29,19 @@ const ItemSkeleton: FunctionComponent = () => (
           <Skeleton height={ 38 } width={ 120 } />
           <Skeleton height={ 16 } width={ 60 } />
         </Stack>
-        <Skeleton height={ 88 } variant="text" width={ "100%" } />
+        <Skeleton height={ 88 } variant="text" width="100%" />
         <Stack
-          alignItems={ "center" }
-          direction={ "row" }
+          alignItems="center"
+          direction="row"
           gap={ 1.5 }
           justifyContent={ ["center", "center", "start"] }
         >
           <Skeleton height={ 40 } variant="circular" width={ 40 } />
           <Skeleton height={ 20 } width={ 120 } />
+        </Stack>
+        <Stack mt={ 4.5 } width="100%">
+          <Skeleton height={ 115 } variant="text" width={ "100%" } />
+          <Skeleton height={ 115 } variant="text" width={ "100%" } />
         </Stack>
       </Stack>
     </Stack>
