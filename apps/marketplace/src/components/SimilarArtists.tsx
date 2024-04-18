@@ -23,7 +23,7 @@ const SimilarArtists: FunctionComponent = () => {
 
   return (
     <Stack mb={ 8 }>
-      <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
+      <Stack alignItems="center" mb={ 3.5 } mt={ 16 }>
         <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
           SIMILAR ARTISTS
         </Typography>

@@ -1,4 +1,4 @@
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface ArtistSkeletonProps {
