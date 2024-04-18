@@ -1,13 +1,9 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import Songs from "./Songs";
-import { mockSong, mockSongs } from "../temp/data";
+import { mockSongs } from "../temp/data";
 
-interface MoreSongsProps {
-  readonly song?: typeof mockSong;
-}
-
-const MoreSongs: FunctionComponent<MoreSongsProps> = () => {
+const MoreSongs: FunctionComponent = () => {
   // TODO: fetch similar songs from artist
   const songs = mockSongs;
 

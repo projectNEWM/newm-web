@@ -3,25 +3,18 @@ import { Box, useTheme } from "@mui/material";
 import Songs from "./Songs";
 import { mockArtist, mockSongs } from "../temp/data";
 
-interface MoreSongsProps {
-  readonly artist?: typeof mockArtist;
-}
-
-const MoreSongs: FunctionComponent<MoreSongsProps> = ({
-  // TODO: remove default
-  artist: { stageName, firstName, lastName } = mockArtist,
-}) => {
+const MoreSongs: FunctionComponent = () => {
   const theme = useTheme();
 
-  // TODO: fetch more songs from artist
+  const artist = mockArtist;
   const songs = mockSongs;
-  const artistName = stageName || `${firstName} ${lastName}`;
+  const artistFullName = `${artist.firstName} ${artist.lastName}`;
 
   const title = (
     <Box component="span">
       MORE FROM&nbsp;
       <Box component="span" sx={ { color: theme.colors.music } }>
-        { artistName }
+        { artist.stageName || artistFullName }
       </Box>
     </Box>
   );

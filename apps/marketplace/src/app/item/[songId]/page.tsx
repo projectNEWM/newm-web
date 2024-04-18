@@ -91,9 +91,9 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         </Stack>
       </Container>
 
-      <MoreSongs artist={ artistData } />
+      <MoreSongs />
 
-      <SimilarSongs song={ songData } />
+      <SimilarSongs />
     </Container>
   );
 };
