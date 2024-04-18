@@ -84,16 +84,11 @@ export const connectFromMobile = createAsyncThunk(
         connection = answerChallengeResp.data;
       }
 
-      const getQRCodeResp = await dispatch(
-        newmApi.endpoints.getQRCode.initiate({
-          connectionId: connection.connectionId,
-        })
-      );
-
-      if ("error" in getQRCodeResp) return;
-
       dispatch(
-        setConnectionData({ ...connection, qrCodeBlob: getQRCodeResp.data })
+        setConnectionData({
+          connectionId: `newm-${connection.connectionId}`,
+          expiresAt: connection.expiresAt,
+        })
       );
     } catch (error) {
       // non-endpoint related error occur, show toast

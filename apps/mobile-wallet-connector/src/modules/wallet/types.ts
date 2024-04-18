@@ -2,15 +2,7 @@ export interface WalletState {
   readonly connectionData: {
     readonly connectionId: AnswerChallengeResponse["connectionId"];
     readonly expiresAt: AnswerChallengeResponse["expiresAt"];
-    readonly qrCodeBlob?: Blob;
   };
-}
-
-/**
- * GenerateQRCode as stored in the NEWM API.
- */
-export interface GetQRCodeRequest {
-  readonly connectionId: string;
 }
 
 /**

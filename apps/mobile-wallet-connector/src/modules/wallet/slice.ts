@@ -5,7 +5,6 @@ const initialState: WalletState = {
   connectionData: {
     connectionId: "",
     expiresAt: "",
-    qrCodeBlob: undefined,
   },
 };
 
