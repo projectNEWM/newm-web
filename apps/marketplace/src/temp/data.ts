@@ -19,6 +19,7 @@ export const mockArtist = {
   songCount: 4,
   soundCloudUrl: "https://www.example.com",
   spotifyUrl: "https://www.example.com",
+  stageName: "Dr. Shrimp Puerto Rico",
   websiteUrl: "https://www.example.com",
   xUrl: "https://www.example.com",
 };
@@ -180,3 +181,5 @@ export const mockSongs = [
     title: "Vibrate Punk",
   },
 ];
+
+export const mockSong = mockSongs[0];
