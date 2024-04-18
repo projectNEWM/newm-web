@@ -4,7 +4,6 @@ import Songs from "./Songs";
 import { mockArtist, mockSongs } from "../temp/data";
 
 interface MoreSongsProps {
-  // TODO: replace with actual artist type definition
   readonly artist?: typeof mockArtist;
 }
 

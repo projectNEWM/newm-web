@@ -17,7 +17,7 @@ interface SingleSongProps {
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const [isLoading, setIsLoading] = useState(true);
   const songData = mockSongs.find((song) => song.id === params.songId);
-  const artist = mockArtist;
+  const artistData = mockArtist;
 
   // TEMP: simulate data loading
   useEffect(() => {
@@ -91,7 +91,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         </Stack>
       </Container>
 
-      <MoreSongs artist={ mockArtist } />
+      <MoreSongs artist={ artistData } />
 
       <SimilarSongs song={ songData } />
     </Container>
