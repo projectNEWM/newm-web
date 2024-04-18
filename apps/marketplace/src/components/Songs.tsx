@@ -39,6 +39,7 @@ const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
             <Box mb={ 3.5 }>
               <Typography
                 fontSize={ ["24px", "24px", "32px"] }
+                textAlign="center"
                 textTransform="uppercase"
                 variant="h3"
               >
