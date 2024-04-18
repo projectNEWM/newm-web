@@ -5,7 +5,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { ProfileImage } from "@newm-web/elements";
 import MoreSongs from "../../../components/MoreSongs";
-import { mockArtist, mockSongs } from "../../../temp/data";
+import { mockSongs } from "../../../temp/data";
 import { ItemSkeleton, SimilarSongs } from "../../../components";
 
 interface SingleSongProps {
@@ -17,7 +17,6 @@ interface SingleSongProps {
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const [isLoading, setIsLoading] = useState(true);
   const songData = mockSongs.find((song) => song.id === params.songId);
-  const artistData = mockArtist;
 
   // TEMP: simulate data loading
   useEffect(() => {

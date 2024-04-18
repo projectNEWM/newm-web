@@ -4,7 +4,6 @@ import Songs from "./Songs";
 import { mockSongs } from "../temp/data";
 
 const MoreSongs: FunctionComponent = () => {
-  // TODO: fetch similar songs from artist
   const songs = mockSongs;
 
   return (
