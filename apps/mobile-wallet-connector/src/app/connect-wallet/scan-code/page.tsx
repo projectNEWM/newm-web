@@ -9,6 +9,7 @@ import { Button, TextInput } from "@newm-web/elements";
 import DoneIcon from "@mui/icons-material/Done";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import theme from "@newm-web/theme";
+import { NEWMLogo } from "@newm-web/assets";
 import { TimeRemaining, getTimeRemaining } from "@newm-web/utils";
 import { useAppDispatch, useAppSelector } from "../../../common";
 import { selectWallet, setConnectionData } from "../../../modules/wallet";
@@ -82,30 +83,53 @@ const Page: FunctionComponent = () => {
   return (
     <>
       <Typography component="h1" fontWeight="700" mt={ 4 } variant="body2">
-        Scan the QR Code with Newm app
-      </Typography>
-      <Typography mb={ 5 } mt={ 0.5 } variant="subtitle1">
-        or paste the code in the app
+        Scan the QR Code with NEWM app
       </Typography>
       { connectionId ? (
-        <QRCode
-          logoHeight={ 80 }
-          logoImage="https://res.cloudinary.com/newm/image/upload/v1713317311/NEWM-logo_amv5cy.png"
-          logoWidth={ 80 }
-          size={ 280 }
-          value={ connectionId }
-        />
+        <Stack
+          sx={ {
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "1fr",
+            mt: 5,
+          } }
+        >
+          <Stack
+            sx={ {
+              alignItems: "center",
+              gridArea: "1 / 1 / 2 / 2",
+              justifyContent: "center",
+              zIndex: "123",
+            } }
+          >
+            <NEWMLogo height="80px" width="80px" />
+          </Stack>
+
+          <Stack sx={ { gridArea: "1 / 1 / 2 / 2" } }>
+            <QRCode
+              logoHeight={ 80 }
+              logoPadding={ 90 }
+              logoPaddingStyle="circle"
+              logoWidth={ 80 }
+              size={ 280 }
+              value={ connectionId }
+            />
+          </Stack>
+        </Stack>
       ) : (
-        <Skeleton height={ 280 } variant="rectangular" width={ 280 } />
+        <Skeleton
+          height={ 280 }
+          sx={ { mt: 5 } }
+          variant="rectangular"
+          width={ 280 }
+        />
       ) }
       <Stack mt={ 3 }>
-        { timeLeft ? (
+        { timeLeft && timeLeft.total > 0 ? (
           <Typography>
-            { timeLeft.total <= 0 || isNaN(timeLeft.total)
-              ? "The code has expired. Please refresh the page to generate a new code."
-              : `This code will expire in ${timeLeft.minutes || "00"} : ${
-                  timeLeft.seconds || "00"
-                }` }
+            { `This code will expire in ${timeLeft.minutes || "00"} : ${
+              timeLeft.seconds || "00"
+            }` }
           </Typography>
         ) : (
           <Skeleton height={ 20 } variant="rectangular" width={ 205 } />
@@ -121,7 +145,7 @@ const Page: FunctionComponent = () => {
       >
         <TextInput
           isOptional={ false }
-          label="or use this code"
+          label="or paste the code in the app"
           name="code"
           readOnly={ true }
           title={ connectionId }
