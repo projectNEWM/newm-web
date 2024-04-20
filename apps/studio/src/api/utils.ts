@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { Mutex } from "async-mutex";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { executeRecaptcha } from "@newm-web/utils";
-import { AxiosBaseQueryParams, BaseQuery } from "./types";
+import { AxiosBaseQueryParams, BaseQuery } from "@newm-web/types";
 import { logOutExpiredSession, receiveRefreshToken } from "./actions";
 import { recaptchaEndpointActionMap } from "./constants";
 import { RootState } from "../store";

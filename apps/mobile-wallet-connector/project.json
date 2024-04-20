@@ -1,7 +1,7 @@
 {
-  "name": "marketplace",
+  "name": "mobile-wallet-connector",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/marketplace",
+  "sourceRoot": "apps/mobile-wallet-connector",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,11 +9,11 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/marketplace"
+        "outputPath": "dist/apps/mobile-wallet-connector"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/marketplace"
+          "outputPath": "apps/mobile-wallet-connector"
         },
         "production": {}
       }
@@ -22,17 +22,17 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "marketplace:build",
+        "buildTarget": "mobile-wallet-connector:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "marketplace:build:development",
+          "buildTarget": "mobile-wallet-connector:build:development",
           "dev": true,
-          "port": 4200
+          "port": 4300
         },
         "production": {
-          "buildTarget": "marketplace:build:production",
+          "buildTarget": "mobile-wallet-connector:build:production",
           "dev": false
         }
       }
@@ -40,19 +40,18 @@
     "export": {
       "executor": "@nx/next:export",
       "options": {
-        "buildTarget": "marketplace:build:production"
+        "buildTarget": "mobile-wallet-connector:build:production"
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/marketplace/jest.config.ts"
+        "jestConfig": "apps/mobile-wallet-connector/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/eslint:lint"
     }
   },
   "tags": []

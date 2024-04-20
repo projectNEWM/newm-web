@@ -1,4 +1,4 @@
-import { OnUploadProgress } from "../../api/types";
+import { OnUploadProgress } from "@newm-web/types";
 
 export interface CloudinaryUploadOptions {
   readonly eager?: string;

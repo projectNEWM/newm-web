@@ -1,9 +1,9 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { getFileBinary } from "@newm-web/utils";
+import { OnUploadProgress } from "@newm-web/types";
 import { CloudinaryUploadOptions } from "./types";
 import { cloudinaryApi } from "../../api";
 import { songApi } from "../../modules/song";
-import { OnUploadProgress } from "../../api/types";
 
 /**
  * Uploads an image to Cloudinary. Returns the response if

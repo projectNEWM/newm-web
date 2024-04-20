@@ -13,3 +13,5 @@ export { default as WalletEnvMismatchModal } from "./lib/modals/WalletEnvMismatc
 export * from "./lib/modals/WalletModal";
 export { default as WalletModal } from "./lib/modals/WalletModal";
 export * from "./lib/SongCard";
+export { default as StyledComponentsRegistry } from "./lib/nextjs/StyledComponentsRegistry";
+export { default as Alert } from "./lib/Alert";
