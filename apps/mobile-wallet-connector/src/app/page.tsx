@@ -14,7 +14,7 @@ const Page: FunctionComponent = () => {
 
   useEffect(() => {
     if (isConnected) {
-      router.push("/connect-wallet");
+      router.push("/web-connected");
     }
   }, [isConnected, router]);
 
