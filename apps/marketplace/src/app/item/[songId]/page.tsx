@@ -63,21 +63,15 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
             onSubtitleClick={ () => {} }
           />
         </Box>
-        <Stack
-          gap={ [4, 4, 2.5] }
-          pt={ [0, 0, 1.5] }
-          textAlign={ ["center", "center", "left"] }
-          width={ ["100%", 440, 440] }
-        >
-          <Stack gap={ 0.5 }>
+        <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
+          <Stack gap={ 0.5 } textAlign={ ["center", "center", "left"] }>
             <Typography variant="h3">{ songData?.title }</Typography>
             <Typography color={ theme.colors.grey300 } variant="subtitle2">
               { songData?.isExplicit ? "Explicit" : null }
             </Typography>
           </Stack>
-          <Typography textAlign="left" variant="subtitle1">
-            { songData?.description }
-          </Typography>
+
+          <Typography variant="subtitle1">{ songData?.description }</Typography>
           <Stack
             alignItems="center"
             direction="row"
