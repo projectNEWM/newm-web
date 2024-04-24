@@ -14,10 +14,7 @@ const ItemSkeleton: FunctionComponent = () => (
         p={ 1.5 }
         width={ [240, 240, 400] }
       >
-        <Skeleton
-          sx={ { height: "100%", width: "100%" } }
-          variant="rectangular"
-        />
+        <Skeleton sx={ { height: "100%", width: "100%" } } variant="rounded" />
       </Box>
       <Stack
         alignItems={ ["center", "center", "start"] }
@@ -40,8 +37,12 @@ const ItemSkeleton: FunctionComponent = () => (
           <Skeleton height={ 20 } width={ 120 } />
         </Stack>
         <Stack mt={ 4.5 } width="100%">
-          <Skeleton height={ 115 } variant="text" width={ "100%" } />
-          <Skeleton height={ 115 } variant="text" width={ "100%" } />
+          <Box>
+            <Skeleton height={ 124 } variant="rounded" width={ "100%" } />
+          </Box>
+          <Box pt={ 2.5 }>
+            <Skeleton height={ 80 } variant="rounded" width={ "100%" } />
+          </Box>
         </Stack>
       </Stack>
     </Stack>
