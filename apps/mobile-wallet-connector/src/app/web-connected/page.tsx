@@ -51,7 +51,7 @@ const Page: FunctionComponent = () => {
 
   useEffect(() => {
     if (connectionData.connectionId) {
-      router.push("/connect-wallet/scan-code");
+      router.push("/scan-code");
     }
   }, [connectionData, router]);
 

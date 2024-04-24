@@ -11,8 +11,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import theme from "@newm-web/theme";
 import { NEWMLogo } from "@newm-web/assets";
 import { TimeRemaining, getTimeRemaining } from "@newm-web/utils";
-import { useAppDispatch, useAppSelector } from "../../../common";
-import { selectWallet, setConnectionData } from "../../../modules/wallet";
+import { useAppDispatch, useAppSelector } from "../../common";
+import { selectWallet, setConnectionData } from "../../modules/wallet";
 
 const Page: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +42,7 @@ const Page: FunctionComponent = () => {
 
   useEffect(() => {
     if (!connectionId) {
-      router.replace("/connect-wallet");
+      router.replace("/web-connected");
     }
   }, [connectionId, router]);
 
@@ -84,6 +84,9 @@ const Page: FunctionComponent = () => {
     <>
       <Typography component="h1" fontWeight="700" mt={ 4 } variant="body2">
         Scan the QR Code with NEWM app
+      </Typography>
+      <Typography mt={ 0.5 } variant="subtitle1">
+        or paste the code in the app
       </Typography>
       { connectionId ? (
         <Stack
@@ -145,7 +148,7 @@ const Page: FunctionComponent = () => {
       >
         <TextInput
           isOptional={ false }
-          label="or paste the code in the app"
+          label="QR Code"
           name="code"
           readOnly={ true }
           title={ connectionId }
