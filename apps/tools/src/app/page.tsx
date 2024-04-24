@@ -26,12 +26,7 @@ export const NEWM_TOOLS: Tool[] = [
 const Page: FunctionComponent = () => {
   return (
     <Stack aria-label="NEWM Tools" mt={ 4 } role="group">
-      <Stack
-        component="ul"
-        display="grid"
-        gap={ 3 }
-        gridTemplateColumns={ ["1fr", "1fr 1fr", "1fr 1fr 1fr"] }
-      >
+      <Stack component="ul" display="grid" gap={ 3 } pl={ 0 }>
         { NEWM_TOOLS.map(({ description, Icon, name, path, title }) => {
           return (
             <Stack
