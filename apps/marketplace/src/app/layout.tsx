@@ -4,8 +4,9 @@ import { Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
+import { StyledComponentsRegistry } from "@newm-web/components";
 import { Provider } from "react-redux";
-import { Footer, Header, StyledComponentsRegistry } from "../components";
+import { Footer, Header } from "../components";
 import store from "../store";
 
 interface RootLayoutProps {

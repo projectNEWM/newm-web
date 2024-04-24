@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, ReactNode, useEffect, useState } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { useRouter } from "next/navigation";
@@ -6,7 +6,7 @@ import { mockSongs } from "../temp/data";
 
 interface SongsProps {
   readonly songs: typeof mockSongs;
-  readonly title?: string;
+  readonly title?: string | ReactNode;
 }
 
 /**
@@ -37,7 +37,12 @@ const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
         <>
           { !!title && (
             <Box mb={ 3.5 }>
-              <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
+              <Typography
+                fontSize={ ["24px", "24px", "32px"] }
+                textAlign="center"
+                textTransform="uppercase"
+                variant="h3"
+              >
                 { title }
               </Typography>
             </Box>

@@ -62,3 +62,11 @@ export interface ResizeImageOptions {
   readonly height: number;
   readonly width: number;
 }
+
+export interface TimeRemaining {
+  readonly days?: string;
+  readonly hours?: string;
+  readonly minutes?: string;
+  readonly seconds?: string;
+  readonly total: number;
+}

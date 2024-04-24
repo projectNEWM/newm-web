@@ -28,7 +28,8 @@
       "configurations": {
         "development": {
           "buildTarget": "marketplace:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4200
         },
         "production": {
           "buildTarget": "marketplace:build:production",
