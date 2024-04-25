@@ -7,7 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+import HelpIcon from "@mui/icons-material/Help";
 import { SongCard } from "@newm-web/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { resizeCloudinaryImage } from "@newm-web/utils";
@@ -115,7 +115,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                             }
                           >
                             <IconButton sx={ { padding: 0 } }>
-                              <InfoIcon sx={ { color: theme.colors.grey100 } } />
+                              <HelpIcon sx={ { color: theme.colors.grey100 } } />
                             </IconButton>
                           </Tooltip>
                         </Box>
