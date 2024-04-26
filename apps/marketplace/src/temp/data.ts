@@ -39,7 +39,7 @@ export const mockSongs = [
   {
     artist: mockArtist,
     coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+      "https://asset1effvlkkw02m9ft3ymlkfld8mhlq05wc2hal5du.newm.nftcdn.io/image?tk=zUl6kloWCTcV-IZYK9YkmeDFzP9t1MyhLelFeAaoQkM",
     description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
@@ -51,7 +51,7 @@ export const mockSongs = [
     isExplicit: true,
     price: "3.0",
     streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      "https://asset1effvlkkw02m9ft3ymlkfld8mhlq05wc2hal5du.newm.nftcdn.io/files/0?tk=13GWPr-C3hRfdkrfy-adwYVHFwNr4pieLik3GxpRr5s",
     title: "Vibrate Punk",
   },
   {
@@ -69,7 +69,7 @@ export const mockSongs = [
     isExplicit: false,
     price: "3.0",
     streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      "https://asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht.poolpm.nftcdn.io/files/0/?tk=1wCx2KO2FeZz5855Mqqhk6Ymuefgoh0E1gyEItGXtHw",
     title: "Vibrate Punk",
   },
   {

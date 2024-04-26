@@ -18,6 +18,7 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
+import { Howl } from "howler";
 import MoreSongs from "../../../components/MoreSongs";
 import { mockSongs } from "../../../temp/data";
 import { ItemSkeleton, SimilarSongs } from "../../../components";
@@ -31,7 +32,44 @@ interface SingleSongProps {
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(true);
+  const [song, setSong] = useState<Howl | null>(null);
+  const [isPlaying, setIsSongPlaying] = useState(false);
   const songData = mockSongs.find((song) => song.id === params.songId);
+
+  /**
+   * Set playable audio when file is uploaded or changed.
+   */
+  useEffect(() => {
+    if (songData) {
+      const howler = new Howl({
+        format: ["wav", "flac", "mpeg"],
+        onend: () => {
+          setIsSongPlaying(false);
+        },
+        onplay: () => setIsSongPlaying(true),
+        onstop: () => {
+          setIsSongPlaying(false);
+        },
+        src: songData?.streamUrl,
+      });
+      console.log(howler.duration());
+      setSong(howler);
+    }
+  }, [songData]);
+
+  const handlePlaySong = () => {
+    console.log("Song loaded", songData?.title);
+    if (!song) return;
+
+    console.log(song.duration());
+    song.play();
+  };
+
+  const handleStopSong = () => {
+    if (!song) return;
+
+    song.stop();
+  };
 
   // TEMP: simulate data loading
   useEffect(() => {
@@ -51,14 +89,18 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
           alignItems={ ["center", "center", "start"] }
           direction={ ["column", "column", "row"] }
         >
+          { /* TODO: Separate into component */ }
           <Box mb={ [2, 2, 0] } mr={ [0, 0, 5] } width={ [240, 240, 400] }>
             <SongCard
               coverArtUrl={ songData?.coverArtUrl }
+              duration={ song?.duration() }
               imageDimensions={ 480 }
               isPlayable={ true }
+              isPlaying={ isPlaying }
               price={ mockSongs[0].price }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onCardClick={ () => {} }
+              onPlayPauseClick={ isPlaying ? handleStopSong : handlePlaySong }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onPriceClick={ () => {} }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -92,7 +134,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                 { songData?.artist.firstName } { songData?.artist.lastName }
               </Typography>
             </Stack>
-
+            { /* TODO: Separate into component */ }
             <Formik
               initialValues={ { streamTokens: 1 } }
               onSubmit={ () => {
@@ -151,7 +193,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               pt={ 0.5 }
                               variant="subtitle2"
                             >
-                              Maximum stream tokens = 80000
+                              Maximum stream tokens = 8000
                             </Typography>
                           </Stack>
                         </Box>
