@@ -27,4 +27,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
-          aws-region: us-west-2
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Deploy to S3
+        run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_PREVIEW_BUCKET }}/${{ github.event.pull_request.number }} --no-progress --delete
