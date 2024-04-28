@@ -216,7 +216,7 @@ export const SongCard = ({
             onClick={ handleSubtitleClick }
             onKeyDown={ handleKeyPress(handleSubtitleClick) }
           >
-            { subtitle }
+            { subtitle }a
           </Typography>
         ) }
       </Stack>
