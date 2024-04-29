@@ -56,11 +56,9 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
               coverArtUrl={ songData?.coverArtUrl }
               imageDimensions={ 480 }
               isPlayable={ true }
-              price={ mockSongs[0].price }
+              priceInNEWM={ mockSongs[0].priceInNEWM }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onCardClick={ () => {} }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onPriceClick={ () => {} }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onSubtitleClick={ () => {} }
             />

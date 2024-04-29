@@ -166,6 +166,7 @@ const Songs: FunctionComponent = () => {
               isPlaying={ song.id === playerState.currentPlayingSongId }
               subtitle={ genresString }
               title={ song.title }
+              onCardClick={ () => handleSongPlayPause(song) }
               onPlayPauseClick={ () => handleSongPlayPause(song) }
             />
           </Grid>
