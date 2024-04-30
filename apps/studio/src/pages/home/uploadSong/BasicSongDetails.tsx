@@ -282,6 +282,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               emptyMessage="Drag and drop or browse your image"
               maxFileSizeMB={ 10 }
               minDimensions={ { height: 1400, width: 1400 } }
+              minFileSizeMB={ 0.1 }
               name="coverArtUrl"
               rootSx={ { alignSelf: "center", width: "100%" } }
               hasPreviewOption
