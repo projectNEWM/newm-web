@@ -142,6 +142,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     },
     [
       maxFileSizeMB,
+      minFileSizeMB,
       isAspectRatioOneToOne,
       minDimensions,
       onChange,
