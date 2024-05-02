@@ -1,84 +1,90 @@
-import { FunctionComponent, ReactNode, useEffect, useState } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { useRouter } from "next/navigation";
-import { mockSongs } from "../temp/data";
+import { SongCardSkeleton } from "@newm-web/elements";
+import { Sale } from "../modules/sale/types";
 
 interface SongsProps {
-  readonly songs: typeof mockSongs;
+  readonly isLoading?: boolean;
+  readonly sales: ReadonlyArray<Sale>;
   readonly title?: string | ReactNode;
 }
 
-/**
- * TODO: Implement useGetSongsQuery and playback functionality,
- * see studio/src/pages/home/owners/Songs.tsx
- */
-const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
+const Songs: FunctionComponent<SongsProps> = ({
+  title,
+  sales = [],
+  isLoading = false,
+}) => {
   const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleTitleClick = (id: string) => {
+  const handleCardClick = (id: string) => {
     router.push(`/item/${id}`);
   };
 
-  /**
-   * TEMP: simulate loading
-   */
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  const handleSubtitleClick = (id: string) => {
+    router.push(`artist/${id}`);
+  };
+
+  const handlePlayPauseClick = () => {
+    // play song here
+  };
+
+  if (!isLoading && !sales.length) {
+    return (
+      <Typography sx={ { marginTop: 8, textAlign: "center" } }>
+        No songs to display at this time.
+      </Typography>
+    );
+  }
 
   return (
     <Stack alignItems="center">
-      { songs.length ? (
-        <>
-          { !!title && (
-            <Box mb={ 3.5 }>
-              <Typography
-                fontSize={ ["24px", "24px", "32px"] }
-                textAlign="center"
-                textTransform="uppercase"
-                variant="h3"
-              >
-                { title }
-              </Typography>
-            </Box>
-          ) }
+      { !!title && (
+        <Box mb={ 3.5 }>
+          <Typography
+            fontSize={ ["24px", "24px", "32px"] }
+            textAlign="center"
+            textTransform="uppercase"
+            variant="h3"
+          >
+            { title }
+          </Typography>
+        </Box>
+      ) }
 
-          <Grid justifyContent="center" pb={ 1 } rowGap={ 1.5 } container>
-            { mockSongs.map((song) => {
+      <Grid justifyContent="flex-start" pb={ 1 } rowGap={ 1.5 } container>
+        { isLoading
+          ? new Array(8).fill(null).map((_, idx) => {
+              return (
+                <Grid key={ idx } md={ 3 } sm={ 4 } xs={ 6 } item>
+                  <SongCardSkeleton
+                    isSubtitleVisible={ true }
+                    isTitleVisible={ true }
+                  />
+                </Grid>
+              );
+            })
+          : sales.map(({ costAmount, id, song }) => {
               const genresString = song.genres.join(", ");
 
               return (
                 <Grid key={ song.id } md={ 3 } sm={ 4 } xs={ 6 } item>
                   <SongCard
                     coverArtUrl={ song.coverArtUrl }
-                    isLoading={ isLoading }
-                    isPlayable={ !!song.streamUrl }
-                    key={ song.id }
-                    price={ song.price }
+                    isPlayable={ !!song.clipUrl }
+                    key={ id }
+                    price={ String(costAmount) }
                     subtitle={ genresString }
                     title={ song.title }
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onCardClick={ () => handleTitleClick(song.id) }
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onPriceClick={ () => {} }
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onSubtitleClick={ () => {} }
+                    onCardClick={ () => handleCardClick(id) }
+                    onPlayPauseClick={ () => handlePlayPauseClick() }
+                    onSubtitleClick={ () => handleSubtitleClick(id) }
                   />
                 </Grid>
               );
             }) }
-          </Grid>
-        </>
-      ) : (
-        <Typography sx={ { marginTop: 8, textAlign: "center" } }>
-          No songs to display at this time.
-        </Typography>
-      ) }
+      </Grid>
     </Stack>
   );
 };

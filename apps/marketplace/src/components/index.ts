@@ -1,6 +1,7 @@
 export * from "./Artist";
 export * from "./skeletons/index";
 export { default as Artist } from "./Artist";
+export { default as ArtistSongs } from "./ArtistSongs";
 export { default as ArtistSpotlight } from "./ArtistSpotlight";
 export { default as Footer } from "./footer/Footer";
 export { default as Header } from "./header/Header";
