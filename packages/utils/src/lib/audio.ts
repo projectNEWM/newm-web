@@ -2,7 +2,7 @@ import { Howl } from "howler";
 import { useCallback, useMemo, useState } from "react";
 
 /**
- * Plays an audio file using the Howl library.
+ * Hook used to play an audio file using the Howl library.
  */
 export const usePlayAudioUrl = () => {
   const [audio, setAudio] = useState<Howl>();

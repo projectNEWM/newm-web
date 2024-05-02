@@ -77,7 +77,7 @@ export type GetSaleResponse = Sale;
 
 export type GetSalesResponse = ReadonlyArray<GetSaleResponse>;
 
-export interface GetSalesRequest {
+export interface GetSalesParams {
   // List of song artist UUID's to filter results
   readonly artistIds?: ReadonlyArray<string>;
   // List of song genres to filter results

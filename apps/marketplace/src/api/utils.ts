@@ -4,7 +4,7 @@ import { executeRecaptcha } from "@newm-web/utils";
 import { recaptchaEndpointActionMap } from "./constants";
 
 /**
- * Returns recaptcha headers for unauthenticated requests.
+ * Returns recaptcha headers.
  */
 export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
   const { endpoint } = api;

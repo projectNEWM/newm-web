@@ -195,7 +195,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                                 <TextInputField
                                   name="streamTokens"
                                   type="number"
-                                ></TextInputField>
+                                />
                               </Box>
                               <Typography
                                 alignSelf="center"

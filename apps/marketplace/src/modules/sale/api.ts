@@ -1,4 +1,4 @@
-import { GetSaleResponse, GetSalesRequest, GetSalesResponse } from "./types";
+import { GetSaleResponse, GetSalesParams, GetSalesResponse } from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
@@ -26,7 +26,7 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `/v1/marketplace/sales/${saleId}`,
       }),
     }),
-    getSales: build.query<GetSalesResponse, GetSalesRequest | void>({
+    getSales: build.query<GetSalesResponse, GetSalesParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
