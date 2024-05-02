@@ -35,6 +35,8 @@ interface SingleSongProps {
 const TEMP_NEWM_USD_RATE = 0.005;
 const TEMP_AUDIO_URL =
   "https://arweave.net/sltkDapMEeLF4WJU5KG8SioD_lRV5lso4q0FZ-N7eBE";
+const TEMP_ARTIST_IMAGE_URL =
+  "https://res.cloudinary.com/newm/image/upload/v1714627123/pfsbogvjumesu1sznuts.png";
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
@@ -139,7 +141,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
             >
               <ProfileImage
                 height={ 40 }
-                src="https://res.cloudinary.com/newm/image/upload/v1714627123/pfsbogvjumesu1sznuts.png"
+                src={ TEMP_ARTIST_IMAGE_URL }
                 width={ 40 }
               />
               <Typography variant="h4">{ sale?.song.artistName }</Typography>

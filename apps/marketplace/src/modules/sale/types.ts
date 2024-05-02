@@ -73,6 +73,33 @@ export interface Collaborator {
   readonly role: string;
 }
 
-export type SaleResponse = Sale;
+export type GetSaleResponse = Sale;
 
-export type SalesResponse = ReadonlyArray<SaleResponse>;
+export type GetSalesResponse = ReadonlyArray<GetSaleResponse>;
+
+export interface GetSalesRequest {
+  // List of song artist UUID's to filter results
+  readonly artistIds?: ReadonlyArray<string>;
+  // List of song genres to filter results
+  readonly genres?: ReadonlyArray<string>;
+  // List of sale UUID's to filter results
+  readonly ids?: ReadonlyArray<string>;
+  // Maximum number of paginated results to retrieve. Default is 25
+  readonly limit?: number;
+  // List of song moods to filter results
+  readonly moods?: ReadonlyArray<string>;
+  // ISO-8601 formated newest (minimum) timestamp to filter results
+  readonly newerThan?: string;
+  // Start offset of paginated results to retrieve. Default is 0
+  readonly offset?: number;
+  // ISO-8601 formated oldest (maximum) timestamp to filter results
+  readonly olderThan?: string;
+  // Case-insensitive phrase to filter by song title and artist name
+  readonly phrase?: string;
+  // List of song UUID's to filter results
+  readonly songIds?: ReadonlyArray<string>;
+  // Sort order of the results based on createdAt field. Default is asc
+  readonly sortOrder?: "asc" | "desc";
+  // List of sale statuses to filter results
+  readonly statuses?: ReadonlyArray<string>;
+}
