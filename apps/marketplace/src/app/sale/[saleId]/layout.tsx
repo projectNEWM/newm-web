@@ -10,7 +10,7 @@ export const generateStaticParams = async () => {
   const resp = await fetch(`${baseUrls.newm}/v1/marketplace/sales`);
   const data: SalesResponse = await resp.json();
 
-  return data.map(({ id }) => ({ songId: id }));
+  return data.map(({ id }) => ({ saleId: id }));
 };
 
 const Layout: FunctionComponent<SongLayoutProps> = ({ children }) => {

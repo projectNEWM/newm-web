@@ -1,14 +1,15 @@
 import { Box } from "@mui/material";
 import { FunctionComponent } from "react";
-import Songs from "./Songs";
+import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale/api";
 
 const ArtistSongs: FunctionComponent = () => {
+  // TODO: limit results by artist ID once artist page references API data
   const { isLoading, data = [] } = useGetSalesQuery();
 
   return (
     <Box mt={ 7 }>
-      <Songs isLoading={ isLoading } sales={ data } />
+      <Sales isLoading={ isLoading } sales={ data } />
     </Box>
   );
 };

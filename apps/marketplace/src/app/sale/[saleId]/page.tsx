@@ -27,7 +27,7 @@ import { ItemSkeleton, SimilarSongs } from "../../../components";
 
 interface SingleSongProps {
   readonly params: {
-    readonly songId: string;
+    readonly saleId: string;
   };
 }
 
@@ -37,7 +37,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { isLoading, data: sale } = useGetSaleQuery(params.songId);
+  const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
 
   const initialFormValues = {
     streamTokens: 1000,

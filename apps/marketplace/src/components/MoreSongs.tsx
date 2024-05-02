@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box, useTheme } from "@mui/material";
-import Songs from "./Songs";
+import Sales from "./Sales";
 import { mockArtist, mockSales } from "../temp/data";
 
 const MoreSongs: FunctionComponent = () => {
@@ -20,7 +20,7 @@ const MoreSongs: FunctionComponent = () => {
 
   return (
     <Box mt={ [10, 8, 12.5] }>
-      <Songs sales={ mockSales } title={ title } />
+      <Sales sales={ mockSales } title={ title } />
     </Box>
   );
 };

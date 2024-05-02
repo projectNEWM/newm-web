@@ -1,13 +1,10 @@
-import { type KeyboardEvent, MouseEvent, useCallback, useState } from "react";
+import { type KeyboardEvent, MouseEvent, useCallback } from "react";
 import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import { getImageSrc, resizeCloudinaryImage } from "@newm-web/utils";
-import {
-  Clickable,
-  ResponsiveImage,
-  SongCardSkeleton,
-} from "@newm-web/elements";
+import { Clickable, ResponsiveImage } from "@newm-web/elements";
+import { SongCardSkeleton } from "@newm-web/components";
 
 interface SongCardProps {
   readonly coverArtUrl?: string;
@@ -24,7 +21,7 @@ interface SongCardProps {
   readonly title?: string;
 }
 
-export const SongCard = ({
+const SongCard = ({
   imageDimensions = 400,
   coverArtUrl,
   title,
@@ -223,3 +220,5 @@ export const SongCard = ({
     </Clickable>
   );
 };
+
+export default SongCard;

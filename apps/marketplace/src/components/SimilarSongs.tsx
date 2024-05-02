@@ -1,12 +1,12 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
-import Songs from "./Songs";
+import Sales from "./Sales";
 import { mockSales } from "../temp/data";
 
 const MoreSongs: FunctionComponent = () => {
   return (
     <Box mb={ 8 } mt={ 16 }>
-      <Songs sales={ mockSales } title="SIMILAR SONGS" />
+      <Sales sales={ mockSales } title="SIMILAR SONGS" />
     </Box>
   );
 };

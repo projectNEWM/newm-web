@@ -9,4 +9,4 @@ export { default as ItemSkeleton } from "./skeletons/ItemSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
 export { default as SimilarArtists } from "./SimilarArtists";
 export { default as SimilarSongs } from "./SimilarSongs";
-export { default as Songs } from "./Songs";
+export { default as Sales } from "./Sales";
