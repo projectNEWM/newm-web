@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode } from "react";
-import { SalesResponse } from "../../../modules/sale";
+import { GetSalesResponse } from "../../../modules/sale";
 import { baseUrls } from "../../../buildParams";
 
 interface SongLayoutProps {
@@ -8,7 +8,7 @@ interface SongLayoutProps {
 
 export const generateStaticParams = async () => {
   const resp = await fetch(`${baseUrls.newm}/v1/marketplace/sales`);
-  const data: SalesResponse = await resp.json();
+  const data: GetSalesResponse = await resp.json();
 
   return data.map(({ id }) => ({ saleId: id }));
 };
