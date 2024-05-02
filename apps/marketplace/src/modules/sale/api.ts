@@ -1,6 +1,7 @@
 import { SaleResponse, SalesResponse } from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
+import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
@@ -17,6 +18,8 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
+
+      providesTags: [Tags.Sale],
 
       query: (saleId) => ({
         method: "GET",
@@ -36,6 +39,8 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
+
+      providesTags: [Tags.Sale],
 
       query: (body) => ({
         body,

@@ -1,8 +1,9 @@
-import { FunctionComponent, ReactNode, useState } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard, SongCardSkeleton } from "@newm-web/components";
 import { useRouter } from "next/navigation";
 import { Howl } from "howler";
+import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
@@ -11,15 +12,16 @@ interface SalesProps {
   readonly title?: string | ReactNode;
 }
 
+const TEMP_AUDIO_URL =
+  "https://arweave.net/sltkDapMEeLF4WJU5KG8SioD_lRV5lso4q0FZ-N7eBE";
+
 const Sales: FunctionComponent<SalesProps> = ({
   title,
   sales = [],
   isLoading = false,
 }) => {
   const router = useRouter();
-  const [audio, setAudio] = useState<Howl>();
-  const [audioUrl, setAudioUrl] = useState<string>();
-  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  const { audioUrl, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
 
   const handleCardClick = (id: string) => {
     router.push(`/sale/${id}`);
@@ -27,48 +29,6 @@ const Sales: FunctionComponent<SalesProps> = ({
 
   const handleSubtitleClick = (id: string) => {
     router.push(`artist/${id}`);
-  };
-
-  const handlePlayPauseClick = (src: string) => {
-    const isCurrentSong = src === audioUrl;
-
-    // if currently selected song, pause or play and return
-    if (isCurrentSong) {
-      if (audio?.playing()) {
-        audio?.pause();
-      } else {
-        audio?.play();
-      }
-
-      return;
-    }
-
-    // if not currently selected song, stop playing
-    if (audio?.playing()) {
-      audio.stop();
-    }
-
-    // play new song
-    const newAudio = new Howl({
-      html5: true,
-      onend: () => {
-        setIsAudioPlaying(false);
-      },
-      onpause: () => {
-        setIsAudioPlaying(false);
-      },
-      onplay: (id) => {
-        setAudioUrl(src);
-        setIsAudioPlaying(true);
-      },
-      onstop: () => {
-        setIsAudioPlaying(false);
-      },
-      src,
-    });
-
-    newAudio.play();
-    setAudio(newAudio);
   };
 
   if (!isLoading && !sales.length) {
@@ -114,13 +74,14 @@ const Sales: FunctionComponent<SalesProps> = ({
                   <SongCard
                     coverArtUrl={ song.coverArtUrl }
                     isPlayable={ !!song.clipUrl }
-                    isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
+                    isPlaying={ audioUrl === TEMP_AUDIO_URL && isAudioPlaying }
                     key={ id }
-                    price={ String(costAmount) }
+                    price={ formatNewmAmount(costAmount, false) }
                     subtitle={ genresString }
                     title={ song.title }
                     onCardClick={ () => handleCardClick(id) }
-                    onPlayPauseClick={ () => handlePlayPauseClick(song.clipUrl) }
+                    // onPlayPauseClick={ () => handlePlayPauseClick(song.clipUrl) }
+                    onPlayPauseClick={ () => playPauseAudio(TEMP_AUDIO_URL) }
                     onSubtitleClick={ () => handleSubtitleClick(id) }
                   />
                 </Grid>

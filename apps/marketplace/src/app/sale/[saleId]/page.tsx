@@ -21,6 +21,7 @@ import {
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
+import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { useGetSaleQuery } from "../../../modules/sale";
 import MoreSongs from "../../../components/MoreSongs";
 import { ItemSkeleton, SimilarSongs } from "../../../components";
@@ -32,11 +33,14 @@ interface SingleSongProps {
 }
 
 const TEMP_NEWM_USD_RATE = 0.005;
+const TEMP_AUDIO_URL =
+  "https://arweave.net/sltkDapMEeLF4WJU5KG8SioD_lRV5lso4q0FZ-N7eBE";
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
   const router = useRouter();
 
+  const { isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
   const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
 
   const initialFormValues = {
@@ -57,8 +61,8 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
    */
   const getPercentageOfTotalStreamTokens = (purchaseAmount: number) => {
     if (!sale) return;
-    const percentage = (purchaseAmount / sale.totalBundleQuantity) * 100;
 
+    const percentage = (purchaseAmount / sale.totalBundleQuantity) * 100;
     return parseFloat(percentage.toFixed(6));
   };
 
@@ -72,11 +76,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
     const usdAmount = newmAmount * TEMP_NEWM_USD_RATE;
 
     return {
-      newmAmount: currency(newmAmount, {
-        pattern: "# !",
-        precision: 0,
-        symbol: "Ɲ",
-      }).format(),
+      newmAmount: formatNewmAmount(newmAmount),
       usdAmount: currency(usdAmount).format(),
     };
   };
@@ -106,10 +106,12 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
               coverArtUrl={ sale?.song.coverArtUrl }
               imageDimensions={ 480 }
               isLoading={ isLoading }
-              isPlayable={ true }
-              price={ String(sale?.costAmount) }
+              isPlayable={ !!sale?.song.clipUrl }
+              isPlaying={ isAudioPlaying }
+              price={ formatNewmAmount(sale?.costAmount, false) }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onCardClick={ () => {} }
+              onPlayPauseClick={ () => playPauseAudio(TEMP_AUDIO_URL) }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
               onPriceClick={ () => {} }
               // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -164,7 +166,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               "with the percentage of Streaming royalties you " +
                               "can acquire and the total price of the bundle. " +
                               "For example 1 token is worth = 0.0000001% of " +
-                              "total royalties, and costs ‘3.0 Ɲ‘."
+                              "total royalties, and costs ‘3 Ɲ‘."
                             }
                           >
                             <IconButton sx={ { padding: 0 } }>
