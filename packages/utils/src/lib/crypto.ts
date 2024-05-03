@@ -5,7 +5,7 @@ export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
 
   return currency(amount, {
     pattern: "# !",
-    precision: 0,
+    precision: 1,
     symbol: includeSymbol ? "Ɲ" : "",
   }).format();
 };
