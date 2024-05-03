@@ -6,7 +6,7 @@ export * from "./lib/async";
 export * from "./lib/error";
 export * from "./lib/file";
 export * from "./lib/types";
-export * from "./lib/currency";
+export * from "./lib/crypto";
 export * from "./lib/hooks";
 export * from "./lib/time";
 export * from "./lib/redux";
