@@ -2,7 +2,7 @@ import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard, SongCardSkeleton } from "@newm-web/components";
 import { useRouter } from "next/navigation";
-import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
+import { usePlayAudioUrl } from "@newm-web/utils";
 import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
