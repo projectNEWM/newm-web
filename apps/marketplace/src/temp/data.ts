@@ -49,7 +49,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
     isExplicit: true,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -67,7 +68,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df581",
     isExplicit: false,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -85,7 +87,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df582",
     isExplicit: true,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -103,7 +106,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df583",
     isExplicit: false,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -121,7 +125,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df584",
     isExplicit: true,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -139,7 +144,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df585",
     isExplicit: false,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -157,7 +163,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df586",
     isExplicit: true,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",
@@ -175,7 +182,8 @@ export const mockSongs = [
     genres: ["Punk"],
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df587",
     isExplicit: false,
-    price: "3.0",
+    priceInNEWM: "3.0",
+    priceInUSD: "4.21",
     streamUrl:
       "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
     title: "Vibrate Punk",

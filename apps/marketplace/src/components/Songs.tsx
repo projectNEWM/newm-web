@@ -59,13 +59,12 @@ const Songs: FunctionComponent<SongsProps> = ({ title, songs }) => {
                     isLoading={ isLoading }
                     isPlayable={ !!song.streamUrl }
                     key={ song.id }
-                    price={ song.price }
+                    priceInNEWM={ song.priceInNEWM }
+                    priceInUSD={ song.priceInUSD }
                     subtitle={ genresString }
                     title={ song.title }
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
                     onCardClick={ () => handleTitleClick(song.id) }
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onPriceClick={ () => {} }
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
                     onSubtitleClick={ () => {} }
                   />
