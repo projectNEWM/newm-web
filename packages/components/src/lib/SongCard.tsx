@@ -77,14 +77,11 @@ export const SongCard = ({
     );
   }
 
-  const CardComponent = onCardClick ? Clickable : Box;
-
   return (
-    <CardComponent
+    <Clickable
       sx={ {
         display: "flex",
         justifyContent: "flex-start",
-        padding: 1.5,
         position: "relative",
         width: "100%",
       } }
@@ -190,6 +187,6 @@ export const SongCard = ({
           ) : null }
         </Stack>
       </Stack>
-    </CardComponent>
+    </Clickable>
   );
 };
