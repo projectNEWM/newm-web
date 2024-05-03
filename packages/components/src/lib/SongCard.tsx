@@ -171,7 +171,7 @@ const SongCard = ({
               ) }
               { !!priceInUsd && (
                 <Typography
-                  fontSize={ title ? "13px" : "15px" }
+                  fontSize={ title ? "14px" : "15px" }
                   variant="subtitle1"
                 >
                   &nbsp;(~ { currency(priceInUsd).format() })
