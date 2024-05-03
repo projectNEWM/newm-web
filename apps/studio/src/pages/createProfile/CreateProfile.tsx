@@ -8,7 +8,8 @@ import SelectRole from "./SelectRole";
 import Complete from "./Complete";
 import AddFirstName from "./AddFirstName";
 import AddLastName from "./AddLastName";
-import { useGetRolesQuery } from "../../modules/content";
+import SelectLocation from "./SelectLocation";
+import { useGetCountriesQuery, useGetRolesQuery } from "../../modules/content";
 import { commonYupValidation } from "../../common";
 import {
   ProfileFormValues,
@@ -18,6 +19,7 @@ import {
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
+  const { data: locations = [] } = useGetCountriesQuery();
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
@@ -27,6 +29,7 @@ const CreateProfile: FunctionComponent = () => {
   const initialValues: ProfileFormValues = {
     firstName: "",
     lastName: "",
+    location: "",
     role: "",
   };
 
@@ -36,6 +39,7 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     firstName: commonYupValidation.firstName,
     lastName: commonYupValidation.lastName,
+    location: commonYupValidation.location(locations),
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
   };
@@ -94,6 +98,13 @@ const CreateProfile: FunctionComponent = () => {
               path: "what-is-your-role",
               validationSchema: Yup.object().shape({
                 role: validations.role,
+              }),
+            },
+            {
+              element: <SelectLocation />,
+              path: "what-is-your-loocation",
+              validationSchema: Yup.object().shape({
+                location: validations.location,
               }),
             },
             {

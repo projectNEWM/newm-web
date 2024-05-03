@@ -159,6 +159,12 @@ export const commonYupValidation = {
     .trim()
     .max(20, "Must be 20 characters or less")
     .required("Last name is required"),
+  location: (locations: string[]) =>
+    Yup.string()
+      .required("This field is required")
+      .test("is-location", "You need to type or select one", (location) =>
+        locations.includes(location || "")
+      ),
   moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
   newPassword: Yup.string()
     .test(

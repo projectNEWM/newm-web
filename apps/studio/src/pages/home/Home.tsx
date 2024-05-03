@@ -20,16 +20,22 @@ const Home: FunctionComponent = () => {
   const [isMobileOpen, setMobileOpen] = useState(false);
 
   const {
-    data: { firstName = "", lastName = "", role } = emptyProfile,
+    data: { firstName = "", lastName = "", role, location } = emptyProfile,
     isLoading,
   } = useGetProfileQuery();
 
-  const hasBasicDetails = !!(firstName && lastName && role);
+  const hasBasicDetails = !!(firstName && lastName && role && location);
 
   if (!hasBasicDetails && !isLoading) {
-    navigate("/create-profile");
+    if (!firstName || !lastName || !role) {
+      navigate("/create-profile");
+      return null;
+    }
 
-    return null;
+    if (!location) {
+      navigate("/create-profile/what-is-your-location");
+      return null;
+    }
   }
 
   if (isLoading) return null;
