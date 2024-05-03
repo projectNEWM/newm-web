@@ -150,7 +150,7 @@ const SongCard = ({
           justifyContent="space-between"
           mt={ 0.5 }
         >
-          <Stack direction="row" gap={ 0.5 } justifyContent="space-between">
+          <Stack direction="row" gap={ 1 } justifyContent="space-between">
             { !!title && (
               <Typography fontWeight={ 700 } textAlign="left" variant="h4">
                 { title }
@@ -174,7 +174,7 @@ const SongCard = ({
                   fontSize={ title ? "14px" : "15px" }
                   variant="subtitle1"
                 >
-                  &nbsp;(~ { currency(priceInUsd).format() })
+                  &nbsp;(≈ { currency(priceInUsd).format() })
                 </Typography>
               ) }
             </Stack>

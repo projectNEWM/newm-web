@@ -175,7 +175,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
           <Typography mr={ 2 } mt={ 1.5 } variant="subtitle2">
             { `For every additional artist who will receive royalties, the
-              fee to complete the minting process will increase by ~₳${
+              fee to complete the minting process will increase by ≈₳${
                 formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A"
               }.` }
             <Tooltip

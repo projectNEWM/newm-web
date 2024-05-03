@@ -232,7 +232,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                           >
                             Buy { values.streamTokens.toLocaleString() } Stream
                             Tokens •{ " " }
-                            { `${totalCost?.newmAmount} (~ ${totalCost?.usdAmount})` }
+                            { `${totalCost?.newmAmount} (≈ ${totalCost?.usdAmount})` }
                           </Typography>
                         </Button>
                       </Box>
