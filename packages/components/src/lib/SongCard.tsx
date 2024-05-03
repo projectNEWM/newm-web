@@ -157,7 +157,7 @@ const SongCard = ({
               </Typography>
             ) }
 
-            <Stack display="flex" flexDirection="row">
+            <Stack display="flex" flexDirection="row" whiteSpace="nowrap">
               { !!priceInNewm && (
                 <Typography
                   fontSize={ title ? "14px" : "16px" }
