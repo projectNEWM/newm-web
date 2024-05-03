@@ -2,13 +2,12 @@ import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard, SongCardSkeleton } from "@newm-web/components";
 import { useRouter } from "next/navigation";
-import { Howl } from "howler";
 import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
   readonly isLoading?: boolean;
-  readonly limit?: number;
+  readonly numSkeletons?: number;
   readonly sales: ReadonlyArray<Sale>;
   readonly title?: string | ReactNode;
 }
@@ -20,7 +19,7 @@ const Sales: FunctionComponent<SalesProps> = ({
   title,
   sales = [],
   isLoading = false,
-  limit = 8,
+  numSkeletons = 8,
 }) => {
   const router = useRouter();
   const { audioUrl, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
@@ -58,7 +57,7 @@ const Sales: FunctionComponent<SalesProps> = ({
 
       <Grid justifyContent="flex-start" pb={ 1 } rowGap={ 1.5 } container>
         { isLoading
-          ? new Array(limit).fill(null).map((_, idx) => {
+          ? new Array(numSkeletons).fill(null).map((_, idx) => {
               return (
                 <Grid key={ idx } md={ 3 } sm={ 4 } xs={ 6 } item>
                   <SongCardSkeleton
