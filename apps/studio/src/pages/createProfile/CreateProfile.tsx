@@ -13,12 +13,16 @@ import { useGetRolesQuery } from "../../modules/content";
 import { commonYupValidation } from "../../common";
 import {
   ProfileFormValues,
+  emptyProfile,
+  useGetProfileQuery,
   useUpdateInitialProfileThunk,
 } from "../../modules/session";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
+  const { data: { firstName, lastName, role, location } = emptyProfile } =
+    useGetProfileQuery();
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
@@ -26,10 +30,10 @@ const CreateProfile: FunctionComponent = () => {
    * Initial form values.
    */
   const initialValues: ProfileFormValues = {
-    firstName: "",
-    lastName: "",
-    location: "",
-    role: "",
+    firstName,
+    lastName,
+    location,
+    role,
   };
 
   /**
