@@ -169,7 +169,7 @@ const Profile: FunctionComponent = () => {
     ipi: commonYupValidation.ipi,
     isni: commonYupValidation.isni,
     lastName: commonYupValidation.lastName,
-    location: commonYupValidation.location(locations),
+    location: commonYupValidation.location,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
     soundCloudProfile: Yup.string()
