@@ -17,8 +17,10 @@ export interface Sale {
   readonly bundleAssetName: string;
   // Policy ID of the bundle token
   readonly bundlePolicyId: string;
-  // Amount of tokens in one unit of cost
+  // Cost of one unit of tokens in NEWM
   readonly costAmount: number;
+  // Cost of one unit of tokens in USD
+  readonly costAmountUsd: number;
   // Asset Name (hex-encoded) of the cost token
   readonly costAssetName: string;
   // Policy ID of the cost token

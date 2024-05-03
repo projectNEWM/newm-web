@@ -61,6 +61,7 @@ const Sales: FunctionComponent<SalesProps> = ({
               return (
                 <Grid key={ idx } md={ 3 } sm={ 4 } xs={ 6 } item>
                   <SongCardSkeleton
+                    isPriceVisible={ true }
                     isSubtitleVisible={ true }
                     isTitleVisible={ true }
                   />
@@ -77,7 +78,8 @@ const Sales: FunctionComponent<SalesProps> = ({
                     isPlayable={ !!song.clipUrl }
                     isPlaying={ audioUrl === TEMP_AUDIO_URL && isAudioPlaying }
                     key={ id }
-                    price={ formatNewmAmount(costAmount, false) }
+                    priceInNewm={ costAmount }
+                    priceInUsd={ 0.01 }
                     subtitle={ genresString }
                     title={ song.title }
                     onCardClick={ () => handleCardClick(id) }

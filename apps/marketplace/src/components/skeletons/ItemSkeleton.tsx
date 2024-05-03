@@ -7,15 +7,17 @@ const ItemSkeleton: FunctionComponent = () => (
       alignItems={ ["center", "center", "start"] }
       direction={ ["column", "column", "row"] }
     >
-      <Box
-        height={ [240, 240, 400] }
+      <Stack
+        gap={ 0.5 }
+        height={ [272, 272, 432] }
         mb={ [2, 2, 0] }
         mr={ [0, 0, 5] }
         p={ 1.5 }
         width={ [240, 240, 400] }
       >
         <Skeleton sx={ { height: "100%", width: "100%" } } variant="rounded" />
-      </Box>
+        <Skeleton height={ 32 } width={ 100 } />
+      </Stack>
       <Stack
         alignItems={ ["center", "center", "start"] }
         gap={ [4, 4, 2.5] }

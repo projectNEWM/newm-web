@@ -110,14 +110,9 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
               isLoading={ isLoading }
               isPlayable={ !!sale?.song.clipUrl }
               isPlaying={ isAudioPlaying }
-              price={ formatNewmAmount(sale?.costAmount, false) }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onCardClick={ () => {} }
+              priceInNewm={ sale?.costAmount }
+              priceInUsd={ 0.01 }
               onPlayPauseClick={ () => playPauseAudio(TEMP_AUDIO_URL) }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onPriceClick={ () => {} }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onSubtitleClick={ () => {} }
             />
           </Box>
           <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
