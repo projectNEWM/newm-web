@@ -56,6 +56,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -92,6 +94,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -128,6 +132,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -164,6 +170,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -200,6 +208,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -236,6 +246,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -272,6 +284,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
@@ -308,6 +322,8 @@ export const mockSales: ReadonlyArray<Sale> = [
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
       artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       clipUrl:
         "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
       collaborators: [],
