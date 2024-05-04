@@ -11,7 +11,7 @@ export const usePlayAudioUrl = () => {
 
   useEffect(() => {
     return () => {
-      if (audio) {
+      if (audio?.playing()) {
         audio.stop();
       }
     };
