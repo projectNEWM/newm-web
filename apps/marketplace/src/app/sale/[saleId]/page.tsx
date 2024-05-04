@@ -32,12 +32,6 @@ interface SingleSongProps {
   };
 }
 
-const TEMP_NEWM_USD_RATE = 0.005;
-const TEMP_AUDIO_URL =
-  "https://arweave.net/sltkDapMEeLF4WJU5KG8SioD_lRV5lso4q0FZ-N7eBE";
-const TEMP_ARTIST_IMAGE_URL =
-  "https://res.cloudinary.com/newm/image/upload/v1714627123/pfsbogvjumesu1sznuts.png";
-
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
   const router = useRouter();
@@ -75,7 +69,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
     if (!sale) return;
 
     const newmAmount = purchaseAmount * sale.costAmount;
-    const usdAmount = newmAmount * TEMP_NEWM_USD_RATE;
+    const usdAmount = purchaseAmount * sale.costAmountUsd;
 
     return {
       newmAmount: formatNewmAmount(newmAmount),
@@ -111,8 +105,8 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
               isPlayable={ !!sale?.song.clipUrl }
               isPlaying={ isAudioPlaying }
               priceInNewm={ sale?.costAmount }
-              priceInUsd={ 0.01 }
-              onPlayPauseClick={ () => playPauseAudio(TEMP_AUDIO_URL) }
+              priceInUsd={ sale?.costAmountUsd }
+              onPlayPauseClick={ () => playPauseAudio(sale?.song.clipUrl) }
             />
           </Box>
           <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
@@ -136,7 +130,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
             >
               <ProfileImage
                 height={ 40 }
-                src={ TEMP_ARTIST_IMAGE_URL }
+                src={ sale?.song.artistPictureUrl }
                 width={ 40 }
               />
               <Typography variant="h4">{ sale?.song.artistName }</Typography>

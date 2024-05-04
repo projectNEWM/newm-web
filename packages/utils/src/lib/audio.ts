@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 /**
  * Hook used to play an audio file using the Howl library.
@@ -8,6 +8,14 @@ export const usePlayAudioUrl = () => {
   const [audio, setAudio] = useState<Howl>();
   const [audioUrl, setAudioUrl] = useState<string>();
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.stop();
+      }
+    };
+  }, [audio]);
 
   const playPauseAudio = useCallback(
     (src?: string) => {

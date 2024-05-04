@@ -44,6 +44,8 @@ export interface Song {
   readonly artistId: string;
   // Stage name of the song artist
   readonly artistName: string;
+  // url for the song artist's profile image
+  readonly artistPictureUrl: string;
   // Valid URL of song audio clip file
   readonly clipUrl: string;
   // Song collaborator objects (see details bellow).	Always
@@ -104,4 +106,12 @@ export interface GetSalesParams {
   readonly sortOrder?: "asc" | "desc";
   // List of sale statuses to filter results
   readonly statuses?: ReadonlyArray<string>;
+}
+
+export interface ApiSale extends Omit<Sale, "song"> {
+  readonly song: ApiSong;
+}
+
+export interface ApiSong extends Omit<Song, "isExplicit"> {
+  readonly parentalAdvisory: "Explicit" | "Non-Explicit";
 }

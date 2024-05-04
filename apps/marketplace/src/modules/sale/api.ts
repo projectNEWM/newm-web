@@ -1,4 +1,10 @@
-import { GetSaleResponse, GetSalesParams, GetSalesResponse } from "./types";
+import {
+  ApiSale,
+  GetSaleResponse,
+  GetSalesParams,
+  GetSalesResponse,
+} from "./types";
+import { transformApiSale } from "./utils";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
@@ -25,6 +31,10 @@ export const extendedApi = newmApi.injectEndpoints({
         method: "GET",
         url: `/v1/marketplace/sales/${saleId}`,
       }),
+
+      transformResponse: (apiSale: ApiSale) => {
+        return transformApiSale(apiSale);
+      },
     }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -63,6 +73,10 @@ export const extendedApi = newmApi.injectEndpoints({
         },
         url: "/v1/marketplace/sales",
       }),
+
+      transformResponse: (apiSales: ReadonlyArray<ApiSale>) => {
+        return apiSales.map(transformApiSale);
+      },
     }),
   }),
 });

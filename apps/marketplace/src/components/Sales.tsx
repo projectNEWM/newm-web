@@ -12,9 +12,6 @@ interface SalesProps {
   readonly title?: string | ReactNode;
 }
 
-const TEMP_AUDIO_URL =
-  "https://arweave.net/sltkDapMEeLF4WJU5KG8SioD_lRV5lso4q0FZ-N7eBE";
-
 const Sales: FunctionComponent<SalesProps> = ({
   title,
   sales = [],
@@ -68,7 +65,7 @@ const Sales: FunctionComponent<SalesProps> = ({
                 </Grid>
               );
             })
-          : sales.map(({ costAmount, id, song }) => {
+          : sales.map(({ costAmount, costAmountUsd, id, song }) => {
               const genresString = song.genres.join(", ");
 
               return (
@@ -76,15 +73,14 @@ const Sales: FunctionComponent<SalesProps> = ({
                   <SongCard
                     coverArtUrl={ song.coverArtUrl }
                     isPlayable={ !!song.clipUrl }
-                    isPlaying={ audioUrl === TEMP_AUDIO_URL && isAudioPlaying }
+                    isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
                     key={ id }
                     priceInNewm={ costAmount }
-                    priceInUsd={ 0.01 }
+                    priceInUsd={ costAmountUsd }
                     subtitle={ genresString }
                     title={ song.title }
                     onCardClick={ () => handleCardClick(id) }
-                    // onPlayPauseClick={ () => handlePlayPauseClick(song.clipUrl) }
-                    onPlayPauseClick={ () => playPauseAudio(TEMP_AUDIO_URL) }
+                    onPlayPauseClick={ () => playPauseAudio(song.clipUrl) }
                     onSubtitleClick={ () => handleSubtitleClick(id) }
                   />
                 </Grid>
