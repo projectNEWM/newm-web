@@ -12,7 +12,6 @@ import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent } from "react";
-// import { resizeCloudinaryImage } from "@newm-web/utils";
 import {
   Button,
   ProfileImage,
@@ -125,8 +124,11 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
               direction="row"
               gap={ 1.5 }
               justifyContent={ ["center", "center", "start"] }
+              role="button"
               sx={ { cursor: "pointer" } }
+              tabIndex={ 0 }
               onClick={ handleArtistClick }
+              onKeyDown={ handleArtistClick }
             >
               <ProfileImage
                 height={ 40 }
@@ -157,7 +159,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               "with the percentage of Streaming royalties you " +
                               "can acquire and the total price of the bundle. " +
                               "For example 1 token is worth = 0.0000001% of " +
-                              "total royalties, and costs ‘3 Ɲ‘."
+                              "total royalties, and costs '3.0 Ɲ'."
                             }
                           >
                             <IconButton sx={ { padding: 0 } }>

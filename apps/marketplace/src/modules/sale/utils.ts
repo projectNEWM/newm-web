@@ -1,10 +1,9 @@
 import { ApiSale, Sale } from "./types";
 
 /**
- * Removes song.parentalAdvisory string field from sale API object
- * and replaces it with song.isExplicit boolean field.
- * @param apiSale
- * @returns
+ * Creates a sale object from the sale API object with
+ * the song.parentalAdvisory string field replaced with
+ * a song.isExplicit boolean field.
  */
 export const transformApiSale = (apiSale: ApiSale): Sale => {
   const {
