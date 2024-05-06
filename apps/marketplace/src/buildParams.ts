@@ -4,3 +4,7 @@ import { isProd } from "@newm-web/env";
 const isReduxLoggingEnabledInStaging = false;
 
 export const isReduxLoggingEnabled = !isProd && isReduxLoggingEnabledInStaging;
+
+export const baseUrls: Record<string, string> = {
+  newm: isProd ? "https://studio.newm.io/" : "https://garage.newm.io/",
+};

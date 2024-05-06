@@ -1,13 +1,12 @@
 import { FunctionComponent } from "react";
 import { Box, useTheme } from "@mui/material";
-import Songs from "./Songs";
-import { mockArtist, mockSongs } from "../temp/data";
+import Sales from "./Sales";
+import { mockArtist, mockSales } from "../temp/data";
 
 const MoreSongs: FunctionComponent = () => {
   const theme = useTheme();
 
   const artist = mockArtist;
-  const songs = mockSongs;
   const artistFullName = `${artist.firstName} ${artist.lastName}`;
 
   const title = (
@@ -21,7 +20,7 @@ const MoreSongs: FunctionComponent = () => {
 
   return (
     <Box mt={ [10, 8, 12.5] }>
-      <Songs songs={ songs } title={ title } />
+      <Sales sales={ mockSales } title={ title } />
     </Box>
   );
 };

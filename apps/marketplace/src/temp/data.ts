@@ -1,3 +1,5 @@
+import { Sale, SaleStatus } from "../modules/sale/types";
+
 export const mockArtist = {
   coverImageUrl:
     "https://res.cloudinary.com/newm/image/upload/v1680991027/cvjbuze1tqft5srafmzg.jpg",
@@ -35,159 +37,314 @@ export const mockArtists = Array(10)
         : "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1695587661/mprskynp42oijtpaypeq.jpg",
   }));
 
-export const mockSongs = [
+const mockArtistFullName = `${mockArtist.firstName} ${mockArtist.lastName}`;
+const mockArtistName = mockArtist.stageName || mockArtistFullName;
+
+export const mockSales: ReadonlyArray<Sale> = [
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
-    description: `
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-    natoque penatibus et magnis dis parturient montes, nascetur 
-    ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
-    pretium.`,
-    genres: ["Punk"],
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
     id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
-    isExplicit: true,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+      description: `
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+      natoque penatibus et magnis dis parturient montes, nascetur 
+      ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
+      pretium.`,
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      isExplicit: true,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+      description: `
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+      natoque penatibus et magnis dis parturient montes, nascetur 
+      ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
+      pretium.`,
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df581",
+      isExplicit: false,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
+  },
+  {
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df581",
-    isExplicit: false,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df582",
+      isExplicit: true,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699544008/xrcmyar9m09mk3l9mo1o.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df582",
-    isExplicit: true,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df583",
+      isExplicit: false,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699544008/xrcmyar9m09mk3l9mo1o.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699580048/aw7w0kielduse0z4vavi.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df583",
-    isExplicit: false,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df584",
+      isExplicit: true,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1699580048/aw7w0kielduse0z4vavi.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1701892098/rka1mlzzad6ohrcfqef3.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df584",
-    isExplicit: true,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df585",
+      isExplicit: false,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1701892098/rka1mlzzad6ohrcfqef3.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df585",
-    isExplicit: false,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df586",
+      isExplicit: true,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
   {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
-    description: `
+    availableBundleQuantity: 100000000,
+    bundleAmount: 1,
+    bundleAssetName: "ABCD1234",
+    bundlePolicyId: "1234ABCD",
+    costAmount: 3,
+    costAmountUsd: 0.015,
+    costAssetName: "XYZ123",
+    costPolicyId: "123XYZ",
+    createdAt: new Date("April 10th, 2024").toDateString(),
+    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    maxBundleSize: 1,
+    song: {
+      artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+      artistName: mockArtistName,
+      artistPictureUrl:
+        "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
+      clipUrl:
+        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+      collaborators: [],
+      coverArtUrl:
+        "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
+      description: `
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
     natoque penatibus et magnis dis parturient montes, nascetur 
     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
     pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df586",
-    isExplicit: true,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
-  },
-  {
-    artist: mockArtist,
-    coverArtUrl:
-      "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1702264297/ql6f3j5tettsbc3moea3.png",
-    description: `
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-    natoque penatibus et magnis dis parturient montes, nascetur 
-    ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, 
-    pretium.`,
-    genres: ["Punk"],
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df587",
-    isExplicit: false,
-    priceInNEWM: "3.0",
-    priceInUSD: "4.21",
-    streamUrl:
-      "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
-    title: "Vibrate Punk",
+      genres: ["Punk"],
+      id: "3cfb2d02-a320-4385-96d1-1498d8a1df587",
+      isExplicit: false,
+      moods: [],
+      title: "Vibrate Punk",
+      tokenAgreementUrl: "http://example.com",
+    },
+    status: SaleStatus.Started,
+    totalBundleQuantity: 100000000,
   },
 ];
 
-export const mockSong = mockSongs[0];
+export const mockSale = mockSales[0];

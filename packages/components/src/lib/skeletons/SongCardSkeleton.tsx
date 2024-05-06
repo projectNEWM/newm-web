@@ -2,6 +2,7 @@ import { Box, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface SongCardSkeletonProps {
+  readonly isPriceVisible?: boolean;
   readonly isSubtitleVisible?: boolean;
   readonly isTitleVisible?: boolean;
 }
@@ -9,6 +10,7 @@ interface SongCardSkeletonProps {
 const SongCardSkeleton: FunctionComponent<SongCardSkeletonProps> = ({
   isTitleVisible = true,
   isSubtitleVisible = true,
+  isPriceVisible = false,
 }) => (
   <Stack mb={ 6.25 } position="relative" width="100%">
     <img
@@ -26,7 +28,10 @@ const SongCardSkeleton: FunctionComponent<SongCardSkeletonProps> = ({
       top={ 0 }
     >
       <Skeleton height="100%" variant="rectangular" width="100%" />
-      { isTitleVisible && <Skeleton height={ 30 } width={ 100 } /> }
+      <Stack direction="row" justifyContent="space-between">
+        { isTitleVisible && <Skeleton height={ 30 } width={ 100 } /> }
+        { isPriceVisible && <Skeleton height={ 30 } width={ 80 } /> }
+      </Stack>
       { isSubtitleVisible && <Skeleton height={ 20 } width={ 60 } /> }
     </Box>
   </Stack>

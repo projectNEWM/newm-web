@@ -1,6 +1,7 @@
 export * from "./Artist";
 export * from "./skeletons/index";
 export { default as Artist } from "./Artist";
+export { default as ArtistSongs } from "./ArtistSongs";
 export { default as ArtistSpotlight } from "./ArtistSpotlight";
 export { default as Footer } from "./footer/Footer";
 export { default as Header } from "./header/Header";
@@ -8,4 +9,4 @@ export { default as ItemSkeleton } from "./skeletons/ItemSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
 export { default as SimilarArtists } from "./SimilarArtists";
 export { default as SimilarSongs } from "./SimilarSongs";
-export { default as Songs } from "./Songs";
+export { default as Sales } from "./Sales";

@@ -8,9 +8,10 @@ import {
   useTheme,
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
+import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
-import { FunctionComponent, useEffect, useState } from "react";
-import { resizeCloudinaryImage } from "@newm-web/utils";
+import * as Yup from "yup";
+import { FunctionComponent } from "react";
 import {
   Button,
   ProfileImage,
@@ -18,27 +19,75 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
+import { useGetSaleQuery } from "../../../modules/sale";
 import MoreSongs from "../../../components/MoreSongs";
-import { mockSongs } from "../../../temp/data";
 import { ItemSkeleton, SimilarSongs } from "../../../components";
 
 interface SingleSongProps {
   readonly params: {
-    readonly songId: string;
+    readonly saleId: string;
   };
 }
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
-  const songData = mockSongs.find((song) => song.id === params.songId);
+  const router = useRouter();
 
-  // TEMP: simulate data loading
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  const { isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
+
+  const initialFormValues = {
+    streamTokens: 1000,
+  };
+
+  const formValidationSchema = Yup.object({
+    streamTokens: Yup.number()
+      .required("This field is required")
+      .integer()
+      .min(1)
+      .max(sale?.availableBundleQuantity || 0),
+  });
+
+  /**
+   * @returns what percentage of the total tokens
+   * the current purchase amount is.
+   */
+  const getPercentageOfTotalStreamTokens = (purchaseAmount: number) => {
+    if (!sale) return;
+
+    const percentage = (purchaseAmount / sale.totalBundleQuantity) * 100;
+    return parseFloat(percentage.toFixed(6));
+  };
+
+  /**
+   * @returns total cost of purchase in NEWM and USD.
+   */
+  const getTotalPurchaseCost = (purchaseAmount: number) => {
+    if (!sale) {
+      throw new Error("no sale present");
+    }
+
+    const newmAmount = purchaseAmount * sale.costAmount;
+    const usdAmount = purchaseAmount * sale.costAmountUsd;
+
+    return {
+      newmAmount: formatNewmAmount(newmAmount),
+      usdAmount: currency(usdAmount).format(),
+    };
+  };
+
+  /**
+   * Navigates to the artist page when clicked.
+   */
+  const handleArtistClick = () => {
+    if (!sale) {
+      throw new Error("no sale present");
+    }
+
+    router.push(`/artist/${sale.song.artistId}`);
+  };
 
   if (isLoading) {
     return <ItemSkeleton />;
@@ -53,51 +102,56 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         >
           <Box mb={ [2, 2, 0] } mr={ [0, 0, 5] } width={ [240, 240, 400] }>
             <SongCard
-              coverArtUrl={ songData?.coverArtUrl }
+              coverArtUrl={ sale?.song.coverArtUrl }
               imageDimensions={ 480 }
-              isPlayable={ true }
-              priceInNEWM={ mockSongs[0].priceInNEWM }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onCardClick={ () => {} }
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onSubtitleClick={ () => {} }
+              isLoading={ isLoading }
+              isPlayable={ !!sale?.song.clipUrl }
+              isPlaying={ isAudioPlaying }
+              priceInNewm={ sale?.costAmount }
+              priceInUsd={ sale?.costAmountUsd }
+              onPlayPauseClick={ () => playPauseAudio(sale?.song.clipUrl) }
             />
           </Box>
           <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
             <Stack gap={ 0.5 } textAlign={ ["center", "center", "left"] }>
-              <Typography variant="h3">{ songData?.title }</Typography>
+              <Typography variant="h3">{ sale?.song.title }</Typography>
               <Typography color={ theme.colors.grey300 } variant="subtitle2">
-                { songData?.isExplicit ? "Explicit" : null }
+                { sale?.song.isExplicit ? "Explicit" : null }
               </Typography>
             </Stack>
 
-            <Typography variant="subtitle1">{ songData?.description }</Typography>
+            <Typography variant="subtitle1">
+              { sale?.song.description }
+            </Typography>
             <Stack
               alignItems="center"
               direction="row"
               gap={ 1.5 }
               justifyContent={ ["center", "center", "start"] }
+              role="button"
+              sx={ { cursor: "pointer" } }
+              tabIndex={ 0 }
+              onClick={ handleArtistClick }
+              onKeyDown={ handleArtistClick }
             >
               <ProfileImage
                 height={ 40 }
-                src={ resizeCloudinaryImage(songData?.artist.profileImageUrl, {
-                  height: 56,
-                  width: 56,
-                }) }
+                src={ sale?.song.artistPictureUrl }
                 width={ 40 }
               />
-              <Typography variant="h4">
-                { songData?.artist.firstName } { songData?.artist.lastName }
-              </Typography>
+              <Typography variant="h4">{ sale?.song.artistName }</Typography>
             </Stack>
 
             <Formik
-              initialValues={ { streamTokens: 1 } }
+              initialValues={ initialFormValues }
+              validationSchema={ formValidationSchema }
               onSubmit={ () => {
                 return;
               } }
             >
-              { () => {
+              { ({ values, isValid }) => {
+                const totalCost = getTotalPurchaseCost(values.streamTokens);
+
                 return (
                   <Form>
                     <Stack gap={ 2.5 } mb={ 4 } mt={ 0.5 }>
@@ -109,7 +163,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               "with the percentage of Streaming royalties you " +
                               "can acquire and the total price of the bundle. " +
                               "For example 1 token is worth = 0.0000001% of " +
-                              "total royalties, and costs ‘Ɲ3.0‘."
+                              "total royalties, and costs '3.0 Ɲ'."
                             }
                           >
                             <IconButton sx={ { padding: 0 } }>
@@ -133,7 +187,10 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                             </Typography>
                             <Stack direction={ "row" }>
                               <Box maxWidth={ "150px" }>
-                                <TextInputField name="streamTokens"></TextInputField>
+                                <TextInputField
+                                  name="streamTokens"
+                                  type="number"
+                                />
                               </Box>
                               <Typography
                                 alignSelf="center"
@@ -141,7 +198,11 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                                 pl={ 1.5 }
                                 variant="subtitle2"
                               >
-                                = 0.0000001% of total royalties
+                                ={ " " }
+                                { getPercentageOfTotalStreamTokens(
+                                  values.streamTokens
+                                ) }
+                                % of total royalties
                               </Typography>
                             </Stack>
                             <Typography
@@ -149,7 +210,8 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               pt={ 0.5 }
                               variant="subtitle2"
                             >
-                              Maximum stream tokens = 80000
+                              Maximum stream tokens ={ " " }
+                              { sale?.availableBundleQuantity.toLocaleString() }
                             </Typography>
                           </Stack>
                         </Box>
@@ -163,12 +225,14 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                           backgroundColor: theme.colors.grey600,
                         } }
                       >
-                        <Button type="submit" width="full">
+                        <Button disabled={ !isValid } type="submit" width="full">
                           <Typography
                             fontWeight={ theme.typography.fontWeightBold }
                             variant="body1"
                           >
-                            Buy 1 Stream Token • { "4.73N (~ $7.30)" }
+                            Buy { values.streamTokens.toLocaleString() } Stream
+                            Tokens •{ " " }
+                            { `${totalCost?.newmAmount} (≈ ${totalCost?.usdAmount})` }
                           </Typography>
                         </Button>
                       </Box>

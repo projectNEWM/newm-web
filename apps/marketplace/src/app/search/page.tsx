@@ -36,7 +36,7 @@ const Search = () => {
             "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png"
           }
           isPlayable={ true }
-          priceInNEWM="3.0"
+          priceInNewm={ 3 }
           subtitle="Luis Viton"
           title="The Forest Fall"
           // eslint-disable-next-line @typescript-eslint/no-empty-function

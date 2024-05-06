@@ -1,5 +1,11 @@
 import { Box, BoxProps } from "@mui/material";
-import { FunctionComponent, HTMLProps, useState } from "react";
+import {
+  FunctionComponent,
+  HTMLProps,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type ResponsiveImagePropsBase = BoxProps & HTMLProps<HTMLImageElement>;
 type ResponsiveImageProps = Omit<ResponsiveImagePropsBase, "width" | "height">;
@@ -15,7 +21,18 @@ const ResponsiveImage: FunctionComponent<ResponsiveImageProps> = ({
   sx,
   ...rest
 }) => {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  /**
+   * Occasionally image onLoad will not trigger on initial page load,
+   * this ensures the non-placeholder image is still rendered.
+   */
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setIsImageLoaded(true);
+    }
+  }, []);
 
   return (
     <>
@@ -31,6 +48,7 @@ const ResponsiveImage: FunctionComponent<ResponsiveImageProps> = ({
       <Box
         component="img"
         height="100%"
+        ref={ imgRef }
         sx={ { ...sx, display: isImageLoaded ? "inline-block" : "none" } }
         width="100%"
         onLoad={ () => setIsImageLoaded(true) }

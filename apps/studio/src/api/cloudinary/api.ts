@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { axiosBaseQuery } from "@newm-web/utils";
 import { CloudinaryUploadParams, CloudinaryUploadResponse } from "./types";
 import { baseUrls } from "../../buildParams";
-import { axiosBaseQuery } from "../../api/utils";
 
 const api = createApi({
   baseQuery: axiosBaseQuery({

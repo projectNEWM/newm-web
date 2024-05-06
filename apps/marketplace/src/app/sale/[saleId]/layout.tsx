@@ -1,12 +1,16 @@
 import { FunctionComponent, ReactNode } from "react";
-import { mockSongs } from "../../../temp/data";
+import { GetSalesResponse } from "../../../modules/sale";
+import { baseUrls } from "../../../buildParams";
 
 interface SongLayoutProps {
   readonly children: ReactNode;
 }
 
 export const generateStaticParams = async () => {
-  return mockSongs.map(({ id }) => ({ songId: id }));
+  const resp = await fetch(`${baseUrls.newm}/v1/marketplace/sales`);
+  const data: GetSalesResponse = await resp.json();
+
+  return data.map(({ id }) => ({ saleId: id }));
 };
 
 const Layout: FunctionComponent<SongLayoutProps> = ({ children }) => {
