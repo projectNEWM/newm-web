@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { WizardForm } from "@newm-web/elements";
 import * as Yup from "yup";
+import { getUpdatedValues } from "@newm-web/utils";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -21,8 +22,9 @@ import {
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
-  const { data: { firstName, lastName, role, location } = emptyProfile } =
-    useGetProfileQuery();
+  const {
+    data: { firstName, lastName, role, location, nickname } = emptyProfile,
+  } = useGetProfileQuery();
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
@@ -33,6 +35,7 @@ const CreateProfile: FunctionComponent = () => {
     firstName,
     lastName,
     location,
+    nickname,
     role,
   };
 
@@ -51,7 +54,9 @@ const CreateProfile: FunctionComponent = () => {
    * Submits the form when on the last route of the form.
    */
   const handleSubmit = (values: ProfileFormValues) => {
-    updateInitialProfile({ ...values });
+    const updatedValues = getUpdatedValues(initialValues, values);
+
+    updateInitialProfile(updatedValues);
   };
 
   return (
@@ -68,6 +73,7 @@ const CreateProfile: FunctionComponent = () => {
     >
       <Container maxWidth="xl">
         <WizardForm
+          enableReinitialize={ true }
           initialValues={ initialValues }
           rootPath="create-profile"
           routes={ [
