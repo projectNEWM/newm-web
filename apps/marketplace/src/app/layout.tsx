@@ -8,6 +8,7 @@ import { StyledComponentsRegistry } from "@newm-web/components";
 import { Provider } from "react-redux";
 import { Footer, Header } from "../components";
 import store from "../store";
+import Toast from "../components/Toast";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -44,6 +45,8 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
+                <Toast />
+
                 <Stack flexGrow={ 1 } justifyContent="space-between">
                   <Stack justifyContent="flex-start">
                     <Header />

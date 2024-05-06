@@ -65,7 +65,9 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
    * @returns total cost of purchase in NEWM and USD.
    */
   const getTotalPurchaseCost = (purchaseAmount: number) => {
-    if (!sale) return;
+    if (!sale) {
+      throw new Error("no sale present");
+    }
 
     const newmAmount = purchaseAmount * sale.costAmount;
     const usdAmount = purchaseAmount * sale.costAmountUsd;
@@ -80,7 +82,9 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
    * Navigates to the artist page when clicked.
    */
   const handleArtistClick = () => {
-    if (!sale) return;
+    if (!sale) {
+      throw new Error("no sale present");
+    }
 
     router.push(`/artist/${sale.song.artistId}`);
   };

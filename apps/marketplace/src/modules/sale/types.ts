@@ -48,7 +48,7 @@ export interface Song {
   readonly artistPictureUrl: string;
   // Valid URL of song audio clip file
   readonly clipUrl: string;
-  // Song collaborator objects (see details bellow).	Always
+  // Song collaborator objects (see details below).
   readonly collaborators: ReadonlyArray<Collaborator>;
   // Valid URL of cover art picture file
   readonly coverArtUrl: string;
@@ -64,7 +64,7 @@ export interface Song {
   readonly moods: ReadonlyArray<string>;
   // Song title
   readonly title: string;
-  // Valid URL of song token agreetment document
+  // Valid URL of song token agreement document
   readonly tokenAgreementUrl: string;
 }
 
