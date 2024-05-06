@@ -2,22 +2,29 @@ import { FunctionComponent } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { WizardForm } from "@newm-web/elements";
 import * as Yup from "yup";
+import { getUpdatedValues } from "@newm-web/utils";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
 import Complete from "./Complete";
 import AddFirstName from "./AddFirstName";
 import AddLastName from "./AddLastName";
+import SelectLocation from "./SelectLocation";
 import { useGetRolesQuery } from "../../modules/content";
 import { commonYupValidation } from "../../common";
 import {
   ProfileFormValues,
+  emptyProfile,
+  useGetProfileQuery,
   useUpdateInitialProfileThunk,
 } from "../../modules/session";
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const { data: roles = [] } = useGetRolesQuery();
+  const {
+    data: { firstName, lastName, role, location, nickname } = emptyProfile,
+  } = useGetProfileQuery();
 
   const [updateInitialProfile] = useUpdateInitialProfileThunk();
 
@@ -25,9 +32,11 @@ const CreateProfile: FunctionComponent = () => {
    * Initial form values.
    */
   const initialValues: ProfileFormValues = {
-    firstName: "",
-    lastName: "",
-    role: "",
+    firstName,
+    lastName,
+    location,
+    nickname,
+    role,
   };
 
   /**
@@ -36,6 +45,7 @@ const CreateProfile: FunctionComponent = () => {
   const validations = {
     firstName: commonYupValidation.firstName,
     lastName: commonYupValidation.lastName,
+    location: commonYupValidation.location,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
   };
@@ -44,7 +54,9 @@ const CreateProfile: FunctionComponent = () => {
    * Submits the form when on the last route of the form.
    */
   const handleSubmit = (values: ProfileFormValues) => {
-    updateInitialProfile({ ...values });
+    const updatedValues = getUpdatedValues(initialValues, values);
+
+    updateInitialProfile(updatedValues);
   };
 
   return (
@@ -61,6 +73,7 @@ const CreateProfile: FunctionComponent = () => {
     >
       <Container maxWidth="xl">
         <WizardForm
+          enableReinitialize={ true }
           initialValues={ initialValues }
           rootPath="create-profile"
           routes={ [
@@ -94,6 +107,13 @@ const CreateProfile: FunctionComponent = () => {
               path: "what-is-your-role",
               validationSchema: Yup.object().shape({
                 role: validations.role,
+              }),
+            },
+            {
+              element: <SelectLocation />,
+              path: "what-is-your-location",
+              validationSchema: Yup.object().shape({
+                location: validations.location,
               }),
             },
             {

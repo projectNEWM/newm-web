@@ -1,11 +1,10 @@
 import { FunctionComponent, useEffect, useRef } from "react";
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { FormikValues, useFormikContext } from "formik";
 import {
   Button,
   FilteredTagsField,
   GradientTextInputField,
-  Typography,
 } from "@newm-web/elements";
 import { useUserDevice, useWindowDimensions } from "@newm-web/utils";
 import { ResponsiveNEWMLogo } from "../../components";
@@ -153,11 +152,7 @@ const AddProfileInformation: FunctionComponent<AddProfileInformationProps> = ({
                 Next
               </Button>
             </Stack>
-            <Typography
-              color="grey100"
-              sx={ { opacity: isValid ? 1 : 0.5 } }
-              variant="h5"
-            >
+            <Typography sx={ { opacity: isValid ? 1 : 0.5 } } variant="subtitle2">
               or press Enter
             </Typography>
           </Box>

@@ -40,7 +40,10 @@ import {
   commonYupValidation,
   useAppDispatch,
 } from "../../../common";
-import { useGetRolesQuery } from "../../../modules/content";
+import {
+  useGetCountriesQuery,
+  useGetRolesQuery,
+} from "../../../modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -58,6 +61,7 @@ const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { state } = useLocation();
 
+  const locationRef = useRef<HTMLDivElement>(null);
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -69,6 +73,7 @@ const Profile: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
+  const { data: locations = [] } = useGetCountriesQuery();
 
   const {
     data: {
@@ -164,6 +169,7 @@ const Profile: FunctionComponent = () => {
     ipi: commonYupValidation.ipi,
     isni: commonYupValidation.isni,
     lastName: commonYupValidation.lastName,
+    location: commonYupValidation.location,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
     soundCloudProfile: Yup.string()
@@ -293,6 +299,7 @@ const Profile: FunctionComponent = () => {
       >
         { ({ dirty, errors, handleReset, isSubmitting }) => {
           scrollToError(errors, isSubmitting, [
+            { element: locationRef.current, error: errors.location },
             { element: roleRef.current, error: errors.role },
             { element: firstNameRef.current, error: errors.firstName },
             { element: lastNameRef.current, error: errors.lastName },
@@ -357,6 +364,7 @@ const Profile: FunctionComponent = () => {
                     <Stack
                       alignItems={ ["center", "center", "flex-start"] }
                       gap={ 1 }
+                      ref={ locationRef }
                       width="100%"
                     >
                       <Stack
@@ -377,16 +385,19 @@ const Profile: FunctionComponent = () => {
                         ) : null }
                       </Stack>
 
-                      { location ? (
-                        <TextInputField
-                          disabled={ true }
-                          isOptional={ false }
-                          label="LOCATION"
-                          name="location"
-                          readOnly={ true }
-                          type="text"
-                        />
-                      ) : null }
+                      <DropdownSelectField
+                        isOptional={ false }
+                        label="LOCATION"
+                        name="location"
+                        options={ locations }
+                        placeholder="Select or search your country"
+                        tooltipText={
+                          "Providing this info will make it easier " +
+                          "for streaming platforms to make your music easier to find " +
+                          "for your fans & listeners."
+                        }
+                        widthType="default"
+                      />
                     </Stack>
                   </Stack>
 

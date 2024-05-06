@@ -17,8 +17,10 @@ const NoResultsText = styled("span")`
   padding: 12px 12px;
   position: absolute;
   width: 100%;
-  z-index: 1;
-
+  z-index: 10;
+  bottom: -52px;
+  right: 0;
+  left: 0;
   ${({ widthType }: Props) =>
     widthType !== "full" &&
     css`

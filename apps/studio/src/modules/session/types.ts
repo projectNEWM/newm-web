@@ -84,6 +84,7 @@ export interface ProfileFormValues
   readonly email?: string;
   readonly firstName?: string;
   readonly lastName?: string;
+  readonly location?: string;
   readonly pictureUrl?: string | File;
   readonly role?: string;
 }
