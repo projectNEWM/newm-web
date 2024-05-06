@@ -391,6 +391,11 @@ const Profile: FunctionComponent = () => {
                         name="location"
                         options={ locations }
                         placeholder="Select or search your country"
+                        tooltipText={
+                          "Providing this info will make it easier " +
+                          "for streaming platforms to make your music easier to find " +
+                          "for your fans & listeners."
+                        }
                         widthType="default"
                       />
                     </Stack>
