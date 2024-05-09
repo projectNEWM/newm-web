@@ -23,7 +23,7 @@ COPY ./ ./
 RUN chown -R node:node .
 USER node
 
-EXPOSE 4200
+EXPOSE 3000
 
 # Build the production app
 RUN npx nx build marketplace
