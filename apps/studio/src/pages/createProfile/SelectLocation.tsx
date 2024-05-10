@@ -47,8 +47,8 @@ const SelectLocation: FunctionComponent = () => {
         Finally, what is your country of residence?
       </Typography>
       <Typography sx={ { mb: 6.5, textAlign: "center" } } variant="subtitle1">
-        Providing this info will make it easier for streaming platforms to make
-        your music easier to find for your fans & listeners.
+        Providing this info will enable streaming platforms to make your music
+        easier to find for your fans & listeners.
       </Typography>
 
       <DropdownSelectField
