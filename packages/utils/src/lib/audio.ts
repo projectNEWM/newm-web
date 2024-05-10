@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
  * Hook used to play an audio file using the Howl library.
  */
 export const usePlayAudioUrl = () => {
+  const [audioDuration, setAudioDuration] = useState<number>();
   const [audio, setAudio] = useState<Howl>();
   const [audioUrl, setAudioUrl] = useState<string>();
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
@@ -51,6 +52,7 @@ export const usePlayAudioUrl = () => {
         onplay: (id) => {
           setAudioUrl(src);
           setIsAudioPlaying(true);
+          setAudioDuration(newAudio.duration());
         },
         onstop: () => {
           setIsAudioPlaying(false);
@@ -66,11 +68,12 @@ export const usePlayAudioUrl = () => {
 
   const result = useMemo(
     () => ({
+      audioDuration,
       audioUrl,
       isAudioPlaying,
       playPauseAudio,
     }),
-    [audioUrl, isAudioPlaying, playPauseAudio]
+    [audioUrl, isAudioPlaying, playPauseAudio, audioDuration]
   );
 
   return result;

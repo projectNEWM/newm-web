@@ -161,6 +161,7 @@ const Songs: FunctionComponent = () => {
           <Grid key={ song.id } lg={ 3 } md={ 4 } sm={ 4 } xs={ 6 } item>
             <SongCard
               coverArtUrl={ song.coverArtUrl }
+              duration={ song.duration && song.duration / 1000 }
               isLoading={ isLoading }
               isPlayable={ !!song.streamUrl }
               isPlaying={ song.id === playerState.currentPlayingSongId }

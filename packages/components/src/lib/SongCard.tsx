@@ -1,5 +1,18 @@
-import { type KeyboardEvent, MouseEvent, useCallback } from "react";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  type KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
@@ -13,6 +26,7 @@ import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {
   readonly coverArtUrl?: string;
+  readonly duration?: number;
   readonly imageDimensions?: number;
   readonly isLoading?: boolean;
   readonly isPlayable?: boolean;
@@ -27,9 +41,10 @@ interface SongCardProps {
 }
 
 const SongCard = ({
-  imageDimensions = 400,
   coverArtUrl,
-  title,
+  duration,
+  imageDimensions = 400,
+  isLoading = false,
   isPlayable,
   isPlaying,
   onCardClick,
@@ -38,9 +53,30 @@ const SongCard = ({
   priceInNewm,
   priceInUsd,
   subtitle,
-  isLoading = false,
+  title,
 }: SongCardProps) => {
   const theme = useTheme();
+
+  const [songProgress, setSongProgress] = useState(0);
+
+  useEffect(() => {
+    if (isPlaying && duration) {
+      if (songProgress === 0) setSongProgress(1);
+      const interval = setInterval(() => {
+        setSongProgress((prevProgress) =>
+          Math.min(prevProgress + 1, Math.floor(duration))
+        );
+
+        if (songProgress > duration) {
+          clearInterval(interval);
+          onPlayPauseClick?.();
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setSongProgress(0);
+    }
+  }, [duration, isPlaying, onPlayPauseClick, songProgress]);
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
     event.preventDefault();
@@ -143,6 +179,22 @@ const SongCard = ({
               </IconButton>
             ) }
           </Box>
+
+          { isPlaying && (
+            <LinearProgress
+              color="success"
+              sx={ {
+                backgroundColor: theme.colors.grey500,
+                borderBottomLeftRadius: "4px",
+                borderBottomRightRadius: "4px",
+                height: "4px",
+                marginTop: "-4px",
+                width: "100%",
+              } }
+              value={ duration && (songProgress / Math.floor(duration)) * 100 }
+              variant="determinate"
+            />
+          ) }
         </Stack>
         <Stack
           direction="column"
