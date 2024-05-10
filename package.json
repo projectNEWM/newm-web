@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "scripts": {
-    "preinstall": "node ./scripts/preinstall.ts"
-  },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.10.6",
@@ -56,6 +53,8 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-react": "^7.14.5",
+    "@nx-tools/container-metadata": "^5.3.1",
+    "@nx-tools/nx-container": "^5.3.1",
     "@nx/eslint": "18.0.4",
     "@nx/eslint-plugin": "18.0.4",
     "@nx/jest": "18.0.4",
@@ -113,7 +112,6 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
     "jsdom": "~22.1.0",
-    "nx": "18.0.4",
     "prettier": "^2.6.2",
     "prettier-eslint": "15.0.1",
     "prettier-eslint-cli": "^7.1.0",

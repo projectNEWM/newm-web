@@ -1,0 +1,8 @@
+# .dockerignore
+node_modules
+.git
+.nx
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
