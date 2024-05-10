@@ -29,7 +29,7 @@ export const extendedApi = newmApi.injectEndpoints({
 
       query: (saleId) => ({
         method: "GET",
-        url: `/v1/marketplace/sales/${saleId}`,
+        url: `v1/marketplace/sales/${saleId}`,
       }),
 
       transformResponse: (apiSale: ApiSale) => {
@@ -71,7 +71,7 @@ export const extendedApi = newmApi.injectEndpoints({
           ...(statuses ? { statuses: statuses.join(",") } : {}),
           ...rest,
         },
-        url: "/v1/marketplace/sales",
+        url: "v1/marketplace/sales",
       }),
 
       transformResponse: (apiSales: ReadonlyArray<ApiSale>) => {
