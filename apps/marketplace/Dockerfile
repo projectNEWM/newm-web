@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node  *.json ./
 COPY --chown=node:node  .nvmrc ./
+COPY --chown=node:node  scripts ./scripts
 
 # Install dependencies  
 RUN npm ci 
