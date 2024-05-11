@@ -13,11 +13,20 @@ class WebPreviewStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new lambda.DockerImageFunction(this, "AssetFunction", {
-      code: lambda.DockerImageCode.fromImageAsset(rootDir, {
-        file: path.join("apps", "marketplace", "Dockerfile"),
-      }),
-      memorySize: 1024,
+    const previewFunction = new lambda.DockerImageFunction(
+      this,
+      "PreviewFunction",
+      {
+        code: lambda.DockerImageCode.fromImageAsset(rootDir, {
+          file: path.join("apps", "marketplace", "Dockerfile"),
+        }),
+        memorySize: 1024,
+      }
+    );
+    const lambdaFuncUrl = previewFunction.addFunctionUrl({});
+    new cdk.CfnOutput(this, "CfnOutputFunctionUrl", {
+      key: `${appName}-${qualifier}-FunctionUrl`,
+      value: lambdaFuncUrl,
     });
   }
 }
