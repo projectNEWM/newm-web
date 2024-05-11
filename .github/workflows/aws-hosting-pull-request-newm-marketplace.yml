@@ -12,6 +12,7 @@ jobs:
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -49,7 +50,7 @@ jobs:
         run: echo "previewurl=$(aws cloudformation describe-stacks --stack-name Marketplace-${{ github.event.pull_request.number }} --query 'Stacks[0].Outputs[0].OutputValue' --output text)" >> $GITHUB_OUTPUT
 
       - name: Url to PR comment
-        uses: mshick/add-pr-comment@v1
+        uses: mshick/add-pr-comment@v2
         with:
           message: |
             Visit the preview URL for this PR (updated for commit ${{ steps.vars.outputs.sha_short }}):
