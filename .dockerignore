@@ -1,5 +1,6 @@
 # .dockerignore
 node_modules
+.github
 .git
 .nx
 .env*
