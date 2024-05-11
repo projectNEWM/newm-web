@@ -110,6 +110,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
     "jsdom": "~22.1.0",
+    "nx": "18.0.4",
     "prettier": "^2.6.2",
     "prettier-eslint": "15.0.1",
     "prettier-eslint-cli": "^7.1.0",
