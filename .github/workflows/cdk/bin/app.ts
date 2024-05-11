@@ -15,7 +15,7 @@ class WebPreviewStack extends cdk.Stack {
 
     new lambda.DockerImageFunction(this, "AssetFunction", {
       code: lambda.DockerImageCode.fromImageAsset(
-        path.join(rootDir, "dist", "apps", "marketplace"),
+        path.join(rootDir, "apps", "marketplace"),
         { workingDirectory: rootDir }
       ),
       memorySize: 1024,
