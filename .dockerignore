@@ -2,6 +2,7 @@
 node_modules
 .git
 .nx
+.env*
 
 # CDK asset staging directory
 .cdk.staging

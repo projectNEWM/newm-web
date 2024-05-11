@@ -40,9 +40,8 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Deploy to Lambda Function
-        working-directory: ./.github/workflows/cdk
         run: |
-          npm install
-          QUALIFIER=${{ steps.vars.outputs.sha_short }} npm run cdk deploy -- --require-approval never
+          npm install --prefix .github/workflows/cdk
+          QUALIFIER=${{ steps.vars.outputs.sha_short }} npm run --prefix .github/workflows/cdk cdk deploy -- --require-approval never
 
       
