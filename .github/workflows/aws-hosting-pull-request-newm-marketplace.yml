@@ -43,6 +43,6 @@ jobs:
         working-directory: ./.github/workflows/cdk
         run: |
           npm install
-          QUALIFIER=${{ steps.vars.outputs.sha_short }} npm run cdk deploy --require-approval never
+          QUALIFIER=${{ steps.vars.outputs.sha_short }} npm run cdk deploy -- --require-approval never
 
       
