@@ -55,7 +55,4 @@ jobs:
           message: |
             Visit the preview URL for this PR (updated for commit ${{ steps.vars.outputs.sha_short }}):
             :rocket: ${{ steps.previewurl.outputs.previewurl }}
-  
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: "github-actions[bot]"
           allow-repeats: true
