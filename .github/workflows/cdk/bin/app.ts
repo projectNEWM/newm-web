@@ -27,7 +27,7 @@ class WebPreviewStack extends cdk.Stack {
       authType: lambda.FunctionUrlAuthType.NONE,
     });
     new cdk.CfnOutput(this, "CfnOutputFunctionUrl", {
-      key: `${appName}-${qualifier}-FunctionUrl`,
+      key: `${appName}${qualifier}FunctionUrl`,
       value: lambdaFuncUrl.url,
     });
   }
