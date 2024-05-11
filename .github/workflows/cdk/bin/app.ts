@@ -5,7 +5,7 @@ import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import * as path from "path";
 
-const appName = "Marketplace";
+const appName = process.env.APPNAME || "APPNAME";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
@@ -18,7 +18,7 @@ class WebPreviewStack extends cdk.Stack {
       "PreviewFunction",
       {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
-          file: path.join("apps", "marketplace", "Dockerfile"),
+          file: path.join("apps", appName, "Dockerfile"),
         }),
         memorySize: 1024,
       }
