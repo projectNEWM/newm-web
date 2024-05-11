@@ -23,10 +23,12 @@ class WebPreviewStack extends cdk.Stack {
         memorySize: 1024,
       }
     );
-    const lambdaFuncUrl = previewFunction.addFunctionUrl({});
+    const lambdaFuncUrl = previewFunction.addFunctionUrl({
+      authType: lambda.FunctionUrlAuthType.NONE,
+    });
     new cdk.CfnOutput(this, "CfnOutputFunctionUrl", {
       key: `${appName}-${qualifier}-FunctionUrl`,
-      value: lambdaFuncUrl,
+      value: lambdaFuncUrl.url,
     });
   }
 }
