@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noEmit": true
+  },
+  "exclude": ["node_modules", "cdk.out"],
+  "extends": "../../../tsconfig.base.json"
+}
