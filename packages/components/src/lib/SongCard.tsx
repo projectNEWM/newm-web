@@ -61,7 +61,9 @@ const SongCard = ({
 
   useEffect(() => {
     if (isPlaying && duration) {
+      // Gives indication that the song is playing by incrementing the progress bar
       if (songProgress === 0) setSongProgress(1);
+
       const interval = setInterval(() => {
         setSongProgress((prevProgress) =>
           Math.min(prevProgress + 1, Math.floor(duration))
