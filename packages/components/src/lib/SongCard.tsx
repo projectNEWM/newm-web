@@ -1,10 +1,4 @@
-import {
-  type KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { type KeyboardEvent, MouseEvent, useCallback } from "react";
 import {
   Box,
   IconButton,
@@ -25,8 +19,8 @@ import currency from "currency.js";
 import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {
+  readonly audioProgress?: number;
   readonly coverArtUrl?: string;
-  readonly duration?: number;
   readonly imageDimensions?: number;
   readonly isLoading?: boolean;
   readonly isPlayable?: boolean;
@@ -42,7 +36,7 @@ interface SongCardProps {
 
 const SongCard = ({
   coverArtUrl,
-  duration,
+  audioProgress = 0,
   imageDimensions = 400,
   isLoading = false,
   isPlayable,
@@ -56,29 +50,6 @@ const SongCard = ({
   title,
 }: SongCardProps) => {
   const theme = useTheme();
-
-  const [songProgress, setSongProgress] = useState(0);
-
-  useEffect(() => {
-    if (isPlaying && duration) {
-      // Gives indication that the song is playing by incrementing the progress bar
-      if (songProgress === 0) setSongProgress(1);
-
-      const interval = setInterval(() => {
-        setSongProgress((prevProgress) =>
-          Math.min(prevProgress + 1, Math.floor(duration))
-        );
-
-        if (songProgress > duration) {
-          clearInterval(interval);
-          onPlayPauseClick?.();
-        }
-      }, 1000);
-      return () => clearInterval(interval);
-    } else {
-      setSongProgress(0);
-    }
-  }, [duration, isPlaying, onPlayPauseClick, songProgress]);
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
     event.preventDefault();
@@ -193,7 +164,7 @@ const SongCard = ({
                 marginTop: "-4px",
                 width: "100%",
               } }
-              value={ duration && (songProgress / Math.floor(duration)) * 100 }
+              value={ audioProgress }
               variant="determinate"
             />
           ) }

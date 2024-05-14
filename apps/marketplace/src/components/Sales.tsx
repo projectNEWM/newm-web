@@ -19,7 +19,7 @@ const Sales: FunctionComponent<SalesProps> = ({
   numSkeletons = 8,
 }) => {
   const router = useRouter();
-  const { audioDuration, audioUrl, isAudioPlaying, playPauseAudio } =
+  const { audioProgress, audioUrl, isAudioPlaying, playPauseAudio } =
     usePlayAudioUrl();
 
   const handleCardClick = (id: string) => {
@@ -72,8 +72,8 @@ const Sales: FunctionComponent<SalesProps> = ({
               return (
                 <Grid key={ song.id } md={ 3 } sm={ 4 } xs={ 6 } item>
                   <SongCard
+                    audioProgress={ audioProgress }
                     coverArtUrl={ song.coverArtUrl }
-                    duration={ audioDuration }
                     isPlayable={ !!song.clipUrl }
                     isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
                     key={ id }

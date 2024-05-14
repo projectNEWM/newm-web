@@ -35,7 +35,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { audioDuration, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const { audioProgress, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
   const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
 
   const initialFormValues = {
@@ -102,8 +102,8 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         >
           <Box mb={ [2, 2, 0] } mr={ [0, 0, 5] } width={ [240, 240, 400] }>
             <SongCard
+              audioProgress={ audioProgress }
               coverArtUrl={ sale?.song.coverArtUrl }
-              duration={ audioDuration }
               imageDimensions={ 480 }
               isLoading={ isLoading }
               isPlayable={ !!sale?.song.clipUrl }

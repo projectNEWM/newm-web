@@ -11,6 +11,7 @@ import {
 import Hls from "hls.js";
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
+import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 import { UseHlsJsParams, UseHlsJsResult, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -129,6 +130,7 @@ export const useHlsJs = ({
   onSongEnded,
 }: UseHlsJsParams): UseHlsJsResult => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [audioProgress, setAudioProgress] = useState(0);
 
   /**
    * Calls onPlaySong if it exists.
@@ -238,7 +240,14 @@ export const useHlsJs = ({
   /**
    * Memoized playSong and stopSong handlers.
    */
-  const result = useMemo(() => ({ playSong, stopSong }), [playSong, stopSong]);
+  const result = useMemo(
+    () => ({
+      audioProgress: audioProgress < 0.75 ? 0.75 : audioProgress,
+      playSong,
+      stopSong,
+    }),
+    [playSong, stopSong, audioProgress]
+  );
 
   /**
    * Create video element and attach ref.
@@ -247,6 +256,24 @@ export const useHlsJs = ({
     const video = document.createElement("video");
     videoRef.current = video;
   }, []);
+
+  /**
+   * Update song progress
+   */
+  useEffect(() => {
+    setInterval(() => {
+      if (!videoRef.current) return;
+
+      const prevProgress = audioProgress;
+      const currentTime = videoRef.current.currentTime;
+      const duration = videoRef.current.duration;
+      const currentProgress = currentTime / duration;
+
+      if (currentProgress > 0 && prevProgress !== currentProgress) {
+        setAudioProgress(currentProgress);
+      }
+    }, 250);
+  }, [audioProgress]);
 
   /**
    * Cleanup
