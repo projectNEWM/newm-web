@@ -35,6 +35,11 @@ export const usePlayAudioUrl = () => {
       }
     }, 250);
 
+    if (!audio?.playing()) {
+      setAudioProgress(0);
+      clearTimeout(timeoutId);
+    }
+
     return () => clearTimeout(timeoutId);
   }, [audio, audioProgress, isAudioPlaying]);
 
