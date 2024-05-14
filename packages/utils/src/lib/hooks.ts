@@ -11,7 +11,6 @@ import {
 import Hls from "hls.js";
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
-import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 import { UseHlsJsParams, UseHlsJsResult, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -242,6 +241,7 @@ export const useHlsJs = ({
    */
   const result = useMemo(
     () => ({
+      // render a small percentage when just starting to show song is playing
       audioProgress: audioProgress < 0.75 ? 0.75 : audioProgress,
       playSong,
       stopSong,
@@ -267,9 +267,9 @@ export const useHlsJs = ({
       const prevProgress = audioProgress;
       const currentTime = videoRef.current.currentTime;
       const duration = videoRef.current.duration;
-      const currentProgress = currentTime / duration;
+      const currentProgress = duration ? currentTime / duration : 0;
 
-      if (currentProgress > 0 && prevProgress !== currentProgress) {
+      if (prevProgress !== currentProgress) {
         setAudioProgress(currentProgress);
       }
     }, 250);
