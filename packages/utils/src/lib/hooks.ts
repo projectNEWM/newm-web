@@ -11,7 +11,6 @@ import {
 import Hls from "hls.js";
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
-import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 import { UseHlsJsParams, UseHlsJsResult, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -172,7 +171,7 @@ export const useHlsJs = ({
 
   /**
    * Kicks off a timeout that will continue to update the
-   * song progress until it stops playing.
+   * song progress until the song stops playing.
    */
   const trackSongProgress = useCallback(() => {
     setTimeout(() => {
