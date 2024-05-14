@@ -19,21 +19,23 @@ export const usePlayAudioUrl = () => {
   }, [audio]);
 
   useEffect(() => {
-    if (audio) {
-      setTimeout(() => {
-        const prevProgress = audioProgress;
-        const audioPosition = audio.seek();
-        const audioDuration = audio.duration();
+    const timeoutId = setTimeout(() => {
+      if (!audio) return;
 
-        const currentProgress = audioDuration
-          ? (audioPosition / audioDuration) * 100
-          : 0;
+      const prevProgress = audioProgress;
+      const audioPosition = audio.seek();
+      const audioDuration = audio.duration();
 
-        if (prevProgress !== currentProgress) {
-          setAudioProgress(currentProgress);
-        }
-      }, 250);
-    }
+      const currentProgress = audioDuration
+        ? (audioPosition / audioDuration) * 100
+        : 0;
+
+      if (prevProgress !== currentProgress) {
+        setAudioProgress(currentProgress);
+      }
+    }, 250);
+
+    return () => clearTimeout(timeoutId);
   }, [audio, audioProgress, isAudioPlaying]);
 
   const playPauseAudio = useCallback(

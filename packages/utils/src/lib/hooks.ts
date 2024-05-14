@@ -11,6 +11,7 @@ import {
 import Hls from "hls.js";
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
+import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 import { UseHlsJsParams, UseHlsJsResult, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -170,6 +171,25 @@ export const useHlsJs = ({
   );
 
   /**
+   * Kicks off a timeout that will continue to update the
+   * song progress until it stops playing.
+   */
+  const trackSongProgress = useCallback(() => {
+    setTimeout(() => {
+      if (!videoRef.current) return;
+
+      const prevProgress = audioProgress;
+      const currentTime = videoRef.current.currentTime;
+      const duration = videoRef.current.duration;
+      const currentProgress = duration ? currentTime / duration : 0;
+
+      if (prevProgress !== currentProgress) {
+        setAudioProgress(currentProgress);
+      }
+    }, 250);
+  }, [audioProgress]);
+
+  /**
    * Play song using native browser functionality.
    */
   const playSongNatively = (song: Song) => {
@@ -211,11 +231,12 @@ export const useHlsJs = ({
         playSongWithHlsJs(song);
       }
 
+      trackSongProgress();
       handlePlaySong(song);
 
       videoRef.current.addEventListener("ended", handleSongEnded);
     },
-    [handlePlaySong, handleSongEnded]
+    [handlePlaySong, handleSongEnded, trackSongProgress]
   );
 
   /**
@@ -256,24 +277,6 @@ export const useHlsJs = ({
     const video = document.createElement("video");
     videoRef.current = video;
   }, []);
-
-  /**
-   * Update song progress
-   */
-  useEffect(() => {
-    setInterval(() => {
-      if (!videoRef.current) return;
-
-      const prevProgress = audioProgress;
-      const currentTime = videoRef.current.currentTime;
-      const duration = videoRef.current.duration;
-      const currentProgress = duration ? currentTime / duration : 0;
-
-      if (prevProgress !== currentProgress) {
-        setAudioProgress(currentProgress);
-      }
-    }, 250);
-  }, [audioProgress]);
 
   /**
    * Cleanup
