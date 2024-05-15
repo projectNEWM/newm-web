@@ -30,11 +30,14 @@ FROM base as runtime
 
 WORKDIR /app
 
+ENV PORT 4200
+ENV HOST 0.0.0
+ENV NEXT_TELEMETRY_DISABLED 1
+
 COPY --chown=node:node  --from=build /usr/src/app/dist/apps/mobile-wallet-connector ./dist/apps/mobile-wallet-connector
 COPY --chown=node:node  --from=build /usr/src/app/node_modules ./node_modules
 
 USER node
-ENV HOST 0.0.0
 EXPOSE 3000
 ENV PORT 3000
 
