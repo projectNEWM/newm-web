@@ -18,7 +18,7 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching available songs",
+              message: "An error occurred while fetching sale details",
               severity: "error",
             })
           );

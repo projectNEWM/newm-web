@@ -8,12 +8,14 @@ import {
   useTheme,
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent } from "react";
 import {
   Button,
+  HorizontalLine,
   ProfileImage,
   TextInputField,
   Tooltip,
@@ -23,7 +25,7 @@ import { useRouter } from "next/navigation";
 import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { useGetSaleQuery } from "../../../modules/sale";
 import MoreSongs from "../../../components/MoreSongs";
-import { ItemSkeleton, SimilarSongs } from "../../../components";
+import { ItemSkeleton, SaleMetadata, SimilarSongs } from "../../../components";
 
 interface SingleSongProps {
   readonly params: {
@@ -81,16 +83,23 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   /**
    * Navigates to the artist page when clicked.
    */
-  const handleArtistClick = () => {
+  const handleArtistClick = (artistId: string) => {
     if (!sale) {
       throw new Error("no sale present");
     }
 
-    router.push(`/artist/${sale.song.artistId}`);
+    router.push(`/artist/${artistId}`);
   };
 
   if (isLoading) {
     return <ItemSkeleton />;
+  }
+
+  // If the sale is not found, redirect to the home page, an error toast will display
+  if (!sale) {
+    router.push("/");
+
+    return null;
   }
 
   return (
@@ -102,45 +111,75 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         >
           <Box mb={ [2, 2, 0] } mr={ [0, 0, 5] } width={ [240, 240, 400] }>
             <SongCard
-              coverArtUrl={ sale?.song.coverArtUrl }
+              coverArtUrl={ sale.song.coverArtUrl }
               imageDimensions={ 480 }
               isLoading={ isLoading }
-              isPlayable={ !!sale?.song.clipUrl }
+              isPlayable={ !!sale.song.clipUrl }
               isPlaying={ isAudioPlaying }
-              priceInNewm={ sale?.costAmount }
-              priceInUsd={ sale?.costAmountUsd }
-              onPlayPauseClick={ () => playPauseAudio(sale?.song.clipUrl) }
+              priceInNewm={ sale.costAmount }
+              priceInUsd={ sale.costAmountUsd }
+              onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
             />
           </Box>
           <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
             <Stack gap={ 0.5 } textAlign={ ["center", "center", "left"] }>
-              <Typography variant="h3">{ sale?.song.title }</Typography>
+              <Typography variant="h3">{ sale.song.title }</Typography>
               <Typography color={ theme.colors.grey300 } variant="subtitle2">
-                { sale?.song.isExplicit ? "Explicit" : null }
+                { sale.song.isExplicit ? "Explicit" : null }
               </Typography>
             </Stack>
 
-            <Typography variant="subtitle1">
-              { sale?.song.description }
-            </Typography>
-            <Stack
-              alignItems="center"
-              direction="row"
-              gap={ 1.5 }
-              justifyContent={ ["center", "center", "start"] }
-              role="button"
-              sx={ { cursor: "pointer" } }
-              tabIndex={ 0 }
-              onClick={ handleArtistClick }
-              onKeyDown={ handleArtistClick }
-            >
-              <ProfileImage
-                height={ 40 }
-                src={ sale?.song.artistPictureUrl }
-                width={ 40 }
-              />
-              <Typography variant="h4">{ sale?.song.artistName }</Typography>
-            </Stack>
+            <Typography variant="subtitle1">{ sale.song.description }</Typography>
+            { sale.song.collaborators && (
+              <Stack
+                columnGap={ 5 }
+                flexDirection="row"
+                flexWrap="wrap"
+                justifyContent={ ["center", "center", "start"] }
+                rowGap={ 2.5 }
+              >
+                { sale.song.collaborators.map((collaborator) => (
+                  <Stack
+                    key={ collaborator.id }
+                    role="button"
+                    sx={ {
+                      cursor: "pointer",
+                      flexDirection: "row",
+                      gap: 1,
+                      width: "max-content",
+                    } }
+                    tabIndex={ 0 }
+                    onClick={ () => handleArtistClick(collaborator.id) }
+                    onKeyDown={ () => handleArtistClick(collaborator.id) }
+                  >
+                    { collaborator.pictureUrl ? (
+                      <ProfileImage
+                        height={ 40 }
+                        src={ collaborator.pictureUrl }
+                        width={ 40 }
+                      />
+                    ) : (
+                      <AccountCircleIcon
+                        sx={ {
+                          color: theme.colors.grey200,
+                          fontSize: "46px",
+                          marginLeft: "-2px",
+                        } }
+                      />
+                    ) }
+
+                    <Stack sx={ { justifyContent: "center" } }>
+                      <Typography fontWeight={ 500 } variant="h4">
+                        { collaborator.name }
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        { collaborator.role }
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                )) }
+              </Stack>
+            ) }
 
             <Formik
               initialValues={ initialFormValues }
@@ -211,7 +250,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                               variant="subtitle2"
                             >
                               Maximum stream tokens ={ " " }
-                              { sale?.availableBundleQuantity.toLocaleString() }
+                              { sale.availableBundleQuantity.toLocaleString() }
                             </Typography>
                           </Stack>
                         </Box>
@@ -232,7 +271,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
                           >
                             Buy { values.streamTokens.toLocaleString() } Stream
                             Tokens •{ " " }
-                            { `${totalCost?.newmAmount} (≈ ${totalCost?.usdAmount})` }
+                            { `${totalCost.newmAmount} (≈ ${totalCost.usdAmount})` }
                           </Typography>
                         </Button>
                       </Box>
@@ -243,6 +282,11 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
             </Formik>
           </Stack>
         </Stack>
+        <HorizontalLine mt={ 16 } />
+
+        <SaleMetadata sale={ sale } />
+
+        <HorizontalLine />
       </Container>
 
       <MoreSongs />

@@ -46,6 +46,8 @@ export interface Song {
   readonly artistName: string;
   // url for the song artist's profile image
   readonly artistPictureUrl: string;
+  // asset URL at pool.pm for studio environment or at cardanoscan.io for garage
+  readonly assetUrl: string;
   // Valid URL of song audio clip file
   readonly clipUrl: string;
   // Song collaborator objects (see details below).
@@ -73,6 +75,8 @@ export interface Collaborator {
   readonly id: string;
   // Stage name of the song collaborator
   readonly name: string;
+  // Picture url of the song collaborator
+  readonly pictureUrl?: string;
   // Role of the song collaborator
   readonly role: string;
 }
