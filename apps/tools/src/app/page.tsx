@@ -4,7 +4,7 @@ import { Stack, Typography } from "@mui/material";
 import { WalletIcon } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 
-export interface Tool {
+interface Tool {
   readonly Icon: FunctionComponent;
   readonly description: string;
   readonly name: string;
@@ -12,7 +12,7 @@ export interface Tool {
   readonly title: string;
 }
 
-export const NEWM_TOOLS: Tool[] = [
+const NEWM_TOOLS: Tool[] = [
   {
     Icon: WalletIcon,
     description:
