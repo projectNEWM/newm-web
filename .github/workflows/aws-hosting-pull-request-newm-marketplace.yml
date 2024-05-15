@@ -43,11 +43,11 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk deploy -- --require-approval never
+          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl
-        run: echo "previewurl=$(aws cloudformation describe-stacks --stack-name mobile-wallet-connector-${{ github.event.pull_request.number }} --query 'Stacks[0].Outputs[0].OutputValue' --output text)" >> $GITHUB_OUTPUT
+        run: echo "previewurl=$(aws cloudformation describe-stacks --stack-name marketplace-${{ github.event.pull_request.number }} --query 'Stacks[0].Outputs[0].OutputValue' --output text)" >> $GITHUB_OUTPUT
 
       - name: Url to PR comment
         uses: mshick/add-pr-comment@v2
