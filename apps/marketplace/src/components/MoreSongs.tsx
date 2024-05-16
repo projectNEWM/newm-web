@@ -1,17 +1,18 @@
 import { FunctionComponent } from "react";
 import { Box, useTheme } from "@mui/material";
 import Sales from "./Sales";
-import { mockArtist } from "../temp/data";
 import { useGetSalesQuery } from "../modules/sale";
 
 interface MoreSongsProps {
   readonly artistId?: string;
+  readonly artistName?: string;
   readonly currentSaleId?: string;
 }
 
 const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   artistId,
   currentSaleId,
+  artistName,
 }) => {
   const theme = useTheme();
   const { isLoading, data = [] } = useGetSalesQuery({
@@ -20,14 +21,11 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
 
   const withoutCurrentSale = data.filter(({ id }) => id !== currentSaleId);
 
-  const artist = mockArtist;
-  const artistFullName = `${artist.firstName} ${artist.lastName}`;
-
   const title = (
     <Box component="span">
       MORE FROM&nbsp;
       <Box component="span" sx={ { color: theme.colors.music } }>
-        { artist.stageName || artistFullName }
+        { artistName }
       </Box>
     </Box>
   );

@@ -37,7 +37,11 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         <HorizontalLine />
       </Container>
 
-      <MoreSongs artistId={ sale?.song.artistId } currentSaleId={ sale?.id } />
+      <MoreSongs
+        artistId={ sale?.song.artistId }
+        artistName={ sale?.song.artistName }
+        currentSaleId={ sale?.id }
+      />
 
       <SimilarSongs currentSaleId={ sale?.id } genres={ sale?.song.genres } />
     </Container>

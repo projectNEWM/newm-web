@@ -1,11 +1,13 @@
 import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import { SongCard, SongCardSkeleton } from "@newm-web/components";
+import { SongCard } from "@newm-web/components";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/utils";
+import SalesSkeleton from "./skeletons/SalesSkeleton";
 import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
+  readonly hasTitle?: boolean;
   readonly isLoading?: boolean;
   readonly numSkeletons?: number;
   readonly sales: ReadonlyArray<Sale>;
@@ -16,7 +18,8 @@ const Sales: FunctionComponent<SalesProps> = ({
   title,
   sales = [],
   isLoading = false,
-  numSkeletons = 8,
+  hasTitle,
+  numSkeletons,
 }) => {
   const router = useRouter();
   const { audioUrl, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
@@ -28,6 +31,10 @@ const Sales: FunctionComponent<SalesProps> = ({
   const handleSubtitleClick = (id: string) => {
     router.push(`artist/${id}`);
   };
+
+  if (isLoading) {
+    return <SalesSkeleton hasTitle={ hasTitle } numItems={ numSkeletons } />;
+  }
 
   return (
     <Stack alignItems="center">
@@ -45,19 +52,7 @@ const Sales: FunctionComponent<SalesProps> = ({
       ) }
 
       <Grid justifyContent="flex-start" pb={ 1 } rowGap={ 1.5 } container>
-        { isLoading ? (
-          new Array(numSkeletons).fill(null).map((_, idx) => {
-            return (
-              <Grid key={ idx } md={ 3 } sm={ 4 } xs={ 6 } item>
-                <SongCardSkeleton
-                  isPriceVisible={ true }
-                  isSubtitleVisible={ true }
-                  isTitleVisible={ true }
-                />
-              </Grid>
-            );
-          })
-        ) : !sales.length ? (
+        { !sales.length ? (
           <Box flex={ 1 }>
             <Typography sx={ { marginTop: 8, textAlign: "center" } }>
               No songs to display at this time.
