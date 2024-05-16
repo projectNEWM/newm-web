@@ -3,7 +3,7 @@ node_modules
 .github
 .git
 .nx
-# .env*
+.env*
 
 # CDK asset staging directory
 .cdk.staging
