@@ -1,11 +1,11 @@
-name: Destory NEWM Marketplace AWS preview environment when PR is closed
+name: Destory NEWM Mobile Wallet AWS preview environment when PR is closed
 on:
   pull_request:
     branches: [ master ]
     types: [ closed ]
     paths:
-      - .github/workflows/aws-hosting-pull-request-newm-marketplace.yml
-      - apps/marketplace/**
+      - .github/workflows/aws-hosting-pull-request-newm-mobile-wallet-connector.yml
+      - apps/mobile-wallet-connector/**
       - packages/**
 jobs:
   destroy:
@@ -28,11 +28,11 @@ jobs:
       - name: Destory preview environment
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk destroy -- --require-approval never
+          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk destroy -- --require-approval never
 
       - name: Url to PR comment
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            :skull: marketplace preview environment destroyed
+            :skull: wallet preview environment destroyed
           allow-repeats: true

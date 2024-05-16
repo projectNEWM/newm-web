@@ -6,6 +6,7 @@ import { Construct } from "constructs";
 import * as path from "path";
 
 const appName = process.env.APPNAME || "APPNAME";
+const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
@@ -27,7 +28,7 @@ class WebPreviewStack extends cdk.Stack {
       authType: lambda.FunctionUrlAuthType.NONE,
     });
     new cdk.CfnOutput(this, "CfnOutputFunctionUrl", {
-      key: `${appName}${qualifier}FunctionUrl`,
+      key: `${appNameAbbr}${qualifier}FunctionUrl`,
       value: lambdaFuncUrl.url,
     });
   }
