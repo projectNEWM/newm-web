@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "cdk": "cdk"
+    "cdk:preview": "npx cdk --app 'ts-node bin/preview.ts'",
+    "cdk:deploy": "npx cdk --app 'ts-node bin/deploy.ts'"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
