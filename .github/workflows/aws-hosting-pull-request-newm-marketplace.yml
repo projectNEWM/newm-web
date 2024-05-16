@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk deploy -- --require-approval never
+          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl

@@ -1,18 +1,18 @@
-name: Deploy NEWM Mobile Wallet to AWS Hosting on PR
+name: Deploy NEWM Mobile Wallet to AWS Hosting on merge
 on:
-  pull_request:
+  push:
+    branches:
+      - master
     paths:
-      - .github/workflows/aws-hosting-pull-request-newm-mobile-wallet-connector.yml
+      - .github/workflows/aws-hosting-merge-deploy-newm-mobile-wallet-connector.yml
       - apps/mobile-wallet-connector/**
       - packages/**
 jobs:
-  build_and_preview:
-    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+  build_and_deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
-      pull-requests: write
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -43,16 +43,4 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
-
-      - name: Get preview url
-        id: previewurl
-        run: echo "previewurl=$(aws cloudformation describe-stacks --stack-name mobile-wallet-connector-${{ github.event.pull_request.number }} --query 'Stacks[0].Outputs[0].OutputValue' --output text)" >> $GITHUB_OUTPUT
-
-      - name: Url to PR comment
-        uses: mshick/add-pr-comment@v2
-        with:
-          message: |
-            Visit the wallet preview URL for this PR (updated for commit ${{ steps.vars.outputs.sha_short }}):
-            :rocket: ${{ steps.previewurl.outputs.previewurl }}
-          allow-repeats: true
+          APPNAME=mobile-wallet-connector QUALIFIER=garage npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never

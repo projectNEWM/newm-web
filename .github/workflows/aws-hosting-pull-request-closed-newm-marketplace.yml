@@ -28,7 +28,7 @@ jobs:
       - name: Destory preview environment
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk destroy -- --require-approval never
+          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview destroy -- --require-approval never
 
       - name: Url to PR comment
         uses: mshick/add-pr-comment@v2
