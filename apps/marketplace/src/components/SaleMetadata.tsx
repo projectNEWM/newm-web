@@ -5,7 +5,7 @@ import moment from "moment";
 import { Sale } from "../modules/sale";
 
 interface SaleMetaDataProps {
-  readonly sale: Sale;
+  readonly sale?: Sale;
 }
 
 interface SaleDetailProps {
@@ -47,6 +47,8 @@ const SaleLink = ({ label, href }: SaleLinkProps) => (
 );
 
 const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
+  if (!sale) return null;
+
   return (
     <Stack
       display="grid"

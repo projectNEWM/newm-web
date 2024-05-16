@@ -1,10 +1,24 @@
 import { FunctionComponent } from "react";
 import { Box, useTheme } from "@mui/material";
 import Sales from "./Sales";
-import { mockArtist, mockSales } from "../temp/data";
+import { mockArtist } from "../temp/data";
+import { useGetSalesQuery } from "../modules/sale";
 
-const MoreSongs: FunctionComponent = () => {
+interface MoreSongsProps {
+  readonly artistId?: string;
+  readonly currentSaleId?: string;
+}
+
+const MoreSongs: FunctionComponent<MoreSongsProps> = ({
+  artistId,
+  currentSaleId,
+}) => {
   const theme = useTheme();
+  const { isLoading, data = [] } = useGetSalesQuery({
+    artistIds: artistId ? [artistId] : undefined,
+  });
+
+  const withoutCurrentSale = data.filter(({ id }) => id !== currentSaleId);
 
   const artist = mockArtist;
   const artistFullName = `${artist.firstName} ${artist.lastName}`;
@@ -20,7 +34,7 @@ const MoreSongs: FunctionComponent = () => {
 
   return (
     <Box mt={ [10, 8, 12.5] }>
-      <Sales sales={ mockSales } title={ title } />
+      <Sales isLoading={ isLoading } sales={ withoutCurrentSale } title={ title } />
     </Box>
   );
 };
