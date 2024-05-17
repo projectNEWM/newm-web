@@ -45,7 +45,6 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
 
       <SimilarSongs
         currentArtistId={ sale?.song.artistId }
-        currentSaleId={ sale?.id }
         genres={ sale?.song.genres }
       />
     </Container>
