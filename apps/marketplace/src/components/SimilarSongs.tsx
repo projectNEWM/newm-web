@@ -14,10 +14,10 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
   currentArtistId,
   currentSaleId,
 }) => {
-  const { isLoading, data = [] } = useGetSalesQuery({ genres });
+  const { isLoading, data: sales = [] } = useGetSalesQuery({ genres });
 
   // TODO: filter out these sales using query param when back-end updated
-  const filteredSales = data.filter(({ id, song: { artistId } }) => {
+  const filteredSales = sales.filter(({ id, song: { artistId } }) => {
     return id !== currentSaleId && artistId !== currentArtistId;
   });
 
