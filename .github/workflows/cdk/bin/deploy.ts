@@ -28,7 +28,7 @@ class WebDeployStack extends cdk.Stack {
       }
     );
 
-    new ssm.StringParameter(scope, "SsmDeployFunctionArn", {
+    new ssm.StringParameter(this, "SsmDeployFunctionArn", {
       parameterName: `/cdk/${qualifier}/NewmWeb/${appId}FunctionArn`,
       stringValue: deployFunction.functionArn,
     });
