@@ -30,7 +30,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
   const { isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
 
   const initialFormValues = {
-    streamTokens: 1000,
+    streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
   };
 
   const formValidationSchema = Yup.object({
