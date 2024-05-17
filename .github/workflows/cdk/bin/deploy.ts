@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
+import * as ssm from "aws-cdk-lib/aws-ssm";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import * as path from "path";
+import { Tags } from "aws-cdk-lib";
 
 const appName = process.env.APPNAME || "APPNAME";
+const appId = process.env.APPID || "APPID";
 const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
@@ -24,11 +27,16 @@ class WebDeployStack extends cdk.Stack {
         memorySize: 1024,
       }
     );
+
+    new ssm.StringParameter(scope, "SsmDeployFunctionArn", {
+      parameterName: `/cdk/${qualifier}/NewmWeb/${appId}FunctionArn`,
+      stringValue: deployFunction.functionArn,
+    });
   }
 }
 
 const app = new cdk.App();
-new WebDeployStack(app, "WebDeployStack", {
+const deployStack = new WebDeployStack(app, "WebDeployStack", {
   stackName: `${appName}-${qualifier}`,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,

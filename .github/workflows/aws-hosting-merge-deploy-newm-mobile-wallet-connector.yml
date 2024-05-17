@@ -43,4 +43,4 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector QUALIFIER=garage npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Garage npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
