@@ -4,6 +4,7 @@ import * as cdk from "aws-cdk-lib";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import * as path from "path";
+import { Tags } from "aws-cdk-lib";
 
 const appName = process.env.APPNAME || "APPNAME";
 const appNameAbbr = appName.replace(/-/g, "");
@@ -28,10 +29,12 @@ class WebDeployStack extends cdk.Stack {
 }
 
 const app = new cdk.App();
-new WebDeployStack(app, "WebDeployStack", {
+const deployStack = new WebDeployStack(app, "WebDeployStack", {
   stackName: `${appName}-${qualifier}`,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
 });
+
+Tags.of(deployStack).add("newm-web:app", `${appName}-${qualifier}`);
