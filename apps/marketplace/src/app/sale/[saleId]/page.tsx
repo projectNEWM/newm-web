@@ -43,7 +43,11 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
         currentSaleId={ sale?.id }
       />
 
-      <SimilarSongs currentSaleId={ sale?.id } genres={ sale?.song.genres } />
+      <SimilarSongs
+        currentArtistId={ sale?.song.artistId }
+        currentSaleId={ sale?.id }
+        genres={ sale?.song.genres }
+      />
     </Container>
   );
 };

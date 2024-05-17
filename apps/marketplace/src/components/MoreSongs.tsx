@@ -19,6 +19,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
     artistIds: artistId ? [artistId] : undefined,
   });
 
+  // TODO: filter sales using query param when back-end updated
   const withoutCurrentSale = data.filter(({ id }) => id !== currentSaleId);
 
   const title = (
