@@ -1,14 +1,27 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import Sales from "./Sales";
-import { mockSales } from "../temp/data";
+import { useGetSalesQuery } from "../modules/sale";
 
-const MoreSongs: FunctionComponent = () => {
+interface SimilarSongsProps {
+  readonly currentArtistId?: string;
+  readonly genres?: ReadonlyArray<string>;
+}
+
+const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
+  genres,
+  currentArtistId,
+}) => {
+  const { isLoading, data: sales = [] } = useGetSalesQuery({
+    artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
+    genres,
+  });
+
   return (
     <Box mb={ 8 } mt={ 16 }>
-      <Sales sales={ mockSales } title="SIMILAR SONGS" />
+      <Sales isLoading={ isLoading } sales={ sales } title="SIMILAR SONGS" />
     </Box>
   );
 };
 
-export default MoreSongs;
+export default SimilarSongs;
