@@ -17,10 +17,8 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   const theme = useTheme();
   const { isLoading, data: sales = [] } = useGetSalesQuery({
     artistIds: artistId ? [artistId] : undefined,
+    ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
   });
-
-  // TODO: filter sales using query param when back-end updated
-  const withoutCurrentSale = sales.filter(({ id }) => id !== currentSaleId);
 
   const title = (
     <Box component="span">
@@ -33,7 +31,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
 
   return (
     <Box mt={ [10, 8, 12.5] }>
-      <Sales isLoading={ isLoading } sales={ withoutCurrentSale } title={ title } />
+      <Sales isLoading={ isLoading } sales={ sales } title={ title } />
     </Box>
   );
 };

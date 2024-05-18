@@ -46,7 +46,9 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
    * the current purchase amount is.
    */
   const getPercentageOfTotalStreamTokens = (purchaseAmount: number) => {
-    if (!sale) return;
+    if (!sale) {
+      throw new Error("no sale present");
+    }
 
     const percentage = (purchaseAmount / sale.totalBundleQuantity) * 100;
     return parseFloat(percentage.toFixed(6));
@@ -73,10 +75,6 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
    * Navigates to the artist page when clicked.
    */
   const handleArtistClick = (artistId: string) => {
-    if (!sale) {
-      throw new Error("no sale present");
-    }
-
     router.push(`/artist/${artistId}`);
   };
 
