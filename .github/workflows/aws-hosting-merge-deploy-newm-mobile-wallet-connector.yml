@@ -7,6 +7,8 @@ on:
       - .github/workflows/aws-hosting-merge-deploy-newm-mobile-wallet-connector.yml
       - apps/mobile-wallet-connector/**
       - packages/**
+  workflow_dispatch:
+    
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
