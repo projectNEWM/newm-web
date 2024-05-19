@@ -3,11 +3,11 @@ import { Box, Skeleton, Stack, Typography, useTheme } from "@mui/material";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale";
 
-interface SimilarSongsProps {
+interface SearchResultsProps {
   readonly query: string;
 }
 
-const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({ query }) => {
+const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
   const theme = useTheme();
   const { isLoading, data: sales = [] } = useGetSalesQuery({ phrase: query });
 
@@ -50,4 +50,4 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({ query }) => {
   );
 };
 
-export default SimilarSongs;
+export default SearchResults;

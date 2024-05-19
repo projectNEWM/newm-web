@@ -1,7 +1,7 @@
 "use client";
 import { Container } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { SaleSearchResults } from "../../components";
+import { SearchResults } from "../../components";
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -15,7 +15,7 @@ const Search = () => {
 
   return (
     <Container sx={ { flexGrow: 1, mt: 5 } }>
-      <SaleSearchResults query={ searchTerm } />
+      <SearchResults query={ searchTerm } />
     </Container>
   );
 };

@@ -9,7 +9,7 @@ export { default as ItemSkeleton } from "./skeletons/ItemSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
 export { default as Sale } from "./Sale";
 export { default as SaleMetadata } from "./SaleMetadata";
-export { default as SaleSearchResults } from "./SaleSearchResults";
+export { default as SearchResults } from "./SearchResults";
 export { default as SimilarArtists } from "./SimilarArtists";
 export { default as SimilarSongs } from "./SimilarSongs";
 export { default as Sales } from "./Sales";
