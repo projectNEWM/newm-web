@@ -85,7 +85,6 @@ const Sales: FunctionComponent<SalesProps> = ({
                   title={ song.title }
                   onCardClick={ () => handleCardClick(id) }
                   onPlayPauseClick={ () => playPauseAudio(song.clipUrl) }
-                  onSubtitleClick={ () => handleSubtitleClick(id) }
                 />
               </Grid>
             );
