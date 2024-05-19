@@ -11,12 +11,6 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({ query }) => {
   const theme = useTheme();
   const { isLoading, data: sales = [] } = useGetSalesQuery({ phrase: query });
 
-  if (!query) {
-    throw new Error("No query param present");
-
-    return null;
-  }
-
   return (
     <Stack my={ 8 } rowGap={ 2.5 }>
       <Box>
