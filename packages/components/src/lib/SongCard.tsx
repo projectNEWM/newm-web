@@ -188,7 +188,6 @@ const SongCard = ({
           >
             { !!priceInNewm && (
               <Typography
-                fontSize={ title ? "15px" : "16px" }
                 fontWeight={ 700 }
                 sx={ { opacity: 0.9 } }
                 textAlign="right"
