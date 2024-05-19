@@ -9,6 +9,7 @@ import { Sale } from "../modules/sale/types";
 interface SalesProps {
   readonly hasTitle?: boolean;
   readonly isLoading?: boolean;
+  readonly noResultsContent?: string | ReactNode;
   readonly numSkeletons?: number;
   readonly sales: ReadonlyArray<Sale>;
   readonly title?: string | ReactNode;
@@ -20,6 +21,7 @@ const Sales: FunctionComponent<SalesProps> = ({
   isLoading = false,
   hasTitle,
   numSkeletons,
+  noResultsContent = "No songs to display at this time.",
 }) => {
   const router = useRouter();
   const { audioUrl, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
@@ -40,23 +42,31 @@ const Sales: FunctionComponent<SalesProps> = ({
     <Stack alignItems="center">
       { !!title && (
         <Box mb={ 3.5 }>
-          <Typography
-            fontSize={ ["24px", "24px", "32px"] }
-            textAlign="center"
-            textTransform="uppercase"
-            variant="h3"
-          >
-            { title }
-          </Typography>
+          { typeof title === "string" ? (
+            <Typography
+              fontSize={ ["24px", "24px", "32px"] }
+              textAlign="center"
+              textTransform="uppercase"
+              variant="h3"
+            >
+              { title }
+            </Typography>
+          ) : (
+            title
+          ) }
         </Box>
       ) }
 
       <Grid justifyContent="flex-start" pb={ 1 } rowGap={ 1.5 } container>
-        { !sales.length ? (
+        { !isLoading && !sales.length ? (
           <Box flex={ 1 }>
-            <Typography sx={ { marginTop: 8, textAlign: "center" } }>
-              No songs to display at this time.
-            </Typography>
+            { typeof noResultsContent === "string" ? (
+              <Typography sx={ { marginTop: 8, textAlign: "center" } }>
+                { noResultsContent }
+              </Typography>
+            ) : (
+              noResultsContent
+            ) }
           </Box>
         ) : (
           sales.map(({ costAmount, costAmountUsd, id, song }) => {
