@@ -18,6 +18,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   const { isLoading, data: sales = [] } = useGetSalesQuery({
     artistIds: artistId ? [artistId] : undefined,
     ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
+    limit: 8,
   });
 
   const title = (
