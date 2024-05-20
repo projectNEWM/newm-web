@@ -6,7 +6,9 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/mobile-wallet-connector"
@@ -33,7 +35,8 @@
         },
         "production": {
           "buildTarget": "mobile-wallet-connector:build:production",
-          "dev": false
+          "dev": false,
+          "port": 3000
         }
       }
     },
@@ -45,7 +48,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/mobile-wallet-connector/jest.config.ts"
       }

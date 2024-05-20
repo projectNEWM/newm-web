@@ -9,7 +9,7 @@ const ArtistSongs: FunctionComponent = () => {
 
   return (
     <Box mt={ 7 }>
-      <Sales isLoading={ isLoading } sales={ data } />
+      <Sales hasTitle={ false } isLoading={ isLoading } sales={ data } />
     </Box>
   );
 };

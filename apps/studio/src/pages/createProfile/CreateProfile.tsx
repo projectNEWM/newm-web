@@ -36,7 +36,7 @@ const CreateProfile: FunctionComponent = () => {
     lastName,
     location,
     nickname,
-    role,
+    role: role || "",
   };
 
   /**

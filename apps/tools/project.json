@@ -23,17 +23,18 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "tools:build",
-        "dev": true,
-        "port": 4400
+        "dev": true
       },
       "configurations": {
         "development": {
           "buildTarget": "tools:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4400
         },
         "production": {
           "buildTarget": "tools:build:production",
-          "dev": false
+          "dev": false,
+          "port": 3000
         }
       }
     },

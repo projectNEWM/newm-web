@@ -384,20 +384,6 @@ const Profile: FunctionComponent = () => {
                           <CheckCircleIcon color="success" />
                         ) : null }
                       </Stack>
-
-                      <DropdownSelectField
-                        isOptional={ false }
-                        label="LOCATION"
-                        name="location"
-                        options={ locations }
-                        placeholder="Select or search your country"
-                        tooltipText={
-                          "Providing this info will make it easier " +
-                          "for streaming platforms to make your music easier to find " +
-                          "for your fans & listeners."
-                        }
-                        widthType="default"
-                      />
                     </Stack>
                   </Stack>
 
@@ -406,15 +392,39 @@ const Profile: FunctionComponent = () => {
                       <Typography fontWeight="700" variant="h4">
                         YOUR PUBLIC PROFILE
                       </Typography>
-                      <TextInputField
-                        label="STAGE NAME"
-                        name="nickname"
-                        placeholder="Stage name"
-                        type="text"
-                      />
+
                       <Stack
                         ref={ roleRef }
                         sx={ {
+                          columnGap: 1,
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <TextInputField
+                          label="STAGE NAME"
+                          name="nickname"
+                          placeholder="Stage name"
+                          type="text"
+                        />
+                        <DropdownSelectField
+                          isOptional={ false }
+                          label="LOCATION"
+                          name="location"
+                          options={ locations }
+                          placeholder="Select or search your country"
+                          tooltipText={
+                            "Providing this info will enable streaming platforms to make " +
+                            "your music easier to find for your fans & listeners."
+                          }
+                          widthType="default"
+                        />
+                      </Stack>
+                      <Stack
+                        ref={ roleRef }
+                        sx={ {
+                          columnGap: 1,
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
                           rowGap: 2,

@@ -44,12 +44,14 @@ const FilteredTagsField: FunctionComponent<FilteredTagsFieldProps> = ({
  * that match the query string. Once the query string exactly matches a
  * tag, hide the remaining tag.
  */
-const filterTags = (query: string) => (tag: string) => {
-  const emptyQuery = query.length === 0;
-  const queryExactlyMatchesTag = tag === query;
-  const tagIncludesQuery = tag.toLowerCase().includes(query.toLowerCase());
+const filterTags =
+  (query = "") =>
+  (tag: string) => {
+    const emptyQuery = query.length === 0;
+    const queryExactlyMatchesTag = tag === query;
+    const tagIncludesQuery = tag.toLowerCase().includes(query.toLowerCase());
 
-  return emptyQuery || (!queryExactlyMatchesTag && tagIncludesQuery);
-};
+    return emptyQuery || (!queryExactlyMatchesTag && tagIncludesQuery);
+  };
 
 export default FilteredTagsField;

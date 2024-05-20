@@ -33,7 +33,8 @@
         },
         "production": {
           "buildTarget": "marketplace:build:production",
-          "dev": false
+          "dev": false,
+          "port": 3000
         }
       }
     },
