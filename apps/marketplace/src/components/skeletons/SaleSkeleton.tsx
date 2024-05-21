@@ -1,7 +1,7 @@
 import { Box, Container, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 
-const ItemSkeleton: FunctionComponent = () => (
+const SaleSkeleton: FunctionComponent = () => (
   <Container maxWidth="md" sx={ { flexGrow: 1, mt: [0, 0, 5] } }>
     <Stack
       alignItems={ ["center", "center", "start"] }
@@ -51,4 +51,4 @@ const ItemSkeleton: FunctionComponent = () => (
   </Container>
 );
 
-export default ItemSkeleton;
+export default SaleSkeleton;

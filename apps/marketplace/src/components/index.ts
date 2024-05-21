@@ -5,7 +5,7 @@ export { default as ArtistSongs } from "./ArtistSongs";
 export { default as ArtistSpotlight } from "./ArtistSpotlight";
 export { default as Footer } from "./footer/Footer";
 export { default as Header } from "./header/Header";
-export { default as ItemSkeleton } from "./skeletons/ItemSkeleton";
+export { default as SaleSkeleton } from "./skeletons/SaleSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
 export { default as Sale } from "./Sale";
 export { default as SaleMetadata } from "./SaleMetadata";
