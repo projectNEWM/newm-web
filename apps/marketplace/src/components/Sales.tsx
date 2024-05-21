@@ -10,7 +10,7 @@ interface SalesProps {
   readonly hasTitle?: boolean;
   readonly isLoading?: boolean;
   readonly numSkeletons?: number;
-  readonly sales: ReadonlyArray<Sale>;
+  readonly sales?: ReadonlyArray<Sale>;
   readonly title?: string | ReactNode;
 }
 
@@ -59,27 +59,23 @@ const Sales: FunctionComponent<SalesProps> = ({
             </Typography>
           </Box>
         ) : (
-          sales.map(({ costAmount, costAmountUsd, id, song }) => {
-            const genresString = song.genres.join(", ");
-
-            return (
-              <Grid key={ song.id } md={ 3 } sm={ 4 } xs={ 6 } item>
-                <SongCard
-                  coverArtUrl={ song.coverArtUrl }
-                  isPlayable={ !!song.clipUrl }
-                  isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
-                  key={ id }
-                  priceInNewm={ costAmount }
-                  priceInUsd={ costAmountUsd }
-                  subtitle={ genresString }
-                  title={ song.title }
-                  onCardClick={ () => handleCardClick(id) }
-                  onPlayPauseClick={ () => playPauseAudio(song.clipUrl) }
-                  onSubtitleClick={ () => handleSubtitleClick(id) }
-                />
-              </Grid>
-            );
-          })
+          sales.map(({ costAmount, costAmountUsd, id, song }) => (
+            <Grid key={ song.id } md={ 3 } sm={ 4 } xs={ 6 } item>
+              <SongCard
+                coverArtUrl={ song.coverArtUrl }
+                isPlayable={ !!song.clipUrl }
+                isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
+                key={ id }
+                priceInNewm={ costAmount }
+                priceInUsd={ costAmountUsd }
+                subtitle={ song.artistName }
+                title={ song.title }
+                onCardClick={ () => handleCardClick(id) }
+                onPlayPauseClick={ () => playPauseAudio(song.clipUrl) }
+                onSubtitleClick={ () => handleSubtitleClick(id) }
+              />
+            </Grid>
+          ))
         ) }
       </Grid>
     </Stack>
