@@ -11,6 +11,7 @@ const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
+const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
 class WebDeployStack extends cdk.Stack {
@@ -24,6 +25,9 @@ class WebDeployStack extends cdk.Stack {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
           file: path.join("apps", appName, "Dockerfile"),
         }),
+        environment: {
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+        },
         memorySize: 1024,
       }
     );
