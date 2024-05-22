@@ -11,7 +11,7 @@ interface SalesProps {
   readonly isLoading?: boolean;
   readonly noResultsContent?: string | ReactNode;
   readonly numSkeletons?: number;
-  readonly sales: ReadonlyArray<Sale>;
+  readonly sales?: ReadonlyArray<Sale>;
   readonly title?: string | ReactNode;
 }
 

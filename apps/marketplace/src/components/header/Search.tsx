@@ -20,7 +20,7 @@ export const Search = () => {
   };
 
   const handleSearch = ({ searchTerm }: FormikValues) => {
-    if (!searchTerm) return;
+    if (!searchTerm.trim()) return;
 
     router.push(`/search?searchTerm=${searchTerm}`);
   };
