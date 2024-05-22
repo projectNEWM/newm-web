@@ -43,21 +43,27 @@ const SongCard = ({
   const theme = useTheme();
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onCardClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onCardClick?.();
+    onCardClick();
   };
 
   const handlePlayPauseClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onPlayPauseClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onPlayPauseClick?.();
+    onPlayPauseClick();
   };
 
   const handleSubtitleClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onSubtitleClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onSubtitleClick?.();
+    onSubtitleClick();
   };
 
   const handleKeyPress = useCallback(

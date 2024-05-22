@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale";
 
@@ -22,12 +22,17 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   });
 
   const title = (
-    <Box component="span">
+    <Typography
+      fontSize={ ["24px", "24px", "32px"] }
+      textAlign="center"
+      textTransform="uppercase"
+      variant="h3"
+    >
       MORE FROM&nbsp;
       <Box component="span" sx={ { color: theme.colors.music } }>
         { artistName }
       </Box>
-    </Box>
+    </Typography>
   );
 
   return (

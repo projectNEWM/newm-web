@@ -9,6 +9,7 @@ export { default as SaleSkeleton } from "./skeletons/SaleSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
 export { default as Sale } from "./Sale";
 export { default as SaleMetadata } from "./SaleMetadata";
+export { default as SearchResults } from "./SearchResults";
 export { default as SimilarArtists } from "./SimilarArtists";
 export { default as SimilarSongs } from "./SimilarSongs";
 export { default as Sales } from "./Sales";
