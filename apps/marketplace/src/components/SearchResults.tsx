@@ -44,7 +44,8 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
             </Typography>
           </Box>
         }
-        sales={ sales }
+        // TODO: update back-end so no results are returned whery query is empty
+        sales={ query ? sales : [] }
       />
     </Stack>
   );
