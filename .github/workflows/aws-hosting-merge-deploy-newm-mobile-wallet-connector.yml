@@ -8,7 +8,7 @@ on:
       - apps/mobile-wallet-connector/**
       - packages/**
   workflow_dispatch:
-    
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -18,13 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npx nx build mobile-wallet-connector
+
+      - name: Prepare environment variables
+        run: |
+          echo "NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}" >> apps/mobile-wallet-connector/.env
+          echo "NEXT_PUBLIC_ENV=staging" >> apps/mobile-wallet-connector/.env
+
+      - name: Build Application
+        run: npx nx build mobile-wallet-connector
         env:
-          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           NEXT_PUBLIC_ENV: staging
 
       - name: Configure AWS credentials
