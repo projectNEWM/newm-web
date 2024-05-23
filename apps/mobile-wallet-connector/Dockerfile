@@ -27,7 +27,7 @@ ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
 
 # Build the production app
-RUN npx nx build mobile-wallet-connector --skip-nx-cache
+RUN npx nx build mobile-wallet-connector
 
 FROM base as runtime
 
