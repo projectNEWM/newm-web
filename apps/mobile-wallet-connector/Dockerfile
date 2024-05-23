@@ -23,6 +23,11 @@ WORKDIR /usr/src/app
 COPY --chown=node:node  --from=deps /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node ./ ./
 
+ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
+
+RUN echo "THE VAR IN DOCKER IS: "
+RUN echo $NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
+
 # Build the production app
 RUN npx nx build mobile-wallet-connector --skip-nx-cache
 
