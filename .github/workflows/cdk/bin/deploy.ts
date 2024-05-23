@@ -10,14 +10,12 @@ import { Tags } from "aws-cdk-lib";
 const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
+const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
 class WebDeployStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
-    const recaptchaKey =
-      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 
     const deployFunction = new lambda.DockerImageFunction(
       this,
@@ -29,9 +27,6 @@ class WebDeployStack extends cdk.Stack {
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
-        environment: {
-          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
-        },
         memorySize: 1024,
       }
     );
