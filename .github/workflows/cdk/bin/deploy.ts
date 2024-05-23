@@ -26,11 +26,11 @@ class WebDeployStack extends cdk.Stack {
           buildArgs: {
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
           },
-          environment: {
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
-          },
           file: path.join("apps", appName, "Dockerfile"),
         }),
+        environment: {
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+        },
         memorySize: 1024,
       }
     );
