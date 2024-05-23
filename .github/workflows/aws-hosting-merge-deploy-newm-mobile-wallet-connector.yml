@@ -17,17 +17,6 @@ jobs:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
-      - run: npx nx build mobile-wallet-connector
-        env:
-          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
-          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          NEXT_PUBLIC_ENV: staging
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -47,4 +36,4 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Garage NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Garage NEXT_PUBLIC_ENV:staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
