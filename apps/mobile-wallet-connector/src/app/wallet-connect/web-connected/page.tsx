@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation";
 import { Form, Formik, FormikValues } from "formik";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Button, SwitchInputField } from "@newm-web/elements";
-import { setToastMessage } from "../../modules/ui";
-import { selectWallet, useConnectFromMobileThunk } from "../../modules/wallet";
-import { useAppDispatch, useAppSelector } from "../../common";
+import { setToastMessage } from "../../../modules/ui";
+import {
+  selectWallet,
+  useConnectFromMobileThunk,
+} from "../../../modules/wallet";
+import { useAppDispatch, useAppSelector } from "../../../common";
 
 const Page: FunctionComponent = () => {
   const router = useRouter();
@@ -45,13 +48,13 @@ const Page: FunctionComponent = () => {
     if (isConnected) {
       setIsFormSubmitDisabled(false);
     } else {
-      router.replace("/");
+      router.replace("/wallet-connect");
     }
   }, [isConnected, router]);
 
   useEffect(() => {
     if (connectionData.connectionId) {
-      router.push("/scan-code");
+      router.push("scan-code");
     }
   }, [connectionData, router]);
 

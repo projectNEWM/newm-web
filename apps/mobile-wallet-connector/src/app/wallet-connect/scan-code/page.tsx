@@ -11,8 +11,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import theme from "@newm-web/theme";
 import { NEWMLogo } from "@newm-web/assets";
 import { TimeRemaining, getTimeRemaining } from "@newm-web/utils";
-import { useAppDispatch, useAppSelector } from "../../common";
-import { selectWallet, setConnectionData } from "../../modules/wallet";
+import { useAppDispatch, useAppSelector } from "../../../common";
+import { selectWallet, setConnectionData } from "../../../modules/wallet";
 
 const Page: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -36,13 +36,13 @@ const Page: FunctionComponent = () => {
 
   useEffect(() => {
     if (!isConnected) {
-      router.replace("/");
+      router.replace("/wallet-connect");
     }
   }, [isConnected, router]);
 
   useEffect(() => {
     if (!connectionId) {
-      router.replace("/web-connected");
+      router.replace("web-connected");
     }
   }, [connectionId, router]);
 

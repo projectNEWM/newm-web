@@ -7,8 +7,8 @@ import { NEWMLogo } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { StyledComponentsRegistry } from "@newm-web/components";
 import "./global.css";
-import store from "../store";
-import { ConnectWallet, Toast } from "../components";
+import store from "../../store";
+import { ConnectWallet, Toast } from "../../components";
 
 interface RootLayoutProps {
   readonly children: ReactNode;

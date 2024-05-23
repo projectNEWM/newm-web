@@ -17,6 +17,15 @@ const nextConfig = {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
   },
+  // Adding the rewrites to the config
+  async rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "/wallet-connect",
+      },
+    ];
+  },
 };
 
 const plugins = [
