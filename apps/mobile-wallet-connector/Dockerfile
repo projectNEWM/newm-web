@@ -23,10 +23,11 @@ WORKDIR /usr/src/app
 COPY --chown=node:node  --from=deps /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node ./ ./
 
+ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
 
 # Build the production app
-RUN npx nx build mobile-wallet-connector --skip-nx-cache
+RUN npx nx build mobile-wallet-connector
 
 FROM base as runtime
 
