@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - .github/workflows/aws-hosting-merge-deploy-newm-mobile-wallet-connector.yml
+      - .github/workflows/cdk/**
       - apps/mobile-wallet-connector/**
       - packages/**
   workflow_dispatch:
@@ -17,15 +18,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - run: npm install
-      - run: npx nx build mobile-wallet-connector
-        env:
-          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
-          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          NEXT_PUBLIC_ENV: staging
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -47,4 +39,4 @@ jobs:
         run: |
           npm install --prefix .github/workflows/cdk
           sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js
-          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Garage NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Garage NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
