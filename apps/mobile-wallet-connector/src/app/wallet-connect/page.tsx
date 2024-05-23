@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { useAppDispatch } from "../common";
-import { setIsConnectWalletModalOpen } from "../modules/ui";
+import { useAppDispatch } from "../../common";
+import { setIsConnectWalletModalOpen } from "../../modules/ui";
 
 const Page: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const Page: FunctionComponent = () => {
 
   useEffect(() => {
     if (isConnected) {
-      router.push("/web-connected");
+      router.push("wallet-connect/web-connected");
     }
   }, [isConnected, router]);
 
