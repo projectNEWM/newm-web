@@ -13,8 +13,6 @@ const nextConfig = {
     svgr: false
   },
 
-  basePath: "/wallet-connect",
-
   compiler: {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true
