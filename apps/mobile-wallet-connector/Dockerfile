@@ -24,7 +24,7 @@ COPY --chown=node:node  --from=deps /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node ./ ./
 
 # Build the production app
-RUN npx nx build mobile-wallet-connector
+RUN npx nx build mobile-wallet-connector --skip-nx-cache
 
 FROM base as runtime
 
