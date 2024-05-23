@@ -24,10 +24,10 @@ class WebDeployStack extends cdk.Stack {
       {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
           file: path.join("apps", appName, "Dockerfile"),
+          buildArgs: {
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+          }
         }),
-        environment: {
-          NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
-        },
         memorySize: 1024,
       }
     );
