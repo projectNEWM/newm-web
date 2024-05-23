@@ -9,14 +9,15 @@ import { Tags } from "aws-cdk-lib";
 
 const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
-const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
-const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
 class WebDeployStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    const recaptchaKey =
+      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 
     const deployFunction = new lambda.DockerImageFunction(
       this,
