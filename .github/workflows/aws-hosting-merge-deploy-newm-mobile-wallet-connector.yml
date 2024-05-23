@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - .github/workflows/aws-hosting-merge-deploy-newm-mobile-wallet-connector.yml
+      - .github/workflows/cdk/**
       - apps/mobile-wallet-connector/**
       - packages/**
   workflow_dispatch:
