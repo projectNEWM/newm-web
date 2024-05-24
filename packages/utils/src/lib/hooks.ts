@@ -170,17 +170,17 @@ export const useHlsJs = ({
   );
 
   /**
-   * Kicks off a timeout that will continue to update the
-   * song progress until the song stops playing.
+   * Kicks off a timeout that will update the song progress
+   * if the song progressed.
    */
   const trackSongProgress = useCallback(() => {
-    setTimeout(() => {
+    return setTimeout(() => {
       if (!videoRef.current) return;
 
       const prevProgress = audioProgress;
       const currentTime = videoRef.current.currentTime;
       const duration = videoRef.current.duration;
-      const currentProgress = duration ? currentTime / duration : 0;
+      const currentProgress = duration ? (currentTime / duration) * 100 : 0;
 
       if (prevProgress !== currentProgress) {
         setAudioProgress(currentProgress);
@@ -195,8 +195,10 @@ export const useHlsJs = ({
     if (!videoRef.current || !song.streamUrl) return;
 
     videoRef.current.src = song.streamUrl;
+
     videoRef.current.addEventListener("loadedmetadata", () => {
       videoRef.current?.play();
+      trackSongProgress();
     });
   };
 
@@ -212,9 +214,14 @@ export const useHlsJs = ({
         xhr.withCredentials = true;
       },
     });
+
     hls.loadSource(song.streamUrl);
     hls.attachMedia(videoRef.current);
-    videoRef.current.play();
+
+    videoRef.current.addEventListener("loadedmetadata", () => {
+      videoRef.current?.play();
+      trackSongProgress();
+    });
   };
 
   /**
@@ -230,12 +237,11 @@ export const useHlsJs = ({
         playSongWithHlsJs(song);
       }
 
-      trackSongProgress();
       handlePlaySong(song);
-
       videoRef.current.addEventListener("ended", handleSongEnded);
     },
-    [handlePlaySong, handleSongEnded, trackSongProgress]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handlePlaySong, handleSongEnded]
   );
 
   /**
@@ -249,8 +255,8 @@ export const useHlsJs = ({
       videoRef.current.removeAttribute("src");
       videoRef.current.load();
 
+      setAudioProgress(0);
       handleStopSong(song);
-
       videoRef.current.removeEventListener("ended", handleSongEnded);
     },
     [handleStopSong, handleSongEnded]
@@ -276,6 +282,20 @@ export const useHlsJs = ({
     const video = document.createElement("video");
     videoRef.current = video;
   }, []);
+
+  /**
+   * Tracks song progress as it continues to play.
+   */
+  useEffect(() => {
+    const timeoutId = trackSongProgress();
+
+    if (!videoRef.current || videoRef.current.ended) {
+      setAudioProgress(0);
+      clearTimeout(timeoutId);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [audioProgress, trackSongProgress]);
 
   /**
    * Cleanup
