@@ -15,12 +15,12 @@ import {
 import { Form, Formik } from "formik";
 import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
-import { ItemSkeleton } from "../components";
-import { Sale } from "../modules/sale";
+import { SaleSkeleton } from "../components";
+import { Sale as SaleItem } from "../modules/sale";
 
 interface SaleProps {
   readonly isLoading: boolean;
-  readonly sale?: Sale;
+  readonly sale?: SaleItem;
 }
 
 const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
@@ -79,7 +79,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
   };
 
   if (isLoading) {
-    return <ItemSkeleton />;
+    return <SaleSkeleton />;
   }
 
   if (!sale) return null;

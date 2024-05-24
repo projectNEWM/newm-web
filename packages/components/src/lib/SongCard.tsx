@@ -52,21 +52,27 @@ const SongCard = ({
   const theme = useTheme();
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onCardClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onCardClick?.();
+    onCardClick();
   };
 
   const handlePlayPauseClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onPlayPauseClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onPlayPauseClick?.();
+    onPlayPauseClick();
   };
 
   const handleSubtitleClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onSubtitleClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onSubtitleClick?.();
+    onSubtitleClick();
   };
 
   const handleKeyPress = useCallback(
@@ -170,63 +176,66 @@ const SongCard = ({
           ) }
         </Stack>
         <Stack
-          direction="column"
+          direction="row"
           gap={ 0.5 }
           justifyContent="space-between"
           mt={ 0.5 }
         >
-          <Stack direction="row" gap={ 1 } justifyContent="space-between">
+          <Stack direction="column">
             { !!title && (
               <Typography fontWeight={ 700 } textAlign="left" variant="h4">
                 { title }
               </Typography>
             ) }
 
-            <Stack display="flex" flexDirection="row" whiteSpace="nowrap">
-              { !!priceInNewm && (
-                <Typography
-                  fontSize={ title ? "14px" : "16px" }
-                  fontWeight={ 700 }
-                  sx={ { opacity: 0.9 } }
-                  textAlign="right"
-                  variant="h4"
-                >
-                  { formatNewmAmount(priceInNewm) }
-                </Typography>
-              ) }
-              { !!priceInUsd && (
-                <Typography
-                  fontSize={ title ? "14px" : "15px" }
-                  variant="subtitle1"
-                >
-                  &nbsp;(≈ { currency(priceInUsd).format() })
-                </Typography>
-              ) }
-            </Stack>
+            { !!subtitle && (
+              <Typography
+                fontWeight={ 500 }
+                role={ onSubtitleClick ? "button" : undefined }
+                sx={
+                  onSubtitleClick
+                    ? {
+                        "&:hover": { textDecoration: "underline" },
+                        cursor: "pointer",
+                        width: "fit-content",
+                      }
+                    : undefined
+                }
+                tabIndex={ onSubtitleClick ? 0 : undefined }
+                textAlign="left"
+                variant="subtitle1"
+                onClick={ handleSubtitleClick }
+                onKeyDown={ handleKeyPress(handleSubtitleClick) }
+              >
+                { subtitle }
+              </Typography>
+            ) }
           </Stack>
 
-          { !!subtitle && (
-            <Typography
-              fontWeight={ 500 }
-              role={ onSubtitleClick ? "button" : undefined }
-              sx={
-                onSubtitleClick
-                  ? {
-                      "&:hover": { textDecoration: "underline" },
-                      cursor: "pointer",
-                      width: "fit-content",
-                    }
-                  : undefined
-              }
-              tabIndex={ onSubtitleClick ? 0 : undefined }
-              textAlign="left"
-              variant="subtitle1"
-              onClick={ handleSubtitleClick }
-              onKeyDown={ handleKeyPress(handleSubtitleClick) }
-            >
-              { subtitle }
-            </Typography>
-          ) }
+          <Stack
+            display="flex"
+            flexDirection={ title ? "column" : "row" }
+            whiteSpace="nowrap"
+          >
+            { !!priceInNewm && (
+              <Typography
+                fontWeight={ 700 }
+                sx={ { opacity: 0.9 } }
+                textAlign="right"
+                variant="h4"
+              >
+                { formatNewmAmount(priceInNewm) }
+              </Typography>
+            ) }
+            { !!priceInUsd && (
+              <Typography
+                fontSize={ title ? "12px" : "15px" }
+                variant="subtitle1"
+              >
+                &nbsp;(≈ { currency(priceInUsd).format() })
+              </Typography>
+            ) }
+          </Stack>
         </Stack>
       </Stack>
     </Clickable>

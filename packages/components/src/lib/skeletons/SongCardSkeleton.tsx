@@ -29,10 +29,15 @@ const SongCardSkeleton: FunctionComponent<SongCardSkeletonProps> = ({
     >
       <Skeleton height="100%" variant="rectangular" width="100%" />
       <Stack direction="row" justifyContent="space-between">
-        { isTitleVisible && <Skeleton height={ 30 } width={ 100 } /> }
-        { isPriceVisible && <Skeleton height={ 30 } width={ 80 } /> }
+        <Stack direction="column">
+          { isTitleVisible && <Skeleton height={ 30 } width={ 100 } /> }
+          { isSubtitleVisible && <Skeleton height={ 20 } width={ 60 } /> }
+        </Stack>
+        <Stack alignItems="flex-end" direction="column">
+          { isPriceVisible && <Skeleton height={ 30 } width={ 80 } /> }
+          { isPriceVisible && <Skeleton height={ 18 } width={ 60 } /> }
+        </Stack>
       </Stack>
-      { isSubtitleVisible && <Skeleton height={ 20 } width={ 60 } /> }
     </Box>
   </Stack>
 );

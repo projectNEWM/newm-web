@@ -15,6 +15,7 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
   const { isLoading, data: sales = [] } = useGetSalesQuery({
     artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
     genres,
+    limit: 8,
   });
 
   return (

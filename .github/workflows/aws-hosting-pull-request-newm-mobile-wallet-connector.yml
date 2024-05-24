@@ -15,14 +15,6 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v3
-      - run: npm install
-      - run: npx nx build mobile-wallet-connector
-        env:
-          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          NEXT_PUBLIC_ENV: staging
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -43,7 +35,7 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
+          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl
