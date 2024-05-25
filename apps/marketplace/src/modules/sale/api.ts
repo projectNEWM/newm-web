@@ -1,5 +1,7 @@
 import {
   ApiSale,
+  GetArtistsParams,
+  GetArtistsResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
@@ -11,6 +13,32 @@ import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
+    getArtists: build.query<GetArtistsResponse, GetArtistsParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching artists",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Artist],
+
+      query: ({ ids, genres, ...rest } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/artists",
+      }),
+    }),
     getSale: build.query<GetSaleResponse, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -81,6 +109,7 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const { useGetArtistsQuery, useGetSaleQuery, useGetSalesQuery } =
+  extendedApi;
 
 export default extendedApi;
