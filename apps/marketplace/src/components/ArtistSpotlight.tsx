@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Stack } from "@mui/material";
 import Artists from "./Artists";
-import { useGetArtistsQuery } from "../modules/sale";
+import { useGetArtistsQuery } from "../modules/artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
   const { isLoading, data: artists = [] } = useGetArtistsQuery({

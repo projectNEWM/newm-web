@@ -1,16 +1,66 @@
 import {
   ApiSale,
+  GetArtistResponse,
+  GetArtistsParams,
+  GetArtistsResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
 } from "./types";
 import { transformApiSale } from "./utils";
 import { newmApi } from "../../api";
-import { setToastMessage } from "../../modules/ui";
+import { setToastMessage } from "../ui";
 import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
+    getArtist: build.query<GetArtistResponse, string>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching artists",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Artist],
+
+      query: (id) => ({
+        method: "GET",
+        url: `v1/marketplace/artists/${id}`,
+      }),
+    }),
+    getArtists: build.query<GetArtistsResponse, GetArtistsParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching artists",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Artist],
+
+      query: ({ ids, genres, ...rest } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/artists",
+      }),
+    }),
     getSale: build.query<GetSaleResponse, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -81,6 +131,7 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const { useGetArtistsQuery, useGetSaleQuery, useGetSalesQuery } =
+  extendedApi;
 
 export default extendedApi;

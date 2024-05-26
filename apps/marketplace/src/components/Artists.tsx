@@ -3,7 +3,7 @@ import { Grid, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import ArtistsSkeleton from "./skeletons/ArtistsSkeleton";
 import Artist from "./Artist";
-import { Artist as ArtistItem } from "../modules/sale";
+import { Artist as ArtistItem } from "../modules/artist";
 
 interface ArtistsProps {
   readonly artists?: ReadonlyArray<ArtistItem>;
