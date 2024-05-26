@@ -1,61 +1,25 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { Grid, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import Artist from "./Artist";
-import { mockArtists } from "../temp/data";
+import { FunctionComponent } from "react";
+import { Stack } from "@mui/material";
+import Artists from "./Artists";
+import { useGetArtistsQuery } from "../modules/artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
-  const router = useRouter();
-
-  // TEMP: simulate data loading
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleSelectArtist = (id: string) => {
-    router.push(`/artist/${id}`);
-  };
-
-  // TEMP: simulate data loading
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  // TODO: update params to only return artists with sales when API updated
+  const { isLoading, data: artists = [] } = useGetArtistsQuery({
+    limit: 10,
+    sortOrder: "desc",
+  });
 
   return (
     <Stack mb={ 8 }>
-      <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
-        <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
-          ARTIST SPOTLIGHT
-        </Typography>
-      </Stack>
-
-      <Grid justifyContent="center" rowGap={ 5 } container>
-        { mockArtists.map(
-          ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
-            return (
-              <Grid
-                display="flex"
-                justifyContent="center"
-                key={ id }
-                lg={ 2.4 }
-                md={ 3 }
-                sm={ 4 }
-                xs={ 6 }
-                item
-              >
-                <Artist
-                  imageUrl={ profileImageUrl }
-                  isLoading={ isLoading }
-                  orientation="column"
-                  subtitle={ `${songCount} songs` }
-                  title={ `${firstName} ${lastName}` }
-                  onSelectArtist={ () => handleSelectArtist(id) }
-                />
-              </Grid>
-            );
-          }
-        ) }
-      </Grid>
+      <Artists
+        artists={ artists }
+        isLoading={ isLoading }
+        itemOrientation="column"
+        numSkeletons={ 10 }
+        title="ARTIST SPOTLIGHT"
+        hasTitle
+      />
     </Stack>
   );
 };

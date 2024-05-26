@@ -8,7 +8,7 @@ import { mockArtist } from "../../../temp/data";
 
 interface ArtistProps {
   readonly params: {
-    readonly id: string;
+    readonly artistId: string;
   };
 }
 
