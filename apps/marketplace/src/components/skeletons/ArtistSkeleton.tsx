@@ -9,7 +9,7 @@ const ArtistSkeleton: FunctionComponent<ArtistSkeletonProps> = ({
   orientation,
 }) => (
   <Stack
-    alignItems={ orientation === "column" ? "center" : "flex-start" }
+    alignItems="center"
     direction={ orientation }
     p={ 1.5 }
     spacing={ orientation === "column" ? 1.25 : 4 }

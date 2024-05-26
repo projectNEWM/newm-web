@@ -12,7 +12,7 @@ interface ArtistProps {
   };
 }
 
-const Artist: FunctionComponent<ArtistProps> = () => {
+const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
