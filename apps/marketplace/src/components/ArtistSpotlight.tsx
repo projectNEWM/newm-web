@@ -4,16 +4,19 @@ import Artists from "./Artists";
 import { useGetArtistsQuery } from "../modules/artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
-  // TODO: Confirm only artist with active sales are returned after API updated
   const { isLoading, data: artists = [] } = useGetArtistsQuery({
     limit: 10,
     sortOrder: "desc",
   });
 
+  const withActiveSales = artists.filter(({ marketplaceSongCount }) => {
+    return marketplaceSongCount > 0;
+  });
+
   return (
     <Stack mb={ 8 }>
       <Artists
-        artists={ artists }
+        artists={ withActiveSales }
         isLoading={ isLoading }
         itemOrientation="column"
         numSkeletons={ 10 }

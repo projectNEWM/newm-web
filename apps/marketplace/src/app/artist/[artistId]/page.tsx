@@ -8,11 +8,11 @@ import { mockArtist } from "../../../temp/data";
 
 interface ArtistProps {
   readonly params: {
-    readonly id: string;
+    readonly artistId: string;
   };
 }
 
-const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
+const Artist: FunctionComponent<ArtistProps> = () => {
   const theme = useTheme();
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 

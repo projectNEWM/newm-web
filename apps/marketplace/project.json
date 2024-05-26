@@ -29,7 +29,7 @@
         "development": {
           "buildTarget": "marketplace:build:development",
           "dev": true,
-          "port": 3000
+          "port": 4200
         },
         "production": {
           "buildTarget": "marketplace:build:production",

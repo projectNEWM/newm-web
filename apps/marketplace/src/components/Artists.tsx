@@ -49,7 +49,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
       </Stack>
 
       <Grid justifyContent="flex-start" rowGap={ 5 } container>
-        { artists.map(({ id, pictureUrl, name, releasedSongCount }, idx) => {
+        { artists.map(({ id, pictureUrl, name, marketplaceSongCount }, idx) => {
           return (
             <Grid
               display="flex"
@@ -65,7 +65,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
                 imageUrl={ pictureUrl }
                 isLoading={ isLoading }
                 orientation="column"
-                subtitle={ `${releasedSongCount} songs` }
+                subtitle={ `${marketplaceSongCount} songs` }
                 title={ name }
                 onSelectArtist={ () => handleSelectArtist(id) }
               />
