@@ -7,6 +7,7 @@ export { default as Footer } from "./footer/Footer";
 export { default as Header } from "./header/Header";
 export { default as SaleSkeleton } from "./skeletons/SaleSkeleton";
 export { default as MoreSongs } from "./MoreSongs";
+export { default as RecentSongs } from "./RecentSongs";
 export { default as Sale } from "./Sale";
 export { default as SaleMetadata } from "./SaleMetadata";
 export { default as SearchResults } from "./SearchResults";

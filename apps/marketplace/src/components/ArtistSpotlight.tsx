@@ -4,6 +4,7 @@ import Artists from "./Artists";
 import { useGetArtistsQuery } from "../modules/artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
+  // TODO: Confirm only artist with active sales are returned after API updated
   const { isLoading, data: artists = [] } = useGetArtistsQuery({
     limit: 10,
     sortOrder: "desc",
