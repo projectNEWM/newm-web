@@ -191,21 +191,23 @@ export const useHlsJs = ({
   /**
    * Play song using native browser functionality.
    */
-  const playSongNatively = (song: Song) => {
+  const playSongNatively = useCallback((song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
     videoRef.current.src = song.streamUrl;
 
-    videoRef.current.addEventListener("loadedmetadata", () => {
-      videoRef.current?.play();
+    videoRef.current.addEventListener("loadedmetadata", async () => {
+      await videoRef.current?.play();
       trackSongProgress();
     });
-  };
+    // Callback doesn't need to update on trackSongProgress changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Play song using HLS library.
    */
-  const playSongWithHlsJs = (song: Song) => {
+  const playSongWithHlsJs = useCallback((song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
     const hls = new Hls({
@@ -218,11 +220,13 @@ export const useHlsJs = ({
     hls.loadSource(song.streamUrl);
     hls.attachMedia(videoRef.current);
 
-    videoRef.current.addEventListener("loadedmetadata", () => {
-      videoRef.current?.play();
+    videoRef.current.addEventListener("loadedmetadata", async () => {
+      await videoRef.current?.play();
       trackSongProgress();
     });
-  };
+    // Callback doesn't need to update on trackSongProgress changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Plays song using either native browser or hls.js functionality.
@@ -240,8 +244,7 @@ export const useHlsJs = ({
       handlePlaySong(song);
       videoRef.current.addEventListener("ended", handleSongEnded);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [handlePlaySong, handleSongEnded]
+    [handlePlaySong, handleSongEnded, playSongNatively, playSongWithHlsJs]
   );
 
   /**
