@@ -45,8 +45,6 @@ const Socials: FunctionComponent<SocialsProps> = ({
     xUrl,
   ].filter((item) => item !== undefined).length;
 
-  console.log("num: ", numSkeletonItems);
-
   if (isLoading) {
     return <SocialsSkeleton numItems={ numSkeletonItems } />;
   }
