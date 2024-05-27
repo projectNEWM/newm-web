@@ -1,4 +1,4 @@
-import { Container, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import { Button, Modal, ModalProps } from "@newm-web/elements";
 import { FunctionComponent, ReactNode } from "react";
 import Socials, { SocialsProps } from "../Socials";
@@ -6,7 +6,7 @@ import Socials, { SocialsProps } from "../Socials";
 interface ProfileModalProps
   extends Omit<ModalProps, "isCloseButtonVisible" | "children"> {
   readonly children: ReactNode;
-  readonly name: string;
+  readonly name?: string;
   readonly socials: SocialsProps;
 }
 
@@ -36,16 +36,25 @@ const ProfileModal: FunctionComponent<ProfileModalProps> = ({
             { children }
           </Stack>
 
-          <Stack direction="row" justifyContent="space-between" p={ 1.5 }>
+          <Stack
+            direction={ ["column", "row", "row"] }
+            justifyContent="space-between"
+            px={ 3 }
+            py={ 2 }
+            rowGap={ 1 }
+          >
             <Socials { ...socials } />
-            <Button
-              color="music"
-              variant="secondary"
-              width="compact"
-              onClick={ onClose }
-            >
-              Close
-            </Button>
+
+            <Box ml={ 1 }>
+              <Button
+                color="music"
+                variant="secondary"
+                width="compact"
+                onClick={ onClose }
+              >
+                Close
+              </Button>
+            </Box>
           </Stack>
         </Stack>
       </Container>

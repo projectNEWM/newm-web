@@ -3,6 +3,7 @@ export { default as Artist } from "./Artist";
 export { default as ArtistsSkeleton } from "./skeletons/ArtistsSkeleton";
 export { default as ArtistSongs } from "./ArtistSongs";
 export { default as ArtistSpotlight } from "./ArtistSpotlight";
+export { default as BannerImage } from "./BannerImage";
 export { default as Footer } from "./footer/Footer";
 export { default as Header } from "./header/Header";
 export { default as SaleSkeleton } from "./skeletons/SaleSkeleton";

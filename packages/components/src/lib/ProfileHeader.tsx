@@ -4,31 +4,34 @@ import { Button, ProfileImage } from "@newm-web/elements";
 import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { FunctionComponent } from "react";
 import Socials, { SocialsProps } from "./Socials";
+import ProfileHeaderSkeleton from "./skeletons/ProfileHeaderSkeleton";
 
 interface ProfileHeaderProps {
-  readonly firstName: string;
-  readonly isVerified?: boolean;
-  readonly lastName: string;
-  readonly location: string;
+  readonly isLoading?: boolean;
+  readonly location?: string;
+  readonly name?: string;
   readonly onClickAbout: VoidFunction;
-  readonly profileImageUrl: string;
+  readonly pictureUrl?: string;
   readonly socials: SocialsProps;
 }
 
 const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
-  firstName,
-  lastName,
-  isVerified,
+  name,
   location,
   onClickAbout,
-  profileImageUrl,
+  pictureUrl,
   socials,
+  isLoading,
 }) => {
   const theme = useTheme();
 
   const isBelowMdBreakpoint = useBetterMediaQuery(
     `(max-width: ${theme.breakpoints.values.md}px)`
   );
+
+  if (isLoading) {
+    return <ProfileHeaderSkeleton />;
+  }
 
   return (
     <Stack
@@ -46,7 +49,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         <Box pb={ 1 } position="relative" top={ [0, 0, theme.spacing(-2)] }>
           <ProfileImage
             height={ 200 }
-            src={ resizeCloudinaryImage(profileImageUrl, {
+            src={ resizeCloudinaryImage(pictureUrl, {
               height: 280,
               width: 280,
             }) }
@@ -62,24 +65,21 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         >
           <Stack alignItems="center" direction="row" spacing={ 1.5 }>
             <Typography
+              display="inline-block"
               fontSize={ ["24px", "24px", "32px"] }
               textAlign={ ["center", "center", "left"] }
               textTransform="uppercase"
               variant="h3"
+              whiteSpace="nowrap"
             >
-              { firstName }{ " " }
-              <Box component="span" display="inline-block" whiteSpace="nowrap">
-                { lastName }
-                { isVerified && (
-                  <Box component="span" display="inline-block" ml={ 1.5 }>
-                    <CheckCircle
-                      sx={ {
-                        color: theme.colors.green,
-                        mb: [-0.5, -0.5, "-0.5px"],
-                      } }
-                    />
-                  </Box>
-                ) }
+              { name }{ " " }
+              <Box component="span" display="inline-block" ml={ 1.5 }>
+                <CheckCircle
+                  sx={ {
+                    color: theme.colors.green,
+                    mb: [-0.5, -0.5, "-0.5px"],
+                  } }
+                />
               </Box>
             </Typography>
           </Stack>
