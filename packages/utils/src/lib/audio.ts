@@ -8,6 +8,7 @@ export const usePlayAudioUrl = () => {
   const [audio, setAudio] = useState<Howl>();
   const [audioUrl, setAudioUrl] = useState<string>();
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  const [audioProgress, setAudioProgress] = useState<number>(0);
 
   useEffect(() => {
     return () => {
@@ -16,6 +17,31 @@ export const usePlayAudioUrl = () => {
       }
     };
   }, [audio]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!audio) return;
+
+      const prevProgress = audioProgress;
+      const audioPosition = audio.seek();
+      const audioDuration = audio.duration();
+
+      const currentProgress = audioDuration
+        ? (audioPosition / audioDuration) * 100
+        : 0;
+
+      if (prevProgress !== currentProgress) {
+        setAudioProgress(currentProgress);
+      }
+    }, 250);
+
+    if (!audio?.playing()) {
+      setAudioProgress(0);
+      clearTimeout(timeoutId);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [audio, audioProgress, isAudioPlaying]);
 
   const playPauseAudio = useCallback(
     (src?: string) => {
@@ -66,11 +92,13 @@ export const usePlayAudioUrl = () => {
 
   const result = useMemo(
     () => ({
+      // render a small percentage when just starting to show song is playing
+      audioProgress: audioProgress < 0.75 ? 0.75 : audioProgress,
       audioUrl,
       isAudioPlaying,
       playPauseAudio,
     }),
-    [audioUrl, isAudioPlaying, playPauseAudio]
+    [audioUrl, isAudioPlaying, playPauseAudio, audioProgress]
   );
 
   return result;

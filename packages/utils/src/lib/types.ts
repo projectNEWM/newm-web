@@ -54,6 +54,7 @@ export interface UseHlsJsParams {
 }
 
 export interface UseHlsJsResult {
+  readonly audioProgress: number;
   readonly playSong: (song: Song) => void;
   readonly stopSong: (song?: Song) => void;
 }

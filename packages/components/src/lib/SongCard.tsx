@@ -1,5 +1,12 @@
 import { type KeyboardEvent, MouseEvent, useCallback } from "react";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
@@ -12,6 +19,7 @@ import currency from "currency.js";
 import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {
+  readonly audioProgress?: number;
   readonly coverArtUrl?: string;
   readonly imageDimensions?: number;
   readonly isLoading?: boolean;
@@ -27,9 +35,10 @@ interface SongCardProps {
 }
 
 const SongCard = ({
-  imageDimensions = 400,
   coverArtUrl,
-  title,
+  audioProgress = 0,
+  imageDimensions = 400,
+  isLoading = false,
   isPlayable,
   isPlaying,
   onCardClick,
@@ -38,7 +47,7 @@ const SongCard = ({
   priceInNewm,
   priceInUsd,
   subtitle,
-  isLoading = false,
+  title,
 }: SongCardProps) => {
   const theme = useTheme();
 
@@ -149,6 +158,22 @@ const SongCard = ({
               </IconButton>
             ) }
           </Box>
+
+          { isPlaying && (
+            <LinearProgress
+              color="success"
+              sx={ {
+                backgroundColor: theme.colors.grey500,
+                borderBottomLeftRadius: "4px",
+                borderBottomRightRadius: "4px",
+                height: "4px",
+                marginTop: "-4px",
+                width: "100%",
+              } }
+              value={ audioProgress }
+              variant="determinate"
+            />
+          ) }
         </Stack>
         <Stack
           direction="row"

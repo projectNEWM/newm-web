@@ -24,7 +24,8 @@ const Sales: FunctionComponent<SalesProps> = ({
   noResultsContent = "No songs to display at this time.",
 }) => {
   const router = useRouter();
-  const { audioUrl, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const { audioProgress, audioUrl, isAudioPlaying, playPauseAudio } =
+    usePlayAudioUrl();
 
   const handleCardClick = (id: string) => {
     router.push(`/sale/${id}`);
@@ -73,6 +74,7 @@ const Sales: FunctionComponent<SalesProps> = ({
             return (
               <Grid key={ id } md={ 3 } sm={ 4 } xs={ 6 } item>
                 <SongCard
+                  audioProgress={ audioProgress }
                   coverArtUrl={ song.coverArtUrl }
                   isPlayable={ !!song.clipUrl }
                   isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }

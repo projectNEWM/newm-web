@@ -51,7 +51,7 @@ export const mockSales: ReadonlyArray<Sale> = [
     costAssetName: "XYZ123",
     costPolicyId: "123XYZ",
     createdAt: new Date("April 10th, 2024").toDateString(),
-    id: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
+    id: "cec4f704-69c4-41fd-807d-47aa2d73f0d2",
     maxBundleSize: 1,
     song: {
       artistId: "3cfb2d02-a320-4385-96d1-1498d8a1df58",
@@ -60,7 +60,7 @@ export const mockSales: ReadonlyArray<Sale> = [
         "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       assetUrl: "https://pool.pm/asset10k9w7tt0khmve76ukggk5vftwcsfh2vtdkxx5p",
       clipUrl:
-        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+        "https://asset1lret95e9jyr8y6ry83x447y6xjjmxgsppluuht.poolpm.nftcdn.io/files/0/?tk=1wCx2KO2FeZz5855Mqqhk6Ymuefgoh0E1gyEItGXtHw",
       collaborators: [],
       coverArtUrl:
         "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
@@ -99,7 +99,7 @@ export const mockSales: ReadonlyArray<Sale> = [
         "https://res.cloudinary.com/newm/image/upload/v1701715430/pzeo4bcivjouksomeggy.jpg",
       assetUrl: "https://pool.pm/asset10k9w7tt0khmve76ukggk5vftwcsfh2vtdkxx5p",
       clipUrl:
-        "https://media.garage.newm.io/3cfb2d02-a320-4385-96d1-1498d8a1df58/audio/HLS/audio_output.m3u8",
+        "https://asset1effvlkkw02m9ft3ymlkfld8mhlq05wc2hal5du.newm.nftcdn.io/files/0?tk=13GWPr-C3hRfdkrfy-adwYVHFwNr4pieLik3GxpRr5s",
       collaborators: [],
       coverArtUrl:
         "https://res.cloudinary.com/newm/image/upload/c_limit,w_4000,h_4000/v1706033133/efpgmcjwk8glctlwfzm8.png",
