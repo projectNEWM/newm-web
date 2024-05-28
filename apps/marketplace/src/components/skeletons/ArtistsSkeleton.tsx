@@ -17,7 +17,11 @@ const SalesSkeleton: FunctionComponent<SalesSkeletonProps> = ({
     <Stack alignItems="center">
       { hasTitle && (
         <Box mb={ 3.5 }>
-          <Skeleton height={ 76 } width={ 480 } />
+          <Skeleton
+            sx={ { fontSize: ["24px", "24px", "32px"] } }
+            variant="rectangular"
+            width={ 480 }
+          />
         </Box>
       ) }
 
