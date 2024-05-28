@@ -1,7 +1,3 @@
-export interface ArtistState {
-  readonly artists: ReadonlyArray<Artist>;
-}
-
 export interface Artist {
   // Apple Music artist profile ID.
   readonly appleMusicProfile: string;
