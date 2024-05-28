@@ -34,6 +34,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
         <Container sx={ { flexGrow: 1 } }>
           <ProfileHeader
             isLoading={ isLoading }
+            isVerified={ true }
             location={ artist?.location }
             name={ artist?.name }
             pictureUrl={ artist?.pictureUrl }

@@ -74,11 +74,10 @@ const Owner: FunctionComponent = () => {
       />
 
       <ProfileHeader
-        firstName={ firstName }
         isVerified={ isVerified }
-        lastName={ lastName }
         location={ location }
-        profileImageUrl={ pictureUrl }
+        name={ `${firstName} ${lastName}` }
+        pictureUrl={ pictureUrl }
         socials={ socials }
         onClickAbout={ () => setIsModalOpen(!isModalOpen) }
       />

@@ -8,6 +8,7 @@ import ProfileHeaderSkeleton from "./skeletons/ProfileHeaderSkeleton";
 
 interface ProfileHeaderProps {
   readonly isLoading?: boolean;
+  readonly isVerified?: boolean;
   readonly location?: string;
   readonly name?: string;
   readonly onClickAbout: VoidFunction;
@@ -22,6 +23,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
   pictureUrl,
   socials,
   isLoading,
+  isVerified = false,
 }) => {
   const theme = useTheme();
 
@@ -73,14 +75,16 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
               whiteSpace="nowrap"
             >
               { name }{ " " }
-              <Box component="span" display="inline-block" ml={ 1.5 }>
-                <CheckCircle
-                  sx={ {
-                    color: theme.colors.green,
-                    mb: [-0.5, -0.5, "-0.5px"],
-                  } }
-                />
-              </Box>
+              { isVerified && (
+                <Box component="span" display="inline-block" ml={ 1.5 }>
+                  <CheckCircle
+                    sx={ {
+                      color: theme.colors.green,
+                      mb: [-0.5, -0.5, "-0.5px"],
+                    } }
+                  />
+                </Box>
+              ) }
             </Typography>
           </Stack>
 
