@@ -27,7 +27,6 @@ import Search from "./lib/icons/Search";
 import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
 import SpotifyLogo from "./lib/icons/SpotifyLogo";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
-import TwitterLogo from "./lib/icons/TwitterLogo";
 import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
 import UploadIcon from "./lib/icons/UploadIcon";
 import VerticalEllipsis from "./lib/icons/VerticalEllipsis";
@@ -64,7 +63,6 @@ export {
   SoundWave,
   SpotifyLogo,
   TimeCircleLine,
-  TwitterLogo,
   UnselectedCheckboxIcon,
   UploadIcon,
   VerticalEllipsis,
