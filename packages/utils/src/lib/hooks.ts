@@ -322,7 +322,9 @@ export const useHlsJs = ({
  *  );
  */
 export const useBetterMediaQuery = (mediaQueryString: string) => {
-  const [matches, setMatches] = useState<boolean | null>(null);
+  const [matches, setMatches] = useState<boolean | null>(
+    window.matchMedia(mediaQueryString).matches
+  );
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(mediaQueryString);

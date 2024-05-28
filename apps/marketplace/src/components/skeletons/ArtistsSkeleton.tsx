@@ -14,10 +14,14 @@ const SalesSkeleton: FunctionComponent<SalesSkeletonProps> = ({
   itemOrientation,
 }) => {
   return (
-    <Stack alignItems="center">
+    <Stack alignItems="center" maxWidth="100%">
       { hasTitle && (
-        <Box mb={ 3.5 }>
-          <Skeleton height={ 76 } width={ 480 } />
+        <Box maxWidth="100%" mb={ 3.5 } overflow="hidden">
+          <Skeleton
+            sx={ { fontSize: ["24px", "24px", "32px"] } }
+            variant="rectangular"
+            width={ 480 }
+          />
         </Box>
       ) }
 
@@ -25,8 +29,10 @@ const SalesSkeleton: FunctionComponent<SalesSkeletonProps> = ({
         { new Array(numItems).fill(null).map((_, idx) => {
           return (
             <Grid
+              display="flex"
+              justifyContent="center"
               key={ idx }
-              lg={ itemOrientation === "column" ? 2.4 : 3 }
+              lg={ 2.4 }
               md={ 3 }
               sm={ 4 }
               xs={ 6 }

@@ -4,10 +4,6 @@ export enum SaleStatus {
   Started = "Started",
 }
 
-export interface SaleState {
-  readonly sales: ReadonlyArray<Sale>;
-}
-
 export interface Sale {
   // Available quantity of bundles for sale
   readonly availableBundleQuantity: number;
