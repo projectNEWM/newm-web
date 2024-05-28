@@ -14,7 +14,7 @@ const SalesSkeleton: FunctionComponent<SalesSkeletonProps> = ({
   return (
     <Stack alignItems="center">
       { hasTitle && (
-        <Box mb={ 3.5 }>
+        <Box maxWidth="100%" mb={ 3.5 } overflow="hidden">
           <Skeleton
             sx={ { fontSize: ["24px", "24px", "32px"] } }
             variant="rectangular"

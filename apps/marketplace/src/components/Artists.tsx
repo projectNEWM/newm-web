@@ -30,7 +30,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
 
   if (isLoading) {
     return (
-      <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
+      <Stack alignItems="center" mt={ 17 }>
         <ArtistsSkeleton
           hasTitle={ hasTitle }
           itemOrientation={ itemOrientation }
@@ -44,7 +44,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
     <Stack>
       <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
         <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
-          ARTIST SPOTLIGHT
+          { title }
         </Typography>
       </Stack>
 

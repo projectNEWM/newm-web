@@ -23,7 +23,7 @@ const ProfileHeaderSkeleton: FunctionComponent = () => {
         direction={ ["column", "column", "row"] }
         spacing={ 4 }
       >
-        <Box pb={ 1 } position="relative" top={ [0, 0, theme.spacing(-2)] }>
+        <Box pb={ 2 } position="relative" top={ [0, 0, theme.spacing(-2)] }>
           <Skeleton height={ 200 } variant="circular" width={ 200 } />
         </Box>
 
@@ -50,7 +50,7 @@ const ProfileHeaderSkeleton: FunctionComponent = () => {
 
       { isBelowMdBreakpoint && (
         <Box alignSelf="stretch" pt={ 1.5 }>
-          <Skeleton height={ 40 } variant="rectangular" width={ 120 } />
+          <Skeleton height={ 40 } variant="rectangular" width="100%" />
         </Box>
       ) }
     </Stack>

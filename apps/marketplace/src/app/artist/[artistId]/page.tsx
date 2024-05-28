@@ -1,7 +1,6 @@
 "use client";
-import { Container, Stack, Typography, useTheme } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
 import { useGetArtistQuery } from "../../../modules/artist";
 import { ArtistSongs, BannerImage, SimilarArtists } from "../../../components";

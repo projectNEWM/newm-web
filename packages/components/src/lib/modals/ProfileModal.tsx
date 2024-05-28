@@ -25,7 +25,7 @@ const ProfileModal: FunctionComponent<ProfileModalProps> = ({
         maxWidth="sm"
         sx={ { alignItems: "center", display: "flex", height: "100vh" } }
       >
-        <Stack sx={ { backgroundColor: theme.colors.grey600 } }>
+        <Stack sx={ { backgroundColor: theme.colors.grey600, minWidth: "100%" } }>
           <Stack
             p={ 3 }
             pb={ 1.5 }
@@ -45,7 +45,7 @@ const ProfileModal: FunctionComponent<ProfileModalProps> = ({
           >
             <Socials { ...socials } />
 
-            <Box ml={ 1 }>
+            <Box>
               <Button
                 color="music"
                 variant="secondary"
