@@ -43,7 +43,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 
           <ArtistSongs />
 
-          <SimilarArtists />
+          <SimilarArtists genre={ artist?.genre } />
         </Container>
       </Stack>
 

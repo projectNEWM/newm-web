@@ -1,54 +1,28 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { Grid, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import Artist from "./Artist";
-import { mockArtists } from "../temp/data";
+import { FunctionComponent } from "react";
+import { Stack } from "@mui/material";
+import Artists from "./Artists";
+import { useGetArtistsQuery } from "../modules/artist";
 
-const SimilarArtists: FunctionComponent = () => {
-  const router = useRouter();
+interface SimilarArtistsProps {
+  readonly genre?: string;
+}
 
-  // TEMP: simulate data loading
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleSelectArtist = (id: string) => {
-    router.push(`/artist/${id}`);
-  };
-
-  // TEMP: simulate data loading
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({ genre }) => {
+  const { isLoading, data: artists = [] } = useGetArtistsQuery({
+    genres: genre ? [genre] : [],
+    limit: 6,
+  });
 
   return (
     <Stack mb={ 8 }>
-      <Stack alignItems="center" mb={ 3.5 } mt={ 16 }>
-        <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
-          SIMILAR ARTISTS
-        </Typography>
-      </Stack>
-
-      <Grid justifyContent="center" rowGap={ 5 } container>
-        { mockArtists
-          .slice(0, 6)
-          .map(
-            ({ id, profileImageUrl, firstName, lastName, songCount }, idx) => {
-              return (
-                <Grid key={ id } lg={ 4 } sm={ 6 } xs={ 12 } item>
-                  <Artist
-                    imageUrl={ profileImageUrl }
-                    isLoading={ isLoading }
-                    orientation="row"
-                    subtitle={ `${songCount} songs` }
-                    title={ `${firstName} ${lastName}` }
-                    onSelectArtist={ () => handleSelectArtist(id) }
-                  />
-                </Grid>
-              );
-            }
-          ) }
-      </Grid>
+      <Artists
+        artists={ artists }
+        hasTitle={ true }
+        isLoading={ isLoading }
+        itemOrientation="row"
+        numSkeletons={ 6 }
+        title="SIMILAR ARTISTS"
+      />
     </Stack>
   );
 };
