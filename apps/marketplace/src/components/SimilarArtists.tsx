@@ -13,6 +13,7 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
   genre,
 }) => {
   const limit = 6;
+  const skip = !artistId || !genre;
 
   // TODO: limit to artists with marketplace sales when API updated
   const { isLoading, data: artists = [] } = useGetArtistsQuery(
@@ -21,7 +22,7 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
       ids: artistId ? [`-${artistId}`] : undefined,
       limit,
     },
-    { skip: !artistId || !genre }
+    { skip }
   );
 
   return (
@@ -29,7 +30,7 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
       <Artists
         artists={ artists }
         hasTitle={ true }
-        isLoading={ isLoading }
+        isLoading={ skip || isLoading }
         itemOrientation="row"
         numSkeletons={ limit }
         title="SIMILAR ARTISTS"

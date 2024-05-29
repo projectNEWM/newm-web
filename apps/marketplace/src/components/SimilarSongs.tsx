@@ -12,18 +12,24 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
   genres,
   currentArtistId,
 }) => {
+  const skip = !currentArtistId;
+
   const { isLoading, data: sales = [] } = useGetSalesQuery(
     {
       artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
       genres,
       limit: 8,
     },
-    { skip: !currentArtistId }
+    { skip }
   );
 
   return (
     <Box mb={ 8 } mt={ 16 }>
-      <Sales isLoading={ isLoading } sales={ sales } title="SIMILAR SONGS" />
+      <Sales
+        isLoading={ skip || isLoading }
+        sales={ sales }
+        title="SIMILAR SONGS"
+      />
     </Box>
   );
 };
