@@ -1,4 +1,3 @@
-import { isProd } from "@newm-web/env";
 import {
   AnswerChallengeRequest,
   AnswerChallengeResponse,
@@ -40,13 +39,6 @@ export const extendedApi = newmApi.injectEndpoints({
     >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
-          // eslint-disable-next-line
-          console.log(
-            "TEMP: ",
-            isProd,
-            process.env["NODE" + "_ENV"],
-            process.env.NEXT_PUBLIC_ENV
-          );
           await queryFulfilled;
         } catch (error) {
           dispatch(
