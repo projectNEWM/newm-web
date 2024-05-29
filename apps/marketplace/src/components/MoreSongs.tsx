@@ -15,11 +15,14 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   artistName,
 }) => {
   const theme = useTheme();
-  const { isLoading, data: sales = [] } = useGetSalesQuery({
-    artistIds: artistId ? [artistId] : undefined,
-    ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
-    limit: 8,
-  });
+  const { isLoading, data: sales = [] } = useGetSalesQuery(
+    {
+      artistIds: artistId ? [artistId] : undefined,
+      ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
+      limit: 8,
+    },
+    { skip: !artistId || !currentSaleId }
+  );
 
   const title = (
     <Typography

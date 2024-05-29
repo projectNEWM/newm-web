@@ -17,8 +17,8 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
   // TODO: limit to artists with marketplace sales when API updated
   const { isLoading, data: artists = [] } = useGetArtistsQuery(
     {
-      genres: genre ? [genre] : [],
-      ids: artistId ? [`-${artistId}`] : [],
+      genres: genre ? [genre] : undefined,
+      ids: artistId ? [`-${artistId}`] : undefined,
       limit,
     },
     { skip: !artistId || !genre }

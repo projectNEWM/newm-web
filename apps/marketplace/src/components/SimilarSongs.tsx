@@ -12,11 +12,14 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
   genres,
   currentArtistId,
 }) => {
-  const { isLoading, data: sales = [] } = useGetSalesQuery({
-    artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
-    genres,
-    limit: 8,
-  });
+  const { isLoading, data: sales = [] } = useGetSalesQuery(
+    {
+      artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
+      genres,
+      limit: 8,
+    },
+    { skip: !currentArtistId }
+  );
 
   return (
     <Box mb={ 8 } mt={ 16 }>
