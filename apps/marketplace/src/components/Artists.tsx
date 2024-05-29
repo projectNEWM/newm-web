@@ -61,13 +61,13 @@ const Artists: FunctionComponent<ArtistsProps> = ({
             return (
               <Grid
                 display="flex"
+                item={ true }
                 justifyContent="center"
                 key={ id }
                 lg={ gridSizeColumnMap.lg[itemOrientation] }
                 md={ gridSizeColumnMap.md[itemOrientation] }
                 sm={ gridSizeColumnMap.sm[itemOrientation] }
                 xs={ gridSizeColumnMap.xs[itemOrientation] }
-                item
               >
                 <Artist
                   imageUrl={ pictureUrl }

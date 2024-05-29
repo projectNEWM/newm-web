@@ -4,15 +4,25 @@ import Artists from "./Artists";
 import { useGetArtistsQuery } from "../modules/artist";
 
 interface SimilarArtistsProps {
+  readonly artistId?: string;
   readonly genre?: string;
 }
 
-const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({ genre }) => {
+const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
+  artistId,
+  genre,
+}) => {
+  const limit = 6;
+
   // TODO: limit to artists with marketplace sales when API updated
-  const { isLoading, data: artists = [] } = useGetArtistsQuery({
-    genres: genre ? [genre] : [],
-    limit: 6,
-  });
+  const { isLoading, data: artists = [] } = useGetArtistsQuery(
+    {
+      genres: genre ? [genre] : [],
+      ids: artistId ? [`-${artistId}`] : [],
+      limit,
+    },
+    { skip: !artistId || !genre }
+  );
 
   return (
     <Stack mb={ 8 }>
@@ -21,7 +31,7 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({ genre }) => {
         hasTitle={ true }
         isLoading={ isLoading }
         itemOrientation="row"
-        numSkeletons={ 6 }
+        numSkeletons={ limit }
         title="SIMILAR ARTISTS"
       />
     </Stack>
