@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths:
-      - .github/workflows/aws-hosting-merge-deploynewm-studio.yml
+      - .github/workflows/aws-hosting-merge-deploy-newm-studio.yml
       - apps/studio/**
       - packages/**
 jobs:
