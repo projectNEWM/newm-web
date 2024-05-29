@@ -10,6 +10,7 @@ const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
 const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const appEnv = process.env.NEXT_PUBLIC_ENV || "";
+const nodeEnv = process.env.NODE_ENV;
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
 class WebPreviewStack extends cdk.Stack {
@@ -24,6 +25,7 @@ class WebPreviewStack extends cdk.Stack {
           buildArgs: {
             NEXT_PUBLIC_ENV: appEnv,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+            NODE_ENV: nodeEnv,
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
