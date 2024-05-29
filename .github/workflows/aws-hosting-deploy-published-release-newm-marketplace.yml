@@ -1,0 +1,58 @@
+name: Deploy app to AWS on published release NEWM Marketplace
+on:
+ release:
+   types: [ published ]
+ workflow_dispatch:
+jobs:
+  build_and_deploy_studio_release:
+    if: ${{ startsWith(github.event.release.tag_name, 'marketplace') }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required to interact with GitHub's OIDC Token endpoint.
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install
+      - run: npx nx build marketplace
+        env:
+          VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
+          VITE_RECAPTCHA_SITE_KEY_PROD: ${{ secrets.RECAPTCHA_SITE_KEY_PROD }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_ENV: production
+
+      # TODO: Test this to make sure docker setup is correct
+      - name: Lambda-ify
+        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/marketplace/Dockerfile
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }} #TODO: These might need the marketplace role or modify this to be a generic role
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy marketplace
+        run: |
+          npm install --prefix .github/workflows/cdk
+          APPNAME=marketplace APPID=Marketplace QUALIFIER=Studio NEXT_PUBLIC_ENV=production NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Marketplace updated in production. View at https://newm.marketplace. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MARKETPLACE_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

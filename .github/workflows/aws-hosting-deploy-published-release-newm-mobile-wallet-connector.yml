@@ -1,13 +1,11 @@
-# TODO: DELETE THIS FILE AFTER INDIVIDUAL PIPELINES ARE UPDATED WITH THE NEW WORKFLOW
-name: Deploy app to AWS on published release
+name: Deploy app to AWS on published release NEWM Mobile Wallet Connector
 on:
  release:
    types: [ published ]
  workflow_dispatch:
 jobs:
   build_and_deploy_studio_release:
-# disabled until tested
-#   if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
+    if: ${{ startsWith(github.event.release.tag_name, 'mobile-wallet-connector') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
@@ -20,42 +18,28 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm install
-      - run: npx nx build-with-sentry studio
+      - run: npx nx build mobile-wallet-connector
         env:
-          VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_RECAPTCHA_SITE_KEY_PROD: ${{ secrets.RECAPTCHA_SITE_KEY_PROD }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: production
 
       - name: Lambda-ify
-        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/tools/Dockerfile
-      - name: Lambda-ify
         run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/mobile-wallet-connector/Dockerfile
-  
+
       - name: Install AWS CDK
         run: npm install -g aws-cdk
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }} #TODO: These might need the mobile-wallet-connector role or modify this to be a generic role
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Deploy tools
-        run: |
-          npm install --prefix .github/workflows/cdk
-          APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
 
       - name: Deploy mobile-wallet-connector
         run: |
           npm install --prefix .github/workflows/cdk
           sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js
           APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Studio NEXT_PUBLIC_ENV=production NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
- 
-      - name: Deploy studio
-        run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_STUDIO }} --no-progress --delete
 
       - name: Send update to slack
         id: slack
@@ -63,8 +47,8 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Studio updated in production. View at https://newm.studio. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+              "text": "NEWM Mobile Wallet Connector updated in production. View at https://newm.tools/wallet-connect. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }} #TODO: This should be a mobile-wallet-connector webhook
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
