@@ -27,7 +27,6 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: production
 
-      # TODO: Test this to make sure docker setup is correct
       - name: Lambda-ify
         run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/marketplace/Dockerfile
 
