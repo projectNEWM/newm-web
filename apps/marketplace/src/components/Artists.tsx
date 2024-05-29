@@ -57,7 +57,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
             </Typography>
           </Box>
         ) : (
-          artists.map(({ id, pictureUrl, name, marketplaceSongCount }, idx) => {
+          artists.map(({ id, pictureUrl, name, marketplaceSongCount }) => {
             return (
               <Grid
                 display="flex"

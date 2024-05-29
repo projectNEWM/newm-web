@@ -8,6 +8,7 @@ interface SimilarArtistsProps {
 }
 
 const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({ genre }) => {
+  // TODO: limit to artists with marketplace sales when API updated
   const { isLoading, data: artists = [] } = useGetArtistsQuery({
     genres: genre ? [genre] : [],
     limit: 6,
