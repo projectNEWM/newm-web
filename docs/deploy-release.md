@@ -7,6 +7,8 @@
    - The `app-prefix` can be one of two values:
      - `studio` for NEWM Studio
      - `marketplace` for NEWM Marketplace
+     - `tools` for NEWM Tools
+     - `mobile-wallet-connector` for NEWM Mobile Wallet Connector
 2. Perform any testing for the release in the release branch.
 3. Merge additional changes or fixes into the release branch as required.
 4. Navigate to the [create release page](https://github.com/projectNEWM/newm-web/releases/new)
