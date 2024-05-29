@@ -1,6 +1,7 @@
 import { Box, Grid, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent } from "react";
 import ArtistSkeleton from "./ArtistSkeleton";
+import { gridSizeColumnMap } from "../../common";
 
 interface SalesSkeletonProps {
   readonly hasTitle?: boolean;
@@ -32,10 +33,10 @@ const SalesSkeleton: FunctionComponent<SalesSkeletonProps> = ({
               display="flex"
               justifyContent="center"
               key={ idx }
-              lg={ 2.4 }
-              md={ 3 }
-              sm={ 4 }
-              xs={ 6 }
+              lg={ gridSizeColumnMap.lg[itemOrientation] }
+              md={ gridSizeColumnMap.md[itemOrientation] }
+              sm={ gridSizeColumnMap.sm[itemOrientation] }
+              xs={ gridSizeColumnMap.xs[itemOrientation] }
               item
             >
               <ArtistSkeleton orientation={ itemOrientation } />

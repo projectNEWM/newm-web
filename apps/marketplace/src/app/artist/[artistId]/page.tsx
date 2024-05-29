@@ -41,9 +41,9 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
             onClickAbout={ () => setIsAboutModalOpen(true) }
           />
 
-          <ArtistSongs />
+          <ArtistSongs artistId={ params.artistId } />
 
-          <SimilarArtists />
+          <SimilarArtists artistId={ artist?.id } genre={ artist?.genre } />
         </Container>
       </Stack>
 
