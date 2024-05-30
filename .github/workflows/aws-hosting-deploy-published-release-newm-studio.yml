@@ -1,4 +1,4 @@
-name: Deploy app to AWS on published release
+name: Deploy NEWM Studio app to AWS on published release
 on:
 #  release:
 #    types: [ published ]
@@ -6,8 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   build_and_deploy_studio_release:
-# disabled until tested
-#   if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
+    if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
@@ -29,11 +28,6 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: production
 
-      - name: Lambda-ify
-        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/tools/Dockerfile
-      - name: Lambda-ify
-        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/mobile-wallet-connector/Dockerfile
-  
       - name: Install AWS CDK
         run: npm install -g aws-cdk
 
@@ -43,23 +37,12 @@ jobs:
           role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy tools
-        run: |
-          npm install --prefix .github/workflows/cdk
-          APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
-
-      - name: Deploy mobile-wallet-connector
-        run: |
-          npm install --prefix .github/workflows/cdk
-          sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js
-          APPNAME=mobile-wallet-connector APPID=MobileWalletConnector QUALIFIER=Studio NEXT_PUBLIC_ENV=production NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
- 
       - name: Deploy studio
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_STUDIO }} --no-progress --delete
 
       - name: Send update to slack
         id: slack
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
             {
