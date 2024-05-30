@@ -1,9 +1,9 @@
-name: Deploy app to AWS on published release
+name: Deploy mobile wallet connector app to AWS on published release
 on:
  release:
    types: [ published ]
 jobs:
-  build_and_deploy_studio_release:
+  build_and_deploy_mobile_wallet_connector_release:
     if: ${{ startsWith(github.event.release.tag_name, 'mobile-wallet-connector') }}
     runs-on: ubuntu-latest
     permissions:
@@ -26,7 +26,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy mobile-wallet-connector
+      - name: Deploy mobile wallet connector
         run: |
           npm install --prefix .github/workflows/cdk
           sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js
@@ -34,11 +34,11 @@ jobs:
 
       - name: Send update to slack
         id: slack
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
             {
-              "text": "NEWM Mobile Wallet Connector updated in production. View at https://newm.tools/connect-wallet. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+              "text": "NEWM Mobile Wallet Connector updated in production. View at https://newm.tools/wallet-connect. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MOBILE_WALLET_CONNECTOR_WEBHOOK }}

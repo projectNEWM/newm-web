@@ -1,9 +1,9 @@
-name: Deploy app to AWS on published release
+name: Deploy tools app to AWS on published release
 on:
  release:
    types: [ published ]
 jobs:
-  build_and_deploy_studio_release:
+  build_and_deploy_tools_release:
     if: ${{ startsWith(github.event.release.tag_name, 'tools') }}
     runs-on: ubuntu-latest
     permissions:
@@ -34,7 +34,6 @@ jobs:
       - name: Send update to slack
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
-    
         with:
           payload: |
             {
