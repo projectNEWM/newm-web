@@ -11,6 +11,8 @@ const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
 const recaptchaKeyProd = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD || "";
+const recaptchaKeyStaging =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const appEnv = process.env.NEXT_PUBLIC_ENV || "";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
@@ -26,6 +28,7 @@ class WebDeployStack extends cdk.Stack {
           buildArgs: {
             NEXT_PUBLIC_ENV: appEnv,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD: recaptchaKeyProd,
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKeyStaging,
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
