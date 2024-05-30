@@ -1,4 +1,4 @@
-import { Stack, useTheme } from "@mui/material";
+import { Skeleton, Stack, useTheme } from "@mui/material";
 import {
   InstagramLogo,
   ItunesLogo,
@@ -9,9 +9,11 @@ import {
 import { Button } from "@newm-web/elements";
 import LanguageIcon from "@mui/icons-material/Language";
 import { FunctionComponent } from "react";
+import SocialsSkeleton from "./skeletons/SocialsSkeleton";
 
 export interface SocialsProps {
   readonly instagramUrl?: string;
+  readonly isLoading?: boolean;
   readonly itunesUrl?: string;
   readonly soundCloudUrl?: string;
   readonly spotifyUrl?: string;
@@ -29,9 +31,23 @@ const Socials: FunctionComponent<SocialsProps> = ({
   soundCloudUrl,
   spotifyUrl,
   websiteUrl,
+  isLoading = false,
   xUrl,
 }) => {
   const theme = useTheme();
+
+  const numSkeletonItems = [
+    instagramUrl,
+    itunesUrl,
+    soundCloudUrl,
+    spotifyUrl,
+    websiteUrl,
+    xUrl,
+  ].filter((item) => item !== undefined).length;
+
+  if (isLoading) {
+    return <SocialsSkeleton numItems={ numSkeletonItems } />;
+  }
 
   return (
     <Stack direction="row" spacing={ 1 }>

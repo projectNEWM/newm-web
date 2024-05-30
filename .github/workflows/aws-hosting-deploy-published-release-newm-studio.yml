@@ -1,0 +1,53 @@
+name: Deploy NEWM Studio app to AWS on published release
+on:
+#  release:
+#    types: [ published ]
+# only manually trigger for testing
+  workflow_dispatch:
+jobs:
+  build_and_deploy_studio_release:
+    if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required to interact with GitHub's OIDC Token endpoint.
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install
+      - run: npx nx build-with-sentry studio
+        env:
+          VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
+          VITE_RECAPTCHA_SITE_KEY_PROD: ${{ secrets.RECAPTCHA_SITE_KEY_PROD }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_ENV: production
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy studio
+        run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_STUDIO }} --no-progress --delete
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Studio updated in production. View at https://newm.studio. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

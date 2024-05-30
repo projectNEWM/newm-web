@@ -1,5 +1,9 @@
-import { MintingStatus, Song, SortOrder } from "@newm-web/types";
-import { OnUploadProgress } from "../../api/types";
+import {
+  MintingStatus,
+  OnUploadProgress,
+  Song,
+  SortOrder,
+} from "@newm-web/types";
 
 export interface SongState {
   artistAgreement: string;

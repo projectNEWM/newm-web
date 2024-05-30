@@ -1,3 +1,6 @@
+import { padStart } from "lodash";
+import { TimeRemaining } from "./types";
+
 /**
  * Determines whether the current time has exceeded the given threshold in seconds from the specified time.
  *
@@ -31,4 +34,31 @@ export const isMoreThanThresholdSecondsLater = (
     differenceInMilliseconds / MILLISECONDS_PER_SECOND;
 
   return differenceInSeconds > secondsThreshold;
+};
+
+/**
+ * Returns an object representing the time until the end date, including
+ * days, hours, minutes, seconds, and the total milliseconds remaining.
+ * Fields for larger time units are omitted if their values are zero.
+ */
+export const getTimeRemaining = (end: Date, start: Date): TimeRemaining => {
+  const total = end.getTime() - start.getTime();
+  const totalSeconds = total / 1000;
+
+  const days = Math.floor(totalSeconds / (3600 * 24));
+  const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  return {
+    days: days > 0 ? days.toString() : undefined,
+    hours:
+      hours > 0 || days > 0 ? hours.toString().padStart(2, "0") : undefined,
+    minutes:
+      minutes > 0 || hours > 0 || days > 0
+        ? minutes.toString().padStart(2, "0")
+        : undefined,
+    seconds: seconds.toString().padStart(2, "0"),
+    total,
+  };
 };

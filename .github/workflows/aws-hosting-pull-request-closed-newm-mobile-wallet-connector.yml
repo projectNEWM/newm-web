@@ -1,0 +1,38 @@
+name: Destory NEWM Mobile Wallet AWS preview environment when PR is closed
+on:
+  pull_request:
+    branches: [ master ]
+    types: [ closed ]
+    paths:
+      - .github/workflows/aws-hosting-pull-request-newm-mobile-wallet-connector.yml
+      - apps/mobile-wallet-connector/**
+      - packages/**
+jobs:
+  destroy:
+    name: Destroy NEWM Marketplace AWS preview environment
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required to interact with GitHub's OIDC Token endpoint.
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Destory preview environment
+        run: |
+          npm install --prefix .github/workflows/cdk
+          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview destroy -- --require-approval never
+
+      - name: Url to PR comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            :skull: wallet preview environment destroyed
+          allow-repeats: true

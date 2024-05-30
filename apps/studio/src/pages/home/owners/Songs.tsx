@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { Typography } from "@newm-web/elements";
 import { SongCard } from "@newm-web/components";
 import { useHlsJs } from "@newm-web/utils";
@@ -69,7 +69,7 @@ const Songs: FunctionComponent = () => {
     []
   );
 
-  const { playSong, stopSong } = useHlsJs(hlsJsParams);
+  const { audioProgress, playSong, stopSong } = useHlsJs(hlsJsParams);
 
   /**
    * Plays and/or stops the song depending on if it's currently playing or not.
@@ -146,33 +146,37 @@ const Songs: FunctionComponent = () => {
   }
 
   return (
-    <Stack
-      columnGap={ 2 }
-      flexDirection="row"
-      flexWrap="wrap"
+    <Grid
+      flexGrow={ 1 }
       justifyContent="center"
-      mt={ 7.5 }
-      rowGap={ 3 }
+      pb={ 1 }
+      pt={ 6 }
+      rowGap={ 1.5 }
+      container
     >
       { songs.map((song) => {
         const genresString = song.genres.join(", ");
 
         return (
-          <SongCard
-            coverArtUrl={ song.coverArtUrl }
-            isPlayable={ !!song.streamUrl }
-            isPlaying={ song.id === playerState.currentPlayingSongId }
-            key={ song.id }
-            subtitle={ genresString }
-            title={ song.title }
-            onPlayPauseClick={ () => handleSongPlayPause(song) }
-          />
+          <Grid key={ song.id } lg={ 3 } md={ 4 } sm={ 4 } xs={ 6 } item>
+            <SongCard
+              audioProgress={ audioProgress }
+              coverArtUrl={ song.coverArtUrl }
+              isLoading={ isLoading }
+              isPlayable={ !!song.streamUrl }
+              isPlaying={ song.id === playerState.currentPlayingSongId }
+              subtitle={ genresString }
+              title={ song.title }
+              onPlayPauseClick={ () => handleSongPlayPause(song) }
+            />
+          </Grid>
         );
       }) }
+
       <Stack flex="1 0 100%" ref={ ref } textAlign="center">
         { hasMore ? <Typography>Loading more songs...</Typography> : null }
       </Stack>
-    </Stack>
+    </Grid>
   );
 };
 

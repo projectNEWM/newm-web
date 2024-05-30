@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { bgImage } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
@@ -57,7 +57,7 @@ const Owner: FunctionComponent = () => {
     : bgImage;
 
   return (
-    <>
+    <Stack direction="column">
       <Box pb={ 4 }>
         <ItemHeader title="ARTIST PAGE" onGoBack={ history.back } />
       </Box>
@@ -74,11 +74,10 @@ const Owner: FunctionComponent = () => {
       />
 
       <ProfileHeader
-        firstName={ firstName }
         isVerified={ isVerified }
-        lastName={ lastName }
         location={ location }
-        profileImageUrl={ pictureUrl }
+        name={ `${firstName} ${lastName}` }
+        pictureUrl={ pictureUrl }
         socials={ socials }
         onClickAbout={ () => setIsModalOpen(!isModalOpen) }
       />
@@ -93,7 +92,7 @@ const Owner: FunctionComponent = () => {
         socials={ socials }
         onClose={ () => setIsModalOpen(false) }
       />
-    </>
+    </Stack>
   );
 };
 

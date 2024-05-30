@@ -43,6 +43,7 @@ export interface UploadImageProps {
     readonly height: number;
     readonly width: number;
   };
+  readonly minFileSizeMB?: number;
   readonly minimumSizeLabel?: string;
   readonly onBlur: VoidFunction;
   readonly onChange: (file: FileWithPreview) => void;
@@ -73,6 +74,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   hasPreviewOption = false,
   isSuccessIconDisplayed = true,
   maxFileSizeMB,
+  minFileSizeMB,
   minDimensions,
   minimumSizeLabel = "Minimum size",
   onBlur,
@@ -106,6 +108,12 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
           );
         }
 
+        if (minFileSizeMB && firstFile.size < minFileSizeMB * 1000 * 1000) {
+          throw new Error(
+            `Image must be greater than or equal to ${minFileSizeMB}MB`
+          );
+        }
+
         const fileWithPreview = Object.assign(firstFile, {
           preview: URL.createObjectURL(firstFile),
         });
@@ -134,6 +142,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     },
     [
       maxFileSizeMB,
+      minFileSizeMB,
       isAspectRatioOneToOne,
       minDimensions,
       onChange,

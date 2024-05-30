@@ -109,19 +109,14 @@ export const uploadSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split("-")[0];
-      const defaultCopyright = body.artistName || body.companyName;
-
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           album: body.album,
           barcodeNumber: body.barcodeNumber || undefined,
           barcodeType,
-          compositionCopyrightOwner:
-            body.compositionCopyrightOwner || defaultCopyright,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner: body.compositionCopyrightOwner,
+          compositionCopyrightYear: body.compositionCopyrightYear,
           coverArtUrl,
           coverRemixSample: body.isCoverRemixSample,
           description: body.description,
@@ -134,10 +129,8 @@ export const uploadSong = createAsyncThunk(
           lyricsUrl: body.lyricsUrl,
           moods: body.moods,
           parentalAdvisory,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          phonographicCopyrightYear: body.phonographicCopyrightYear,
           publicationDate: body.publicationDate || undefined,
           releaseDate: body.releaseDate || undefined,
           title: body.title,
@@ -403,19 +396,14 @@ export const patchSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split("-")[0];
-      const defaultCopyright = body.artistName || body.companyName;
-
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
           album: body.album,
           barcodeNumber: body.barcodeNumber || undefined,
           barcodeType,
-          compositionCopyrightOwner:
-            body.compositionCopyrightOwner || defaultCopyright,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner: body.compositionCopyrightOwner,
+          compositionCopyrightYear: body.compositionCopyrightYear,
           coverArtUrl,
           description: body.description,
           genres: body.genres,
@@ -428,10 +416,8 @@ export const patchSong = createAsyncThunk(
           lyricsUrl: body.lyricsUrl,
           moods: body.moods,
           parentalAdvisory,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          phonographicCopyrightYear: body.phonographicCopyrightYear,
           publicationDate: body.publicationDate || undefined,
           releaseDate: body.releaseDate || undefined,
           title: body.title,

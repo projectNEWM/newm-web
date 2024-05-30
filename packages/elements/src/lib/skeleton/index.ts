@@ -1,2 +1,1 @@
-export * from "./SongCardSkeleton";
-export * from "./TableSkeleton";
+export { default as TableSkeleton } from "./TableSkeleton";

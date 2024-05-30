@@ -36,12 +36,14 @@ const Modal: FunctionComponent<ModalProps> = ({
   }, [onClose]);
 
   return (
-    <MuiModal
-      disableAutoFocus={ true }
-      open={ isOpen }
-      sx={ { m: 2, mb: 10, mt: 1 } }
-    >
-      <Box display="flex" flex={ 1 } flexDirection="column" height="100%">
+    <MuiModal open={ isOpen } sx={ { m: 2, mb: 10, mt: 1 } }>
+      <Box
+        display="flex"
+        flex={ 1 }
+        flexDirection="column"
+        height="100%"
+        width="100%"
+      >
         { isCloseButtonVisible && (
           <Box display="flex" justifyContent="flex-end" mb={ 1 }>
             <CloseIcon

@@ -18,12 +18,7 @@ const nextConfig = {
     styledComponents: true
   },
 
-  images: {
-    // TODO: remove this setting once non-static site can be deployed
-    unoptimized: true
-  },
-
-  output: "export"
+  trailingSlash: true
 };
 
 const plugins = [

@@ -3,7 +3,7 @@
  */
 export const NEWM_SUPPORT_EMAIL = "support@newm.io";
 export const NEWM_CLICKUP_FORM_URL =
-  "https://forms.clickup.com/24371401/f/q7r69-16220/410BQW62PPVQ51RI2B";
+  "https://projectnewm.atlassian.net/servicedesk/customer/portal/1";
 export const NEWM_IO_URL = "https://newm.io/";
 export const NEWM_STUDIO_DISCORD_URL =
   "https://discord.com/channels/931903540056694856/1153293933468713041";

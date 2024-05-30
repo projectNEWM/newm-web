@@ -129,6 +129,7 @@ export const useHlsJs = ({
   onSongEnded,
 }: UseHlsJsParams): UseHlsJsResult => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [audioProgress, setAudioProgress] = useState(0);
 
   /**
    * Calls onPlaySong if it exists.
@@ -169,21 +170,44 @@ export const useHlsJs = ({
   );
 
   /**
+   * Kicks off a timeout that will update the song progress
+   * if the song progressed.
+   */
+  const trackSongProgress = useCallback(() => {
+    return setTimeout(() => {
+      if (!videoRef.current) return;
+
+      const prevProgress = audioProgress;
+      const currentTime = videoRef.current.currentTime;
+      const duration = videoRef.current.duration;
+      const currentProgress = duration ? (currentTime / duration) * 100 : 0;
+
+      if (prevProgress !== currentProgress) {
+        setAudioProgress(currentProgress);
+      }
+    }, 250);
+  }, [audioProgress]);
+
+  /**
    * Play song using native browser functionality.
    */
-  const playSongNatively = (song: Song) => {
+  const playSongNatively = useCallback((song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
     videoRef.current.src = song.streamUrl;
-    videoRef.current.addEventListener("loadedmetadata", () => {
-      videoRef.current?.play();
+
+    videoRef.current.addEventListener("loadedmetadata", async () => {
+      await videoRef.current?.play();
+      trackSongProgress();
     });
-  };
+    // Callback doesn't need to update on trackSongProgress changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Play song using HLS library.
    */
-  const playSongWithHlsJs = (song: Song) => {
+  const playSongWithHlsJs = useCallback((song: Song) => {
     if (!videoRef.current || !song.streamUrl) return;
 
     const hls = new Hls({
@@ -192,10 +216,17 @@ export const useHlsJs = ({
         xhr.withCredentials = true;
       },
     });
+
     hls.loadSource(song.streamUrl);
     hls.attachMedia(videoRef.current);
-    videoRef.current.play();
-  };
+
+    videoRef.current.addEventListener("loadedmetadata", async () => {
+      await videoRef.current?.play();
+      trackSongProgress();
+    });
+    // Callback doesn't need to update on trackSongProgress changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /**
    * Plays song using either native browser or hls.js functionality.
@@ -211,10 +242,9 @@ export const useHlsJs = ({
       }
 
       handlePlaySong(song);
-
       videoRef.current.addEventListener("ended", handleSongEnded);
     },
-    [handlePlaySong, handleSongEnded]
+    [handlePlaySong, handleSongEnded, playSongNatively, playSongWithHlsJs]
   );
 
   /**
@@ -228,8 +258,8 @@ export const useHlsJs = ({
       videoRef.current.removeAttribute("src");
       videoRef.current.load();
 
+      setAudioProgress(0);
       handleStopSong(song);
-
       videoRef.current.removeEventListener("ended", handleSongEnded);
     },
     [handleStopSong, handleSongEnded]
@@ -238,7 +268,15 @@ export const useHlsJs = ({
   /**
    * Memoized playSong and stopSong handlers.
    */
-  const result = useMemo(() => ({ playSong, stopSong }), [playSong, stopSong]);
+  const result = useMemo(
+    () => ({
+      // render a small percentage when just starting to show song is playing
+      audioProgress: audioProgress < 0.75 ? 0.75 : audioProgress,
+      playSong,
+      stopSong,
+    }),
+    [playSong, stopSong, audioProgress]
+  );
 
   /**
    * Create video element and attach ref.
@@ -247,6 +285,20 @@ export const useHlsJs = ({
     const video = document.createElement("video");
     videoRef.current = video;
   }, []);
+
+  /**
+   * Tracks song progress as it continues to play.
+   */
+  useEffect(() => {
+    const timeoutId = trackSongProgress();
+
+    if (!videoRef.current || videoRef.current.ended) {
+      setAudioProgress(0);
+      clearTimeout(timeoutId);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [audioProgress, trackSongProgress]);
 
   /**
    * Cleanup
@@ -270,7 +322,9 @@ export const useHlsJs = ({
  *  );
  */
 export const useBetterMediaQuery = (mediaQueryString: string) => {
-  const [matches, setMatches] = useState<boolean | null>(null);
+  const [matches, setMatches] = useState<boolean | null>(
+    window.matchMedia(mediaQueryString).matches
+  );
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(mediaQueryString);

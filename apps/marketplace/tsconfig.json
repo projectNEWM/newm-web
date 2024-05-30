@@ -16,11 +16,7 @@
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node",
-      "vite/client"
-    ]
+    "types": ["jest", "node", "vite/client"]
   },
   "include": [
     "**/*.ts",

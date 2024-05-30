@@ -36,16 +36,16 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
     : "N/A";
 
   const dspFormattedPricingAda = dspPriceAda
-    ? `(~${formatPriceToDecimal(dspPriceAda)}₳/RELEASE)`
+    ? `(≈${formatPriceToDecimal(dspPriceAda)}₳/RELEASE)`
     : undefined;
 
   const collabFormattedPricing = collabPerArtistPriceAda
-    ? ` (~${formatPriceToDecimal(collabPerArtistPriceAda, 1)}₳/each)`
+    ? ` (≈${formatPriceToDecimal(collabPerArtistPriceAda, 1)}₳/each)`
     : "";
 
   const totalMintFormattedPricing =
     mintPriceAda && collabPerArtistPriceAda
-      ? ` (~${formatPriceToDecimal(
+      ? ` (≈${formatPriceToDecimal(
           String(
             parseFloat(mintPriceAda) + parseFloat(collabPerArtistPriceAda)
           ),

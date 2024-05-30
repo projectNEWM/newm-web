@@ -19,8 +19,6 @@ export const asThunkHook = <Returned, Arg>(
     UseWrappedThunkResponse<Returned>
   ] => {
     const [data, setData] = useState<Returned>();
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
 
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
@@ -28,28 +26,16 @@ export const asThunkHook = <Returned, Arg>(
     const callHook = useCallback(
       async (arg: Arg) => {
         setIsLoading(true);
-        try {
-          const action = thunk(arg) as any; // eslint-disable-line
-          const result = (await dispatch(action)) as PayloadAction<Returned>;
+        const action = thunk(arg) as any; // eslint-disable-line
+        const result = (await dispatch(action)) as PayloadAction<Returned>;
 
-          // Check if the thunk execution was successful
-          if (thunk.fulfilled.match(result)) {
-            setData(result.payload);
-            setIsSuccess(true);
-          } else {
-            setIsSuccess(false);
-          }
-        } catch (error) {
-          setIsError(true);
-          setIsSuccess(false);
-        } finally {
-          setIsLoading(false);
-        }
+        setData(result.payload);
+        setIsLoading(false);
       },
-      [dispatch, setIsError, setIsLoading, setIsSuccess]
+      [dispatch]
     );
 
-    return [callHook, { data, isError, isLoading, isSuccess }];
+    return [callHook, { data, isLoading }];
   };
 
   return useWrappedThunk;

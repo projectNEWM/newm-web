@@ -2,13 +2,18 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { isProd } from "@newm-web/env";
 import { isReduxLoggingEnabled } from "./buildParams";
+import { newmApi } from "./api";
+import { uiReducer } from "./modules/ui";
 
-export const reducer = combineReducers({});
+export const reducer = combineReducers({
+  ui: uiReducer,
+  [newmApi.reducerPath]: newmApi.reducer,
+});
 
 const store = configureStore({
   devTools: !isProd,
   middleware: (getDefaultMiddleware) => {
-    const baseMiddleware = getDefaultMiddleware();
+    const baseMiddleware = getDefaultMiddleware().prepend(newmApi.middleware);
 
     return isReduxLoggingEnabled
       ? baseMiddleware.prepend(logger)
