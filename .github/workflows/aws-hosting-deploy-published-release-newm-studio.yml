@@ -1,4 +1,4 @@
-name: Deploy app to AWS on published release NEWM Studio
+name: Deploy NEWM Studio app to AWS on published release
 on:
  release:
    types: [ published ]

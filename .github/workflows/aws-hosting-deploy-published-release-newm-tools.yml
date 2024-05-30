@@ -1,4 +1,4 @@
-name: Deploy app to AWS on published release NEWM Tools
+name: Deploy NEWM Tools app to AWS on published release
 on:
  release:
    types: [ published ]
@@ -13,15 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm install
-      - run: npx nx build tools
-        env:
-          VITE_ENV: production
-
       - name: Lambda-ify
         run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/tools/Dockerfile
 
@@ -31,7 +22,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }} #TODO: These might need the tools role or modify this to be a generic role
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy tools
@@ -48,5 +39,5 @@ jobs:
               "text": "NEWM Tools updated in production. View at https://newm.tools. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }} #TODO: This should be a tools webhook
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_TOOLS_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

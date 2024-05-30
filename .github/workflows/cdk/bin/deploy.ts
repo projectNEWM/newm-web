@@ -10,7 +10,9 @@ import { Tags } from "aws-cdk-lib";
 const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
-const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
+const recaptchaKeyStaging =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
+const recaptchaKeyProd = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD || "";
 const appEnv = process.env.NEXT_PUBLIC_ENV || "";
 const rootDir = path.resolve(__dirname, "..", "..", "..", "..");
 
@@ -25,7 +27,8 @@ class WebDeployStack extends cdk.Stack {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
           buildArgs: {
             NEXT_PUBLIC_ENV: appEnv,
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD: recaptchaKeyProd,
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKeyStaging,
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
