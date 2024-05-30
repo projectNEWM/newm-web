@@ -37,7 +37,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Mobile Wallet Connector updated in production. View at https://newm.tools/wallet-connect. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+              "text": "NEWM Mobile Wallet Connector updated in production. View at https://newm.tools/wallet-connect . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }} ."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MOBILE_WALLET_CONNECTOR_WEBHOOK }}
