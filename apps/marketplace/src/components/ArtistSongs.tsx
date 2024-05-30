@@ -3,9 +3,12 @@ import { FunctionComponent } from "react";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale/api";
 
-const ArtistSongs: FunctionComponent = () => {
-  // TODO: limit results by artist ID once artist page references API data
-  const { isLoading, data = [] } = useGetSalesQuery();
+interface ArtistSongsProps {
+  readonly artistId: string;
+}
+
+const ArtistSongs: FunctionComponent<ArtistSongsProps> = ({ artistId }) => {
+  const { isLoading, data = [] } = useGetSalesQuery({ artistIds: [artistId] });
 
   return (
     <Box mt={ 7 }>

@@ -14,12 +14,17 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
   currentSaleId,
   artistName,
 }) => {
+  const skip = !artistId || !currentSaleId;
+
   const theme = useTheme();
-  const { isLoading, data: sales = [] } = useGetSalesQuery({
-    artistIds: artistId ? [artistId] : undefined,
-    ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
-    limit: 8,
-  });
+  const { isLoading, data: sales = [] } = useGetSalesQuery(
+    {
+      artistIds: artistId ? [artistId] : undefined,
+      ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
+      limit: 8,
+    },
+    { skip }
+  );
 
   const title = (
     <Typography
@@ -37,7 +42,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
 
   return (
     <Box mt={ [10, 8, 12.5] }>
-      <Sales isLoading={ isLoading } sales={ sales } title={ title } />
+      <Sales isLoading={ skip || isLoading } sales={ sales } title={ title } />
     </Box>
   );
 };

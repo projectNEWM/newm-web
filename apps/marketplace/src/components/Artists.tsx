@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import ArtistsSkeleton from "./skeletons/ArtistsSkeleton";
 import Artist from "./Artist";
 import { Artist as ArtistItem } from "../modules/artist";
+import { gridSizeColumnMap } from "../common";
 
 interface ArtistsProps {
   readonly artists?: ReadonlyArray<ArtistItem>;
@@ -49,29 +50,37 @@ const Artists: FunctionComponent<ArtistsProps> = ({
       </Stack>
 
       <Grid justifyContent="flex-start" rowGap={ 5 } container>
-        { artists.map(({ id, pictureUrl, name, marketplaceSongCount }, idx) => {
-          return (
-            <Grid
-              display="flex"
-              justifyContent="center"
-              key={ id }
-              lg={ 2.4 }
-              md={ 3 }
-              sm={ 4 }
-              xs={ 6 }
-              item
-            >
-              <Artist
-                imageUrl={ pictureUrl }
-                isLoading={ isLoading }
-                orientation="column"
-                subtitle={ `${marketplaceSongCount} songs` }
-                title={ name }
-                onSelectArtist={ () => handleSelectArtist(id) }
-              />
-            </Grid>
-          );
-        }) }
+        { !isLoading && !artists.length ? (
+          <Box flex={ 1 }>
+            <Typography sx={ { marginTop: 8, textAlign: "center" } }>
+              No artists to display at this time.
+            </Typography>
+          </Box>
+        ) : (
+          artists.map(({ id, pictureUrl, name, marketplaceSongCount }) => {
+            return (
+              <Grid
+                display="flex"
+                item={ true }
+                justifyContent="center"
+                key={ id }
+                lg={ gridSizeColumnMap.lg[itemOrientation] }
+                md={ gridSizeColumnMap.md[itemOrientation] }
+                sm={ gridSizeColumnMap.sm[itemOrientation] }
+                xs={ gridSizeColumnMap.xs[itemOrientation] }
+              >
+                <Artist
+                  imageUrl={ pictureUrl }
+                  isLoading={ isLoading }
+                  orientation={ itemOrientation }
+                  subtitle={ `${marketplaceSongCount} songs` }
+                  title={ name }
+                  onSelectArtist={ () => handleSelectArtist(id) }
+                />
+              </Grid>
+            );
+          })
+        ) }
       </Grid>
     </Stack>
   );
