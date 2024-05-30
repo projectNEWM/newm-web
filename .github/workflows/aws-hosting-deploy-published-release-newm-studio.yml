@@ -41,7 +41,7 @@ jobs:
 
       - name: Send update to slack
         id: slack
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
             {
