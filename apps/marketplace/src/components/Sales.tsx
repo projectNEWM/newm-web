@@ -32,7 +32,7 @@ const Sales: FunctionComponent<SalesProps> = ({
   };
 
   const handleSubtitleClick = (id: string) => {
-    router.push(`artist/${id}`);
+    router.push(`/artist/${id}`);
   };
 
   if (isLoading) {
