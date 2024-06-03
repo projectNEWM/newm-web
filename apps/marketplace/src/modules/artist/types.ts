@@ -1,6 +1,8 @@
 export interface Artist {
   // Apple Music artist profile ID.
   readonly appleMusicProfile: string;
+  // Valid URL of Artist banner image file.
+  readonly bannerUrl?: string;
   // Artist biography.
   readonly biography?: string;
   // Date and time when the Artist was created (ISO-8601 format).

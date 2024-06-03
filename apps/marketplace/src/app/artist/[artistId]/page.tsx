@@ -27,8 +27,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   return (
     <>
       <Stack direction="column">
-        { /* TODO: replace with banner image url when available */ }
-        <BannerImage imageUrl={ "" } isLoading={ isLoading } />
+        <BannerImage imageUrl={ artist?.bannerUrl } isLoading={ isLoading } />
 
         <Container sx={ { flexGrow: 1 } }>
           <ProfileHeader
