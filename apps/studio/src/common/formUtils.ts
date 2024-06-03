@@ -10,10 +10,12 @@ import {
 import { BarcodeConfig, BarcodeType } from "./types";
 import {
   REGEX_EVEARA_PROHIBITED_CHARACTERS,
+  REGEX_INSTAGRAM_PROFILE,
   REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
   REGEX_SONG_TITLE,
+  REGEX_X_PROFILE,
 } from "./regex";
 import {
   MAX_CHARACTER_COUNT,
@@ -134,6 +136,12 @@ export const commonYupValidation = {
       )
       .min(1, "At least one genre is required")
       .max(2, "Maximum of two genres allowed"),
+  instagramUrl: Yup.string()
+    .matches(REGEX_WEBSITE_URL, "Please enter a valid URL")
+    .matches(
+      REGEX_INSTAGRAM_PROFILE,
+      "Must be a valid \"instagram.com\" profile URL. Example: https://www.instagram.com/username"
+    ),
   ipi: Yup.string().matches(
     REGEX_9_TO_11_DIGITS,
     "Field should contain 9 to 11 digits"
@@ -255,6 +263,12 @@ export const commonYupValidation = {
     REGEX_WEBSITE_URL,
     "Please enter a valid URL"
   ),
+  xUrl: Yup.string()
+    .matches(REGEX_WEBSITE_URL, "Please enter a valid URL")
+    .matches(
+      REGEX_X_PROFILE,
+      "Must be a valid \"x.com\" or \"twitter.com\" profile URL. Example: https://x.com/username"
+    ),
   year: Yup.string()
     .matches(/^[0-9]+$/, "Year must only contain digits")
     .min(4, "Year must be 4 digits")

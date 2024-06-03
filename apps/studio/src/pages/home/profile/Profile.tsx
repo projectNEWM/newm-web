@@ -165,7 +165,7 @@ const Profile: FunctionComponent = () => {
         .required("Company name is required"),
     }),
     firstName: commonYupValidation.firstName,
-    instagramUrl: commonYupValidation.websiteUrl,
+    instagramUrl: commonYupValidation.instagramUrl,
     ipi: commonYupValidation.ipi,
     isni: commonYupValidation.isni,
     lastName: commonYupValidation.lastName,
@@ -184,7 +184,7 @@ const Profile: FunctionComponent = () => {
         REGEX_SPOTIFY_PROFILE,
         "URL must be in the format similar to \"https://open.spotify.com/artist/your-artist-id\""
       ),
-    twitterUrl: commonYupValidation.websiteUrl,
+    twitterUrl: commonYupValidation.xUrl,
     websiteUrl: commonYupValidation.websiteUrl,
   });
 
