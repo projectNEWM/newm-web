@@ -35,6 +35,5 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            Visit the studio preview URL for this PR :rocket: :
-            https://${{ github.event.pull_request.number }}.artist.preview.newm.io/
+            Visit the studio preview URL for this PR :rocket: : https://${{ github.event.pull_request.number }}.artist.preview.newm.io/
           allow-repeats: true
