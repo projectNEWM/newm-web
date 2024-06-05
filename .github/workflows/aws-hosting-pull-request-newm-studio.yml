@@ -30,3 +30,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_PREVIEW_BUCKET }}/${{ github.event.pull_request.number }} --no-progress --delete
+      - name: Url to PR comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            Visit the studio preview URL for this PR :rocket: :
+            https://${{ github.event.pull_request.number }}.artist.preview.newm.io/
+          allow-repeats: true
