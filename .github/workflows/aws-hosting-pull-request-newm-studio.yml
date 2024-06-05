@@ -36,4 +36,5 @@ jobs:
           message: |
             Visit the studio preview URL for this PR :rocket: :
             https://${{ github.event.pull_request.number }}.artist.preview.newm.io/
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-repeats: true
