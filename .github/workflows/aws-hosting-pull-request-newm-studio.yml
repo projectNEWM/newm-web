@@ -12,6 +12,7 @@ jobs:
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
+      pull-requests: write  # Explicitly allow writing to pull requests
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -36,5 +37,4 @@ jobs:
           message: |
             Visit the studio preview URL for this PR :rocket: :
             https://${{ github.event.pull_request.number }}.artist.preview.newm.io/
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-repeats: true
