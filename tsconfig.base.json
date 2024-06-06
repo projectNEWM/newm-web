@@ -19,6 +19,7 @@
       "@newm-web/components": ["packages/components/src/index.ts"],
       "@newm-web/elements": ["packages/elements/src/index.ts"],
       "@newm-web/env": ["packages/env/src/index.ts"],
+      "@newm-web/modules": ["packages/modules/src/index.ts"],
       "@newm-web/theme": ["packages/theme/src/index.ts"],
       "@newm-web/types": ["packages/types/src/index.ts"],
       "@newm-web/utils": ["packages/utils/src/index.ts"]
