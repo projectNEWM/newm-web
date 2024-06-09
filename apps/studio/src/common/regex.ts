@@ -54,17 +54,6 @@ export const REGEX_X_PROFILE = generateRegexForDomainsWithPath([
 ]);
 
 /**
- * Matches strings containing alphanumeric characters (both lower and uppercase),
- * spaces, and most ASCII punctuation characters. It excludes some special characters like `%,*,=#<>{}~@\\/;:?$"`.
- * Main purpose is to prevent emojis.
- *
- * - `\w`: Matches any word character (alphanumeric + underscore).
- * - `\s`: Matches any whitespace character (spaces, tabs, line breaks).
- * - `!-/:-@[-``{-~`: Matches most ASCII punctuation characters.
- */
-export const REGEX_SONG_TITLE = /^[\w\s!-/:-@[-`{-~]*$/;
-
-/**
  * A regular expression pattern that matches strings excluding specific special characters
  * like %,*=#<>{}~@\\/;:?$".
  *
