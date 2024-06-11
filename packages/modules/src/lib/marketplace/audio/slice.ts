@@ -2,26 +2,52 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AudioState } from "./types";
 
 const initialState: AudioState = {
-  previewUrl: "",
+  audio: undefined,
+  audioProgress: 0,
+  audioUrl: "",
+  isAudioPlaying: false,
 };
 
 const audioSlice = createSlice({
   initialState,
   name: "audio",
   reducers: {
-    clearSaleAudioPreviewUrl: (state) => {
-      state.previewUrl = "";
+    resetAudioState: (state) => {
+      state.audio = undefined;
+      state.audioProgress = 0;
+      state.isAudioPlaying = false;
+      state.audioUrl = "";
     },
-    setSaleAudioPreviewUrl: (
+    setAudio: (state, { payload }: PayloadAction<AudioState["audio"]>) => {
+      state.audio = payload;
+    },
+    setAudioProgress: (
       state,
-      { payload }: PayloadAction<AudioState["previewUrl"]>
+      { payload }: PayloadAction<AudioState["audioProgress"]>
     ) => {
-      state.previewUrl = payload;
+      state.audioProgress = payload;
+    },
+    setAudioUrl: (
+      state,
+      { payload }: PayloadAction<AudioState["audioUrl"]>
+    ) => {
+      state.audioUrl = payload;
+    },
+    setIsAudioPlaying: (
+      state,
+      { payload }: PayloadAction<AudioState["isAudioPlaying"]>
+    ) => {
+      state.isAudioPlaying = payload;
     },
   },
 });
 
-export const { clearSaleAudioPreviewUrl, setSaleAudioPreviewUrl } =
-  audioSlice.actions;
+export const {
+  resetAudioState,
+  setAudio,
+  setAudioUrl,
+  setAudioProgress,
+  setIsAudioPlaying,
+} = audioSlice.actions;
 
 export default audioSlice.reducer;

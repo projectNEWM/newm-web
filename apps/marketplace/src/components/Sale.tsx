@@ -27,7 +27,8 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { audioProgress, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const { audioUrl, audioProgress, isAudioPlaying, playPauseAudio } =
+    usePlayAudioUrl();
 
   const initialFormValues = {
     streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
@@ -96,7 +97,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
           imageDimensions={ 480 }
           isLoading={ isLoading }
           isPlayable={ !!sale.song.clipUrl }
-          isPlaying={ isAudioPlaying }
+          isPlaying={ audioUrl === sale.song.clipUrl && isAudioPlaying }
           priceInNewm={ sale.costAmount }
           priceInUsd={ sale.costAmountUsd }
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }

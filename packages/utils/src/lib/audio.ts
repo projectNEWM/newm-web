@@ -1,22 +1,31 @@
+import {
+  AudioState,
+  resetAudioState,
+  setAudio,
+  setAudioProgress,
+  setAudioUrl,
+  setIsAudioPlaying,
+} from "@newm-web/modules";
 import { Howl } from "howler";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * Hook used to play an audio file using the Howl library.
  */
 export const usePlayAudioUrl = () => {
-  const [audio, setAudio] = useState<Howl>();
-  const [audioUrl, setAudioUrl] = useState<string>();
-  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
-  const [audioProgress, setAudioProgress] = useState<number>(0);
+  const dispatch = useDispatch();
+  const { audio, audioUrl, audioProgress, isAudioPlaying }: AudioState =
+    useSelector((state: { audio: AudioState }): AudioState => state.audio);
 
   useEffect(() => {
     return () => {
       if (audio?.playing()) {
         audio.stop();
+        dispatch(resetAudioState());
       }
     };
-  }, [audio]);
+  }, [audio, dispatch]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -31,17 +40,16 @@ export const usePlayAudioUrl = () => {
         : 0;
 
       if (prevProgress !== currentProgress) {
-        setAudioProgress(currentProgress);
+        dispatch(setAudioProgress(currentProgress));
       }
     }, 250);
 
     if (!audio?.playing()) {
-      setAudioProgress(0);
       clearTimeout(timeoutId);
     }
 
     return () => clearTimeout(timeoutId);
-  }, [audio, audioProgress, isAudioPlaying]);
+  }, [audio, audioProgress, dispatch, isAudioPlaying]);
 
   const playPauseAudio = useCallback(
     (src?: string) => {
@@ -53,8 +61,11 @@ export const usePlayAudioUrl = () => {
       if (isCurrentSong) {
         if (audio?.playing()) {
           audio?.stop();
+          dispatch(setIsAudioPlaying(false));
+          dispatch(setAudioProgress(0));
         } else {
           audio?.play();
+          dispatch(setIsAudioPlaying(true));
         }
 
         return;
@@ -63,31 +74,29 @@ export const usePlayAudioUrl = () => {
       // if not currently selected song, stop playing
       if (audio?.playing()) {
         audio.stop();
+        dispatch(resetAudioState());
       }
 
       // play new song
       const newAudio = new Howl({
         html5: true,
         onend: () => {
-          setIsAudioPlaying(false);
+          dispatch(resetAudioState());
         },
         onpause: () => {
-          setIsAudioPlaying(false);
+          dispatch(setIsAudioPlaying(false));
         },
         onplay: (id) => {
-          setAudioUrl(src);
-          setIsAudioPlaying(true);
-        },
-        onstop: () => {
-          setIsAudioPlaying(false);
+          dispatch(setAudioUrl(src));
+          dispatch(setIsAudioPlaying(true));
         },
         src,
       });
 
       newAudio.play();
-      setAudio(newAudio);
+      dispatch(setAudio(newAudio));
     },
-    [audio, audioUrl]
+    [audio, audioUrl, dispatch]
   );
 
   const result = useMemo(
