@@ -1,3 +1,5 @@
+import { Howl } from "howler";
+
 export interface AudioState {
   audio: Howl | undefined;
   audioProgress: number;
