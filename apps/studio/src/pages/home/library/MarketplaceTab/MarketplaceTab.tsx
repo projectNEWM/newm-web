@@ -7,7 +7,7 @@ import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 
-export const Marketplace = () => {
+export const MarketplaceTab = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
