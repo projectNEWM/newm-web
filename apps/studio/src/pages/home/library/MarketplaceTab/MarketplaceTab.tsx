@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { Box, Typography } from "@mui/material";
 import theme from "@newm-web/theme";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { ConnectWallet } from "./ConnectWallet";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
@@ -11,6 +12,7 @@ export const MarketplaceTab = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
+  const { wallet } = useConnectWallet();
 
   const hasStreamTokens =
     walletSongsResponse?.data?.songs[0].song.id === songId;
@@ -20,7 +22,7 @@ export const MarketplaceTab = () => {
       ids: [songId],
       limit: 1,
     });
-  }, [getUserWalletSongs, songId]);
+  }, [getUserWalletSongs, songId, wallet]);
 
   if (isLoading) {
     return (
