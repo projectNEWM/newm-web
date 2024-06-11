@@ -11,7 +11,7 @@ import { MintingStatus } from "@newm-web/types";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
-import { Marketplace } from "./Marketplace";
+import { MarketplaceTab } from "./MarketplaceTab";
 import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
@@ -183,7 +183,7 @@ const ViewDetails: FunctionComponent = () => {
           <MintSong />
         </TabPanel>
         <TabPanel index={ 2 } value={ tab }>
-          <Marketplace />
+          <MarketplaceTab />
         </TabPanel>
       </Box>
     </>
