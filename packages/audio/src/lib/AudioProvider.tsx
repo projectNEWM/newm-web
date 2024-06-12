@@ -1,18 +1,18 @@
 import { FunctionComponent, ReactNode, useReducer } from "react";
 import AudioContext from "./AudioContext";
-import reducer, { initialStoreState } from "./reducer";
+import reducer, { initialState } from "./reducer";
 
 interface AudioProviderProps {
   readonly children: ReactNode;
 }
 
 const AudioProvider: FunctionComponent<AudioProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialStoreState);
-
-  const audioState = { dispatch, state };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <AudioContext.Provider value={ audioState }>{ children }</AudioContext.Provider>
+    <AudioContext.Provider value={ { dispatch, state } }>
+      { children }
+    </AudioContext.Provider>
   );
 };
 
