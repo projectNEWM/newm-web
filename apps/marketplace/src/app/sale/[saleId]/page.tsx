@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { HorizontalLine } from "@newm-web/elements";
 import { useRouter } from "next/navigation";
-import { useIncrement } from "@newm-web/audio";
+import { useNum } from "@newm-web/audio";
 import { useGetSaleQuery } from "../../../modules/sale";
 import MoreSongs from "../../../components/MoreSongs";
 import { Sale, SaleMetadata, SimilarSongs } from "../../../components";
@@ -16,7 +16,7 @@ interface SingleSongProps {
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   const router = useRouter();
-  const { num, increment } = useIncrement();
+  const { num, decrement } = useNum();
 
   const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
 
@@ -31,7 +31,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
   return (
     <Container>
       <h4>{ num }</h4>
-      <button onClick={ increment }>Increment</button>
+      <button onClick={ decrement }>Decrement</button>
 
       <Container maxWidth="md" sx={ { flexGrow: 1, mt: [0, 0, 5] } }>
         <Sale isLoading={ isLoading } sale={ sale } />

@@ -1,13 +1,17 @@
 import { useCallback } from "react";
-import { incrementNum } from "./actions";
+import { decrementNum, incrementNum } from "./actions";
 import { useAudioContext } from "./AudioContext";
 
-export const useIncrement = () => {
+export const useNum = () => {
   const { state, dispatch } = useAudioContext();
 
   const increment = useCallback(() => {
-    dispatch(incrementNum());
+    dispatch(incrementNum(1));
   }, [dispatch]);
 
-  return { increment, num: state.num };
+  const decrement = useCallback(() => {
+    dispatch(decrementNum(1));
+  }, [dispatch]);
+
+  return { decrement, increment, num: state.num };
 };
