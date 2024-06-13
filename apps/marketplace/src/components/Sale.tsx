@@ -13,8 +13,9 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
-import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
+import { formatNewmAmount } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
+import { usePlayAudioUrl } from "@newm-web/audio";
 import { SaleSkeleton } from "../components";
 import { Sale as SaleItem } from "../modules/sale";
 

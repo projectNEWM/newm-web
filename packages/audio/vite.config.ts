@@ -22,9 +22,9 @@ export default defineConfig({
       // Don't forget to update your package.json as well.
       formats: ["es", "cjs"],
 
-      name: "modules",
+      name: "audio",
     },
-    outDir: "../../dist/packages/modules",
+    outDir: "../../dist/packages/audio",
     reportCompressedSize: true,
     rollupOptions: {
       // External packages that should not be bundled into your library.
@@ -32,7 +32,7 @@ export default defineConfig({
     },
   },
 
-  cacheDir: "../../node_modules/.vite/modules",
+  cacheDir: "../../node_modules/.vite/audio",
 
   plugins: [
     react(),

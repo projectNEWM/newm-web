@@ -1,22 +1,21 @@
+import { Howl } from "howler";
+import { useCallback, useEffect, useMemo } from "react";
 import {
-  AudioState,
   resetAudioState,
   setAudio,
   setAudioProgress,
   setAudioUrl,
   setIsAudioPlaying,
-} from "@newm-web/modules";
-import { Howl } from "howler";
-import { useCallback, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+} from "./actions";
+import { useAudioContext } from "./AudioContext";
+import { AudioState } from "./types";
 
 /**
  * Hook used to play an audio file using the Howl library.
  */
 export const usePlayAudioUrl = () => {
-  const dispatch = useDispatch();
-  const { audio, audioUrl, audioProgress, isAudioPlaying }: AudioState =
-    useSelector((state: { audio: AudioState }): AudioState => state.audio);
+  const { state, dispatch } = useAudioContext();
+  const { audio, audioUrl, audioProgress, isAudioPlaying }: AudioState = state;
 
   useEffect(() => {
     return () => {
