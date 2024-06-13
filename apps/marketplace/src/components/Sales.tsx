@@ -72,7 +72,7 @@ const Sales: FunctionComponent<SalesProps> = ({
         ) : (
           sales.map(({ costAmount, costAmountUsd, id, song }) => {
             return (
-              <Grid key={ id } md={ 3 } sm={ 4 } xs={ 6 } item>
+              <Grid key={ id } md={ 3 } sm={ 4 } xs={ 12 } item>
                 <SongCard
                   audioProgress={ audioProgress }
                   coverArtUrl={ song.coverArtUrl }
