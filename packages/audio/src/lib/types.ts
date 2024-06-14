@@ -1,5 +1,12 @@
 import { Dispatch } from "react";
 import { Howl } from "howler";
+import {
+  resetAudioState,
+  setAudio,
+  setAudioProgress,
+  setAudioUrl,
+  setIsAudioPlaying,
+} from "./actions";
 
 export const RESET_AUDIO_STATE = "resetAudioState";
 export const SET_AUDIO = "setAudio";
@@ -7,29 +14,11 @@ export const SET_AUDIO_PROGRESS = "setAudioProgress";
 export const SET_AUDIO_URL = "setAudioUrl";
 export const SET_IS_AUDIO_PLAYING = "setIsAudioPlaying";
 
-export interface ResetAudioStateAction {
-  readonly type: typeof RESET_AUDIO_STATE;
-}
-
-export interface SetAudioAction {
-  readonly payload: Howl | undefined;
-  readonly type: typeof SET_AUDIO;
-}
-
-export interface SetAudioProgressAction {
-  readonly payload: number;
-  readonly type: typeof SET_AUDIO_PROGRESS;
-}
-
-export interface SetAudioUrlAction {
-  readonly payload: string;
-  readonly type: typeof SET_AUDIO_URL;
-}
-
-export interface SetIsAudioPlayingAction {
-  readonly payload: boolean;
-  readonly type: typeof SET_IS_AUDIO_PLAYING;
-}
+export type ResetAudioStateAction = ReturnType<typeof resetAudioState>;
+export type SetAudioAction = ReturnType<typeof setAudio>;
+export type SetAudioProgressAction = ReturnType<typeof setAudioProgress>;
+export type SetAudioUrlAction = ReturnType<typeof setAudioUrl>;
+export type SetIsAudioPlayingAction = ReturnType<typeof setIsAudioPlaying>;
 
 export type Action =
   | ResetAudioStateAction

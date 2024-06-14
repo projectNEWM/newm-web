@@ -1,4 +1,16 @@
-import { Action, AudioState } from "./types";
+import {
+  Action,
+  AudioState,
+  RESET_AUDIO_STATE,
+  SET_AUDIO,
+  SET_AUDIO_PROGRESS,
+  SET_AUDIO_URL,
+  SET_IS_AUDIO_PLAYING,
+  SetAudioAction,
+  SetAudioProgressAction,
+  SetAudioUrlAction,
+  SetIsAudioPlayingAction,
+} from "./types";
 
 export const initialState: AudioState = {
   audio: undefined,
@@ -7,20 +19,30 @@ export const initialState: AudioState = {
   isAudioPlaying: false,
 };
 
-const reducer = (state: AudioState, action: Action) => {
+const reducer = (state: AudioState, action: Action): AudioState => {
   switch (action.type) {
-    case "resetAudioState":
+    case RESET_AUDIO_STATE: {
       return initialState;
-    case "setAudio":
-      return { ...state, audio: action.payload };
-    case "setAudioProgress":
-      return { ...state, audioProgress: action.payload };
-    case "setAudioUrl":
-      return { ...state, audioUrl: action.payload };
-    case "setIsAudioPlaying":
-      return { ...state, isAudioPlaying: action.payload };
-    default:
+    }
+    case SET_AUDIO: {
+      const setAudioAction = action as SetAudioAction;
+      return { ...state, audio: setAudioAction.payload };
+    }
+    case SET_AUDIO_PROGRESS: {
+      const setAudioProgressAction = action as SetAudioProgressAction;
+      return { ...state, audioProgress: setAudioProgressAction.payload };
+    }
+    case SET_AUDIO_URL: {
+      const setAudioUrlAction = action as SetAudioUrlAction;
+      return { ...state, audioUrl: setAudioUrlAction.payload };
+    }
+    case SET_IS_AUDIO_PLAYING: {
+      const setIsAudioPlayingAction = action as SetIsAudioPlayingAction;
+      return { ...state, isAudioPlaying: setIsAudioPlayingAction.payload };
+    }
+    default: {
       return state;
+    }
   }
 };
 
