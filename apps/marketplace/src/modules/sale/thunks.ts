@@ -42,7 +42,12 @@ export const purchaseStreamTokens = createAsyncThunk(
       if ("error" in transactionResp || !transactionResp.data) return;
 
       const unsignedTransaction = transactionResp.data.txCborHex;
-      await signWalletTransaction(wallet, unsignedTransaction);
+      const signedTransaction = await signWalletTransaction(
+        wallet,
+        unsignedTransaction
+      );
+
+      wallet.submitTx(signedTransaction);
     } catch (error) {
       if (error instanceof Error) {
         dispatch(
