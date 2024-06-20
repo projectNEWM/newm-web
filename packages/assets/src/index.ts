@@ -9,6 +9,7 @@ import CheckIcon from "./lib/icons/CheckIcon";
 import CloseCircleFill from "./lib/icons/CloseCircleFill";
 import CloseIcon from "./lib/icons/CloseIcon";
 import DiscordLogo from "./lib/icons/DiscordLogo";
+import Document from "./lib/icons/Document";
 import DropdownAdornment from "./lib/icons/DropdownAdornment";
 import FoldersIcon from "./lib/icons/FoldersIcon";
 import GlobalFill from "./lib/icons/GlobalFill";
@@ -23,6 +24,7 @@ import PeopleIcon from "./lib/icons/PeopleIcon";
 import PlayButton from "./lib/icons/PlayButton";
 import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
 import SoundWave from "./lib/icons/SoundWave";
+import Suitcase from "./lib/icons/Suitcase";
 import Search from "./lib/icons/Search";
 import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
 import SpotifyLogo from "./lib/icons/SpotifyLogo";
@@ -45,6 +47,7 @@ export {
   CloseCircleFill,
   CloseIcon,
   DiscordLogo,
+  Document,
   DropdownAdornment,
   FoldersIcon,
   GlobalFill,
@@ -62,6 +65,7 @@ export {
   SoundCloudLogo,
   SoundWave,
   SpotifyLogo,
+  Suitcase,
   TimeCircleLine,
   UnselectedCheckboxIcon,
   UploadIcon,

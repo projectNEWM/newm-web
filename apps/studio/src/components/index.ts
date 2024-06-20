@@ -29,6 +29,7 @@ export { default as SquareGridCard } from "./SquareGridCard";
 export { default as Toast } from "./Toast";
 export { default as UpdateWalletAddressModal } from "./UpdateWalletAddressModal";
 export { default as TableDropdownSelect } from "./TableDropdownSelect";
+export * from "./TableDropdownSelect";
 export { default as ViewPDF } from "./ViewPDF";
 export { SearchBox } from "./SearchBox";
 export { default as IconStatus } from "./library/IconStatus";

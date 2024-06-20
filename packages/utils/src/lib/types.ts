@@ -14,7 +14,9 @@ export interface WindowDimensions {
 
 export interface UseWrappedThunkResponse<Returned> {
   readonly data?: Returned;
+  readonly isError: boolean;
   readonly isLoading: boolean;
+  readonly isSuccess: boolean;
 }
 
 export type CustomError = {
