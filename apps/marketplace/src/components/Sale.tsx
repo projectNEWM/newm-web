@@ -13,8 +13,9 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
-import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
+import { formatNewmAmount } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
+import { usePlayAudioUrl } from "@newm-web/audio";
 import { SaleSkeleton } from "../components";
 import { Sale as SaleItem } from "../modules/sale";
 import { usePurchaseStreamTokensThunk } from "../modules/sale/thunks";
@@ -35,9 +36,10 @@ const Sale: FunctionComponent<SaleProps> = ({
   const theme = useTheme();
   const router = useRouter();
 
-  const { audioProgress, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
   const [createPurchase, { isLoading: isTransactionLoading }] =
     usePurchaseStreamTokensThunk();
+  const { audioUrl, audioProgress, isAudioPlaying, playPauseAudio } =
+    usePlayAudioUrl();
 
   const initialFormValues = {
     streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
@@ -121,7 +123,7 @@ const Sale: FunctionComponent<SaleProps> = ({
           imageDimensions={ 480 }
           isLoading={ isSaleLoading }
           isPlayable={ !!sale.song.clipUrl }
-          isPlaying={ isAudioPlaying }
+          isPlaying={ audioUrl === sale.song.clipUrl && isAudioPlaying }
           priceInNewm={ sale.costAmount }
           priceInUsd={ sale.costAmountUsd }
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
