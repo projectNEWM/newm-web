@@ -47,7 +47,15 @@ export const purchaseStreamTokens = createAsyncThunk(
         unsignedTransaction
       );
 
-      wallet.submitTx(signedTransaction);
+      await wallet.submitTx(signedTransaction);
+
+      dispatch(
+        setToastMessage({
+          message: `Stream token purchase was successful, please allow up 
+            to 5 minutes for the transaction to complete.`,
+          severity: "success",
+        })
+      );
     } catch (error) {
       if (error instanceof Error) {
         dispatch(
