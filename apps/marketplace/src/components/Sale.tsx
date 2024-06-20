@@ -266,7 +266,7 @@ const Sale: FunctionComponent<SaleProps> = ({
                     } }
                   >
                     <Button
-                      disabled={ !isValid }
+                      disabled={ !isValid || !sale.availableBundleQuantity }
                       isLoading={ isTransactionLoading }
                       type="submit"
                       width="full"

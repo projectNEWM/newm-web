@@ -25,7 +25,10 @@ export const purchaseStreamTokens = createAsyncThunk(
       const utxoCborHexList = await wallet.getUtxos(amountCborHex);
 
       if (!utxoCborHexList) {
-        throw new Error("Insufficient NEWM tokens in wallet");
+        throw new Error(
+          `Insufficient NEWM tokens in wallet. Please add NEWM tokens to
+          your wallet and try again.`
+        );
       }
 
       const transactionResp = await dispatch(
