@@ -1,5 +1,9 @@
 import {
   ApiSale,
+  GenerateOrderRequest,
+  GenerateOrderResponse,
+  GenerateTransactionRequest,
+  GenerateTransactionResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
@@ -11,6 +15,53 @@ import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
+    generateOrder: build.mutation<GenerateOrderResponse, GenerateOrderRequest>({
+      invalidatesTags: [Tags.Sale],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while generating order",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/amount",
+      }),
+    }),
+    generateTransaction: build.mutation<
+      GenerateTransactionResponse,
+      GenerateTransactionRequest
+    >({
+      invalidatesTags: [Tags.Sale],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while generating transaction",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/transaction",
+      }),
+    }),
     getSale: build.query<GetSaleResponse, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {

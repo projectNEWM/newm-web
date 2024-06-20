@@ -17,17 +17,27 @@ import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
 import { SaleSkeleton } from "../components";
 import { Sale as SaleItem } from "../modules/sale";
+import { usePurchaseStreamTokensThunk } from "../modules/sale/thunks";
+
+interface FormValues {
+  readonly streamTokens: number;
+}
 
 interface SaleProps {
   readonly isLoading: boolean;
   readonly sale?: SaleItem;
 }
 
-const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
+const Sale: FunctionComponent<SaleProps> = ({
+  sale,
+  isLoading: isSaleLoading,
+}) => {
   const theme = useTheme();
   const router = useRouter();
 
   const { audioProgress, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const [createPurchase, { isLoading: isTransactionLoading }] =
+    usePurchaseStreamTokensThunk();
 
   const initialFormValues = {
     streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
@@ -78,7 +88,22 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
     router.push(`/artist/${artistId}`);
   };
 
-  if (isLoading) {
+  /**
+   * Initiates the process to create and sign a stream token
+   * purchase transaction.
+   */
+  const handlePurchaseStreamTokens = (values: FormValues) => {
+    if (!sale) {
+      throw new Error("no sale present");
+    }
+
+    createPurchase({
+      bundleQuantity: values.streamTokens,
+      saleId: sale.id,
+    });
+  };
+
+  if (isSaleLoading) {
     return <SaleSkeleton />;
   }
 
@@ -94,7 +119,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
           audioProgress={ audioProgress }
           coverArtUrl={ sale.song.coverArtUrl }
           imageDimensions={ 480 }
-          isLoading={ isLoading }
+          isLoading={ isSaleLoading }
           isPlayable={ !!sale.song.clipUrl }
           isPlaying={ isAudioPlaying }
           priceInNewm={ sale.costAmount }
@@ -165,9 +190,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
         <Formik
           initialValues={ initialFormValues }
           validationSchema={ formValidationSchema }
-          onSubmit={ () => {
-            return;
-          } }
+          onSubmit={ handlePurchaseStreamTokens }
         >
           { ({ values, isValid }) => {
             const totalCost = getTotalPurchaseCost(values.streamTokens);
@@ -242,7 +265,12 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
                       backgroundColor: theme.colors.grey600,
                     } }
                   >
-                    <Button disabled={ !isValid } type="submit" width="full">
+                    <Button
+                      disabled={ !isValid }
+                      isLoading={ isTransactionLoading }
+                      type="submit"
+                      width="full"
+                    >
                       <Typography
                         fontWeight={ theme.typography.fontWeightBold }
                         variant="body1"

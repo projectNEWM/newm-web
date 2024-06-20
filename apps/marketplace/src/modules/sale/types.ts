@@ -108,6 +108,36 @@ export interface GetSalesParams {
   readonly statuses?: ReadonlyArray<string>;
 }
 
+export interface GenerateOrderRequest {
+  // Quantity of bundles to purchase
+  readonly bundleQuantity: number;
+  // Incentive to process order earlier in queue
+  readonly incentiveAmount?: number;
+  // UUID of the Sale
+  readonly saleId: string;
+}
+
+export interface GenerateOrderResponse {
+  // CBOR format-encoded order amount
+  readonly amountCborHex: string;
+  // UUID of the associated pending order
+  readonly orderId: string;
+}
+
+export interface GenerateTransactionRequest {
+  // Cardano wallet change address
+  readonly changeAddress: string;
+  // UUID of the Order
+  readonly orderId: string;
+  // CBOR format-encoded list of UTXOs
+  readonly utxoCborHexList: string;
+}
+
+export interface GenerateTransactionResponse {
+  // CBOR format-encoded unsigned transaction
+  readonly txCborHex: string;
+}
+
 export interface ApiSale extends Omit<Sale, "song"> {
   readonly song: ApiSong;
 }
