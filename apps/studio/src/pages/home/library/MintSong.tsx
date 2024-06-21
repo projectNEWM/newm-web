@@ -352,62 +352,6 @@ const MintSong = () => {
                         </ErrorMessage>
                       </Box>
                     ) }
-
-                    { isMintingFormVisible && !isVerified && (
-                      <Alert
-                        action={
-                          <Button
-                            aria-label="close"
-                            color="yellow"
-                            sx={ { textTransform: "none" } }
-                            variant="outlined"
-                            onClick={ handleVerifyProfile }
-                          >
-                            Verify profile
-                          </Button>
-                        }
-                        severity="warning"
-                      >
-                        <Typography color="yellow">
-                          Verify your profile
-                        </Typography>
-                        <Typography
-                          color="yellow"
-                          fontWeight={ 400 }
-                          variant="subtitle1"
-                        >
-                          Profile verification is required to mint. Please
-                          verify your profile.
-                        </Typography>
-                      </Alert>
-                    ) }
-
-                    { isMintingFormVisible && !wallet && (
-                      <Alert
-                        action={
-                          <Button
-                            aria-label="close"
-                            color="yellow"
-                            sx={ { textTransform: "none" } }
-                            variant="outlined"
-                            onClick={ handleConnectWallet }
-                          >
-                            Connect wallet
-                          </Button>
-                        }
-                        severity="warning"
-                        sx={ { py: 2.5 } }
-                      >
-                        <Typography color="yellow">Connect a wallet</Typography>
-                        <Typography
-                          color="yellow"
-                          fontWeight={ 400 }
-                          variant="subtitle1"
-                        >
-                          To continue, please connect a wallet.
-                        </Typography>
-                      </Alert>
-                    ) }
                   </Stack>
 
                   <Box py={ 5 }>
