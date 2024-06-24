@@ -13,36 +13,25 @@ import {
   scrollToError,
   useWindowDimensions,
 } from "@newm-web/utils";
-import { MintingStatus } from "@newm-web/types";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Formik, FormikValues } from "formik";
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
-import { ConfirmContract } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import { useGetRolesQuery } from "../../../modules/content";
-import {
-  VerificationStatus,
-  emptyProfile,
-  useGetProfileQuery,
-} from "../../../modules/session";
+import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
   Creditor,
   Featured,
   Owner,
-  emptySong,
-  useGenerateArtistAgreementThunk,
   useGetCollaborationsQuery,
-  useGetSongQuery,
   usePatchSongThunk,
 } from "../../../modules/song";
 
 interface FormValues {
-  readonly consentsToContract: boolean;
   readonly creditors: Array<Creditor>;
   readonly featured: Array<Featured>;
   readonly isMinting: boolean;
@@ -52,40 +41,16 @@ interface FormValues {
 const MintSong = () => {
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
-  const { wallet } = useConnectWallet();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
   const coCreatorsRef = useRef<HTMLDivElement>(null);
-  const consentsToContractRef = useRef<HTMLDivElement>(null);
 
-  const {
-    data: {
-      companyName = "",
-      email,
-      firstName = "",
-      lastName = "",
-      nickname: stageName,
-      verificationStatus,
-      role,
-    } = emptyProfile,
-  } = useGetProfileQuery();
-  const { data: { title, mintingStatus } = emptySong } =
-    useGetSongQuery(songId);
+  const { data: { email, role } = emptyProfile } = useGetProfileQuery();
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: songId });
 
-  const [patchSong, { isLoading: isSongLoading }] = usePatchSongThunk();
-  const [generateArtistAgreement, { isLoading: isArtistAgreementLoading }] =
-    useGenerateArtistAgreementThunk();
+  const [patchSong, { isLoading }] = usePatchSongThunk();
 
-  const [stepIndex, setStepIndex] = useState<0 | 1>(0);
   const [showWarning, setShowWarning] = useState(true);
-
-  const isLoading = isSongLoading || isArtistAgreementLoading;
-  const isVerified = verificationStatus === VerificationStatus.Verified;
-  const artistName = `${firstName} ${lastName}`;
-
-  // some functionality is different if minting has already been initiated
-  const isMintingInitiated = mintingStatus !== MintingStatus.Undistributed;
 
   // get owners from collaborations array
   const owners: Array<Owner> = collabs
@@ -153,10 +118,10 @@ const MintSong = () => {
   const initialFeatured = featured.length ? featured : [];
 
   // Set collaborator content as visible if any have been added
+  // TODO: Set to mintingStatus !== MintingStatus.Undistributed;
   const isMinting = collabs.length > 0;
 
   const initialValues: FormValues = {
-    consentsToContract: false,
     creditors: initialCreditors,
     featured: initialFeatured,
     isMinting,
@@ -166,50 +131,15 @@ const MintSong = () => {
   const { data: roles = [] } = useGetRolesQuery();
 
   const validationSchema = Yup.object().shape({
-    consentsToContract: Yup.bool().required("This field is required"),
     creditors: commonYupValidation.creditors(roles),
     owners: commonYupValidation.owners,
   });
 
-  const handleSubmitStep = async (values: FormValues) => {
-    const updatedValues = getUpdatedValues(initialValues, values);
-
-    if (stepIndex === 0) {
-      handleCompleteFirstStep();
-    } else {
-      await generateArtistAgreement({
-        artistName,
-        companyName,
-        saved: true,
-        songId,
-        songName: title,
-        stageName,
-      });
-
-      patchSong({ id: songId, ...updatedValues });
-    }
-  };
-
-  const handleCompleteFirstStep = async () => {
-    await generateArtistAgreement({
-      artistName,
-      companyName,
-      songName: title,
-      stageName,
-    });
-
-    setStepIndex(1);
-  };
-
-  const handleUpdateCollaborators = (values: FormikValues) => {
+  const handleSubmitForm = (values: FormikValues) => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
     patchSong({ id: songId, ...updatedValues });
   };
-
-  const handleSubmitForm = isMintingInitiated
-    ? handleUpdateCollaborators
-    : handleSubmitStep;
 
   return (
     <Box sx={ { maxWidth: "700px" } }>
@@ -231,17 +161,12 @@ const MintSong = () => {
             }
           >
             <AlertTitle sx={ { color: theme.colors.baseBlue, fontWeight: 600 } }>
-              { isMintingInitiated
-                ? "Collaborators can't be added or removed after " +
-                  "initiating minting"
-                : "These details cannot be changed after minting." }
+              { "Collaborators can't be added or removed after " +
+                "initiating minting." }
             </AlertTitle>
             <Typography color="baseBlue" fontWeight={ 500 } variant="subtitle1">
-              { isMintingInitiated
-                ? "If you need to add or remove a collaborator, please " +
-                  "contact support."
-                : "Please review all details carefully before moving forward " +
-                  "with the minting process." }
+              { "If you need to add or remove a collaborator, please " +
+                "contact support." }
             </Typography>
           </Alert>
         </Box>
@@ -262,18 +187,6 @@ const MintSong = () => {
           touched,
           values,
         }) => {
-          // if minting has been initiated, only show save button if
-          // collaborators have changed, otherwise only show if minting
-          const isStepOneButtonVisible = isMintingInitiated
-            ? dirty
-            : values.isMinting;
-
-          // if minting has been toggled but mint hasn't been initiated
-          const isMintingFormVisible = !isMintingInitiated && values.isMinting;
-
-          const isStepOneButtonDisabled =
-            isMintingFormVisible && (!isVerified || !wallet);
-
           const handleChangeOwners = (values: ReadonlyArray<Owner>) => {
             setFieldValue("owners", values);
           };
@@ -289,150 +202,83 @@ const MintSong = () => {
           scrollToError(errors, isSubmitting, [
             { element: coCreatorsRef.current, error: errors.creditors },
             { element: coCreatorsRef.current, error: errors.owners },
-            {
-              element: consentsToContractRef.current,
-              error: errors.consentsToContract,
-            },
           ]);
 
           return (
-            <>
-              { stepIndex === 0 && (
-                <Stack pt={ 3 }>
-                  <Stack spacing={ 5 }>
-                    <Box>
-                      <SwitchInputField
-                        description={
-                          "Minting a song will create an NFT that reflects " +
-                          "ownership, making streaming royalties purchasable. " +
-                          "Once a song is minted, it cannot be deleted."
-                        }
-                        disabled={ isMintingInitiated }
-                        includeBorder={ false }
-                        name="isMinting"
-                        title="DISTRIBUTE & MINT SONG"
-                      />
-
-                      { values.isMinting && (
-                        <SelectCoCeators
-                          creditors={ values.creditors }
-                          featured={ values.featured }
-                          isAddDeleteDisabled={ isMintingInitiated }
-                          owners={ values.owners }
-                          onChangeCreditors={ handleChangeCreditors }
-                          onChangeFeatured={ handleChangeFeatured }
-                          onChangeOwners={ handleChangeOwners }
-                        />
-                      ) }
-                    </Box>
-
-                    { !!touched.owners && !!errors.owners && (
-                      <Box mt={ 0.5 } ref={ coCreatorsRef }>
-                        <ErrorMessage>{ errors.owners as string }</ErrorMessage>
-                      </Box>
-                    ) }
-
-                    { !!touched.creditors && !!errors.creditors && (
-                      <Box mt={ 0.5 } ref={ coCreatorsRef }>
-                        <ErrorMessage>
-                          { errors.creditors as string }
-                        </ErrorMessage>
-                      </Box>
-                    ) }
-                  </Stack>
-
-                  <Box py={ 5 }>
-                    <HorizontalLine />
-                  </Box>
-
-                  <Stack columnGap={ 2 } direction="row">
-                    <Button
-                      color="music"
-                      variant="secondary"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
-                      onClick={ () => navigate(-1) }
-                    >
-                      Cancel
-                    </Button>
-
-                    { isStepOneButtonVisible && (
-                      <Button
-                        disabled={ isStepOneButtonDisabled }
-                        isLoading={ isLoading }
-                        width={
-                          windowWidth &&
-                          windowWidth > theme.breakpoints.values.md
-                            ? "compact"
-                            : "default"
-                        }
-                        onClick={ () => handleSubmit() }
-                      >
-                        { isMintingInitiated ? "Update collaborators" : "Next" }
-                      </Button>
-                    ) }
-                  </Stack>
-                </Stack>
-              ) }
-
-              { stepIndex === 1 && (
-                <Stack>
-                  <Stack ref={ consentsToContractRef } sx={ { my: 4, rowGap: 2 } }>
-                    <Typography>ONE LAST THING</Typography>
-                    <Typography variant="subtitle1">
-                      You&apos;re almost ready to mint! To proceed please review
-                      your ownership contract and follow the steps below.
-                    </Typography>
-                  </Stack>
-
-                  <ConfirmContract
-                    isCoCreator={ values.owners.length > 1 }
-                    songTitle={ title }
-                    onConfirm={ (value: boolean) =>
-                      setFieldValue("consentsToContract", value)
+            <Stack pt={ 3 }>
+              <Stack spacing={ 5 }>
+                <Box>
+                  <SwitchInputField
+                    description={
+                      "Minting a song will create an NFT that reflects " +
+                      "ownership, making streaming royalties purchasable. " +
+                      "Once a song is minted, it cannot be deleted."
                     }
+                    disabled={ true }
+                    includeBorder={ false }
+                    name="isMinting"
+                    title="DISTRIBUTE & MINT SONG"
                   />
 
-                  <HorizontalLine sx={ { my: 5 } } />
+                  { values.isMinting && (
+                    <SelectCoCeators
+                      creditors={ values.creditors }
+                      featured={ values.featured }
+                      isAddDeleteDisabled={ true }
+                      owners={ values.owners }
+                      onChangeCreditors={ handleChangeCreditors }
+                      onChangeFeatured={ handleChangeFeatured }
+                      onChangeOwners={ handleChangeOwners }
+                    />
+                  ) }
+                </Box>
 
-                  <Stack
-                    alignItems="center"
-                    columnGap={ 2 }
-                    direction="row"
-                    mt={ 5 }
+                { !!touched.owners && !!errors.owners && (
+                  <Box mt={ 0.5 } ref={ coCreatorsRef }>
+                    <ErrorMessage>{ errors.owners as string }</ErrorMessage>
+                  </Box>
+                ) }
+
+                { !!touched.creditors && !!errors.creditors && (
+                  <Box mt={ 0.5 } ref={ coCreatorsRef }>
+                    <ErrorMessage>{ errors.creditors as string }</ErrorMessage>
+                  </Box>
+                ) }
+              </Stack>
+
+              <Box py={ 5 }>
+                <HorizontalLine />
+              </Box>
+
+              <Stack columnGap={ 2 } direction="row">
+                <Button
+                  color="music"
+                  variant="secondary"
+                  width={
+                    windowWidth && windowWidth > theme.breakpoints.values.md
+                      ? "compact"
+                      : "default"
+                  }
+                  onClick={ () => navigate(-1) }
+                >
+                  Cancel
+                </Button>
+
+                { dirty && (
+                  <Button
+                    isLoading={ isLoading }
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.md
+                        ? "compact"
+                        : "default"
+                    }
+                    onClick={ () => handleSubmit() }
                   >
-                    <Button
-                      color="music"
-                      variant="secondary"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
-                      onClick={ () => setStepIndex(0) }
-                    >
-                      Previous
-                    </Button>
-
-                    <Button
-                      disabled={ !values.consentsToContract }
-                      isLoading={ isLoading }
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
-                      onClick={ () => handleSubmit() }
-                    >
-                      Request Minting
-                    </Button>
-                  </Stack>
-                </Stack>
-              ) }
-            </>
+                    Update collaborators
+                  </Button>
+                ) }
+              </Stack>
+            </Stack>
           );
         } }
       </Formik>
