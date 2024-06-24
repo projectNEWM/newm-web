@@ -20,7 +20,7 @@ import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { SongRouteParams } from "./types";
-import { commonYupValidation, useAppDispatch } from "../../../common";
+import { commonYupValidation } from "../../../common";
 import { ConfirmContract } from "../../../components";
 import SelectCoCeators from "../../../components/minting/SelectCoCreators";
 import { useGetRolesQuery } from "../../../modules/content";
@@ -40,10 +40,6 @@ import {
   useGetSongQuery,
   usePatchSongThunk,
 } from "../../../modules/song";
-import {
-  setIsConnectWalletModalOpen,
-  setIsIdenfyModalOpen,
-} from "../../../modules/ui";
 
 interface FormValues {
   readonly consentsToContract: boolean;
@@ -54,7 +50,6 @@ interface FormValues {
 }
 
 const MintSong = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const windowWidth = useWindowDimensions()?.width;
   const { wallet } = useConnectWallet();
@@ -210,14 +205,6 @@ const MintSong = () => {
     const updatedValues = getUpdatedValues(initialValues, values);
 
     patchSong({ id: songId, ...updatedValues });
-  };
-
-  const handleVerifyProfile = () => {
-    dispatch(setIsIdenfyModalOpen(true));
-  };
-
-  const handleConnectWallet = () => {
-    dispatch(setIsConnectWalletModalOpen(true));
   };
 
   const handleSubmitForm = isMintingInitiated
