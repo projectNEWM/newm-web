@@ -1,11 +1,16 @@
-import { AlertTitle, Box, Button as MUIButton, Stack } from "@mui/material";
+import {
+  AlertTitle,
+  Box,
+  Button as MUIButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import {
   Alert,
   Button,
   ErrorMessage,
   HorizontalLine,
   SwitchInputField,
-  Typography,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
@@ -17,9 +22,10 @@ import { Formik, FormikValues } from "formik";
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
+import { MintingStatus } from "@newm-web/types";
 import { SongRouteParams } from "./types";
 import { commonYupValidation } from "../../../common";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import { useGetRolesQuery } from "../../../modules/content";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
@@ -27,7 +33,9 @@ import {
   Creditor,
   Featured,
   Owner,
+  emptySong,
   useGetCollaborationsQuery,
+  useGetSongQuery,
   usePatchSongThunk,
 } from "../../../modules/song";
 
@@ -46,7 +54,12 @@ const MintSong = () => {
   const coCreatorsRef = useRef<HTMLDivElement>(null);
 
   const { data: { email, role } = emptyProfile } = useGetProfileQuery();
+
+  const { data: { mintingStatus } = emptySong } = useGetSongQuery(songId);
+
   const { data: collabs = [] } = useGetCollaborationsQuery({ songIds: songId });
+
+  const { data: roles = [] } = useGetRolesQuery();
 
   const [patchSong, { isLoading }] = usePatchSongThunk();
 
@@ -117,9 +130,8 @@ const MintSong = () => {
   // set initial featured artists
   const initialFeatured = featured.length ? featured : [];
 
-  // Set collaborator content as visible if any have been added
-  // TODO: Set to mintingStatus !== MintingStatus.Undistributed;
-  const isMinting = collabs.length > 0;
+  // Set isMinting switch as toggled for minting in progress or completed
+  const isMinting = mintingStatus !== MintingStatus.Undistributed;
 
   const initialValues: FormValues = {
     creditors: initialCreditors,
@@ -127,8 +139,6 @@ const MintSong = () => {
     isMinting,
     owners: initialOwners,
   };
-
-  const { data: roles = [] } = useGetRolesQuery();
 
   const validationSchema = Yup.object().shape({
     creditors: commonYupValidation.creditors(roles),
@@ -220,17 +230,15 @@ const MintSong = () => {
                     title="DISTRIBUTE & MINT SONG"
                   />
 
-                  { values.isMinting && (
-                    <SelectCoCeators
-                      creditors={ values.creditors }
-                      featured={ values.featured }
-                      isAddDeleteDisabled={ true }
-                      owners={ values.owners }
-                      onChangeCreditors={ handleChangeCreditors }
-                      onChangeFeatured={ handleChangeFeatured }
-                      onChangeOwners={ handleChangeOwners }
-                    />
-                  ) }
+                  <SelectCoCreators
+                    creditors={ values.creditors }
+                    featured={ values.featured }
+                    isAddDeleteDisabled={ true }
+                    owners={ values.owners }
+                    onChangeCreditors={ handleChangeCreditors }
+                    onChangeFeatured={ handleChangeFeatured }
+                    onChangeOwners={ handleChangeOwners }
+                  />
                 </Box>
 
                 { !!touched.owners && !!errors.owners && (
