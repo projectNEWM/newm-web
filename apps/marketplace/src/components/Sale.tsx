@@ -99,6 +99,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
           isPlaying={ isAudioPlaying }
           priceInNewm={ sale.costAmount }
           priceInUsd={ sale.costAmountUsd }
+          priceVariant="pill"
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
         />
       </Box>

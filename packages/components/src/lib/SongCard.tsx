@@ -30,6 +30,7 @@ interface SongCardProps {
   readonly onSubtitleClick?: () => void;
   readonly priceInNewm?: number;
   readonly priceInUsd?: number;
+  readonly priceVariant?: "pill" | "text";
   readonly subtitle?: string;
   readonly title?: string;
 }
@@ -48,6 +49,7 @@ const SongCard = ({
   priceInUsd,
   subtitle,
   title,
+  priceVariant = "text",
 }: SongCardProps) => {
   const theme = useTheme();
 
@@ -108,6 +110,22 @@ const SongCard = ({
     >
       <Stack sx={ { rowGap: 0.5 } } width="100%">
         <Stack alignItems="center" justifyItems="center" position="relative">
+          { priceVariant === "pill" && (
+            <Stack
+              bgcolor="rgba(0, 0, 0, 0.4)"
+              borderRadius="6px"
+              position="absolute"
+              px={ 1.5 }
+              py={ 1 }
+              right={ theme.spacing(1.5) }
+              top={ theme.spacing(1) }
+            >
+              <Typography fontWeight={ 700 } variant="h4">
+                From { formatNewmAmount(priceInNewm) }
+              </Typography>
+            </Stack>
+          ) }
+
           <ResponsiveImage
             aria-label="Song cover art"
             src={
@@ -212,30 +230,32 @@ const SongCard = ({
             ) }
           </Stack>
 
-          <Stack
-            display="flex"
-            flexDirection={ title ? "column" : "row" }
-            whiteSpace="nowrap"
-          >
-            { !!priceInNewm && (
-              <Typography
-                fontWeight={ 700 }
-                sx={ { opacity: 0.9 } }
-                textAlign="right"
-                variant="h4"
-              >
-                { formatNewmAmount(priceInNewm) }
-              </Typography>
-            ) }
-            { !!priceInUsd && (
-              <Typography
-                fontSize={ title ? "12px" : "15px" }
-                variant="subtitle1"
-              >
-                &nbsp;(≈ { currency(priceInUsd).format() })
-              </Typography>
-            ) }
-          </Stack>
+          { priceVariant === "text" && (
+            <Stack
+              display="flex"
+              flexDirection={ title ? "column" : "row" }
+              whiteSpace="nowrap"
+            >
+              { !!priceInNewm && (
+                <Typography
+                  fontWeight={ 700 }
+                  sx={ { opacity: 0.9 } }
+                  textAlign="right"
+                  variant="h4"
+                >
+                  { formatNewmAmount(priceInNewm) }
+                </Typography>
+              ) }
+              { !!priceInUsd && (
+                <Typography
+                  fontSize={ title ? "12px" : "15px" }
+                  variant="subtitle1"
+                >
+                  &nbsp;(≈ { currency(priceInUsd).format() })
+                </Typography>
+              ) }
+            </Stack>
+          ) }
         </Stack>
       </Stack>
     </Clickable>
