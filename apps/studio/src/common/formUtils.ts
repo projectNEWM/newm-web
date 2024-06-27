@@ -211,7 +211,7 @@ export const commonYupValidation = {
           if (!owners) return false;
 
           const percentageSum = owners.reduce((sum, owner) => {
-            return sum + owner.percentage;
+            return sum + Number(owner.percentage);
           }, 0);
 
           return percentageSum === 100;
