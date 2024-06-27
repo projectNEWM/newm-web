@@ -24,6 +24,7 @@ export { default as ProgressBar } from "./ProgressBar";
 export { default as ProgressBarModal } from "./ProgressBarModal";
 export { default as ResponsiveNEWMLogo } from "./ResponsiveNEWMLogo";
 export { default as ProfileSkeleton } from "./skeletons/ProfileSkeleton";
+export { default as MarketplaceTabSkeleton } from "./skeletons/MarketplaceTabSkeleton";
 export { default as LogoutButton } from "./home/LogoutButton";
 export { default as SquareGridCard } from "./SquareGridCard";
 export { default as Toast } from "./Toast";
