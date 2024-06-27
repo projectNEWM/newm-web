@@ -9,14 +9,13 @@ const SaleSkeleton: FunctionComponent = () => (
     >
       <Stack
         gap={ 0.5 }
-        height={ [272, 272, 432] }
+        height={ [240, 240, 400] }
         mb={ [2, 2, 0] }
         mr={ [0, 0, 5] }
         p={ 1.5 }
         width={ [240, 240, 400] }
       >
         <Skeleton sx={ { height: "100%", width: "100%" } } variant="rounded" />
-        <Skeleton height={ 32 } width={ 100 } />
       </Stack>
       <Stack
         alignItems={ ["center", "center", "start"] }

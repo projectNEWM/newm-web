@@ -126,6 +126,7 @@ const Sale: FunctionComponent<SaleProps> = ({
           isPlaying={ audioUrl === sale.song.clipUrl && isAudioPlaying }
           priceInNewm={ sale.costAmount }
           priceInUsd={ sale.costAmountUsd }
+          priceVariant="pill"
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
         />
       </Box>
@@ -203,13 +204,13 @@ const Sale: FunctionComponent<SaleProps> = ({
                   <Stack>
                     <Box alignSelf="flex-end" p={ 0.5 }>
                       <Tooltip
-                        title={
-                          "The number of Stream Tokens correlates directly " +
-                          "with the percentage of Streaming royalties you " +
-                          "can acquire and the total price of the bundle. " +
-                          "For example 1 token is worth = 0.0000001% of " +
-                          "total royalties, and costs '3.0 Ɲ'."
-                        }
+                        title={ `The number of Stream Tokens correlates directly
+                          with the percentage of Streaming royalties you
+                          can acquire and the total price of the bundle.
+                          For example 1 token is worth = 
+                          ${getPercentageOfTotalStreamTokens(1)}% of
+                          total royalties, and costs 
+                          '${formatNewmAmount(sale.costAmount)}'.` }
                       >
                         <IconButton sx={ { padding: 0 } }>
                           <HelpIcon sx={ { color: theme.colors.grey100 } } />
