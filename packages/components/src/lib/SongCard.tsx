@@ -232,6 +232,7 @@ const SongCard = ({
 
           { priceVariant === "text" && (
             <Stack
+              alignItems="flex-end"
               display="flex"
               flexDirection={ title ? "column" : "row" }
               whiteSpace="nowrap"
