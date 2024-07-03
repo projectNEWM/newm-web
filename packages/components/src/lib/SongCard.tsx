@@ -11,6 +11,7 @@ import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
   formatNewmAmount,
+  formatUsdAmount,
   getImageSrc,
   resizeCloudinaryImage,
 } from "@newm-web/utils";
@@ -232,6 +233,7 @@ const SongCard = ({
 
           { priceVariant === "text" && (
             <Stack
+              alignItems="flex-end"
               display="flex"
               flexDirection={ title ? "column" : "row" }
               whiteSpace="nowrap"
@@ -251,7 +253,7 @@ const SongCard = ({
                   fontSize={ title ? "12px" : "15px" }
                   variant="subtitle1"
                 >
-                  &nbsp;(≈ { currency(priceInUsd).format() })
+                  &nbsp;(≈ { formatUsdAmount(priceInUsd) })
                 </Typography>
               ) }
             </Stack>
