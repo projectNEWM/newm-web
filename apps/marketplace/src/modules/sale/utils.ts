@@ -13,6 +13,8 @@ export const transformApiSale = (apiSale: ApiSale): Sale => {
 
   return {
     ...sale,
+    // TODO: look into back-end returning value with correct decimal places
+    costAmount: sale.costAmount / 1000000,
     song: {
       ...song,
       isExplicit: parentalAdvisory === "Explicit",
