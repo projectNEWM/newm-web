@@ -19,8 +19,8 @@ export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
  * rather than the standard two, based on the exchange rate
  * for NEWM to USD.
  */
-export const formatUsdAmount = (amount?: number) => {
+export const formatUsdAmount = (amount?: number, precision = 3) => {
   if (!amount) return "";
 
-  return currency(amount, { precision: 3 }).format();
+  return currency(amount, { precision }).format();
 };
