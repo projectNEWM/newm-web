@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import Sales from "./Sales";
-import { useGetSalesQuery } from "../modules/sale";
+import { SaleStatus, useGetSalesQuery } from "../modules/sale";
 
 interface MoreSongsProps {
   readonly artistId?: string;
@@ -22,6 +22,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
       artistIds: artistId ? [artistId] : undefined,
       ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
       limit: 8,
+      statuses: [SaleStatus.Started],
     },
     { skip }
   );

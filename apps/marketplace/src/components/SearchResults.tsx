@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Skeleton, Stack, Typography, useTheme } from "@mui/material";
 import Sales from "./Sales";
-import { useGetSalesQuery } from "../modules/sale";
+import { SaleStatus, useGetSalesQuery } from "../modules/sale";
 
 interface SearchResultsProps {
   readonly query: string;
@@ -9,7 +9,10 @@ interface SearchResultsProps {
 
 const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
   const theme = useTheme();
-  const { isLoading, data: sales = [] } = useGetSalesQuery({ phrase: query });
+  const { isLoading, data: sales = [] } = useGetSalesQuery({
+    phrase: query,
+    statuses: [SaleStatus.Started],
+  });
 
   return (
     <Stack my={ 8 } rowGap={ 2.5 }>
