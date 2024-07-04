@@ -19,7 +19,7 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
       artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
       genres,
       limit: 8,
-      statuses: [SaleStatus.Started],
+      saleStatuses: [SaleStatus.Started],
     },
     { skip }
   );

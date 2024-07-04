@@ -22,7 +22,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
       artistIds: artistId ? [artistId] : undefined,
       ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
       limit: 8,
-      statuses: [SaleStatus.Started],
+      saleStatuses: [SaleStatus.Started],
     },
     { skip }
   );

@@ -11,7 +11,7 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
   const theme = useTheme();
   const { isLoading, data: sales = [] } = useGetSalesQuery({
     phrase: query,
-    statuses: [SaleStatus.Started],
+    saleStatuses: [SaleStatus.Started],
   });
 
   return (

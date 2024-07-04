@@ -7,8 +7,8 @@ import { SaleStatus } from "../modules/sale";
 const RecentSongs: FunctionComponent = () => {
   const { data, isLoading } = useGetSalesQuery({
     limit: 8,
+    saleStatuses: [SaleStatus.Started],
     sortOrder: "desc",
-    statuses: [SaleStatus.Started],
   });
 
   return (

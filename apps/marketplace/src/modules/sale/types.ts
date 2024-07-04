@@ -100,12 +100,12 @@ export interface GetSalesParams {
   readonly olderThan?: string;
   // Case-insensitive phrase to filter by song title and artist name
   readonly phrase?: string;
+  // List of sale statuses to filter results
+  readonly saleStatuses?: ReadonlyArray<string>;
   // List of song UUID's to filter results
   readonly songIds?: ReadonlyArray<string>;
   // Sort order of the results based on createdAt field. Default is asc
   readonly sortOrder?: "asc" | "desc";
-  // List of sale statuses to filter results
-  readonly statuses?: ReadonlyArray<string>;
 }
 
 export interface GenerateOrderRequest {

@@ -11,7 +11,7 @@ interface ArtistSongsProps {
 const ArtistSongs: FunctionComponent<ArtistSongsProps> = ({ artistId }) => {
   const { isLoading, data = [] } = useGetSalesQuery({
     artistIds: [artistId],
-    statuses: [SaleStatus.Started],
+    saleStatuses: [SaleStatus.Started],
   });
 
   return (
