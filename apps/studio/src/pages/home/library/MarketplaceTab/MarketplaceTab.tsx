@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { ConnectWallet } from "./ConnectWallet";
+import { Sale } from "./Sale";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
@@ -15,7 +16,7 @@ export const MarketplaceTab = () => {
   const { wallet } = useConnectWallet();
 
   const hasStreamTokens =
-    walletSongsResponse?.data?.songs[0].song.id === songId;
+    walletSongsResponse?.data?.songs[0]?.song?.id === songId;
 
   useEffect(() => {
     getUserWalletSongs({
@@ -42,11 +43,7 @@ export const MarketplaceTab = () => {
     <Box
       maxWidth={ [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"] }
     >
-      { hasStreamTokens ? (
-        <Typography>HAS STREAM TOKENS CONTENT</Typography>
-      ) : (
-        <ConnectWallet />
-      ) }
+      { hasStreamTokens ? <Sale /> : <ConnectWallet /> }
     </Box>
   );
 };

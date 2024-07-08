@@ -28,14 +28,14 @@ export interface Sale {
   // Maximum bundle size allowed
   readonly maxBundleSize: number;
   // The song associated with the sale
-  readonly song: Song;
+  readonly song: MarketplaceSong;
   // Sale status. Valid valid values are: Started, SoldOut & Ended
   readonly status: SaleStatus;
   // Total quantity of bundles originally for sale
   readonly totalBundleQuantity: number;
 }
 
-export interface Song {
+export interface MarketplaceSong {
   // UUID of the song artist
   readonly artistId: string;
   // Stage name of the song artist
@@ -112,6 +112,6 @@ export interface ApiSale extends Omit<Sale, "song"> {
   readonly song: ApiSong;
 }
 
-export interface ApiSong extends Omit<Song, "isExplicit"> {
+export interface ApiSong extends Omit<MarketplaceSong, "isExplicit"> {
   readonly parentalAdvisory: "Explicit" | "Non-Explicit";
 }

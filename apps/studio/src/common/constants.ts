@@ -1,3 +1,5 @@
+import { isProd } from "@newm-web/env";
+
 /**
  * NEWM External Links and Support
  */
@@ -35,3 +37,7 @@ export const SKIP_FETCH_INVITE_PATH_LIST = [
   "/idenfy-success-session",
   "/idenfy-fail-session",
 ];
+
+export const NEWM_MARKETPLACE_URL = isProd
+  ? "https://marketplace.newm.io"
+  : "https://fan.square.newm.io";

@@ -46,7 +46,7 @@ const App = () => {
             <IdenfyPingUserStatus />
             <IdenfyModal />
             <ConnectWalletModal />
-            <InvitesModal />
+            { /* <InvitesModal /> */ }
             <ProgressBarModal />
             <UpdateWalletAddressModal />
             <WalletEnvMismatchModal />

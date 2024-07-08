@@ -1,10 +1,10 @@
+import { transformApiSale } from "@newm-web/utils";
 import {
   ApiSale,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
-} from "./types";
-import { transformApiSale } from "./utils";
+} from "@newm-web/types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
