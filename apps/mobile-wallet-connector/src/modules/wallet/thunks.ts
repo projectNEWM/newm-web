@@ -3,10 +3,9 @@ import {
   EnabledWallet,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { asThunkHook } from "@newm-web/utils";
+import { asThunkHook, encodeAddress } from "@newm-web/utils";
 import { extendedApi as newmApi } from "./api";
 import { ChallengeMethod } from "./types";
-import { encodeAddress } from "./utils";
 import { setConnectionData } from "./slice";
 import { setToastMessage } from "../ui";
 

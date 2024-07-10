@@ -49,6 +49,11 @@ export interface StartSaleAmountRequest {
   readonly totalBundleQuantity: number;
 }
 
+export interface StartSaleThunkRequest
+  extends Omit<StartSaleAmountRequest, "ownerAddress"> {
+  ownerAddress?: string;
+}
+
 export interface StartSaleTransactionResponse {
   // CBOR format-encoded generated transaction.
   readonly txCborHex: string;

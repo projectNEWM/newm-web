@@ -1,12 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  enableWallet,
-  getWalletChangeAddress,
-  signWalletTransaction,
-} from "@newm.io/cardano-dapp-wallet-connector";
-import { asThunkHook } from "@newm-web/utils";
+import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { asThunkHook, encodeAddress } from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
-import { StartSaleAmountRequest } from "./types";
+import { StartSaleThunkRequest } from "./types";
 
 /**
  * Generates an artist agreement and then navigates
@@ -14,17 +10,22 @@ import { StartSaleAmountRequest } from "./types";
  */
 export const startSale = createAsyncThunk(
   "sale/start",
-  async (body: StartSaleAmountRequest, { dispatch }) => {
+  async (body: StartSaleThunkRequest, { dispatch }) => {
     try {
+      const wallet = await enableWallet();
+      const changeAddress = encodeAddress(await wallet.getChangeAddress());
+
       const startSaleAmountResp = await dispatch(
-        saleApi.endpoints.startSaleAmount.initiate(body)
+        saleApi.endpoints.startSaleAmount.initiate({
+          ...body,
+          ownerAddress: changeAddress,
+        })
       );
 
       if ("error" in startSaleAmountResp || !startSaleAmountResp.data) return;
 
       const { saleId, amountCborHex } = startSaleAmountResp.data;
-      const wallet = await enableWallet();
-      const changeAddress = await getWalletChangeAddress(wallet);
+
       const utxoCborHexList = await wallet.getUtxos(amountCborHex);
 
       if (!utxoCborHexList) {
@@ -44,10 +45,8 @@ export const startSale = createAsyncThunk(
       if ("error" in startSaleTransactionResp || !startSaleTransactionResp.data)
         return;
 
-      const unsignedTransaction = startSaleTransactionResp.data.txCborHex;
-      const signedTransaction = await signWalletTransaction(
-        wallet,
-        unsignedTransaction
+      const signedTransaction = await wallet.signTx(
+        startSaleTransactionResp.data.txCborHex
       );
 
       await wallet.submitTx(signedTransaction);
@@ -55,6 +54,7 @@ export const startSale = createAsyncThunk(
       // TODO: handle success/failure of transaction submission
     } catch (err) {
       // do nothing
+      console.error(err);
     }
   }
 );

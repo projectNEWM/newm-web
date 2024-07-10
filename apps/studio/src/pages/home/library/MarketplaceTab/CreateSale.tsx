@@ -17,11 +17,9 @@ import {
   formatNewmAmount,
   formatPercentageAdaptive,
 } from "@newm-web/utils";
-import { useAppSelector } from "../../../../common";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
-import { selectWallet } from "../../../../modules/wallet";
 
 export const CreateSale = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
@@ -34,14 +32,12 @@ export const CreateSale = () => {
     { data: startSaleResponse, isLoading: isStartSaleLoading },
   ] = useStartSaleThunk();
   const { wallet } = useConnectWallet();
-  const { walletAddress } = useAppSelector(selectWallet);
   const currentSong = walletSongsResponse?.data?.songs[0];
 
   const handleCreateSale = async (values: FormikValues) => {
     if (
       !currentSong ||
       !currentSong.song.nftPolicyId ||
-      !walletAddress ||
       !currentSong.song.nftName
     )
       return;
@@ -51,7 +47,6 @@ export const CreateSale = () => {
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
       costAmount: values.totalSaleValue,
-      ownerAddress: walletAddress,
       totalBundleQuantity: values.tokensToSell,
     });
   };
