@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
 import Sales from "./Sales";
-import { useGetSalesQuery } from "../modules/sale";
+import { SaleStatus, useGetSalesQuery } from "../modules/sale";
 
 interface SimilarSongsProps {
   readonly currentArtistId?: string;
@@ -19,6 +19,7 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
       artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
       genres,
       limit: 8,
+      saleStatuses: [SaleStatus.Started],
     },
     { skip }
   );

@@ -29,7 +29,7 @@ import { MintingStatus } from "@newm-web/types";
 import { UploadSongFormValues } from "./UploadSong";
 import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
@@ -406,7 +406,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 />
 
                 { isMintingVisible && (
-                  <SelectCoCeators
+                  <SelectCoCreators
                     creditors={ values.creditors }
                     featured={ values.featured }
                     isAddDeleteDisabled={ isDeclined }

@@ -9,7 +9,18 @@ export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
 
   return currency(amount, {
     pattern: "# !",
-    precision: 1,
+    precision: 2,
     symbol: includeSymbol ? "Ɲ" : "",
   }).format();
+};
+
+/**
+ * Formats a numerical USD amount to three decimal places
+ * rather than the standard two, based on the exchange rate
+ * for NEWM to USD.
+ */
+export const formatUsdAmount = (amount?: number, precision = 3) => {
+  if (!amount) return "";
+
+  return currency(amount, { precision }).format();
 };

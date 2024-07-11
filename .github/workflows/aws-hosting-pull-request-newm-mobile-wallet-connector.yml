@@ -5,6 +5,7 @@ on:
       - .github/workflows/aws-hosting-pull-request-newm-mobile-wallet-connector.yml
       - apps/mobile-wallet-connector/**
       - packages/**
+      - package-lock.json
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
