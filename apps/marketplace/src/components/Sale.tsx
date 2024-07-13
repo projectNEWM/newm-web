@@ -16,8 +16,8 @@ import { Form, Formik } from "formik";
 import { formatNewmAmount } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/audio";
+import { Sale as SaleItem } from "@newm-web/types";
 import { SaleSkeleton } from "../components";
-import { Sale as SaleItem } from "../modules/sale";
 import { usePurchaseStreamTokensThunk } from "../modules/sale/thunks";
 
 interface FormValues {

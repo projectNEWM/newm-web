@@ -41,3 +41,6 @@ export const SKIP_FETCH_INVITE_PATH_LIST = [
 export const NEWM_MARKETPLACE_URL = isProd
   ? "https://marketplace.newm.io"
   : "https://fan.square.newm.io";
+
+export const PENDING_SALES_UPDATED_EVENT = "pendingSaleSongIdsUpdated";
+export const LOCAL_STORAGE_PENDING_SALES_KEY = "pendingSaleSongIds";

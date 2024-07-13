@@ -85,7 +85,7 @@ export const extendedApi = newmApi.injectEndpoints({
         genres,
         moods,
         songIds,
-        statuses,
+        saleStatuses,
         ...rest
       } = {}) => ({
         method: "GET",
@@ -95,7 +95,7 @@ export const extendedApi = newmApi.injectEndpoints({
           ...(genres ? { genres: genres.join(",") } : {}),
           ...(moods ? { moods: moods.join(",") } : {}),
           ...(songIds ? { songIds: songIds.join(",") } : {}),
-          ...(statuses ? { statuses: statuses.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
           ...rest,
         },
         url: "v1/marketplace/sales",

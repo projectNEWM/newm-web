@@ -5,7 +5,7 @@ import {
   getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { GenerateOrderRequest } from "./types";
+import { GenerateOrderRequest } from "@newm-web/types";
 import saleApi from "./api";
 import { setToastMessage } from "../ui";
 

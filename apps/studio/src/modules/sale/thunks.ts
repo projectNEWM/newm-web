@@ -1,8 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { enableWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { asThunkHook, encodeAddress } from "@newm-web/utils";
+import {
+  enableWallet,
+  signWalletTransaction,
+} from "@newm.io/cardano-dapp-wallet-connector";
+import {
+  NEWM_DECIMAL_CONVERSION,
+  asThunkHook,
+  encodeAddress,
+} from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
 import { StartSaleThunkRequest } from "./types";
+import { setToastMessage } from "../ui";
+import {
+  LOCAL_STORAGE_PENDING_SALES_KEY,
+  PENDING_SALES_UPDATED_EVENT,
+} from "../../common";
 
 /**
  * Generates an artist agreement and then navigates
@@ -17,8 +29,12 @@ export const startSale = createAsyncThunk(
 
       const startSaleAmountResp = await dispatch(
         saleApi.endpoints.startSaleAmount.initiate({
-          ...body,
+          bundleAmount: body.bundleAmount,
+          bundleAssetName: body.bundleAssetName,
+          bundlePolicyId: body.bundlePolicyId,
+          costAmount: body.costAmount * NEWM_DECIMAL_CONVERSION,
           ownerAddress: changeAddress,
+          totalBundleQuantity: body.totalBundleQuantity,
         })
       );
 
@@ -45,16 +61,48 @@ export const startSale = createAsyncThunk(
       if ("error" in startSaleTransactionResp || !startSaleTransactionResp.data)
         return;
 
-      const signedTransaction = await wallet.signTx(
-        startSaleTransactionResp.data.txCborHex
+      const signedTransaction = await signWalletTransaction(
+        wallet,
+        startSaleTransactionResp.data.txCborHex,
+        true
       );
 
       await wallet.submitTx(signedTransaction);
 
-      // TODO: handle success/failure of transaction submission
-    } catch (err) {
-      // do nothing
-      console.error(err);
+      const pendingSaleSongIds = localStorage.getItem(
+        LOCAL_STORAGE_PENDING_SALES_KEY
+      );
+
+      if (pendingSaleSongIds) {
+        localStorage.setItem(
+          LOCAL_STORAGE_PENDING_SALES_KEY,
+          JSON.stringify([...JSON.parse(pendingSaleSongIds), body.songId])
+        );
+      } else {
+        localStorage.setItem(
+          LOCAL_STORAGE_PENDING_SALES_KEY,
+          JSON.stringify([body.songId])
+        );
+      }
+
+      window.dispatchEvent(new Event(PENDING_SALES_UPDATED_EVENT));
+
+      dispatch(
+        setToastMessage({
+          message: "You have commenced creation of the stream token sale.",
+          severity: "success",
+        })
+      );
+    } catch (error) {
+      // non-endpoint related error occur, show toast
+      if (error instanceof Error) {
+        dispatch(
+          setToastMessage({
+            message: error.message,
+            severity: "error",
+          })
+        );
+      }
     }
   }
 );

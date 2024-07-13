@@ -52,6 +52,7 @@ export interface StartSaleAmountRequest {
 export interface StartSaleThunkRequest
   extends Omit<StartSaleAmountRequest, "ownerAddress"> {
   ownerAddress?: string;
+  songId: string;
 }
 
 export interface StartSaleTransactionResponse {

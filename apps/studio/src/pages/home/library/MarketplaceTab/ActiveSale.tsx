@@ -13,14 +13,9 @@ import { NEWM_MARKETPLACE_URL } from "../../../../common";
 export const ActiveSale = () => {
   const [isEndSaleModalOpen, setIsEndSaleModalOpen] = useState(false);
   const { songId } = useParams<"songId">() as SongRouteParams;
-  const { data: sales = [], isLoading } = useGetSalesQuery({ ids: [songId] });
-
-  // TODO: Delete the following lines after sale endpoints are implemented.
-  // const activeSaleId = " 277fc24f-5acf-4ae4-a5c0-7d64f6d1768b";
-  // const inactiveSaleId = "46c2ca23-8a1e-4315-994f-4ee9d1fc0c24";
-  // const { data: sales = [], isLoading } = useGetSalesQuery({
-  //   ids: [activeSaleId],
-  // });
+  const { data: sales = [], isLoading } = useGetSalesQuery({
+    songIds: [songId],
+  });
 
   const handleEndSale = () => {
     console.log("TODO: Handle end sale. Show sucess toast and update the UI.");

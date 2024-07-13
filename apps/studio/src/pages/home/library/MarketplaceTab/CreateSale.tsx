@@ -47,6 +47,7 @@ export const CreateSale = () => {
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
       costAmount: values.totalSaleValue,
+      songId,
       totalBundleQuantity: values.tokensToSell,
     });
   };
