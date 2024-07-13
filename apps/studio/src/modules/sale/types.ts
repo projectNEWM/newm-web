@@ -22,6 +22,10 @@ export interface EndSaleTransactionRequest {
   readonly utxoCborHexList: string;
 }
 
+export interface EndSaleThunkRequest extends EndSaleAmountRequest {
+  readonly songId: string;
+}
+
 export interface StartSaleAmountResponse {
   // CBOR format-encoded generated amount.
   readonly amountCborHex: string;

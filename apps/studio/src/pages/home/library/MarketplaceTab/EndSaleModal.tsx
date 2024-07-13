@@ -4,15 +4,17 @@ import { Button, Modal, Typography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
 interface EndSaleModalProps {
-  handleClose: () => void;
-  handleEndSale: () => void;
-  isOpen: boolean;
+  readonly handleClose: () => void;
+  readonly handleEndSale: () => void;
+  readonly isLoading: boolean;
+  readonly isOpen: boolean;
 }
 
 export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
   handleClose,
   isOpen,
   handleEndSale,
+  isLoading,
 }) => {
   return (
     <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ handleClose }>
@@ -49,13 +51,18 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
           <Stack flexDirection="row" gap={ 1 } justifyContent="end" mt={ 1 }>
             <Button
               color="music"
+              disabled={ isLoading }
               variant="secondary"
               width="compact"
               onClick={ handleClose }
             >
               Cancel
             </Button>
-            <Button width="compact" onClick={ handleEndSale }>
+            <Button
+              disabled={ isLoading }
+              width="compact"
+              onClick={ handleEndSale }
+            >
               Yes, end
             </Button>
           </Stack>

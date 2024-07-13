@@ -14,7 +14,8 @@ import {
   IdenfyPingUserStatus,
   IdenfySuccessSession,
   InvitesModal,
-  PingPendingSales,
+  PingSaleEnd,
+  PingSaleStart,
   PrivateRoute,
   ProgressBarModal,
   Toast,
@@ -51,7 +52,8 @@ const App = () => {
             <ProgressBarModal />
             <UpdateWalletAddressModal />
             <WalletEnvMismatchModal />
-            <PingPendingSales />
+            <PingSaleStart />
+            <PingSaleEnd />
             <ScrollToTop />
 
             <Background>

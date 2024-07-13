@@ -42,5 +42,17 @@ export const NEWM_MARKETPLACE_URL = isProd
   ? "https://marketplace.newm.io"
   : "https://fan.square.newm.io";
 
-export const PENDING_SALES_UPDATED_EVENT = "pendingSaleSongIdsUpdated";
-export const LOCAL_STORAGE_PENDING_SALES_KEY = "pendingSaleSongIds";
+export const LOCAL_STORAGE_SALE_START_PENDING_KEY = "saleStartSongIds";
+export const SALE_START_UPDATED_EVENT = "saleStartUpdated";
+
+export const LOCAL_STORAGE_SALE_END_PENDING_KEY = "saleEndSongIds";
+export const SALE_END_UPDATED_EVENT = "saleEndUpdated";
+/**
+ * 15 seconds in milliseconds
+ */
+export const PENDING_SALE_POLLING_INTERVAL = 15000;
+
+/**
+ * 5 minutes in milliseconds
+ */
+export const PENDING_SALE_PING_TIMEOUT = 300000;

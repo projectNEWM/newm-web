@@ -4,21 +4,27 @@ import currency from "currency.js";
 import { AlertTitle, Stack, Typography } from "@mui/material";
 import { Alert, Button, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { SaleStatus } from "@newm-web/types";
 import { EndSaleModal } from "./EndSaleModal";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
-import { useGetSalesQuery } from "../../../../modules/sale";
+import { useEndSaleThunk, useGetSalesQuery } from "../../../../modules/sale";
 import { NEWM_MARKETPLACE_URL } from "../../../../common";
 
 export const ActiveSale = () => {
   const [isEndSaleModalOpen, setIsEndSaleModalOpen] = useState(false);
   const { songId } = useParams<"songId">() as SongRouteParams;
   const { data: sales = [], isLoading } = useGetSalesQuery({
+    saleStatuses: [SaleStatus.Started],
     songIds: [songId],
   });
+  const [endSale, { isLoading: isEndSaleLoading }] = useEndSaleThunk();
+  const saleId = sales[0].id;
 
-  const handleEndSale = () => {
-    console.log("TODO: Handle end sale. Show sucess toast and update the UI.");
+  const handleEndSale = async () => {
+    await endSale({ saleId, songId });
+
+    setIsEndSaleModalOpen(false);
   };
 
   if (isLoading) {
@@ -55,7 +61,7 @@ export const ActiveSale = () => {
       <Stack flexDirection="row" gap={ 2.5 }>
         <Button
           component="a"
-          href={ `${NEWM_MARKETPLACE_URL}/sale/${sales[0].id}/` }
+          href={ `${NEWM_MARKETPLACE_URL}/sale/${saleId}/` }
           target="_blank"
           width="compact"
         >
@@ -63,6 +69,7 @@ export const ActiveSale = () => {
         </Button>
         <Button
           color="music"
+          disabled={ isEndSaleLoading }
           variant="secondary"
           width="compact"
           onClick={ () => setIsEndSaleModalOpen(true) }
@@ -73,6 +80,7 @@ export const ActiveSale = () => {
       <EndSaleModal
         handleClose={ () => setIsEndSaleModalOpen(false) }
         handleEndSale={ handleEndSale }
+        isLoading={ isEndSaleLoading }
         isOpen={ isEndSaleModalOpen }
       />
     </Stack>
