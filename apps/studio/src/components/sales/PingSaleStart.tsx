@@ -89,13 +89,14 @@ const PingSaleStart: FunctionComponent = () => {
    * Update saleStartSongIds in localStorage whenever sales data is updated.
    */
   useEffect(() => {
-    if (sales.length > 0) {
-      const pendingSales = localStorage.getItem(
-        LOCAL_STORAGE_SALE_START_PENDING_KEY
-      );
-      if (pendingSales) {
-        const parsedPendingSales: string[] = JSON.parse(pendingSales);
+    const pendingSales = localStorage.getItem(
+      LOCAL_STORAGE_SALE_START_PENDING_KEY
+    );
 
+    if (pendingSales && !isGetSalesLoading) {
+      const parsedPendingSales: string[] = JSON.parse(pendingSales);
+
+      if (parsedPendingSales.length > 0) {
         // Remove the songIds that have been successfully started
         const updatedPendingSales = parsedPendingSales.filter(
           (songId) => !sales.find((sale) => sale.song.id === songId)
@@ -107,11 +108,11 @@ const PingSaleStart: FunctionComponent = () => {
         );
 
         window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
-      }
-    }
+      } else {
+        localStorage.removeItem(LOCAL_STORAGE_SALE_START_PENDING_KEY);
 
-    if (sales.length === 0 && !isGetSalesLoading) {
-      localStorage.removeItem(LOCAL_STORAGE_SALE_START_PENDING_KEY);
+        window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
+      }
     }
   }, [sales, isGetSalesLoading]);
 
