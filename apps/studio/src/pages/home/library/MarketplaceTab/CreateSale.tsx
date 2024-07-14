@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import currency from "currency.js";
 import * as Yup from "yup";
 import { AlertTitle, Stack, Typography } from "@mui/material";
+import { Form, Formik, FormikValues } from "formik";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   Alert,
   Button,
@@ -9,14 +11,13 @@ import {
   TextInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { Form, Formik, FormikValues } from "formik";
 import { useEffect } from "react";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   calculateOwnershipPerecentage,
   formatNewmAmount,
   formatPercentageAdaptive,
 } from "@newm-web/utils";
+import { SALE_DEFAULT_BUNDLE_AMOUNT } from "../../../../common";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
@@ -27,10 +28,7 @@ export const CreateSale = () => {
     getUserWalletSongs,
     { data: walletSongsResponse, isLoading: isGetWalletSongsLoading },
   ] = useGetUserWalletSongsThunk();
-  const [
-    startSale,
-    { data: startSaleResponse, isLoading: isStartSaleLoading },
-  ] = useStartSaleThunk();
+  const [startSale, { isLoading: isStartSaleLoading }] = useStartSaleThunk();
   const { wallet } = useConnectWallet();
   const currentSong = walletSongsResponse?.data?.songs[0];
 
@@ -43,7 +41,7 @@ export const CreateSale = () => {
       return;
 
     await startSale({
-      bundleAmount: 1,
+      bundleAmount: SALE_DEFAULT_BUNDLE_AMOUNT,
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
       costAmount: values.totalSaleValue,
@@ -67,6 +65,7 @@ export const CreateSale = () => {
     precision: 0,
     symbol: "",
   }).format();
+  const isOnlyOneTokenAvailable = streamTokensInWallet === 1;
 
   const validationSchema = Yup.object({
     tokensToSell: Yup.number()
@@ -84,7 +83,9 @@ export const CreateSale = () => {
     <>
       <Alert>
         <AlertTitle color={ theme.colors.blue } sx={ { fontWeight: 600 } }>
-          { `You currently have ${formattedStreamTokensInWallet} stream tokens for this track available to sell.` }
+          { `You currently have ${formattedStreamTokensInWallet} stream token${
+            isOnlyOneTokenAvailable ? "" : "s"
+          } for this track available to sell.` }
         </AlertTitle>
         <Typography
           color={ theme.colors.blue }
@@ -142,7 +143,13 @@ export const CreateSale = () => {
               />
             </Stack>
             <HorizontalLine />
-            <Button disabled={ isSubmitting } type="submit" width="compact">
+            <Button
+              disabled={
+                isSubmitting || isStartSaleLoading || isGetWalletSongsLoading
+              }
+              type="submit"
+              width="compact"
+            >
               Create stream token sale
             </Button>
           </Form>
@@ -151,11 +158,3 @@ export const CreateSale = () => {
     </>
   );
 };
-
-/** TODO:
- * Add loading state
- * NEWM currency translation to 6 digits
- * Fix wallet not being able to be found on refresh
- * add poll solution
- * Handle reuse of values/cleanup
- */

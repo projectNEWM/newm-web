@@ -56,3 +56,8 @@ export const PENDING_SALE_POLLING_INTERVAL = 15000;
  * 5 minutes in milliseconds
  */
 export const PENDING_SALE_PING_TIMEOUT = 300000;
+
+/**
+ * Stream token sale default bundle amount
+ */
+export const SALE_DEFAULT_BUNDLE_AMOUNT = 1;

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { Box } from "@mui/material";
-import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import theme from "@newm-web/theme";
 import { ConnectWallet } from "./ConnectWallet";
 import { Sale } from "./Sale";
 import { MarketplaceTabSkeleton } from "../../../../components";

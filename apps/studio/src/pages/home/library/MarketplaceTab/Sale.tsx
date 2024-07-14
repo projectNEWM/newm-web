@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SaleStatus } from "@newm-web/types";
-import { useCallback, useEffect, useState } from "react";
 import { ActiveSale } from "./ActiveSale";
 import { CreateSale } from "./CreateSale";
 import SaleEndPending from "./SaleEndPending";

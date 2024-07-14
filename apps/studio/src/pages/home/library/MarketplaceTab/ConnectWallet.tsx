@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Alert, Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useAppDispatch } from "../../../../common";
 import { setIsConnectWalletModalOpen } from "../../../../modules/ui";
 
