@@ -76,7 +76,9 @@ export const CreateSale = () => {
         streamTokensInWallet,
         `You only have ${formattedStreamTokensInWallet} stream tokens available to sell.`
       ),
-    totalSaleValue: Yup.number().required("This field is required").min(0.01),
+    totalSaleValue: Yup.number()
+      .required("This field is required")
+      .min(0.01, "You must sell at least 0.01 Ɲ"),
   });
 
   return (
