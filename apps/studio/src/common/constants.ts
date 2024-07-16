@@ -1,3 +1,5 @@
+import { isProd } from "@newm-web/env";
+
 /**
  * NEWM External Links and Support
  */
@@ -35,3 +37,27 @@ export const SKIP_FETCH_INVITE_PATH_LIST = [
   "/idenfy-success-session",
   "/idenfy-fail-session",
 ];
+
+export const NEWM_MARKETPLACE_URL = isProd
+  ? "https://marketplace.newm.io"
+  : "https://fan.square.newm.io";
+
+export const LOCAL_STORAGE_SALE_START_PENDING_KEY = "saleStartSongIds";
+export const SALE_START_UPDATED_EVENT = "saleStartUpdated";
+
+export const LOCAL_STORAGE_SALE_END_PENDING_KEY = "saleEndSongIds";
+export const SALE_END_UPDATED_EVENT = "saleEndUpdated";
+/**
+ * 15 seconds in milliseconds
+ */
+export const PENDING_SALE_POLLING_INTERVAL = 15000;
+
+/**
+ * 5 minutes in milliseconds
+ */
+export const PENDING_SALE_PING_TIMEOUT = 300000;
+
+/**
+ * Stream token sale default bundle amount
+ */
+export const SALE_DEFAULT_BUNDLE_AMOUNT = 1;

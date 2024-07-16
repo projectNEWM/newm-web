@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { FunctionComponent } from "react";
+import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale/api";
-import { SaleStatus } from "../modules/sale";
 
 const RecentSongs: FunctionComponent = () => {
   const { data, isLoading } = useGetSalesQuery({

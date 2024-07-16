@@ -3,8 +3,8 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/audio";
+import { Sale } from "@newm-web/types";
 import SalesSkeleton from "./skeletons/SalesSkeleton";
-import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
   readonly hasTitle?: boolean;

@@ -5,8 +5,14 @@
 export const recaptchaEndpointActionMap: Record<string, string> = {
   appleLogin: "login_apple",
   createAccount: "signup",
+  endSaleAmount: "generate_sale_end_amount",
+  endSaleTransaction: "generate_sale_end_transaction",
+  getSale: "get_sale",
+  getSales: "get_sales",
   googleLogin: "login_google",
   login: "login",
   resetPassword: "password_reset",
   sendVerificationEmail: "auth_code",
+  startSaleAmount: "generate_sale_start_amount",
+  startSaleTransaction: "generate_sale_start_transaction",
 };

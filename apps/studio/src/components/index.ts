@@ -11,6 +11,8 @@ export { default as WalletEnvMismatchModal } from "./WalletEnvMismatchModal";
 export { default as AppleLogin } from "./AppleLogin";
 export { default as GoogleLogin } from "./GoogleLogin";
 export * from "./idenfy";
+export { default as PingSaleStart } from "./sales/PingSaleStart";
+export { default as PingSaleEnd } from "./sales/PingSaleEnd";
 export { default as InvitesModal } from "./invites/InvitesModal";
 export { default as NEWMLogo } from "./NEWMLogo";
 export { default as SelectWalletItem } from "./uploadSong/SelectWalletItem";

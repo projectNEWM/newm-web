@@ -19,6 +19,7 @@ const api = createApi({
     Tags.Languages,
     Tags.Profile,
     Tags.Roles,
+    Tags.Sale,
     Tags.Song,
   ],
 });
