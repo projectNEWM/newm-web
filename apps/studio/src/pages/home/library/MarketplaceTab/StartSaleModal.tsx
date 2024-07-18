@@ -145,7 +145,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                 </Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    { !isNEWMPriceUnavailable
+                    { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
                       : `(≈ ${currency(pricePerStreamTokenInUSD, {
                           precision: 3,
