@@ -37,10 +37,12 @@ const UnsupportedBrowserBanner: FunctionComponent = () => {
     <Stack
       alignItems="center"
       justifyContent="center"
+      position="relative"
       py={ 2 }
       sx={ {
         backgroundColor: theme.colors.grey600,
       } }
+      zIndex={ 1000000 }
     >
       <Container maxWidth="lg">
         <Alert
