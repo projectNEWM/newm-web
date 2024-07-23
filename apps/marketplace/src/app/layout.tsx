@@ -4,7 +4,10 @@ import { Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
+import {
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
 import { Provider } from "react-redux";
 import { AudioProvider } from "@newm-web/audio";
 import { Footer, Header } from "../components";
@@ -48,6 +51,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
               <ThemeProvider theme={ theme }>
                 <AudioProvider>
                   <Toast />
+                  <UnsupportedBrowserBanner />
 
                   <Stack flexGrow={ 1 } justifyContent="space-between">
                     <Stack justifyContent="flex-start">
