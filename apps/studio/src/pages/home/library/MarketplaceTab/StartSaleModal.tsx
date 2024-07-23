@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Box, Stack } from "@mui/material";
-import { Button, HorizontalLine, Modal, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography } from "@mui/material";
+import { Button, HorizontalLine, Modal } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { FormikValues } from "formik";
 import currency from "currency.js";
