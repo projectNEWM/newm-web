@@ -1,6 +1,7 @@
+// eslint-disable-next-line
 interface FeatureFlags {
-  // This is a test flag and does not exist. It is only to setup the structure. delete it after adding a real flag.
-  readonly testFlag: boolean;
+  // When a feature flag is added it will have the following format:
+  // readonly exampleFlag: boolean;
 }
 
 export interface GetStudioClientConfigResponse {
