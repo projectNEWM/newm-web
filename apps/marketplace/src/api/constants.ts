@@ -7,6 +7,7 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   generateTransaction: "generate_order_transaction",
   getArtist: "get_artist",
   getArtists: "get_artists",
+  getMarketplaceClientConfig: "marketplace_config",
   getSale: "get_sale",
   getSales: "get_sales",
 };

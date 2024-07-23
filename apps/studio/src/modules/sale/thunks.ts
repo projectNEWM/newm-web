@@ -70,19 +70,25 @@ export const startSale = createAsyncThunk(
 
       await wallet.submitTx(signedTransaction);
 
-      const pendingSaleSongIds = localStorage.getItem(
+      const pendingSales = localStorage.getItem(
         LOCAL_STORAGE_SALE_START_PENDING_KEY
       );
+      const newSale = {
+        tokensToSell: body.totalBundleQuantity,
+        totalSaleValue: body.costAmount,
+      };
 
-      if (pendingSaleSongIds) {
+      if (pendingSales) {
+        const parsedPendingSales = JSON.parse(pendingSales);
+        parsedPendingSales[body.songId] = newSale;
         localStorage.setItem(
           LOCAL_STORAGE_SALE_START_PENDING_KEY,
-          JSON.stringify([...JSON.parse(pendingSaleSongIds), body.songId])
+          JSON.stringify(parsedPendingSales)
         );
       } else {
         localStorage.setItem(
           LOCAL_STORAGE_SALE_START_PENDING_KEY,
-          JSON.stringify([body.songId])
+          JSON.stringify({ [body.songId]: newSale })
         );
       }
 

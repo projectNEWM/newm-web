@@ -1,4 +1,10 @@
-import { Country, Genre, Language, Role } from "./types";
+import {
+  Country,
+  Genre,
+  GetStudioClientConfigResponse,
+  Language,
+  Role,
+} from "./types";
 import { Tags, newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 
@@ -121,6 +127,22 @@ export const extendedApi = newmApi.injectEndpoints({
         return extracted.sort((a, b) => a.localeCompare(b));
       },
     }),
+    getStudioClientConfig: build.query<GetStudioClientConfigResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching app config",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: () => ({ method: "GET", url: "v1/client-config/studio" }),
+    }),
   }),
 });
 
@@ -131,6 +153,7 @@ export const {
   useGetLanguagesQuery,
   useGetMoodsQuery,
   useGetRolesQuery,
+  useGetStudioClientConfigQuery,
 } = extendedApi;
 
 export default extendedApi;

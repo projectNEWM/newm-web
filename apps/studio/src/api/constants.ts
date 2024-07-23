@@ -9,6 +9,7 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   endSaleTransaction: "generate_sale_end_transaction",
   getSale: "get_sale",
   getSales: "get_sales",
+  getStudioClientConfig: "studio_config",
   googleLogin: "login_google",
   login: "login",
   resetPassword: "password_reset",
