@@ -23,3 +23,12 @@ export interface Country {
   readonly country_name: string;
   readonly state?: State[];
 }
+
+interface FeatureFlags {
+  readonly "claim-wallet-royalties-enabled": boolean;
+  readonly "manage-marketplace-sales-enabled": boolean;
+}
+
+export interface GetStudioClientConfigResponse {
+  "feature-flags": FeatureFlags;
+}
