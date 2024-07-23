@@ -23,3 +23,12 @@ export interface Country {
   readonly country_name: string;
   readonly state?: State[];
 }
+
+interface FeatureFlags {
+  readonly claimWalletRoyaltiesEnabled: boolean;
+  readonly manageMarketplaceSalesEnabled: boolean;
+}
+
+export interface GetStudioClientConfigResponse {
+  readonly featureFlags: FeatureFlags;
+}
