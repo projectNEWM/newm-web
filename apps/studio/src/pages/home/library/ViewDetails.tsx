@@ -80,8 +80,7 @@ const ViewDetails: FunctionComponent = () => {
   ].includes(mintingStatus);
 
   const isManageMarketplaceSalesEnabled =
-    clientConfig?.["feature-flags"]?.["manage-marketplace-sales-enabled"] ??
-    false;
+    clientConfig?.featureFlags?.manageMarketplaceSalesEnabled ?? false;
 
   const shouldRenderMarketplaceTab =
     !isClientConfigLoading &&

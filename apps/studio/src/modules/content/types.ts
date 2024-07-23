@@ -25,10 +25,10 @@ export interface Country {
 }
 
 interface FeatureFlags {
-  readonly "claim-wallet-royalties-enabled": boolean;
-  readonly "manage-marketplace-sales-enabled": boolean;
+  readonly claimWalletRoyaltiesEnabled: boolean;
+  readonly manageMarketplaceSalesEnabled: boolean;
 }
 
 export interface GetStudioClientConfigResponse {
-  "feature-flags": FeatureFlags;
+  readonly featureFlags: FeatureFlags;
 }
