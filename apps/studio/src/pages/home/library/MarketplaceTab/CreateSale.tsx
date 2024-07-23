@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import currency from "currency.js";
 import * as Yup from "yup";
@@ -11,18 +12,21 @@ import {
   TextInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { useEffect } from "react";
 import {
   calculateOwnershipPerecentage,
   formatNewmAmount,
   formatPercentageAdaptive,
+  useWindowDimensions,
 } from "@newm-web/utils";
+import StartSaleModal from "./StartSaleModal";
 import { SALE_DEFAULT_BUNDLE_AMOUNT } from "../../../../common";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
 
 export const CreateSale = () => {
+  const [isSaleSummaryModalOpen, setIsSaleSummaryModalOpen] = useState(false);
+  const windowWidth = useWindowDimensions()?.width;
   const { songId } = useParams<"songId">() as SongRouteParams;
   const [
     getUserWalletSongs,
@@ -48,6 +52,8 @@ export const CreateSale = () => {
       songId,
       totalBundleQuantity: values.tokensToSell,
     });
+
+    setIsSaleSummaryModalOpen(false);
   };
 
   useEffect(() => {
@@ -103,12 +109,15 @@ export const CreateSale = () => {
           tokensToSell: undefined,
           totalSaleValue: undefined,
         } }
+        validateOnMount={ true }
         validationSchema={ validationSchema }
         onSubmit={ handleCreateSale }
       >
         { ({
-          isSubmitting,
           values: { tokensToSell = 0, totalSaleValue = 0 },
+          isValid,
+          submitForm,
+          setTouched,
         }) => (
           <Form
             style={ {
@@ -118,16 +127,21 @@ export const CreateSale = () => {
               marginTop: "40px",
             } }
           >
-            <Stack columnGap={ 2.5 } flexDirection="row" rowGap={ 3.5 }>
+            <Stack
+              columnGap={ 2.5 }
+              flexDirection={ ["column", "column", "row"] }
+              rowGap={ 3.5 }
+            >
               <TextInputField
                 isOptional={ false }
                 label="STREAM TOKENS TO SELL"
                 name="tokensToSell"
                 placeholder="0"
-                tooltipText="Some cool text"
+                tooltipText="The total number of the track's stream tokens to be included in the sale."
                 type="number"
               />
               <TextInputField
+                endAdornment={ <Typography px={ 2 }>Ɲ</Typography> }
                 helperText={
                   !!totalSaleValue && !!tokensToSell
                     ? `Price per stream token: ${formatNewmAmount(
@@ -140,20 +154,40 @@ export const CreateSale = () => {
                 label="TOTAL SALE VALUE"
                 name="totalSaleValue"
                 placeholder="0"
-                tooltipText="Some cool text"
+                tooltipText="The total amount (Ɲ) to be earned once the sale is fulfilled."
                 type="number"
               />
             </Stack>
             <HorizontalLine />
             <Button
-              disabled={
-                isSubmitting || isStartSaleLoading || isGetWalletSongsLoading
+              disabled={ isGetWalletSongsLoading }
+              type="button"
+              width={
+                windowWidth && windowWidth > theme.breakpoints.values.md
+                  ? "compact"
+                  : "default"
               }
-              type="submit"
-              width="compact"
+              onClick={ () => {
+                if (isValid) {
+                  setIsSaleSummaryModalOpen(true);
+                } else {
+                  setTouched({
+                    tokensToSell: true,
+                    totalSaleValue: true,
+                  });
+                }
+              } }
             >
               Create stream token sale
             </Button>
+            <StartSaleModal
+              handleClose={ () => setIsSaleSummaryModalOpen(false) }
+              handleStartSale={ submitForm }
+              isLoading={ isStartSaleLoading }
+              isOpen={ isSaleSummaryModalOpen }
+              totalTokensOwnedByUser={ streamTokensInWallet }
+              values={ { tokensToSell, totalSaleValue } }
+            />
           </Form>
         ) }
       </Formik>
