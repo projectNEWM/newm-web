@@ -6,6 +6,7 @@ import {
   PENDING_SALE_PING_TIMEOUT,
   PENDING_SALE_POLLING_INTERVAL,
   SALE_START_UPDATED_EVENT,
+  SaleStartPendingSongs,
 } from "../../common";
 
 const PingSaleStart: FunctionComponent = () => {
@@ -30,14 +31,19 @@ const PingSaleStart: FunctionComponent = () => {
     );
 
     if (pendingSales) {
-      const parsedPendingSales = JSON.parse(pendingSales);
+      const parsedPendingSales: SaleStartPendingSongs =
+        JSON.parse(pendingSales);
+      const songIds = Object.keys(parsedPendingSales);
 
-      setSaleStartSongIds(parsedPendingSales);
-      setPollingInterval(PENDING_SALE_POLLING_INTERVAL);
-    } else {
-      setSaleStartSongIds([]);
-      setPollingInterval(undefined);
+      if (songIds.length > 0) {
+        setSaleStartSongIds(songIds);
+        setPollingInterval(PENDING_SALE_POLLING_INTERVAL);
+        return;
+      }
     }
+
+    setSaleStartSongIds([]);
+    setPollingInterval(undefined);
   }, []);
 
   /**
@@ -89,29 +95,38 @@ const PingSaleStart: FunctionComponent = () => {
    * Update saleStartSongIds in localStorage whenever sales data is updated.
    */
   useEffect(() => {
-    const pendingSales = localStorage.getItem(
-      LOCAL_STORAGE_SALE_START_PENDING_KEY
-    );
+    if (!isGetSalesLoading) {
+      const pendingSales = localStorage.getItem(
+        LOCAL_STORAGE_SALE_START_PENDING_KEY
+      );
 
-    if (pendingSales && !isGetSalesLoading) {
-      const parsedPendingSales: string[] = JSON.parse(pendingSales);
+      if (pendingSales) {
+        const parsedPendingSales: SaleStartPendingSongs =
+          JSON.parse(pendingSales);
 
-      if (parsedPendingSales.length > 0) {
-        // Remove the songIds that have been successfully started
-        const updatedPendingSales = parsedPendingSales.filter(
-          (songId) => !sales.find((sale) => sale.song.id === songId)
-        );
+        if (Object.keys(parsedPendingSales).length > 0) {
+          // Remove the songIds that have been successfully started
+          const updatedPendingSales = Object.keys(parsedPendingSales)
+            .filter((songId) => !sales.find((sale) => sale.song.id === songId))
+            .reduce((acc: SaleStartPendingSongs, songId) => {
+              acc[songId] = parsedPendingSales[songId];
+              return acc;
+            }, {});
 
-        localStorage.setItem(
-          LOCAL_STORAGE_SALE_START_PENDING_KEY,
-          JSON.stringify(updatedPendingSales)
-        );
+          if (Object.keys(updatedPendingSales).length > 0) {
+            localStorage.setItem(
+              LOCAL_STORAGE_SALE_START_PENDING_KEY,
+              JSON.stringify(updatedPendingSales)
+            );
+          } else {
+            localStorage.removeItem(LOCAL_STORAGE_SALE_START_PENDING_KEY);
+          }
 
-        window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
-      } else {
-        localStorage.removeItem(LOCAL_STORAGE_SALE_START_PENDING_KEY);
-
-        window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
+          window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
+        } else {
+          localStorage.removeItem(LOCAL_STORAGE_SALE_START_PENDING_KEY);
+          window.dispatchEvent(new Event(SALE_START_UPDATED_EVENT));
+        }
       }
     }
   }, [sales, isGetSalesLoading]);

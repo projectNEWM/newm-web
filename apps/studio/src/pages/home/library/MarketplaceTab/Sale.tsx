@@ -10,6 +10,7 @@ import {
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
   SALE_END_UPDATED_EVENT,
   SALE_START_UPDATED_EVENT,
+  SaleStartPendingSongs,
 } from "../../../../common";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { useGetSalesQuery } from "../../../../modules/sale";
@@ -26,35 +27,40 @@ export const Sale = () => {
   });
 
   /**
-   * Handle the pending state for sales start or end.
+   * Handle the pending state for sale start.
    */
-  const handleSalePending = useCallback(
-    (key: string, setState: (value: boolean) => void) => {
-      const pendingSales = localStorage.getItem(key);
-      if (pendingSales) {
-        const parsedPendingSales = JSON.parse(pendingSales);
-        setState(parsedPendingSales.includes(songId));
-      }
-    },
-    [songId]
-  );
+  const handleSaleStartPending = useCallback(() => {
+    const pendingSales = localStorage.getItem(
+      LOCAL_STORAGE_SALE_START_PENDING_KEY
+    );
+    if (pendingSales) {
+      const parsedPendingSales: SaleStartPendingSongs =
+        JSON.parse(pendingSales);
+      setIsSaleStartPending(!!parsedPendingSales[songId]);
+    } else {
+      setIsSaleStartPending(false);
+    }
+  }, [songId]);
+
+  /**
+   * Handle the pending state for sale end.
+   */
+  const handleSaleEndPending = useCallback(() => {
+    const pendingSales = localStorage.getItem(
+      LOCAL_STORAGE_SALE_END_PENDING_KEY
+    );
+    if (pendingSales) {
+      const parsedPendingSales: string[] = JSON.parse(pendingSales);
+      setIsSaleEndPending(parsedPendingSales.includes(songId));
+    } else {
+      setIsSaleEndPending(false);
+    }
+  }, [songId]);
 
   /**
    * Initialize and manage the event listeners for pending sales updates.
-   * It also calls the handleSalePending to initialize the state based on localStorage.
    */
   useEffect(() => {
-    const handleSaleEndPending = () =>
-      handleSalePending(
-        LOCAL_STORAGE_SALE_END_PENDING_KEY,
-        setIsSaleEndPending
-      );
-    const handleSaleStartPending = () =>
-      handleSalePending(
-        LOCAL_STORAGE_SALE_START_PENDING_KEY,
-        setIsSaleStartPending
-      );
-
     handleSaleEndPending();
     handleSaleStartPending();
 
@@ -70,7 +76,7 @@ export const Sale = () => {
         handleSaleStartPending
       );
     };
-  }, [handleSalePending]);
+  }, [handleSaleEndPending, handleSaleStartPending]);
 
   if (isLoading || isPendingSalesLoading) {
     return <MarketplaceTabSkeleton />;

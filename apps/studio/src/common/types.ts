@@ -26,3 +26,12 @@ export interface PlayerState {
   readonly loadingSongId?: string;
   readonly song?: Song;
 }
+
+interface SaleDetails {
+  tokensToSell: string;
+  totalSaleValue: string;
+}
+
+export interface SaleStartPendingSongs {
+  [key: string]: SaleDetails;
+}

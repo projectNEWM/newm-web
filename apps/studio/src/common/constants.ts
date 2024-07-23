@@ -42,7 +42,7 @@ export const NEWM_MARKETPLACE_URL = isProd
   ? "https://marketplace.newm.io"
   : "https://fan.square.newm.io";
 
-export const LOCAL_STORAGE_SALE_START_PENDING_KEY = "saleStartSongIds";
+export const LOCAL_STORAGE_SALE_START_PENDING_KEY = "saleStartSongs";
 export const SALE_START_UPDATED_EVENT = "saleStartUpdated";
 
 export const LOCAL_STORAGE_SALE_END_PENDING_KEY = "saleEndSongIds";
