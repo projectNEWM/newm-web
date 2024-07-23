@@ -6,6 +6,7 @@ import theme from "@newm-web/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_CLIENT_ID } from "@newm-web/env";
+import { UnsupportedBrowserBanner } from "@newm-web/components";
 import {
   Background,
   ConnectWalletModal,
@@ -54,6 +55,7 @@ const App = () => {
             <WalletEnvMismatchModal />
             <PingSaleStart />
             <PingSaleEnd />
+            <UnsupportedBrowserBanner />
             <ScrollToTop />
 
             <Background>

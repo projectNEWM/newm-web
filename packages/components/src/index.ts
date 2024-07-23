@@ -16,6 +16,7 @@ export * from "./lib/SongCard";
 export { default as SongCard } from "./lib/SongCard";
 export { default as SongCardSkeleton } from "./lib/skeletons/SongCardSkeleton";
 export { default as StyledComponentsRegistry } from "./lib/nextjs/StyledComponentsRegistry";
+export { default as UnsupportedBrowserBanner } from "./lib/UnsupportedBrowserBanner";
 export { default as WalletEnvMismatchModal } from "./lib/modals/WalletEnvMismatchModal";
 export * from "./lib/modals/WalletModal";
 export { default as WalletModal } from "./lib/modals/WalletModal";
