@@ -5,7 +5,10 @@ import { Provider } from "react-redux";
 import { Container, Stack, ThemeProvider } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
+import {
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
 import "./global.css";
 import store from "../store";
 import { ConnectWallet, Toast } from "../components";
@@ -49,7 +52,9 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
+                <UnsupportedBrowserBanner />
                 <Toast />
+
                 <Stack
                   alignItems="flex-end"
                   minHeight={ ["68px", "68px", "44px"] }
