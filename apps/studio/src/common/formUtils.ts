@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import emojiRegex from "emoji-regex";
 import {
   REGEX_9_TO_11_DIGITS,
   REGEX_EXACTLY_12_DIGITS,
@@ -14,7 +15,6 @@ import {
   REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
-  REGEX_SONG_TITLE,
   REGEX_X_PROFILE,
 } from "./regex";
 import {
@@ -211,7 +211,7 @@ export const commonYupValidation = {
           if (!owners) return false;
 
           const percentageSum = owners.reduce((sum, owner) => {
-            return sum + owner.percentage;
+            return sum + Number(owner.percentage);
           }, 0);
 
           return percentageSum === 100;
@@ -254,7 +254,11 @@ export const commonYupValidation = {
       REGEX_EVEARA_PROHIBITED_CHARACTERS,
       "Cannot contain special characters like %,*=#<>{}~@\\/;:?$\""
     )
-    .matches(REGEX_SONG_TITLE, "Cannot contain special characters")
+    .test(
+      "emoji-less",
+      "Must not contain emoji characters",
+      (value) => !!value && !emojiRegex().test(value)
+    )
     .max(
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`

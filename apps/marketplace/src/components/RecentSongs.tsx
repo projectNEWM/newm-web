@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
 import { FunctionComponent } from "react";
+import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale/api";
 
 const RecentSongs: FunctionComponent = () => {
   const { data, isLoading } = useGetSalesQuery({
     limit: 8,
+    saleStatuses: [SaleStatus.Started],
     sortOrder: "desc",
   });
 

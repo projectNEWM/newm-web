@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box } from "@mui/material";
+import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale";
 
@@ -19,6 +20,7 @@ const SimilarSongs: FunctionComponent<SimilarSongsProps> = ({
       artistIds: currentArtistId ? [`-${currentArtistId}`] : undefined,
       genres,
       limit: 8,
+      saleStatuses: [SaleStatus.Started],
     },
     { skip }
   );

@@ -4,8 +4,12 @@ import { Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
+import {
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
 import { Provider } from "react-redux";
+import { AudioProvider } from "@newm-web/audio";
 import { Footer, Header } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
@@ -45,15 +49,18 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <Toast />
+                <AudioProvider>
+                  <Toast />
+                  <UnsupportedBrowserBanner />
 
-                <Stack flexGrow={ 1 } justifyContent="space-between">
-                  <Stack justifyContent="flex-start">
-                    <Header />
-                    { children }
+                  <Stack flexGrow={ 1 } justifyContent="space-between">
+                    <Stack justifyContent="flex-start">
+                      <Header />
+                      { children }
+                    </Stack>
+                    <Footer />
                   </Stack>
-                  <Footer />
-                </Stack>
+                </AudioProvider>
               </ThemeProvider>
             </Provider>
           </AppRouterCacheProvider>

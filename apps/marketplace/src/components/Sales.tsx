@@ -2,9 +2,9 @@ import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { useRouter } from "next/navigation";
-import { usePlayAudioUrl } from "@newm-web/utils";
+import { usePlayAudioUrl } from "@newm-web/audio";
+import { Sale } from "@newm-web/types";
 import SalesSkeleton from "./skeletons/SalesSkeleton";
-import { Sale } from "../modules/sale/types";
 
 interface SalesProps {
   readonly hasTitle?: boolean;
@@ -72,7 +72,7 @@ const Sales: FunctionComponent<SalesProps> = ({
         ) : (
           sales.map(({ costAmount, costAmountUsd, id, song }) => {
             return (
-              <Grid key={ id } md={ 3 } sm={ 4 } xs={ 6 } item>
+              <Grid key={ id } md={ 3 } sm={ 4 } xs={ 12 } item>
                 <SongCard
                   audioProgress={ audioProgress }
                   coverArtUrl={ song.coverArtUrl }

@@ -1,4 +1,4 @@
-import { Sale, SaleStatus } from "../modules/sale/types";
+import { Sale, SaleStatus } from "@newm-web/types";
 
 export const mockArtist = {
   coverImageUrl:

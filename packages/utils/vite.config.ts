@@ -6,7 +6,6 @@ import dts from "vite-plugin-dts";
 import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
 
 export default defineConfig({
-  root: __dirname,
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
@@ -14,8 +13,6 @@ export default defineConfig({
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
   build: {
-    outDir: "../../dist/packages/utils",
-    reportCompressedSize: true,
     commonjsOptions: { transformMixedEsModules: true },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
@@ -27,6 +24,8 @@ export default defineConfig({
 
       name: "utils",
     },
+    outDir: "../../dist/packages/utils",
+    reportCompressedSize: true,
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: ["react", "react-dom", "react/jsx-runtime"],
@@ -44,4 +43,6 @@ export default defineConfig({
       tsConfigFilePath: path.join(__dirname, "tsconfig.lib.json"),
     }),
   ],
+
+  root: __dirname,
 });

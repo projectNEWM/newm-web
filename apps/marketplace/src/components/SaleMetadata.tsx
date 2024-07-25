@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { Link, Stack, Typography } from "@mui/material";
 import theme from "@newm-web/theme";
 import moment from "moment";
-import { Sale } from "../modules/sale";
+import { Sale } from "@newm-web/types";
 
 interface SaleMetaDataProps {
   readonly sale?: Sale;

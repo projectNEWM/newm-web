@@ -28,14 +28,14 @@ export interface Sale {
   // Maximum bundle size allowed
   readonly maxBundleSize: number;
   // The song associated with the sale
-  readonly song: Song;
+  readonly song: MarketplaceSong;
   // Sale status. Valid valid values are: Started, SoldOut & Ended
   readonly status: SaleStatus;
   // Total quantity of bundles originally for sale
   readonly totalBundleQuantity: number;
 }
 
-export interface Song {
+export interface MarketplaceSong {
   // UUID of the song artist
   readonly artistId: string;
   // Stage name of the song artist
@@ -100,18 +100,48 @@ export interface GetSalesParams {
   readonly olderThan?: string;
   // Case-insensitive phrase to filter by song title and artist name
   readonly phrase?: string;
+  // List of sale statuses to filter results
+  readonly saleStatuses?: ReadonlyArray<string>;
   // List of song UUID's to filter results
   readonly songIds?: ReadonlyArray<string>;
   // Sort order of the results based on createdAt field. Default is asc
   readonly sortOrder?: "asc" | "desc";
-  // List of sale statuses to filter results
-  readonly statuses?: ReadonlyArray<string>;
+}
+
+export interface GenerateOrderRequest {
+  // Quantity of bundles to purchase
+  readonly bundleQuantity: number;
+  // Incentive to process order earlier in queue
+  readonly incentiveAmount?: number;
+  // UUID of the Sale
+  readonly saleId: string;
+}
+
+export interface GenerateOrderResponse {
+  // CBOR format-encoded order amount
+  readonly amountCborHex: string;
+  // UUID of the associated pending order
+  readonly orderId: string;
+}
+
+export interface GenerateTransactionRequest {
+  // Cardano wallet change address
+  readonly changeAddress: string;
+  // UUID of the Order
+  readonly orderId: string;
+  // CBOR format-encoded list of UTXOs
+  readonly utxoCborHexList: string;
+}
+
+export interface GenerateTransactionResponse {
+  // CBOR format-encoded unsigned transaction
+  readonly txCborHex: string;
 }
 
 export interface ApiSale extends Omit<Sale, "song"> {
   readonly song: ApiSong;
 }
 
-export interface ApiSong extends Omit<Song, "isExplicit"> {
+export interface ApiSong extends Omit<MarketplaceSong, "isExplicit"> {
   readonly parentalAdvisory: "Explicit" | "Non-Explicit";
 }

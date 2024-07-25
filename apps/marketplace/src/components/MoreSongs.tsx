@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
+import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
 import { useGetSalesQuery } from "../modules/sale";
 
@@ -22,6 +23,7 @@ const MoreSongs: FunctionComponent<MoreSongsProps> = ({
       artistIds: artistId ? [artistId] : undefined,
       ids: currentSaleId ? [`-${currentSaleId}`] : undefined,
       limit: 8,
+      saleStatuses: [SaleStatus.Started],
     },
     { skip }
   );

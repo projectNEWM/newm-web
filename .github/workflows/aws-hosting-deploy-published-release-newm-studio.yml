@@ -1,9 +1,8 @@
 name: Deploy NEWM Studio app to AWS on published release
 on:
-#  release:
-#    types: [ published ]
-# only manually trigger for testing
-  workflow_dispatch:
+ release:
+   types: [ published ]
+ workflow_dispatch:
 jobs:
   build_and_deploy_studio_release:
     if: ${{ startsWith(github.event.release.tag_name, 'studio') }}

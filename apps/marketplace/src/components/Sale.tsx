@@ -13,21 +13,33 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
-import { formatNewmAmount, usePlayAudioUrl } from "@newm-web/utils";
+import { formatNewmAmount } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
+import { usePlayAudioUrl } from "@newm-web/audio";
+import { Sale as SaleItem } from "@newm-web/types";
 import { SaleSkeleton } from "../components";
-import { Sale as SaleItem } from "../modules/sale";
+import { usePurchaseStreamTokensThunk } from "../modules/sale/thunks";
+
+interface FormValues {
+  readonly streamTokens: number;
+}
 
 interface SaleProps {
   readonly isLoading: boolean;
   readonly sale?: SaleItem;
 }
 
-const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
+const Sale: FunctionComponent<SaleProps> = ({
+  sale,
+  isLoading: isSaleLoading,
+}) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const { audioProgress, isAudioPlaying, playPauseAudio } = usePlayAudioUrl();
+  const [createPurchase, { isLoading: isTransactionLoading }] =
+    usePurchaseStreamTokensThunk();
+  const { audioUrl, audioProgress, isAudioPlaying, playPauseAudio } =
+    usePlayAudioUrl();
 
   const initialFormValues = {
     streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
@@ -78,7 +90,22 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
     router.push(`/artist/${artistId}`);
   };
 
-  if (isLoading) {
+  /**
+   * Initiates the process to create and sign a stream token
+   * purchase transaction.
+   */
+  const handlePurchaseStreamTokens = (values: FormValues) => {
+    if (!sale) {
+      throw new Error("no sale present");
+    }
+
+    createPurchase({
+      bundleQuantity: values.streamTokens,
+      saleId: sale.id,
+    });
+  };
+
+  if (isSaleLoading) {
     return <SaleSkeleton />;
   }
 
@@ -94,11 +121,12 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
           audioProgress={ audioProgress }
           coverArtUrl={ sale.song.coverArtUrl }
           imageDimensions={ 480 }
-          isLoading={ isLoading }
+          isLoading={ isSaleLoading }
           isPlayable={ !!sale.song.clipUrl }
-          isPlaying={ isAudioPlaying }
+          isPlaying={ audioUrl === sale.song.clipUrl && isAudioPlaying }
           priceInNewm={ sale.costAmount }
           priceInUsd={ sale.costAmountUsd }
+          priceVariant="pill"
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
         />
       </Box>
@@ -165,9 +193,7 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
         <Formik
           initialValues={ initialFormValues }
           validationSchema={ formValidationSchema }
-          onSubmit={ () => {
-            return;
-          } }
+          onSubmit={ handlePurchaseStreamTokens }
         >
           { ({ values, isValid }) => {
             const totalCost = getTotalPurchaseCost(values.streamTokens);
@@ -178,13 +204,13 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
                   <Stack>
                     <Box alignSelf="flex-end" p={ 0.5 }>
                       <Tooltip
-                        title={
-                          "The number of Stream Tokens correlates directly " +
-                          "with the percentage of Streaming royalties you " +
-                          "can acquire and the total price of the bundle. " +
-                          "For example 1 token is worth = 0.0000001% of " +
-                          "total royalties, and costs '3.0 Ɲ'."
-                        }
+                        title={ `The number of Stream Tokens correlates directly
+                          with the percentage of Streaming royalties you
+                          can acquire and the total price of the bundle.
+                          For example 1 token is worth = 
+                          ${getPercentageOfTotalStreamTokens(1)}% of
+                          total royalties, and costs 
+                          '${formatNewmAmount(sale.costAmount)}'.` }
                       >
                         <IconButton sx={ { padding: 0 } }>
                           <HelpIcon sx={ { color: theme.colors.grey100 } } />
@@ -242,7 +268,12 @@ const Sale: FunctionComponent<SaleProps> = ({ sale, isLoading }) => {
                       backgroundColor: theme.colors.grey600,
                     } }
                   >
-                    <Button disabled={ !isValid } type="submit" width="full">
+                    <Button
+                      disabled={ !isValid || !sale.availableBundleQuantity }
+                      isLoading={ isTransactionLoading }
+                      type="submit"
+                      width="full"
+                    >
                       <Typography
                         fontWeight={ theme.typography.fontWeightBold }
                         variant="body1"

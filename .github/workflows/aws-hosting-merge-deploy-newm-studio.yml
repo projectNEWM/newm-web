@@ -7,6 +7,7 @@ on:
       - .github/workflows/aws-hosting-merge-deploy-newm-studio.yml
       - apps/studio/**
       - packages/**
+      - package-lock.json
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

@@ -1,16 +1,67 @@
+import { transformApiSale } from "@newm-web/utils";
 import {
   ApiSale,
+  GenerateOrderRequest,
+  GenerateOrderResponse,
+  GenerateTransactionRequest,
+  GenerateTransactionResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
-} from "./types";
-import { transformApiSale } from "./utils";
+} from "@newm-web/types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
+    generateOrder: build.mutation<GenerateOrderResponse, GenerateOrderRequest>({
+      invalidatesTags: [Tags.Sale],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while generating order",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/amount",
+      }),
+    }),
+    generateTransaction: build.mutation<
+      GenerateTransactionResponse,
+      GenerateTransactionRequest
+    >({
+      invalidatesTags: [Tags.Sale],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while generating transaction",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/transaction",
+      }),
+    }),
     getSale: build.query<GetSaleResponse, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -58,7 +109,7 @@ export const extendedApi = newmApi.injectEndpoints({
         genres,
         moods,
         songIds,
-        statuses,
+        saleStatuses,
         ...rest
       } = {}) => ({
         method: "GET",
@@ -68,7 +119,7 @@ export const extendedApi = newmApi.injectEndpoints({
           ...(genres ? { genres: genres.join(",") } : {}),
           ...(moods ? { moods: moods.join(",") } : {}),
           ...(songIds ? { songIds: songIds.join(",") } : {}),
-          ...(statuses ? { statuses: statuses.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
           ...rest,
         },
         url: "v1/marketplace/sales",

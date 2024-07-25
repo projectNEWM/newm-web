@@ -5,6 +5,7 @@ on:
       - .github/workflows/aws-hosting-pull-request-newm-studio.yml
       - apps/studio/**
       - packages/**
+      - package-lock.json
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
@@ -12,6 +13,7 @@ jobs:
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
+      pull-requests: write  # Explicitly allow writing to pull requests
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -30,3 +32,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_PREVIEW_BUCKET }}/${{ github.event.pull_request.number }} --no-progress --delete
+      - name: Url to PR comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            Visit the studio preview URL for this PR :rocket: : https://${{ github.event.pull_request.number }}.artist.preview.newm.io/

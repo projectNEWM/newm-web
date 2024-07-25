@@ -1,5 +1,4 @@
 export * from "./lib/api";
-export * from "./lib/audio";
 export * from "./lib/url";
 export * from "./lib/array";
 export * from "./lib/async";
@@ -18,3 +17,4 @@ export * from "./lib/form";
 export * from "./lib/tests";
 export * from "./lib/wallet";
 export * from "./lib/image";
+export * from "./lib/sales";

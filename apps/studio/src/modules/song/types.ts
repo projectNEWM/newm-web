@@ -357,9 +357,38 @@ export interface GetEarliestReleaseDateResponse {
 }
 
 export interface GetUserWalletSongsRequest {
+  // Comma-separated list of song genres for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly genres?: string[];
+  // Comma-separated list of song UUID's for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly ids?: string[];
+  // Maximum number of paginated results to retrieve. Default is 25.
   readonly limit?: number;
+  // Comma-separated list of song Song minting statuses for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly mintingStatuses?: MintingStatus[];
+  // Comma-separated list of song moods to for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly moods?: string[];
+  // ISO-8601 formated newest (minimum) timestamp to filter-out results.
+  // If missing, defaults to no filtering out.
+  readonly newerThan?: string;
+  // Start offset of paginated results to retrieve. Default is 0.
   readonly offset?: number;
+  // ISO-8601 formated oldest (maximum) timestamp to filter-out results. If missing, defaults to no filtering out.
+  readonly olderThan?: string;
+  // Comma-separated list of owner UUID's for filtering results. A value of "me" can be used instead of
+  // the caller's UUID.Prefix each value with - to exclude and + (optional) to include.
+  // Defaults to inclusion if no prefix is specified.
+  readonly ownerIds?: string[];
+  // Case-insensitive phrase to filter out songs by searching the Song title, description, album and
+  // nftName fields as well as the Song Owner nickname if set, otherwise firstName and lastName.
+  readonly phrase?: string;
+  // Sort order of the results based on createdAt field.
+  // Valid values are desc (newest first) and asc (oldest first). Default is asc.
   readonly sortOrder?: SortOrder;
+  // The list of UTxOs from walletApi.getUtxos().
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
