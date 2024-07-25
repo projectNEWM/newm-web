@@ -1,13 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   enableWallet,
+  getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import {
-  NEWM_DECIMAL_CONVERSION,
-  asThunkHook,
-  encodeAddress,
-} from "@newm-web/utils";
+import { NEWM_DECIMAL_CONVERSION, asThunkHook } from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
 import { EndSaleThunkRequest, StartSaleThunkRequest } from "./types";
 import { setToastMessage } from "../ui";
@@ -26,7 +23,7 @@ export const startSale = createAsyncThunk(
   async (body: StartSaleThunkRequest, { dispatch }) => {
     try {
       const wallet = await enableWallet();
-      const changeAddress = encodeAddress(await wallet.getChangeAddress());
+      const changeAddress = await getWalletChangeAddress(wallet);
 
       const startSaleAmountResp = await dispatch(
         saleApi.endpoints.startSaleAmount.initiate({
@@ -122,7 +119,7 @@ export const endSale = createAsyncThunk(
   async (body: EndSaleThunkRequest, { dispatch }) => {
     try {
       const wallet = await enableWallet();
-      const changeAddress = encodeAddress(await wallet.getChangeAddress());
+      const changeAddress = await getWalletChangeAddress(wallet);
 
       const endSaleAmountResp = await dispatch(
         saleApi.endpoints.endSaleAmount.initiate({

@@ -10,17 +10,19 @@ import {
 
 const PingSaleEnd: FunctionComponent = () => {
   const [currentPollingInterval, setPollingInterval] = useState<number>();
-  const [saleEndSongIds, setSaleEndSongIds] = useState<string[]>([]);
+  const [saleEndSongIds, setSaleEndSongIds] = useState<string[] | null>();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   const { data: sales = [], isLoading: isGetSalesLoading } = useGetSalesQuery(
     {
       saleStatuses: [SaleStatus.Started],
-      songIds: saleEndSongIds,
+      songIds: saleEndSongIds || undefined,
     },
     {
       pollingInterval: currentPollingInterval,
-      skip: !saleEndSongIds || saleEndSongIds.length === 0,
+      skip:
+        saleEndSongIds === null ||
+        (saleEndSongIds && saleEndSongIds.length === 0),
     }
   );
 
@@ -35,7 +37,7 @@ const PingSaleEnd: FunctionComponent = () => {
       setSaleEndSongIds(parsedPendingSales);
       setPollingInterval(PENDING_SALE_POLLING_INTERVAL);
     } else {
-      setSaleEndSongIds([]);
+      setSaleEndSongIds(null);
       setPollingInterval(undefined);
     }
   }, []);
@@ -66,7 +68,7 @@ const PingSaleEnd: FunctionComponent = () => {
       clearTimeout(timeoutId);
     }
 
-    if (saleEndSongIds.length > 0) {
+    if (saleEndSongIds?.length) {
       const newTimeoutId = setTimeout(() => {
         setPollingInterval(undefined);
       }, PENDING_SALE_PING_TIMEOUT);

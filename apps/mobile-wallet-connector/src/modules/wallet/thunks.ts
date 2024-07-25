@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   EnabledWallet,
+  getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { asThunkHook, encodeAddress } from "@newm-web/utils";
@@ -23,7 +24,7 @@ export const connectFromMobile = createAsyncThunk(
       let connection;
       const adresses = await wallet.getRewardAddresses();
       const stakeAddress = encodeAddress(adresses[0]);
-      const changeAddress = encodeAddress(await wallet.getChangeAddress());
+      const changeAddress = await getWalletChangeAddress(wallet);
       const utxoCborHexList = await wallet.getUtxos("1a001e8480");
 
       if (isHardwareWallet) {
