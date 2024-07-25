@@ -1,30 +1,30 @@
+import { ApiSale, GetSalesParams, GetSalesResponse } from "@newm-web/types";
 import { transformApiSale } from "@newm-web/utils";
 import {
-  ApiSale,
-  GenerateOrderRequest,
-  GenerateOrderResponse,
-  GenerateTransactionRequest,
-  GenerateTransactionResponse,
-  GetSaleResponse,
-  GetSalesParams,
-  GetSalesResponse,
-} from "@newm-web/types";
+  EndSaleAmountRequest,
+  EndSaleAmountResponse,
+  EndSaleTransactionRequest,
+  EndSaleTransactionResponse,
+  StartSaleAmountRequest,
+  StartSaleAmountResponse,
+  StartSaleTransactionRequest,
+  StartSaleTransactionResponse,
+} from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
-    generateOrder: build.mutation<GenerateOrderResponse, GenerateOrderRequest>({
+    endSaleAmount: build.mutation<EndSaleAmountResponse, EndSaleAmountRequest>({
       invalidatesTags: [Tags.Sale],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while generating order",
+              message: "An error occurred while generating the sale end amount",
               severity: "error",
             })
           );
@@ -34,22 +34,22 @@ export const extendedApi = newmApi.injectEndpoints({
       query: (body) => ({
         body,
         method: "POST",
-        url: "v1/marketplace/orders/amount",
+        url: "v1/marketplace/sales/end/amount",
       }),
     }),
-    generateTransaction: build.mutation<
-      GenerateTransactionResponse,
-      GenerateTransactionRequest
+    endSaleTransaction: build.mutation<
+      EndSaleTransactionResponse,
+      EndSaleTransactionRequest
     >({
       invalidatesTags: [Tags.Sale],
-
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while generating transaction",
+              message:
+                "An error occurred while generating the sale end transaction",
               severity: "error",
             })
           );
@@ -59,34 +59,10 @@ export const extendedApi = newmApi.injectEndpoints({
       query: (body) => ({
         body,
         method: "POST",
-        url: "v1/marketplace/orders/transaction",
+        url: "v1/marketplace/sales/end/transaction",
       }),
     }),
-    getSale: build.query<GetSaleResponse, string>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching sale details",
-              severity: "error",
-            })
-          );
-        }
-      },
 
-      providesTags: [Tags.Sale],
-
-      query: (saleId) => ({
-        method: "GET",
-        url: `v1/marketplace/sales/${saleId}`,
-      }),
-
-      transformResponse: (apiSale: ApiSale) => {
-        return transformApiSale(apiSale);
-      },
-    }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -94,7 +70,7 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching available songs",
+              message: "An error occurred while fetching sale data",
               severity: "error",
             })
           );
@@ -129,9 +105,59 @@ export const extendedApi = newmApi.injectEndpoints({
         return apiSales.map(transformApiSale);
       },
     }),
+    startSaleAmount: build.mutation<
+      StartSaleAmountResponse,
+      StartSaleAmountRequest
+    >({
+      invalidatesTags: [Tags.Sale],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message:
+                "An error occurred while generating the sale start amount",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/sales/start/amount",
+      }),
+    }),
+    startSaleTransaction: build.mutation<
+      StartSaleTransactionResponse,
+      StartSaleTransactionRequest
+    >({
+      invalidatesTags: [Tags.Sale],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message:
+                "An error occurred while generating the sale start transaction",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/sales/start/transaction",
+      }),
+    }),
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const { useGetSalesQuery } = extendedApi;
 
 export default extendedApi;

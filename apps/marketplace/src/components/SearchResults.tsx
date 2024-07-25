@@ -1,7 +1,8 @@
 import { FunctionComponent } from "react";
 import { Box, Skeleton, Stack, Typography, useTheme } from "@mui/material";
+import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
-import { SaleStatus, useGetSalesQuery } from "../modules/sale";
+import { useGetSalesQuery } from "../modules/sale";
 
 interface SearchResultsProps {
   readonly query: string;

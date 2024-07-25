@@ -4,5 +4,6 @@ export enum Tags {
   Languages = "Languages",
   Profile = "Profile",
   Roles = "Roles",
-  Song = "Song",
+  Sale = "Sale",
+  Song = "Song"
 }

@@ -9,13 +9,14 @@ import {
 import { useAutocomplete } from "@mui/base/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "@newm-web/theme";
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import TextInput from "./TextInput";
 import ResultsList from "./styled/ResultsList";
 import NoResultsText from "./styled/NoResultsText";
 import { DropdownSelectFieldProps } from "./form/DropdownSelectField";
 
 interface DropdownSelectProps extends DropdownSelectFieldProps {
+  readonly containerSxOverrides?: SxProps;
   readonly errorMessage?: string;
   readonly onChange?: (
     event: SyntheticEvent<Element, Event>,
@@ -38,6 +39,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     placeholder,
     value = null,
     widthType,
+    containerSxOverrides,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -87,6 +89,7 @@ const DropdownSelect: ForwardRefRenderFunction<
         maxWidth: widthType === "default" ? theme.inputField.maxWidth : null,
         position: "relative",
         width: "100%",
+        ...containerSxOverrides,
       } }
     >
       <div { ...getRootProps() }>
