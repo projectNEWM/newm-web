@@ -50,6 +50,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
     <Stack direction="column" ref={ ref } spacing={ 1 }>
       <Stack direction="row" justifyContent="space-between">
         <Typography
+          component="div"
           sx={ {
             color: theme.colors.grey100,
             fontWeight: 500,
@@ -58,7 +59,7 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
           } }
         >
           <Stack direction="row" spacing="4px">
-            <Box>{ label }</Box>
+            <Box component="label">{ label }</Box>
 
             { !!tooltipText && (
               <Tooltip title={ tooltipText }>
