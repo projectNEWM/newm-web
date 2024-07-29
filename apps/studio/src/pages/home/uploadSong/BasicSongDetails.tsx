@@ -27,7 +27,11 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
 import { UploadSongFormValues } from "./UploadSong";
-import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
+import {
+  NEWM_STUDIO_FAQ_URL,
+  SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
+  useAppDispatch,
+} from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
@@ -379,6 +383,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             placeholder="Tell us about your song"
             ref={ descriptionRef }
           />
+          <Typography
+            component="span"
+            style={ { marginTop: "4px", textAlign: "end" } }
+            variant="subtitle2"
+          >
+            { `${values.description?.length}/${SONG_DESCRIPTION_MAX_CHARACTER_COUNT}` }
+          </Typography>
 
           <Stack spacing={ 3 }>
             <Stack spacing={ 1.5 }>
