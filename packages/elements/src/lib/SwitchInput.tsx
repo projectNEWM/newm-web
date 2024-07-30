@@ -3,13 +3,13 @@ import {
   Stack,
   SwitchProps,
   SxProps,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 import Switch from "./Switch";
 import Tooltip from "./styled/Tooltip";
-import Typography from "./Typography";
 
 export interface SwitchInputProps extends SwitchProps {
   readonly children?: ReactNode;
@@ -53,7 +53,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
         <Stack pr={ [0, 0, 4] }>
           <Stack display="flex" flexDirection="row">
             <Typography
-              color="white"
+              color={ theme.colors.white }
               pr={ 1 }
               variant={ description ? "body1" : "subtitle1" }
             >

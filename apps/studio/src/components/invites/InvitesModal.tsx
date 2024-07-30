@@ -6,8 +6,9 @@ import {
   DialogContentText,
   DialogTitle,
   Stack,
+  Typography,
 } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import InvitesTable from "./InvitesTable";
 import {

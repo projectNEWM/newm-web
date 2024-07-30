@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Box, Container } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Box, Container, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";

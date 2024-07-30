@@ -1,12 +1,7 @@
 import { FunctionComponent, useState } from "react";
-import {
-  Button,
-  GradientTypography,
-  TextInputField,
-  Typography,
-} from "@newm-web/elements";
+import { Button, GradientTypography, TextInputField } from "@newm-web/elements";
 import { FormikValues, useFormikContext } from "formik";
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { ResponsiveNEWMLogo } from "../../components";
 import { sendVerificationEmail } from "../../modules/session";
 import { useAppDispatch } from "../../common";
@@ -71,7 +66,7 @@ const Verification: FunctionComponent = () => {
 
       <Box mt={ 2 } pb={ 4 }>
         { showResendLink ? (
-          <Typography color="grey100" fontWeight={ 500 }>
+          <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
             Didn&apos;t receive an email?
             <button
               style={ {

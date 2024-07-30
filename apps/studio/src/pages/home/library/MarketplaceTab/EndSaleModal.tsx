@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Box, Stack } from "@mui/material";
-import { Button, Modal, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography } from "@mui/material";
+import { Button, Modal } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
 interface EndSaleModalProps {

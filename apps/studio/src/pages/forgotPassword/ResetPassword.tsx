@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { FormikValues, useFormikContext } from "formik";
-import { Box, Stack, useTheme } from "@mui/material";
-import { Button, PasswordInputField, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Button, PasswordInputField } from "@newm-web/elements";
 
 const ResetPassword: FunctionComponent = () => {
   const theme = useTheme();

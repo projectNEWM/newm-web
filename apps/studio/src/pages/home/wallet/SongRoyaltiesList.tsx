@@ -9,12 +9,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import theme from "@newm-web/theme";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
-import { TablePagination, Typography } from "@newm-web/elements";
+import { TablePagination } from "@newm-web/elements";
 import AllCaughtUp from "./AllCaughtUp";
 import { TableDropdownSelect } from "../../../components";
 

@@ -1,6 +1,6 @@
+import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "@newm-web/theme";
-import Typography from "../Typography";
 
 const GradientTypography = styled(Typography)`
   color: transparent;
