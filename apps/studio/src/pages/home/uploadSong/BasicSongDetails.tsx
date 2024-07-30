@@ -378,18 +378,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           </Stack>
 
           <TextAreaField
+            characterCountLimit={ SONG_DESCRIPTION_MAX_CHARACTER_COUNT }
+            currentCharacterCount={ values.description?.length }
             label="DESCRIPTION"
             name="description"
             placeholder="Tell us about your song"
             ref={ descriptionRef }
           />
-          <Typography
-            component="span"
-            style={ { marginTop: "4px", textAlign: "end" } }
-            variant="subtitle2"
-          >
-            { `${values.description?.length}/${SONG_DESCRIPTION_MAX_CHARACTER_COUNT}` }
-          </Typography>
 
           <Stack spacing={ 3 }>
             <Stack spacing={ 1.5 }>
