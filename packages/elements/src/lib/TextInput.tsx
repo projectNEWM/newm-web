@@ -165,7 +165,10 @@ export const TextInput: ForwardRefRenderFunction<
           fontWeight={ 500 }
         >
           <>
-            <Typography sx={ { fontWeight: 500, textTransform: "uppercase" } }>
+            <Typography
+              component="span"
+              sx={ { fontWeight: 500, textTransform: "uppercase" } }
+            >
               { label }
             </Typography>
 
