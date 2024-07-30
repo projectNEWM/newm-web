@@ -3,8 +3,8 @@ import { Box, Typography, styled } from "@mui/material";
 import theme from "@newm-web/theme";
 
 interface StepBoxProps {
-  readonly boxColor: string;
-  readonly boxTitle: string;
+  readonly boxcolor: string;
+  readonly boxtitle: string;
 }
 
 interface FormStepperGridProps {
@@ -27,9 +27,9 @@ const statusColor = (activeStep: number, currentIndex: number) => {
 
 const StepBox = styled(Box)<StepBoxProps>`
   flex-grow: 1;
-  color: ${(props) => props.boxColor};
+  color: ${(props) => props.boxcolor};
   background-color: ${theme.colors.grey700};
-  border-bottom: 3px solid ${(props) => props.boxColor};
+  border-bottom: 3px solid ${(props) => props.boxcolor};
   min-height: 60px;
   min-width: 232px;
   display: flex;
@@ -78,8 +78,8 @@ const FormProgressStepper = ({
 
         return (
           <StepBox
-            boxColor={ stepColor }
-            boxTitle={ stepTitle }
+            boxcolor={ stepColor }
+            boxtitle={ stepTitle }
             justifyContent={ ["center", "center", "flex-start"] }
             key={ index }
           >
