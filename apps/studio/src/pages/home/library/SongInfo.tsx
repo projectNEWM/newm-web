@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { useWindowDimensions } from "@newm-web/utils";
 import {
@@ -8,7 +8,6 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  Typography,
   UploadImageField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
@@ -114,7 +113,7 @@ const SongInfo = () => {
                 spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
                   SONG
                 </Typography>
 
@@ -136,7 +135,7 @@ const SongInfo = () => {
                 spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
                   SONG COVER ART
                 </Typography>
 

@@ -1,13 +1,13 @@
 import { FunctionComponent } from "react";
-import Typography from "./Typography";
-
+import { Typography } from "@mui/material";
+import theme from "@newm-web/theme";
 interface SideBarHeaderProps {
   readonly children: string;
 }
 
 const SideBarHeader: FunctionComponent<SideBarHeaderProps> = ({ children }) => {
   return (
-    <Typography color="grey300" variant="h6">
+    <Typography color={ theme.colors.grey300 } variant="h6">
       { children }
     </Typography>
   );

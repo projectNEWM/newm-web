@@ -1,11 +1,6 @@
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
-import {
-  Button,
-  HorizontalLine,
-  Tooltip,
-  Typography,
-} from "@newm-web/elements";
+import { Button, HorizontalLine, Tooltip } from "@newm-web/elements";
 import { Formik, FormikProps } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "@newm-web/theme";
@@ -140,7 +135,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         <>
           <HorizontalLine sx={ { my: 5 } } />
 
-          <Typography color="grey100" mb={ -0.5 } variant="h5">
+          <Typography color={ theme.colors.grey100 } mb={ -0.5 } variant="h5">
             FEATURED ARTISTS
           </Typography>
 

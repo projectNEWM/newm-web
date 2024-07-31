@@ -1,5 +1,4 @@
-import { Box, Divider, Stack, useTheme } from "@mui/material";
-import { Typography } from "@newm-web/elements";
+import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -135,7 +134,7 @@ const DisconnectWalletButton: FunctionComponent<
           top={ parentHeight + 8 }
         >
           <Stack alignItems="flex-start" direction="row" gap={ 1 } p={ 2 }>
-            <Typography fontWeight={ 500 } sx={ { color: theme.colors.grey200 } }>
+            <Typography color={ theme.colors.grey200 } fontWeight={ 500 }>
               { ellipsedAddress }
             </Typography>
 
@@ -163,9 +162,7 @@ const DisconnectWalletButton: FunctionComponent<
             onClick={ handleDisconnect }
           >
             <LogoutIcon fontSize="small" sx={ { color: theme.colors.white } } />
-            <Typography sx={ { color: theme.colors.white } }>
-              Disconnect
-            </Typography>
+            <Typography color={ theme.colors.white }>Disconnect</Typography>
           </Stack>
         </Stack>
       ) }

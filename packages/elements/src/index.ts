@@ -1,5 +1,3 @@
-export { default as Typography } from "./lib/Typography";
-export * from "./lib/Typography";
 export { default as Alert } from "./lib/Alert";
 export { default as Button } from "./lib/Button";
 export * from "./lib/Button";
