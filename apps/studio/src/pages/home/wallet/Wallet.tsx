@@ -16,12 +16,17 @@ import {
 } from "@mui/material";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { Button } from "@newm-web/elements";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
 import { NoConnectedWallet } from "./NoConnectedWallet";
-import { resetWalletPortfolioTableFilter } from "../../../modules/ui";
+import { useGetStudioClientConfigQuery } from "../../../modules/content";
+import {
+  resetWalletPortfolioTableFilter,
+  setIsConnectWalletModalOpen,
+} from "../../../modules/ui";
 import { useAppDispatch } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
@@ -64,6 +69,11 @@ const Wallet: FunctionComponent = () => {
   const { wallet } = useConnectWallet();
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
+  const { data: clientConfig, isLoading: isClientConfigLoading } =
+    useGetStudioClientConfigQuery();
+
+  const isClaimWalletRoyaltiesEnabled =
+    clientConfig?.featureFlags?.claimWalletRoyaltiesEnabled ?? false;
 
   const songs =
     walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
@@ -89,76 +99,120 @@ const Wallet: FunctionComponent = () => {
     setTab(nextTab);
   };
 
-  if (!wallet) {
-    return <NoConnectedWallet />;
-  }
+  if (isClientConfigLoading) return;
 
-  return (
-    <Container maxWidth={ false }>
-      <Box mx={ [null, null, 1.5] }>
-        <Box
-          sx={ {
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "space-between",
-            mb: 5,
-          } }
-        >
-          <Typography fontWeight={ 800 } variant="h3">
-            WALLET
-          </Typography>
-          <DisconnectWalletButton />
+  if (!isClaimWalletRoyaltiesEnabled) {
+    return (
+      <Container maxWidth={ false }>
+        <Box mx={ [null, null, 3] }>
+          <Box
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "space-between",
+              mb: 5,
+            } }
+          >
+            <Typography fontWeight={ 800 } variant="h3">
+              WALLET
+            </Typography>
+            { wallet ? (
+              <DisconnectWalletButton />
+            ) : (
+              <Button
+                gradient="crypto"
+                sx={ { mb: 5, mr: [0, 4.75] } }
+                width="compact"
+                onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
+              >
+                Connect Wallet
+              </Button>
+            ) }
+          </Box>
+          <Box mt={ 5 } pb={ 5 }>
+            <Typography variant="body1">
+              Wallet Portfolio and Transactions Coming Soon
+            </Typography>
+          </Box>
         </Box>
+      </Container>
+    );
+  } else {
+    if (!wallet) {
+      return <NoConnectedWallet />;
+    }
 
-        { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
-          <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
-        ) : (
-          <NoPendingEarnings />
-        ) }
-
-        <Box mt={ 5 } pb={ 5 }>
-          <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
-            <Tabs
-              aria-label="Wallet details"
-              sx={ {
-                ".Mui-selected": {
-                  background: theme.gradients[colorMap[tab]],
-                  backgroundClip: "text",
-                  color: theme.colors[colorMap[tab]],
-                  textFillColor: "transparent",
-                },
-                ".MuiButtonBase-root.MuiTab-root": {
-                  minWidth: "auto",
-                  ...theme.typography.subtitle2,
-                  color: theme.colors.grey400,
-                  fontWeight: 500,
-                },
-                ".MuiTabs-flexContainer": {
-                  gap: 4,
-                  justifyContent: ["center", "center", "normal"],
-                },
-                ".MuiTabs-indicator": {
-                  background: theme.gradients[colorMap[tab]],
-                },
-              } }
-              value={ tab }
-              onChange={ handleChange }
-            >
-              <Tab aria-controls="tabpanel-0" id="tab-0" label="PORTFOLIO" />
-              <Tab aria-controls="tabpanel-1" id="tab-1" label="TRANSACTIONS" />
-            </Tabs>
+    return (
+      <Container maxWidth={ false }>
+        <Box mx={ [null, null, 1.5] }>
+          <Box
+            sx={ {
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "space-between",
+              mb: 5,
+            } }
+          >
+            <Typography fontWeight={ 800 } variant="h3">
+              WALLET
+            </Typography>
+            <DisconnectWalletButton />
           </Box>
 
-          <TabPanel index={ 0 } value={ tab }>
-            <Portfolio />
-          </TabPanel>
-          <TabPanel index={ 1 } value={ tab }>
-            <Transactions />
-          </TabPanel>
+          { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
+            <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
+          ) : (
+            <NoPendingEarnings />
+          ) }
+
+          <Box mt={ 5 } pb={ 5 }>
+            <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
+              <Tabs
+                aria-label="Wallet details"
+                sx={ {
+                  ".Mui-selected": {
+                    background: theme.gradients[colorMap[tab]],
+                    backgroundClip: "text",
+                    color: theme.colors[colorMap[tab]],
+                    textFillColor: "transparent",
+                  },
+                  ".MuiButtonBase-root.MuiTab-root": {
+                    minWidth: "auto",
+                    ...theme.typography.subtitle2,
+                    color: theme.colors.grey400,
+                    fontWeight: 500,
+                  },
+                  ".MuiTabs-flexContainer": {
+                    gap: 4,
+                    justifyContent: ["center", "center", "normal"],
+                  },
+                  ".MuiTabs-indicator": {
+                    background: theme.gradients[colorMap[tab]],
+                  },
+                } }
+                value={ tab }
+                onChange={ handleChange }
+              >
+                <Tab aria-controls="tabpanel-0" id="tab-0" label="PORTFOLIO" />
+                <Tab
+                  aria-controls="tabpanel-1"
+                  id="tab-1"
+                  label="TRANSACTIONS"
+                />
+              </Tabs>
+            </Box>
+
+            <TabPanel index={ 0 } value={ tab }>
+              <Portfolio />
+            </TabPanel>
+            <TabPanel index={ 1 } value={ tab }>
+              <Transactions />
+            </TabPanel>
+          </Box>
         </Box>
-      </Box>
-    </Container>
-  );
+      </Container>
+    );
+  }
 };
 
 export default Wallet;
