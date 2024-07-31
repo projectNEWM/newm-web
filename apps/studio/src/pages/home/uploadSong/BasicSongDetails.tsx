@@ -27,7 +27,11 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
 import { UploadSongFormValues } from "./UploadSong";
-import { NEWM_STUDIO_FAQ_URL, useAppDispatch } from "../../../common";
+import {
+  NEWM_STUDIO_FAQ_URL,
+  SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
+  useAppDispatch,
+} from "../../../common";
 import { PlaySong, PricingPlansDialog } from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
@@ -374,6 +378,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           </Stack>
 
           <TextAreaField
+            characterCountLimit={ SONG_DESCRIPTION_MAX_CHARACTER_COUNT }
+            currentCharacterCount={ values.description?.length }
             label="DESCRIPTION"
             name="description"
             placeholder="Tell us about your song"

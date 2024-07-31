@@ -19,9 +19,9 @@ import {
 } from "./regex";
 import {
   MAX_CHARACTER_COUNT,
-  MAX_CHARACTER_COUNT_LONG,
   MIN_DISTRIBUTION_TIME,
   NONE_OPTION,
+  SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "./constants";
 
 /**
@@ -112,8 +112,8 @@ export const commonYupValidation = {
       }),
     }),
   description: Yup.string().max(
-    MAX_CHARACTER_COUNT_LONG,
-    `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
+    SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
+    `Must be ${SONG_DESCRIPTION_MAX_CHARACTER_COUNT} characters or less`
   ),
   email: Yup.string()
     .email("Please enter a vaild email")
