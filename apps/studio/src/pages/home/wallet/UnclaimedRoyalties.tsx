@@ -1,5 +1,5 @@
-import { Box, IconButton, Stack } from "@mui/material";
-import { Button, Tooltip, Typography } from "@newm-web/elements";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Button, Tooltip } from "@newm-web/elements";
 import currency from "currency.js";
 import theme from "@newm-web/theme";
 import HelpIcon from "@mui/icons-material/Help";
@@ -32,7 +32,7 @@ export const UnclaimedRoyalties = ({
         } }
       >
         <Stack alignItems="center" direction="row" gap={ 1 }>
-          <Typography color="grey100" fontSize={ 12 }>
+          <Typography color={ theme.colors.grey100 } fontSize={ 12 }>
             ROYALTIES ACCRUED SO FAR
           </Typography>
 

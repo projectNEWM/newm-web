@@ -1,4 +1,4 @@
-import { Box, Link, Stack, useTheme } from "@mui/material";
+import { Box, Link, Stack, Typography, useTheme } from "@mui/material";
 import {
   Alert,
   Button,
@@ -11,7 +11,6 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  Typography,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
@@ -209,11 +208,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               }
               severity="warning"
             >
-              <Typography color="yellow" mb={ 0.5 }>
+              <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                 Outlet Profile Information Missing
               </Typography>
               <Typography
-                color="yellow"
+                color={ theme.colors.yellow }
                 fontWeight={ 400 }
                 maxWidth="460px"
                 variant="subtitle1"
@@ -244,7 +243,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           >
             { isInEditMode ? (
               <>
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
                   SONG
                 </Typography>
 
@@ -262,7 +261,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               </>
             ) : (
               <>
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
                   SONG FILE
                 </Typography>
 
@@ -277,7 +276,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             spacing={ 0.5 }
             width="100%"
           >
-            <Typography color="grey100" fontWeight={ 500 }>
+            <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
               SONG COVER ART
             </Typography>
 
@@ -452,10 +451,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 }
                 severity="warning"
               >
-                <Typography color="yellow" mb={ 0.5 }>
+                <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                   Verify your profile
                 </Typography>
-                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                <Typography
+                  color={ theme.colors.yellow }
+                  fontWeight={ 400 }
+                  variant="subtitle1"
+                >
                   Profile verification is required to mint. Please verify your
                   profile.
                 </Typography>
@@ -480,10 +483,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 severity="warning"
                 sx={ { py: 2.5 } }
               >
-                <Typography color="yellow" mb={ 0.5 }>
+                <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                   Connect a wallet
                 </Typography>
-                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                <Typography
+                  color={ theme.colors.yellow }
+                  fontWeight={ 400 }
+                  variant="subtitle1"
+                >
                   To continue, please connect a wallet.
                 </Typography>
               </Alert>

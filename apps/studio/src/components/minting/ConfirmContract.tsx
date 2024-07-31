@@ -1,8 +1,9 @@
-import { Box, Stack } from "@mui/material";
-import { CheckboxField, HorizontalLine, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography } from "@mui/material";
+import { CheckboxField, HorizontalLine } from "@newm-web/elements";
 import { Formik, FormikProps } from "formik";
 import { FunctionComponent, useEffect } from "react";
 import { artistAgreementPreview } from "@newm-web/assets";
+import theme from "@newm-web/theme";
 import { selectSong } from "../../modules/song";
 import { useAppSelector } from "../../common";
 import ViewPDF from "../ViewPDF";
@@ -82,7 +83,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   return (
     <Box>
       <Stack direction="column" spacing={ 1 }>
-        <Typography color="grey100" fontWeight={ 500 }>
+        <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
           View your contract here
         </Typography>
 
@@ -98,13 +99,21 @@ const FormContent: FunctionComponent<FormContentProps> = ({
         <CheckboxField
           label={
             isCoCreator ? (
-              <Typography color="white" fontSize={ 12 } variant="subtitle1">
+              <Typography
+                color={ theme.colors.white }
+                fontSize={ 12 }
+                variant="subtitle1"
+              >
                 I confirm that I am the primary creator of{ " " }
                 <strong>{ songTitle }</strong> and all mentioned collaborators are
                 accurate.
               </Typography>
             ) : (
-              <Typography color="white" fontSize={ 12 } variant="subtitle1">
+              <Typography
+                color={ theme.colors.white }
+                fontSize={ 12 }
+                variant="subtitle1"
+              >
                 I confirm that I am the exclusive creator of{ " " }
                 <strong>{ songTitle }.</strong>
               </Typography>
@@ -130,10 +139,18 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           name="agreesToContract"
         />
 
-        <Typography color="white" fontSize={ 12 } variant="subtitle1">
+        <Typography
+          color={ theme.colors.white }
+          fontSize={ 12 }
+          variant="subtitle1"
+        >
           <CheckboxField
             label={
-              <Typography color="white" fontSize={ 12 } variant="subtitle1">
+              <Typography
+                color={ theme.colors.white }
+                fontSize={ 12 }
+                variant="subtitle1"
+              >
                 By selecting &lsquo;Distribute & Mint&rsquo; you agree to
                 distribute this song to all current and future available stores
                 including digital downloads.
@@ -145,7 +162,11 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
         <HorizontalLine style={ { marginTop: "24px" } } />
 
-        <Typography color="white" fontSize={ 12 } variant="subtitle1">
+        <Typography
+          color={ theme.colors.white }
+          fontSize={ 12 }
+          variant="subtitle1"
+        >
           The distribution and minting process may take 3-15 days to complete.
         </Typography>
       </Stack>

@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Box, Link, useTheme } from "@mui/material";
-import { Button, GradientTypography, Typography } from "@newm-web/elements";
+import { Box, Link, Typography, useTheme } from "@mui/material";
+import { Button, GradientTypography } from "@newm-web/elements";
 import { ResponsiveNEWMLogo } from "../../components";
 import {
   NEWM_PRIVACY_POLICY_URL,
@@ -46,7 +46,7 @@ const Complete: FunctionComponent = () => {
           Enter NEWM
         </Button>
 
-        <Typography color="grey200" variant="subtitle1">
+        <Typography color={ theme.colors.grey200 } variant="subtitle1">
           By clicking &apos;Enter NEWM&apos;, you agree to
           <br />
           NEWM&apos;s{ " " }
