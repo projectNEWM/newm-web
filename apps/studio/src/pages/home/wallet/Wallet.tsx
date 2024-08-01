@@ -22,6 +22,7 @@ import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
 import { NoConnectedWallet } from "./NoConnectedWallet";
+import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
 import { useGetStudioClientConfigQuery } from "../../../modules/content";
 import {
   resetWalletPortfolioTableFilter,
@@ -99,12 +100,14 @@ const Wallet: FunctionComponent = () => {
     setTab(nextTab);
   };
 
+  // Don't show any content until client config has loaded
   if (isClientConfigLoading) return;
 
+  // Current State of the Wallet Page
   if (!isClaimWalletRoyaltiesEnabled) {
     return (
       <Container maxWidth={ false }>
-        <Box mx={ [null, null, 3] }>
+        <Box ml={ [null, null, 3] }>
           <Box
             sx={ {
               alignItems: "center",
@@ -116,6 +119,7 @@ const Wallet: FunctionComponent = () => {
             <Typography fontWeight={ 800 } variant="h3">
               WALLET
             </Typography>
+
             { wallet ? (
               <DisconnectWalletButton />
             ) : (
@@ -129,15 +133,17 @@ const Wallet: FunctionComponent = () => {
               </Button>
             ) }
           </Box>
-          <Box mt={ 5 } pb={ 5 }>
-            <Typography variant="body1">
-              Wallet Portfolio and Transactions Coming Soon
-            </Typography>
+
+          <LegacyUnclaimedRoyalties unclaimedRoyalties={ 0 } />
+
+          <Box mt={ 2.5 }>
+            <LegacyPortfolio />
           </Box>
         </Box>
       </Container>
     );
   } else {
+    // New Wallet Royalties and Enhancement Features
     if (!wallet) {
       return <NoConnectedWallet />;
     }
