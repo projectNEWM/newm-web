@@ -1,5 +1,5 @@
-import { Box, Divider, Stack, useTheme } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -117,7 +117,7 @@ const DisconnectWalletButton: FunctionComponent<
           onClick={ handleClickButton }
         >
           <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-            <Typography>{ balance } ₳</Typography>
+            <Typography sx={ { whiteSpace: "nowrap" } }>{ balance } ₳</Typography>
             <Typography sx={ { display: ["none", "none", "flex"] } }>
               |
             </Typography>
