@@ -23,6 +23,14 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD
         : import.meta.env.VITE_RECAPTCHA_SITE_KEY_PROD;
+    case "DEXHUNTER_MARKETPLACE_PARTNER_CODE":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE
+        : import.meta.env.VITE_DEXHUNTER_MARKETPLACE_PARTNER_CODE;
+    case "DEXHUNTER_STUDIO_PARTNER_CODE":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_STUDIO_PARTNER_CODE
+        : import.meta.env.VITE_DEXHUNTER_STUDIO_PARTNER_CODE;
     case "ENV":
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_ENV
@@ -35,6 +43,12 @@ const getAppEnvVar = (name: string): string => {
 export const APPLE_CLIENT_ID = getAppEnvVar("APPLE_CLIENT_ID");
 export const GOOGLE_CLIENT_ID = getAppEnvVar("GOOGLE_CLIENT_ID");
 export const GA_STUDIO_ID = getAppEnvVar("GA_STUDIO_ID");
+export const DEXHUNTER_STUDIO_PARTNER_CODE = getAppEnvVar(
+  "DEXHUNTER_STUDIO_PARTNER_CODE"
+);
+export const DEXHUNTER_MARKETPLACE_PARTNER_CODE = getAppEnvVar(
+  "DEXHUNTER_MARKETPLACE_PARTNER_CODE"
+);
 export const ENV = getAppEnvVar("ENV");
 
 const NODE_ENV = process.env.NODE_ENV;

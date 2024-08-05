@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@dexhunterio/swaps": "^0.0.103",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
