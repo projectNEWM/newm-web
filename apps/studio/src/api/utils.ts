@@ -105,7 +105,9 @@ export const getAuthHeaders = (api: BaseQueryApi) => {
  */
 export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
   const { endpoint } = api;
-  const action = recaptchaEndpointActionMap[endpoint] || endpoint;
+  const action = recaptchaEndpointActionMap[endpoint];
+
+  if (!action) return {};
 
   return {
     "g-recaptcha-platform": "Web",
@@ -118,16 +120,13 @@ export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
  */
 export const prepareHeaders = async (
   api: BaseQueryApi,
-  headers: AxiosRequestConfig["headers"],
-  shouldIncludeRecaptchaHeaders = true
+  headers: AxiosRequestConfig["headers"]
 ) => {
   const authHeaders = getAuthHeaders(api);
-  const recaptchaHeaders = shouldIncludeRecaptchaHeaders
-    ? await getRecaptchaHeaders(api)
-    : {};
+  const recaptchaHeaders = await getRecaptchaHeaders(api);
 
-  // ensure recaptcha headers and auth headers are not sent together
-  const shouldIncludeAuthHeaders = Object.keys(recaptchaHeaders).length > 0;
+  // ensure auth header isn't sent if recaptcha header is present
+  const shouldIncludeAuthHeaders = Object.keys(recaptchaHeaders).length === 0;
 
   return {
     ...(shouldIncludeAuthHeaders ? authHeaders : {}),

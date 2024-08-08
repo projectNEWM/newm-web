@@ -7,6 +7,8 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   createAccount: "signup",
   endSaleAmount: "generate_sale_end_amount",
   endSaleTransaction: "generate_sale_end_transaction",
+  getADAPrice: "get_ada_price",
+  getNEWMPrice: "get_newm_price",
   getSale: "get_sale",
   getSales: "get_sales",
   getStudioClientConfig: "studio_config",

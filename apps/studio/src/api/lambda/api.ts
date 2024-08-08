@@ -11,7 +11,7 @@ import { fetchBaseQueryWithReauth, prepareHeaders } from "../utils";
 
 const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.lambda,
-  prepareHeaders: (api, headers) => prepareHeaders(api, headers, false),
+  prepareHeaders,
 });
 
 const api = createApi({
