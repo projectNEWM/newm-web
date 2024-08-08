@@ -1,18 +1,19 @@
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import currency from "currency.js";
 import { FunctionComponent, useEffect } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
 import { useAppDispatch, useAppSelector } from "../common";
 import { setIsConnectWalletModalOpen } from "../modules/ui";
 import {
   selectWallet,
+  setWalletAdaBalance,
   setWalletAddress,
-  setWalletBalance,
+  setWalletNewmBalance,
 } from "../modules/wallet";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const { walletAddress, walletBalance } = useAppSelector(selectWallet);
+  const { walletAddress, walletAdaBalance, walletNewmBalance } =
+    useAppSelector(selectWallet);
   const { wallet, getBalance, getAddress } = useConnectWallet();
 
   /**
@@ -28,8 +29,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getBalance((value) => {
-        const adaBalance = currency(value, { symbol: "" }).format();
-        dispatch(setWalletBalance(adaBalance));
+        dispatch(setWalletAdaBalance(value));
       });
     }
   }, [wallet, getBalance, dispatch]);
@@ -47,8 +47,9 @@ const DisconnectWalletButton: FunctionComponent = () => {
 
   return (
     <DisconnectWalletButtonComponent
+      adaBalance={ walletAdaBalance }
       address={ walletAddress }
-      balance={ walletBalance }
+      newmBalance={ 0 }
       onDisconnect={ handleDisconnectWallet }
     />
   );

@@ -7,11 +7,22 @@ import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  formatAdaAmount,
+  formatNewmAmount,
+  formatUsdAmount,
+} from "@newm-web/utils";
 import SwapNewmModal from "../modals/SwapNewmModal";
 
+const TEMP_NEWM_USD_AMOUNT = 125.0;
+const TEMP_ADA_USD_AMOUNT = 250.0;
+
 interface DisconnectWalletButtonProps {
+  readonly adaBalance?: number;
+  readonly adaUsdBalance?: number;
   readonly address?: string;
-  readonly balance?: string;
+  readonly newmBalance?: number;
+  readonly newmUsdBalance?: number;
   readonly onDisconnect?: VoidFunction;
 }
 
@@ -21,7 +32,7 @@ interface DisconnectWalletButtonProps {
  */
 const DisconnectWalletButton: FunctionComponent<
   DisconnectWalletButtonProps
-> = ({ address = "", balance = "", onDisconnect }) => {
+> = ({ address = "", adaBalance, newmBalance, onDisconnect }) => {
   const theme = useTheme();
 
   const parentRef = useRef<HTMLDivElement>(null);
@@ -117,7 +128,9 @@ const DisconnectWalletButton: FunctionComponent<
           onClick={ handleClickButton }
         >
           <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-            <Typography sx={ { whiteSpace: "nowrap" } }>{ balance } ₳</Typography>
+            <Typography whiteSpace="nowrap">
+              { formatNewmAmount(newmBalance) }
+            </Typography>
             <Typography sx={ { display: ["none", "none", "flex"] } }>
               |
             </Typography>
@@ -145,20 +158,73 @@ const DisconnectWalletButton: FunctionComponent<
             } }
             top={ parentHeight + 8 }
           >
-            <Stack alignItems="flex-start" direction="row" gap={ 1 } p={ 1.5 }>
-              <Typography fontWeight={ 500 } sx={ { color: theme.colors.grey200 } }>
-                { ellipsedAddress }
+            <Stack
+              alignItems="flex-start"
+              color={ theme.colors.grey200 }
+              direction="column"
+              gap={ 1 }
+              p={ 1.5 }
+            >
+              <Typography fontWeight={ 700 } variant="h5">
+                WALLET ADDRESS
               </Typography>
+              <Stack alignItems="flex-start" direction="row" gap={ 1 }>
+                <Typography fontWeight={ 400 } sx={ { color: theme.colors.white } }>
+                  { ellipsedAddress }
+                </Typography>
 
-              { isCopied ? (
-                <DoneIcon fontSize="small" sx={ { color: theme.colors.green } } />
-              ) : (
-                <ContentCopyIcon
-                  fontSize="small"
-                  sx={ { color: theme.colors.grey200, cursor: "pointer" } }
-                  onClick={ handleClickCopyIcon }
-                />
-              ) }
+                { isCopied ? (
+                  <DoneIcon
+                    fontSize="small"
+                    sx={ { color: theme.colors.green } }
+                  />
+                ) : (
+                  <ContentCopyIcon
+                    fontSize="small"
+                    sx={ { color: theme.colors.white, cursor: "pointer" } }
+                    onClick={ handleClickCopyIcon }
+                  />
+                ) }
+              </Stack>
+            </Stack>
+
+            <Stack alignItems="flex-start" direction="column" gap={ 1 } p={ 1.5 }>
+              <Typography
+                color={ theme.colors.grey200 }
+                fontWeight={ 700 }
+                variant="h5"
+              >
+                YOUR BALANCE
+              </Typography>
+              <Stack gap={ 0.25 }>
+                <Typography sx={ { color: theme.colors.white } } variant="h4">
+                  { formatNewmAmount(newmBalance) }
+                </Typography>
+                <Typography
+                  color={ theme.colors.grey200 }
+                  fontWeight={ 400 }
+                  variant="h5"
+                >
+                  (~{ formatUsdAmount(TEMP_NEWM_USD_AMOUNT, 2) })
+                </Typography>
+              </Stack>
+
+              <Stack gap={ 0.25 }>
+                <Typography
+                  fontWeight={ 400 }
+                  sx={ { color: theme.colors.white } }
+                  variant="h4"
+                >
+                  { formatAdaAmount(adaBalance) }
+                </Typography>
+                <Typography
+                  color={ theme.colors.grey200 }
+                  fontWeight={ 400 }
+                  variant="h5"
+                >
+                  (~{ formatUsdAmount(TEMP_ADA_USD_AMOUNT, 2) })
+                </Typography>
+              </Stack>
             </Stack>
 
             <Stack alignSelf="stretch" p={ 1.5 }>

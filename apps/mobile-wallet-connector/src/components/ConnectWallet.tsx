@@ -1,4 +1,3 @@
-import currency from "currency.js";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
@@ -19,7 +18,7 @@ const ConnectWallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
   const [walletAddress, setWalletAddress] = useState("");
-  const [walletBalance, setWalletBalance] = useState("");
+  const [walletAdaBalance, setWalletAdaBalance] = useState(0);
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
   const { wallet, getBalance, getAddress } = useConnectWallet();
 
@@ -54,8 +53,7 @@ const ConnectWallet: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getBalance((value) => {
-        const adaBalance = currency(value, { symbol: "" }).format();
-        setWalletBalance(adaBalance);
+        setWalletAdaBalance(value);
       });
     }
   }, [wallet, getBalance]);
@@ -86,8 +84,9 @@ const ConnectWallet: FunctionComponent = () => {
 
       { wallet && (
         <DisconnectWalletButton
+          adaBalance={ walletAdaBalance }
           address={ walletAddress }
-          balance={ walletBalance }
+          newmBalance={ 0 }
           onDisconnect={ handleDisconnectWallet }
         />
       ) }
