@@ -31,7 +31,7 @@ const ConnectWallet: FunctionComponent = () => {
     useGetNewmUsdConversionRateQuery();
 
   const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / 1000000;
-  const adaNewmBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
+  const newmUsdBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -102,10 +102,10 @@ const ConnectWallet: FunctionComponent = () => {
       { wallet ? (
         <DisconnectWalletButton
           adaBalance={ walletAdaBalance }
-          adaNewmBalance={ adaNewmBalance }
           adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
           newmBalance={ walletNewmBalance }
+          newmUsdBalance={ newmUsdBalance }
           onDisconnect={ handleDisconnectWallet }
         />
       ) : (

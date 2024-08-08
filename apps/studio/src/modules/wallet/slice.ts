@@ -2,9 +2,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { WalletState } from "./types";
 
 const initialState: WalletState = {
-  walletAdaBalance: undefined,
+  walletAdaBalance: 0,
   walletAddress: undefined,
-  walletNewmBalance: undefined,
+  walletNewmBalance: 0,
 };
 
 const walletSlice = createSlice({

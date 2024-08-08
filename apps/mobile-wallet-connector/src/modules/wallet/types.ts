@@ -38,6 +38,14 @@ export type GenerateChallengeRequest =
   | GenerateChallengeRequestSignedData
   | GenerateChallengeRequestSignedTransaction;
 
+export interface GetAdaUsdConversionResponse {
+  readonly usdPrice: number;
+}
+
+export interface GetNewmUsdConversionResponse {
+  readonly usdPrice: number;
+}
+
 export enum ChallengeMethod {
   SignedData = "SignedData",
   SignedTransaction = "SignedTransaction",

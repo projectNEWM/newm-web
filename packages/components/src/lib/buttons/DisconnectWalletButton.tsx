@@ -15,12 +15,11 @@ import {
 import SwapNewmModal from "../modals/SwapNewmModal";
 
 interface DisconnectWalletButtonProps {
-  readonly adaBalance?: number;
-  readonly adaNewmBalance?: number;
-  readonly adaUsdBalance?: number;
+  readonly adaBalance: number;
+  readonly adaUsdBalance: number;
   readonly address?: string;
-  readonly newmBalance?: number;
-  readonly newmUsdBalance?: number;
+  readonly newmBalance: number;
+  readonly newmUsdBalance: number;
   readonly onDisconnect?: VoidFunction;
 }
 
@@ -34,7 +33,7 @@ const DisconnectWalletButton: FunctionComponent<
   address = "",
   adaBalance,
   newmBalance,
-  adaNewmBalance,
+  newmUsdBalance,
   adaUsdBalance,
   onDisconnect,
 }) => {
@@ -210,7 +209,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(adaNewmBalance, 2) })
+                  (≈{ formatUsdAmount(newmUsdBalance, 2) })
                 </Typography>
               </Stack>
 

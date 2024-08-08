@@ -1,5 +1,5 @@
 export interface WalletState {
-  readonly walletAdaBalance?: number;
+  readonly walletAdaBalance: number;
   readonly walletAddress?: string;
-  readonly walletNewmBalance?: number;
+  readonly walletNewmBalance: number;
 }

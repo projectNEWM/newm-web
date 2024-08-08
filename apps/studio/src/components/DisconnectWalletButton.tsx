@@ -14,13 +14,23 @@ import {
   setWalletAddress,
   setWalletNewmBalance,
 } from "../modules/wallet";
+import { useGetADAPriceQuery, useGetNEWMPriceQuery } from "../modules/crypto";
 
 const DisconnectWalletButton: FunctionComponent = () => {
+  const defaultUsdPrice = { usdPrice: 0 };
+
   const dispatch = useAppDispatch();
   const { walletAddress, walletAdaBalance, walletNewmBalance } =
     useAppSelector(selectWallet);
   const { wallet, getBalance, getTokenBalance, getAddress } =
     useConnectWallet();
+  const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
+    useGetADAPriceQuery();
+  const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
+    useGetNEWMPriceQuery();
+
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / 1000000;
+  const newmUsdBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
 
   /**
    * Opens disconnect wallet modal
@@ -67,8 +77,10 @@ const DisconnectWalletButton: FunctionComponent = () => {
   return (
     <DisconnectWalletButtonComponent
       adaBalance={ walletAdaBalance }
+      adaUsdBalance={ adaUsdBalance }
       address={ walletAddress }
       newmBalance={ walletNewmBalance }
+      newmUsdBalance={ newmUsdBalance }
       onDisconnect={ handleDisconnectWallet }
     />
   );
