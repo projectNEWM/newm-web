@@ -1,0 +1,3 @@
+export const NEWM_POLICY_ID =
+  "682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f63";
+export const NEWM_TOKEN_NAME = "4e45574d";

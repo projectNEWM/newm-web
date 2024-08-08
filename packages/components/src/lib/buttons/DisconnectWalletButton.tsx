@@ -205,7 +205,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (~{ formatUsdAmount(TEMP_NEWM_USD_AMOUNT, 2) })
+                  (≈{ formatUsdAmount(TEMP_NEWM_USD_AMOUNT, 2) })
                 </Typography>
               </Stack>
 
@@ -222,7 +222,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (~{ formatUsdAmount(TEMP_ADA_USD_AMOUNT, 2) })
+                  (≈{ formatUsdAmount(TEMP_ADA_USD_AMOUNT, 2) })
                 </Typography>
               </Stack>
             </Stack>

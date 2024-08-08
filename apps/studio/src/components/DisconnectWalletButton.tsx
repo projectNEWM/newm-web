@@ -1,7 +1,12 @@
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent, useEffect } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
-import { useAppDispatch, useAppSelector } from "../common";
+import {
+  NEWM_POLICY_ID,
+  NEWM_TOKEN_NAME,
+  useAppDispatch,
+  useAppSelector,
+} from "../common";
 import { setIsConnectWalletModalOpen } from "../modules/ui";
 import {
   selectWallet,
@@ -14,7 +19,8 @@ const DisconnectWalletButton: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { walletAddress, walletAdaBalance, walletNewmBalance } =
     useAppSelector(selectWallet);
-  const { wallet, getBalance, getAddress } = useConnectWallet();
+  const { wallet, getBalance, getTokenBalance, getAddress } =
+    useConnectWallet();
 
   /**
    * Opens disconnect wallet modal
@@ -35,6 +41,19 @@ const DisconnectWalletButton: FunctionComponent = () => {
   }, [wallet, getBalance, dispatch]);
 
   /**
+   * Gets the NEWM balance from the wallet and updates the Redux state.
+   */
+  useEffect(() => {
+    const callback = (value: number) => {
+      dispatch(setWalletNewmBalance(value));
+    };
+
+    if (wallet) {
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_TOKEN_NAME);
+    }
+  }, [wallet, dispatch, getTokenBalance]);
+
+  /**
    * Gets an address from the wallet and updates the Redux state.
    */
   useEffect(() => {
@@ -49,7 +68,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
     <DisconnectWalletButtonComponent
       adaBalance={ walletAdaBalance }
       address={ walletAddress }
-      newmBalance={ 0 }
+      newmBalance={ walletNewmBalance }
       onDisconnect={ handleDisconnectWallet }
     />
   );

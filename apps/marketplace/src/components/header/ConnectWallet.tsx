@@ -12,6 +12,7 @@ import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
+import { NEWM_POLICY_ID, NEWM_TOKEN_NAME } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
   const [walletAddress, setWalletAddress] = useState("");
@@ -20,7 +21,8 @@ const ConnectWallet: FunctionComponent = () => {
   const [isWalletModalOpen, setisWalletModalOpen] = useState(false);
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
 
-  const { wallet, getBalance, getAddress } = useConnectWallet();
+  const { wallet, getBalance, getAddress, getTokenBalance } =
+    useConnectWallet();
   const { data: adaConversion = {} } = useGetAdaUsdConversionRateQuery();
   const { data: newmConversion = {} } = useGetNewmUsdConversionRateQuery();
 
@@ -52,6 +54,19 @@ const ConnectWallet: FunctionComponent = () => {
       });
     }
   }, [wallet, getBalance]);
+
+  /**
+   * Gets the NEWM balance from the wallet and updates the state.
+   */
+  useEffect(() => {
+    const callback = (value: number) => {
+      setWalletNewmBalance(value);
+    };
+
+    if (wallet) {
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_TOKEN_NAME);
+    }
+  }, [wallet, getTokenBalance]);
 
   /**
    * Gets an address from the wallet and updates the state.
