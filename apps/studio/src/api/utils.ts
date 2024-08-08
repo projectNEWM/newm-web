@@ -126,8 +126,11 @@ export const prepareHeaders = async (
     ? await getRecaptchaHeaders(api)
     : {};
 
+  // ensure recaptcha headers and auth headers are not sent together
+  const shouldIncludeAuthHeaders = Object.keys(recaptchaHeaders).length > 0;
+
   return {
-    ...authHeaders,
+    ...(shouldIncludeAuthHeaders ? authHeaders : {}),
     ...recaptchaHeaders,
     ...headers,
   };

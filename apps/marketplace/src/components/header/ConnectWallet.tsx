@@ -15,6 +15,8 @@ import {
 import { NEWM_POLICY_ID, NEWM_TOKEN_NAME } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
+  const defaultUsdPrice = { usdPrice: 0 };
+
   const [walletAddress, setWalletAddress] = useState("");
   const [walletAdaBalance, setWalletAdaBalance] = useState(0);
   const [walletNewmBalance, setWalletNewmBalance] = useState(0);
@@ -23,8 +25,13 @@ const ConnectWallet: FunctionComponent = () => {
 
   const { wallet, getBalance, getAddress, getTokenBalance } =
     useConnectWallet();
-  const { data: adaConversion = {} } = useGetAdaUsdConversionRateQuery();
-  const { data: newmConversion = {} } = useGetNewmUsdConversionRateQuery();
+  const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
+    useGetAdaUsdConversionRateQuery();
+  const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
+    useGetNewmUsdConversionRateQuery();
+
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / 1000000;
+  const adaNewmBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -95,6 +102,8 @@ const ConnectWallet: FunctionComponent = () => {
       { wallet ? (
         <DisconnectWalletButton
           adaBalance={ walletAdaBalance }
+          adaNewmBalance={ adaNewmBalance }
+          adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
           newmBalance={ walletNewmBalance }
           onDisconnect={ handleDisconnectWallet }

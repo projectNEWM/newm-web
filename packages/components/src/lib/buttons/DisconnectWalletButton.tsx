@@ -14,11 +14,9 @@ import {
 } from "@newm-web/utils";
 import SwapNewmModal from "../modals/SwapNewmModal";
 
-const TEMP_NEWM_USD_AMOUNT = 125.0;
-const TEMP_ADA_USD_AMOUNT = 250.0;
-
 interface DisconnectWalletButtonProps {
   readonly adaBalance?: number;
+  readonly adaNewmBalance?: number;
   readonly adaUsdBalance?: number;
   readonly address?: string;
   readonly newmBalance?: number;
@@ -32,7 +30,14 @@ interface DisconnectWalletButtonProps {
  */
 const DisconnectWalletButton: FunctionComponent<
   DisconnectWalletButtonProps
-> = ({ address = "", adaBalance, newmBalance, onDisconnect }) => {
+> = ({
+  address = "",
+  adaBalance,
+  newmBalance,
+  adaNewmBalance,
+  adaUsdBalance,
+  onDisconnect,
+}) => {
   const theme = useTheme();
 
   const parentRef = useRef<HTMLDivElement>(null);
@@ -205,7 +210,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(TEMP_NEWM_USD_AMOUNT, 2) })
+                  (≈{ formatUsdAmount(adaNewmBalance, 2) })
                 </Typography>
               </Stack>
 
@@ -222,7 +227,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(TEMP_ADA_USD_AMOUNT, 2) })
+                  (≈{ formatUsdAmount(adaUsdBalance, 2) })
                 </Typography>
               </Stack>
             </Stack>
