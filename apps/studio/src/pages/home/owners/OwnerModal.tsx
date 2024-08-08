@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
-import { DialogProps } from "@mui/material";
-import { Typography } from "@newm-web/elements";
+import { DialogProps, Typography } from "@mui/material";
 import { ProfileModal, SocialsProps } from "@newm-web/components";
+import theme from "@newm-web/theme";
 
 interface OwnerModalProps extends Omit<DialogProps, "onClose"> {
   readonly biography?: string;
@@ -29,7 +29,7 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
       { role ? (
         <>
           <Typography variant="body1">MAIN ROLES</Typography>
-          <Typography color="white" mt={ 0.5 } variant="subtitle1">
+          <Typography color={ theme.colors.white } mt={ 0.5 } variant="subtitle1">
             { role }
           </Typography>
         </>
@@ -40,7 +40,7 @@ const OwnerModal: FunctionComponent<OwnerModalProps> = ({
           <Typography mt={ 2.5 } variant="body1">
             DESCRIPTION
           </Typography>
-          <Typography color="white" mt={ 0.5 } variant="subtitle1">
+          <Typography color={ theme.colors.white } mt={ 0.5 } variant="subtitle1">
             { biography }
           </Typography>
         </>

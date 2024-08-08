@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Box } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Box, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import { Owner } from "@newm-web/assets";
 import { useNavigate } from "react-router-dom";
 

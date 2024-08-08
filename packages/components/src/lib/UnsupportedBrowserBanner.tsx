@@ -1,5 +1,5 @@
-import { Container, Stack, useTheme } from "@mui/material";
-import { Alert, Button, Typography } from "@newm-web/elements";
+import { Container, Stack, Typography, useTheme } from "@mui/material";
+import { Alert, Button } from "@newm-web/elements";
 import { browserName } from "react-device-detect";
 import { FunctionComponent, useEffect, useState } from "react";
 
@@ -59,8 +59,12 @@ const UnsupportedBrowserBanner: FunctionComponent = () => {
           severity="warning"
         >
           <Stack spacing={ 0.5 }>
-            <Typography color="yellow">{ title }</Typography>
-            <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+            <Typography color={ theme.colors.yellow }>{ title }</Typography>
+            <Typography
+              color={ theme.colors.yellow }
+              fontWeight={ 400 }
+              variant="subtitle1"
+            >
               { message }
             </Typography>
           </Stack>

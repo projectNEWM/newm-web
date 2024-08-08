@@ -1,11 +1,10 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import {
   Button,
   HorizontalLine,
   Link,
   PasswordInputField,
   TextInputField,
-  Typography,
 } from "@newm-web/elements";
 import { FunctionComponent, MouseEventHandler, useState } from "react";
 import { Form, Formik, FormikValues } from "formik";

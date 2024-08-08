@@ -18,6 +18,7 @@ export const NEWM_PRIVACY_POLICY_URL = "https://newm.io/privacy-policy/";
  * Character count constants for form validation
  */
 export const MAX_CHARACTER_COUNT = 64;
+export const SONG_DESCRIPTION_MAX_CHARACTER_COUNT = 120;
 export const MAX_CHARACTER_COUNT_LONG = 250;
 
 /**

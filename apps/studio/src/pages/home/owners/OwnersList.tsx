@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { Stack } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Stack, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import OwnersTable from "./OwnersTable";
 import {
   CollaborationStatus,

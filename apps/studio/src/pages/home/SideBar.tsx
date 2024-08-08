@@ -1,10 +1,17 @@
 import { FunctionComponent } from "react";
-import { Box, Drawer, IconButton, Link, Stack, useTheme } from "@mui/material";
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import {
   ProfileImage,
   SideBarHeader,
   SideBarNavLink,
-  Typography,
 } from "@newm-web/elements";
 import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
 import {

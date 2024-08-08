@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
-import { Stack, Theme } from "@mui/material";
-import { Typography } from "@newm-web/elements";
+import { Stack, Theme, Typography } from "@mui/material";
 import theme from "@newm-web/theme";
 
 export interface IconStatusProps {
@@ -31,7 +30,7 @@ const IconStatus: FunctionComponent<IconStatusProps> = ({
   >
     { icon }
 
-    <Typography color={ fontColor } fontWeight={ 400 }>
+    <Typography color={ theme.colors[fontColor] } fontWeight={ 400 }>
       { status }
     </Typography>
   </Stack>

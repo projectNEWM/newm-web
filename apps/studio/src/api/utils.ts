@@ -118,10 +118,13 @@ export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
  */
 export const prepareHeaders = async (
   api: BaseQueryApi,
-  headers: AxiosRequestConfig["headers"]
+  headers: AxiosRequestConfig["headers"],
+  shouldIncludeRecaptchaHeaders = true
 ) => {
   const authHeaders = getAuthHeaders(api);
-  const recaptchaHeaders = await getRecaptchaHeaders(api);
+  const recaptchaHeaders = shouldIncludeRecaptchaHeaders
+    ? await getRecaptchaHeaders(api)
+    : {};
 
   return {
     ...authHeaders,
