@@ -1,11 +1,18 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useRef, useState } from "react";
 import { useWindowDimensions } from "@newm-web/utils";
 import { Box } from "@mui/material";
 import { TableSkeleton } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { SortOrder } from "@newm-web/types";
-import SongRoyaltiesList from "./SongRoyaltiesList";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import SongRoyaltiesList, { TotalSongRoyalty } from "./SongRoyaltiesList";
+import { EmptyPortfolio } from "./EmptyPortfolio";
+import {
+  createTempSongEarningsQueryData,
+  isWithinFilterPeriod,
+} from "./songRoyaltiesUtils";
 import { useGetUserWalletSongsThunk } from "../../../modules/song";
+import { useAppSelector } from "../../../common";
+import { selectUi } from "../../../modules/ui";
 
 const Portfolio: FunctionComponent = () => {
   const windowHeight = useWindowDimensions()?.height;
@@ -22,19 +29,27 @@ const Portfolio: FunctionComponent = () => {
   const pageIdx = page - 1;
   const lastRowOnPage = pageIdx * rowsPerPage + rowsPerPage;
 
-  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
-    useGetUserWalletSongsThunk();
+  const { wallet } = useConnectWallet();
+  const [
+    getUserWalletSongs,
+    { data: walletSongsResponse, isLoading, isSuccess },
+  ] = useGetUserWalletSongsThunk();
 
-  const songs =
-    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+  const songs = useMemo(
+    () => walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [],
+    [walletSongsResponse?.data?.songs]
+  );
+
+  const [walletSongsRoyaltyCombined, setWalletSongsRoyaltyCombined] = useState<
+    TotalSongRoyalty[]
+  >([]);
+
+  const { walletPortfolioTableFilter } = useAppSelector(selectUi);
 
   useEffect(() => {
-    getUserWalletSongs({
-      limit: skeletonRows,
-      offset: pageIdx * skeletonRows,
-      sortOrder: SortOrder.Desc,
-    });
-  }, [getUserWalletSongs, pageIdx, skeletonRows]);
+    // Pagination was removed as Song creation date is not used as sorting criteria
+    getUserWalletSongs({});
+  }, [getUserWalletSongs, wallet]);
 
   useEffect(() => {
     const skeletonYPos = skeletonRef.current?.offsetTop || 0;
@@ -50,29 +65,66 @@ const Portfolio: FunctionComponent = () => {
 
     setSkeletonRows(rowsToRender);
     setRowsPerPage(rowsToRender);
-  }, [windowHeight]);
+
+    // TODO: Creates temporary earnings in place of backend table query
+    const walletSongsEarnings = songs.map((song) =>
+      createTempSongEarningsQueryData(song)
+    );
+
+    const combinedEarnings = walletSongsEarnings
+      .map((songEarning) => {
+        const totalRoyaltyAmount = songEarning.earningsData
+          // filter out earnings that are not within the filter period
+          .filter((songEarning) =>
+            isWithinFilterPeriod(
+              songEarning.createdAt,
+              walletPortfolioTableFilter
+            )
+          )
+          // combine earnings within the filter period
+          .reduce((acc, curr) => acc + curr.amount, 0);
+        return {
+          song: songEarning.song,
+          totalRoyaltyAmount,
+        };
+      })
+      // Sort filtered songs by descending totalRoyaltyAmount
+      .sort((a, b) => b?.totalRoyaltyAmount - a?.totalRoyaltyAmount)
+      // handle pagination for song earnings
+      .slice(pageIdx * skeletonRows, pageIdx * skeletonRows + rowsToRender);
+
+    setWalletSongsRoyaltyCombined(combinedEarnings);
+  }, [pageIdx, skeletonRows, songs, walletPortfolioTableFilter, windowHeight]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [walletPortfolioTableFilter, windowHeight]);
+
+  if (isLoading) {
+    return (
+      <TableSkeleton
+        cols={ windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2 }
+        maxWidth={ maxListWidth }
+        rows={ skeletonRows }
+      />
+    );
+  }
+
+  if (isSuccess && songs?.length === 0) {
+    return <EmptyPortfolio />;
+  }
 
   return (
-    <Box pb={ 8 } pt={ 2 } ref={ skeletonRef }>
-      { isLoading ? (
-        <TableSkeleton
-          cols={
-            windowWidth && windowWidth > theme.breakpoints.values.sm ? 3 : 2
-          }
-          maxWidth={ maxListWidth }
-          rows={ skeletonRows }
-        />
-      ) : (
-        <SongRoyaltiesList
-          lastRowOnPage={ lastRowOnPage }
-          page={ page }
-          rows={ songs.length }
-          rowsPerPage={ rowsPerPage }
-          setPage={ setPage }
-          songRoyalties={ songs }
-          totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
-        />
-      ) }
+    <Box mt={ 2 } pb={ 8 } pt={ 2 } ref={ skeletonRef }>
+      <SongRoyaltiesList
+        lastRowOnPage={ lastRowOnPage }
+        page={ page }
+        rows={ walletSongsRoyaltyCombined.length }
+        rowsPerPage={ rowsPerPage }
+        setPage={ setPage }
+        songRoyalties={ walletSongsRoyaltyCombined }
+        totalCountOfSongs={ walletSongsResponse?.data?.total || 0 }
+      />
     </Box>
   );
 };

@@ -16,36 +16,18 @@ import { resizeCloudinaryImage } from "@newm-web/utils";
 import { Song } from "@newm-web/types";
 import { Dispatch, SetStateAction } from "react";
 import { TablePagination } from "@newm-web/elements";
-import currency from "currency.js";
-import AllCaughtUp from "./AllCaughtUp";
-import { selectUi, setWalletPortfolioTableFilter } from "../../../modules/ui";
-import {
-  TableDropdownMenuParameters,
-  TableDropdownSelect,
-} from "../../../components";
-import { useAppDispatch, useAppSelector } from "../../../common";
+import LegacyAllCaughtUp from "./LegacyAllCaughtUp";
+import LegacyTableDropdownSelect from "./LegacyTableDropdownSelect";
 
-export interface TotalSongRoyalty {
-  song: Song;
-  totalRoyaltyAmount: number;
-}
-
-interface SongRoyaltiesListProps {
+interface LegacySongRoyaltiesListProps {
   lastRowOnPage: number;
   page: number;
   rows: number;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
-  songRoyalties: ReadonlyArray<TotalSongRoyalty>;
+  songRoyalties: ReadonlyArray<Song>;
   totalCountOfSongs: number;
 }
-
-const royaltyPeriodFilters: ReadonlyArray<TableDropdownMenuParameters> = [
-  { label: "Royalty Earnings: All Time", value: "All" },
-  { label: "Royalty Earnings: Past Week", value: "Week" },
-  { label: "Royalty Earnings: Past Month", value: "Month" },
-  { label: "Royalty Earnings: Past Year", value: "Year" },
-];
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border
@@ -54,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.colors.grey600,
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 
@@ -63,7 +45,7 @@ const StyledTableCell = styled(TableCell)({
   height: "48px",
 });
 
-export default function SongRoyaltiesList({
+export default function LegacySongRoyaltiesList({
   songRoyalties,
   rows,
   page,
@@ -71,12 +53,8 @@ export default function SongRoyaltiesList({
   lastRowOnPage,
   setPage,
   totalCountOfSongs,
-}: SongRoyaltiesListProps) {
-  const { walletPortfolioTableFilter } = useAppSelector(selectUi);
-  const dispatch = useAppDispatch();
-
+}: LegacySongRoyaltiesListProps) {
   const TABLE_WIDTH = 700;
-  const isLastRowOnPageVisible = lastRowOnPage >= totalCountOfSongs;
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -85,11 +63,7 @@ export default function SongRoyaltiesList({
     setPage(page);
   };
 
-  const handleRoyaltyPeriodChange = (tableFilter: string) => {
-    dispatch(setWalletPortfolioTableFilter(tableFilter));
-  };
-
-  if (songRoyalties.length) {
+  if (songRoyalties) {
     return (
       <Box sx={ { maxWidth: TABLE_WIDTH } }>
         <TableContainer
@@ -106,23 +80,24 @@ export default function SongRoyaltiesList({
                   </Typography>
                 </StyledTableCell>
                 <StyledTableCell align="right" sx={ { pr: 0 } }>
-                  <TableDropdownSelect
-                    menuItems={ royaltyPeriodFilters }
-                    selectedValue={ walletPortfolioTableFilter }
-                    onDropdownChange={ handleRoyaltyPeriodChange }
-                  />
+                  <LegacyTableDropdownSelect />
                 </StyledTableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              { songRoyalties.map(({ song, totalRoyaltyAmount }) => (
-                <StyledTableRow key={ song.id }>
+              { songRoyalties.map((row, index) => (
+                <StyledTableRow
+                  key={ row.id }
+                  style={
+                    (index + 1) % 2 ? { background: theme.colors.grey600 } : {}
+                  }
+                >
                   <StyledTableCell>
                     <Box sx={ { alignItems: "center", display: "flex" } }>
                       <img
                         alt="Album cover"
-                        src={ resizeCloudinaryImage(song.coverArtUrl) }
+                        src={ resizeCloudinaryImage(row.coverArtUrl) }
                         style={ {
                           borderRadius: "50%",
                         } }
@@ -134,21 +109,19 @@ export default function SongRoyaltiesList({
                           whiteSpace: "nowrap",
                         } }
                       >
-                        <Typography fontWeight={ 500 }>{ song.title }</Typography>
+                        <Typography fontWeight={ 500 }>{ row.title }</Typography>
                       </Box>
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <Typography fontSize={ 12 } fontWeight={ 700 }>
-                      { currency(totalRoyaltyAmount, {
-                        pattern: "#!",
-                        symbol: "Ɲ",
-                      }).format() }
+                      --.--
                     </Typography>
                   </StyledTableCell>
                 </StyledTableRow>
               )) }
             </TableBody>
+
             { totalCountOfSongs > rows && (
               <TablePagination
                 cellStyles={ { paddingTop: "12px" } }
@@ -164,11 +137,11 @@ export default function SongRoyaltiesList({
           </Table>
         </TableContainer>
 
-        { isLastRowOnPageVisible && (
-          <Box sx={ { pt: 2 } }>
-            <AllCaughtUp />
+        { songRoyalties.length === 0 ? (
+          <Box sx={ { pt: 1 } }>
+            <LegacyAllCaughtUp />
           </Box>
-        ) }
+        ) : null }
       </Box>
     );
   } else {
