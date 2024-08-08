@@ -36,7 +36,7 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
+          APPNAME=mobile-wallet-connector QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NEXT_PUBLIC_DEXHUNTER_MOBILE_WALLET_CONNECTOR_PARTNER_CODE=${{ secrets.DEXHUNTER_MOBILE_WALLET_CONNECTOR_PARTNER_CODE }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl
