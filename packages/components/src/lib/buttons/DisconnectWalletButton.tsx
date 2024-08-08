@@ -263,7 +263,6 @@ const DisconnectWalletButton: FunctionComponent<
       </Stack>
 
       <SwapNewmModal
-        isCloseOnClickBackgroundEnabled={ true }
         isOpen={ isSwapModalVisible }
         partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
         partnerName="NEWMMarketplace"

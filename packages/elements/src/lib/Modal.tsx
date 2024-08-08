@@ -2,7 +2,6 @@ import {
   Box,
   Modal as MuiModal,
   ModalProps as MuiModalProps,
-  SxProps,
   useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
