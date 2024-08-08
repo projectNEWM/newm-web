@@ -10,7 +10,6 @@ import { SelectedWallet } from "@dexhunterio/swaps/lib/typescript/cardano-api";
 import "@dexhunterio/swaps/lib/assets/style.css";
 
 interface SwapNewmModalProps {
-  readonly isCloseOnClickBackgroundEnabled?: boolean;
   readonly isOpen: boolean;
   readonly onClose: VoidFunction;
   readonly partnerCode: string;
@@ -22,7 +21,6 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
   onClose,
   partnerName,
   partnerCode,
-  isCloseOnClickBackgroundEnabled = false,
 }) => {
   const theme = useTheme();
 
@@ -33,7 +31,7 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
 
   return isConnectedWalletSupported ? (
     <Modal
-      isCloseOnClickBackgroundEnabled={ isCloseOnClickBackgroundEnabled }
+      isCloseOnClickBackgroundEnabled={ true }
       isOpen={ isOpen }
       onClose={ onClose }
     >

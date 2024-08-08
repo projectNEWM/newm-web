@@ -38,10 +38,18 @@ export type GenerateChallengeRequest =
   | GenerateChallengeRequestSignedData
   | GenerateChallengeRequestSignedTransaction;
 
+/**
+ * Get ADA price in USD (6 decimal places), e.g a value
+ * of 1234567 means $1.234567 USD.
+ */
 export interface GetAdaUsdConversionResponse {
   readonly usdPrice: number;
 }
 
+/**
+ * Get NEWM price in USD (6 decimal places), e.g a value
+ * of 1234567 means $1.234567 USD.
+ */
 export interface GetNewmUsdConversionResponse {
   readonly usdPrice: number;
 }

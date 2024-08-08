@@ -29,7 +29,7 @@
         "development": {
           "buildTarget": "mobile-wallet-connector:build:development",
           "dev": true,
-          "port": 3000
+          "port": 4300
         },
         "production": {
           "buildTarget": "mobile-wallet-connector:build:production",
