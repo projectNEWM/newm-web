@@ -10,6 +10,10 @@ import { Tags } from "aws-cdk-lib";
 const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
+const dexHunterMarketplacePartnerCode =
+  process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE || "";
+const dexHunterMobileWalletConnectorPartnerCode =
+  process.env.NEXT_PUBLIC_DEXHUNTER_MOBILE_WALLET_CONNECTOR_PARTNER_CODE || "";
 const recaptchaKeyProd = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD || "";
 const recaptchaKeyStaging =
   process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
@@ -26,6 +30,10 @@ class WebDeployStack extends cdk.Stack {
       {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
           buildArgs: {
+            NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE:
+              dexHunterMarketplacePartnerCode,
+            NEXT_PUBLIC_DEXHUNTER_MOBILE_WALLET_CONNECTOR_PARTNER_CODE:
+              dexHunterMobileWalletConnectorPartnerCode,
             NEXT_PUBLIC_ENV: appEnv,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD: recaptchaKeyProd,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKeyStaging,

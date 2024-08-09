@@ -8,7 +8,9 @@ import { recaptchaEndpointActionMap } from "./constants";
  */
 export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
   const { endpoint } = api;
-  const action = recaptchaEndpointActionMap[endpoint] || endpoint;
+  const action = recaptchaEndpointActionMap[endpoint];
+
+  if (!action) return {};
 
   return {
     "g-recaptcha-platform": "Web",
