@@ -10,7 +10,7 @@ import {
   formatNewmAmount,
   formatPercentageAdaptive,
 } from "@newm-web/utils";
-import { useGetNEWMPriceQuery } from "../../../../modules/crypto";
+import { useGetNewmUsdConversionRateQuery } from "../../../../modules/crypto";
 
 interface StartSaleModalProps {
   readonly handleClose: () => void;
@@ -29,7 +29,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
   totalTokensOwnedByUser,
   values,
 }) => {
-  const { data: NEWMPriceData } = useGetNEWMPriceQuery();
+  const { data: NEWMPriceData } = useGetNewmUsdConversionRateQuery();
   // Set the NEWM price in USD to 0 if the price data is not available
   const NEWMPriceInUSD = NEWMPriceData?.usdPrice
     ? NEWMPriceData?.usdPrice / LOVELACE_CONVERSION
