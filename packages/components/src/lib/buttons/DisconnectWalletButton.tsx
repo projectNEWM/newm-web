@@ -1,15 +1,27 @@
 import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  formatAdaAmount,
+  formatNewmAmount,
+  formatUsdAmount,
+} from "@newm-web/utils";
+import SwapNewmModal from "../modals/SwapNewmModal";
 
 interface DisconnectWalletButtonProps {
+  readonly adaBalance: number;
+  readonly adaUsdBalance: number;
   readonly address?: string;
-  readonly balance?: string;
+  readonly newmBalance: number;
+  readonly newmUsdBalance: number;
   readonly onDisconnect?: VoidFunction;
+  readonly partnerCode: string;
+  readonly partnerName: string;
 }
 
 /**
@@ -18,12 +30,22 @@ interface DisconnectWalletButtonProps {
  */
 const DisconnectWalletButton: FunctionComponent<
   DisconnectWalletButtonProps
-> = ({ address = "", balance = "", onDisconnect }) => {
+> = ({
+  address = "",
+  adaBalance,
+  newmBalance,
+  newmUsdBalance,
+  adaUsdBalance,
+  partnerCode,
+  partnerName,
+  onDisconnect,
+}) => {
   const theme = useTheme();
 
   const parentRef = useRef<HTMLDivElement>(null);
   const [parentHeight, setParentHeight] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSwapModalVisible, setIsSwapModalVisible] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
   const truncatedAddress = address ? address.slice(0, 16) : "";
@@ -46,6 +68,11 @@ const DisconnectWalletButton: FunctionComponent<
 
     navigator.clipboard.writeText(address);
     setIsCopied(true);
+  };
+
+  const handleOpenSwapModal = () => {
+    setIsDropdownOpen(false);
+    setIsSwapModalVisible(true);
   };
 
   /**
@@ -86,87 +113,165 @@ const DisconnectWalletButton: FunctionComponent<
   }, []);
 
   return (
-    <Stack
-      alignItems="flex-end"
-      direction="column"
-      gap={ 1 }
-      position="relative"
-      ref={ parentRef }
-    >
+    <>
       <Stack
-        direction="row"
-        sx={ {
-          alignItems: "center",
-          border: `2px solid ${theme.colors.white}`,
-          borderRadius: "4px",
-          cursor: "pointer",
-          pl: 2,
-          pr: 1.2,
-          py: 1,
-        } }
-        onClick={ handleClickButton }
+        alignItems="flex-end"
+        direction="column"
+        gap={ 1 }
+        position="relative"
+        ref={ parentRef }
       >
-        <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-          <Typography>{ balance } ₳</Typography>
-          <Typography sx={ { display: ["none", "none", "flex"] } }>|</Typography>
-          <Typography>{ truncatedAddress }</Typography>
+        <Stack
+          direction="row"
+          sx={ {
+            alignItems: "center",
+            border: `2px solid ${theme.colors.white}`,
+            borderRadius: "4px",
+            cursor: "pointer",
+            pl: 2,
+            pr: 1.2,
+            py: 1,
+          } }
+          onClick={ handleClickButton }
+        >
+          <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
+            <Typography whiteSpace="nowrap">
+              { formatNewmAmount(newmBalance) }
+            </Typography>
+            <Typography sx={ { display: ["none", "none", "flex"] } }>
+              |
+            </Typography>
+            <Typography>{ truncatedAddress }</Typography>
+          </Stack>
+
+          <Box alignItems="center" justifyContent="center" lineHeight="0px">
+            { isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+          </Box>
         </Stack>
 
-        <Box alignItems="center" justifyContent="center" lineHeight="0px">
-          { isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
-        </Box>
+        { isDropdownOpen && (
+          <Stack
+            direction="column"
+            divider={
+              <Divider sx={ { borderColor: theme.colors.grey500 } } flexItem />
+            }
+            position="absolute"
+            sx={ {
+              alignItems: "flex-start",
+              backgroundColor: theme.colors.grey600,
+              border: `2px solid ${theme.colors.grey500}`,
+              borderRadius: "4px",
+              zIndex: 10,
+            } }
+            top={ parentHeight + 8 }
+          >
+            <Stack
+              alignItems="flex-start"
+              color={ theme.colors.grey200 }
+              direction="column"
+              gap={ 1 }
+              p={ 1.5 }
+            >
+              <Typography fontWeight={ 700 } variant="h5">
+                WALLET ADDRESS
+              </Typography>
+              <Stack alignItems="flex-start" direction="row" gap={ 1 }>
+                <Typography fontWeight={ 400 } sx={ { color: theme.colors.white } }>
+                  { ellipsedAddress }
+                </Typography>
+
+                { isCopied ? (
+                  <DoneIcon
+                    fontSize="small"
+                    sx={ { color: theme.colors.green } }
+                  />
+                ) : (
+                  <ContentCopyIcon
+                    fontSize="small"
+                    sx={ { color: theme.colors.white, cursor: "pointer" } }
+                    onClick={ handleClickCopyIcon }
+                  />
+                ) }
+              </Stack>
+            </Stack>
+
+            <Stack alignItems="flex-start" direction="column" gap={ 1 } p={ 1.5 }>
+              <Typography
+                color={ theme.colors.grey200 }
+                fontWeight={ 700 }
+                variant="h5"
+              >
+                YOUR BALANCE
+              </Typography>
+              <Stack gap={ 0.25 }>
+                <Typography sx={ { color: theme.colors.white } } variant="h4">
+                  { formatNewmAmount(newmBalance) }
+                </Typography>
+                <Typography
+                  color={ theme.colors.grey200 }
+                  fontWeight={ 400 }
+                  variant="h5"
+                >
+                  (≈{ formatUsdAmount(newmUsdBalance, 2) })
+                </Typography>
+              </Stack>
+
+              <Stack gap={ 0.25 }>
+                <Typography
+                  fontWeight={ 400 }
+                  sx={ { color: theme.colors.white } }
+                  variant="h4"
+                >
+                  { formatAdaAmount(adaBalance) }
+                </Typography>
+                <Typography
+                  color={ theme.colors.grey200 }
+                  fontWeight={ 400 }
+                  variant="h5"
+                >
+                  (≈{ formatUsdAmount(adaUsdBalance, 2) })
+                </Typography>
+              </Stack>
+            </Stack>
+
+            <Stack alignSelf="stretch" p={ 1.5 }>
+              <Button
+                fullWidth={ true }
+                gradient="crypto"
+                onClick={ handleOpenSwapModal }
+              >
+                Buy $NEWM Tokens
+              </Button>
+            </Stack>
+
+            <Stack
+              alignItems="center"
+              direction="row"
+              gap={ 1 }
+              p={ 1.5 }
+              sx={ {
+                "&:hover": { backgroundColor: theme.colors.grey500 },
+                cursor: "pointer",
+              } }
+              width="100%"
+              onClick={ handleDisconnect }
+            >
+              <LogoutIcon fontSize="small" sx={ { color: theme.colors.white } } />
+              <Typography sx={ { color: theme.colors.white } }>
+                Disconnect
+              </Typography>
+            </Stack>
+          </Stack>
+        ) }
       </Stack>
 
-      { isDropdownOpen && (
-        <Stack
-          direction="column"
-          divider={
-            <Divider sx={ { borderColor: theme.colors.grey500 } } flexItem />
-          }
-          position="absolute"
-          sx={ {
-            alignItems: "flex-start",
-            backgroundColor: theme.colors.grey600,
-            border: `2px solid ${theme.colors.grey500}`,
-            borderRadius: "4px",
-            zIndex: 10,
-          } }
-          top={ parentHeight + 8 }
-        >
-          <Stack alignItems="flex-start" direction="row" gap={ 1 } p={ 2 }>
-            <Typography color={ theme.colors.grey200 } fontWeight={ 500 }>
-              { ellipsedAddress }
-            </Typography>
-
-            { isCopied ? (
-              <DoneIcon fontSize="small" sx={ { color: theme.colors.green } } />
-            ) : (
-              <ContentCopyIcon
-                fontSize="small"
-                sx={ { color: theme.colors.grey200, cursor: "pointer" } }
-                onClick={ handleClickCopyIcon }
-              />
-            ) }
-          </Stack>
-
-          <Stack
-            alignItems="center"
-            direction="row"
-            gap={ 1 }
-            p={ 2 }
-            sx={ {
-              "&:hover": { backgroundColor: theme.colors.grey500 },
-              cursor: "pointer",
-            } }
-            width="100%"
-            onClick={ handleDisconnect }
-          >
-            <LogoutIcon fontSize="small" sx={ { color: theme.colors.white } } />
-            <Typography color={ theme.colors.white }>Disconnect</Typography>
-          </Stack>
-        </Stack>
-      ) }
-    </Stack>
+      <SwapNewmModal
+        isOpen={ isSwapModalVisible }
+        partnerCode={ partnerCode }
+        partnerName={ partnerName }
+        onClose={ () => setIsSwapModalVisible(false) }
+      />
+    </>
   );
 };
 

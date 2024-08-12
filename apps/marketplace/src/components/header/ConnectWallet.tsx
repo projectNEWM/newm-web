@@ -1,5 +1,4 @@
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import currency from "currency.js";
 import { FunctionComponent, useEffect, useState } from "react";
 import {
   DisconnectWalletButton,
@@ -8,14 +7,33 @@ import {
 } from "@newm-web/components";
 import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
-import { getIsWalletEnvMismatch } from "@newm-web/utils";
+import { LOVELACE_CONVERSION, getIsWalletEnvMismatch } from "@newm-web/utils";
+import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
+import {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../../modules/wallet/api";
+import { NEWM_ASSET_NAME, NEWM_POLICY_ID } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
+  const defaultUsdPrice = { usdPrice: 0 };
+
   const [walletAddress, setWalletAddress] = useState("");
-  const [walletBalance, setWalletBalance] = useState("");
+  const [walletAdaBalance, setWalletAdaBalance] = useState(0);
+  const [walletNewmBalance, setWalletNewmBalance] = useState(0);
   const [isWalletModalOpen, setisWalletModalOpen] = useState(false);
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
-  const { wallet, getBalance, getAddress } = useConnectWallet();
+
+  const { wallet, getBalance, getAddress, getTokenBalance } =
+    useConnectWallet();
+  const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
+    useGetAdaUsdConversionRateQuery();
+  const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
+    useGetNewmUsdConversionRateQuery();
+
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION;
+  const newmUsdBalance =
+    (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION;
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -41,11 +59,23 @@ const ConnectWallet: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getBalance((value) => {
-        const adaBalance = currency(value, { symbol: "" }).format();
-        setWalletBalance(adaBalance);
+        setWalletAdaBalance(value);
       });
     }
   }, [wallet, getBalance]);
+
+  /**
+   * Gets the NEWM balance from the wallet and updates the state.
+   */
+  useEffect(() => {
+    const callback = (value: number) => {
+      setWalletNewmBalance(value);
+    };
+
+    if (wallet) {
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_ASSET_NAME);
+    }
+  }, [wallet, getTokenBalance]);
 
   /**
    * Gets an address from the wallet and updates the state.
@@ -73,8 +103,13 @@ const ConnectWallet: FunctionComponent = () => {
 
       { wallet ? (
         <DisconnectWalletButton
+          adaBalance={ walletAdaBalance }
+          adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
-          balance={ walletBalance }
+          newmBalance={ walletNewmBalance }
+          newmUsdBalance={ newmUsdBalance }
+          partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
+          partnerName="NEWMMarketplace"
           onDisconnect={ handleDisconnectWallet }
         />
       ) : (

@@ -21,9 +21,9 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: () => ({
+      query: (body) => ({
         method: "GET",
-        url: "v1/cardano/prices/ada",
+        url: "/v1/cardano/prices/ada",
       }),
     }),
     getNewmUsdConversionRate: build.query<GetNewmUsdConversionResponse, void>({
@@ -40,9 +40,9 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: () => ({
+      query: (body) => ({
         method: "GET",
-        url: "v1/cardano/prices/newm",
+        url: "/v1/cardano/prices/newm",
       }),
     }),
   }),

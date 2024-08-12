@@ -4,7 +4,7 @@ import {
   getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { NEWM_DECIMAL_CONVERSION, asThunkHook } from "@newm-web/utils";
+import { LOVELACE_CONVERSION, asThunkHook } from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
 import { EndSaleThunkRequest, StartSaleThunkRequest } from "./types";
 import { setToastMessage } from "../ui";
@@ -30,7 +30,7 @@ export const startSale = createAsyncThunk(
           bundleAmount: body.bundleAmount,
           bundleAssetName: body.bundleAssetName,
           bundlePolicyId: body.bundlePolicyId,
-          costAmount: body.costAmount * NEWM_DECIMAL_CONVERSION,
+          costAmount: body.costAmount * LOVELACE_CONVERSION,
           ownerAddress: changeAddress,
           totalBundleQuantity: body.totalBundleQuantity,
         })
