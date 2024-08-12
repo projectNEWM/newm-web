@@ -26,8 +26,13 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
 
   const { wallet } = useConnectWallet();
 
-  const isConnectedWalletSupported =
-    wallet && dexhunterSupportedWallets.includes(wallet.name);
+  if (!wallet) {
+    throw new Error("Wallet must be connected before accessing swap modal.");
+  }
+
+  const isConnectedWalletSupported = dexhunterSupportedWallets.includes(
+    wallet.name
+  );
 
   return isConnectedWalletSupported ? (
     <Modal
