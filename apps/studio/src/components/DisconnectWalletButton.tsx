@@ -1,6 +1,7 @@
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent, useEffect } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
+import { DEXHUNTER_STUDIO_PARTNER_CODE } from "@newm-web/env";
 import {
   NEWM_POLICY_ID,
   NEWM_TOKEN_NAME,
@@ -81,6 +82,8 @@ const DisconnectWalletButton: FunctionComponent = () => {
       address={ walletAddress }
       newmBalance={ walletNewmBalance }
       newmUsdBalance={ newmUsdBalance }
+      partnerCode={ DEXHUNTER_STUDIO_PARTNER_CODE }
+      partnerName="NEWMStudio"
       onDisconnect={ handleDisconnectWallet }
     />
   );

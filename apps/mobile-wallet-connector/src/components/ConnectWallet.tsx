@@ -7,6 +7,7 @@ import {
   WalletModal,
 } from "@newm-web/components";
 import { getIsWalletEnvMismatch } from "@newm-web/utils";
+import { DEXHUNTER_TOOLS_PARTNER_CODE } from "@newm-web/env";
 import {
   selectUi,
   setIsConnectWalletModalOpen,
@@ -118,6 +119,8 @@ const ConnectWallet: FunctionComponent = () => {
           address={ walletAddress }
           newmBalance={ walletNewmBalance }
           newmUsdBalance={ newmUsdBalance }
+          partnerCode={ DEXHUNTER_TOOLS_PARTNER_CODE }
+          partnerName="NEWMTools"
           onDisconnect={ handleDisconnectWallet }
         />
       ) }

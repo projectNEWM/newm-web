@@ -8,6 +8,7 @@ import {
 import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
 import { getIsWalletEnvMismatch } from "@newm-web/utils";
+import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
@@ -106,6 +107,8 @@ const ConnectWallet: FunctionComponent = () => {
           address={ walletAddress }
           newmBalance={ walletNewmBalance }
           newmUsdBalance={ newmUsdBalance }
+          partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
+          partnerName="NEWMMarketplace"
           onDisconnect={ handleDisconnectWallet }
         />
       ) : (

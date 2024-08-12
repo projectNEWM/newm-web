@@ -5,7 +5,6 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DoneIcon from "@mui/icons-material/Done";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import {
   formatAdaAmount,
@@ -21,6 +20,8 @@ interface DisconnectWalletButtonProps {
   readonly newmBalance: number;
   readonly newmUsdBalance: number;
   readonly onDisconnect?: VoidFunction;
+  readonly partnerCode: string;
+  readonly partnerName: string;
 }
 
 /**
@@ -35,6 +36,8 @@ const DisconnectWalletButton: FunctionComponent<
   newmBalance,
   newmUsdBalance,
   adaUsdBalance,
+  partnerCode,
+  partnerName,
   onDisconnect,
 }) => {
   const theme = useTheme();
@@ -264,8 +267,8 @@ const DisconnectWalletButton: FunctionComponent<
 
       <SwapNewmModal
         isOpen={ isSwapModalVisible }
-        partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
-        partnerName="NEWMMarketplace"
+        partnerCode={ partnerCode }
+        partnerName={ partnerName }
         onClose={ () => setIsSwapModalVisible(false) }
       />
     </>

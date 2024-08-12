@@ -27,6 +27,10 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE
         : import.meta.env.VITE_DEXHUNTER_MARKETPLACE_PARTNER_CODE;
+    case "DEXHUNTER_TOOLS_PARTNER_CODE":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE
+        : import.meta.env.VITE_DEXHUNTER_TOOLS_PARTNER_CODE;
     case "DEXHUNTER_STUDIO_PARTNER_CODE":
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_DEXHUNTER_STUDIO_PARTNER_CODE
@@ -48,6 +52,9 @@ export const DEXHUNTER_STUDIO_PARTNER_CODE = getAppEnvVar(
 );
 export const DEXHUNTER_MARKETPLACE_PARTNER_CODE = getAppEnvVar(
   "DEXHUNTER_MARKETPLACE_PARTNER_CODE"
+);
+export const DEXHUNTER_TOOLS_PARTNER_CODE = getAppEnvVar(
+  "DEXHUNTER_TOOLS_PARTNER_CODE"
 );
 export const ENV = getAppEnvVar("ENV");
 
