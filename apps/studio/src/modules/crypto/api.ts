@@ -1,17 +1,20 @@
-import { GetADAPriceResponse, GetNEWMPriceResponse } from "./types";
+import {
+  GetAdaUsdConversionResponse,
+  GetNewmUsdConversionResponse,
+} from "@newm-web/types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
-    getADAPrice: build.query<GetADAPriceResponse, void>({
+    getAdaUsdConversionRate: build.query<GetAdaUsdConversionResponse, void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred fetching ADA price",
+              message: "An error occurred fetching ADA/USD conversion rate",
               severity: "error",
             })
           );
@@ -23,14 +26,14 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/cardano/prices/ada",
       }),
     }),
-    getNEWMPrice: build.query<GetNEWMPriceResponse, void>({
+    getNewmUsdConversionRate: build.query<GetNewmUsdConversionResponse, void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred fetching NEWM price",
+              message: "An error occurred fetching NEWM/USD conversion rate",
               severity: "error",
             })
           );
@@ -45,6 +48,9 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetNEWMPriceQuery, useGetADAPriceQuery } = extendedApi;
+export const {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} = extendedApi;
 
 export default extendedApi;

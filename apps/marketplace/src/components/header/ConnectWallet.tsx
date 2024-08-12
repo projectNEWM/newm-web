@@ -7,13 +7,13 @@ import {
 } from "@newm-web/components";
 import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
-import { getIsWalletEnvMismatch } from "@newm-web/utils";
+import { LOVELACE_CONVERSION, getIsWalletEnvMismatch } from "@newm-web/utils";
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
-import { NEWM_POLICY_ID, NEWM_TOKEN_NAME } from "../../common";
+import { NEWM_ASSET_NAME, NEWM_POLICY_ID } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
@@ -31,8 +31,9 @@ const ConnectWallet: FunctionComponent = () => {
   const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
     useGetNewmUsdConversionRateQuery();
 
-  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / 1000000;
-  const newmUsdBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION;
+  const newmUsdBalance =
+    (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION;
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -72,7 +73,7 @@ const ConnectWallet: FunctionComponent = () => {
     };
 
     if (wallet) {
-      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_TOKEN_NAME);
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_ASSET_NAME);
     }
   }, [wallet, getTokenBalance]);
 

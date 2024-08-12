@@ -6,7 +6,7 @@ import { FormikValues } from "formik";
 import currency from "currency.js";
 import {
   FULL_OWNERSHIP_STREAM_TOKENS,
-  NEWM_DECIMAL_CONVERSION,
+  LOVELACE_CONVERSION,
   formatNewmAmount,
   formatPercentageAdaptive,
 } from "@newm-web/utils";
@@ -32,7 +32,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
   const { data: NEWMPriceData } = useGetNEWMPriceQuery();
   // Set the NEWM price in USD to 0 if the price data is not available
   const NEWMPriceInUSD = NEWMPriceData?.usdPrice
-    ? NEWMPriceData?.usdPrice / NEWM_DECIMAL_CONVERSION
+    ? NEWMPriceData?.usdPrice / LOVELACE_CONVERSION
     : 0;
   const isNEWMPriceUnavailable = NEWMPriceInUSD === 0;
   const totalSaleValueInUSD = values.totalSaleValue * NEWMPriceInUSD;

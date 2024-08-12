@@ -1,7 +1,7 @@
 import {
   GetAdaUsdConversionResponse,
   GetNewmUsdConversionResponse,
-} from "./types";
+} from "@newm-web/types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 

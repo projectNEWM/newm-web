@@ -1,10 +1,12 @@
 import {
+  GetAdaUsdConversionResponse,
+  GetNewmUsdConversionResponse,
+} from "@newm-web/types";
+import {
   AnswerChallengeRequest,
   AnswerChallengeResponse,
   GenerateChallengeRequest,
   GenerateChallengeResponse,
-  GetAdaUsdConversionResponse,
-  GetNewmUsdConversionResponse,
 } from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";

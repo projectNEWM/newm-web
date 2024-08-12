@@ -2,9 +2,10 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent, useEffect } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
 import { DEXHUNTER_STUDIO_PARTNER_CODE } from "@newm-web/env";
+import { LOVELACE_CONVERSION } from "@newm-web/utils";
 import {
+  NEWM_ASSET_NAME,
   NEWM_POLICY_ID,
-  NEWM_TOKEN_NAME,
   useAppDispatch,
   useAppSelector,
 } from "../common";
@@ -15,7 +16,10 @@ import {
   setWalletAddress,
   setWalletNewmBalance,
 } from "../modules/wallet";
-import { useGetADAPriceQuery, useGetNEWMPriceQuery } from "../modules/crypto";
+import {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../modules/crypto";
 
 const DisconnectWalletButton: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
@@ -26,12 +30,13 @@ const DisconnectWalletButton: FunctionComponent = () => {
   const { wallet, getBalance, getTokenBalance, getAddress } =
     useConnectWallet();
   const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
-    useGetADAPriceQuery();
+    useGetAdaUsdConversionRateQuery();
   const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
-    useGetNEWMPriceQuery();
+    useGetNewmUsdConversionRateQuery();
 
-  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / 1000000;
-  const newmUsdBalance = (newmUsdPrice * walletNewmBalance) / 1000000;
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION;
+  const newmUsdBalance =
+    (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION;
 
   /**
    * Opens disconnect wallet modal
@@ -60,7 +65,7 @@ const DisconnectWalletButton: FunctionComponent = () => {
     };
 
     if (wallet) {
-      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_TOKEN_NAME);
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_ASSET_NAME);
     }
   }, [wallet, dispatch, getTokenBalance]);
 

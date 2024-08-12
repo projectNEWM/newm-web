@@ -10,7 +10,7 @@ export const FULL_OWNERSHIP_STREAM_TOKENS = 100000000;
  * Conversion factor for converting between NEWM values.
  * TODO: look into back-end returning value with correct decimal places
  */
-export const NEWM_DECIMAL_CONVERSION = 1000000;
+export const LOVELACE_CONVERSION = 1000000;
 
 /**
  * Creates a sale object from the sale API object with
@@ -25,7 +25,7 @@ export const transformApiSale = (apiSale: ApiSale): Sale => {
 
   return {
     ...sale,
-    costAmount: sale.costAmount / NEWM_DECIMAL_CONVERSION,
+    costAmount: sale.costAmount / LOVELACE_CONVERSION,
     song: {
       ...song,
       isExplicit: parentalAdvisory === "Explicit",
