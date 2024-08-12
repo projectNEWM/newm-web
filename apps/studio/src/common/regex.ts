@@ -35,7 +35,7 @@ const generateRegexForDomainsWithPath = (
     .map((domain) => domain.replace(/\./g, "\\."))
     .join("|");
   return new RegExp(
-    `^(https?:\\/\\/(www\\.)?)?(${domainsPattern})(\\/[^\\s]+)`,
+    `^(https?:\\/\\/)?(www\\.)?(${domainsPattern})(\\/[^\\s]+)`,
     "i"
   );
 };

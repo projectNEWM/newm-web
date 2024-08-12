@@ -4,13 +4,13 @@ import currency from "currency.js";
 import theme from "@newm-web/theme";
 import HelpIcon from "@mui/icons-material/Help";
 
-interface UnclaimedRoyaltiesProps {
+interface LegacyUnclaimedRoyaltiesProps {
   unclaimedRoyalties: number;
 }
 
-export const UnclaimedRoyalties = ({
+export const LegacyUnclaimedRoyalties = ({
   unclaimedRoyalties,
-}: UnclaimedRoyaltiesProps) => {
+}: LegacyUnclaimedRoyaltiesProps) => {
   return (
     <Box
       sx={ {
@@ -31,22 +31,16 @@ export const UnclaimedRoyalties = ({
           paddingRight: [1, "unset"],
         } }
       >
-        <Stack alignItems="center" direction="row" gap={ 1 } pb={ 1.5 }>
-          <Typography
-            color={ theme.colors.grey100 }
-            fontSize={ 12 }
-            fontWeight={ 500 }
-          >
-            YOU HAVE UNCLAIMED EARNINGS
+        <Stack alignItems="center" direction="row" gap={ 1 }>
+          <Typography color={ theme.colors.grey100 } fontSize={ 12 }>
+            ROYALTIES ACCRUED SO FAR
           </Typography>
 
           <Tooltip
             title={
-              "These earnings include the streaming royalties accumulated " +
-              "for your distributed and minted songs. Select \"Claim now\" " +
-              "to transfer unclaimed earnings to your wallet. Upon launch of " +
-              "the NEWM Marketplace, any income generated through your " +
-              "stream token sales will also be available to claim here."
+              "These are the royalties you have accrued since minting " +
+              "your song(s). All royalties will be available to claim " +
+              "following the launch of the Stream Token Marketplace."
             }
           >
             <IconButton sx={ { padding: 0 } }>
@@ -55,25 +49,15 @@ export const UnclaimedRoyalties = ({
           </Tooltip>
         </Stack>
 
-        <Typography fontSize="24px" fontWeight={ 700 } lineHeight="28px" pb={ 0.5 }>
-          { currency(unclaimedRoyalties, {
-            pattern: "#!",
-            symbol: "Ɲ",
-          }).format() }
-        </Typography>
-        <Typography
-          color={ theme.colors.grey200 }
-          fontWeight={ 500 }
-          variant="subtitle1"
-        >
-          ~$X.XX
+        <Typography fontSize="28px" fontWeight={ 700 }>
+          { currency(unclaimedRoyalties).format() }
         </Typography>
       </Box>
       <Tooltip title={ "Feature coming soon" }>
         <Box sx={ { alignSelf: "center" } }>
           <Button
             color="white"
-            disabled={ true }
+            disabled={ unclaimedRoyalties === 0 }
             sx={ { alignSelf: "center" } }
             variant="outlined"
             width="compact"
@@ -86,4 +70,4 @@ export const UnclaimedRoyalties = ({
   );
 };
 
-export default UnclaimedRoyalties;
+export default LegacyUnclaimedRoyalties;
