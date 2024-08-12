@@ -26,11 +26,11 @@ class WebPreviewStack extends cdk.Stack {
       {
         code: lambda.DockerImageCode.fromImageAsset(rootDir, {
           buildArgs: {
-            NEXT_PUBLIC_ENV: appEnv,
-            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
-            NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE: dexHunterToolsPartnerCode,
             NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE:
               dexHunterMarketplacePartnerCode,
+            NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE: dexHunterToolsPartnerCode,
+            NEXT_PUBLIC_ENV: appEnv,
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
@@ -57,8 +57,3 @@ new WebPreviewStack(app, "WebPreviewStack", {
   },
   stackName: `${appName}-${qualifier}`,
 });
-
-
-            NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE:
-              dexHunterMarketplacePartnerCode,
-            NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE: dexHunterToolsPartnerCode,
