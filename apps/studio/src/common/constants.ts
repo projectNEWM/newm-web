@@ -62,8 +62,3 @@ export const PENDING_SALE_PING_TIMEOUT = 300000;
  * Stream token sale default bundle amount
  */
 export const SALE_DEFAULT_BUNDLE_AMOUNT = 1;
-
-/** NEWM token information */
-export const NEWM_POLICY_ID =
-  "682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f63";
-export const NEWM_ASSET_NAME = "4e45574d";

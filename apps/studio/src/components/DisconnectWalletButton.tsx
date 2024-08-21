@@ -2,13 +2,12 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { FunctionComponent, useEffect } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
 import { DEXHUNTER_STUDIO_PARTNER_CODE } from "@newm-web/env";
-import { LOVELACE_CONVERSION } from "@newm-web/utils";
 import {
+  LOVELACE_CONVERSION,
   NEWM_ASSET_NAME,
   NEWM_POLICY_ID,
-  useAppDispatch,
-  useAppSelector,
-} from "../common";
+} from "@newm-web/utils";
+import { useAppDispatch, useAppSelector } from "../common";
 import { setIsConnectWalletModalOpen } from "../modules/ui";
 import {
   selectWallet,
