@@ -6,7 +6,12 @@ import {
   WalletEnvMismatchModal,
   WalletModal,
 } from "@newm-web/components";
-import { LOVELACE_CONVERSION, getIsWalletEnvMismatch } from "@newm-web/utils";
+import {
+  LOVELACE_CONVERSION,
+  NEWM_ASSET_NAME,
+  NEWM_POLICY_ID,
+  getIsWalletEnvMismatch,
+} from "@newm-web/utils";
 import { DEXHUNTER_TOOLS_PARTNER_CODE } from "@newm-web/env";
 import {
   selectUi,
@@ -14,7 +19,6 @@ import {
   setToastMessage,
 } from "../modules/ui";
 import { useAppDispatch, useAppSelector } from "../common";
-import { NEWM_ASSET_NAME, NEWM_POLICY_ID } from "../common/constants";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,

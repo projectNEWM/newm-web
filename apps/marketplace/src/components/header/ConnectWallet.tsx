@@ -7,13 +7,17 @@ import {
 } from "@newm-web/components";
 import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
-import { LOVELACE_CONVERSION, getIsWalletEnvMismatch } from "@newm-web/utils";
+import {
+  LOVELACE_CONVERSION,
+  NEWM_ASSET_NAME,
+  NEWM_POLICY_ID,
+  getIsWalletEnvMismatch,
+} from "@newm-web/utils";
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
-import { NEWM_ASSET_NAME, NEWM_POLICY_ID } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
