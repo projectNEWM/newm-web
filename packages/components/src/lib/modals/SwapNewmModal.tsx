@@ -73,9 +73,9 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
           <Stack spacing={ 0.5 }>
             <Typography color="yellow">Unsupported wallet</Typography>
             <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
-              Your currently connected wallet is not supported by the DexHunter
-              token swap integration. If you would like to purchase NEWM through
-              the integration, please use one of the following wallets:{ " " }
+              The wallet you have connected is not supported by the DexHunter
+              token swap integration. To purchase NEWM through this integration,
+              please use one of the following compatible wallets:{ " " }
               { renderSupportedWallets() }.
             </Typography>
           </Stack>
