@@ -173,7 +173,9 @@ export const mapCollaboratorsToCollaborations = (
     email: collaborator.email,
     featured: collaborator.isFeatured,
     role: collaborator.role,
-    royaltyRate: collaborator.royaltyRate || 0,
+    ...(collaborator.royaltyRate
+      ? { royaltyRate: collaborator.royaltyRate }
+      : {}),
     songId,
   }));
 };
