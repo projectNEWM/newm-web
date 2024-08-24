@@ -37,6 +37,7 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
   return isConnectedWalletSupported ? (
     <Modal
       isCloseOnClickBackgroundEnabled={ true }
+      isFullScreen={ false }
       isOpen={ isOpen }
       onClose={ onClose }
     >
