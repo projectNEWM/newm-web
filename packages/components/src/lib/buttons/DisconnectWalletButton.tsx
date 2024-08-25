@@ -137,7 +137,11 @@ const DisconnectWalletButton: FunctionComponent<
         position="relative"
         ref={ parentRef }
       >
-        <Badge color="primary" invisible={ !isNewmBadgeVisible } variant="dot">
+        <Badge
+          color="primary"
+          invisible={ isDropdownOpen || !isNewmBadgeVisible }
+          variant="dot"
+        >
           <Stack
             direction="row"
             sx={ {
