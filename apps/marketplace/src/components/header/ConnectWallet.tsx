@@ -23,8 +23,8 @@ const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
 
   const [walletAddress, setWalletAddress] = useState("");
-  const [walletAdaBalance, setWalletAdaBalance] = useState(0);
-  const [walletNewmBalance, setWalletNewmBalance] = useState(0);
+  const [walletAdaBalance, setWalletAdaBalance] = useState<number>();
+  const [walletNewmBalance, setWalletNewmBalance] = useState<number>();
   const [isWalletModalOpen, setisWalletModalOpen] = useState(false);
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
 
@@ -35,9 +35,14 @@ const ConnectWallet: FunctionComponent = () => {
   const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
     useGetNewmUsdConversionRateQuery();
 
-  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION;
+  const adaUsdBalance =
+    typeof walletAdaBalance === "number"
+      ? (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION
+      : undefined;
   const newmUsdBalance =
-    (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION;
+    typeof walletNewmBalance === "number"
+      ? (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION
+      : undefined;
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -110,6 +115,7 @@ const ConnectWallet: FunctionComponent = () => {
           adaBalance={ walletAdaBalance }
           adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
+          isNewmBalanceBadgeEnabled={ true }
           newmBalance={ walletNewmBalance }
           newmUsdBalance={ newmUsdBalance }
           partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
