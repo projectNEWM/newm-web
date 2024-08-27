@@ -14,8 +14,6 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import { AudioVisualizer } from "react-audio-visualize";
-import { Howl } from "howler";
-import { getFileBinary } from "@newm-web/utils";
 import IconMessage from "./IconMessage";
 import DashedOutline from "./styled/DashedOutline";
 import ErrorMessage from "./styled/ErrorMessage";
@@ -52,7 +50,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const theme = useTheme();
 
   const [isHovering, setIsHovering] = useState(false);
-  const [song, setSong] = useState<Howl | null>(null);
+  const [song, setSong] = useState<HTMLAudioElement | null>(null);
   const [songProgress, setSongProgress] = useState<number>(0);
   const [isSongPlaying, setIsSongPlaying] = useState<boolean>(false);
   const visualizerRef = useRef<HTMLCanvasElement>(null);
@@ -60,7 +58,6 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
   const createAudioBuffer = async (value: File) => {
     const audioContext = new (window.AudioContext || window.AudioContext)();
     const arrayBuffer = await value.arrayBuffer();
-
     return audioContext.decodeAudioData(arrayBuffer);
   };
 
@@ -85,15 +82,19 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
     event.stopPropagation();
     if (!song) return;
 
-    song.stop();
+    song.pause();
+    song.currentTime = 0;
   };
 
   /**
-   * Stop playing song when component umounts
+   * Stop playing song when component unmounts
    */
   useEffect(() => {
     return () => {
-      song?.stop();
+      if (song) {
+        song.pause();
+        song.currentTime = 0;
+      }
     };
   }, [song]);
 
@@ -146,7 +147,7 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         onError("");
 
         // stop current song if it's playing
-        if (song?.playing()) song.stop();
+        if (song && !song.paused) song.pause();
       } catch (error) {
         if (error instanceof Error) {
           onError(error.message);
@@ -171,27 +172,26 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
    * Set playable audio when file is uploaded or changed.
    */
   useEffect(() => {
-    const setBase64AudioString = async () => {
-      if (!file) return;
+    if (!file) return;
 
-      const binary = (await getFileBinary(file)) as string;
-      const howler = new Howl({
-        onend: () => {
-          setIsSongPlaying(false);
-          setSongProgress(0);
-        },
-        onplay: () => setIsSongPlaying(true),
-        onstop: () => {
-          setIsSongPlaying(false);
-          setSongProgress(0);
-        },
-        src: binary,
-      });
+    const audio = new Audio();
+    setSong(audio);
 
-      setSong(howler);
-    };
+    audio.src = URL.createObjectURL(file);
 
-    setBase64AudioString();
+    audio.addEventListener("ended", () => {
+      setIsSongPlaying(false);
+      setSongProgress(0);
+    });
+
+    audio.addEventListener("play", () => {
+      setIsSongPlaying(true);
+    });
+
+    audio.addEventListener("pause", () => {
+      setIsSongPlaying(false);
+      setSongProgress(0);
+    });
   }, [file]);
 
   /**
@@ -203,8 +203,8 @@ const UploadSong: FunctionComponent<UploadSongProps> = ({
         return 0;
       }
 
-      const songDuration = song.duration();
-      const songPosition = song.seek();
+      const songDuration = song.duration;
+      const songPosition = song.currentTime;
       return songPosition / songDuration;
     };
 
