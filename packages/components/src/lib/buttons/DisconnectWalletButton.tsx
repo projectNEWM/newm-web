@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
-import { Button } from "@newm-web/elements";
+import { Badge, Button } from "@newm-web/elements";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -14,12 +14,14 @@ import {
 import SwapNewmModal from "../modals/SwapNewmModal";
 
 interface DisconnectWalletButtonProps {
-  readonly adaBalance: number;
-  readonly adaUsdBalance: number;
+  readonly adaBalance?: number;
+  readonly adaUsdBalance?: number;
   readonly address?: string;
-  readonly newmBalance: number;
-  readonly newmUsdBalance: number;
+  readonly isNewmBalanceBadgeEnabled?: boolean;
+  readonly newmBalance?: number;
+  readonly newmUsdBalance?: number;
   readonly onDisconnect?: VoidFunction;
+  readonly onDismissNewmBalanceBadge?: VoidFunction;
   readonly partnerCode: string;
   readonly partnerName: string;
 }
@@ -39,6 +41,8 @@ const DisconnectWalletButton: FunctionComponent<
   partnerCode,
   partnerName,
   onDisconnect,
+  onDismissNewmBalanceBadge,
+  isNewmBalanceBadgeEnabled = false,
 }) => {
   const theme = useTheme();
 
@@ -47,6 +51,7 @@ const DisconnectWalletButton: FunctionComponent<
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSwapModalVisible, setIsSwapModalVisible] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isNewmBadgeVisible, setIsNewmBadgeVisible] = useState(false);
 
   const truncatedAddress = address ? address.slice(0, 16) : "";
   const ellipsedAddress = address
@@ -54,10 +59,24 @@ const DisconnectWalletButton: FunctionComponent<
     : "";
 
   /**
-   * Toggles the dropdown.
+   * Toggles the dropdown and dismisses the NEWM balance
+   * badge when the dropdown is closed.
    */
-  const handleClickButton = () => {
-    setIsDropdownOpen((isOpen) => !isOpen);
+  const handleToggleDropdown = () => {
+    setIsDropdownOpen((isOpen) => {
+      if (isOpen) handleDismissNewmBadge();
+
+      return !isOpen;
+    });
+  };
+
+  /**
+   * Dismisses the Newm balance notification badge.
+   */
+  const handleDismissNewmBadge = () => {
+    setIsNewmBadgeVisible(false);
+
+    if (newmBalance === 0) onDismissNewmBalanceBadge?.();
   };
 
   /**
@@ -71,7 +90,7 @@ const DisconnectWalletButton: FunctionComponent<
   };
 
   const handleOpenSwapModal = () => {
-    setIsDropdownOpen(false);
+    handleToggleDropdown();
     setIsSwapModalVisible(true);
   };
 
@@ -79,7 +98,7 @@ const DisconnectWalletButton: FunctionComponent<
    * Called when the user presses the dropdown disconnect button.
    */
   const handleDisconnect = () => {
-    setIsDropdownOpen(false);
+    handleToggleDropdown();
     onDisconnect?.();
   };
 
@@ -93,6 +112,14 @@ const DisconnectWalletButton: FunctionComponent<
       }, 2000);
     }
   }, [isCopied]);
+
+  /**
+   * Sets whether the NEWM balance notification badge
+   * should be displayed.
+   */
+  useEffect(() => {
+    setIsNewmBadgeVisible(isNewmBalanceBadgeEnabled && newmBalance === 0);
+  }, [isNewmBalanceBadgeEnabled, newmBalance]);
 
   /**
    * Gets the height of the menu button on initial mount and screen resize.
@@ -121,33 +148,39 @@ const DisconnectWalletButton: FunctionComponent<
         position="relative"
         ref={ parentRef }
       >
-        <Stack
-          direction="row"
-          sx={ {
-            alignItems: "center",
-            border: `2px solid ${theme.colors.white}`,
-            borderRadius: "4px",
-            cursor: "pointer",
-            pl: 2,
-            pr: 1.2,
-            py: 1,
-          } }
-          onClick={ handleClickButton }
+        <Badge
+          color="primary"
+          invisible={ isDropdownOpen || !isNewmBadgeVisible }
+          variant="dot"
         >
-          <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
-            <Typography whiteSpace="nowrap">
-              { formatNewmAmount(newmBalance) }
-            </Typography>
-            <Typography sx={ { display: ["none", "none", "flex"] } }>
-              |
-            </Typography>
-            <Typography>{ truncatedAddress }</Typography>
-          </Stack>
+          <Stack
+            direction="row"
+            sx={ {
+              alignItems: "center",
+              border: `2px solid ${theme.colors.white}`,
+              borderRadius: "4px",
+              cursor: "pointer",
+              pl: 2,
+              pr: 1.2,
+              py: 1,
+            } }
+            onClick={ handleToggleDropdown }
+          >
+            <Stack direction={ ["column", "column", "row"] } gap={ 1 }>
+              <Typography whiteSpace="nowrap">
+                { formatNewmAmount(newmBalance) }
+              </Typography>
+              <Typography sx={ { display: ["none", "none", "flex"] } }>
+                |
+              </Typography>
+              <Typography>{ truncatedAddress }</Typography>
+            </Stack>
 
-          <Box alignItems="center" justifyContent="center" lineHeight="0px">
-            { isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
-          </Box>
-        </Stack>
+            <Box alignItems="center" justifyContent="center" lineHeight="0px">
+              { isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon /> }
+            </Box>
+          </Stack>
+        </Badge>
 
         { isDropdownOpen && (
           <Stack
@@ -235,13 +268,19 @@ const DisconnectWalletButton: FunctionComponent<
             </Stack>
 
             <Stack alignSelf="stretch" p={ 1.5 }>
-              <Button
-                fullWidth={ true }
-                gradient="crypto"
-                onClick={ handleOpenSwapModal }
+              <Badge
+                color="primary"
+                invisible={ !isNewmBadgeVisible }
+                variant="dot"
               >
-                Buy $NEWM Tokens
-              </Button>
+                <Button
+                  fullWidth={ true }
+                  gradient="crypto"
+                  onClick={ handleOpenSwapModal }
+                >
+                  Buy $NEWM Tokens
+                </Button>
+              </Badge>
             </Stack>
 
             <Stack

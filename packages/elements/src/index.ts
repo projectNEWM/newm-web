@@ -1,6 +1,7 @@
 export { default as Alert } from "./lib/Alert";
 export { default as Button } from "./lib/Button";
 export * from "./lib/Button";
+export { default as Badge } from "./lib/styled/Badge";
 export { default as Checkbox } from "./lib/Checkbox";
 export * from "./lib/Checkbox";
 export { default as Clickable } from "./lib/Clickable";
@@ -28,8 +29,8 @@ export * from "./lib/TextInput";
 export { default as TablePagination } from "./lib/TablePagination";
 export { default as Tooltip } from "./lib/styled/Tooltip";
 export { default as ErrorMessage } from "./lib/styled/ErrorMessage";
-export { default as Badge } from "./lib/styled/Badge";
-export * from "./lib/styled/Badge";
+export { default as Pill } from "./lib/styled/Pill";
+export * from "./lib/styled/Pill";
 export { default as DashedOutline } from "./lib/styled/DashedOutline";
 export { default as PaperInput } from "./lib/styled/PaperInput";
 export { default as ProfileImage } from "./lib/styled/ProfileImage";
