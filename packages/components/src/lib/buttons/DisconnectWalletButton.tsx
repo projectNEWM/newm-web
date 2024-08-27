@@ -21,6 +21,7 @@ interface DisconnectWalletButtonProps {
   readonly newmBalance?: number;
   readonly newmUsdBalance?: number;
   readonly onDisconnect?: VoidFunction;
+  readonly onDismissNewmBalanceBadge?: VoidFunction;
   readonly partnerCode: string;
   readonly partnerName: string;
 }
@@ -40,6 +41,7 @@ const DisconnectWalletButton: FunctionComponent<
   partnerCode,
   partnerName,
   onDisconnect,
+  onDismissNewmBalanceBadge,
   isNewmBalanceBadgeEnabled = false,
 }) => {
   const theme = useTheme();
@@ -62,10 +64,19 @@ const DisconnectWalletButton: FunctionComponent<
    */
   const handleToggleDropdown = () => {
     setIsDropdownOpen((isOpen) => {
-      if (isOpen) setIsNewmBadgeVisible(false);
+      if (isOpen) handleDismissNewmBadge();
 
       return !isOpen;
     });
+  };
+
+  /**
+   * Dismisses the Newm balance notification badge.
+   */
+  const handleDismissNewmBadge = () => {
+    setIsNewmBadgeVisible(false);
+
+    if (newmBalance === 0) onDismissNewmBalanceBadge?.();
   };
 
   /**

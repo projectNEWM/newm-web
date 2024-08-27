@@ -9,6 +9,7 @@ import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
 import {
   LOVELACE_CONVERSION,
+  LocalStorage,
   NEWM_ASSET_NAME,
   NEWM_POLICY_ID,
   getIsWalletEnvMismatch,
@@ -18,6 +19,7 @@ import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
+import { LocalStorageKeys } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
@@ -44,6 +46,10 @@ const ConnectWallet: FunctionComponent = () => {
       ? (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION
       : undefined;
 
+  const isNewmBalanceBadgeDismissed = !!LocalStorage.getItem(
+    LocalStorageKeys.isNewmBalanceBadgeDismissed
+  );
+
   const handleConnectWallet = async () => {
     if (!wallet) return;
 
@@ -60,6 +66,10 @@ const ConnectWallet: FunctionComponent = () => {
 
   const handleCloseWalletEnvModal = () => {
     setIsWalletEnvModalOpen(false);
+  };
+
+  const handleDismissNewmBalanceBadge = () => {
+    LocalStorage.setItem(LocalStorageKeys.isNewmBalanceBadgeDismissed, "true");
   };
 
   /**
@@ -115,12 +125,13 @@ const ConnectWallet: FunctionComponent = () => {
           adaBalance={ walletAdaBalance }
           adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
-          isNewmBalanceBadgeEnabled={ true }
+          isNewmBalanceBadgeEnabled={ !isNewmBalanceBadgeDismissed }
           newmBalance={ walletNewmBalance }
           newmUsdBalance={ newmUsdBalance }
           partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
           partnerName="NEWMMarketplace"
           onDisconnect={ handleDisconnectWallet }
+          onDismissNewmBalanceBadge={ handleDismissNewmBalanceBadge }
         />
       ) : (
         <Button
