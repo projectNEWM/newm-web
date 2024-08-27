@@ -1,3 +1,3 @@
-export enum LocalStorageKeys {
+export enum LocalStorageKey {
   isStudioNewmBalanceBadgeDismissed = "isStudioNewmBalanceBadgeDismissed",
 }
