@@ -15,11 +15,11 @@ import {
   getIsWalletEnvMismatch,
 } from "@newm-web/utils";
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
+import { LocalStorageKeys } from "@newm-web/types";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
-import { LocalStorageKeys } from "../../common";
 
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
@@ -47,7 +47,7 @@ const ConnectWallet: FunctionComponent = () => {
       : undefined;
 
   const isNewmBalanceBadgeDismissed = !!LocalStorage.getItem(
-    LocalStorageKeys.isNewmBalanceBadgeDismissed
+    LocalStorageKeys.isStudioNewmBalanceBadgeDismissed
   );
 
   const handleConnectWallet = async () => {
@@ -69,7 +69,10 @@ const ConnectWallet: FunctionComponent = () => {
   };
 
   const handleDismissNewmBalanceBadge = () => {
-    LocalStorage.setItem(LocalStorageKeys.isNewmBalanceBadgeDismissed, "true");
+    LocalStorage.setItem(
+      LocalStorageKeys.isStudioNewmBalanceBadgeDismissed,
+      "true"
+    );
   };
 
   /**
