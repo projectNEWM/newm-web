@@ -4,12 +4,7 @@ import {
   getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import {
-  Currency,
-  LOVELACE_CONVERSION,
-  USD_CONVERSION,
-  asThunkHook,
-} from "@newm-web/utils";
+import { Currency, asThunkHook } from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
 import { EndSaleThunkRequest, StartSaleThunkRequest } from "./types";
 import { setToastMessage } from "../ui";
@@ -31,9 +26,7 @@ export const startSale = createAsyncThunk(
       const changeAddress = await getWalletChangeAddress(wallet);
 
       const costAmount =
-        body.saleCurrency === Currency.USD.name
-          ? body.costAmount * USD_CONVERSION
-          : body.costAmount * LOVELACE_CONVERSION;
+        body.costAmount * Currency[body.saleCurrency].conversion;
 
       const startSaleAmountResp = await dispatch(
         saleApi.endpoints.startSaleAmount.initiate({
