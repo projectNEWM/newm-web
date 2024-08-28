@@ -36,6 +36,7 @@ export { default as PaperInput } from "./lib/styled/PaperInput";
 export { default as ProfileImage } from "./lib/styled/ProfileImage";
 export { default as SolidOutline } from "./lib/styled/SolidOutline";
 export { default as Pagination } from "./lib/styled/Pagination";
+export { default as PriceInputField } from "./lib/form/PriceInputField";
 export { default as TableCell } from "./lib/styled/table/TableCell";
 export { default as TableHeadCell } from "./lib/styled/table/TableHeadCell";
 export { default as CheckboxField } from "./lib/form/CheckboxField";

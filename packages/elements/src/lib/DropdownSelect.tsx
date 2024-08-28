@@ -40,6 +40,7 @@ const DropdownSelect: ForwardRefRenderFunction<
     value = null,
     widthType,
     containerSxOverrides,
+    shouldDisplayErrorMessage = true,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -110,7 +111,7 @@ const DropdownSelect: ForwardRefRenderFunction<
               onClick={ handleEndAdornmentClick }
             />
           }
-          errorMessage={ errorMessage }
+          errorMessage={ shouldDisplayErrorMessage ? errorMessage : "" }
           label={ label }
           name={ name }
           placeholder={ placeholder }

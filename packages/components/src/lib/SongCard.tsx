@@ -16,7 +16,6 @@ import {
   resizeCloudinaryImage,
 } from "@newm-web/utils";
 import { Clickable, ResponsiveImage } from "@newm-web/elements";
-import currency from "currency.js";
 import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {

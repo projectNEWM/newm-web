@@ -1,0 +1,126 @@
+import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { ForwardRefRenderFunction, forwardRef } from "react";
+import HelpIcon from "@mui/icons-material/Help";
+import { FormikErrors, FormikTouched, useFormikContext } from "formik";
+import TextInputField from "./TextInputField";
+import DropdownSelectField from "./DropdownSelectField";
+import { TextInputProps } from "../TextInput";
+import Tooltip from "../styled/Tooltip";
+import ErrorMessage from "../styled/ErrorMessage";
+
+interface Props extends Omit<TextInputProps, "name"> {
+  readonly currencyFieldName: string;
+  readonly priceFieldName: string;
+}
+
+/**
+ * Displays a number and currency dropdown as two separate fields.
+ */
+const PriceInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
+  {
+    label,
+    priceFieldName,
+    currencyFieldName,
+    tooltipText,
+    helperText,
+    placeholder,
+    isOptional = true,
+    ...rest
+  },
+  ref
+) => {
+  const theme = useTheme();
+
+  const priceTouchedKey = priceFieldName as keyof FormikTouched<unknown>;
+  const priceErrorsKey = priceFieldName as keyof FormikErrors<unknown>;
+
+  const { touched, errors } = useFormikContext();
+  const isTouched = touched[priceTouchedKey];
+  const errorMessage = errors[priceErrorsKey];
+  const shouldShowErrorMessage = isTouched && errorMessage;
+
+  const renderSubtext = () => {
+    if (shouldShowErrorMessage) {
+      return <ErrorMessage>{ errorMessage }</ErrorMessage>;
+    }
+
+    if (helperText) {
+      return <Typography variant="subtitle2">{ helperText }</Typography>;
+    }
+  };
+
+  return (
+    <Stack
+      direction="column"
+      maxWidth={ theme.inputField.maxWidth }
+      ref={ ref }
+      spacing={ 0.5 }
+      width="100%"
+    >
+      <Stack direction="row" justifyContent="space-between">
+        <Typography
+          component="div"
+          sx={ {
+            color: theme.colors.grey100,
+            fontWeight: 500,
+            opacity: rest.disabled ? 0.5 : 1,
+            textTransform: "uppercase",
+          } }
+        >
+          <Stack direction="row" spacing="4px">
+            <Box component="label">{ label }</Box>
+
+            { !!tooltipText && (
+              <Tooltip title={ tooltipText }>
+                <IconButton sx={ { padding: 0 } }>
+                  <HelpIcon
+                    sx={ {
+                      color: theme.colors.grey100,
+                      height: "18px",
+                      width: "18px",
+                    } }
+                  />
+                </IconButton>
+              </Tooltip>
+            ) }
+          </Stack>
+        </Typography>
+
+        { isOptional && (
+          <Typography
+            component="span"
+            marginLeft="auto"
+            sx={ {
+              color: theme.colors.grey400,
+              opacity: rest.disabled ? 0.5 : 1,
+            } }
+          >
+            OPTIONAL
+          </Typography>
+        ) }
+      </Stack>
+
+      <Stack direction="row" spacing={ 1 }>
+        <TextInputField
+          isOptional={ false }
+          name={ priceFieldName }
+          placeholder={ placeholder }
+          shouldDisplayErrorMessage={ false }
+        />
+
+        <Box maxWidth="7.5em">
+          <DropdownSelectField
+            isOptional={ false }
+            name={ currencyFieldName }
+            options={ ["USD", "NEWM"] }
+            shouldDisplayErrorMessage={ false }
+          />
+        </Box>
+      </Stack>
+
+      { renderSubtext() }
+    </Stack>
+  );
+};
+
+export default forwardRef(PriceInputField);
