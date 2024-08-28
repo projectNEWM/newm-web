@@ -10,6 +10,7 @@ import {
   formatNewmAmount,
   formatPercentageAdaptive,
 } from "@newm-web/utils";
+import { Currency } from "@newm-web/types";
 import { useGetNewmUsdConversionRateQuery } from "../../../../modules/crypto";
 
 interface StartSaleModalProps {
@@ -17,8 +18,10 @@ interface StartSaleModalProps {
   readonly handleStartSale: (values: FormikValues) => void;
   readonly isLoading: boolean;
   readonly isOpen: boolean;
+  readonly saleCurrency: Currency;
+  readonly tokensToSell: number;
+  readonly totalSaleValue: number;
   readonly totalTokensOwnedByUser: number;
-  readonly values: FormikValues;
 }
 
 const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
@@ -27,7 +30,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
   handleStartSale,
   isLoading,
   totalTokensOwnedByUser,
-  values,
+  totalSaleValue,
+  tokensToSell,
+  saleCurrency,
 }) => {
   const { data: NEWMPriceData } = useGetNewmUsdConversionRateQuery();
   // Set the NEWM price in USD to 0 if the price data is not available
@@ -35,8 +40,15 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
     ? NEWMPriceData?.usdPrice / LOVELACE_CONVERSION
     : 0;
   const isNEWMPriceUnavailable = NEWMPriceInUSD === 0;
-  const totalSaleValueInUSD = values.totalSaleValue * NEWMPriceInUSD;
-  const pricePerStreamTokenInUSD = totalSaleValueInUSD / values.tokensToSell;
+  const totalSaleValueInNewm =
+    saleCurrency === Currency.NEWM
+      ? totalSaleValue
+      : totalSaleValue / NEWMPriceInUSD;
+  const totalSaleValueInUsd =
+    saleCurrency === Currency.USD
+      ? totalSaleValue
+      : totalSaleValue * NEWMPriceInUSD;
+  const pricePerStreamTokenInUSD = totalSaleValueInUsd / tokensToSell;
 
   return (
     <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ handleClose }>
@@ -79,7 +91,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   Stream tokens to sell
                 </Typography>
                 <Typography variant="h4">
-                  { currency(values.tokensToSell, {
+                  { currency(tokensToSell, {
                     precision: 0,
                     symbol: "",
                   }).format() }
@@ -96,7 +108,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                 </Typography>
                 <Typography variant="h4">
                   { formatPercentageAdaptive(
-                    (values.tokensToSell / totalTokensOwnedByUser) * 100
+                    (tokensToSell / totalTokensOwnedByUser) * 100
                   ) }
                   %
                 </Typography>
@@ -111,7 +123,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                 </Typography>
                 <Typography variant="h4">
                   { formatPercentageAdaptive(
-                    (values.tokensToSell / FULL_OWNERSHIP_STREAM_TOKENS) * 100
+                    (tokensToSell / FULL_OWNERSHIP_STREAM_TOKENS) * 100
                   ) }
                   %
                 </Typography>
@@ -127,12 +139,12 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${currency(totalSaleValueInUSD, {
+                      : `(≈ ${currency(totalSaleValueInUsd, {
                           precision: 3,
                           symbol: "$",
                         }).format()})` }
                   </Typography>
-                  { formatNewmAmount(values.totalSaleValue, true) }
+                  { formatNewmAmount(totalSaleValueInNewm, true) }
                 </Typography>
               </Stack>
               <Stack
@@ -152,10 +164,7 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                           symbol: "$",
                         }).format()})` }
                   </Typography>
-                  { formatNewmAmount(
-                    values.totalSaleValue / values.tokensToSell,
-                    true
-                  ) }
+                  { formatNewmAmount(totalSaleValueInNewm / tokensToSell, true) }
                 </Typography>
               </Stack>
             </Stack>

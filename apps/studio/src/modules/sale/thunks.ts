@@ -4,7 +4,12 @@ import {
   getWalletChangeAddress,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
-import { LOVELACE_CONVERSION, asThunkHook } from "@newm-web/utils";
+import {
+  Currency,
+  LOVELACE_CONVERSION,
+  USD_CONVERSION,
+  asThunkHook,
+} from "@newm-web/utils";
 import { extendedApi as saleApi } from "./api";
 import { EndSaleThunkRequest, StartSaleThunkRequest } from "./types";
 import { setToastMessage } from "../ui";
@@ -25,12 +30,19 @@ export const startSale = createAsyncThunk(
       const wallet = await enableWallet();
       const changeAddress = await getWalletChangeAddress(wallet);
 
+      const costAmount =
+        body.saleCurrency === Currency.USD.name
+          ? body.costAmount * USD_CONVERSION
+          : body.costAmount * LOVELACE_CONVERSION;
+
       const startSaleAmountResp = await dispatch(
         saleApi.endpoints.startSaleAmount.initiate({
           bundleAmount: body.bundleAmount,
           bundleAssetName: body.bundleAssetName,
           bundlePolicyId: body.bundlePolicyId,
-          costAmount: body.costAmount * LOVELACE_CONVERSION,
+          costAmount,
+          costAssetName: Currency[body.saleCurrency].costAssetName,
+          costPolicyId: Currency[body.saleCurrency].costPolicyId,
           ownerAddress: changeAddress,
           totalBundleQuantity: body.totalBundleQuantity,
         })

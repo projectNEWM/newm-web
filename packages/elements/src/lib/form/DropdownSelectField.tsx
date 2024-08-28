@@ -14,6 +14,7 @@ export interface DropdownSelectFieldProps
   readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
   readonly placeholder?: string;
+  readonly shouldDisplayErrorMessage?: boolean;
   readonly tooltipText?: string;
   readonly widthType?: WidthType;
 }

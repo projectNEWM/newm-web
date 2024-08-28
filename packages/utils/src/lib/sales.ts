@@ -1,4 +1,5 @@
 import { ApiSale, Sale } from "@newm-web/types";
+import { Currency } from "./crypto";
 
 /**
  * Full ownership stream tokens, used for calculating ownership percentage.
@@ -8,9 +9,13 @@ export const FULL_OWNERSHIP_STREAM_TOKENS = 100000000;
 
 /**
  * Conversion factor for converting between NEWM values.
- * TODO: look into back-end returning value with correct decimal places
  */
 export const LOVELACE_CONVERSION = 1000000;
+
+/**
+ * Conversion factor for converting USD to required decimal places for back-end.
+ */
+export const USD_CONVERSION = 1000000000000;
 
 /**
  * Creates a sale object from the sale API object with
@@ -23,9 +28,14 @@ export const transformApiSale = (apiSale: ApiSale): Sale => {
     ...sale
   } = apiSale;
 
+  const conversionFactor =
+    sale.costPolicyId === Currency.USD.costPolicyId
+      ? USD_CONVERSION
+      : LOVELACE_CONVERSION;
+
   return {
     ...sale,
-    costAmount: sale.costAmount / LOVELACE_CONVERSION,
+    costAmount: sale.costAmount / conversionFactor,
     song: {
       ...song,
       isExplicit: parentalAdvisory === "Explicit",

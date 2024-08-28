@@ -1,3 +1,5 @@
+import { Currency } from "@newm-web/types";
+
 export interface EndSaleAmountResponse {
   // CBOR format-encoded generated amount.
   readonly amountCborHex: string;
@@ -41,22 +43,25 @@ export interface StartSaleAmountRequest {
   readonly bundleAssetName: string;
   // Policy ID of the bundle token.
   readonly bundlePolicyId: string;
-  // Token amount (6 decimal places) in one unit of cost.
+  // Token amount in one unit of cost (12 decimal places for USD, 6 for NEWM).
   readonly costAmount: number;
-  // Asset Name (hex-encoded) of the cost token. If missing, defaults to NEWM token.
+  // Asset Name (hex-encoded) of the cost token. If missing, defaults to USD.
   readonly costAssetName?: string;
-  // Policy ID of the cost token. If missing, defaults to NEWM token.
+  // Policy ID of the cost token. If missing, defaults to USD.
   readonly costPolicyId?: string;
   // The owner address (typically the stake address) of the caller.
   readonly ownerAddress: string;
+  // The currency type for the sale amount (USD or NEWM, defaults to USD)
+  readonly saleCurrency?: string;
   // Total quantity of bundles for sale.
   readonly totalBundleQuantity: number;
 }
 
 export interface StartSaleThunkRequest
   extends Omit<StartSaleAmountRequest, "ownerAddress"> {
-  ownerAddress?: string;
-  songId: string;
+  readonly ownerAddress?: string;
+  readonly saleCurrency: Currency;
+  readonly songId: string;
 }
 
 export interface StartSaleTransactionResponse {
