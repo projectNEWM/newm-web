@@ -11,6 +11,9 @@ interface PricingPlansDialogProps {
   readonly open: boolean;
 }
 
+/**
+ * Allows users to select a pricing plan.
+ */
 const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
