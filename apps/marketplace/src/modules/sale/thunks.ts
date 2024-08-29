@@ -51,8 +51,7 @@ export const purchaseStreamTokens = createAsyncThunk(
 
       dispatch(
         setToastMessage({
-          message: `Stream token purchase was successful, please allow up 
-            to 5 minutes for the transaction to complete.`,
+          message: "Stream token purchase was successful.",
           severity: "success",
         })
       );

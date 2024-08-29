@@ -1,4 +1,3 @@
-import { Buffer } from "buffer";
 import { isProd } from "@newm-web/env";
 import currency from "currency.js";
 import { Currency as CurrencyType } from "@newm-web/types";

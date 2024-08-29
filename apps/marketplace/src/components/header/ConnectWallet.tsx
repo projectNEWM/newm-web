@@ -16,19 +16,24 @@ import {
 } from "@newm-web/utils";
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import { LocalStorageKey } from "@newm-web/types";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../modules/wallet/api";
+import { selectUi, setIsConnectWalletModalOpen } from "../../modules/ui";
 
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
 
+  const dispatch = useDispatch();
+
   const [walletAddress, setWalletAddress] = useState("");
   const [walletAdaBalance, setWalletAdaBalance] = useState<number>();
   const [walletNewmBalance, setWalletNewmBalance] = useState<number>();
-  const [isWalletModalOpen, setisWalletModalOpen] = useState(false);
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
+
+  const { isConnectWalletModalOpen } = useSelector(selectUi);
 
   const { wallet, getBalance, getAddress, getTokenBalance } =
     useConnectWallet();
@@ -61,7 +66,7 @@ const ConnectWallet: FunctionComponent = () => {
   };
 
   const handleDisconnectWallet = () => {
-    setisWalletModalOpen(true);
+    dispatch(setIsConnectWalletModalOpen(true));
   };
 
   const handleCloseWalletEnvModal = () => {
@@ -113,8 +118,8 @@ const ConnectWallet: FunctionComponent = () => {
   return (
     <Grid>
       <WalletModal
-        isOpen={ isWalletModalOpen }
-        onClose={ () => setisWalletModalOpen(false) }
+        isOpen={ isConnectWalletModalOpen }
+        onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
       />
 
@@ -140,7 +145,7 @@ const ConnectWallet: FunctionComponent = () => {
         <Button
           gradient="crypto"
           width="compact"
-          onClick={ () => setisWalletModalOpen(true) }
+          onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
         >
           Connect Wallet
         </Button>

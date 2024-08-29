@@ -5,7 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import {
   Button,
   ProfileImage,
@@ -13,12 +13,18 @@ import {
   Tooltip,
 } from "@newm-web/elements";
 import { Form, Formik } from "formik";
-import { formatNewmAmount } from "@newm-web/utils";
+import {
+  FULL_OWNERSHIP_STREAM_TOKENS,
+  formatNewmAmount,
+} from "@newm-web/utils";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/audio";
 import { Sale as SaleItem } from "@newm-web/types";
-import { SaleSkeleton } from "../components";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+import { useDispatch } from "react-redux";
+import { PurchaseStreamTokensModal, SaleSkeleton } from "../components";
 import { usePurchaseStreamTokensThunk } from "../modules/sale/thunks";
+import { setIsConnectWalletModalOpen } from "../modules/ui";
 
 interface FormValues {
   readonly streamTokens: number;
@@ -35,11 +41,18 @@ const Sale: FunctionComponent<SaleProps> = ({
 }) => {
   const theme = useTheme();
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { wallet } = useConnectWallet();
 
   const [createPurchase, { isLoading: isTransactionLoading }] =
     usePurchaseStreamTokensThunk();
   const { audioUrl, audioProgress, isAudioPlaying, playPauseAudio } =
     usePlayAudioUrl();
+
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  // wait until transaction has finished loading before closing modal
+  const isPurchaseModalClosed = !isPurchaseModalOpen && !isTransactionLoading;
 
   const initialFormValues = {
     streamTokens: sale ? Math.min(1000, sale.availableBundleQuantity) : 1000,
@@ -62,7 +75,7 @@ const Sale: FunctionComponent<SaleProps> = ({
       throw new Error("no sale present");
     }
 
-    const percentage = (purchaseAmount / sale.totalBundleQuantity) * 100;
+    const percentage = (purchaseAmount / FULL_OWNERSHIP_STREAM_TOKENS) * 100;
     return parseFloat(percentage.toFixed(6));
   };
 
@@ -103,6 +116,21 @@ const Sale: FunctionComponent<SaleProps> = ({
       bundleQuantity: values.streamTokens,
       saleId: sale.id,
     });
+
+    handleClosePurchaseModal();
+  };
+
+  const handleOpenPurchaseModal = () => {
+    if (!wallet) {
+      dispatch(setIsConnectWalletModalOpen(true));
+      return;
+    }
+
+    setIsPurchaseModalOpen(true);
+  };
+
+  const handleClosePurchaseModal = () => {
+    setIsPurchaseModalOpen(false);
   };
 
   if (isSaleLoading) {
@@ -195,11 +223,29 @@ const Sale: FunctionComponent<SaleProps> = ({
           validationSchema={ formValidationSchema }
           onSubmit={ handlePurchaseStreamTokens }
         >
-          { ({ values, isValid }) => {
+          { ({ values, isValid, handleSubmit }) => {
             const totalCost = getTotalPurchaseCost(values.streamTokens);
+            const percentageOfTotalRoyalties = getPercentageOfTotalStreamTokens(
+              values.streamTokens
+            );
 
             return (
               <Form>
+                <PurchaseStreamTokensModal
+                  isLoading={ isTransactionLoading }
+                  isOpen={ !isPurchaseModalClosed }
+                  numPurchasedTokens={ values.streamTokens }
+                  percentageOfTotalRoyalties={ percentageOfTotalRoyalties }
+                  pricePerTokenNewm={ sale.costAmount }
+                  pricePerTokenUsd={ sale.costAmountUsd }
+                  totalPurchaseValueNewm={ values.streamTokens * sale.costAmount }
+                  totalPurchaseValueUsd={
+                    values.streamTokens * sale.costAmountUsd
+                  }
+                  onClose={ handleClosePurchaseModal }
+                  onSubmit={ handleSubmit }
+                />
+
                 <Stack gap={ 2.5 } mb={ 4 } mt={ 0.5 }>
                   <Stack>
                     <Box alignSelf="flex-end" p={ 0.5 }>
@@ -241,11 +287,7 @@ const Sale: FunctionComponent<SaleProps> = ({
                             pl={ 1.5 }
                             variant="subtitle2"
                           >
-                            ={ " " }
-                            { getPercentageOfTotalStreamTokens(
-                              values.streamTokens
-                            ) }
-                            % of total royalties
+                            = { percentageOfTotalRoyalties }% of total royalties
                           </Typography>
                         </Stack>
                         <Typography
@@ -270,9 +312,8 @@ const Sale: FunctionComponent<SaleProps> = ({
                   >
                     <Button
                       disabled={ !isValid || !sale.availableBundleQuantity }
-                      isLoading={ isTransactionLoading }
-                      type="submit"
                       width="full"
+                      onClick={ handleOpenPurchaseModal }
                     >
                       <Typography
                         fontWeight={ theme.typography.fontWeightBold }
