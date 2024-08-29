@@ -32,6 +32,8 @@ class WebPreviewStack extends cdk.Stack {
             NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE: dexHunterToolsPartnerCode,
             NEXT_PUBLIC_ENV: appEnv,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
+          },
+          environment: {
             NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
           },
           file: path.join("apps", appName, "Dockerfile"),
