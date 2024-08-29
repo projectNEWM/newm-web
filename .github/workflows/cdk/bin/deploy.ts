@@ -38,11 +38,11 @@ class WebDeployStack extends cdk.Stack {
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD: recaptchaKeyProd,
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKeyStaging,
           },
-          environment: {
-            NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
-          },
           file: path.join("apps", appName, "Dockerfile"),
         }),
+        environment: {
+          NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
+        },
         memorySize: 1024,
       }
     );
