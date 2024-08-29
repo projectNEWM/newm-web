@@ -8,6 +8,9 @@ interface SearchResultsProps {
   readonly query: string;
 }
 
+/**
+ * Displays sales matching a search query.
+ */
 const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
   const theme = useTheme();
   const { isLoading, data: sales = [] } = useGetSalesQuery({
