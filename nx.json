@@ -9,15 +9,8 @@
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "options": { "passWithNoTests": true },
+      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     },
     "build-storybook": {
       "cache": true,
@@ -73,9 +66,7 @@
         "bundler": "vite",
         "babel": true
       },
-      "component": {
-        "style": "styled-components"
-      },
+      "component": { "style": "styled-components" },
       "library": {
         "style": "styled-components",
         "linter": "eslint",
@@ -83,17 +74,11 @@
       }
     },
     "@nx/next": {
-      "application": {
-        "style": "styled-components",
-        "linter": "eslint"
-      }
+      "application": { "style": "styled-components", "linter": "eslint" }
     }
   },
   "tasksRunnerOptions": {
-    "default": {
-      "options": {
-        "cacheableOperations": ["build-storybook"]
-      }
-    }
-  }
+    "default": { "options": { "cacheableOperations": ["build-storybook"] } }
+  },
+  "nxCloudAccessToken": "YjgyZThiMTYtN2YyMS00Yzk2LWEzMjctNmNhMjYwM2QyMDEwfHJlYWQtd3JpdGU="
 }
