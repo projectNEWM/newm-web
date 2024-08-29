@@ -1,19 +1,15 @@
-name: Deploy NEWM Studio to AWS Hosting on merge
+name: Deploy NEWM Studio to Firebase Hosting on merge
 on:
   push:
     branches:
       - master
     paths:
-      - .github/workflows/aws-hosting-merge-deploy-newm-studio.yml
+      - .github/workflows/firebase-hosting-merge-deploy-newm-studio.yml
       - apps/studio/**
       - packages/**
-      - package-lock.json
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # required to interact with GitHub's OIDC Token endpoint.
-      contents: read
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -24,18 +20,17 @@ jobs:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
-          VITE_DEXHUNTER_STUDIO_PARTNER_CODE: ${{ secrets.DEXHUNTER_STUDIO_PARTNER_CODE }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: staging
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
         with:
-          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Deploy to S3
-        run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_GARAGE }} --no-progress --delete
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_ARTIST_PORTAL }}"
+          channelId: live
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_ARTIST_PORTAL }}"
+          target: studio
 
       - name: Send update to slack
         id: slack
@@ -43,7 +38,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Studio updated in staging. View at https://artist.garage.newm.io ."
+              "text": "NEWM Studio updated in staging. View at https://artist.garage.newm.io."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
