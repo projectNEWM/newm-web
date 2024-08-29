@@ -27,10 +27,24 @@ jobs:
           VITE_DEXHUNTER_STUDIO_PARTNER_CODE: ${{ secrets.DEXHUNTER_STUDIO_PARTNER_CODE }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: staging
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
           aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_GARAGE }} --no-progress --delete
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Studio updated in staging. View at https://artist.garage.newm.io ."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

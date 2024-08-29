@@ -39,3 +39,15 @@ jobs:
         run: |
           npm install --prefix .github/workflows/cdk
           APPNAME=marketplace APPID=Marketplace QUALIFIER=Garage NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+        
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Marketplace updated in staging. View at https://fan.square.newm.io ."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MARKETPLACE_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
