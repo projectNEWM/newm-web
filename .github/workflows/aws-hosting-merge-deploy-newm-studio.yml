@@ -19,6 +19,7 @@ jobs:
       - run: npm install
       - run: npx nx build-with-sentry studio
         env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
           VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
