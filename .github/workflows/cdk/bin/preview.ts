@@ -8,6 +8,7 @@ import { Construct } from "constructs";
 const appName = process.env.APPNAME || "APPNAME";
 const appNameAbbr = appName.replace(/-/g, "");
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
+const nxCloudAccessToken = process.env.NX_CLOUD_ACCESS_TOKEN;
 const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING || "";
 const dexHunterMarketplacePartnerCode =
   process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE || "";
@@ -34,6 +35,9 @@ class WebPreviewStack extends cdk.Stack {
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
+        environment: {
+          NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
+        },
         memorySize: 1024,
       }
     );

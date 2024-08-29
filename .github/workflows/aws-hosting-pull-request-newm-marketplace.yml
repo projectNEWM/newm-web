@@ -44,7 +44,7 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
+          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl

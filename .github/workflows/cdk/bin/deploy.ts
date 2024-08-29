@@ -10,6 +10,7 @@ import { Tags } from "aws-cdk-lib";
 const appName = process.env.APPNAME || "APPNAME";
 const appId = process.env.APPID || "APPID";
 const qualifier = process.env.QUALIFIER || "UNDEFINED";
+const nxCloudAccessToken = process.env.NX_CLOUD_ACCESS_TOKEN;
 const dexHunterMarketplacePartnerCode =
   process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE || "";
 const dexHunterToolsPartnerCode =
@@ -39,6 +40,9 @@ class WebDeployStack extends cdk.Stack {
           },
           file: path.join("apps", appName, "Dockerfile"),
         }),
+        environment: {
+          NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
+        },
         memorySize: 1024,
       }
     );
