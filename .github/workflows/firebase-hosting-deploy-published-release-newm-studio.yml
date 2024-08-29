@@ -1,0 +1,46 @@
+name: Deploy NEWM Studio app to production on published release
+on:
+  release:
+    types: [published]
+jobs:
+  build_and_deploy_studio_release:
+    if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+      - run: npx nx build-with-sentry studio
+        env:
+          VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
+          VITE_RECAPTCHA_SITE_KEY_PROD: ${{ secrets.RECAPTCHA_SITE_KEY_PROD }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VITE_ENV: production
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWM_STUDIO }}"
+          channelId: live
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID_NEWM_STUDIO }}"
+          target: studio
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Studio updated in production. View at https://newm.studio. View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }}."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_STUDIO_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
