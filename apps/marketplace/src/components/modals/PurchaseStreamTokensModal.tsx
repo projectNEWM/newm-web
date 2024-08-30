@@ -39,9 +39,12 @@ const PurchaseStreamTokensModal: FunctionComponent<
 
   const { data: { usdPrice: adaUsdConversionRate = 0 } = {} } =
     useGetAdaUsdConversionRateQuery();
+  const { data: { usdPrice: newmUsdConversionRate = 0 } = {} } =
+    useGetAdaUsdConversionRateQuery();
 
-  const newmTransactionFeeUsd = 0.03 * totalPurchaseValueUsd;
-  const newmTransactionFeeNewm = 0.03 * totalPurchaseValueNewm;
+  const newmTransactionFeeUsd = 0.5;
+  const newmTransactionFeeNewm =
+    (newmTransactionFeeUsd * newmUsdConversionRate) / LOVELACE_CONVERSION;
   const adaTransactionFeeAda = 0.4;
   const adaTransactionFeeUsd =
     (adaTransactionFeeAda * adaUsdConversionRate) / LOVELACE_CONVERSION;
@@ -150,7 +153,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 flexDirection="row"
                 justifyContent="space-between"
               >
-                <Typography variant="subtitle1">NEWM (3%)</Typography>
+                <Typography variant="subtitle1">NEWM fee</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { formatUsdAmount(newmTransactionFeeUsd, 2) }
