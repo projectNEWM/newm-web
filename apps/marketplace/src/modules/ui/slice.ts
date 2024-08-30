@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UIState } from "./types";
 
 const initialState: UIState = {
+  isConnectWalletModalOpen: false,
   toast: {
     heading: "",
     message: "",
@@ -18,12 +19,19 @@ const uiSlice = createSlice({
       state.toast.message = "";
       state.toast.severity = "error";
     },
+    setIsConnectWalletModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isConnectWalletModalOpen = action.payload;
+    },
     setToastMessage: (state, { payload }: PayloadAction<UIState["toast"]>) => {
       state.toast = payload;
     },
   },
 });
 
-export const { clearToastMessage, setToastMessage } = uiSlice.actions;
+export const {
+  clearToastMessage,
+  setToastMessage,
+  setIsConnectWalletModalOpen,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

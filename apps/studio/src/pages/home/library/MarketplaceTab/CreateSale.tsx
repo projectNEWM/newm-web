@@ -9,13 +9,16 @@ import {
   Alert,
   Button,
   HorizontalLine,
+  PriceInputField,
   TextInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
+  Currency,
   calculateOwnershipPerecentage,
   formatNewmAmount,
   formatPercentageAdaptive,
+  formatUsdAmount,
   useWindowDimensions,
 } from "@newm-web/utils";
 import StartSaleModal from "./StartSaleModal";
@@ -36,19 +39,27 @@ export const CreateSale = () => {
   const { wallet } = useConnectWallet();
   const currentSong = walletSongsResponse?.data?.songs[0];
 
+  const initialValues = {
+    saleCurrency: Currency.USD.name,
+    tokensToSell: undefined,
+    totalSaleValue: undefined,
+  };
+
   const handleCreateSale = async (values: FormikValues) => {
     if (
       !currentSong ||
       !currentSong.song.nftPolicyId ||
       !currentSong.song.nftName
-    )
+    ) {
       return;
+    }
 
     await startSale({
       bundleAmount: SALE_DEFAULT_BUNDLE_AMOUNT,
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
-      costAmount: values.totalSaleValue,
+      costAmount: values.totalSaleValue / values.tokensToSell,
+      saleCurrency: values.saleCurrency,
       songId,
       totalBundleQuantity: values.tokensToSell,
     });
@@ -84,7 +95,11 @@ export const CreateSale = () => {
       ),
     totalSaleValue: Yup.number()
       .required("This field is required")
-      .min(0.01, "You must sell at least 0.01 Ɲ"),
+      .when("saleCurrency", {
+        is: (val: string) => val === Currency.USD.name,
+        otherwise: (s) => s.min(1, "Value must be at least 1 Ɲ"),
+        then: (s) => s.min(0.01, "Value must be at least $0.01"),
+      }),
   });
 
   return (
@@ -105,91 +120,98 @@ export const CreateSale = () => {
       </Alert>
 
       <Formik
-        initialValues={ {
-          tokensToSell: undefined,
-          totalSaleValue: undefined,
-        } }
+        initialValues={ initialValues }
         validateOnMount={ true }
         validationSchema={ validationSchema }
         onSubmit={ handleCreateSale }
       >
         { ({
-          values: { tokensToSell = 0, totalSaleValue = 0 },
+          values: { tokensToSell = 0, totalSaleValue = 0, saleCurrency },
           isValid,
           submitForm,
           setTouched,
-        }) => (
-          <Form
-            style={ {
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-              marginTop: "40px",
-            } }
-          >
-            <Stack
-              columnGap={ 2.5 }
-              flexDirection={ ["column", "column", "row"] }
-              rowGap={ 3.5 }
-            >
-              <TextInputField
-                isOptional={ false }
-                label="STREAM TOKENS TO SELL"
-                name="tokensToSell"
-                placeholder="0"
-                tooltipText="The total number of the track's stream tokens to be included in the sale."
-                type="number"
-              />
-              <TextInputField
-                endAdornment={ <Typography px={ 2 }>Ɲ</Typography> }
-                helperText={
-                  !!totalSaleValue && !!tokensToSell
-                    ? `Price per stream token: ${formatNewmAmount(
-                        totalSaleValue / tokensToSell,
-                        true
-                      )}`
-                    : ""
-                }
-                isOptional={ false }
-                label="TOTAL SALE VALUE"
-                name="totalSaleValue"
-                placeholder="0"
-                tooltipText="The total amount (Ɲ) to be earned once the sale is fulfilled."
-                type="number"
-              />
-            </Stack>
-            <HorizontalLine />
-            <Button
-              disabled={ isGetWalletSongsLoading }
-              type="button"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
-              }
-              onClick={ () => {
-                if (isValid) {
-                  setIsSaleSummaryModalOpen(true);
-                } else {
-                  setTouched({
-                    tokensToSell: true,
-                    totalSaleValue: true,
-                  });
-                }
+        }) => {
+          const perTokenPrice = totalSaleValue / tokensToSell;
+          const formattedPerTokenPrice =
+            saleCurrency === Currency.USD.name
+              ? formatUsdAmount(perTokenPrice)
+              : formatNewmAmount(perTokenPrice, true);
+
+          return (
+            <Form
+              style={ {
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                marginTop: "40px",
               } }
             >
-              Create stream token sale
-            </Button>
-            <StartSaleModal
-              handleClose={ () => setIsSaleSummaryModalOpen(false) }
-              handleStartSale={ submitForm }
-              isLoading={ isStartSaleLoading }
-              isOpen={ isSaleSummaryModalOpen }
-              totalTokensOwnedByUser={ streamTokensInWallet }
-              values={ { tokensToSell, totalSaleValue } }
-            />
-          </Form>
-        ) }
+              <Stack
+                columnGap={ 2.5 }
+                flexDirection={ ["column", "column", "row"] }
+                rowGap={ 3.5 }
+              >
+                <TextInputField
+                  isOptional={ false }
+                  label="STREAM TOKENS TO SELL"
+                  name="tokensToSell"
+                  placeholder="0"
+                  tooltipText="The total number of the track's stream tokens to be included in the sale."
+                  type="number"
+                />
+
+                <PriceInputField
+                  currencyFieldName="saleCurrency"
+                  helperText={
+                    !!totalSaleValue && !!tokensToSell
+                      ? `Price per stream token: ${formattedPerTokenPrice}`
+                      : ""
+                  }
+                  isOptional={ false }
+                  label="TOTAL SALE VALUE"
+                  placeholder="0"
+                  priceFieldName="totalSaleValue"
+                  tooltipText="The total amount to be earned once the sale is fulfilled."
+                />
+              </Stack>
+
+              <HorizontalLine />
+
+              <Button
+                disabled={ isGetWalletSongsLoading }
+                type="button"
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
+                onClick={ () => {
+                  if (isValid) {
+                    setIsSaleSummaryModalOpen(true);
+                  } else {
+                    setTouched({
+                      tokensToSell: true,
+                      totalSaleValue: true,
+                    });
+                  }
+                } }
+              >
+                Create stream token sale
+              </Button>
+
+              <StartSaleModal
+                handleClose={ () => setIsSaleSummaryModalOpen(false) }
+                handleStartSale={ submitForm }
+                isLoading={ isStartSaleLoading }
+                isOpen={ isSaleSummaryModalOpen }
+                saleCurrency={ saleCurrency }
+                tokensToSell={ tokensToSell }
+                totalSaleValue={ totalSaleValue }
+                totalTokensOwnedByUser={ streamTokensInWallet }
+              />
+            </Form>
+          );
+        } }
       </Formik>
     </>
   );

@@ -1,5 +1,7 @@
 import { isProd } from "@newm-web/env";
 import currency from "currency.js";
+import { Currency as CurrencyType } from "@newm-web/types";
+import { LOVELACE_CONVERSION, USD_CONVERSION } from "./sales";
 
 export const NEWM_POLICY_ID = isProd
   ? "682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f63"
@@ -43,4 +45,19 @@ export const formatUsdAmount = (amount?: number, precision = 3) => {
   if (!amount) return "$0";
 
   return currency(amount, { precision }).format();
+};
+
+export const Currency = {
+  NEWM: {
+    conversion: LOVELACE_CONVERSION,
+    costAssetName: NEWM_ASSET_NAME,
+    costPolicyId: NEWM_POLICY_ID,
+    name: CurrencyType.NEWM,
+  },
+  USD: {
+    conversion: USD_CONVERSION,
+    costAssetName: "555344",
+    costPolicyId: "555344",
+    name: CurrencyType.USD,
+  },
 };

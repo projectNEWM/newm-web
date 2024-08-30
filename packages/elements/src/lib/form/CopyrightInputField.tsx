@@ -47,7 +47,13 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
   const errorMessage = errors[yearErrorsKey] || errors[ownerErrorsKey];
 
   return (
-    <Stack direction="column" ref={ ref } spacing={ 1 }>
+    <Stack
+      direction="column"
+      maxWidth={ theme.inputField.maxWidth }
+      ref={ ref }
+      spacing={ 0.5 }
+      width="100%"
+    >
       <Stack direction="row" justifyContent="space-between">
         <Typography
           component="div"

@@ -13,8 +13,10 @@ export interface Sale {
   readonly bundleAssetName: string;
   // Policy ID of the bundle token
   readonly bundlePolicyId: string;
-  // Cost of one unit of tokens in NEWM
+  // Cost of one unit of tokens (12 decimals for USD, 6 for NEWM)
   readonly costAmount: number;
+  // Cost of one unit of tokens in NEWM
+  readonly costAmountNewm: number;
   // Cost of one unit of tokens in USD
   readonly costAmountUsd: number;
   // Asset Name (hex-encoded) of the cost token
@@ -138,7 +140,10 @@ export interface GenerateTransactionResponse {
   readonly txCborHex: string;
 }
 
-export interface ApiSale extends Omit<Sale, "song"> {
+export interface ApiSale
+  extends Omit<Sale, "song" | "costAmountNewm" | "costAmountUsd"> {
+  readonly costAmountNewm: string;
+  readonly costAmountUsd: string;
   readonly song: ApiSong;
 }
 

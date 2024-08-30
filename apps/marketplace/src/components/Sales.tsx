@@ -70,7 +70,7 @@ const Sales: FunctionComponent<SalesProps> = ({
             ) }
           </Box>
         ) : (
-          sales.map(({ costAmount, costAmountUsd, id, song }) => {
+          sales.map(({ costAmountNewm, costAmountUsd, id, song }) => {
             return (
               <Grid key={ id } md={ 3 } sm={ 4 } xs={ 12 } item>
                 <SongCard
@@ -79,7 +79,7 @@ const Sales: FunctionComponent<SalesProps> = ({
                   isPlayable={ !!song.clipUrl }
                   isPlaying={ audioUrl === song.clipUrl && isAudioPlaying }
                   key={ id }
-                  priceInNewm={ costAmount }
+                  priceInNewm={ costAmountNewm }
                   priceInUsd={ costAmountUsd }
                   subtitle={ song.artistName }
                   title={ song.title }
