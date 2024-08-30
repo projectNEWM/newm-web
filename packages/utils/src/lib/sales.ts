@@ -36,6 +36,8 @@ export const transformApiSale = (apiSale: ApiSale): Sale => {
   return {
     ...sale,
     costAmount: sale.costAmount / conversionFactor,
+    costAmountNewm: parseFloat(sale.costAmountNewm),
+    costAmountUsd: parseFloat(sale.costAmountUsd),
     song: {
       ...song,
       isExplicit: parentalAdvisory === "Explicit",

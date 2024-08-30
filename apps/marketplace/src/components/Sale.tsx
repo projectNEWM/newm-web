@@ -87,7 +87,7 @@ const Sale: FunctionComponent<SaleProps> = ({
       throw new Error("no sale present");
     }
 
-    const newmAmount = purchaseAmount * sale.costAmount;
+    const newmAmount = purchaseAmount * sale.costAmountNewm;
     const usdAmount = purchaseAmount * sale.costAmountUsd;
 
     return {
@@ -152,7 +152,7 @@ const Sale: FunctionComponent<SaleProps> = ({
           isLoading={ isSaleLoading }
           isPlayable={ !!sale.song.clipUrl }
           isPlaying={ audioUrl === sale.song.clipUrl && isAudioPlaying }
-          priceInNewm={ sale.costAmount }
+          priceInNewm={ sale.costAmountNewm }
           priceInUsd={ sale.costAmountUsd }
           priceVariant="pill"
           onPlayPauseClick={ () => playPauseAudio(sale.song.clipUrl) }
@@ -236,9 +236,11 @@ const Sale: FunctionComponent<SaleProps> = ({
                   isOpen={ !isPurchaseModalClosed }
                   numPurchasedTokens={ values.streamTokens }
                   percentageOfTotalRoyalties={ percentageOfTotalRoyalties }
-                  pricePerTokenNewm={ sale.costAmount }
+                  pricePerTokenNewm={ sale.costAmountNewm }
                   pricePerTokenUsd={ sale.costAmountUsd }
-                  totalPurchaseValueNewm={ values.streamTokens * sale.costAmount }
+                  totalPurchaseValueNewm={
+                    values.streamTokens * sale.costAmountNewm
+                  }
                   totalPurchaseValueUsd={
                     values.streamTokens * sale.costAmountUsd
                   }
@@ -256,7 +258,7 @@ const Sale: FunctionComponent<SaleProps> = ({
                           For example 1 token is worth = 
                           ${getPercentageOfTotalStreamTokens(1)}% of
                           total royalties, and costs 
-                          '${formatNewmAmount(sale.costAmount)}'.` }
+                          '${formatNewmAmount(sale.costAmountNewm)}'.` }
                       >
                         <IconButton sx={ { padding: 0 } }>
                           <HelpIcon sx={ { color: theme.colors.grey100 } } />
