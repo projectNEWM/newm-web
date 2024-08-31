@@ -11,6 +11,7 @@ import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
+import { useGetStudioClientConfigQuery } from "../../modules/content";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
@@ -18,6 +19,9 @@ const Home: FunctionComponent = () => {
   const navigate = useNavigate();
 
   const [isMobileOpen, setMobileOpen] = useState(false);
+
+  // fetch and cache client config
+  useGetStudioClientConfigQuery();
 
   const {
     data: { firstName = "", lastName = "", role, location } = emptyProfile,
