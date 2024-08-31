@@ -132,6 +132,11 @@ export const CreateSale = () => {
           setTouched,
         }) => {
           const perTokenPrice = totalSaleValue / tokensToSell;
+          const percentageOfUserStreamTokens =
+            (tokensToSell / streamTokensInWallet) * 100;
+          const formattedPercentageOfUserStreamTokens = `${percentageOfUserStreamTokens.toFixed(
+            2
+          )}%`;
           const formattedPerTokenPrice =
             saleCurrency === Currency.USD.name
               ? formatUsdAmount(perTokenPrice)
@@ -152,6 +157,11 @@ export const CreateSale = () => {
                 rowGap={ 3.5 }
               >
                 <TextInputField
+                  helperText={ `Percentage of my total stream tokens: ${
+                    percentageOfUserStreamTokens
+                      ? formattedPercentageOfUserStreamTokens
+                      : ""
+                  }` }
                   isOptional={ false }
                   label="STREAM TOKENS TO SELL"
                   name="tokensToSell"
@@ -162,11 +172,11 @@ export const CreateSale = () => {
 
                 <PriceInputField
                   currencyFieldName="saleCurrency"
-                  helperText={
-                    !!totalSaleValue && !!tokensToSell
-                      ? `Price per stream token: ${formattedPerTokenPrice}`
+                  helperText={ `Price per stream token: ${
+                    perTokenPrice && isFinite(perTokenPrice)
+                      ? formattedPerTokenPrice
                       : ""
-                  }
+                  }` }
                   isOptional={ false }
                   label="TOTAL SALE VALUE"
                   placeholder="0"
