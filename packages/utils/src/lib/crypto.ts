@@ -56,7 +56,7 @@ export const Currency = {
   },
   USD: {
     conversion: USD_CONVERSION,
-    costAssetName: "555344",
+    costAssetName: "",
     costPolicyId: "555344",
     name: CurrencyType.USD,
   },
