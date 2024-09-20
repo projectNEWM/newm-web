@@ -1,7 +1,6 @@
 import {
   FocusEvent,
   ForwardRefRenderFunction,
-  ForwardedRef,
   InputHTMLAttributes,
   ReactNode,
   forwardRef,
@@ -65,7 +64,7 @@ export const TextInput: ForwardRefRenderFunction<
     type,
     ...rest
   },
-  ref: ForwardedRef<HTMLInputElement>
+  ref
 ) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
