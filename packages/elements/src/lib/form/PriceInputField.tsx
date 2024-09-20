@@ -8,7 +8,7 @@ import { TextInputProps } from "../TextInput";
 import Tooltip from "../styled/Tooltip";
 import ErrorMessage from "../styled/ErrorMessage";
 
-interface Props extends Omit<TextInputProps, "name"> {
+interface Props extends Omit<TextInputProps, "name" | "number"> {
   readonly currencyFieldName: string;
   readonly priceFieldName: string;
 }
@@ -106,6 +106,7 @@ const PriceInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
           name={ priceFieldName }
           placeholder={ placeholder }
           shouldDisplayErrorMessage={ false }
+          type="number"
         />
 
         <Box maxWidth="7.5em">
