@@ -1,4 +1,9 @@
-import { ChangeEvent, FunctionComponent, InputHTMLAttributes } from "react";
+import {
+  ChangeEvent,
+  ForwardRefRenderFunction,
+  InputHTMLAttributes,
+  forwardRef,
+} from "react";
 import { NumericFormat } from "react-number-format";
 import StyledInput from "./styled/Input";
 
@@ -15,11 +20,10 @@ interface NumericInputProps
  * Replacement for an input component with a type of "number"
  * that handles formatting the displayed value.
  */
-export const NumericInput: FunctionComponent<NumericInputProps> = ({
-  type,
-  onChange,
-  ...props
-}) => {
+export const NumericInput: ForwardRefRenderFunction<
+  HTMLInputElement,
+  NumericInputProps
+> = ({ type, onChange, ...props }, ref) => {
   /**
    * Removes any commas that were added when formatting the
    * input value and then calls the onChange prop.
@@ -38,10 +42,11 @@ export const NumericInput: FunctionComponent<NumericInputProps> = ({
     <NumericFormat
       { ...props }
       customInput={ StyledInput }
+      getInputRef={ ref }
       thousandSeparator=","
       onChange={ handleChange }
     />
   );
 };
 
-export default NumericInput;
+export default forwardRef(NumericInput);
