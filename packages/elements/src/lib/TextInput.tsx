@@ -15,6 +15,8 @@ import theme from "@newm-web/theme";
 import { WidthType } from "@newm-web/utils";
 import ErrorMessage from "./styled/ErrorMessage";
 import Tooltip from "./styled/Tooltip";
+import StyledInput, { inputStyles } from "./styled/Input";
+import NumericInput from "./NumericInput";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly endAdornment?: JSX.Element;
@@ -37,48 +39,6 @@ const StyledRootElement = styled.div`
   flex-grow: 1;
 `;
 
-const inputStyles = `
-  width: 100%;
-  display: flex;
-  flex-grow: 1;
-  background: ${theme.colors.grey600};
-  color-scheme: dark;
-  border-width: 0;
-  font-family: ${theme.inputField.fontFamily};
-  font-size: ${theme.inputField.fontSize};
-  font-weight: ${theme.inputField.fontWeight};
-  line-height: ${theme.inputField.lineHeight};
-  padding: ${theme.inputField.padding};
-
-  &::placeholder {
-    color: ${theme.colors.grey100};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  /* Hide number arrows - Chrome, Safari, Edge, Opera */
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Hide number arrows - Firefox */
-  &: [type=number] {
-    -moz-appearance: textfield;
-  }
-
-  /* Change date "placeholder" text color to match other fields*/
-  &[type="date"]:not([value*="-"])::-webkit-datetime-edit {
-    color: ${theme.colors.grey100};
-  }
-`;
-
-const StyledInput = styled.input`
-  ${inputStyles}
-`;
 const StyledMaskedInput = styled(InputMask)`
   ${inputStyles}
 `;
@@ -102,6 +62,7 @@ export const TextInput: ForwardRefRenderFunction<
     widthType = "default",
     shouldDisplayErrorMessage = true,
     helperText,
+    type,
     ...rest
   },
   ref: ForwardedRef<HTMLInputElement>
@@ -111,7 +72,7 @@ export const TextInput: ForwardRefRenderFunction<
   const shouldShowErrorMessage = !!errorMessage && shouldDisplayErrorMessage;
 
   // eslint-disable-next-line
-  const InputElement = (mask ? StyledMaskedInput : StyledInput) as any;
+  const InputElement = getInputElement(mask, type) as any;
   const maskedProps = mask ? { inputRef: ref, mask, maskChar } : {};
 
   /**
@@ -228,6 +189,7 @@ export const TextInput: ForwardRefRenderFunction<
             { ...maskedProps }
             disabled={ disabled }
             ref={ ref }
+            type={ type }
             onBlur={ handleBlur }
             onFocus={ handleFocus }
           />
@@ -260,6 +222,19 @@ const getBorderColor = (
   }
 
   return theme.colors.grey400;
+};
+
+const getInputElement = (
+  mask: TextInputProps["mask"],
+  type: TextInputProps["type"]
+) => {
+  if (mask) {
+    return StyledMaskedInput;
+  } else if (type === "number") {
+    return NumericInput;
+  } else {
+    return StyledInput;
+  }
 };
 
 export default forwardRef(TextInput);

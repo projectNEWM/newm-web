@@ -16,6 +16,7 @@ export * from "./lib/GradientTextInput";
 export { default as HorizontalLine } from "./lib/styled/HorizontalLine";
 export { default as Link } from "./lib/Link";
 export { default as NoResultsText } from "./lib/styled/NoResultsText";
+export { default as NumericInput } from "./lib/NumericInput";
 export { default as Modal } from "./lib/Modal";
 export * from "./lib/Modal";
 export { default as ResultsList } from "./lib/styled/ResultsList";
