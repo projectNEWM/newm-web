@@ -43,19 +43,6 @@ const StyledMaskedInput = styled(InputMask)`
   ${inputStyles}
 `;
 
-const getInputElement = (
-  mask: TextInputProps["mask"],
-  type: TextInputProps["type"]
-) => {
-  if (mask) {
-    return StyledMaskedInput;
-  } else if (type === "number") {
-    return NumericInput;
-  } else {
-    return StyledInput;
-  }
-};
-
 export const TextInput: ForwardRefRenderFunction<
   HTMLInputElement,
   TextInputProps
@@ -235,6 +222,19 @@ const getBorderColor = (
   }
 
   return theme.colors.grey400;
+};
+
+const getInputElement = (
+  mask: TextInputProps["mask"],
+  type: TextInputProps["type"]
+) => {
+  if (mask) {
+    return StyledMaskedInput;
+  } else if (type === "number") {
+    return NumericInput;
+  } else {
+    return StyledInput;
+  }
 };
 
 export default forwardRef(TextInput);
