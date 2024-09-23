@@ -13,12 +13,12 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
   genre,
 }) => {
   const limit = 6;
-  const skip = !artistId || !genre;
+  const skip = !artistId;
 
   const { isLoading, data: artists = [] } = useGetArtistsQuery(
     {
-      genres: genre ? [genre] : undefined,
-      ids: artistId ? [`-${artistId}`] : undefined,
+      genres: genre ? [genre] : [],
+      ids: [`-${artistId}`],
       limit,
     },
     { skip }
