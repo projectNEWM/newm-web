@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import {
   NEWM_ASSET_NAME,
@@ -39,20 +39,6 @@ const ConnectWalletModal: FunctionComponent = () => {
     );
 
     dispatch(saveWalletAddress(wallet));
-
-    getAddress((value) => {
-      dispatch(setWalletAddress(value));
-    });
-
-    getBalance((value) => {
-      dispatch(setWalletAdaBalance(value));
-    });
-
-    const tokenBalanceCallback = (value: number) => {
-      dispatch(setWalletNewmBalance(value));
-    };
-
-    getTokenBalance(NEWM_POLICY_ID, tokenBalanceCallback, NEWM_ASSET_NAME);
   };
 
   const handleDisconnect = () => {
@@ -69,6 +55,41 @@ const ConnectWalletModal: FunctionComponent = () => {
       })
     );
   };
+
+  /**
+   * Gets the ADA balance from the wallet and updates the Redux state.
+   */
+  useEffect(() => {
+    if (wallet) {
+      getBalance((value) => {
+        dispatch(setWalletAdaBalance(value));
+      });
+    }
+  }, [wallet, getBalance, dispatch]);
+
+  /**
+   * Gets the NEWM balance from the wallet and updates the Redux state.
+   */
+  useEffect(() => {
+    const callback = (value: number) => {
+      dispatch(setWalletNewmBalance(value));
+    };
+
+    if (wallet) {
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_ASSET_NAME);
+    }
+  }, [wallet, dispatch, getTokenBalance]);
+
+  /**
+   * Gets an address from the wallet and updates the Redux state.
+   */
+  useEffect(() => {
+    if (wallet) {
+      getAddress((value) => {
+        dispatch(setWalletAddress(value));
+      });
+    }
+  }, [wallet, getAddress, dispatch]);
 
   return (
     <WalletModal
