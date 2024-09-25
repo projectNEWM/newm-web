@@ -69,6 +69,12 @@ const ConnectWallet: FunctionComponent = () => {
     dispatch(setIsConnectWalletModalOpen(true));
   };
 
+  const handleResetWallet = () => {
+    setWalletAdaBalance(0);
+    setWalletNewmBalance(0);
+    setWalletAddress("");
+  };
+
   const handleCloseWalletEnvModal = () => {
     setIsWalletEnvModalOpen(false);
   };
@@ -121,6 +127,7 @@ const ConnectWallet: FunctionComponent = () => {
         isOpen={ isConnectWalletModalOpen }
         onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
+        onDisconnect={ handleResetWallet }
       />
 
       <WalletEnvMismatchModal
