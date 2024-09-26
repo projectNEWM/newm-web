@@ -25,16 +25,22 @@ export const NumericInput: ForwardRefRenderFunction<
   NumericInputProps
 > = ({ type, onChange, ...props }, ref) => {
   /**
-   * Removes any commas that were added when formatting the
-   * input value and then calls the onChange prop.
+   * Converts the comma formatted string to a number value
+   * and calls the onChange prop.
    */
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      const formattedValue = event.target.value.replace(/,/g, "");
+      const numberValue = Number(event.target.value.replace(/,/g, ""));
 
-      event.target.value = formattedValue;
-
-      onChange(event);
+      onChange({
+        ...event,
+        target: {
+          ...event.target,
+          name: event.target.name,
+          // eslint-disable-next-line
+          value: numberValue as any,
+        },
+      });
     }
   };
 
