@@ -30,7 +30,8 @@ export const NumericInput: ForwardRefRenderFunction<
    */
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      const numberValue = Number(event.target.value.replace(/,/g, ""));
+      const formattedValue = event.target.value.replace(/,/g, "");
+      const numberValue = Number(formattedValue);
 
       event.target.type = "number";
       event.target.valueAsNumber = numberValue;
