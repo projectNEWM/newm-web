@@ -12,4 +12,5 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   getNewmUsdConversionRate: "get_newm_price",
   getSale: "get_sale",
   getSales: "get_sales",
+  getSalesCount: "get_sale_count",
 };

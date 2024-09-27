@@ -110,6 +110,31 @@ export interface GetSalesParams {
   readonly sortOrder?: "asc" | "desc";
 }
 
+export interface GetSalesCountResponse {
+  readonly count: number;
+}
+
+export interface GetSalesCountParams {
+  // List of song artist UUID's to filter results
+  readonly artistIds?: ReadonlyArray<string>;
+  // List of song genres to filter results
+  readonly genres?: ReadonlyArray<string>;
+  // List of sale UUID's to filter results
+  readonly ids?: ReadonlyArray<string>;
+  // List of song moods to filter results
+  readonly moods?: ReadonlyArray<string>;
+  // ISO-8601 formated newest (minimum) timestamp to filter results
+  readonly newerThan?: string;
+  // Start offset of paginated results to retrieve. Default is 0
+  readonly olderThan?: string;
+  // Case-insensitive phrase to filter by song title and artist name
+  readonly phrase?: string;
+  // List of sale statuses to filter results
+  readonly saleStatuses?: ReadonlyArray<string>;
+  // List of song UUID's to filter results
+  readonly songIds?: ReadonlyArray<string>;
+}
+
 export interface GenerateOrderRequest {
   // Quantity of bundles to purchase
   readonly bundleQuantity: number;

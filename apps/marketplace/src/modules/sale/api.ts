@@ -6,6 +6,8 @@ import {
   GenerateTransactionRequest,
   GenerateTransactionResponse,
   GetSaleResponse,
+  GetSalesCountParams,
+  GetSalesCountResponse,
   GetSalesParams,
   GetSalesResponse,
 } from "@newm-web/types";
@@ -129,9 +131,51 @@ export const extendedApi = newmApi.injectEndpoints({
         return apiSales.map(transformApiSale);
       },
     }),
+    getSalesCount: build.query<
+      GetSalesCountResponse,
+      GetSalesCountParams | void
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Sale],
+
+      query: ({
+        ids,
+        artistIds,
+        genres,
+        moods,
+        songIds,
+        saleStatuses,
+        ...rest
+      } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...(moods ? { moods: moods.join(",") } : {}),
+          ...(songIds ? { songIds: songIds.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/sales/count",
+      }),
+    }),
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const { useGetSaleQuery, useGetSalesQuery, useGetSalesCountQuery } =
+  extendedApi;
 
 export default extendedApi;
