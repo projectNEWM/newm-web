@@ -5,7 +5,7 @@ import Sales from "./Sales";
 import { useGetSalesCountQuery, useGetSalesQuery } from "../modules/sale/api";
 
 const RecentSongs: FunctionComponent = () => {
-  const requestSize = 8;
+  const requestSize = 4;
   const [numSales, setNumSales] = useState(requestSize);
 
   const { data: saleData = [], isFetching } = useGetSalesQuery({

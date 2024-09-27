@@ -23,8 +23,8 @@ const Sales: FunctionComponent<SalesProps> = ({
   isLoading = false,
   numSkeletons,
   noResultsContent = "No songs to display at this time.",
-  onLoadMore,
   hasMore = false,
+  onLoadMore,
 }) => {
   const router = useRouter();
 

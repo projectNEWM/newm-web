@@ -33,9 +33,9 @@ const Artists: FunctionComponent<ArtistsProps> = ({
   };
 
   return (
-    <Stack>
+    <Stack mt={ 17 }>
       { !!title && !isLoading && (
-        <Stack alignItems="center" mb={ 3.5 } mt={ 17 }>
+        <Stack alignItems="center" mb={ 3.5 }>
           <Typography fontSize={ ["24px", "24px", "32px"] } variant="h3">
             { title }
           </Typography>
@@ -76,7 +76,7 @@ const Artists: FunctionComponent<ArtistsProps> = ({
       </Grid>
 
       { isLoading && (
-        <Stack mt={ 17 }>
+        <Stack mt={ 4.25 }>
           <ArtistsSkeleton
             hasTitle={ !!title && artists.length === 0 }
             itemOrientation={ itemOrientation }
