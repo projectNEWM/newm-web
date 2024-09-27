@@ -93,20 +93,20 @@ const Sales: FunctionComponent<SalesProps> = ({
         }) }
       </Grid>
 
-      { hasMore && (
-        <Stack alignItems="center" mt={ 4 }>
-          <Button variant="secondary" onClick={ onLoadMore }>
-            See more
-          </Button>
-        </Stack>
-      ) }
-
       { isLoading && (
         <Stack>
           <SalesSkeleton
             hasTitle={ !!title && sales.length === 0 }
             numItems={ numSkeletons }
           />
+        </Stack>
+      ) }
+
+      { !isLoading && hasMore && (
+        <Stack alignItems="center" mt={ 4 }>
+          <Button variant="secondary" onClick={ onLoadMore }>
+            See more
+          </Button>
         </Stack>
       ) }
     </Stack>

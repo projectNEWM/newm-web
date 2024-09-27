@@ -8,7 +8,7 @@ const RecentSongs: FunctionComponent = () => {
   const requestSize = 8;
   const [numSales, setNumSales] = useState(requestSize);
 
-  const { data: saleData, isFetching } = useGetSalesQuery({
+  const { data: saleData = [], isFetching } = useGetSalesQuery({
     limit: numSales,
     saleStatuses: [SaleStatus.Started],
     sortOrder: "desc",
@@ -21,7 +21,7 @@ const RecentSongs: FunctionComponent = () => {
   const hasMore = !!saleCountData?.count && saleCountData?.count > numSales;
 
   const numSkeletons = saleCountData?.count
-    ? saleCountData?.count % requestSize
+    ? Math.min(saleCountData.count - saleData.length, requestSize)
     : requestSize;
 
   /**

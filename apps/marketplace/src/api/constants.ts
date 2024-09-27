@@ -8,6 +8,7 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   getAdaUsdConversionRate: "get_ada_price",
   getArtist: "get_artist",
   getArtists: "get_artists",
+  getArtistsCount: "get_artist_count",
   getMarketplaceClientConfig: "marketplace_config",
   getNewmUsdConversionRate: "get_newm_price",
   getSale: "get_sale",

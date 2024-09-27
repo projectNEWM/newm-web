@@ -1,5 +1,7 @@
 import {
   GetArtistResponse,
+  GetArtistsCountParams,
+  GetArtistsCountResponse,
   GetArtistsParams,
   GetArtistsResponse,
 } from "./types";
@@ -56,9 +58,42 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/marketplace/artists",
       }),
     }),
+    getArtistsCount: build.query<
+      GetArtistsCountResponse,
+      GetArtistsCountParams | void
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of artists",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Artist],
+
+      query: ({ ids, genres, ...rest } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/artists/count",
+      }),
+    }),
   }),
 });
 
-export const { useGetArtistsQuery, useGetArtistQuery } = extendedApi;
+export const {
+  useGetArtistsQuery,
+  useGetArtistQuery,
+  useGetArtistsCountQuery,
+} = extendedApi;
 
 export default extendedApi;
