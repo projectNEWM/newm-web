@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { Stack } from "@mui/material";
 import Artists from "./Artists";
-import { useGetArtistsCountQuery, useGetArtistsQuery } from "../modules/artist";
+import { useGetArtistCountQuery, useGetArtistsQuery } from "../modules/artist";
 
 const ArtistSpotlight: FunctionComponent = () => {
   const requestSize = 10;
@@ -12,7 +12,7 @@ const ArtistSpotlight: FunctionComponent = () => {
     sortOrder: "desc",
   });
 
-  const { data: artistCountData } = useGetArtistsCountQuery();
+  const { data: artistCountData } = useGetArtistCountQuery();
 
   const hasMore =
     !!artistCountData?.count && artistCountData?.count > numArtists;

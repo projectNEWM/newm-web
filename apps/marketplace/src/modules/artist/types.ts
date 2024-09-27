@@ -54,11 +54,11 @@ export interface GetArtistsParams {
   readonly sortOrder?: "asc" | "desc";
 }
 
-export interface GetArtistsCountResponse {
+export interface GetArtistCountResponse {
   readonly count: number;
 }
 
-export interface GetArtistsCountParams {
+export interface GetArtistCountParams {
   // List of Artist genres for filtering results.
   readonly genres?: ReadonlyArray<string>;
   // List of Artist UUID's for filtering results.

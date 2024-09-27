@@ -110,11 +110,11 @@ export interface GetSalesParams {
   readonly sortOrder?: "asc" | "desc";
 }
 
-export interface GetSalesCountResponse {
+export interface GetSaleCountResponse {
   readonly count: number;
 }
 
-export interface GetSalesCountParams {
+export interface GetSaleCountParams {
   // List of song artist UUID's to filter results
   readonly artistIds?: ReadonlyArray<string>;
   // List of song genres to filter results

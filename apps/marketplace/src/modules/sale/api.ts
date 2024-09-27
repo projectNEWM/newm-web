@@ -5,9 +5,9 @@ import {
   GenerateOrderResponse,
   GenerateTransactionRequest,
   GenerateTransactionResponse,
+  GetSaleCountParams,
+  GetSaleCountResponse,
   GetSaleResponse,
-  GetSalesCountParams,
-  GetSalesCountResponse,
   GetSalesParams,
   GetSalesResponse,
 } from "@newm-web/types";
@@ -89,6 +89,44 @@ export const extendedApi = newmApi.injectEndpoints({
         return transformApiSale(apiSale);
       },
     }),
+    getSaleCount: build.query<GetSaleCountResponse, GetSaleCountParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Sale],
+
+      query: ({
+        ids,
+        artistIds,
+        genres,
+        moods,
+        songIds,
+        saleStatuses,
+        ...rest
+      } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...(moods ? { moods: moods.join(",") } : {}),
+          ...(songIds ? { songIds: songIds.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/sales/count",
+      }),
+    }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -131,51 +169,10 @@ export const extendedApi = newmApi.injectEndpoints({
         return apiSales.map(transformApiSale);
       },
     }),
-    getSalesCount: build.query<
-      GetSalesCountResponse,
-      GetSalesCountParams | void
-    >({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching number of songs",
-              severity: "error",
-            })
-          );
-        }
-      },
-
-      providesTags: [Tags.Sale],
-
-      query: ({
-        ids,
-        artistIds,
-        genres,
-        moods,
-        songIds,
-        saleStatuses,
-        ...rest
-      } = {}) => ({
-        method: "GET",
-        params: {
-          ...(ids ? { ids: ids.join(",") } : {}),
-          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
-          ...(genres ? { genres: genres.join(",") } : {}),
-          ...(moods ? { moods: moods.join(",") } : {}),
-          ...(songIds ? { songIds: songIds.join(",") } : {}),
-          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
-          ...rest,
-        },
-        url: "v1/marketplace/sales/count",
-      }),
-    }),
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery, useGetSalesCountQuery } =
+export const { useGetSaleQuery, useGetSalesQuery, useGetSaleCountQuery } =
   extendedApi;
 
 export default extendedApi;

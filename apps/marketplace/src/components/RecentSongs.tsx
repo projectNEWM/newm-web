@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { SaleStatus } from "@newm-web/types";
 import Sales from "./Sales";
-import { useGetSalesCountQuery, useGetSalesQuery } from "../modules/sale/api";
+import { useGetSaleCountQuery, useGetSalesQuery } from "../modules/sale/api";
 
 const RecentSongs: FunctionComponent = () => {
-  const requestSize = 4;
+  const requestSize = 8;
   const [numSales, setNumSales] = useState(requestSize);
 
   const { data: saleData = [], isFetching } = useGetSalesQuery({
@@ -14,7 +14,7 @@ const RecentSongs: FunctionComponent = () => {
     sortOrder: "desc",
   });
 
-  const { data: saleCountData } = useGetSalesCountQuery({
+  const { data: saleCountData } = useGetSaleCountQuery({
     saleStatuses: [SaleStatus.Started],
   });
 

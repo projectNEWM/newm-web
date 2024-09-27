@@ -1,7 +1,7 @@
 import {
+  GetArtistCountParams,
+  GetArtistCountResponse,
   GetArtistResponse,
-  GetArtistsCountParams,
-  GetArtistsCountResponse,
   GetArtistsParams,
   GetArtistsResponse,
 } from "./types";
@@ -32,35 +32,9 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `v1/marketplace/artists/${id}`,
       }),
     }),
-    getArtists: build.query<GetArtistsResponse, GetArtistsParams | void>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching artists",
-              severity: "error",
-            })
-          );
-        }
-      },
-
-      providesTags: [Tags.Artist],
-
-      query: ({ ids, genres, ...rest } = {}) => ({
-        method: "GET",
-        params: {
-          ...(ids ? { ids: ids.join(",") } : {}),
-          ...(genres ? { genres: genres.join(",") } : {}),
-          ...rest,
-        },
-        url: "v1/marketplace/artists",
-      }),
-    }),
-    getArtistsCount: build.query<
-      GetArtistsCountResponse,
-      GetArtistsCountParams | void
+    getArtistCount: build.query<
+      GetArtistCountResponse,
+      GetArtistCountParams | void
     >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -87,13 +61,36 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/marketplace/artists/count",
       }),
     }),
+    getArtists: build.query<GetArtistsResponse, GetArtistsParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching artists",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Artist],
+
+      query: ({ ids, genres, ...rest } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/artists",
+      }),
+    }),
   }),
 });
 
-export const {
-  useGetArtistsQuery,
-  useGetArtistQuery,
-  useGetArtistsCountQuery,
-} = extendedApi;
+export const { useGetArtistsQuery, useGetArtistQuery, useGetArtistCountQuery } =
+  extendedApi;
 
 export default extendedApi;
