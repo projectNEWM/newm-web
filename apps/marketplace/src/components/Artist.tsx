@@ -6,7 +6,7 @@ import ArtistSkeleton from "./skeletons/ArtistSkeleton";
 
 interface ArtistProps {
   readonly imageUrl: string;
-  readonly isLoading: boolean;
+  readonly isLoading?: boolean;
   readonly onSelectArtist: VoidFunction;
   readonly orientation: "row" | "column";
   readonly subtitle: string;
@@ -20,7 +20,7 @@ interface ArtistProps {
 const Artist: FunctionComponent<ArtistProps> = ({
   imageUrl,
   title,
-  isLoading,
+  isLoading = false,
   subtitle,
   orientation,
   onSelectArtist,

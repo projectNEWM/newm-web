@@ -38,7 +38,6 @@ const SearchResults: FunctionComponent<SearchResultsProps> = ({ query }) => {
       </Box>
 
       <Sales
-        hasTitle={ false }
         isLoading={ isLoading }
         noResultsContent={
           <Box flex={ 1 } justifyContent="flex-start">

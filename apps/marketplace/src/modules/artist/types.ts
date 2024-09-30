@@ -53,3 +53,20 @@ export interface GetArtistsParams {
   // Sort order of the results based on createdAt field. Default is asc
   readonly sortOrder?: "asc" | "desc";
 }
+
+export interface GetArtistCountResponse {
+  readonly count: number;
+}
+
+export interface GetArtistCountParams {
+  // List of Artist genres for filtering results.
+  readonly genres?: ReadonlyArray<string>;
+  // List of Artist UUID's for filtering results.
+  readonly ids?: ReadonlyArray<string>;
+  // Newest (minimum) timestamp to filter-out results.
+  readonly newerThan?: string;
+  // Start offset of paginated results to retrieve. Default is 0.
+  readonly offset?: number;
+  // Oldest (maximum) timestamp to filter-out results.
+  readonly olderThan?: string;
+}

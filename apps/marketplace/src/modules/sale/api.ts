@@ -5,6 +5,8 @@ import {
   GenerateOrderResponse,
   GenerateTransactionRequest,
   GenerateTransactionResponse,
+  GetSaleCountParams,
+  GetSaleCountResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
@@ -87,6 +89,44 @@ export const extendedApi = newmApi.injectEndpoints({
         return transformApiSale(apiSale);
       },
     }),
+    getSaleCount: build.query<GetSaleCountResponse, GetSaleCountParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Sale],
+
+      query: ({
+        ids,
+        artistIds,
+        genres,
+        moods,
+        songIds,
+        saleStatuses,
+        ...rest
+      } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...(moods ? { moods: moods.join(",") } : {}),
+          ...(songIds ? { songIds: songIds.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/sales/count",
+      }),
+    }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
@@ -132,6 +172,7 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const { useGetSaleQuery, useGetSalesQuery, useGetSaleCountQuery } =
+  extendedApi;
 
 export default extendedApi;

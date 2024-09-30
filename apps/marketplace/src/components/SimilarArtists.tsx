@@ -28,7 +28,6 @@ const SimilarArtists: FunctionComponent<SimilarArtistsProps> = ({
     <Stack mb={ 8 }>
       <Artists
         artists={ artists }
-        hasTitle={ true }
         isLoading={ skip || isLoading }
         itemOrientation="row"
         numSkeletons={ limit }

@@ -16,7 +16,7 @@ const ArtistSongs: FunctionComponent<ArtistSongsProps> = ({ artistId }) => {
 
   return (
     <Box mt={ 7 }>
-      <Sales hasTitle={ false } isLoading={ isLoading } sales={ data } />
+      <Sales isLoading={ isLoading } sales={ data } />
     </Box>
   );
 };
