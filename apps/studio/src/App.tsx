@@ -15,6 +15,7 @@ import {
   IdenfyPingUserStatus,
   IdenfySuccessSession,
   InvitesModal,
+  PingEarningsInProgress,
   PingSaleEnd,
   PingSaleStart,
   PrivateRoute,
@@ -55,6 +56,7 @@ const App = () => {
             <WalletEnvMismatchModal />
             <PingSaleStart />
             <PingSaleEnd />
+            <PingEarningsInProgress />
             <UnsupportedBrowserBanner />
             <ScrollToTop />
 

@@ -21,6 +21,7 @@ const api = createApi({
     Tags.Roles,
     Tags.Sale,
     Tags.Song,
+    Tags.Earnings,
   ],
 });
 
