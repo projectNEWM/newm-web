@@ -203,6 +203,7 @@ const DisconnectWalletButton: FunctionComponent<
               color={ theme.colors.grey200 }
               direction="column"
               gap={ 1 }
+              minWidth={ 280 }
               p={ 1.5 }
             >
               <Typography fontWeight={ 700 } variant="h5">
