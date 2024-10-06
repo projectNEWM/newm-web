@@ -53,8 +53,8 @@ enum ClaimOrderStatus {
   Timeout = "Timeout",
 }
 
-export type ClaimEarningsThunkRequest = {
+export interface ClaimEarningsThunkRequest {
   readonly amountCborHex: string;
   readonly unclaimedEarningsInNEWM: number;
   readonly unclaimedEarningsInUSD: number;
-};
+}
