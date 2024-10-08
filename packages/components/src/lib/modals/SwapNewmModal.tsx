@@ -8,6 +8,7 @@ import {
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { SelectedWallet } from "@dexhunterio/swaps/lib/typescript/cardano-api";
 import "@dexhunterio/swaps/lib/assets/style.css";
+import { alphabeticalAsc } from "@newm-web/utils";
 
 interface SwapNewmModalProps {
   readonly isOpen: boolean;
@@ -91,20 +92,21 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
  */
 const renderSupportedWallets = () => {
   const supportedWalletNames = getSwapSupportedWalletNames();
+  const sortedSupportedWalletNames = supportedWalletNames.sort(alphabeticalAsc);
 
   const getNameConnector = (idx: number) => {
     let connector;
 
-    if (idx < supportedWalletNames.length - 2) {
+    if (idx < sortedSupportedWalletNames.length - 2) {
       connector = ", ";
-    } else if (idx === supportedWalletNames.length - 2) {
+    } else if (idx === sortedSupportedWalletNames.length - 2) {
       connector = ", or ";
     }
 
     return connector;
   };
 
-  return supportedWalletNames.map((name, idx) => {
+  return sortedSupportedWalletNames.map((name, idx) => {
     const connector = getNameConnector(idx);
 
     return (
@@ -133,7 +135,6 @@ const newmSupportedWallets = getSupportedWallets();
 const dexhunterSupportedWallets = [
   "nami",
   "eternl",
-  "flint",
   "gerowallet",
   "typhoncip30",
   "nufi",

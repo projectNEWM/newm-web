@@ -12,3 +12,14 @@ export const formatPriceToDecimal = (
 
   return isNaN(parsedPrice) ? NaN : parsedPrice.toFixed(decimals);
 };
+
+/**
+ * Sort function to order an array of strings in ascending
+ * alphabetical order, ignoring capitalization.
+ */
+export const alphabeticalAsc = (a?: string, b?: string): number => {
+  if (a === undefined) return -1;
+  if (b === undefined) return 1;
+
+  return a.toLowerCase().localeCompare(b.toLowerCase());
+};
