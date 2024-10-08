@@ -30,11 +30,13 @@ export const NumericInput: ForwardRefRenderFunction<
    */
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      const formattedValue = event.target.value.replace(/,/g, "");
-      const numberValue = Number(formattedValue);
+      const value = event.target.value;
+      const numberValue = value ? Number(value.replace(/,/g, "")) : null;
 
-      event.target.type = "number";
-      event.target.valueAsNumber = numberValue;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newTarget = event.target as any;
+      newTarget.value = numberValue;
+      event.target = newTarget;
 
       onChange(event);
     }
