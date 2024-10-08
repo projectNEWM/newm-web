@@ -2,9 +2,9 @@ import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { SaleStatus } from "@newm-web/types";
 import { useGetSalesQuery } from "../../modules/sale";
 import {
+  FIFTEEN_SECONDS_IN_MILLISECONDS,
+  FIVE_MINUTES_IN_MILLISECONDS,
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
-  PENDING_SALE_PING_TIMEOUT,
-  PENDING_SALE_POLLING_INTERVAL,
   SALE_START_UPDATED_EVENT,
   SaleStartPendingSongs,
 } from "../../common";
@@ -37,7 +37,7 @@ const PingSaleStart: FunctionComponent = () => {
 
       if (songIds.length > 0) {
         setSaleStartSongIds(songIds);
-        setPollingInterval(PENDING_SALE_POLLING_INTERVAL);
+        setPollingInterval(FIFTEEN_SECONDS_IN_MILLISECONDS);
         return;
       }
     }
@@ -78,7 +78,7 @@ const PingSaleStart: FunctionComponent = () => {
     if (saleStartSongIds.length > 0) {
       const newTimeoutId = setTimeout(() => {
         setPollingInterval(undefined);
-      }, PENDING_SALE_PING_TIMEOUT);
+      }, FIVE_MINUTES_IN_MILLISECONDS);
 
       setTimeoutId(newTimeoutId);
     }

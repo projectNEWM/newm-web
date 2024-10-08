@@ -3,6 +3,7 @@ import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { Button, HorizontalLine, Modal } from "@newm-web/elements";
 import {
   LOVELACE_CONVERSION,
+  TRANSACTION_FEE_IN_ADA,
   formatNewmAmount,
   formatUsdAmount,
 } from "@newm-web/utils";
@@ -45,9 +46,8 @@ const PurchaseStreamTokensModal: FunctionComponent<
   const newmTransactionFeeUsd = 0.5;
   const newmTransactionFeeNewm =
     (newmTransactionFeeUsd * newmUsdConversionRate) / LOVELACE_CONVERSION;
-  const adaTransactionFeeAda = 0.4;
   const adaTransactionFeeUsd =
-    (adaTransactionFeeAda * adaUsdConversionRate) / LOVELACE_CONVERSION;
+    (TRANSACTION_FEE_IN_ADA * adaUsdConversionRate) / LOVELACE_CONVERSION;
 
   return (
     <Modal
@@ -171,7 +171,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { formatUsdAmount(adaTransactionFeeUsd, 2) }{ " " }
                   </Typography>
-                  ₳ { adaTransactionFeeAda }
+                  ₳ { TRANSACTION_FEE_IN_ADA }
                 </Typography>
               </Stack>
             </Stack>

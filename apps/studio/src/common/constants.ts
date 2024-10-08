@@ -48,15 +48,19 @@ export const SALE_START_UPDATED_EVENT = "saleStartUpdated";
 
 export const LOCAL_STORAGE_SALE_END_PENDING_KEY = "saleEndSongIds";
 export const SALE_END_UPDATED_EVENT = "saleEndUpdated";
+
+export const LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY = "earningsInProgress";
+export const EARNINGS_IN_PROGRESS_UPDATED_EVENT = "earningsInProgressUpdated";
+
 /**
  * 15 seconds in milliseconds
  */
-export const PENDING_SALE_POLLING_INTERVAL = 15000;
+export const FIFTEEN_SECONDS_IN_MILLISECONDS = 15000;
 
 /**
  * 5 minutes in milliseconds
  */
-export const PENDING_SALE_PING_TIMEOUT = 300000;
+export const FIVE_MINUTES_IN_MILLISECONDS = 300000;
 
 /**
  * Stream token sale default bundle amount
