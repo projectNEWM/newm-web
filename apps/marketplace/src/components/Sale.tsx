@@ -281,7 +281,11 @@ const Sale: FunctionComponent<SaleProps> = ({
                         </Typography>
                         <Stack direction={ "row" }>
                           <Box maxWidth={ "150px" }>
-                            <TextInputField name="streamTokens" type="number" />
+                            <TextInputField
+                              name="streamTokens"
+                              placeholder="0"
+                              type="number"
+                            />
                           </Box>
                           <Typography
                             alignSelf="center"
