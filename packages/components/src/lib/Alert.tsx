@@ -32,7 +32,7 @@ const Alert: FunctionComponent<AlertProps> = ({
   return isOpen ? (
     <Snackbar
       anchorOrigin={ { horizontal: "right", vertical: "top" } }
-      autoHideDuration={ 6000 }
+      autoHideDuration={ severity === "error" ? null : 6000 }
       open={ isOpen }
       sx={ {
         "&.MuiSnackbar-root": {
