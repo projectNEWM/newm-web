@@ -60,7 +60,8 @@ export const DEXHUNTER_TOOLS_PARTNER_CODE = getAppEnvVar(
 );
 export const ENV = getAppEnvVar("ENV");
 
-export const isProd = ENV === "production";
+const NODE_ENV = process.env.NODE_ENV;
+export const isProd = NODE_ENV === "production" && ENV === "production";
 
 const RECAPTCHA_SITE_KEY_PROD = getAppEnvVar("RECAPTCHA_SITE_KEY_PROD");
 const RECAPTCHA_SITE_KEY_STAGING = getAppEnvVar("RECAPTCHA_SITE_KEY_STAGING");
