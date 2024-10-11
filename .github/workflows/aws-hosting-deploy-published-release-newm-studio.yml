@@ -41,6 +41,9 @@ jobs:
       - name: Deploy studio
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_STUDIO }} --no-progress --delete
 
+      - name: Invalidate Cloudfront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STUDIO_DISTRIBUTION_STUDIO }} --paths '/*'
+
       - name: Send update to slack
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
