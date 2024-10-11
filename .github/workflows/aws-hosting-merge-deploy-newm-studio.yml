@@ -37,8 +37,8 @@ jobs:
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_STUDIO_BUCKET_GARAGE }} --no-progress --delete
 
-      # - name: Invalidate Cloudfront Cache
-      #   run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STUDIO_DISTRIBUTION_GARAGE }} --paths '/*'
+      - name: Invalidate Cloudfront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STUDIO_DISTRIBUTION_GARAGE }} --paths '/*'
 
       - name: Send update to slack
         id: slack
