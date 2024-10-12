@@ -10,6 +10,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "build": {
+      "cache": false,
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
