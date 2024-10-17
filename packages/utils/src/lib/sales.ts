@@ -13,6 +13,11 @@ export const FULL_OWNERSHIP_STREAM_TOKENS = 100000000;
 export const LOVELACE_CONVERSION = 1000000;
 
 /**
+ * Standard transaction fee.
+ */
+export const TRANSACTION_FEE_IN_ADA = 0.4;
+
+/**
  * Conversion factor for converting USD to required decimal places for back-end.
  */
 export const USD_CONVERSION = 1000000000000;

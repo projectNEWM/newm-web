@@ -2,6 +2,7 @@ import {
   FunctionComponent,
   ReactNode,
   SyntheticEvent,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -22,15 +23,21 @@ import Portfolio from "./Portfolio";
 import Transactions from "./Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
 import { NoConnectedWallet } from "./NoConnectedWallet";
+import { EarningsClaimInProgress } from "./EarningsClaimInProgress";
 import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
 import { useGetStudioClientConfigQuery } from "../../../modules/content";
 import {
   resetWalletPortfolioTableFilter,
   setIsConnectWalletModalOpen,
 } from "../../../modules/ui";
-import { useAppDispatch } from "../../../common";
+import {
+  EARNINGS_IN_PROGRESS_UPDATED_EVENT,
+  LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
-import { useGetUserWalletSongsThunk } from "../../../modules/song";
+import { selectWallet, useGetEarningsQuery } from "../../../modules/wallet";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -41,6 +48,11 @@ interface TabPanelProps {
 interface ColorMap {
   [index: number]: Partial<keyof Theme["gradients" | "colors"]>;
 }
+
+type EarningsInProgress = {
+  unclaimedEarningsInNEWM?: number;
+  unclaimedEarningsInUSD?: number;
+};
 
 const TabPanel: FunctionComponent<TabPanelProps> = ({
   children,
@@ -67,17 +79,63 @@ const colorMap: ColorMap = {
 
 const Wallet: FunctionComponent = () => {
   const dispatch = useAppDispatch();
+  const [tab, setTab] = useState(0);
+  const [earningsInProgress, setEarningsInProgress] =
+    useState<EarningsInProgress>();
   const { wallet } = useConnectWallet();
-  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
-    useGetUserWalletSongsThunk();
   const { data: clientConfig, isLoading: isClientConfigLoading } =
     useGetStudioClientConfigQuery();
+  const { walletAddress = "" } = useAppSelector(selectWallet);
+  const { data: earningsData } = useGetEarningsQuery(walletAddress, {
+    skip: !walletAddress,
+  });
+
+  const earnings = earningsData?.earnings ?? [];
 
   const isClaimWalletRoyaltiesEnabled =
     clientConfig?.featureFlags?.claimWalletRoyaltiesEnabled ?? false;
+  const unclaimedEarnings = earnings.filter((earning) => !earning.claimed);
+  const isEarningsInProgress =
+    earningsInProgress?.unclaimedEarningsInNEWM ||
+    earningsInProgress?.unclaimedEarningsInUSD;
 
-  const songs =
-    walletSongsResponse?.data?.songs?.map((entry) => entry.song) || [];
+  const handleChange = (event: SyntheticEvent, nextTab: number) => {
+    setTab(nextTab);
+  };
+
+  /**
+   * Handle the pending state for sale end.
+   */
+  const handleSaleEndPending = useCallback(() => {
+    const pendingSales = localStorage.getItem(
+      LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY
+    );
+    if (pendingSales) {
+      const parsedPendingSales = JSON.parse(pendingSales);
+      setEarningsInProgress(parsedPendingSales);
+    } else {
+      setEarningsInProgress(undefined);
+    }
+  }, []);
+
+  /**
+   * Initialize and manage the event listeners for pending sales updates.
+   */
+  useEffect(() => {
+    handleSaleEndPending();
+
+    window.addEventListener(
+      EARNINGS_IN_PROGRESS_UPDATED_EVENT,
+      handleSaleEndPending
+    );
+
+    return () => {
+      window.removeEventListener(
+        EARNINGS_IN_PROGRESS_UPDATED_EVENT,
+        handleSaleEndPending
+      );
+    };
+  }, [handleSaleEndPending]);
 
   //Reset Portfolio Table Filter to view all royalty earnings on page navigation
   useEffect(() => {
@@ -85,20 +143,6 @@ const Wallet: FunctionComponent = () => {
       dispatch(resetWalletPortfolioTableFilter());
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    getUserWalletSongs({
-      limit: 1,
-      offset: 0,
-    });
-  }, [getUserWalletSongs, wallet]);
-
-  const [tab, setTab] = useState(0);
-  const [unclaimedRoyalties, setUnclaimedRoyalties] = useState(1);
-
-  const handleChange = (event: SyntheticEvent, nextTab: number) => {
-    setTab(nextTab);
-  };
 
   // Don't show any content until client config has loaded
   if (isClientConfigLoading) return;
@@ -165,8 +209,19 @@ const Wallet: FunctionComponent = () => {
             <DisconnectWalletButton />
           </Box>
 
-          { songs.length === 0 && !isLoading ? null : unclaimedRoyalties ? (
-            <UnclaimedRoyalties unclaimedRoyalties={ unclaimedRoyalties } />
+          { unclaimedEarnings?.length ? (
+            isEarningsInProgress ? (
+              <EarningsClaimInProgress
+                unclaimedEarningsInNEWM={
+                  earningsInProgress?.unclaimedEarningsInNEWM || 0
+                }
+                unclaimedEarningsInUSD={
+                  earningsInProgress.unclaimedEarningsInUSD || 0
+                }
+              />
+            ) : (
+              <UnclaimedRoyalties />
+            )
           ) : (
             <NoPendingEarnings />
           ) }

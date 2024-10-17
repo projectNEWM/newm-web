@@ -61,3 +61,26 @@ export const Currency = {
     name: CurrencyType.USD,
   },
 };
+
+export const convertNewmiesToNewm = (newmies: number): number => {
+  return newmies / LOVELACE_CONVERSION;
+};
+
+export const convertNewmiesToUsd = (
+  newmies: number,
+  preConvertedUsdPrice: number
+): number => {
+  const newm = convertNewmiesToNewm(newmies);
+  const usdPrice = preConvertedUsdPrice / LOVELACE_CONVERSION;
+
+  return newm * usdPrice;
+};
+
+export const convertAdaToUsd = (
+  ada: number,
+  preConvertedUsdPrice: number
+): number => {
+  const usd = preConvertedUsdPrice / LOVELACE_CONVERSION;
+
+  return usd * ada;
+};

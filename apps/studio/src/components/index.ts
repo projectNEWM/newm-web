@@ -13,6 +13,7 @@ export { default as GoogleLogin } from "./GoogleLogin";
 export * from "./idenfy";
 export { default as PingSaleStart } from "./sales/PingSaleStart";
 export { default as PingSaleEnd } from "./sales/PingSaleEnd";
+export { default as PingEarningsInProgress } from "./earnings/PingEarningsInProgress";
 export { default as InvitesModal } from "./invites/InvitesModal";
 export { default as NEWMLogo } from "./NEWMLogo";
 export { default as SelectWalletItem } from "./uploadSong/SelectWalletItem";
