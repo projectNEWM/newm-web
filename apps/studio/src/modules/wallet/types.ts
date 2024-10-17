@@ -4,17 +4,17 @@ export interface WalletState {
   readonly walletNewmBalance: number;
 }
 
-export type GetEarningsResponse = {
+export interface GetEarningsResponse {
   readonly amountCborHex: string;
   readonly earnings: Earning[];
   readonly totalClaimed: number;
-};
+}
 
-export type PostEarningsRequest = {
+export interface PostEarningsRequest {
   readonly changeAddress: string;
   readonly utxoCborHexList: string[];
   readonly walletAddress: string;
-};
+}
 export interface PostEarningsResponse {
   readonly cborHex: string;
   readonly createdAt?: string;
