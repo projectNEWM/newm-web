@@ -18,10 +18,10 @@ const UnsupportedBrowserBanner: FunctionComponent = () => {
     : "Unsupported browser";
 
   const message = isLimitedSupport
-    ? `This browser has limited Cardano wallet extension support. Chrome, 
-      Brave, or Edge are recommended for the best experience.`
-    : `This browser is not currently supported by Cardano wallet extensions.
-       Please switch to Chrome, Brave, or Edge for the best experience.`;
+    ? `This browser has limited support for Cardano wallet extensions. Please 
+    switch to Brave, Chrome, or Edge for an improved user experience.`
+    : `This browser does not currently support Cardano wallet extensions. 
+    Please switch to Brave, Chrome, or Edge for an improved user experience.`;
 
   /**
    * Toggle display after component mounts to avoid Next.js
