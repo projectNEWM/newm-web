@@ -140,7 +140,7 @@ export const CreateSale = () => {
           const formattedPerTokenPrice =
             saleCurrency === Currency.USD.name
               ? formatUsdAmount(perTokenPrice)
-              : formatNewmAmount(perTokenPrice, true);
+              : formatNewmAmount(perTokenPrice);
 
           return (
             <Form

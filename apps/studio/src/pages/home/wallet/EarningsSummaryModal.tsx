@@ -77,7 +77,8 @@ const EarningsSummaryModal: FunctionComponent<
                 <Typography variant="subtitle1">Earnings</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈ { formatUsdAmount(unclaimedEarningsInUSD, 2) }){ " " }
+                    (≈{ " " }
+                    { formatUsdAmount(unclaimedEarningsInUSD, { precision: 2 }) }){ " " }
                   </Typography>
                   { formatNewmAmount(unclaimedEarningsInNEWM) }
                 </Typography>
@@ -93,7 +94,10 @@ const EarningsSummaryModal: FunctionComponent<
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     (≈ { formatUsdAmount(transactionFeeInUSD) }){ " " }
                   </Typography>
-                  { formatAdaAmount(transactionFeeInADA, false) } ₳
+                  { formatAdaAmount(transactionFeeInADA, {
+                    includeSymbol: false,
+                  }) }{ " " }
+                  ₳
                 </Typography>
               </Stack>
             </Stack>

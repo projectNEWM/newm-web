@@ -8,16 +8,26 @@ export const NEWM_POLICY_ID = isProd
   : "769c4c6e9bc3ba5406b9b89fb7beb6819e638ff2e2de63f008d5bcff";
 export const NEWM_ASSET_NAME = isProd ? "4e45574d" : "744e45574d";
 
+interface FormatCurrencyOptions {
+  readonly includeSymbol?: boolean;
+  readonly precision?: number;
+}
+
 /**
  * Formats a numerical NEWM amount with the correct decimal
  * places and symbol.
  */
-export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
+export const formatNewmAmount = (
+  amount?: number,
+  options: FormatCurrencyOptions = { includeSymbol: true, precision: 2 }
+) => {
   if (!amount) return "0 Ɲ";
+
+  const { includeSymbol = true, precision = 2 } = options;
 
   return currency(amount, {
     pattern: "# !",
-    precision: 2,
+    precision,
     symbol: includeSymbol ? "Ɲ" : "",
   }).format();
 };
@@ -26,12 +36,17 @@ export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
  * Formats a numerical ADA amount with the correct decimal
  * places and symbol.
  */
-export const formatAdaAmount = (amount?: number, includeSymbol = true) => {
+export const formatAdaAmount = (
+  amount?: number,
+  options: FormatCurrencyOptions = { includeSymbol: true, precision: 2 }
+) => {
   if (!amount) return "₳ 0";
+
+  const { includeSymbol = true, precision = 2 } = options;
 
   return currency(amount, {
     pattern: "! #",
-    precision: 2,
+    precision,
     symbol: includeSymbol ? "₳" : "",
   }).format();
 };
@@ -41,10 +56,18 @@ export const formatAdaAmount = (amount?: number, includeSymbol = true) => {
  * rather than the standard two, based on the exchange rate
  * for NEWM to USD.
  */
-export const formatUsdAmount = (amount?: number, precision = 3) => {
+export const formatUsdAmount = (
+  amount?: number,
+  options: FormatCurrencyOptions = { includeSymbol: true, precision: 4 }
+) => {
   if (!amount) return "$0";
 
-  return currency(amount, { precision }).format();
+  const { includeSymbol = true, precision = 4 } = options;
+
+  return currency(amount, {
+    precision,
+    symbol: includeSymbol ? "$" : "",
+  }).format();
 };
 
 export const Currency = {
