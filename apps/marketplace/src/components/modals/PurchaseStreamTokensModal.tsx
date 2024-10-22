@@ -7,7 +7,10 @@ import {
   formatNewmAmount,
   formatUsdAmount,
 } from "@newm-web/utils";
-import { useGetAdaUsdConversionRateQuery } from "../../modules/wallet/api";
+import {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../../modules/wallet/api";
 
 interface PurchaseStreamTokensModalProps {
   readonly isLoading: boolean;
@@ -41,13 +44,13 @@ const PurchaseStreamTokensModal: FunctionComponent<
   const { data: { usdPrice: adaUsdConversionRate = 0 } = {} } =
     useGetAdaUsdConversionRateQuery();
   const { data: { usdPrice: newmUsdConversionRate = 0 } = {} } =
-    useGetAdaUsdConversionRateQuery();
+    useGetNewmUsdConversionRateQuery();
 
   const newmTransactionFeeUsd = 0.5;
   const newmTransactionFeeNewm =
-    (newmTransactionFeeUsd * newmUsdConversionRate) / LOVELACE_CONVERSION;
+    newmTransactionFeeUsd / (newmUsdConversionRate / LOVELACE_CONVERSION);
   const adaTransactionFeeUsd =
-    (TRANSACTION_FEE_IN_ADA * adaUsdConversionRate) / LOVELACE_CONVERSION;
+    TRANSACTION_FEE_IN_ADA * (adaUsdConversionRate / LOVELACE_CONVERSION);
 
   return (
     <Modal
@@ -125,7 +128,8 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 </Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈ { formatUsdAmount(totalPurchaseValueUsd, 2) }){ " " }
+                    (≈{ " " }
+                    { formatUsdAmount(totalPurchaseValueUsd, { precision: 2 }) }){ " " }
                   </Typography>
                   { formatNewmAmount(totalPurchaseValueNewm) }
                 </Typography>
@@ -156,7 +160,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography variant="subtitle1">NEWM fee</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    { formatUsdAmount(newmTransactionFeeUsd, 2) }
+                    { formatUsdAmount(newmTransactionFeeUsd, { precision: 2 }) }
                   </Typography>
                   { formatNewmAmount(newmTransactionFeeNewm) }
                 </Typography>
@@ -169,7 +173,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography variant="subtitle1">Transaction fee</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    { formatUsdAmount(adaTransactionFeeUsd, 2) }{ " " }
+                    { formatUsdAmount(adaTransactionFeeUsd, { precision: 2 }) }{ " " }
                   </Typography>
                   ₳ { TRANSACTION_FEE_IN_ADA }
                 </Typography>

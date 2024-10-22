@@ -246,7 +246,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(newmUsdBalance, 2) })
+                  (≈{ formatUsdAmount(newmUsdBalance, { precision: 2 }) })
                 </Typography>
               </Stack>
 
@@ -263,7 +263,7 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(adaUsdBalance, 2) })
+                  (≈{ formatUsdAmount(adaUsdBalance, { precision: 2 }) })
                 </Typography>
               </Stack>
             </Stack>

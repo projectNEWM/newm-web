@@ -9,6 +9,7 @@ import {
   LOVELACE_CONVERSION,
   formatNewmAmount,
   formatPercentageAdaptive,
+  formatUsdAmount,
 } from "@newm-web/utils";
 import { Currency } from "@newm-web/types";
 import { useGetNewmUsdConversionRateQuery } from "../../../../modules/crypto";
@@ -139,12 +140,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${currency(totalSaleValueInUSD, {
-                          precision: 3,
-                          symbol: "$",
-                        }).format()})` }
+                      : `(≈ ${formatUsdAmount(totalSaleValueInUSD)})` }
                   </Typography>
-                  { formatNewmAmount(totalSaleValueInNEWM, true) }
+                  { formatNewmAmount(totalSaleValueInNEWM) }
                 </Typography>
               </Stack>
               <Stack
@@ -159,12 +157,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${currency(pricePerStreamTokenInUSD, {
-                          precision: 3,
-                          symbol: "$",
-                        }).format()})` }
+                      : `(≈ ${formatUsdAmount(pricePerStreamTokenInUSD)})` }
                   </Typography>
-                  { formatNewmAmount(totalSaleValueInNEWM / tokensToSell, true) }
+                  { formatNewmAmount(totalSaleValueInNEWM / tokensToSell) }
                 </Typography>
               </Stack>
             </Stack>
