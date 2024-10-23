@@ -1,4 +1,4 @@
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { ChangeEvent, ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
 import TextInput, { TextInputProps } from "../TextInput";
 
@@ -8,14 +8,36 @@ const TextInputField: ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <Field name={ props.name }>
-      { ({ field, meta }: FieldProps) => (
-        <TextInput
-          errorMessage={ meta.touched ? meta.error : "" }
-          ref={ ref }
-          { ...field }
-          { ...props }
-        />
-      ) }
+      { ({ field, form, meta }: FieldProps) => {
+        const convertNumberStringToNumber = (value: string) => {
+          return !isNaN(parseFloat(value))
+            ? Number(value.replace(/,/g, ""))
+            : value;
+        };
+
+        /**
+         * Necessary for the "react-number-format" library's
+         * NumericInput component in order to store number input
+         * values as numbers instead of strings.
+         */
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          const formattedValue = convertNumberStringToNumber(
+            event.target.value
+          );
+
+          form.setFieldValue(field.name, formattedValue);
+        };
+
+        return (
+          <TextInput
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            { ...field }
+            { ...props }
+            onChange={ handleChange }
+          />
+        );
+      } }
     </Field>
   );
 };
