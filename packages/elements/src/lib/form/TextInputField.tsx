@@ -10,9 +10,9 @@ const TextInputField: ForwardRefRenderFunction<
     <Field name={ props.name }>
       { ({ field, form, meta }: FieldProps) => {
         const convertNumberStringToNumber = (value: string) => {
-          return !isNaN(parseFloat(value))
-            ? Number(value.replace(/,/g, ""))
-            : value;
+          const isNumStr = value.length > 0 && /^[0-9,.]*$/.test(value);
+
+          return isNumStr ? Number(value.replace(/,/g, "")) : value;
         };
 
         /**
