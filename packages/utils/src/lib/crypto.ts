@@ -12,12 +12,16 @@ export const NEWM_ASSET_NAME = isProd ? "4e45574d" : "744e45574d";
  * Formats a numerical NEWM amount with the correct decimal
  * places and symbol.
  */
-export const formatNewmAmount = (amount?: number, includeSymbol = true) => {
+export const formatNewmAmount = (
+  amount?: number,
+  includeSymbol = true,
+  precision = 2
+) => {
   if (!amount) return "0 Ɲ";
 
   return currency(amount, {
     pattern: "# !",
-    precision: 2,
+    precision: precision,
     symbol: includeSymbol ? "Ɲ" : "",
   }).format();
 };

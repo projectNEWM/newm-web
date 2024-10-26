@@ -135,12 +135,19 @@ export const CreateSale = () => {
           const percentageOfUserStreamTokens =
             (tokensToSell / streamTokensInWallet) * 100;
           const formattedPercentageOfUserStreamTokens = `${percentageOfUserStreamTokens.toFixed(
-            2
+            Math.max(2, 7 - tokensToSell.toString().length)
           )}%`;
+          const decimalPlaces =
+            isNaN(perTokenPrice) || perTokenPrice >= 0.01 || perTokenPrice === 0
+              ? 2
+              : Array.from(perTokenPrice.toFixed(10).split(".")[1]).findIndex(
+                  (char) => char !== "0"
+                ) + 1;
+
           const formattedPerTokenPrice =
             saleCurrency === Currency.USD.name
-              ? formatUsdAmount(perTokenPrice)
-              : formatNewmAmount(perTokenPrice, true);
+              ? formatUsdAmount(perTokenPrice, decimalPlaces)
+              : formatNewmAmount(perTokenPrice, true, decimalPlaces);
 
           return (
             <Form
