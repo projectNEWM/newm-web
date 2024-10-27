@@ -9,32 +9,12 @@ const TextInputField: ForwardRefRenderFunction<
   return (
     <Field name={ props.name }>
       { ({ field, form, meta }: FieldProps) => {
-        const convertNumberStringToNumber = (value: string) => {
-          const isNumStr = value.length > 0 && /^[0-9,.]*$/.test(value);
-
-          return isNumStr ? Number(value.replace(/,/g, "")) : value;
-        };
-
-        /**
-         * Necessary for the "react-number-format" library's
-         * NumericInput component in order to store number input
-         * values as numbers instead of strings.
-         */
-        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-          const formattedValue = convertNumberStringToNumber(
-            event.target.value
-          );
-
-          form.setFieldValue(field.name, formattedValue);
-        };
-
         return (
           <TextInput
             errorMessage={ meta.touched ? meta.error : "" }
             ref={ ref }
             { ...field }
             { ...props }
-            onChange={ handleChange }
           />
         );
       } }
