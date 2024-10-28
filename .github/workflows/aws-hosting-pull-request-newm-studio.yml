@@ -34,6 +34,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_PREVIEW_BUCKET }}/${{ github.event.pull_request.number }} --no-progress --delete
+      - name: Invalidate Cloudfront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STUDIO_DISTRIBUTION_STUDIO }} --paths '/*'
       - name: Url to PR comment
         uses: mshick/add-pr-comment@v2
         with:
