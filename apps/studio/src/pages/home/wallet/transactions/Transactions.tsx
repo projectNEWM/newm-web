@@ -36,10 +36,12 @@ const Transactions: FunctionComponent = () => {
     limit: PAGE_LIMIT,
     mintingStatuses: [MintingStatus.Minted],
     offset,
+    ownerIds: ["me"],
     sortOrder: SortOrder.Desc,
   });
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
     mintingStatuses: [MintingStatus.Minted],
+    ownerIds: ["me"],
   });
   const totalGetSongPages = Math.ceil(totalCountOfSongs / PAGE_LIMIT);
   const claimedEarnings = earningsData?.earnings?.filter(
@@ -129,8 +131,10 @@ const Transactions: FunctionComponent = () => {
     offset / PAGE_LIMIT >= totalGetSongPages - 1;
 
   if (
-    (!isEarningsLoading && !claimedEarnings?.length) ||
-    (!isSongsLoading && !songsData?.length)
+    !sortedTransactions.length &&
+    !isInitialLoad &&
+    !isEarningsLoading &&
+    !isSongsLoading
   ) {
     return <EmptyTransactions />;
   }
