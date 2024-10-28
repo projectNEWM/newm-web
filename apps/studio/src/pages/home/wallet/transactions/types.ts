@@ -13,7 +13,7 @@ export interface CombinedTransaction {
 
 export type TransactionsGroupedByDate = Record<string, CombinedTransaction[]>;
 
-export interface TransactionProps {
+export interface SingleTransactionProps {
   readonly amount: number;
   readonly date: string;
   readonly subheading?: string;

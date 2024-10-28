@@ -10,7 +10,7 @@ import {
 import { MintingStatus, Song, SortOrder } from "@newm-web/types";
 import moment from "moment";
 import { EmptyTransactions } from "./EmptyTransactions";
-import Transaction from "./Transaction";
+import SingleTransaction from "./SingleTransaction";
 import { TransactionType, TransactionsGroupedByDate } from "./types";
 import AllCaughtUp from "../AllCaughtUp";
 import { selectWallet, useGetEarningsQuery } from "../../../../modules/wallet";
@@ -155,7 +155,7 @@ const Transactions: FunctionComponent = () => {
               </Typography>
 
               { transactionsGroupedByDate[date].map((transaction) => (
-                <Transaction
+                <SingleTransaction
                   amount={ transaction.amount }
                   date={ transaction.date }
                   key={ transaction.id }

@@ -11,7 +11,11 @@ import {
   formatNewmAmount,
   formatTimeFromISO,
 } from "@newm-web/utils";
-import { TransactionConfig, TransactionProps, TransactionType } from "./types";
+import {
+  SingleTransactionProps,
+  TransactionConfig,
+  TransactionType,
+} from "./types";
 
 const config: Record<TransactionType, TransactionConfig> = {
   claim: {
@@ -46,7 +50,7 @@ const defaultConfig: TransactionConfig = {
   isPositive: false,
 };
 
-const Transaction: FunctionComponent<TransactionProps> = ({
+const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   date,
   subheading,
   amount,
@@ -117,4 +121,4 @@ const Transaction: FunctionComponent<TransactionProps> = ({
   );
 };
 
-export default Transaction;
+export default SingleTransaction;
