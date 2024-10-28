@@ -48,6 +48,7 @@ export interface Song {
   readonly language?: string;
   readonly lyricsUrl?: string;
   readonly marketplaceStatus: MarketplaceStatus;
+  readonly mintCostLovelace?: number;
   readonly mintingStatus: MintingStatus;
   readonly moods?: ReadonlyArray<string>;
   readonly nftName?: string;

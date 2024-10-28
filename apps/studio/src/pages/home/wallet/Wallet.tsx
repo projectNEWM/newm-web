@@ -20,7 +20,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Button } from "@newm-web/elements";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
 import Portfolio from "./Portfolio";
-import Transactions from "./Transactions";
+import Transactions from "./transactions/Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
 import { NoConnectedWallet } from "./NoConnectedWallet";
 import { EarningsClaimInProgress } from "./EarningsClaimInProgress";
