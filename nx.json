@@ -80,5 +80,5 @@
   "tasksRunnerOptions": {
     "default": { "options": { "cacheableOperations": ["build-storybook"] } }
   },
-  "nxCloudAccessToken": "NGU2ZDQ4MGMtZTEzMC00ZDkwLWEwYjMtYzhiNTg5NTJiYzZkfHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "MDc2NTc3OWUtODAxYy00ZGQwLWIzM2YtOWMzZjZhNWEyMmJhfHJlYWQtd3JpdGU="
 }
