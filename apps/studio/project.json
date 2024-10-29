@@ -8,6 +8,7 @@
       "command": "make build-studio-with-sentry"
     },
     "build": {
+      "cache": false,
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
