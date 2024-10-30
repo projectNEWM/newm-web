@@ -5,7 +5,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
-  convertAdaiesToAda,
+  convertLovelaceToAda,
   convertNewmiesToNewm,
   formatAdaAmount,
   formatNewmAmount,
@@ -29,7 +29,7 @@ const config: Record<TransactionType, TransactionConfig> = {
   },
   mint: {
     amountColor: theme.colors.red,
-    converter: convertAdaiesToAda,
+    converter: convertLovelaceToAda,
     formatter: formatAdaAmount,
     heading: "Track distribution and minting",
     icon: (

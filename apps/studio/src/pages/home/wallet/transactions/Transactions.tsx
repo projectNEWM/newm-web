@@ -34,13 +34,13 @@ const Transactions: FunctionComponent = () => {
     });
   const { data: songsData, isLoading: isSongsLoading } = useGetSongsQuery({
     limit: PAGE_LIMIT,
-    mintingStatuses: [MintingStatus.Minted],
+    mintingStatuses: [MintingStatus.Minted, MintingStatus.Released],
     offset,
     ownerIds: ["me"],
     sortOrder: SortOrder.Desc,
   });
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
-    mintingStatuses: [MintingStatus.Minted],
+    mintingStatuses: [MintingStatus.Minted, MintingStatus.Released],
     ownerIds: ["me"],
   });
   const totalGetSongPages = Math.ceil(totalCountOfSongs / PAGE_LIMIT);
@@ -92,6 +92,7 @@ const Transactions: FunctionComponent = () => {
         amount: earning.amount ?? 0,
         date: earning.claimedAt || "",
         id: earning.id ?? "",
+        subheading: earning.memo || "",
         type: TransactionType.Claim,
       })) ?? [];
     const mintTransactions =
