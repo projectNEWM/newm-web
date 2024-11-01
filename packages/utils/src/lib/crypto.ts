@@ -89,6 +89,10 @@ export const convertNewmiesToNewm = (newmies: number): number => {
   return newmies / LOVELACE_CONVERSION;
 };
 
+export const convertLovelaceToAda = (lovelace: number): number => {
+  return lovelace / LOVELACE_CONVERSION;
+};
+
 export const convertNewmiesToUsd = (
   newmies: number,
   preConvertedUsdPrice: number

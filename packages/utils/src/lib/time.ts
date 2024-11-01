@@ -1,4 +1,4 @@
-import { padStart } from "lodash";
+import moment from "moment";
 import { TimeRemaining } from "./types";
 
 /**
@@ -62,3 +62,41 @@ export const getTimeRemaining = (end: Date, start: Date): TimeRemaining => {
     total,
   };
 };
+
+/**
+ * Formats a given ISO date string into "DD MONTH YYYY" format.
+ * If the provided date is today, it returns "TODAY" instead of the date.
+ *
+ * @param {string} dateString - The ISO date string to format (e.g., '2024-09-25T18:14:40.704438').
+ * @returns {string} - Returns "TODAY" if the date is today.
+ * Otherwise returns the formatted date (e.g., '25 September 2024').
+ */
+export const formatToHumanReadableDate = (dateString: string) => {
+  const date = moment(dateString);
+  const today = moment().startOf("day"); // Start of today for comparison
+
+  // Check if the given date is today
+  if (date.isSame(today, "day")) {
+    return "today";
+  }
+
+  // Otherwise, return the date in 'DD MONTH YYYY' format
+  return date.format("DD MMMM YYYY");
+};
+
+/**
+ * Converts an ISO date string to "HH:MM" format.
+ *
+ * @param {string} isoDateString - The ISO date string to format.
+ * @returns {string} - The formatted time in "HH:MM" format.
+ *
+ * @example
+ * // Returns "18:14"
+ * formatTimeFromISO('2024-09-25T18:14:40.704438');
+ */
+export function formatTimeFromISO(isoDateString: string): string {
+  const date = moment(isoDateString);
+
+  // Return the time in "HH:MM" format
+  return date.format("HH:mm");
+}
