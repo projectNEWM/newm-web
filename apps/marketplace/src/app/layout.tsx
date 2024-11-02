@@ -23,7 +23,6 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
     <html lang="en">
       <head>
         <title>NEWM Marketplace</title>
-        <meta content="noindex" name="robots" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"
