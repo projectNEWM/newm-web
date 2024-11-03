@@ -236,8 +236,8 @@ const Sale: FunctionComponent<SaleProps> = ({
                   isOpen={ !isPurchaseModalClosed }
                   numPurchasedTokens={ values.streamTokens }
                   percentageOfTotalRoyalties={ percentageOfTotalRoyalties }
-                  pricePerTokenNewm={ sale.costAmountNewm }
-                  pricePerTokenUsd={ sale.costAmountUsd }
+                  songTitle={ sale.song.title }
+                  tokenAgreementUrl={ sale.song.tokenAgreementUrl }
                   totalPurchaseValueNewm={
                     values.streamTokens * sale.costAmountNewm
                   }

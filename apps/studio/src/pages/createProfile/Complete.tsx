@@ -1,11 +1,9 @@
 import { FunctionComponent } from "react";
 import { Box, Link, Typography, useTheme } from "@mui/material";
 import { Button, GradientTypography } from "@newm-web/elements";
+import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/common";
 import { ResponsiveNEWMLogo } from "../../components";
-import {
-  NEWM_PRIVACY_POLICY_URL,
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-} from "../../common";
+import { NEWM_PRIVACY_POLICY_URL } from "../../common";
 
 const Complete: FunctionComponent = () => {
   const theme = useTheme();
@@ -62,7 +60,7 @@ const Complete: FunctionComponent = () => {
           { " & " }
           <Link
             color={ theme.colors.grey200 }
-            href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
+            href={ NEWM_TERMS_OF_SERVICE_URL }
             rel="noopener"
             target="_blank"
             variant="subtitle1"
