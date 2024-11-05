@@ -39,6 +39,7 @@ export interface Song {
   readonly createdAt: string;
   readonly description?: string;
   readonly duration?: number;
+  readonly earnings?: number;
   readonly genres: ReadonlyArray<string>;
   readonly id: string;
   readonly instrumental?: boolean;

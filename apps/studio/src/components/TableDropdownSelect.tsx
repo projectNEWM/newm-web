@@ -6,6 +6,7 @@ import {
   styled,
 } from "@mui/material";
 import { FunctionComponent } from "react";
+import { PortfolioTableFilter } from "../common";
 
 export interface TableDropdownMenuParameters {
   readonly label: string;
@@ -14,7 +15,7 @@ export interface TableDropdownMenuParameters {
 
 interface TableDropdownSelectProps {
   readonly menuItems: ReadonlyArray<TableDropdownMenuParameters>;
-  readonly onDropdownChange?: (value: string) => void;
+  readonly onDropdownChange?: (value: PortfolioTableFilter) => void;
   readonly selectedValue: string;
 }
 
@@ -41,8 +42,16 @@ const TableDropdownSelect: FunctionComponent<TableDropdownSelectProps> = ({
   }));
 
   const handleDropdownChange = (event: SelectChangeEvent<unknown>) => {
-    onDropdownChange?.(event.target.value as string);
+    const selectedValue = event.target.value as PortfolioTableFilter;
+
+    if (Object.values(PortfolioTableFilter).includes(selectedValue)) {
+      onDropdownChange?.(selectedValue);
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn("Unexpected value for PortfolioTableFilter:", selectedValue);
+    }
   };
+
   return (
     <Box>
       <StyledSelect

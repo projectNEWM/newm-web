@@ -100,3 +100,13 @@ export function formatTimeFromISO(isoDateString: string): string {
   // Return the time in "HH:MM" format
   return date.format("HH:mm");
 }
+
+/**
+ * Formats a Date object to an ISO string without milliseconds.
+ *
+ * @param {Date} date - The date to format.
+ * @returns {string} The formatted date string in "YYYY-MM-DDTHH:MM:SS" format.
+ */
+export const formatDateToISODateTime = (date: Date): string => {
+  return date.toISOString().slice(0, 19);
+};

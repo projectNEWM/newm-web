@@ -19,17 +19,14 @@ import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Button } from "@newm-web/elements";
 import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
-import Portfolio from "./Portfolio";
+import Portfolio from "./portfolio/Portfolio";
 import Transactions from "./transactions/Transactions";
 import { NoPendingEarnings } from "./NoPendingEarnings";
 import { NoConnectedWallet } from "./NoConnectedWallet";
 import { EarningsClaimInProgress } from "./EarningsClaimInProgress";
 import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
 import { useGetStudioClientConfigQuery } from "../../../modules/content";
-import {
-  resetWalletPortfolioTableFilter,
-  setIsConnectWalletModalOpen,
-} from "../../../modules/ui";
+import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import {
   EARNINGS_IN_PROGRESS_UPDATED_EVENT,
   LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY,
@@ -137,13 +134,6 @@ const Wallet: FunctionComponent = () => {
     };
   }, [handleSaleEndPending]);
 
-  //Reset Portfolio Table Filter to view all royalty earnings on page navigation
-  useEffect(() => {
-    return () => {
-      dispatch(resetWalletPortfolioTableFilter());
-    };
-  }, [dispatch]);
-
   // Don't show any content until client config has loaded
   if (isClientConfigLoading) return;
 
@@ -226,7 +216,7 @@ const Wallet: FunctionComponent = () => {
             <NoPendingEarnings />
           ) }
 
-          <Box mt={ 5 } pb={ 5 }>
+          <Box maxWidth={ 1000 } mt={ 5 } pb={ 5 }>
             <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
               <Tabs
                 aria-label="Wallet details"

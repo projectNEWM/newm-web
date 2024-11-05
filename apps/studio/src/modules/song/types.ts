@@ -21,6 +21,8 @@ export interface GetSongStreamData {
 }
 
 export interface GetSongsRequest {
+  // endDate for the song earnings
+  readonly endDate?: string;
   readonly genres?: string[];
   readonly ids?: string[];
   readonly limit?: number;
@@ -31,6 +33,8 @@ export interface GetSongsRequest {
   readonly ownerIds?: string[];
   readonly phrase?: string;
   readonly sortOrder?: SortOrder;
+  // startDate for the song earnings
+  readonly startDate?: string;
 }
 
 export interface Owner {
@@ -205,14 +209,14 @@ export interface Contributor {
 }
 
 export interface GetSongCountRequest {
-  genres?: string[];
-  ids?: string[];
-  mintingStatuses?: MintingStatus[];
-  moods?: string[];
-  newerThan?: string;
-  olderThan?: string;
-  ownerIds?: string[];
-  phrase?: string;
+  readonly genres?: string[];
+  readonly ids?: string[];
+  readonly mintingStatuses?: MintingStatus[];
+  readonly moods?: string[];
+  readonly newerThan?: string;
+  readonly olderThan?: string;
+  readonly ownerIds?: string[];
+  readonly phrase?: string;
 }
 
 export interface GetSongCountResponse {
