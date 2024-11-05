@@ -230,8 +230,7 @@ const Wallet: FunctionComponent = () => {
                   ".MuiButtonBase-root.MuiTab-root": {
                     minWidth: "auto",
                     ...theme.typography.subtitle2,
-                    color: theme.colors.grey400,
-                    fontWeight: 500,
+                    fontWeight: 600,
                   },
                   ".MuiTabs-flexContainer": {
                     gap: 4,
