@@ -15,6 +15,10 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_GA_STUDIO_ID
         : import.meta.env.VITE_GA_STUDIO_ID;
+    case "GA_MARKETPLACE_ID":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_GA_MARKETPLACE_ID
+        : import.meta.env.VITE_GA_MARKETPLACE_ID;
     case "RECAPTCHA_SITE_KEY_STAGING":
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
@@ -47,6 +51,7 @@ const getAppEnvVar = (name: string): string => {
 export const APPLE_CLIENT_ID = getAppEnvVar("APPLE_CLIENT_ID");
 export const GOOGLE_CLIENT_ID = getAppEnvVar("GOOGLE_CLIENT_ID");
 export const GA_STUDIO_ID = getAppEnvVar("GA_STUDIO_ID");
+export const GA_MARKETPLACE_ID = getAppEnvVar("GA_MARKETPLACE_ID");
 export const DEXHUNTER_STUDIO_PARTNER_CODE = getAppEnvVar(
   "DEXHUNTER_STUDIO_PARTNER_CODE"
 );
