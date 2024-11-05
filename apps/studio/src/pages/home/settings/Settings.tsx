@@ -2,8 +2,11 @@ import { FunctionComponent } from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine, PasswordInputField } from "@newm-web/elements";
-import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/common";
-import { getUpdatedValues, useWindowDimensions } from "@newm-web/utils";
+import {
+  NEWM_TERMS_OF_SERVICE_URL,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import * as Yup from "yup";
 import theme from "@newm-web/theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";

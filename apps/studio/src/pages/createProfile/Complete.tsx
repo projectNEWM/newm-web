@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Box, Link, Typography, useTheme } from "@mui/material";
 import { Button, GradientTypography } from "@newm-web/elements";
-import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/common";
+import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/utils";
 import { ResponsiveNEWMLogo } from "../../components";
 import { NEWM_PRIVACY_POLICY_URL } from "../../common";
 

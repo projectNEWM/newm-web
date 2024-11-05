@@ -17,11 +17,11 @@ import {
 } from "@newm-web/elements";
 import {
   LOVELACE_CONVERSION,
+  NEWM_TERMS_OF_SERVICE_URL,
   TRANSACTION_FEE_IN_ADA,
   formatNewmAmount,
   formatUsdAmount,
 } from "@newm-web/utils";
-import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/common";
 import { useGetNewmUsdConversionRateQuery } from "../../modules/wallet/api";
 
 interface PurchaseStreamTokensModalProps {
