@@ -59,6 +59,7 @@ const SignUp: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Password input field"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
@@ -66,6 +67,7 @@ const SignUp: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Confirm password input field"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"

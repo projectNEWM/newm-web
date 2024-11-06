@@ -12,7 +12,6 @@ import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
 import { MarketplaceTab } from "./MarketplaceTab";
-import { useGetProfileQuery } from "../../../modules/session";
 import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
@@ -65,8 +64,6 @@ const ViewDetails: FunctionComponent = () => {
 
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const { data: profile } = useGetProfileQuery();
-
   const {
     data: { title, coverArtUrl, mintingStatus } = emptySong,
     error,
@@ -83,9 +80,7 @@ const ViewDetails: FunctionComponent = () => {
   ].includes(mintingStatus);
 
   const isManageMarketplaceSalesEnabled =
-    profile?.email === "sickcitycleveland@gmail.com" ??
-    clientConfig?.featureFlags?.manageMarketplaceSalesEnabled ??
-    false;
+    clientConfig?.featureFlags?.manageMarketplaceSalesEnabled ?? false;
 
   const shouldRenderMarketplaceTab =
     !isClientConfigLoading &&

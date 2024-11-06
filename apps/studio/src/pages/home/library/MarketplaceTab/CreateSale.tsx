@@ -146,8 +146,8 @@ export const CreateSale = () => {
 
           const formattedPerTokenPrice =
             saleCurrency === Currency.USD.name
-              ? formatUsdAmount(perTokenPrice, decimalPlaces)
-              : formatNewmAmount(perTokenPrice, true, decimalPlaces);
+              ? formatUsdAmount(perTokenPrice, { precision: decimalPlaces })
+              : formatNewmAmount(perTokenPrice, { precision: decimalPlaces });
 
           return (
             <Form

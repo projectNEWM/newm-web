@@ -1,4 +1,4 @@
-import { ForwardRefRenderFunction, forwardRef } from "react";
+import { ChangeEvent, ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
 import TextInput, { TextInputProps } from "../TextInput";
 
@@ -8,14 +8,16 @@ const TextInputField: ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <Field name={ props.name }>
-      { ({ field, meta }: FieldProps) => (
-        <TextInput
-          errorMessage={ meta.touched ? meta.error : "" }
-          ref={ ref }
-          { ...field }
-          { ...props }
-        />
-      ) }
+      { ({ field, form, meta }: FieldProps) => {
+        return (
+          <TextInput
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            { ...field }
+            { ...props }
+          />
+        );
+      } }
     </Field>
   );
 };
