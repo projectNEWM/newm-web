@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { MintingStatus, Song } from "@newm-web/types";
+import { MintingStatus, Song, SortOrder } from "@newm-web/types";
 import { Stack, Typography } from "@mui/material";
 import SinglePortfolioItem from "./SinglePortfolioItem";
 import { calculateStartDate, royaltyPeriodFilters } from "./utils";
@@ -18,6 +18,8 @@ interface FetchOptions {
   mintingStatuses: GetSongsRequest["mintingStatuses"];
   offset: number;
   ownerIds: GetSongsRequest["ownerIds"];
+  sortOrder: GetSongsRequest["sortOrder"];
+  sortedBy: GetSongsRequest["sortedBy"];
   startDate: GetSongsRequest["startDate"];
 }
 
@@ -33,6 +35,8 @@ const Portfolio: FunctionComponent = () => {
     mintingStatuses: [MintingStatus.Minted, MintingStatus.Released],
     offset: 0,
     ownerIds: ["me"],
+    sortOrder: SortOrder.Desc,
+    sortedBy: "earnings",
     startDate: calculateStartDate(filter),
   });
 
