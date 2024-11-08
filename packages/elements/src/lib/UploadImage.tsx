@@ -110,7 +110,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
 
         if (minFileSizeMB && firstFile.size < minFileSizeMB * 1000 * 1000) {
           throw new Error(
-            `Image must be greater than or equal to ${minFileSizeMB}MB`
+            `Image must be greater than or equal to ${minFileSizeMB * 1000}KB`
           );
         }
 
