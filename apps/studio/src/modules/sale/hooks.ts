@@ -31,7 +31,6 @@ export const useIsStreamTokenOwner = (songId: string) => {
   const isLoading = isWalletSongsLoading || isSaleCountLoading;
   const hasTokens = walletSongsResponse?.data?.songs[0]?.song?.id === songId;
 
-  // user could not have tokens because a sale for all tokens was created
   return {
     isLoading,
     isOwner: hasTokens || (hasAccess && !!countData?.count),
