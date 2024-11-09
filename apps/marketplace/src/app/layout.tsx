@@ -1,15 +1,13 @@
 "use client";
-import "../global.css";
-import { Stack, ThemeProvider } from "@mui/material";
+import dynamic from "next/dynamic";
+import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
-import {
-  StyledComponentsRegistry,
-  UnsupportedBrowserBanner,
-} from "@newm-web/components";
 import { Provider } from "react-redux";
 import { AudioProvider } from "@newm-web/audio";
+import "global.css";
+import "../app.css";
 import { Footer, Header } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
@@ -17,6 +15,24 @@ import Toast from "../components/Toast";
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
+
+// Dynamically import components
+const StyledComponentsRegistry = dynamic(() =>
+  import("@newm-web/components").then((mod) => mod.StyledComponentsRegistry)
+);
+const UnsupportedBrowserBanner = dynamic(() =>
+  import("@newm-web/components").then((mod) => mod.UnsupportedBrowserBanner)
+);
+const LDProvider = dynamic(
+  () => import("@newm-web/components").then((mod) => mod.LDProvider),
+  { ssr: false }
+);
+const Maintenance = dynamic(() =>
+  import("@newm-web/components").then((mod) => mod.Maintenance)
+);
+
+// Define context for LaunchDarkly
+const ldContext = { anonymous: true, kind: "user", name: "Marketplace Guest" };
 
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
@@ -51,18 +67,23 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <AudioProvider>
-                  <Toast />
-                  <UnsupportedBrowserBanner />
+                <CssBaseline />
+                <LDProvider context={ ldContext }>
+                  <Maintenance flagName="webMarketplaceMaintenanceMode">
+                    <AudioProvider>
+                      <Toast />
+                      <UnsupportedBrowserBanner />
 
-                  <Stack flexGrow={ 1 } justifyContent="space-between">
-                    <Stack justifyContent="flex-start">
-                      <Header />
-                      { children }
-                    </Stack>
-                    <Footer />
-                  </Stack>
-                </AudioProvider>
+                      <Stack flexGrow={ 1 } justifyContent="space-between">
+                        <Stack justifyContent="flex-start">
+                          <Header />
+                          { children }
+                        </Stack>
+                        <Footer />
+                      </Stack>
+                    </AudioProvider>
+                  </Maintenance>
+                </LDProvider>
               </ThemeProvider>
             </Provider>
           </AppRouterCacheProvider>

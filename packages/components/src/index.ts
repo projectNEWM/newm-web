@@ -8,6 +8,8 @@ export { default as ProfileHeader } from "./lib/ProfileHeader";
 export * from "./lib/ProfileHeader";
 export { default as ProfileHeaderSkeleton } from "./lib/skeletons/ProfileHeaderSkeleton";
 export { default as ProfileModal } from "./lib/modals/ProfileModal";
+export { default as Maintenance } from "./lib/Maintenance";
+export { default as LDProvider } from "./lib/LDProvider";
 export * from "./lib/modals/ProfileModal";
 export { default as Socials } from "./lib/Socials";
 export * from "./lib/Socials";

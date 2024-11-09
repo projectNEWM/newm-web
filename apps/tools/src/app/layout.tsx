@@ -1,15 +1,30 @@
 "use client";
 import { FunctionComponent, ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { Container, Stack, ThemeProvider } from "@mui/material";
+import { Container, CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
-import "./global.css";
+import "global.css";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
+
+// Dynamically import components
+const StyledComponentsRegistry = dynamic(() =>
+  import("@newm-web/components").then((mod) => mod.StyledComponentsRegistry)
+);
+const LDProvider = dynamic(
+  () => import("@newm-web/components").then((mod) => mod.LDProvider),
+  { ssr: false }
+);
+const Maintenance = dynamic(() =>
+  import("@newm-web/components").then((mod) => mod.Maintenance)
+);
+
+// Define context for LaunchDarkly
+const ldContext = { anonymous: true, kind: "user", name: "Tools Guest" };
 
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
@@ -45,19 +60,24 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
         <StyledComponentsRegistry>
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <ThemeProvider theme={ theme }>
-              <Container sx={ { mt: 5, textAlign: "center" } }>
-                <Stack
-                  alignItems="center"
-                  justifyContent="center"
-                  mb={ 10 }
-                  mt={ 2 }
-                >
-                  <Stack mb={ 10 }>
-                    <NEWMLogo />
-                  </Stack>
-                  { children }
-                </Stack>
-              </Container>
+              <CssBaseline />
+              <LDProvider context={ ldContext }>
+                <Maintenance flagName="webToolsMaintenanceMode">
+                  <Container sx={ { mt: 5, textAlign: "center" } }>
+                    <Stack
+                      alignItems="center"
+                      justifyContent="center"
+                      mb={ 10 }
+                      mt={ 2 }
+                    >
+                      <Stack mb={ 10 }>
+                        <NEWMLogo />
+                      </Stack>
+                      { children }
+                    </Stack>
+                  </Container>
+                </Maintenance>
+              </LDProvider>
             </ThemeProvider>
           </AppRouterCacheProvider>
         </StyledComponentsRegistry>

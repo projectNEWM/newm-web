@@ -19,6 +19,7 @@ import ItunesLogo from "./lib/icons/ItunesLogo";
 import NEWMLogo from "./lib/icons/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/icons/NEWMLogoSmInverse";
 import NEWMMarketplaceLogo from "./lib/icons/NEWMMarketplaceLogo";
+import { default as NEWMMonster } from "./lib/images/NEWMMonster.png";
 import Owner from "./lib/icons/Owner";
 import PeopleIcon from "./lib/icons/PeopleIcon";
 import PlayButton from "./lib/icons/PlayButton";
@@ -57,6 +58,7 @@ export {
   NEWMLogo,
   NEWMLogoSmInverse,
   NEWMMarketplaceLogo,
+  NEWMMonster,
   Owner,
   PeopleIcon,
   PlayButton,
