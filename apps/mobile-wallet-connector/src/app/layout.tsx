@@ -1,11 +1,16 @@
 "use client";
 import { FunctionComponent, ReactNode } from "react";
-import dynamic from "next/dynamic";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Provider } from "react-redux";
 import { Container, CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
 import theme from "@newm-web/theme";
+import {
+  LDProvider,
+  Maintenance,
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
 import "global.css";
 import store from "../store";
 import { ConnectWallet, Toast } from "../components";
@@ -13,21 +18,6 @@ import { ConnectWallet, Toast } from "../components";
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
-
-// Dynamically import components
-const StyledComponentsRegistry = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.StyledComponentsRegistry)
-);
-const UnsupportedBrowserBanner = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.UnsupportedBrowserBanner)
-);
-const LDProvider = dynamic(
-  () => import("@newm-web/components").then((mod) => mod.LDProvider),
-  { ssr: false }
-);
-const Maintenance = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.Maintenance)
-);
 
 // Define context for LaunchDarkly
 const ldContext = { anonymous: true, kind: "user", name: "Wallet Guest" };
