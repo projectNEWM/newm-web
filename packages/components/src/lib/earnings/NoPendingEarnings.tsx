@@ -2,38 +2,25 @@ import { FunctionComponent } from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
 import { CheckCircle } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import {
-  convertNewmiesToNewm,
-  convertNewmiesToUsd,
-  formatNewmAmount,
-  formatUsdAmount,
-} from "@newm-web/utils";
-import { useGetNewmUsdConversionRateQuery } from "../../../modules/crypto";
-import { selectWallet, useGetEarningsQuery } from "../../../modules/wallet";
-import { useAppSelector } from "../../../common";
+import { formatNewmAmount, formatUsdAmount } from "@newm-web/utils";
 
-export const NoPendingEarnings: FunctionComponent = () => {
-  const { walletAddress = "" } = useAppSelector(selectWallet);
-  const {
-    data: earningsData,
-    isLoading: isEarningsLoading,
-    isError: isEarningsError,
-  } = useGetEarningsQuery(walletAddress, {
-    skip: !walletAddress,
-  });
-  const {
-    data: newmUsdConversionRate,
-    isLoading: isConversionLoading,
-    isError: isConversionError,
-  } = useGetNewmUsdConversionRateQuery();
-  const preConvertedUsdPrice = newmUsdConversionRate?.usdPrice ?? 0;
-  const totalClaimed = earningsData?.totalClaimed ?? 0;
-  const totalClaimedInNEWM = convertNewmiesToNewm(totalClaimed);
-  const totalClaimedInUSD = convertNewmiesToUsd(
-    totalClaimed,
-    preConvertedUsdPrice
-  );
+interface NoPendingEarningsProps {
+  readonly isConversionError: boolean;
+  readonly isConversionLoading: boolean;
+  readonly isEarningsError: boolean;
+  readonly isEarningsLoading: boolean;
+  readonly totalClaimedInNEWM: number;
+  readonly totalClaimedInUSD: number;
+}
 
+const NoPendingEarnings: FunctionComponent<NoPendingEarningsProps> = ({
+  totalClaimedInNEWM,
+  totalClaimedInUSD,
+  isEarningsLoading,
+  isConversionLoading,
+  isConversionError,
+  isEarningsError,
+}) => {
   return (
     <Stack
       sx={ {
@@ -74,3 +61,5 @@ export const NoPendingEarnings: FunctionComponent = () => {
     </Stack>
   );
 };
+
+export default NoPendingEarnings;

@@ -1,7 +1,6 @@
 /**
  * NEWM External Links and Support
  */
-export const NEWM_DISCORD_URL = "https://discord.com/invite/z4sYqxqgvQ";
 export const NEWM_IO_URL = "https://newm.io/";
 export const NEWM_MARKETPLACE_FAQ_URL = "";
 export const NEWM_MARKETPLACE_SUPPORT_URL = "";

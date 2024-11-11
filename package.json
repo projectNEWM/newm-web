@@ -29,6 +29,7 @@
     "howler": "^2.2.3",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
+    "launchdarkly-react-client-sdk": "^3.5.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "next": "14.0.4",

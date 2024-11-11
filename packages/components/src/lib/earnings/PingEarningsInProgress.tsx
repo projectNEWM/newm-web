@@ -4,22 +4,31 @@ import {
   FIFTEEN_SECONDS_IN_MILLISECONDS,
   FIVE_MINUTES_IN_MILLISECONDS,
   LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY,
-  useAppSelector,
-} from "../../common";
-import { selectWallet, useGetEarningsQuery } from "../../modules/wallet";
+} from "@newm-web/utils";
+import { GetEarningsResponse } from "@newm-web/types";
 
-const PingEarningsInProgress: FunctionComponent = () => {
+interface PingEarningsInProgressProps {
+  getEarningsQuery: any; // This is the useGetEarningsQuery
+  walletAddress: string;
+}
+
+const PingEarningsInProgress: FunctionComponent<
+  PingEarningsInProgressProps
+> = ({ walletAddress = "", getEarningsQuery }) => {
   const [currentPollingInterval, setPollingInterval] = useState<number>();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const { walletAddress = "" } = useAppSelector(selectWallet);
   const {
     data: earningsData,
     isLoading: isEarningsLoading,
     isSuccess: isGetEarningsSuccess,
-  } = useGetEarningsQuery(walletAddress, {
+  } = getEarningsQuery(walletAddress, {
     pollingInterval: currentPollingInterval,
     skip: !walletAddress,
-  });
+  }) as {
+    data: GetEarningsResponse | undefined;
+    isLoading: boolean;
+    isSuccess: boolean;
+  };
 
   const handleEarningsInProgress = useCallback(() => {
     const earningsInProgress = localStorage.getItem(

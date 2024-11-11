@@ -1,15 +1,22 @@
 "use client";
 import { FunctionComponent, ReactNode } from "react";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { Container, Stack, ThemeProvider } from "@mui/material";
+import { Container, CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
+import {
+  LDProvider,
+  Maintenance,
+  StyledComponentsRegistry,
+} from "@newm-web/components";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
-import "./global.css";
+import "global.css";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
+
+// Define context for LaunchDarkly
+const ldContext = { anonymous: true, kind: "user", name: "Tools Guest" };
 
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
@@ -45,19 +52,24 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
         <StyledComponentsRegistry>
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <ThemeProvider theme={ theme }>
-              <Container sx={ { mt: 5, textAlign: "center" } }>
-                <Stack
-                  alignItems="center"
-                  justifyContent="center"
-                  mb={ 10 }
-                  mt={ 2 }
-                >
-                  <Stack mb={ 10 }>
-                    <NEWMLogo />
-                  </Stack>
-                  { children }
-                </Stack>
-              </Container>
+              <CssBaseline />
+              <LDProvider context={ ldContext }>
+                <Maintenance flagName="webToolsMaintenanceMode">
+                  <Container sx={ { mt: 5, textAlign: "center" } }>
+                    <Stack
+                      alignItems="center"
+                      justifyContent="center"
+                      mb={ 10 }
+                      mt={ 2 }
+                    >
+                      <Stack mb={ 10 }>
+                        <NEWMLogo />
+                      </Stack>
+                      { children }
+                    </Stack>
+                  </Container>
+                </Maintenance>
+              </LDProvider>
             </ThemeProvider>
           </AppRouterCacheProvider>
         </StyledComponentsRegistry>
