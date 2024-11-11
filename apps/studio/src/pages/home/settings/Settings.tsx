@@ -155,12 +155,14 @@ const Settings: FunctionComponent = () => {
                       } }
                     >
                       <PasswordInputField
+                        autoComplete="new-password"
                         label="NEW PASSWORD"
                         name="newPassword"
                         placeholder="New password"
                         showEndAdornment={ showEndAdornment }
                       />
                       <PasswordInputField
+                        autoComplete="new-password"
                         label="RETYPE NEW PASSWORD"
                         name="confirmPassword"
                         placeholder="New password"

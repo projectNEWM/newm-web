@@ -715,6 +715,7 @@ export const {
   useGetSongQuery,
   useGetSongStreamQuery,
   useGetSongsQuery,
+  useLazyGetSongsQuery,
 } = extendedApi;
 
 export default extendedApi;

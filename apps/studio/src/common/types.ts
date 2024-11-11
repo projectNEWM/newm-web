@@ -35,3 +35,10 @@ interface SaleDetails {
 export interface SaleStartPendingSongs {
   [key: string]: SaleDetails;
 }
+
+export enum PortfolioTableFilter {
+  All = "all",
+  Month = "month",
+  Week = "week",
+  Year = "year",
+}

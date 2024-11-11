@@ -56,6 +56,7 @@ export const startSale = createAsyncThunk(
       const startSaleTransactionResp = await dispatch(
         saleApi.endpoints.startSaleTransaction.initiate({
           changeAddress,
+          email: body.email || "",
           saleId,
           utxoCborHexList,
         })

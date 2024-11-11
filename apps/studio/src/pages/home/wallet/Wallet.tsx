@@ -33,7 +33,7 @@ import {
   convertNewmiesToUsd,
 } from "@newm-web/utils";
 import { EarningsInProgress } from "@newm-web/types";
-import Portfolio from "./Portfolio";
+import Portfolio from "./portfolio/Portfolio";
 import Transactions from "./transactions/Transactions";
 import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
 import {
@@ -41,10 +41,7 @@ import {
   useGetNewmUsdConversionRateQuery,
 } from "../../../modules/crypto";
 import { useGetStudioClientConfigQuery } from "../../../modules/content";
-import {
-  resetWalletPortfolioTableFilter,
-  setIsConnectWalletModalOpen,
-} from "../../../modules/ui";
+import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch, useAppSelector } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
 import {
@@ -192,13 +189,6 @@ const Wallet: FunctionComponent = () => {
     };
   }, [handleSaleEndPending]);
 
-  //Reset Portfolio Table Filter to view all royalty earnings on page navigation
-  useEffect(() => {
-    return () => {
-      dispatch(resetWalletPortfolioTableFilter());
-    };
-  }, [dispatch]);
-
   // Don't show any content until client config has loaded
   if (isClientConfigLoading) return;
 
@@ -298,7 +288,7 @@ const Wallet: FunctionComponent = () => {
             />
           ) }
 
-          <Box mt={ 5 } pb={ 5 }>
+          <Box maxWidth={ 1000 } mt={ 5 } pb={ 5 }>
             <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
               <Tabs
                 aria-label="Wallet details"
@@ -312,8 +302,7 @@ const Wallet: FunctionComponent = () => {
                   ".MuiButtonBase-root.MuiTab-root": {
                     minWidth: "auto",
                     ...theme.typography.subtitle2,
-                    color: theme.colors.grey400,
-                    fontWeight: 500,
+                    fontWeight: 600,
                   },
                   ".MuiTabs-flexContainer": {
                     gap: 4,
