@@ -1,12 +1,15 @@
 import { Stack, Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
 import { NEWMLogo } from "@newm-web/assets";
-import { setIsConnectWalletModalOpen } from "../../../modules/ui";
-import { useAppDispatch } from "../../../common";
+import { FunctionComponent } from "react";
 
-export const NoConnectedWallet = () => {
-  const dispatch = useAppDispatch();
+interface NoConnectedWalletProps {
+  readonly onConnectWallet: VoidFunction;
+}
 
+const NoConnectedWallet: FunctionComponent<NoConnectedWalletProps> = ({
+  onConnectWallet,
+}) => {
   return (
     <Stack
       alignItems="center"
@@ -29,10 +32,12 @@ export const NoConnectedWallet = () => {
         gradient="crypto"
         sx={ { mt: 2 } }
         width="compact"
-        onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
+        onClick={ onConnectWallet }
       >
         Connect Wallet
       </Button>
     </Stack>
   );
 };
+
+export default NoConnectedWallet;

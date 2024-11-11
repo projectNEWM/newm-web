@@ -18,26 +18,40 @@ import {
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { Button } from "@newm-web/elements";
-import { UnclaimedRoyalties } from "./UnclaimedRoyalties";
+import {
+  EarningsClaimInProgress,
+  NoConnectedWallet,
+  NoPendingEarnings,
+  UnclaimedEarnings,
+} from "@newm-web/components";
+import {
+  EARNINGS_IN_PROGRESS_UPDATED_EVENT,
+  LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY,
+  TRANSACTION_FEE_IN_ADA,
+  convertAdaToUsd,
+  convertNewmiesToNewm,
+  convertNewmiesToUsd,
+} from "@newm-web/utils";
+import { EarningsInProgress } from "@newm-web/types";
 import Portfolio from "./Portfolio";
 import Transactions from "./transactions/Transactions";
-import { NoPendingEarnings } from "./NoPendingEarnings";
-import { NoConnectedWallet } from "./NoConnectedWallet";
-import { EarningsClaimInProgress } from "./EarningsClaimInProgress";
 import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
+import {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../../../modules/crypto";
 import { useGetStudioClientConfigQuery } from "../../../modules/content";
 import {
   resetWalletPortfolioTableFilter,
   setIsConnectWalletModalOpen,
 } from "../../../modules/ui";
-import {
-  EARNINGS_IN_PROGRESS_UPDATED_EVENT,
-  LOCAL_STORAGE_EARNINGS_IN_PROGRESS_KEY,
-  useAppDispatch,
-  useAppSelector,
-} from "../../../common";
+import { useAppDispatch, useAppSelector } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
-import { selectWallet, useGetEarningsQuery } from "../../../modules/wallet";
+import {
+  selectWallet,
+  useClaimEarningsThunk,
+  useGetEarningsQuery,
+} from "../../../modules/wallet";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -48,11 +62,6 @@ interface TabPanelProps {
 interface ColorMap {
   [index: number]: Partial<keyof Theme["gradients" | "colors"]>;
 }
-
-type EarningsInProgress = {
-  unclaimedEarningsInNEWM?: number;
-  unclaimedEarningsInUSD?: number;
-};
 
 const TabPanel: FunctionComponent<TabPanelProps> = ({
   children,
@@ -86,15 +95,53 @@ const Wallet: FunctionComponent = () => {
   const { data: clientConfig, isLoading: isClientConfigLoading } =
     useGetStudioClientConfigQuery();
   const { walletAddress = "" } = useAppSelector(selectWallet);
-  const { data: earningsData } = useGetEarningsQuery(walletAddress, {
+  const {
+    data: earningsData,
+    isLoading: isEarningsLoading,
+    isError: isEarningsError,
+  } = useGetEarningsQuery(walletAddress, {
     skip: !walletAddress,
   });
+  const {
+    data: newmUsdConversionRate,
+    isLoading: isConversionLoading,
+    isError: isConversionError,
+  } = useGetNewmUsdConversionRateQuery();
+  const { data: { usdPrice: adaUsdConversionRate = 0 } = {} } =
+    useGetAdaUsdConversionRateQuery();
+  const [claimEarnings, { isLoading: isClaimEarningsLoading }] =
+    useClaimEarningsThunk();
 
-  const earnings = earningsData?.earnings ?? [];
+  const preConvertedUsdPrice = newmUsdConversionRate?.usdPrice ?? 0;
+  const { earnings = [], amountCborHex = "" } = earningsData || {};
 
   const isClaimWalletRoyaltiesEnabled =
     clientConfig?.featureFlags?.claimWalletRoyaltiesEnabled ?? false;
-  const unclaimedEarnings = earnings.filter((earning) => !earning.claimed);
+  const unclaimedEarnings =
+    earnings?.filter((earning) => !earning.claimed) || [];
+  const unclaimedEarningsInNewmies =
+    unclaimedEarnings?.reduce(
+      (sum, earning) => sum + (earning.amount || 0),
+      0
+    ) || 0;
+  const unclaimedEarningsInNEWM = convertNewmiesToNewm(
+    unclaimedEarningsInNewmies
+  );
+  const unclaimedEarningsInUSD = convertNewmiesToUsd(
+    unclaimedEarningsInNewmies,
+    preConvertedUsdPrice
+  );
+  const totalClaimed = earningsData?.totalClaimed ?? 0;
+  const totalClaimedInNEWM = convertNewmiesToNewm(totalClaimed);
+  const totalClaimedInUSD = convertNewmiesToUsd(
+    totalClaimed,
+    preConvertedUsdPrice
+  );
+
+  const transactionFeeInUSD = convertAdaToUsd(
+    TRANSACTION_FEE_IN_ADA,
+    adaUsdConversionRate
+  );
   const isEarningsInProgress =
     earningsInProgress?.unclaimedEarningsInNEWM ||
     earningsInProgress?.unclaimedEarningsInUSD;
@@ -117,6 +164,14 @@ const Wallet: FunctionComponent = () => {
       setEarningsInProgress(undefined);
     }
   }, []);
+
+  const handleClaimEarnings = async () => {
+    await claimEarnings({
+      amountCborHex,
+      unclaimedEarningsInNEWM,
+      unclaimedEarningsInUSD,
+    });
+  };
 
   /**
    * Initialize and manage the event listeners for pending sales updates.
@@ -189,7 +244,11 @@ const Wallet: FunctionComponent = () => {
   } else {
     // New Wallet Royalties and Enhancement Features
     if (!wallet) {
-      return <NoConnectedWallet />;
+      return (
+        <NoConnectedWallet
+          onConnectWallet={ () => dispatch(setIsConnectWalletModalOpen(true)) }
+        />
+      );
     }
 
     return (
@@ -212,18 +271,31 @@ const Wallet: FunctionComponent = () => {
           { unclaimedEarnings?.length ? (
             isEarningsInProgress ? (
               <EarningsClaimInProgress
-                unclaimedEarningsInNEWM={
-                  earningsInProgress?.unclaimedEarningsInNEWM || 0
-                }
-                unclaimedEarningsInUSD={
-                  earningsInProgress.unclaimedEarningsInUSD || 0
-                }
+                unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
+                unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
               />
             ) : (
-              <UnclaimedRoyalties />
+              <UnclaimedEarnings
+                isClaimEarningsLoading={ isClaimEarningsLoading }
+                isConversionLoading={ isConversionLoading }
+                isEarningsError={ isEarningsError }
+                isEarningsLoading={ isEarningsLoading }
+                transactionFeeInADA={ TRANSACTION_FEE_IN_ADA }
+                transactionFeeInUSD={ transactionFeeInUSD }
+                unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
+                unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
+                onClaimEarnings={ handleClaimEarnings }
+              />
             )
           ) : (
-            <NoPendingEarnings />
+            <NoPendingEarnings
+              isConversionError={ isConversionError }
+              isConversionLoading={ isConversionLoading }
+              isEarningsError={ isEarningsError }
+              isEarningsLoading={ isEarningsLoading }
+              totalClaimedInNEWM={ totalClaimedInNEWM }
+              totalClaimedInUSD={ totalClaimedInUSD }
+            />
           ) }
 
           <Box mt={ 5 } pb={ 5 }>

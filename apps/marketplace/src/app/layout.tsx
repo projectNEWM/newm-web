@@ -1,5 +1,4 @@
 "use client";
-import dynamic from "next/dynamic";
 import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
@@ -8,28 +7,19 @@ import { Provider } from "react-redux";
 import { AudioProvider } from "@newm-web/audio";
 import "global.css";
 import "../app.css";
-import { Footer, Header } from "../components";
+import {
+  LDProvider,
+  Maintenance,
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
+import { Footer, Header, PingEarningsInProgressWrapper } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
-
-// Dynamically import components
-const StyledComponentsRegistry = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.StyledComponentsRegistry)
-);
-const UnsupportedBrowserBanner = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.UnsupportedBrowserBanner)
-);
-const LDProvider = dynamic(
-  () => import("@newm-web/components").then((mod) => mod.LDProvider),
-  { ssr: false }
-);
-const Maintenance = dynamic(() =>
-  import("@newm-web/components").then((mod) => mod.Maintenance)
-);
 
 // Define context for LaunchDarkly
 const ldContext = { anonymous: true, kind: "user", name: "Marketplace Guest" };
@@ -73,9 +63,10 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
                     <AudioProvider>
                       <Toast />
                       <UnsupportedBrowserBanner />
+                      <PingEarningsInProgressWrapper />
 
                       <Stack flexGrow={ 1 } justifyContent="space-between">
-                        <Stack justifyContent="flex-start">
+                        <Stack flex={ 1 } justifyContent="flex-start">
                           <Header />
                           { children }
                         </Stack>
