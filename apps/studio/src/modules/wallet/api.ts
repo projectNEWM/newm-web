@@ -2,7 +2,7 @@ import {
   GetEarningsResponse,
   PostEarningsRequest,
   PostEarningsResponse,
-} from "./types";
+} from "@newm-web/types";
 import { Tags, newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 

@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { AudioProvider } from "@newm-web/audio";
 import "global.css";
 import "../app.css";
-import { Footer, Header } from "../components";
+import { Footer, Header, PingEarningsInProgressWrapper } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
 
@@ -73,9 +73,10 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
                     <AudioProvider>
                       <Toast />
                       <UnsupportedBrowserBanner />
+                      <PingEarningsInProgressWrapper />
 
                       <Stack flexGrow={ 1 } justifyContent="space-between">
-                        <Stack justifyContent="flex-start">
+                        <Stack flex={ 1 } justifyContent="flex-start">
                           <Header />
                           { children }
                         </Stack>
