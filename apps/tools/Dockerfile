@@ -26,7 +26,7 @@ COPY --chown=node:node ./ ./
 ARG NEXT_PUBLIC_ENV
 
 # Build the production app
-RUN npx nx build tools
+RUN npx nx build tools --no-cloud
 
 FROM base as runtime
 
