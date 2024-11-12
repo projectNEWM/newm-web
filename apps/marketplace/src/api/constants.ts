@@ -12,6 +12,7 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   getEarnings: "get_earnings",
   getMarketplaceClientConfig: "marketplace_config",
   getNewmUsdConversionRate: "get_newm_price",
+  getOrderFees: "get_order_fees",
   getSale: "get_sale",
   getSaleCount: "get_sale_count",
   getSales: "get_sales",
