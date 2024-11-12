@@ -70,7 +70,10 @@ const Sale: FunctionComponent<SaleProps> = ({
       .required("This field is required")
       .integer()
       .min(1)
-      .max(sale?.availableBundleQuantity || 0),
+      .max(
+        sale?.availableBundleQuantity || 0,
+        "Order amount cannot exceed maximum Stream Tokens available."
+      ),
   });
 
   /**
