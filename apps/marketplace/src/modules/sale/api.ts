@@ -11,6 +11,7 @@ import {
   GetSalesParams,
   GetSalesResponse,
 } from "@newm-web/types";
+import { GetOrderFeesResponse } from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
@@ -63,6 +64,24 @@ export const extendedApi = newmApi.injectEndpoints({
         method: "POST",
         url: "v1/marketplace/orders/transaction",
       }),
+    }),
+    getOrderFees: build.query<GetOrderFeesResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching order fees",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.OrderFees],
+
+      query: () => ({ method: "GET", url: "v1/marketplace/orders/fees" }),
     }),
     getSale: build.query<GetSaleResponse, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -172,7 +191,11 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery, useGetSaleCountQuery } =
-  extendedApi;
+export const {
+  useGetSaleQuery,
+  useGetSalesQuery,
+  useGetSaleCountQuery,
+  useGetOrderFeesQuery,
+} = extendedApi;
 
 export default extendedApi;

@@ -22,7 +22,8 @@ import {
   formatNewmAmount,
   formatUsdAmount,
 } from "@newm-web/utils";
-import { useGetNewmUsdConversionRateQuery } from "../../modules/wallet/api";
+import { useGetNewmUsdConversionRateQuery } from "../../modules/wallet";
+import { useGetOrderFeesQuery } from "../../modules/sale";
 
 interface PurchaseStreamTokensModalProps {
   readonly isLoading: boolean;
@@ -51,21 +52,20 @@ const PurchaseStreamTokensModal: FunctionComponent<
   songTitle,
   onSubmit,
 }) => {
-  const TEMP_SERVICE_FEE_PERCENTAGE = 0.1;
   const theme = useTheme();
   const [agreesToContractAndConditions, setAgreesToContractAndConditions] =
     useState(false);
 
   const { data: { usdPrice: newmUsdConversionRate = 0 } = {} } =
     useGetNewmUsdConversionRateQuery();
+  const { data: { serviceFeePercentage = 0, profitAmountUsd = 0 } = {} } =
+    useGetOrderFeesQuery();
 
-  const newmTransactionFeeUsd = 0.5;
   const newmTransactionFeeNewm =
-    newmTransactionFeeUsd / (newmUsdConversionRate / LOVELACE_CONVERSION);
-  const serviceFeeUsd = totalPurchaseValueUsd * TEMP_SERVICE_FEE_PERCENTAGE;
-  const serviceFeeNewm = totalPurchaseValueNewm * TEMP_SERVICE_FEE_PERCENTAGE;
-  const totalUsd =
-    totalPurchaseValueUsd + serviceFeeUsd + newmTransactionFeeUsd;
+    profitAmountUsd / (newmUsdConversionRate / LOVELACE_CONVERSION);
+  const serviceFeeUsd = totalPurchaseValueUsd * (serviceFeePercentage / 100);
+  const serviceFeeNewm = totalPurchaseValueNewm * (serviceFeePercentage / 100);
+  const totalUsd = totalPurchaseValueUsd + serviceFeeUsd + profitAmountUsd;
   const totalNewm =
     totalPurchaseValueNewm + serviceFeeNewm + newmTransactionFeeNewm;
 
@@ -208,8 +208,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography variant="subtitle1">Transaction fee</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈{ " " }
-                    { formatUsdAmount(newmTransactionFeeUsd, { precision: 2 }) }){ " " }
+                    (≈ { formatUsdAmount(profitAmountUsd, { precision: 2 }) }){ " " }
                   </Typography>
                   { formatNewmAmount(newmTransactionFeeNewm) }
                 </Typography>
