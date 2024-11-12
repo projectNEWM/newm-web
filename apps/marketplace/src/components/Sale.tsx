@@ -262,7 +262,6 @@ const Sale: FunctionComponent<SaleProps> = ({
                   <Stack>
                     <Box alignSelf="flex-end" p={ 0.5 }>
                       <Tooltip
-                        open={ true }
                         title={
                           <Typography>
                             The number of Stream Tokens correlates with the
