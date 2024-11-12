@@ -24,6 +24,8 @@ COPY --chown=node:node  --from=deps /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node ./ ./
 
 ARG NEXT_PUBLIC_ENV
+ARG NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD
+ARG NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING
 
 # Build the production app
 RUN npx nx build tools --no-cloud
