@@ -1,5 +1,12 @@
 "use client";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import currency from "currency.js";
@@ -252,13 +259,32 @@ const Sale: FunctionComponent<SaleProps> = ({
                   <Stack>
                     <Box alignSelf="flex-end" p={ 0.5 }>
                       <Tooltip
-                        title={ `The number of Stream Tokens correlates directly
-                          with the percentage of Streaming royalties you
-                          can acquire and the total price of the bundle.
-                          For example 1 token is worth = 
-                          ${getPercentageOfTotalStreamTokens(1)}% of
-                          total royalties, and costs 
-                          '${formatNewmAmount(sale.costAmountNewm)}'.` }
+                        open={ true }
+                        title={
+                          <Typography>
+                            The number of Stream Tokens correlates with the
+                            percentage of streaming royalties you can acquire.
+                            For example, 1 Stream Token equates to{ " " }
+                            { `${getPercentageOfTotalStreamTokens(1)}` }% of the
+                            track&apos;s total streaming royalties. For
+                            information on what constitutes a streaming royalty,
+                            please refer to the{ " " }
+                            <span style={ { color: theme.colors.music } }>
+                              <Link
+                                href={ sale.song.tokenAgreementUrl }
+                                rel="noopener noreferrer"
+                                sx={ {
+                                  width: "fit-content",
+                                } }
+                                target="_blank"
+                                variant="h4"
+                              >
+                                stream token contract
+                              </Link>
+                            </span>
+                            .
+                          </Typography>
+                        }
                       >
                         <IconButton sx={ { padding: 0 } }>
                           <HelpIcon sx={ { color: theme.colors.grey100 } } />
