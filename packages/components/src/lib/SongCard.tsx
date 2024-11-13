@@ -109,7 +109,12 @@ const SongCard = ({
       onKeyDown={ handleKeyPress(onCardClick ? handleCardClick : undefined) }
     >
       <Stack sx={ { rowGap: 0.5 } } width="100%">
-        <Stack alignItems="center" justifyItems="center" position="relative">
+        <Stack
+          alignItems="center"
+          justifyItems="center"
+          overflow="hidden"
+          position="relative"
+        >
           { priceVariant === "pill" && (
             <Stack
               bgcolor="rgba(0, 0, 0, 0.4)"
