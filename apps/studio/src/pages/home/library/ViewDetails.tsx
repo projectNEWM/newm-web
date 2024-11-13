@@ -8,6 +8,7 @@ import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
@@ -19,7 +20,6 @@ import {
   useGetSongQuery,
   useHasSongAccess,
 } from "../../../modules/song";
-import { useGetStudioClientConfigQuery } from "../../../modules/content";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -70,8 +70,7 @@ const ViewDetails: FunctionComponent = () => {
     isLoading,
   } = useGetSongQuery(songId);
 
-  const { data: clientConfig, isLoading: isClientConfigLoading } =
-    useGetStudioClientConfigQuery();
+  const { webStudioManageMarketplaceSales } = useFlags();
 
   const hasAccess = useHasSongAccess(songId);
   const isSongMintedOrReleased = [
@@ -79,13 +78,8 @@ const ViewDetails: FunctionComponent = () => {
     MintingStatus.Released,
   ].includes(mintingStatus);
 
-  const isManageMarketplaceSalesEnabled =
-    clientConfig?.featureFlags?.manageMarketplaceSalesEnabled ?? false;
-
   const shouldRenderMarketplaceTab =
-    !isClientConfigLoading &&
-    isSongMintedOrReleased &&
-    isManageMarketplaceSalesEnabled;
+    isSongMintedOrReleased && webStudioManageMarketplaceSales;
 
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
