@@ -53,7 +53,7 @@ const ResponsiveImage: FunctionComponent<ResponsiveImageProps> = ({
           ...sx,
           display: isImageLoaded ? "inline-block" : "none",
           // hide any cropping issues or empty space around image
-          transform: { scale: 1.005 },
+          transform: "scale(1.005)",
         } }
         width="100%"
         onLoad={ () => setIsImageLoaded(true) }
