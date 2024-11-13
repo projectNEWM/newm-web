@@ -63,4 +63,4 @@ export * from "./lib/UploadSong";
 export * from "./lib/skeleton";
 export { default as SideBarNavLink } from "./lib/SideBarNavLink";
 export { default as SideBarHeader } from "./lib/SideBarHeader";
-export { default as Favicon } from "./lib/FavIcon";
+export { default as Favicon } from "./lib/Favicon";
