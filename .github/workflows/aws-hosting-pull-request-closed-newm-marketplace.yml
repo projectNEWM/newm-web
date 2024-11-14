@@ -3,10 +3,6 @@ on:
   push:
     branches: 
       - jonatan-test-branch
-    paths:
-      - .github/workflows/aws-hosting-pull-request-newm-marketplace.yml
-      - apps/marketplace/**
-      - packages/**
 jobs:
   destroy:
     name: Destroy NEWM Marketplace AWS preview environment
