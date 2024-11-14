@@ -100,7 +100,11 @@ export const TextInput: ForwardRefRenderFunction<
     if (shouldShowErrorMessage) {
       return <ErrorMessage>{ errorMessage }</ErrorMessage>;
     } else if (helperText && !shouldShowErrorMessage) {
-      return <Typography variant="subtitle2">{ helperText }</Typography>;
+      return (
+        <Typography fontWeight={ 500 } variant="subtitle2">
+          { helperText }
+        </Typography>
+      );
     }
     return null;
   };
@@ -127,7 +131,7 @@ export const TextInput: ForwardRefRenderFunction<
           <>
             <Typography
               component="span"
-              sx={ { fontWeight: 500, textTransform: "uppercase" } }
+              sx={ { fontWeight: 700, textTransform: "uppercase" } }
             >
               { label }
             </Typography>

@@ -243,7 +243,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           >
             { isInEditMode ? (
               <>
-                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG
                 </Typography>
 
@@ -261,7 +261,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               </>
             ) : (
               <>
-                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG FILE
                 </Typography>
 
@@ -276,7 +276,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             spacing={ 0.5 }
             width="100%"
           >
-            <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+            <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
               SONG COVER ART
             </Typography>
 

@@ -113,7 +113,7 @@ const SongInfo = () => {
                 spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG
                 </Typography>
 
@@ -135,7 +135,7 @@ const SongInfo = () => {
                 spacing={ 0.5 }
                 width="100%"
               >
-                <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG COVER ART
                 </Typography>
 
