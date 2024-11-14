@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useGetUserWalletSongsThunk } from "../song";
 
 /**
@@ -10,6 +11,7 @@ import { useGetUserWalletSongsThunk } from "../song";
  * because a sale was created for all of them.
  */
 export const useHasTokens = (songId: string) => {
+  const { isConnected } = useConnectWallet();
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
 
@@ -18,7 +20,7 @@ export const useHasTokens = (songId: string) => {
       ids: [songId],
       limit: 1,
     });
-  }, [getUserWalletSongs, songId]);
+  }, [getUserWalletSongs, songId, isConnected]);
 
   const hasTokens = walletSongsResponse?.data?.songs[0]?.song?.id === songId;
 
