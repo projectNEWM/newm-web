@@ -60,7 +60,7 @@ export const CreateSale = () => {
       bundleAmount: SALE_DEFAULT_BUNDLE_AMOUNT,
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
-      // round request down to remove decimal amounts
+      // ensure value is an integer
       costAmount: Math.floor(values.totalSaleValue / values.tokensToSell),
       email: profileData?.email,
       saleCurrency: values.saleCurrency,
