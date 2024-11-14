@@ -84,9 +84,11 @@ export const CreateSale = () => {
   }).format();
   const isOnlyOneTokenAvailable = streamTokensInWallet === 1;
 
+  //TODO: Move the schema to formUtils
   const validationSchema = Yup.object({
     tokensToSell: Yup.number()
       .required("This field is required")
+      .typeError("")
       .integer("You must sell a whole number of stream tokens")
       .min(1, "You must sell at least 1 stream token")
       .max(
@@ -95,12 +97,25 @@ export const CreateSale = () => {
       ),
     totalSaleValue: Yup.number()
       .required("This field is required")
+      .typeError("")
       .when("saleCurrency", {
         is: (val: string) => val === Currency.USD.name,
         otherwise: (s) => s.min(1, "Value must be at least 1 Ɲ"),
         then: (s) => s.min(0.01, "Value must be at least $0.01"),
       }),
   });
+
+  // TODO: Move this to a utility file
+  const getDynamicDecimalPrecision = (num: number): number | undefined => {
+    if (num >= 0.001 || num === 0 || !Number.isFinite(num)) {
+      return undefined;
+    }
+    const splitDecimalPortion = num.toFixed(10).split(".")[1];
+    const firstNonZeroIndex = splitDecimalPortion.search(/[1-9]/);
+    return firstNonZeroIndex && firstNonZeroIndex !== -1
+      ? firstNonZeroIndex + 1
+      : undefined;
+  };
 
   return (
     <>
@@ -131,19 +146,16 @@ export const CreateSale = () => {
           submitForm,
           setTouched,
         }) => {
-          const perTokenPrice = totalSaleValue / tokensToSell;
+          // tokensToSell is "" when the field is empty, converted to 0
+          const perTokenPrice =
+            Number(tokensToSell) !== 0 ? totalSaleValue / tokensToSell : 0;
           const percentageOfUserStreamTokens =
             (tokensToSell / streamTokensInWallet) * 100;
           const formattedPercentageOfUserStreamTokens = `${percentageOfUserStreamTokens.toFixed(
             Math.max(2, 7 - tokensToSell.toString().length)
           )}%`;
-          const decimalPlaces =
-            isNaN(perTokenPrice) || perTokenPrice >= 0.01 || perTokenPrice === 0
-              ? 2
-              : Array.from(perTokenPrice.toFixed(10).split(".")[1]).findIndex(
-                  (char) => char !== "0"
-                ) + 1;
 
+          const decimalPlaces = getDynamicDecimalPrecision(perTokenPrice);
           const formattedPerTokenPrice =
             saleCurrency === Currency.USD.name
               ? formatUsdAmount(perTokenPrice, { precision: decimalPlaces })
@@ -163,6 +175,7 @@ export const CreateSale = () => {
                 flexDirection={ ["column", "column", "row"] }
                 rowGap={ 3.5 }
               >
+                { /* TODO: Update title and helper text bold strength */ }
                 <TextInputField
                   helperText={ `Percentage of my total stream tokens: ${
                     percentageOfUserStreamTokens
@@ -180,9 +193,7 @@ export const CreateSale = () => {
                 <PriceInputField
                   currencyFieldName="saleCurrency"
                   helperText={ `Price per stream token: ${
-                    perTokenPrice && isFinite(perTokenPrice)
-                      ? formattedPerTokenPrice
-                      : ""
+                    perTokenPrice ? formattedPerTokenPrice : ""
                   }` }
                   isOptional={ false }
                   label="TOTAL SALE VALUE"

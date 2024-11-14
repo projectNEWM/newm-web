@@ -14,8 +14,8 @@ interface FormatCurrencyOptions {
 }
 
 /**
- * Formats a numerical NEWM amount with the correct decimal
- * places and symbol.
+ * Formats a numerical NEWM amount with 3 decimal
+ * places and the correct symbol.
  */
 export const formatNewmAmount = (
   amount?: number,
@@ -23,7 +23,7 @@ export const formatNewmAmount = (
 ) => {
   if (!amount) return "0 Ɲ";
 
-  const { includeSymbol = true, precision = 2 } = options;
+  const { includeSymbol = true, precision = 3 } = options;
 
   return currency(amount, {
     pattern: "# !",
@@ -52,7 +52,7 @@ export const formatAdaAmount = (
 };
 
 /**
- * Formats a numerical USD amount to three decimal places
+ * Formats a numerical USD amount to four decimal places
  * rather than the standard two, based on the exchange rate
  * for NEWM to USD.
  */
