@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useGetSaleCountQuery } from "./api";
-import { useGetUserWalletSongsThunk, useHasSongAccess } from "../song";
+import { useGetUserWalletSongsThunk } from "../song";
 
 /**
  * Determines whether a user is the owner of a song. Checks
@@ -10,16 +9,9 @@ import { useGetUserWalletSongsThunk, useHasSongAccess } from "../song";
  * user doesn't have any of the song's stream tokens in their wallet
  * because a sale was created for all of them.
  */
-export const useIsStreamTokenOwner = (songId: string) => {
-  const hasAccess = useHasSongAccess(songId);
-  const [
-    getUserWalletSongs,
-    { data: walletSongsResponse, isLoading: isWalletSongsLoading },
-  ] = useGetUserWalletSongsThunk();
-  const { data: countData, isLoading: isSaleCountLoading } =
-    useGetSaleCountQuery({
-      songIds: [songId],
-    });
+export const useHasTokens = (songId: string) => {
+  const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
+    useGetUserWalletSongsThunk();
 
   useEffect(() => {
     getUserWalletSongs({
@@ -28,11 +20,10 @@ export const useIsStreamTokenOwner = (songId: string) => {
     });
   }, [getUserWalletSongs, songId]);
 
-  const isLoading = isWalletSongsLoading || isSaleCountLoading;
   const hasTokens = walletSongsResponse?.data?.songs[0]?.song?.id === songId;
 
   return {
+    hasTokens,
     isLoading,
-    isOwner: hasTokens || (hasAccess && !!countData?.count),
   };
 };

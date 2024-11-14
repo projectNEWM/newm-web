@@ -60,7 +60,8 @@ export const CreateSale = () => {
       bundleAmount: SALE_DEFAULT_BUNDLE_AMOUNT,
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
-      costAmount: values.totalSaleValue / values.tokensToSell,
+      // round request down to remove decimal amounts
+      costAmount: Math.floor(values.totalSaleValue / values.tokensToSell),
       email: profileData?.email,
       saleCurrency: values.saleCurrency,
       songId,
@@ -93,8 +94,8 @@ export const CreateSale = () => {
       .integer("You must sell a whole number of stream tokens")
       .min(1, "You must sell at least 1 stream token")
       .max(
-        streamTokensInWallet,
-        `You only have ${formattedStreamTokensInWallet} stream tokens available to sell.`
+        streamTokensInWallet - 1,
+        "It is required to keep at least one stream token in your wallet."
       ),
     totalSaleValue: Yup.number()
       .required("This field is required")

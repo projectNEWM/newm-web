@@ -5,12 +5,12 @@ import { Sale } from "./Sale";
 import { ConnectWallet } from "./ConnectWallet";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
-import { useIsStreamTokenOwner } from "../../../../modules/sale";
+import { useHasTokens } from "../../../../modules/sale";
 
 export const MarketplaceTab = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
 
-  const { isOwner, isLoading } = useIsStreamTokenOwner(songId);
+  const { hasTokens, isLoading } = useHasTokens(songId);
 
   if (isLoading) {
     return (
@@ -30,7 +30,7 @@ export const MarketplaceTab = () => {
     <Box
       maxWidth={ [theme.inputField.maxWidth, theme.inputField.maxWidth, "700px"] }
     >
-      { isOwner ? <Sale /> : <ConnectWallet /> }
+      { hasTokens ? <Sale /> : <ConnectWallet /> }
     </Box>
   );
 };
