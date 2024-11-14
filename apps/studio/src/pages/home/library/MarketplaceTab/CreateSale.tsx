@@ -26,6 +26,7 @@ import { SALE_DEFAULT_BUNDLE_AMOUNT } from "../../../../common";
 import { SongRouteParams } from "../types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
+import { useGetProfileQuery } from "../../../../modules/session";
 
 export const CreateSale = () => {
   const [isSaleSummaryModalOpen, setIsSaleSummaryModalOpen] = useState(false);
@@ -35,6 +36,7 @@ export const CreateSale = () => {
     getUserWalletSongs,
     { data: walletSongsResponse, isLoading: isGetWalletSongsLoading },
   ] = useGetUserWalletSongsThunk();
+  const { data: profileData } = useGetProfileQuery();
   const [startSale, { isLoading: isStartSaleLoading }] = useStartSaleThunk();
   const { wallet } = useConnectWallet();
   const currentSong = walletSongsResponse?.data?.songs[0];
@@ -59,6 +61,7 @@ export const CreateSale = () => {
       bundleAssetName: currentSong.song.nftName,
       bundlePolicyId: currentSong.song.nftPolicyId,
       costAmount: values.totalSaleValue / values.tokensToSell,
+      email: profileData?.email,
       saleCurrency: values.saleCurrency,
       songId,
       totalBundleQuantity: values.tokensToSell,
@@ -92,8 +95,8 @@ export const CreateSale = () => {
       .integer("You must sell a whole number of stream tokens")
       .min(1, "You must sell at least 1 stream token")
       .max(
-        streamTokensInWallet,
-        `You only have ${formattedStreamTokensInWallet} stream tokens available to sell.`
+        streamTokensInWallet - 1,
+        "It is required to keep at least one stream token in your wallet."
       ),
     totalSaleValue: Yup.number()
       .required("This field is required")

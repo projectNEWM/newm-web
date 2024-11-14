@@ -1,16 +1,20 @@
 "use client";
-import "../global.css";
-import { Stack, ThemeProvider } from "@mui/material";
+import { CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { FunctionComponent, ReactNode } from "react";
 import theme from "@newm-web/theme";
+import { Provider } from "react-redux";
+import { AudioProvider } from "@newm-web/audio";
+import "global.css";
+import "../app.css";
 import {
+  LDProvider,
+  Maintenance,
   StyledComponentsRegistry,
   UnsupportedBrowserBanner,
 } from "@newm-web/components";
-import { Provider } from "react-redux";
-import { AudioProvider } from "@newm-web/audio";
-import { Footer, Header } from "../components";
+import { Favicon } from "@newm-web/elements";
+import { Footer, Header, PingEarningsInProgressWrapper } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
 
@@ -18,12 +22,16 @@ interface RootLayoutProps {
   readonly children: ReactNode;
 }
 
+// Define context for LaunchDarkly
+const ldContext = { anonymous: true, kind: "user", name: "Marketplace Guest" };
+
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <head>
         <title>NEWM Marketplace</title>
         <meta content="noindex" name="robots" />
+        <Favicon />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"
@@ -51,18 +59,24 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <AudioProvider>
-                  <Toast />
-                  <UnsupportedBrowserBanner />
+                <CssBaseline />
+                <LDProvider context={ ldContext }>
+                  <Maintenance flagName="webMarketplaceMaintenanceMode">
+                    <AudioProvider>
+                      <Toast />
+                      <UnsupportedBrowserBanner />
+                      <PingEarningsInProgressWrapper />
 
-                  <Stack flexGrow={ 1 } justifyContent="space-between">
-                    <Stack justifyContent="flex-start">
-                      <Header />
-                      { children }
-                    </Stack>
-                    <Footer />
-                  </Stack>
-                </AudioProvider>
+                      <Stack flexGrow={ 1 } justifyContent="space-between">
+                        <Stack flex={ 1 } justifyContent="flex-start">
+                          <Header />
+                          { children }
+                        </Stack>
+                        <Footer />
+                      </Stack>
+                    </AudioProvider>
+                  </Maintenance>
+                </LDProvider>
               </ThemeProvider>
             </Provider>
           </AppRouterCacheProvider>

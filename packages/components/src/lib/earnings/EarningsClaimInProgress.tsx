@@ -4,12 +4,12 @@ import theme from "@newm-web/theme";
 import { formatNewmAmount, formatUsdAmount } from "@newm-web/utils";
 import { InfoOutlined } from "@mui/icons-material";
 
-type EarningsClaimInProgressProps = {
-  unclaimedEarningsInNEWM: number;
-  unclaimedEarningsInUSD: number;
-};
+interface EarningsClaimInProgressProps {
+  readonly unclaimedEarningsInNEWM: number;
+  readonly unclaimedEarningsInUSD: number;
+}
 
-export const EarningsClaimInProgress: FunctionComponent<
+const EarningsClaimInProgress: FunctionComponent<
   EarningsClaimInProgressProps
 > = ({ unclaimedEarningsInNEWM, unclaimedEarningsInUSD }) => {
   return (
@@ -37,3 +37,5 @@ export const EarningsClaimInProgress: FunctionComponent<
     </Stack>
   );
 };
+
+export default EarningsClaimInProgress;

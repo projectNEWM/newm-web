@@ -26,9 +26,11 @@ COPY --chown=node:node ./ ./
 ARG NEXT_PUBLIC_ENV
 ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD
 ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
+ARG NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD
+ARG NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING
 
 # Build the production app
-RUN npx nx build marketplace
+RUN npx nx build marketplace --no-cloud
 
 FROM base as runtime
 

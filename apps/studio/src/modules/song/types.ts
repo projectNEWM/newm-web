@@ -33,6 +33,7 @@ export interface GetSongsRequest {
   readonly ownerIds?: string[];
   readonly phrase?: string;
   readonly sortOrder?: SortOrder;
+  readonly sortedBy?: string;
   // startDate for the song earnings
   readonly startDate?: string;
 }

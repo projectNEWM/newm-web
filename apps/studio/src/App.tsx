@@ -6,7 +6,11 @@ import theme from "@newm-web/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_CLIENT_ID } from "@newm-web/env";
-import { UnsupportedBrowserBanner } from "@newm-web/components";
+import {
+  LDProvider,
+  Maintenance,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
 import {
   Background,
   ConnectWalletModal,
@@ -15,7 +19,7 @@ import {
   IdenfyPingUserStatus,
   IdenfySuccessSession,
   InvitesModal,
-  PingEarningsInProgress,
+  PingEarningsInProgressWrapper,
   PingSaleEnd,
   PingSaleStart,
   PrivateRoute,
@@ -36,79 +40,94 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 import ScrollToTop from "./components/ScrollToTop";
 import store, { persistor } from "./store";
 import "./App.css";
+import LDUserUpdater from "./components/LDUserUpdater";
 
 const App = () => {
   const googleClientID = GOOGLE_CLIENT_ID;
+  // Define context for LaunchDarkly
+  const ldContext = {
+    anonymous: true,
+    kind: "user",
+    name: "Studio Guest",
+  };
 
   return (
     <ThemeProvider theme={ theme }>
       <GoogleOAuthProvider clientId={ googleClientID }>
-        <Provider store={ store }>
-          <PersistGate loading={ null } persistor={ persistor }>
-            <Toast />
-            <CssBaseline />
-            <IdenfyPingUserStatus />
-            <IdenfyModal />
-            <ConnectWalletModal />
-            <InvitesModal />
-            <ProgressBarModal />
-            <UpdateWalletAddressModal />
-            <WalletEnvMismatchModal />
-            <PingSaleStart />
-            <PingSaleEnd />
-            <PingEarningsInProgress />
-            <UnsupportedBrowserBanner />
-            <ScrollToTop />
+        <LDProvider context={ ldContext }>
+          <Maintenance flagName="webStudioMaintenanceMode">
+            <Provider store={ store }>
+              <PersistGate loading={ null } persistor={ persistor }>
+                <Toast />
+                <CssBaseline />
+                <IdenfyPingUserStatus />
+                <IdenfyModal />
+                <ConnectWalletModal />
+                <InvitesModal />
+                <ProgressBarModal />
+                <UpdateWalletAddressModal />
+                <WalletEnvMismatchModal />
+                <PingSaleStart />
+                <PingSaleEnd />
+                <PingEarningsInProgressWrapper />
+                <UnsupportedBrowserBanner />
+                <LDUserUpdater />
+                <ScrollToTop />
 
-            <Background>
-              <BrowserRouter history={ history }>
-                <GoogleAnalytics />
-                <OnboardingRedirect />
+                <Background>
+                  <BrowserRouter history={ history }>
+                    <GoogleAnalytics />
+                    <OnboardingRedirect />
 
-                <Routes>
-                  <Route element={ <Navigate to="home" replace /> } path="/" />
+                    <Routes>
+                      <Route
+                        element={ <Navigate to="home" replace /> }
+                        path="/"
+                      />
 
-                  <Route element={ <Login /> } path="login" />
+                      <Route element={ <Login /> } path="login" />
 
-                  <Route
-                    element={ <ForgotPassword /> }
-                    path="forgot-password/*"
-                  />
+                      <Route
+                        element={ <ForgotPassword /> }
+                        path="forgot-password/*"
+                      />
 
-                  <Route element={ <SignUp /> } path="sign-up/*" />
+                      <Route element={ <SignUp /> } path="sign-up/*" />
 
-                  <Route
-                    element={ <IdenfySuccessSession /> }
-                    path="idenfy-success-session"
-                  />
+                      <Route
+                        element={ <IdenfySuccessSession /> }
+                        path="idenfy-success-session"
+                      />
 
-                  <Route
-                    element={ <IdenfyFailSession /> }
-                    path="idenfy-fail-session"
-                  />
+                      <Route
+                        element={ <IdenfyFailSession /> }
+                        path="idenfy-fail-session"
+                      />
 
-                  <Route
-                    element={
-                      <PrivateRoute>
-                        <Home />
-                      </PrivateRoute>
-                    }
-                    path="home/*"
-                  />
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <Home />
+                          </PrivateRoute>
+                        }
+                        path="home/*"
+                      />
 
-                  <Route
-                    element={
-                      <PrivateRoute>
-                        <CreateProfile />
-                      </PrivateRoute>
-                    }
-                    path="create-profile/*"
-                  />
-                </Routes>
-              </BrowserRouter>
-            </Background>
-          </PersistGate>
-        </Provider>
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <CreateProfile />
+                          </PrivateRoute>
+                        }
+                        path="create-profile/*"
+                      />
+                    </Routes>
+                  </BrowserRouter>
+                </Background>
+              </PersistGate>
+            </Provider>
+          </Maintenance>
+        </LDProvider>
       </GoogleOAuthProvider>
     </ThemeProvider>
   );

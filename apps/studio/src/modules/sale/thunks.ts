@@ -25,8 +25,9 @@ export const startSale = createAsyncThunk(
       const wallet = await enableWallet();
       const changeAddress = await getWalletChangeAddress(wallet);
 
-      const costAmount =
-        body.costAmount * Currency[body.saleCurrency].conversion;
+      const costAmount = Math.floor(
+        body.costAmount * Currency[body.saleCurrency].conversion
+      );
 
       const startSaleAmountResp = await dispatch(
         saleApi.endpoints.startSaleAmount.initiate({
@@ -56,6 +57,7 @@ export const startSale = createAsyncThunk(
       const startSaleTransactionResp = await dispatch(
         saleApi.endpoints.startSaleTransaction.initiate({
           changeAddress,
+          email: body.email || "",
           saleId,
           utxoCborHexList,
         })

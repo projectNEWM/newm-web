@@ -16,3 +16,5 @@ export { default as SearchResults } from "./SearchResults";
 export { default as SimilarArtists } from "./SimilarArtists";
 export { default as SimilarSongs } from "./SimilarSongs";
 export { default as Sales } from "./Sales";
+export { default as PingEarningsInProgressWrapper } from "./PingEarningsInProgressWrapper";
+export { default as LaunchBanner } from "./LaunchBanner";

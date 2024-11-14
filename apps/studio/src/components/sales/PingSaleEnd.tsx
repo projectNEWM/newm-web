@@ -1,9 +1,11 @@
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { SaleStatus } from "@newm-web/types";
-import { useGetSalesQuery } from "../../modules/sale";
 import {
   FIFTEEN_SECONDS_IN_MILLISECONDS,
   FIVE_MINUTES_IN_MILLISECONDS,
+} from "@newm-web/utils";
+import { useGetSalesQuery } from "../../modules/sale";
+import {
   LOCAL_STORAGE_SALE_END_PENDING_KEY,
   SALE_END_UPDATED_EVENT,
 } from "../../common";
