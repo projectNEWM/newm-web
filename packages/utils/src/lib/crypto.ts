@@ -14,12 +14,12 @@ interface FormatCurrencyOptions {
 }
 
 /**
- * Formats a numerical NEWM amount with 3 decimal
+ * Formats a numerical NEWM amount with three decimal
  * places and the correct symbol.
  */
 export const formatNewmAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = { includeSymbol: true, precision: 2 }
+  options: FormatCurrencyOptions = { includeSymbol: true, precision: 3 }
 ) => {
   if (!amount) return "0 Ɲ";
 
