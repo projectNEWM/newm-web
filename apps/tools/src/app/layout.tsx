@@ -10,6 +10,7 @@ import {
 } from "@newm-web/components";
 import theme from "@newm-web/theme";
 import "global.css";
+import { Favicon } from "@newm-web/elements";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -27,6 +28,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           content="Elevate your NEWM music experience with these set of tools."
           name="description"
         />
+        <Favicon />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"

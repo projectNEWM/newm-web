@@ -13,6 +13,7 @@ import {
   StyledComponentsRegistry,
   UnsupportedBrowserBanner,
 } from "@newm-web/components";
+import { Favicon } from "@newm-web/elements";
 import { Footer, Header, PingEarningsInProgressWrapper } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
@@ -30,6 +31,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
       <head>
         <title>NEWM Marketplace</title>
         <meta content="noindex" name="robots" />
+        <Favicon />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"

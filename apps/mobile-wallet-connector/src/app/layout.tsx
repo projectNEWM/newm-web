@@ -12,6 +12,7 @@ import {
   UnsupportedBrowserBanner,
 } from "@newm-web/components";
 import "global.css";
+import { Favicon } from "@newm-web/elements";
 import store from "../store";
 import { ConnectWallet, Toast } from "../components";
 
@@ -31,6 +32,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           content="Connect your wallet to the NEWM mobile app."
           name="description"
         />
+        <Favicon />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"

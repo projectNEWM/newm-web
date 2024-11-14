@@ -33,6 +33,7 @@ import {
   convertNewmiesToUsd,
 } from "@newm-web/utils";
 import { EarningsInProgress } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import Portfolio from "./portfolio/Portfolio";
 import Transactions from "./transactions/Transactions";
 import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
@@ -40,7 +41,6 @@ import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
 } from "../../../modules/crypto";
-import { useGetStudioClientConfigQuery } from "../../../modules/content";
 import { setIsConnectWalletModalOpen } from "../../../modules/ui";
 import { useAppDispatch, useAppSelector } from "../../../common";
 import { DisconnectWalletButton } from "../../../components";
@@ -89,8 +89,7 @@ const Wallet: FunctionComponent = () => {
   const [earningsInProgress, setEarningsInProgress] =
     useState<EarningsInProgress>();
   const { wallet } = useConnectWallet();
-  const { data: clientConfig, isLoading: isClientConfigLoading } =
-    useGetStudioClientConfigQuery();
+  const { webStudioClaimWalletEarnings } = useFlags();
   const { walletAddress = "" } = useAppSelector(selectWallet);
   const {
     data: earningsData,
@@ -112,8 +111,6 @@ const Wallet: FunctionComponent = () => {
   const preConvertedUsdPrice = newmUsdConversionRate?.usdPrice ?? 0;
   const { earnings = [], amountCborHex = "" } = earningsData || {};
 
-  const isClaimWalletRoyaltiesEnabled =
-    clientConfig?.featureFlags?.claimWalletRoyaltiesEnabled ?? false;
   const unclaimedEarnings =
     earnings?.filter((earning) => !earning.claimed) || [];
   const unclaimedEarningsInNewmies =
@@ -189,11 +186,8 @@ const Wallet: FunctionComponent = () => {
     };
   }, [handleSaleEndPending]);
 
-  // Don't show any content until client config has loaded
-  if (isClientConfigLoading) return;
-
   // Current State of the Wallet Page
-  if (!isClaimWalletRoyaltiesEnabled) {
+  if (!webStudioClaimWalletEarnings) {
     return (
       <Container maxWidth={ false }>
         <Box ml={ [null, null, 3] }>

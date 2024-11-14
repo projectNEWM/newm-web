@@ -260,47 +260,46 @@ const Sale: FunctionComponent<SaleProps> = ({
 
                 <Stack gap={ 2.5 } mb={ 4 } mt={ 0.5 }>
                   <Stack>
-                    <Box alignSelf="flex-end" p={ 0.5 }>
-                      <Tooltip
-                        title={
-                          <Typography>
-                            The number of Stream Tokens correlates with the
-                            percentage of streaming royalties you can acquire.
-                            For example, 1 Stream Token equates to{ " " }
-                            { `${getPercentageOfTotalStreamTokens(1)}` }% of the
-                            track&apos;s total streaming royalties. For
-                            information on what constitutes a streaming royalty,
-                            please refer to the{ " " }
-                            <span style={ { color: theme.colors.music } }>
-                              <Link
-                                href={ sale.song.tokenAgreementUrl }
-                                rel="noopener noreferrer"
-                                sx={ {
-                                  width: "fit-content",
-                                } }
-                                target="_blank"
-                                variant="h4"
-                              >
-                                stream token contract
-                              </Link>
-                            </span>
-                            .
-                          </Typography>
-                        }
-                      >
-                        <IconButton sx={ { padding: 0 } }>
-                          <HelpIcon sx={ { color: theme.colors.grey100 } } />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-
                     <Box
                       borderRadius={ 2 }
-                      px={ 3 }
-                      py={ 2.5 }
+                      pb={ 2.5 }
+                      pl={ 3 }
                       sx={ { backgroundColor: theme.colors.grey600 } }
                     >
                       <Stack>
+                        <Box alignSelf="flex-end" p={ 0.5 }>
+                          <Tooltip
+                            title={
+                              <Typography>
+                                The number of Stream Tokens correlates with the
+                                percentage of streaming royalties you can
+                                acquire. For example, 1 Stream Token equates to{ " " }
+                                { `${getPercentageOfTotalStreamTokens(1)}` }% of
+                                the track&apos;s total streaming royalties. For
+                                information on what constitutes a streaming
+                                royalty, please refer to the{ " " }
+                                <span style={ { color: theme.colors.music } }>
+                                  <Link
+                                    href={ sale.song.tokenAgreementUrl }
+                                    rel="noopener noreferrer"
+                                    sx={ {
+                                      width: "fit-content",
+                                    } }
+                                    target="_blank"
+                                    variant="h4"
+                                  >
+                                    stream token contract
+                                  </Link>
+                                </span>
+                                .
+                              </Typography>
+                            }
+                          >
+                            <IconButton sx={ { padding: 0 } }>
+                              <HelpIcon sx={ { color: theme.colors.grey100 } } />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
                         <Typography
                           fontWeight={ theme.typography.fontWeightBold }
                           variant="subtitle2"
