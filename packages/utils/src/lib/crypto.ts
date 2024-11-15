@@ -35,7 +35,7 @@ export const formatNewmAmount = (
   } = options;
 
   if (precision === 3 && amount < 0.001 && amount > 0) {
-    return "Less than 0.001 Ɲ";
+    return "< 0.001 Ɲ";
   }
 
   const formattedAmount = currency(amount, {
@@ -98,7 +98,7 @@ export const formatUsdAmount = (
   } = options;
 
   if (precision === 4 && amount < 0.0001 && amount > 0) {
-    return "Less than $0.0001";
+    return "< $0.0001";
   }
 
   const formattedAmount = currency(amount, {
