@@ -16,18 +16,20 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Install AWS CDK
-        run: npm install -g aws-cdk
+      - name: Install dependencies
+        run: npm ci --prefix .github/workflows/cdk
 
-      - name: Destory preview environment
+      - name: Destroy preview environment
         run: |
-          npm install --prefix .github/workflows/cdk
           APPNAME=tools QUALIFIER=${{ github.event.pull_request.number }} npm run --prefix .github/workflows/cdk cdk:preview destroy -- --require-approval never
 
       - name: Url to PR comment
