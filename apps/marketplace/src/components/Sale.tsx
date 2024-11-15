@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent, useState } from "react";
