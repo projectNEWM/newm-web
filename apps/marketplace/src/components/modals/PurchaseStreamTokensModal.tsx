@@ -165,8 +165,11 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography variant="subtitle1">Market price</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈{ " " }
-                    { formatUsdAmount(totalPurchaseValueUsd, { precision: 2 }) }){ " " }
+                    (
+                    { formatUsdAmount(totalPurchaseValueUsd, {
+                      includeEstimateSymbol: true,
+                    }) }
+                    ){ " " }
                   </Typography>
                   { formatNewmAmount(totalPurchaseValueNewm) }
                 </Typography>
@@ -195,7 +198,11 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 </Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈ { formatUsdAmount(serviceFeeUsd, { precision: 2 }) }){ " " }
+                    (
+                    { formatUsdAmount(serviceFeeUsd, {
+                      includeEstimateSymbol: true,
+                    }) }
+                    ){ " " }
                   </Typography>
                   { formatNewmAmount(serviceFeeNewm) }
                 </Typography>
@@ -208,7 +215,11 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography variant="subtitle1">Transaction fee</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈ { formatUsdAmount(profitAmountUsd, { precision: 2 }) }){ " " }
+                    (
+                    { formatUsdAmount(profitAmountUsd, {
+                      includeEstimateSymbol: true,
+                    }) }
+                    ){ " " }
                   </Typography>
                   { formatNewmAmount(newmTransactionFeeNewm) }
                 </Typography>
@@ -224,7 +235,9 @@ const PurchaseStreamTokensModal: FunctionComponent<
                 <Typography>Total</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    (≈ { formatUsdAmount(totalUsd, { precision: 2 }) }){ " " }
+                    (
+                    { formatUsdAmount(totalUsd, { includeEstimateSymbol: true }) }
+                    ){ " " }
                   </Typography>
                   { formatNewmAmount(totalNewm) }
                 </Typography>

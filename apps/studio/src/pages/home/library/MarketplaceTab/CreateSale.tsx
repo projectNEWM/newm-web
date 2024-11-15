@@ -87,7 +87,6 @@ export const CreateSale = () => {
   }).format();
   const isOnlyOneTokenAvailable = streamTokensInWallet === 1;
 
-  //TODO: Move the schema to formUtils
   const validationSchema = Yup.object({
     tokensToSell: Yup.number()
       .required("This field is required")
@@ -108,7 +107,6 @@ export const CreateSale = () => {
       }),
   });
 
-  // TODO: Move this to a utility file
   const getDynamicDecimalPrecision = (num: number): number | undefined => {
     if (num >= 0.001 || num === 0 || !Number.isFinite(num)) {
       return undefined;
@@ -178,7 +176,6 @@ export const CreateSale = () => {
                 flexDirection={ ["column", "column", "row"] }
                 rowGap={ 3.5 }
               >
-                { /* TODO: Update title and helper text bold strength */ }
                 <TextInputField
                   helperText={ `Percentage of my total stream tokens: ${
                     percentageOfUserStreamTokens

@@ -138,12 +138,12 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                 <Typography variant="subtitle1">Total sale value</Typography>
                 <Typography variant="h4">
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
-                    { /* TODO: include < symbol if less than 4 decimal places */ }
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${formatUsdAmount(totalSaleValueInUSD)})` }
+                      : `(${formatUsdAmount(totalSaleValueInUSD, {
+                          includeEstimateSymbol: true,
+                        })})` }
                   </Typography>
-                  { /* TODO: include < symbol if less than 3 decimal places */ }
                   { formatNewmAmount(totalSaleValueInNEWM) }
                 </Typography>
               </Stack>
@@ -159,7 +159,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${formatUsdAmount(pricePerStreamTokenInUSD)})` }
+                      : `(${formatUsdAmount(pricePerStreamTokenInUSD, {
+                          includeEstimateSymbol: true,
+                        })})` }
                   </Typography>
                   { formatNewmAmount(totalSaleValueInNEWM / tokensToSell) }
                 </Typography>

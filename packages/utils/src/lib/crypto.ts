@@ -9,7 +9,8 @@ export const NEWM_POLICY_ID = isProd
 export const NEWM_ASSET_NAME = isProd ? "4e45574d" : "744e45574d";
 
 interface FormatCurrencyOptions {
-  readonly includeSymbol?: boolean;
+  readonly includeCurrencySymbol?: boolean;
+  readonly includeEstimateSymbol?: boolean;
   readonly precision?: number;
 }
 
@@ -19,17 +20,31 @@ interface FormatCurrencyOptions {
  */
 export const formatNewmAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = { includeSymbol: true, precision: 3 }
+  options: FormatCurrencyOptions = {
+    includeCurrencySymbol: true,
+    includeEstimateSymbol: false,
+    precision: 3,
+  }
 ) => {
   if (!amount) return "0 Ɲ";
 
-  const { includeSymbol = true, precision = 3 } = options;
+  const {
+    includeCurrencySymbol = true,
+    includeEstimateSymbol = false,
+    precision = 3,
+  } = options;
 
-  return currency(amount, {
+  if (precision === 3 && amount < 0.001 && amount > 0) {
+    return "Less than 0.001 Ɲ";
+  }
+
+  const formattedAmount = currency(amount, {
     pattern: "# !",
     precision,
-    symbol: includeSymbol ? "Ɲ" : "",
+    symbol: includeCurrencySymbol ? "Ɲ" : "",
   }).format();
+
+  return includeEstimateSymbol ? `≈ ${formattedAmount}` : formattedAmount;
 };
 
 /**
@@ -38,17 +53,27 @@ export const formatNewmAmount = (
  */
 export const formatAdaAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = { includeSymbol: true, precision: 2 }
+  options: FormatCurrencyOptions = {
+    includeCurrencySymbol: true,
+    includeEstimateSymbol: false,
+    precision: 2,
+  }
 ) => {
   if (!amount) return "₳ 0";
 
-  const { includeSymbol = true, precision = 2 } = options;
+  const {
+    includeCurrencySymbol = true,
+    includeEstimateSymbol = false,
+    precision = 2,
+  } = options;
 
-  return currency(amount, {
+  const formattedAmount = currency(amount, {
     pattern: "! #",
     precision,
-    symbol: includeSymbol ? "₳" : "",
+    symbol: includeCurrencySymbol ? "₳" : "",
   }).format();
+
+  return includeEstimateSymbol ? `≈ ${formattedAmount}` : formattedAmount;
 };
 
 /**
@@ -58,16 +83,30 @@ export const formatAdaAmount = (
  */
 export const formatUsdAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = { includeSymbol: true, precision: 4 }
+  options: FormatCurrencyOptions = {
+    includeCurrencySymbol: true,
+    includeEstimateSymbol: false,
+    precision: 4,
+  }
 ) => {
   if (!amount) return "$0";
 
-  const { includeSymbol = true, precision = 4 } = options;
+  const {
+    includeCurrencySymbol = true,
+    includeEstimateSymbol = false,
+    precision = 4,
+  } = options;
 
-  return currency(amount, {
+  if (precision === 4 && amount < 0.0001 && amount > 0) {
+    return "Less than $0.0001";
+  }
+
+  const formattedAmount = currency(amount, {
     precision,
-    symbol: includeSymbol ? "$" : "",
+    symbol: includeCurrencySymbol ? "$" : "",
   }).format();
+
+  return includeEstimateSymbol ? `≈ ${formattedAmount}` : formattedAmount;
 };
 
 export const Currency = {
