@@ -257,7 +257,9 @@ const SongCard = ({
                   fontSize={ title ? "12px" : "15px" }
                   variant="subtitle1"
                 >
-                  &nbsp;(≈ { formatUsdAmount(priceInUsd) })
+                  &nbsp;(
+                  { formatUsdAmount(priceInUsd, { includeEstimateSymbol: true }) }
+                  )
                 </Typography>
               ) }
             </Stack>

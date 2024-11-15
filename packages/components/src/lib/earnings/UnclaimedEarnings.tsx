@@ -95,7 +95,11 @@ const UnclaimedEarnings: FunctionComponent<UnclaimedEarningsProps> = ({
               fontWeight={ 500 }
               variant="subtitle1"
             >
-              ~{ formatUsdAmount(unclaimedEarningsInUSD) }
+              (
+              { formatUsdAmount(unclaimedEarningsInUSD, {
+                includeEstimateSymbol: true,
+              }) }
+              ){ " " }
             </Typography>
           </>
         ) }

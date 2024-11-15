@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent, useState } from "react";
@@ -23,6 +22,7 @@ import { Form, Formik } from "formik";
 import {
   FULL_OWNERSHIP_STREAM_TOKENS,
   formatNewmAmount,
+  formatUsdAmount,
 } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/audio";
@@ -102,7 +102,7 @@ const Sale: FunctionComponent<SaleProps> = ({
 
     return {
       newmAmount: formatNewmAmount(newmAmount),
-      usdAmount: currency(usdAmount).format(),
+      usdAmount: formatUsdAmount(usdAmount, { includeEstimateSymbol: true }),
     };
   };
 
@@ -353,7 +353,7 @@ const Sale: FunctionComponent<SaleProps> = ({
                         variant="body1"
                       >
                         Buy { values.streamTokens.toLocaleString() } Stream Tokens
-                        • { `${totalCost.newmAmount} (≈ ${totalCost.usdAmount})` }
+                        • { `${totalCost.newmAmount} (${totalCost.usdAmount})` }
                       </Typography>
                     </Button>
                   </Box>

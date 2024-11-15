@@ -116,7 +116,7 @@ export const TextArea: ForwardRefRenderFunction<
           color={ theme.colors.grey100 }
           columnGap={ 0.5 }
           display="flex"
-          fontWeight={ 500 }
+          fontWeight={ 700 }
         >
           { label }
 
