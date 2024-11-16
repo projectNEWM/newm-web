@@ -1,37 +1,36 @@
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { useParams } from "react-router-dom";
 import currency from "currency.js";
 import { AlertTitle, Stack, Typography } from "@mui/material";
 import { Alert, Button, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { SaleStatus } from "@newm-web/types";
+import { Sale } from "@newm-web/types";
 import { EndSaleModal } from "./EndSaleModal";
-import { MarketplaceTabSkeleton } from "../../../../components";
 import { SongRouteParams } from "../types";
-import { useEndSaleThunk, useGetSalesQuery } from "../../../../modules/sale";
+import { useEndSaleThunk } from "../../../../modules/sale";
 import { NEWM_MARKETPLACE_URL } from "../../../../common";
 
-export const ActiveSale = () => {
+interface ActiveSaleProps {
+  readonly sale?: Sale;
+}
+
+export const ActiveSale: FunctionComponent<ActiveSaleProps> = ({ sale }) => {
   const [isEndSaleModalOpen, setIsEndSaleModalOpen] = useState(false);
   const { songId } = useParams<"songId">() as SongRouteParams;
-  const { data: sales = [], isLoading } = useGetSalesQuery({
-    saleStatuses: [SaleStatus.Started],
-    songIds: [songId],
-  });
   const [endSale, { isLoading: isEndSaleLoading }] = useEndSaleThunk();
-  const saleId = sales[0].id;
+  const saleId = sale?.id;
 
   const handleEndSale = async () => {
+    if (!saleId) {
+      return;
+    }
+
     await endSale({ saleId, songId });
 
     setIsEndSaleModalOpen(false);
   };
 
-  if (isLoading) {
-    return <MarketplaceTabSkeleton />;
-  }
-
-  if (!sales.length) {
+  if (!sale) {
     return null;
   }
 
@@ -47,7 +46,7 @@ export const ActiveSale = () => {
           fontWeight={ 500 }
           variant="subtitle1"
         >
-          { `There are ${currency(sales[0].availableBundleQuantity, {
+          { `There are ${currency(sale.availableBundleQuantity, {
             precision: 0,
             symbol: "",
           }).format()} remaining stream tokens available for sale.` }

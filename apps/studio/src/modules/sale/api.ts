@@ -107,7 +107,7 @@ export const extendedApi = newmApi.injectEndpoints({
       }),
     }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {

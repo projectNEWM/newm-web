@@ -3,14 +3,9 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useGetUserWalletSongsThunk } from "../song";
 
 /**
- * Determines whether a user is the owner of a song. Checks
- * whether a user has stream tokens for the song in their wallet,
- * as well as whether they have access to the song and it's
- * currently on sale. The second criteria is a fallback for when a
- * user doesn't have any of the song's stream tokens in their wallet
- * because a sale was created for all of them.
+ * Checks whether a user has stream tokens for the song in their wallet.
  */
-export const useHasTokens = (songId: string) => {
+export const useHasSongTokens = (songId: string) => {
   const { isConnected } = useConnectWallet();
   const [getUserWalletSongs, { data: walletSongsResponse, isLoading }] =
     useGetUserWalletSongsThunk();
