@@ -94,8 +94,9 @@ export const CreateSale = () => {
       .integer("You must sell a whole number of stream tokens")
       .min(1, "You must sell at least 1 stream token")
       .max(
-        streamTokensInWallet - 1,
-        "It is required to keep at least one stream token in your wallet."
+        streamTokensInWallet,
+        `You only have ${formattedStreamTokensInWallet} stream tokens 
+        available to sell.`
       ),
     totalSaleValue: Yup.number()
       .required("This field is required")
