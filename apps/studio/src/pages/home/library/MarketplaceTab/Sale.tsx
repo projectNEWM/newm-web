@@ -39,7 +39,6 @@ export const Sale = () => {
   } = useGetSalesQuery(
     {
       addresses: [walletAddress],
-      limit: 1,
       saleStatuses: [SaleStatus.Started],
       songIds: [songId],
     },
@@ -52,7 +51,7 @@ export const Sale = () => {
     isHasTokensLoading ||
     isGetActiveSalesLoading;
 
-  const hasActiveSale = activeOwnedSales.length > 0;
+  const activeSale = activeOwnedSales[0];
 
   /**
    * Handle the pending state for sale start.
@@ -88,8 +87,7 @@ export const Sale = () => {
   }, [songId]);
 
   /**
-   * Refetch sales when pending status changes or the
-   * wallet address changes.
+   * Refetch sales when the pending status changes.
    */
   useEffect(() => {
     if (!isGetSalesUninitialized) {
@@ -103,7 +101,7 @@ export const Sale = () => {
   ]);
 
   /**
-   * Gets an address from the wallet updates the state.
+   * Gets an address from the wallet and updates the state.
    */
   useEffect(() => {
     if (!wallet) return;
@@ -136,7 +134,7 @@ export const Sale = () => {
     return <MarketplaceTabSkeleton />;
   }
 
-  if (!isConnected || (!hasActiveSale && !hasTokens)) {
+  if (!isConnected || (!activeSale && !hasTokens)) {
     return <ConnectWallet />;
   }
 
@@ -148,9 +146,5 @@ export const Sale = () => {
     return <SaleEndPending />;
   }
 
-  return hasActiveSale ? (
-    <ActiveSale sale={ activeOwnedSales[0] } />
-  ) : (
-    <CreateSale />
-  );
+  return activeSale ? <ActiveSale sale={ activeSale } /> : <CreateSale />;
 };
