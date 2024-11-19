@@ -6,6 +6,7 @@ import {
   getIsWalletEnvMismatch,
 } from "@newm-web/utils";
 import { WalletModal } from "@newm-web/components";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import {
   selectUi,
   setIsConnectWalletModalOpen,
@@ -21,6 +22,7 @@ import {
 
 const ConnectWalletModal: FunctionComponent = () => {
   const dispatch = useAppDispatch();
+  const { webStudioDisabledWallets } = useFlags();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
   const { wallet, getBalance, getTokenBalance, getAddress } =
     useConnectWallet();
@@ -94,7 +96,7 @@ const ConnectWalletModal: FunctionComponent = () => {
   return (
     <WalletModal
       isOpen={ isConnectWalletModalOpen }
-      omitWallets={ ["vespr"] }
+      omitWallets={ webStudioDisabledWallets }
       onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
       onConnect={ handleConnect }
       onDisconnect={ handleDisconnect }
