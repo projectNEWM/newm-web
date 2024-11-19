@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { GradientTypography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
@@ -15,10 +15,6 @@ const LaunchBanner = () => {
       >
         Welcome to Your Music Rights Marketplace
       </GradientTypography>
-      <Typography fontSize={ ["14px", "16px", "18px"] } px={ 1 } variant="body2">
-        Buy, sell and trade streaming royalty rights alongside your favorite
-        artists.
-      </Typography>
     </Stack>
   );
 };
