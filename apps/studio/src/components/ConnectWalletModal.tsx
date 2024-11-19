@@ -94,6 +94,7 @@ const ConnectWalletModal: FunctionComponent = () => {
   return (
     <WalletModal
       isOpen={ isConnectWalletModalOpen }
+      omitWallets={ ["vespr"] }
       onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
       onConnect={ handleConnect }
       onDisconnect={ handleDisconnect }
