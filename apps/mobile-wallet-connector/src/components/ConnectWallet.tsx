@@ -13,6 +13,7 @@ import {
   getIsWalletEnvMismatch,
 } from "@newm-web/utils";
 import { DEXHUNTER_TOOLS_PARTNER_CODE } from "@newm-web/env";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import {
   selectUi,
   setIsConnectWalletModalOpen,
@@ -28,6 +29,7 @@ const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
 
   const dispatch = useAppDispatch();
+  const { webMobileWalletConnectorDisabledWallets } = useFlags();
   const { isConnectWalletModalOpen } = useAppSelector(selectUi);
   const [walletAddress, setWalletAddress] = useState("");
   const [walletAdaBalance, setWalletAdaBalance] = useState(0);
@@ -114,6 +116,7 @@ const ConnectWallet: FunctionComponent = () => {
     <Grid>
       <WalletModal
         isOpen={ isConnectWalletModalOpen }
+        omitWallets={ webMobileWalletConnectorDisabledWallets }
         onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
         onDisconnect={ handleResetWallet }

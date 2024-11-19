@@ -34,7 +34,7 @@ import {
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
 
-  const { webMarketplaceVesprWallet } = useFlags();
+  const { webMarketplaceDisabledWallets } = useFlags();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -138,7 +138,7 @@ const ConnectWallet: FunctionComponent = () => {
     <Grid>
       <WalletModal
         isOpen={ isConnectWalletModalOpen }
-        omitWallets={ webMarketplaceVesprWallet ? [] : ["vespr"] }
+        omitWallets={ webMarketplaceDisabledWallets }
         onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
         onDisconnect={ handleResetWallet }
