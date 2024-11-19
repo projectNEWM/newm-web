@@ -17,6 +17,7 @@ import { Favicon } from "@newm-web/elements";
 import { Footer, Header, PingEarningsInProgressWrapper } from "../components";
 import store from "../store";
 import Toast from "../components/Toast";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
@@ -63,6 +64,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
                   <Maintenance flagName="webMarketplaceMaintenanceMode">
                     <AudioProvider>
                       <Toast />
+                      <GoogleAnalytics />
                       <UnsupportedBrowserBanner />
                       <PingEarningsInProgressWrapper />
 
