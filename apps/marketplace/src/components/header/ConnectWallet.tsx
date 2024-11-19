@@ -18,6 +18,7 @@ import {
 import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
 import { LocalStorageKey } from "@newm-web/types";
 import { useDispatch, useSelector } from "react-redux";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
@@ -33,6 +34,7 @@ import {
 const ConnectWallet: FunctionComponent = () => {
   const defaultUsdPrice = { usdPrice: 0 };
 
+  const { webMarketplaceVesprWallet } = useFlags();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -136,7 +138,7 @@ const ConnectWallet: FunctionComponent = () => {
     <Grid>
       <WalletModal
         isOpen={ isConnectWalletModalOpen }
-        omitWallets={ ["vespr"] }
+        omitWallets={ webMarketplaceVesprWallet ? [] : ["vespr"] }
         onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
         onDisconnect={ handleResetWallet }
