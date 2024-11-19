@@ -27,10 +27,10 @@ export const ConnectWallet = () => {
         >
           { wallet
             ? "Your current wallet does not contain this track's stream " +
-              "tokens. To create a sale on the Marketplace, please first " +
+              "tokens. To manage sales on the Marketplace, please first " +
               "connect a wallet containing stream tokens for this track."
             : "Please connect a wallet containing stream tokens for " +
-              "this track to create a sale on the Marketplace." }
+              "this track to manage sales on the Marketplace." }
         </Typography>
       </Alert>
       <Button

@@ -13,7 +13,7 @@ const api = createApi({
   baseQuery,
   endpoints: () => ({}),
   reducerPath: "newmApi",
-  tagTypes: [Tags.Sale, Tags.Artist],
+  tagTypes: [Tags.Sale, Tags.Artist, Tags.Earnings, Tags.OrderFees],
 });
 
 export default api;

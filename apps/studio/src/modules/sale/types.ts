@@ -60,6 +60,7 @@ export interface StartSaleThunkRequest
     StartSaleAmountRequest,
     "ownerAddress" | "costAssetName" | "costPolicyId"
   > {
+  readonly email?: string;
   readonly saleCurrency: Currency;
   readonly songId: string;
 }
@@ -72,6 +73,7 @@ export interface StartSaleTransactionResponse {
 export interface StartSaleTransactionRequest {
   // Cardano wallet change address.
   readonly changeAddress: string;
+  readonly email?: string;
   // UUID of the pending sale.
   readonly saleId: string;
   // CBOR format-encoded list of UTXOs.

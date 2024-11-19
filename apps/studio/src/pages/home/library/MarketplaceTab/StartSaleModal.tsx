@@ -140,7 +140,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${formatUsdAmount(totalSaleValueInUSD)})` }
+                      : `(${formatUsdAmount(totalSaleValueInUSD, {
+                          includeEstimateSymbol: true,
+                        })})` }
                   </Typography>
                   { formatNewmAmount(totalSaleValueInNEWM) }
                 </Typography>
@@ -157,7 +159,9 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
                   <Typography component="span" mr={ 0.5 } variant="subtitle2">
                     { isNEWMPriceUnavailable
                       ? "(≈ $ N/A)"
-                      : `(≈ ${formatUsdAmount(pricePerStreamTokenInUSD)})` }
+                      : `(${formatUsdAmount(pricePerStreamTokenInUSD, {
+                          includeEstimateSymbol: true,
+                        })})` }
                   </Typography>
                   { formatNewmAmount(totalSaleValueInNEWM / tokensToSell) }
                 </Typography>

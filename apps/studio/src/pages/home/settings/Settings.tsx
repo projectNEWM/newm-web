@@ -2,7 +2,11 @@ import { FunctionComponent } from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button, HorizontalLine, PasswordInputField } from "@newm-web/elements";
-import { getUpdatedValues, useWindowDimensions } from "@newm-web/utils";
+import {
+  NEWM_TERMS_OF_SERVICE_URL,
+  getUpdatedValues,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import * as Yup from "yup";
 import theme from "@newm-web/theme";
 import DeleteAccountDialog from "./DeleteAccountDialog";
@@ -12,10 +16,7 @@ import {
   useChangePasswordThunk,
   useGetProfileQuery,
 } from "../../../modules/session";
-import {
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-  commonYupValidation,
-} from "../../../common";
+import { commonYupValidation } from "../../../common";
 import { LogoutButton } from "../../../components";
 
 const Settings: FunctionComponent = () => {
@@ -154,12 +155,14 @@ const Settings: FunctionComponent = () => {
                       } }
                     >
                       <PasswordInputField
+                        autoComplete="new-password"
                         label="NEW PASSWORD"
                         name="newPassword"
                         placeholder="New password"
                         showEndAdornment={ showEndAdornment }
                       />
                       <PasswordInputField
+                        autoComplete="new-password"
                         label="RETYPE NEW PASSWORD"
                         name="confirmPassword"
                         placeholder="New password"
@@ -185,7 +188,7 @@ const Settings: FunctionComponent = () => {
                     </Typography>
                     <Link
                       color={ theme.colors.grey100 }
-                      href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
+                      href={ NEWM_TERMS_OF_SERVICE_URL }
                       rel="noopener"
                       sx={ { alignSelf: ["center", "center", "flex-start"] } }
                       target="_blank"

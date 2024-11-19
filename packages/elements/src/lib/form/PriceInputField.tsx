@@ -45,7 +45,11 @@ const PriceInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
     }
 
     if (helperText) {
-      return <Typography variant="subtitle2">{ helperText }</Typography>;
+      return (
+        <Typography fontWeight={ 500 } variant="subtitle2">
+          { helperText }
+        </Typography>
+      );
     }
   };
 
@@ -62,7 +66,7 @@ const PriceInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
           component="div"
           sx={ {
             color: theme.colors.grey100,
-            fontWeight: 500,
+            fontWeight: 700,
             opacity: rest.disabled ? 0.5 : 1,
             textTransform: "uppercase",
           } }

@@ -15,6 +15,10 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_GA_STUDIO_ID
         : import.meta.env.VITE_GA_STUDIO_ID;
+    case "GA_MARKETPLACE_ID":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_GA_MARKETPLACE_ID
+        : import.meta.env.VITE_GA_MARKETPLACE_ID;
     case "RECAPTCHA_SITE_KEY_STAGING":
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
@@ -35,6 +39,14 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_DEXHUNTER_STUDIO_PARTNER_CODE
         : import.meta.env.VITE_DEXHUNTER_STUDIO_PARTNER_CODE;
+    case "LAUNCHDARKLY_CLIENT_ID_STAGING":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING
+        : import.meta.env.VITE_LAUNCHDARKLY_CLIENT_ID_STAGING;
+    case "LAUNCHDARKLY_CLIENT_ID_PROD":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD
+        : import.meta.env.VITE_LAUNCHDARKLY_CLIENT_ID_PROD;
     case "ENV":
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_ENV
@@ -47,6 +59,7 @@ const getAppEnvVar = (name: string): string => {
 export const APPLE_CLIENT_ID = getAppEnvVar("APPLE_CLIENT_ID");
 export const GOOGLE_CLIENT_ID = getAppEnvVar("GOOGLE_CLIENT_ID");
 export const GA_STUDIO_ID = getAppEnvVar("GA_STUDIO_ID");
+export const GA_MARKETPLACE_ID = getAppEnvVar("GA_MARKETPLACE_ID");
 export const DEXHUNTER_STUDIO_PARTNER_CODE = getAppEnvVar(
   "DEXHUNTER_STUDIO_PARTNER_CODE"
 );
@@ -66,3 +79,11 @@ const RECAPTCHA_SITE_KEY_STAGING = getAppEnvVar("RECAPTCHA_SITE_KEY_STAGING");
 export const RECAPTCHA_SITE_KEY = isProd
   ? RECAPTCHA_SITE_KEY_PROD
   : RECAPTCHA_SITE_KEY_STAGING;
+
+const LAUNCHDARKLY_CLIENT_ID_PROD = getAppEnvVar("LAUNCHDARKLY_CLIENT_ID_PROD");
+const LAUNCHDARKLY_CLIENT_ID_STAGING = getAppEnvVar(
+  "LAUNCHDARKLY_CLIENT_ID_STAGING"
+);
+export const LAUNCHDARKLY_CLIENT_ID = isProd
+  ? LAUNCHDARKLY_CLIENT_ID_PROD
+  : LAUNCHDARKLY_CLIENT_ID_STAGING;

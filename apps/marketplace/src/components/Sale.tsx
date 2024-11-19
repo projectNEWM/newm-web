@@ -1,8 +1,14 @@
 "use client";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import currency from "currency.js";
 import { SongCard } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent, useState } from "react";
@@ -16,6 +22,7 @@ import { Form, Formik } from "formik";
 import {
   FULL_OWNERSHIP_STREAM_TOKENS,
   formatNewmAmount,
+  formatUsdAmount,
 } from "@newm-web/utils";
 import { useRouter } from "next/navigation";
 import { usePlayAudioUrl } from "@newm-web/audio";
@@ -63,7 +70,10 @@ const Sale: FunctionComponent<SaleProps> = ({
       .required("This field is required")
       .integer()
       .min(1)
-      .max(sale?.availableBundleQuantity || 0),
+      .max(
+        sale?.availableBundleQuantity || 0,
+        "Order amount cannot exceed maximum Stream Tokens available."
+      ),
   });
 
   /**
@@ -92,7 +102,7 @@ const Sale: FunctionComponent<SaleProps> = ({
 
     return {
       newmAmount: formatNewmAmount(newmAmount),
-      usdAmount: currency(usdAmount).format(),
+      usdAmount: formatUsdAmount(usdAmount, { includeEstimateSymbol: true }),
     };
   };
 
@@ -236,8 +246,8 @@ const Sale: FunctionComponent<SaleProps> = ({
                   isOpen={ !isPurchaseModalClosed }
                   numPurchasedTokens={ values.streamTokens }
                   percentageOfTotalRoyalties={ percentageOfTotalRoyalties }
-                  pricePerTokenNewm={ sale.costAmountNewm }
-                  pricePerTokenUsd={ sale.costAmountUsd }
+                  songTitle={ sale.song.title }
+                  tokenAgreementUrl={ sale.song.tokenAgreementUrl }
                   totalPurchaseValueNewm={
                     values.streamTokens * sale.costAmountNewm
                   }
@@ -250,29 +260,46 @@ const Sale: FunctionComponent<SaleProps> = ({
 
                 <Stack gap={ 2.5 } mb={ 4 } mt={ 0.5 }>
                   <Stack>
-                    <Box alignSelf="flex-end" p={ 0.5 }>
-                      <Tooltip
-                        title={ `The number of Stream Tokens correlates directly
-                          with the percentage of Streaming royalties you
-                          can acquire and the total price of the bundle.
-                          For example 1 token is worth = 
-                          ${getPercentageOfTotalStreamTokens(1)}% of
-                          total royalties, and costs 
-                          '${formatNewmAmount(sale.costAmountNewm)}'.` }
-                      >
-                        <IconButton sx={ { padding: 0 } }>
-                          <HelpIcon sx={ { color: theme.colors.grey100 } } />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-
                     <Box
                       borderRadius={ 2 }
-                      px={ 3 }
-                      py={ 2.5 }
+                      pb={ 2.5 }
+                      pl={ 3 }
                       sx={ { backgroundColor: theme.colors.grey600 } }
                     >
                       <Stack>
+                        <Box alignSelf="flex-end" p={ 0.5 }>
+                          <Tooltip
+                            title={
+                              <Typography>
+                                The number of Stream Tokens correlates with the
+                                percentage of streaming royalties you can
+                                acquire. For example, 1 Stream Token equates to{ " " }
+                                { `${getPercentageOfTotalStreamTokens(1)}` }% of
+                                the track&apos;s total streaming royalties. For
+                                information on what constitutes a streaming
+                                royalty, please refer to the{ " " }
+                                <span style={ { color: theme.colors.music } }>
+                                  <Link
+                                    href={ sale.song.tokenAgreementUrl }
+                                    rel="noopener noreferrer"
+                                    sx={ {
+                                      width: "fit-content",
+                                    } }
+                                    target="_blank"
+                                    variant="h4"
+                                  >
+                                    stream token contract
+                                  </Link>
+                                </span>
+                                .
+                              </Typography>
+                            }
+                          >
+                            <IconButton sx={ { padding: 0 } }>
+                              <HelpIcon sx={ { color: theme.colors.grey100 } } />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
                         <Typography
                           fontWeight={ theme.typography.fontWeightBold }
                           variant="subtitle2"
@@ -326,7 +353,7 @@ const Sale: FunctionComponent<SaleProps> = ({
                         variant="body1"
                       >
                         Buy { values.streamTokens.toLocaleString() } Stream Tokens
-                        • { `${totalCost.newmAmount} (≈ ${totalCost.usdAmount})` }
+                        • { `${totalCost.newmAmount} (${totalCost.usdAmount})` }
                       </Typography>
                     </Button>
                   </Box>

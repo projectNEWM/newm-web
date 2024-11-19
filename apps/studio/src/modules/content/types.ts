@@ -24,6 +24,9 @@ export interface Country {
   readonly state?: State[];
 }
 
+/**
+ * @deprecated Use Launch Darkly feature flags instead.
+ */
 interface FeatureFlags {
   readonly claimWalletRoyaltiesEnabled: boolean;
   readonly manageMarketplaceSalesEnabled: boolean;

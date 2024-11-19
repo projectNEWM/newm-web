@@ -11,6 +11,7 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   getEarnings: "get_earnings",
   getNewmUsdConversionRate: "get_newm_price",
   getSale: "get_sale",
+  getSaleCount: "get_sale_count",
   getSales: "get_sales",
   getStudioClientConfig: "studio_config",
   googleLogin: "login_google",

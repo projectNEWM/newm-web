@@ -28,7 +28,7 @@ jobs:
       - name: Deploy tools
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_ENV=production NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+          APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_ENV=production NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD=${{ secrets.LAUNCHDARKLY_CLIENT_ID_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
 
       - name: Send update to slack
         id: slack
@@ -36,7 +36,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Tools updated in production. View at https://newm.tools . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }} ."
+              "text": "NEWM Tools updated in production. View at https://tools.newm.io . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }} ."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_TOOLS_WEBHOOK }}

@@ -38,6 +38,7 @@ const ResetPassword: FunctionComponent = () => {
       >
         <PasswordInputField
           aria-label="Enter your new password"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
@@ -46,6 +47,7 @@ const ResetPassword: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Confirm your new password"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"

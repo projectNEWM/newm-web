@@ -1,4 +1,10 @@
-import { ApiSale, GetSalesParams, GetSalesResponse } from "@newm-web/types";
+import {
+  ApiSale,
+  GetSaleCountParams,
+  GetSaleCountResponse,
+  GetSalesParams,
+  GetSalesResponse,
+} from "@newm-web/types";
 import { transformApiSale } from "@newm-web/utils";
 import {
   EndSaleAmountRequest,
@@ -62,9 +68,46 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/marketplace/sales/end/transaction",
       }),
     }),
-
-    getSales: build.query<GetSalesResponse, GetSalesParams | void>({
+    getSaleCount: build.query<GetSaleCountResponse, GetSaleCountParams | void>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of songs",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.Sale],
+
+      query: ({
+        ids,
+        artistIds,
+        genres,
+        moods,
+        songIds,
+        saleStatuses,
+        ...rest
+      } = {}) => ({
+        method: "GET",
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...(moods ? { moods: moods.join(",") } : {}),
+          ...(songIds ? { songIds: songIds.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/sales/count",
+      }),
+    }),
+    getSales: build.query<GetSalesResponse, GetSalesParams | void>({
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
@@ -158,6 +201,6 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSalesQuery } = extendedApi;
+export const { useGetSalesQuery, useGetSaleCountQuery } = extendedApi;
 
 export default extendedApi;

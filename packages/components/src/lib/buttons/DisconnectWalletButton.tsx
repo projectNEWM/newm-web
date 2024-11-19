@@ -17,9 +17,11 @@ interface DisconnectWalletButtonProps {
   readonly adaBalance?: number;
   readonly adaUsdBalance?: number;
   readonly address?: string;
+  readonly isClaimEarningsEnabled?: boolean;
   readonly isNewmBalanceBadgeEnabled?: boolean;
   readonly newmBalance?: number;
   readonly newmUsdBalance?: number;
+  readonly onClaimEarnings?: VoidFunction;
   readonly onDisconnect?: VoidFunction;
   readonly onDismissNewmBalanceBadge?: VoidFunction;
   readonly partnerCode: string;
@@ -43,6 +45,8 @@ const DisconnectWalletButton: FunctionComponent<
   onDisconnect,
   onDismissNewmBalanceBadge,
   isNewmBalanceBadgeEnabled = false,
+  isClaimEarningsEnabled = false,
+  onClaimEarnings,
 }) => {
   const theme = useTheme();
 
@@ -100,6 +104,11 @@ const DisconnectWalletButton: FunctionComponent<
   const handleDisconnect = () => {
     handleToggleDropdown();
     onDisconnect?.();
+  };
+
+  const handleClaimEarnings = () => {
+    handleToggleDropdown();
+    onClaimEarnings?.();
   };
 
   /**
@@ -246,7 +255,12 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(newmUsdBalance, { precision: 2 }) })
+                  (
+                  { formatUsdAmount(newmUsdBalance, {
+                    includeEstimateSymbol: true,
+                    precision: 2,
+                  }) }
+                  )
                 </Typography>
               </Stack>
 
@@ -263,12 +277,20 @@ const DisconnectWalletButton: FunctionComponent<
                   fontWeight={ 400 }
                   variant="h5"
                 >
-                  (≈{ formatUsdAmount(adaUsdBalance, { precision: 2 }) })
+                  (
+                  { formatUsdAmount(adaUsdBalance, {
+                    includeEstimateSymbol: true,
+                    precision: 2,
+                  }) }
+                  )
                 </Typography>
               </Stack>
             </Stack>
 
-            <Stack alignSelf="stretch" p={ 1.5 }>
+            <Stack alignSelf="stretch" gap={ 1.5 } p={ 1.5 }>
+              { isClaimEarningsEnabled && (
+                <Button onClick={ handleClaimEarnings }>Claim earnings</Button>
+              ) }
               <Badge
                 color="primary"
                 invisible={ !isNewmBadgeVisible }

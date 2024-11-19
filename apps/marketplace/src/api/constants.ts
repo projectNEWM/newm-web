@@ -9,9 +9,12 @@ export const recaptchaEndpointActionMap: Record<string, string> = {
   getArtist: "get_artist",
   getArtistCount: "get_artist_count",
   getArtists: "get_artists",
+  getEarnings: "get_earnings",
   getMarketplaceClientConfig: "marketplace_config",
   getNewmUsdConversionRate: "get_newm_price",
+  getOrderFees: "get_order_fees",
   getSale: "get_sale",
   getSaleCount: "get_sale_count",
   getSales: "get_sales",
+  postEarnings: "post_earnings",
 };
