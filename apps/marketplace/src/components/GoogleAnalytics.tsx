@@ -1,28 +1,11 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { GA_MARKETPLACE_ID, isProd } from "@newm-web/env";
-import ReactGA from "react-ga4";
-import { useLocation } from "react-router-dom";
-
-if (isProd && GA_MARKETPLACE_ID) {
-  ReactGA.initialize(GA_MARKETPLACE_ID);
-}
+import { GoogleAnalytics as NextJsGoogleAnalytics } from "@next/third-parties/google";
 
 const GoogleAnalytics: FunctionComponent = () => {
-  const location = useLocation();
+  if (!isProd || !GA_MARKETPLACE_ID) return null;
 
-  /**
-   * Send GA page view on each route change in production.
-   */
-  useEffect(() => {
-    if (!isProd) return;
-
-    ReactGA.send({
-      hitType: "pageview",
-      page: location.pathname,
-    });
-  }, [location]);
-
-  return null;
+  return <NextJsGoogleAnalytics gaId={ GA_MARKETPLACE_ID } />;
 };
 
 export default GoogleAnalytics;
