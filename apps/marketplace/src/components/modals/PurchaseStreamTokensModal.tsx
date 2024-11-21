@@ -102,7 +102,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
             pt: 3,
             px: 3,
             textAlign: "center",
-            width: "90%",
+            width: ["100%", "90%", "90%"],
           } }
         >
           <Stack gap={ 0.5 } textAlign="start">

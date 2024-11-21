@@ -56,7 +56,7 @@ const Modal: FunctionComponent<ModalProps> = ({
           pb: 10,
           position: "relative",
           pt: 6,
-          px: 6,
+          px: [0, 6, 6],
         } }
       >
         { isCloseButtonVisible && (
