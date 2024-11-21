@@ -16,6 +16,7 @@ export interface SwitchInputProps extends SwitchProps {
   readonly description?: string;
   readonly includeBorder?: boolean;
   readonly title: string;
+  readonly toggleTooltipText?: string;
   readonly tooltipText?: string;
 }
 
@@ -28,6 +29,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   includeBorder = true,
   tooltipText = "",
   children,
+  toggleTooltipText,
   ...props
 }) => {
   const theme = useTheme();
@@ -81,7 +83,11 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
             </Typography>
           ) }
         </Stack>
-        <Switch { ...props } />
+        <Tooltip title={ toggleTooltipText }>
+          <Stack>
+            <Switch { ...props } />
+          </Stack>
+        </Tooltip>
       </Stack>
       { props.checked ? children : null }
     </Stack>
