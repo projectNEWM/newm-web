@@ -11,7 +11,6 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  Tooltip,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
@@ -131,7 +130,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   const isSubmitDisabled =
     !values.agreesToCoverArtGuidelines ||
-    (isMintingVisible && (!wallet || !isVerified));
+    (isMintingVisible && (!wallet || !isVerified)) ||
+    (values.isMinting && webStudioDisableTrackDistributionAndMinting);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
