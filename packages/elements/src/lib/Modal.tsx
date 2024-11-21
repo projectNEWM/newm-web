@@ -42,7 +42,7 @@ const Modal: FunctionComponent<ModalProps> = ({
   return (
     <MuiModal
       open={ isOpen }
-      sx={ { display: isFullScreen ? "flex" : "grid" } }
+      sx={ { display: isFullScreen ? "flex" : "grid", overflow: "auto" } }
       onClose={ isCloseOnClickBackgroundEnabled ? onClose : undefined }
     >
       <Box
