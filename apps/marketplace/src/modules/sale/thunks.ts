@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { asThunkHook } from "@newm-web/utils";
+import { NEWM_ASSET_NAME, NEWM_POLICY_ID, asThunkHook } from "@newm-web/utils";
 import {
   enableWallet,
   getWalletChangeAddress,
+  getWalletTokenBalance,
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { GenerateOrderRequest } from "@newm-web/types";
@@ -13,6 +14,21 @@ export const purchaseStreamTokens = createAsyncThunk(
   "sale/purchaseStreamTokens",
   async (body: GenerateOrderRequest, { dispatch }) => {
     try {
+      const wallet = await enableWallet();
+
+      const newmBalance = await getWalletTokenBalance(
+        wallet,
+        NEWM_POLICY_ID,
+        NEWM_ASSET_NAME
+      );
+
+      if (!newmBalance) {
+        throw new Error(
+          `Insufficient NEWM tokens in wallet. Please add NEWM tokens to
+          your wallet and try again.`
+        );
+      }
+
       const orderResp = await dispatch(
         saleApi.endpoints.generateOrder.initiate(body)
       );
@@ -20,14 +36,12 @@ export const purchaseStreamTokens = createAsyncThunk(
       if ("error" in orderResp || !orderResp.data) return;
 
       const { orderId, amountCborHex } = orderResp.data;
-      const wallet = await enableWallet();
       const changeAddress = await getWalletChangeAddress(wallet);
       const utxoCborHexList = await wallet.getUtxos(amountCborHex);
 
       if (!utxoCborHexList) {
         throw new Error(
-          `Insufficient NEWM tokens in wallet. Please add NEWM tokens to
-          your wallet and try again.`
+          "Insufficient balance in wallet. Please add funds and try again."
         );
       }
 
