@@ -9,6 +9,7 @@ interface SwitchInputFieldProps extends SwitchProps {
   readonly includeBorder?: boolean;
   readonly name: string;
   readonly title: string;
+  readonly toggleTooltipText?: string;
   readonly tooltipText?: string;
 }
 

@@ -11,6 +11,7 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  Tooltip,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
@@ -25,6 +26,7 @@ import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import { UploadSongFormValues } from "./UploadSong";
 import {
   NEWM_STUDIO_FAQ_URL,
@@ -83,6 +85,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       appleMusicProfile,
     } = emptyProfile,
   } = useGetProfileQuery();
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -401,10 +404,19 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                     "ownership, makes streaming royalties available for " +
                     "purchase, and enables royalty distribution to your account."
                   }
-                  disabled={ isDeclined }
+                  disabled={
+                    isDeclined || webStudioDisableTrackDistributionAndMinting
+                  }
                   includeBorder={ false }
                   name="isMinting"
                   title="DISTRIBUTE & MINT SONG"
+                  toggleTooltipText={
+                    webStudioDisableTrackDistributionAndMinting
+                      ? "Track distribution and minting is temporarily disabled. " +
+                        "Please upload your song to save your progress, and check " +
+                        "back later to finish the distribution process."
+                      : undefined
+                  }
                   onClick={ () => {
                     if (!isArtistPricePlanSelected) handlePricingPlanOpen();
                   } }
