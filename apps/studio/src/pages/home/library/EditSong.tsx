@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
 import {
@@ -48,6 +49,7 @@ const EditSong: FunctionComponent = () => {
   const dispatch = useDispatch();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
   const {
@@ -171,7 +173,9 @@ const EditSong: FunctionComponent = () => {
     ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
     isInstrumental: instrumental,
-    isMinting: isSongEditable(mintingStatus),
+    isMinting:
+      isSongEditable(mintingStatus) &&
+      !webStudioDisableTrackDistributionAndMinting,
     isrc,
     iswc,
     language,
