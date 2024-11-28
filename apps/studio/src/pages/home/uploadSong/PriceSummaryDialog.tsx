@@ -72,7 +72,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             Total amount
           </Typography>
           <Typography variant="h3">
-            { formatPriceToDecimal(songEstimate?.adaPrice) || "N/A" }₳
+            ₳{ formatPriceToDecimal(songEstimate?.adaPrice) || "N/A" }
           </Typography>
           <Typography variant="subtitle1">
             ${ formatPriceToDecimal(songEstimate?.usdPrice) || "N/A" }
@@ -102,7 +102,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={ 0.5 }>
               <Typography>
-                { formatPriceToDecimal(songEstimate?.mintPriceAda) || "N/A" }₳
+                ₳{ formatPriceToDecimal(songEstimate?.mintPriceAda) || "N/A" }
               </Typography>
               <Typography variant="subtitle1">
                 ${ formatPriceToDecimal(songEstimate?.mintPriceUsd) || "N/A" }
@@ -131,7 +131,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={ 0.5 }>
               <Typography>
-                { formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A" }₳
+                ₳{ formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A" }
               </Typography>
               <Typography variant="subtitle1">
                 ${ formatPriceToDecimal(songEstimate?.collabPriceUsd) || "N/A" }
@@ -154,7 +154,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             </Stack>
             <Stack rowGap={ 0.5 }>
               <Typography>
-                { formatPriceToDecimal(songEstimate?.dspPriceAda) || "N/A" }₳
+                ₳{ formatPriceToDecimal(songEstimate?.dspPriceAda) || "N/A" }
               </Typography>
               <Typography variant="subtitle1">
                 ${ formatPriceToDecimal(songEstimate?.dspPriceUsd) || "N/A" }
@@ -182,7 +182,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
           </Stack>
           <Stack rowGap={ 0.5 }>
             <Typography>
-              { formatPriceToDecimal(songEstimate?.adaPrice) || "N/A" }₳
+              ₳{ formatPriceToDecimal(songEstimate?.adaPrice) || "N/A" }
             </Typography>
             <Typography variant="subtitle1">
               ${ formatPriceToDecimal(songEstimate?.usdPrice) || "N/A" }

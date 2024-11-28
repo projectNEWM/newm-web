@@ -103,7 +103,7 @@ export const CreateSale = () => {
       .typeError("")
       .when("saleCurrency", {
         is: (val: string) => val === Currency.USD.name,
-        otherwise: (s) => s.min(1, "Value must be at least 1 Ɲ"),
+        otherwise: (s) => s.min(1, "Value must be at least Ɲ1"),
         then: (s) => s.min(0.01, "Value must be at least $0.01"),
       }),
   });
