@@ -101,10 +101,7 @@ const EarningsSummaryModal: FunctionComponent<
                     }) }
                     )
                   </Typography>
-                  ₳
-                  { formatAdaAmount(transactionFeeInADA, {
-                    includeCurrencySymbol: false,
-                  }) }
+                  { formatAdaAmount(transactionFeeInADA) }
                 </Typography>
               </Stack>
             </Stack>
