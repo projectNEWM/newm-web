@@ -15,16 +15,8 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
-      - run: npx nx build marketplace
-        env:
-          NEXT_PUBLIC_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
-          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          NEXT_PUBLIC_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
-          NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING: ${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          NEXT_PUBLIC_ENV: staging
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -45,7 +37,7 @@ jobs:
       - name: Deploy to Lambda Function
         run: |
           npm install --prefix .github/workflows/cdk
-          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_GA_MARKETPLACE_ID=${{ secrets.GA_MARKETPLACE_ID }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
+          APPNAME=marketplace QUALIFIER=${{ github.event.pull_request.number }} NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING=${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_GA_MARKETPLACE_ID=${{ secrets.GA_MARKETPLACE_ID }} npm run --prefix .github/workflows/cdk cdk:preview deploy -- --require-approval never
 
       - name: Get preview url
         id: previewurl

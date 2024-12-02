@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npx nx build studio
+      - run: npx nx build studio --no-cloud
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
           VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
