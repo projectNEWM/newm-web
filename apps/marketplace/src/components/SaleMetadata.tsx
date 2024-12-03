@@ -16,6 +16,7 @@ interface SaleDetailProps {
 interface SaleLinkProps {
   readonly href: string;
   readonly label: string;
+  readonly linkText: string;
 }
 
 const SaleDetail = ({ label, value }: SaleDetailProps) => (
@@ -29,7 +30,7 @@ const SaleDetail = ({ label, value }: SaleDetailProps) => (
   </Stack>
 );
 
-const SaleLink = ({ label, href }: SaleLinkProps) => (
+const SaleLink = ({ href, label, linkText }: SaleLinkProps) => (
   <Stack color={ theme.colors.music } gap={ 0.5 }>
     <Typography fontWeight={ 600 } variant="subtitle2">
       { label }
@@ -41,7 +42,7 @@ const SaleLink = ({ label, href }: SaleLinkProps) => (
       target="_blank"
       variant="h4"
     >
-      Link
+      { linkText }
     </Link>
   </Stack>
 );
@@ -67,9 +68,17 @@ const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
       />
       <SaleDetail label="GENRE" value={ sale.song.genres.join(", ") } />
       <SaleDetail label="MOOD" value={ sale.song.moods.join(", ") } />
-      <SaleLink href={ sale.song.assetUrl } label="POOL.PM" />
+      <SaleLink
+        href={ sale.song.assetUrl }
+        label="POOL.PM"
+        linkText="Listing Details"
+      />
       <SaleDetail label="POLICY ID" value={ sale.bundlePolicyId } />
-      <SaleLink href={ sale.song.tokenAgreementUrl } label="CONTRACT PREVIEW" />
+      <SaleLink
+        href={ sale.song.tokenAgreementUrl }
+        label="CONTRACT PREVIEW"
+        linkText="View Details"
+      />
     </Stack>
   );
 };
