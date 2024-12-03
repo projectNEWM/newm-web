@@ -244,7 +244,7 @@ const PurchaseStreamTokensModal: FunctionComponent<
               </Stack>
             </Stack>
             <Typography variant="subtitle2">
-              { `Total does not include the network fee (≈ ${TRANSACTION_FEE_IN_ADA} ADA) for using the
+              { `Total does not include the network fee (≈₳${TRANSACTION_FEE_IN_ADA}) for using the
               Cardano blockchain. Fee prices are not guaranteed, costs may vary.
               Stream tokens may take several minutes to appear in the wallet.` }
             </Typography>

@@ -26,7 +26,7 @@ export const formatNewmAmount = (
     precision: 3,
   }
 ) => {
-  if (!amount) return "0 Ɲ";
+  if (!amount) return "Ɲ0";
 
   const {
     includeCurrencySymbol = true,
@@ -39,7 +39,7 @@ export const formatNewmAmount = (
   }
 
   const formattedAmount = currency(amount, {
-    pattern: "# !",
+    pattern: "!#",
     precision,
     symbol: includeCurrencySymbol ? "Ɲ" : "",
   }).format();
@@ -59,7 +59,7 @@ export const formatAdaAmount = (
     precision: 2,
   }
 ) => {
-  if (!amount) return "₳ 0";
+  if (!amount) return "₳0";
 
   const {
     includeCurrencySymbol = true,
@@ -68,12 +68,12 @@ export const formatAdaAmount = (
   } = options;
 
   const formattedAmount = currency(amount, {
-    pattern: "! #",
+    pattern: "!#",
     precision,
     symbol: includeCurrencySymbol ? "₳" : "",
   }).format();
 
-  return includeEstimateSymbol ? `≈ ${formattedAmount}` : formattedAmount;
+  return includeEstimateSymbol ? `≈${formattedAmount}` : formattedAmount;
 };
 
 /**
@@ -106,7 +106,7 @@ export const formatUsdAmount = (
     symbol: includeCurrencySymbol ? "$" : "",
   }).format();
 
-  return includeEstimateSymbol ? `≈ ${formattedAmount}` : formattedAmount;
+  return includeEstimateSymbol ? `≈${formattedAmount}` : formattedAmount;
 };
 
 export const Currency = {
