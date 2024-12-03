@@ -399,6 +399,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 } }
               >
                 <SwitchInputField
+                  data-testid="isMinting"
                   description={
                     "Minting a song will create an NFT that reflects " +
                     "ownership, makes streaming royalties available for " +
@@ -413,8 +414,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   toggleTooltipText={
                     webStudioDisableTrackDistributionAndMinting
                       ? "Track distribution and minting is temporarily disabled. " +
-                        "Please upload your song to save your progress, and check " +
-                        "back later to finish the distribution process."
+                        "Please review and update your song details, and check back " +
+                        "later to finish the distribution process."
                       : undefined
                   }
                   onClick={ () => {
