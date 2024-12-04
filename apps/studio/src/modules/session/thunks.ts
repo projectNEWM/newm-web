@@ -44,7 +44,7 @@ export const updateProfile = createAsyncThunk(
       if (body.bannerUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_lfill,w_1600,h_200",
+          eager: "c_lfill,w_1600,h_200,f_png",
         };
 
         bannerUrl = await uploadToCloudinary(
@@ -57,7 +57,7 @@ export const updateProfile = createAsyncThunk(
       if (body.pictureUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_lfill,w_400,h_400",
+          eager: "c_lfill,w_400,h_400,f_png",
         };
 
         pictureUrl = await uploadToCloudinary(
@@ -70,7 +70,7 @@ export const updateProfile = createAsyncThunk(
       if (body.companyLogoUrl) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_lfill,w_200,h_200",
+          eager: "c_lfill,w_200,h_200,f_png",
         };
 
         companyLogoUrl = await uploadToCloudinary(
