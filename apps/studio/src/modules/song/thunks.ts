@@ -74,7 +74,7 @@ export const uploadSong = createAsyncThunk(
 
       // downsize if necessary
       const uploadParams = {
-        eager: "c_limit,w_4000,h_4000,f_png",
+        eager: "c_limit,w_4000,h_4000",
       };
 
       const coverArtUrl = await uploadToCloudinary(
@@ -359,7 +359,7 @@ export const patchSong = createAsyncThunk(
       if (body.coverArtUrl instanceof File) {
         // downsize if necessary
         const uploadParams = {
-          eager: "c_limit,w_4000,h_4000,f_png",
+          eager: "c_limit,w_4000,h_4000",
         };
 
         coverArtUrl = await uploadToCloudinary(
