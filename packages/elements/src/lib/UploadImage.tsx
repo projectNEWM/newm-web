@@ -160,7 +160,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     accept: {
       "image/jpg": [".jpg", ".jpeg"],
       "image/png": [".png"],
-      "image/webp": [".webp"],
     },
     multiple: false,
     onDrop: allowImageChange ? handleDrop : undefined,
