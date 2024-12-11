@@ -55,6 +55,7 @@ const EditSong: FunctionComponent = () => {
   const {
     data: {
       companyName = "",
+      dspPlanSubscribed: isArtistPricePlanSelected = false,
       email,
       firstName = "",
       lastName = "",
@@ -174,6 +175,7 @@ const EditSong: FunctionComponent = () => {
     isExplicit: parentalAdvisory === "Explicit",
     isInstrumental: instrumental,
     isMinting:
+      isArtistPricePlanSelected &&
       isSongEditable(mintingStatus) &&
       !webStudioDisableTrackDistributionAndMinting,
     isrc,
