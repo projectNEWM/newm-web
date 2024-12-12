@@ -286,7 +286,6 @@ const AdvancedSongDetails = () => {
             "optional; if you do not already have an IPI or choose not to obtain " +
             "one, leave this field blank."
           }
-          type="number"
         />
         <TextInputField
           label="ISWC"
