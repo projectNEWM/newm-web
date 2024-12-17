@@ -104,9 +104,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 fontSize={ 12 }
                 variant="subtitle1"
               >
-                I confirm that I am the primary creator of{ " " }
-                <strong>{ songTitle }</strong> and all mentioned collaborators are
-                accurate.
+                I possess all necessary rights, permissions, and licenses from
+                any third-party holding rights to <strong>{ songTitle }</strong>{ " " }
+                and confirm the accuracy of all mentioned collaborators.
               </Typography>
             ) : (
               <Typography
@@ -114,8 +114,8 @@ const FormContent: FunctionComponent<FormContentProps> = ({
                 fontSize={ 12 }
                 variant="subtitle1"
               >
-                I confirm that I am the exclusive creator of{ " " }
-                <strong>{ songTitle }.</strong>
+                I possess all necessary rights, permissions, and licenses from
+                any third-party holding rights to <strong>{ songTitle }.</strong>
               </Typography>
             )
           }
