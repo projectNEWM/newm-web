@@ -1,7 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from "react";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { Link, Stack, Typography } from "@mui/material";
-import { DiscordLogo, NEWMLogo, NEWMMonster } from "@newm-web/assets";
+import { DiscordLogo, NEWMLogo, NEWMMonsterRock } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { NEWM_DISCORD_URL, getImageSrc } from "@newm-web/utils";
 
@@ -43,7 +43,7 @@ const Maintenance: FunctionComponent<MaintenanceProps> = ({
         <img
           alt={ "NEWM Monster" }
           height={ 250 }
-          src={ getImageSrc(NEWMMonster) }
+          src={ getImageSrc(NEWMMonsterRock) }
           style={ { marginTop: "28px" } }
           width={ 250 }
         />
