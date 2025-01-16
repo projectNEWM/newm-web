@@ -62,6 +62,8 @@ const Header: FunctionComponent = () => {
             mr: [2, 2, 7.5],
             mt: [2, 2, 3.5],
             order: [2, 2, 3],
+            position: "relative",
+            zIndex: 1000,
           } }
         >
           <ConnectWallet />
