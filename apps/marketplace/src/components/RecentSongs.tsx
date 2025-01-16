@@ -33,7 +33,7 @@ const RecentSongs: FunctionComponent = () => {
   };
 
   return (
-    <Box mt={ [7.5, 5.5, 10] }>
+    <Box mt={ [7.5, 5, 5] }>
       <Sales
         hasMore={ hasMore }
         isLoading={ isFetching }
