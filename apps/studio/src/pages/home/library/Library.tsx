@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
 import { FunctionComponent } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { PageNotFound } from "@newm-web/components";
 import EditSong from "./EditSong";
 import Discography from "./Discography";
 import ViewDetails from "./ViewDetails";
@@ -23,7 +24,7 @@ const Library: FunctionComponent = () => (
       <Route element={ <EditSong /> } path="edit-song/:songId*" />
       <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
-      <Route element={ <Navigate to="/home/library" replace /> } path="*" />
+      <Route element={ <PageNotFound /> } path="*" />
     </Routes>
   </Container>
 );
