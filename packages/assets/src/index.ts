@@ -1,7 +1,5 @@
 import AddImage from "./lib/icons/AddImage";
 import AddSong from "./lib/icons/AddSong";
-import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
-import bgImage from "./lib/images/bg-img.webp";
 import Charli3Logo from "./lib/icons/Charli3Logo";
 import CheckboxIcon from "./lib/icons/CheckboxIcon";
 import CheckCircle from "./lib/icons/CheckCircle";
@@ -19,27 +17,29 @@ import ItunesLogo from "./lib/icons/ItunesLogo";
 import NEWMLogo from "./lib/icons/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/icons/NEWMLogoSmInverse";
 import NEWMMarketplaceLogo from "./lib/icons/NEWMMarketplaceLogo";
-import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
-import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
 import Owner from "./lib/icons/Owner";
 import PeopleIcon from "./lib/icons/PeopleIcon";
 import PlayButton from "./lib/icons/PlayButton";
-import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
-import SoundWave from "./lib/icons/SoundWave";
-import Suitcase from "./lib/icons/Suitcase";
 import Search from "./lib/icons/Search";
+import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
 import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
+import SoundWave from "./lib/icons/SoundWave";
 import SpotifyLogo from "./lib/icons/SpotifyLogo";
+import Suitcase from "./lib/icons/Suitcase";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
 import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
 import UploadIcon from "./lib/icons/UploadIcon";
 import VerticalEllipsis from "./lib/icons/VerticalEllipsis";
 import WalletIcon from "./lib/icons/WalletIcon";
 import XLogo from "./lib/icons/XLogo";
+import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
+import bgImage from "./lib/images/bg-img.webp";
+import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
+import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
 
 export {
-  AddSong,
   AddImage,
+  AddSong,
   artistAgreementPreview,
   bgImage,
   Charli3Logo,
@@ -64,8 +64,8 @@ export {
   Owner,
   PeopleIcon,
   PlayButton,
-  SelectedCheckboxIcon,
   Search,
+  SelectedCheckboxIcon,
   SoundCloudLogo,
   SoundWave,
   SpotifyLogo,
