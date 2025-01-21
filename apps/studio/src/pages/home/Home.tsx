@@ -3,6 +3,7 @@ import { FunctionComponent, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
+import { PageNotFound } from "@newm-web/components";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
@@ -78,6 +79,8 @@ const Home: FunctionComponent = () => {
           <Route element={ <Wallet /> } path="wallet" />
           <Route element={ <Profile /> } path="profile" />
           <Route element={ <Settings /> } path="settings" />
+
+          <Route element={ <PageNotFound /> } path="*" />
         </Routes>
       </Box>
     </Box>
