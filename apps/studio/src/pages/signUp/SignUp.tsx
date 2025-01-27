@@ -1,8 +1,10 @@
 import * as Yup from "yup";
 import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { WizardForm } from "@newm-web/elements";
+import { useLocation } from "react-router";
+import { PageNotFound } from "@newm-web/components";
 import Verification from "./Verification";
 import Welcome from "./Welcome";
 import { commonYupValidation, useAppDispatch } from "../../common";
@@ -18,6 +20,9 @@ interface AccountValues {
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const [isValidPath, setIsValidPath] = useState(true); // State to track path validity
+
   const initialValues: AccountValues = {
     authCode: "",
     confirmPassword: "",
@@ -54,6 +59,19 @@ const SignUp: FunctionComponent = () => {
   }: FormikValues): void => {
     dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
   };
+
+  useEffect(() => {
+    const validPaths = ["/sign-up", "/sign-up/verification"];
+
+    const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes
+    const currentPath = normalizePath(location.pathname);
+
+    setIsValidPath(validPaths.map(normalizePath).includes(currentPath));
+  }, [location.pathname]);
+
+  if (!isValidPath) {
+    return <PageNotFound />;
+  }
 
   return (
     <Box
