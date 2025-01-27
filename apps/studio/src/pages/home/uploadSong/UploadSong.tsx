@@ -146,7 +146,7 @@ const UploadSong: FunctionComponent = () => {
    * contents are not persisted. If user navigates to an invalid
    * path, redirect to 404 page.
    *
-   * TODO: remove this when form values are persisted on refresh
+   * TODO: remove the navigation when form values are persisted on refresh
    */
   useEffect(() => {
     const validPaths = [
@@ -174,6 +174,7 @@ const UploadSong: FunctionComponent = () => {
   if (!isValidPath) {
     return <PageNotFound />;
   }
+
   const validations = {
     agreesToCoverArtGuidelines: commonYupValidation.agreesToCoverArtGuidelines,
     audio: commonYupValidation.audio,

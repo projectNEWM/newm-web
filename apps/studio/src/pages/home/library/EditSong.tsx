@@ -5,11 +5,12 @@ import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
+import { PageNotFound } from "@newm-web/components";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
 import {
@@ -47,6 +48,9 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 const EditSong: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [isValidPath, setIsValidPath] = useState(true);
   const { songId } = useParams<"songId">() as SongRouteParams;
 
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
@@ -255,17 +259,38 @@ const EditSong: FunctionComponent = () => {
 
   /**
    * Ensure user is returned to first step on refresh since form
-   * contents are not persisted.
+   * contents are not persisted. If user navigates to an invalid
+   * path, redirect to 404 page.
    *
-   * TODO: remove this when form values are persisted on refresh
+   * TODO: remove the navigation when form values are persisted on refresh
    */
   useEffect(() => {
-    navigate(`/home/library/edit-song/${songId}`, { replace: true });
+    const validPaths = [
+      `/home/library/edit-song/${songId}`,
+      `/home/library/edit-song/${songId}/advanced-details`,
+      `/home/library/edit-song/${songId}/confirm`,
+    ];
+
+    // Remove trailing slashes to compare paths
+    const normalizePath = (path: string) => path.replace(/\/+$/, "");
+    const currentPath = normalizePath(location.pathname);
+
+    if (!validPaths.includes(currentPath)) {
+      setIsValidPath(false);
+    } else {
+      setIsValidPath(true);
+      navigate(`/home/library/edit-song/${songId}`, { replace: true });
+    }
+
     // useNavigate doesn't return memoized function, including it
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.
     // eslint-disable-next-line
   }, []);
+
+  if (!isValidPath) {
+    return <PageNotFound />;
+  }
 
   const validations = {
     agreesToCoverArtGuidelines: commonYupValidation.agreesToCoverArtGuidelines,
