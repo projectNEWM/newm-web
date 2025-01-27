@@ -1,9 +1,11 @@
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { FormikHelpers, FormikValues } from "formik";
 import theme from "@newm-web/theme";
 import { WizardForm } from "@newm-web/elements";
+import { useLocation } from "react-router";
+import { PageNotFound } from "@newm-web/components";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
@@ -13,6 +15,8 @@ import { ResponsiveNEWMLogo } from "../../components";
 
 const ForgotPassword: FunctionComponent = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const [isValidPath, setIsValidPath] = useState(true); // State to track path validity
 
   const initialValues = {
     authCode: "",
@@ -37,6 +41,23 @@ const ForgotPassword: FunctionComponent = () => {
     dispatch(sendVerificationEmail({ email, mustExists: true }));
     setSubmitting(false);
   };
+
+  useEffect(() => {
+    const validPaths = [
+      "/forgot-password",
+      "/forgot-password/verification",
+      "/forgot-password/reset",
+    ];
+
+    const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes
+    const currentPath = normalizePath(location.pathname);
+
+    setIsValidPath(validPaths.map(normalizePath).includes(currentPath));
+  }, [location.pathname]);
+
+  if (!isValidPath) {
+    return <PageNotFound />;
+  }
 
   return (
     <Container
