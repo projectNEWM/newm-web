@@ -3,14 +3,29 @@ import { Link, Stack, Typography } from "@mui/material";
 import { DiscordLogo, NEWMLogo, NEWMMonsterPercussion } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { NEWM_DISCORD_URL, getImageSrc } from "@newm-web/utils";
+import { Button } from "@newm-web/elements";
+import { useNavigate } from "react-router";
 
-const PageNotFound: FunctionComponent = () => {
+interface PageNotFoundProps {
+  returnUrl: string;
+}
+
+const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
+  returnUrl = "/",
+}) => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(returnUrl);
+  };
+
   return (
     <Stack
       sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
-        minHeight: "100%",
+        gap: 3,
+        minWidth: "100%",
         px: [0.5, 1, 2],
         textAlign: "center",
       } }
@@ -29,11 +44,15 @@ const PageNotFound: FunctionComponent = () => {
         >
           404 error
         </Typography>
+
+        <Button sx={ { mt: 4 } } width="compact" onClick={ handleGoBack }>
+          Back to NEWM
+        </Button>
         <img
           alt={ "NEWM Monster" }
           height={ 250 }
           src={ getImageSrc(NEWMMonsterPercussion) }
-          style={ { marginTop: "28px" } }
+          style={ { marginTop: "156px" } }
           width={ 250 }
         />
       </Stack>
