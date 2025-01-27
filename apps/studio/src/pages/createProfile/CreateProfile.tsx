@@ -1,8 +1,10 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { WizardForm } from "@newm-web/elements";
 import * as Yup from "yup";
 import { getUpdatedValues } from "@newm-web/utils";
+import { useLocation } from "react-router-dom";
+import { PageNotFound } from "@newm-web/components";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -21,6 +23,9 @@ import {
 
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
+  const currentPathLocation = useLocation();
+  const [isValidPath, setIsValidPath] = useState(true);
+
   const { data: roles = [] } = useGetRolesQuery();
   const {
     data: { firstName, lastName, role, location, nickname } = emptyProfile,
@@ -58,6 +63,28 @@ const CreateProfile: FunctionComponent = () => {
 
     updateInitialProfile(updatedValues);
   };
+
+  /**
+   * Checks if the current path is a valid path or requires a 404 page.
+   */
+  useEffect(() => {
+    const validPaths = [
+      "/create-profile",
+      "/create-profile/what-is-your-first-name",
+      "/create-profile/what-is-your-last-name",
+      "/create-profile/what-should-we-call-you",
+      "/create-profile/what-is-your-role",
+    ];
+
+    const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes
+    const currentPath = normalizePath(currentPathLocation.pathname);
+
+    setIsValidPath(validPaths.map(normalizePath).includes(currentPath));
+  }, [currentPathLocation.pathname]);
+
+  if (!isValidPath) {
+    return <PageNotFound />;
+  }
 
   return (
     <Box
