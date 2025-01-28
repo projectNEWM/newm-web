@@ -108,11 +108,7 @@ const App = () => {
                       <Route
                         element={
                           <PrivateRoute>
-                            <Routes>
-                              <Route element={ <Home /> } path="/*" />
-                              { /* TODO: This does not lead to all wrong routes leading to 404 page */ }
-                              <Route element={ <PageNotFound /> } path="*" />
-                            </Routes>
+                            <Home />
                           </PrivateRoute>
                         }
                         path="home/*"
@@ -121,10 +117,7 @@ const App = () => {
                       <Route
                         element={
                           <PrivateRoute>
-                            <Routes>
-                              <Route element={ <CreateProfile /> } path="/*" />
-                              <Route element={ <PageNotFound /> } path="*" />
-                            </Routes>
+                            <CreateProfile />
                           </PrivateRoute>
                         }
                         path="create-profile/*"
