@@ -22,7 +22,9 @@ const Owner: FunctionComponent = () => {
   }
 
   if (isError || !ownerData) {
-    return <PageNotFound />;
+    history.push("/home/collaborators");
+
+    return null;
   }
 
   const {

@@ -7,16 +7,16 @@ import { Button } from "@newm-web/elements";
 import { useNavigate } from "react-router";
 
 interface PageNotFoundProps {
-  returnUrl: string;
+  redirectUrl?: string;
 }
 
 const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
-  returnUrl = "/",
+  redirectUrl = "/",
 }) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(returnUrl);
+    navigate(redirectUrl);
   };
 
   return (
