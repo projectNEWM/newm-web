@@ -22,7 +22,10 @@ const Owners: FunctionComponent = () => (
       <Route element={ <OwnersList /> } path="/" />
       <Route element={ <Owner /> } path="/:userId" />
 
-      <Route element={ <PageNotFound /> } path="*" />
+      <Route
+        element={ <PageNotFound redirectUrl="/home/collaborators" /> }
+        path="*"
+      />
     </Routes>
   </Container>
 );

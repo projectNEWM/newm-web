@@ -24,7 +24,7 @@ const Library: FunctionComponent = () => (
       <Route element={ <EditSong /> } path="edit-song/:songId*" />
       <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
-      <Route element={ <PageNotFound /> } path="*" />
+      <Route element={ <PageNotFound redirectUrl="/home/library" /> } path="*" />
     </Routes>
   </Container>
 );

@@ -169,10 +169,10 @@ const UploadSong: FunctionComponent = () => {
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.
     // eslint-disable-next-line
-  }, []);
+  }, [location.pathname]);
 
   if (!isValidPath) {
-    return <PageNotFound />;
+    return <PageNotFound redirectUrl="/home/upload-song" />;
   }
 
   const validations = {

@@ -74,6 +74,8 @@ const CreateProfile: FunctionComponent = () => {
       "/create-profile/what-is-your-last-name",
       "/create-profile/what-should-we-call-you",
       "/create-profile/what-is-your-role",
+      "/create-profile/what-is-your-location",
+      "/create-profile/complete",
     ];
 
     const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes

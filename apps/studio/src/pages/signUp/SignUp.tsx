@@ -70,7 +70,7 @@ const SignUp: FunctionComponent = () => {
   }, [location.pathname]);
 
   if (!isValidPath) {
-    return <PageNotFound />;
+    return <PageNotFound redirectUrl="/sign-up" />;
   }
 
   return (

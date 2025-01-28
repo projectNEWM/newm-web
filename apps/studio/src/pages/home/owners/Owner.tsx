@@ -4,7 +4,7 @@ import { Box, Stack } from "@mui/material";
 import { bgImage } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
-import { ItemHeader, PageNotFound, ProfileHeader } from "@newm-web/components";
+import { ItemHeader, ProfileHeader } from "@newm-web/components";
 import Songs from "./Songs";
 import OwnerModal from "./OwnerModal";
 import { history } from "../../../common/history";
