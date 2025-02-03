@@ -1,8 +1,8 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useMemo } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { WizardForm } from "@newm-web/elements";
 import * as Yup from "yup";
-import { getUpdatedValues } from "@newm-web/utils";
+import { getUpdatedValues, removeTrailingSlash } from "@newm-web/utils";
 import { useLocation } from "react-router-dom";
 import { PageNotFound } from "@newm-web/components";
 import Begin from "./Begin";
@@ -21,10 +21,11 @@ import {
   useUpdateInitialProfileThunk,
 } from "../../modules/session";
 
+const rootPath = "create-profile";
+
 const CreateProfile: FunctionComponent = () => {
   const theme = useTheme();
   const currentPathLocation = useLocation();
-  const [isValidPath, setIsValidPath] = useState(true);
 
   const { data: roles = [] } = useGetRolesQuery();
   const {
@@ -44,16 +45,54 @@ const CreateProfile: FunctionComponent = () => {
     role: role || "",
   };
 
-  /**
-   * Yup validations for all form fields.
-   */
-  const validations = {
-    firstName: commonYupValidation.firstName,
-    lastName: commonYupValidation.lastName,
-    location: commonYupValidation.location,
-    nickname: commonYupValidation.nickname,
-    role: commonYupValidation.role(roles),
-  };
+  const wizardRoutes = useMemo(
+    () => [
+      {
+        element: <Begin />,
+        path: "",
+      },
+      {
+        element: <AddFirstName />,
+        path: "what-is-your-first-name",
+        validationSchema: Yup.object().shape({
+          firstName: commonYupValidation.firstName,
+        }),
+      },
+      {
+        element: <AddLastName />,
+        path: "what-is-your-last-name",
+        validationSchema: Yup.object().shape({
+          lastName: commonYupValidation.lastName,
+        }),
+      },
+      {
+        element: <SelectNickname />,
+        path: "what-should-we-call-you",
+        validationSchema: Yup.object().shape({
+          nickname: commonYupValidation.nickname,
+        }),
+      },
+      {
+        element: <SelectRole />,
+        path: "what-is-your-role",
+        validationSchema: Yup.object().shape({
+          role: commonYupValidation.role(roles),
+        }),
+      },
+      {
+        element: <SelectLocation />,
+        path: "what-is-your-location",
+        validationSchema: Yup.object().shape({
+          location: commonYupValidation.location,
+        }),
+      },
+      {
+        element: <Complete />,
+        path: "complete",
+      },
+    ],
+    [roles]
+  );
 
   /**
    * Submits the form when on the last route of the form.
@@ -65,24 +104,17 @@ const CreateProfile: FunctionComponent = () => {
   };
 
   /**
-   * Checks if the current path is a valid path or requires a 404 page.
+   * Check if the current path is a valid path, if not, show a 404 page.
    */
-  useEffect(() => {
-    const validPaths = [
-      "/create-profile",
-      "/create-profile/what-is-your-first-name",
-      "/create-profile/what-is-your-last-name",
-      "/create-profile/what-should-we-call-you",
-      "/create-profile/what-is-your-role",
-      "/create-profile/what-is-your-location",
-      "/create-profile/complete",
-    ];
-
-    const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes
-    const currentPath = normalizePath(currentPathLocation.pathname);
-
-    setIsValidPath(validPaths.map(normalizePath).includes(currentPath));
-  }, [currentPathLocation.pathname]);
+  const currentPathName = removeTrailingSlash(currentPathLocation.pathname);
+  const validPaths = useMemo(
+    () =>
+      wizardRoutes.map((route) =>
+        removeTrailingSlash(`/${rootPath}/${route.path}`)
+      ),
+    [wizardRoutes]
+  );
+  const isValidPath = validPaths.includes(currentPathName);
 
   if (!isValidPath) {
     return <PageNotFound />;
@@ -104,52 +136,8 @@ const CreateProfile: FunctionComponent = () => {
         <WizardForm
           enableReinitialize={ true }
           initialValues={ initialValues }
-          rootPath="create-profile"
-          routes={ [
-            {
-              element: <Begin />,
-              path: "",
-            },
-            {
-              element: <AddFirstName />,
-              path: "what-is-your-first-name",
-              validationSchema: Yup.object().shape({
-                firstName: validations.firstName,
-              }),
-            },
-            {
-              element: <AddLastName />,
-              path: "what-is-your-last-name",
-              validationSchema: Yup.object().shape({
-                lastName: validations.lastName,
-              }),
-            },
-            {
-              element: <SelectNickname />,
-              path: "what-should-we-call-you",
-              validationSchema: Yup.object().shape({
-                nickname: validations.nickname,
-              }),
-            },
-            {
-              element: <SelectRole />,
-              path: "what-is-your-role",
-              validationSchema: Yup.object().shape({
-                role: validations.role,
-              }),
-            },
-            {
-              element: <SelectLocation />,
-              path: "what-is-your-location",
-              validationSchema: Yup.object().shape({
-                location: validations.location,
-              }),
-            },
-            {
-              element: <Complete />,
-              path: "complete",
-            },
-          ] }
+          rootPath={ rootPath }
+          routes={ wizardRoutes }
           validateOnMount={ true }
           onSubmit={ handleSubmit }
         />
