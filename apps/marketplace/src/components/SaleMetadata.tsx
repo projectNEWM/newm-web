@@ -97,8 +97,8 @@ const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
       />
       <SaleDetail
         isSelectableOnClick={ true }
-        label="POINTER POLICY ID"
-        value={ sale.pointerPolicyId }
+        label="POINTER ASSET NAME"
+        value={ sale.pointerAssetName }
       />
     </Stack>
   );
