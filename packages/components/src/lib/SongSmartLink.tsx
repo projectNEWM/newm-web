@@ -1,6 +1,9 @@
 import { Link } from "@mui/material";
 import { SpotifyLogo } from "@newm-web/assets";
-import { MusicService, SongSmartLink } from "@newm-web/types";
+import {
+  MusicService,
+  SongSmartLink as SongSmartLinkType,
+} from "@newm-web/types";
 import { FunctionComponent } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +11,7 @@ const storeNameIconMap: Record<string, any> = {
   [MusicService.Spotify]: <SpotifyLogo />,
 };
 
-const SongSmartLink: FunctionComponent<SongSmartLink> = ({
+const SongSmartLink: FunctionComponent<SongSmartLinkType> = ({
   storeName,
   url,
 }) => {
