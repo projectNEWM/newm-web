@@ -10,6 +10,7 @@ interface SaleMetaDataProps {
 
 interface SaleDetailProps {
   readonly label: string;
+  readonly selectAllText?: boolean;
   readonly value: string | number;
 }
 
@@ -19,12 +20,23 @@ interface SaleLinkProps {
   readonly linkText: string;
 }
 
-const SaleDetail = ({ label, value }: SaleDetailProps) => (
+const SaleDetail = ({
+  label,
+  value,
+  selectAllText = false,
+}: SaleDetailProps) => (
   <Stack gap={ 0.5 }>
     <Typography fontWeight={ 600 } variant="subtitle2">
       { label }
     </Typography>
-    <Typography sx={ { overflow: "auto", pb: 2.5, textWrap: "nowrap" } }>
+    <Typography
+      sx={ {
+        overflow: "auto",
+        pb: 2.5,
+        textWrap: "nowrap",
+        userSelect: selectAllText ? "all" : "auto",
+      } }
+    >
       { value }
     </Typography>
   </Stack>
@@ -73,11 +85,20 @@ const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
         label="POOL.PM"
         linkText="Listing Details"
       />
-      <SaleDetail label="POLICY ID" value={ sale.bundlePolicyId } />
+      <SaleDetail
+        label="POLICY ID"
+        selectAllText={ true }
+        value={ sale.bundlePolicyId }
+      />
       <SaleLink
         href={ sale.song.tokenAgreementUrl }
         label="CONTRACT PREVIEW"
         linkText="View Details"
+      />
+      <SaleDetail
+        label="POINTER POLICY ID"
+        selectAllText={ true }
+        value={ sale.pointerPolicyId }
       />
     </Stack>
   );

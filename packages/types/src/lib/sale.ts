@@ -29,6 +29,10 @@ export interface Sale {
   readonly id: string;
   // Maximum bundle size allowed
   readonly maxBundleSize: number;
+  // Asset Name (hex-encoded) of the pointer token
+  readonly pointerAssetName: string;
+  // Policy ID of the pointer token
+  readonly pointerPolicyId: string;
   // The song associated with the sale
   readonly song: MarketplaceSong;
   // Sale status. Valid valid values are: Started, SoldOut & Ended
