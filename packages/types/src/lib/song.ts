@@ -73,7 +73,17 @@ export interface PlayerState {
   readonly song?: Song;
 }
 
+export interface SongSmartLink {
+  readonly id: string;
+  readonly storeName: string;
+  readonly url: string;
+}
+
 export enum SortOrder {
   Asc = "asc",
   Desc = "desc",
+}
+
+export enum MusicService {
+  Spotify = "Spotify",
 }
