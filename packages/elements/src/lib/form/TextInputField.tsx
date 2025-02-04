@@ -1,4 +1,4 @@
-import { ChangeEvent, ForwardRefRenderFunction, forwardRef } from "react";
+import { ForwardRefRenderFunction, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
 import TextInput, { TextInputProps } from "../TextInput";
 
