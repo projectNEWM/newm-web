@@ -9,8 +9,8 @@ interface SaleMetaDataProps {
 }
 
 interface SaleDetailProps {
+  readonly isSelectableOnClick?: boolean;
   readonly label: string;
-  readonly selectAllText?: boolean;
   readonly value: string | number;
 }
 
@@ -23,7 +23,7 @@ interface SaleLinkProps {
 const SaleDetail = ({
   label,
   value,
-  selectAllText = false,
+  isSelectableOnClick = false,
 }: SaleDetailProps) => (
   <Stack gap={ 0.5 }>
     <Typography fontWeight={ 600 } variant="subtitle2">
@@ -34,7 +34,7 @@ const SaleDetail = ({
         overflow: "auto",
         pb: 2.5,
         textWrap: "nowrap",
-        userSelect: selectAllText ? "all" : "auto",
+        userSelect: isSelectableOnClick ? "all" : "auto",
       } }
     >
       { value }
@@ -86,8 +86,8 @@ const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
         linkText="Listing Details"
       />
       <SaleDetail
+        isSelectableOnClick={ true }
         label="POLICY ID"
-        selectAllText={ true }
         value={ sale.bundlePolicyId }
       />
       <SaleLink
@@ -96,8 +96,8 @@ const SaleMetaData: FunctionComponent<SaleMetaDataProps> = ({ sale }) => {
         linkText="View Details"
       />
       <SaleDetail
+        isSelectableOnClick={ true }
         label="POINTER POLICY ID"
-        selectAllText={ true }
         value={ sale.pointerPolicyId }
       />
     </Stack>
