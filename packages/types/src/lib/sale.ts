@@ -1,3 +1,5 @@
+import { SongSmartLink } from "./song";
+
 export enum SaleStatus {
   Ended = "Ended",
   SoldOut = "SoldOut",
@@ -62,6 +64,8 @@ export interface MarketplaceSong {
   readonly isExplicit: boolean;
   // Song moods
   readonly moods: ReadonlyArray<string>;
+  // array of available smart links to streaming service
+  readonly smartLinks: ReadonlyArray<SongSmartLink>;
   // Song title
   readonly title: string;
   // Valid URL of song token agreement document

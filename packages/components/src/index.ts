@@ -17,6 +17,7 @@ export { default as SocialsSkeleton } from "./lib/skeletons/SocialsSkeleton";
 export * from "./lib/SongCard";
 export { default as SongCard } from "./lib/SongCard";
 export { default as SongCardSkeleton } from "./lib/skeletons/SongCardSkeleton";
+export { default as SongSmartLink } from "./lib/SongSmartLink";
 export { default as StyledComponentsRegistry } from "./lib/nextjs/StyledComponentsRegistry";
 export { default as UnsupportedBrowserBanner } from "./lib/UnsupportedBrowserBanner";
 export { default as WalletEnvMismatchModal } from "./lib/modals/WalletEnvMismatchModal";
