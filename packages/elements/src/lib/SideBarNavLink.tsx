@@ -53,9 +53,6 @@ const SideBarNavLink: FunctionComponent<SideBarNavLinkProps> = ({
   const resolved = useResolvedPath(to || "");
   const match = useMatch({ end: false, path: resolved.pathname });
   const isActiveLink = to && match;
-  console.log("resolved", resolved);
-  console.log("match", match);
-  console.log("isActiveLink", isActiveLink);
 
   return (
     <Wrapper
