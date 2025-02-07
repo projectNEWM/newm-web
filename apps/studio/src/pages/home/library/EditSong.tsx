@@ -257,11 +257,10 @@ const EditSong: FunctionComponent = () => {
    * Ensure user is returned to first step on refresh since form
    * contents are not persisted.
    *
-   * TODO: remove the navigation when form values are persisted on refresh
+   * TODO: remove this when form values are persisted on refresh
    */
   useEffect(() => {
     navigate(`/home/library/edit-song/${songId}`, { replace: true });
-
     // useNavigate doesn't return memoized function, including it
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.
