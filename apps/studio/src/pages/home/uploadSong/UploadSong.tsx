@@ -202,6 +202,7 @@ const UploadSong: FunctionComponent = () => {
       maxWidth={ false }
       sx={ {
         marginBottom: 8,
+        marginTop: 10.5,
         marginX: [null, null, 3],
         overflow: "auto",
         textAlign: ["center", "center", "initial"],

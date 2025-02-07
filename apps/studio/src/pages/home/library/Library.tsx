@@ -14,6 +14,7 @@ const Library: FunctionComponent = () => (
       flexDirection: "column",
       flexGrow: 1,
       flexWrap: "nowrap",
+      marginTop: 10.5,
       mx: [null, null, 3],
       pb: 8,
       width: "auto",

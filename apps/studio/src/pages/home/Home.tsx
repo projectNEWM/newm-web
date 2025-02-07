@@ -61,7 +61,6 @@ const Home: FunctionComponent = () => {
           flexGrow: 1,
           marginLeft: { md: 30 },
           paddingX: 3,
-          paddingY: 10.5,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         } }
       >

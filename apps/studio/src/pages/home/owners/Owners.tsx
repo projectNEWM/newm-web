@@ -13,6 +13,7 @@ const Owners: FunctionComponent = () => (
       flexDirection: "column",
       flexGrow: 1,
       flexWrap: "nowrap",
+      marginTop: 10.5,
       mx: [null, null, 3],
       paddingBottom: 8,
       width: "auto",
