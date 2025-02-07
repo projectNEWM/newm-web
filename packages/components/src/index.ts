@@ -28,4 +28,5 @@ export * from "./lib/Socials";
 export { default as Socials } from "./lib/Socials";
 export * from "./lib/SongCard";
 export { default as SongCard } from "./lib/SongCard";
+export { default as SongSmartLink } from "./lib/SongSmartLink";
 export { default as UnsupportedBrowserBanner } from "./lib/UnsupportedBrowserBanner";

@@ -33,7 +33,9 @@ import VerticalEllipsis from "./lib/icons/VerticalEllipsis";
 import WalletIcon from "./lib/icons/WalletIcon";
 import XLogo from "./lib/icons/XLogo";
 import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
+import auroraBackground from "./lib/images/aurora-background.webp";
 import bgImage from "./lib/images/bg-img.webp";
+import gradientRing from "./lib/images/gradient-ring.png";
 import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
 import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
 
@@ -41,6 +43,7 @@ export {
   AddImage,
   AddSong,
   artistAgreementPreview,
+  auroraBackground,
   bgImage,
   Charli3Logo,
   CheckboxIcon,
@@ -53,6 +56,7 @@ export {
   DropdownAdornment,
   FoldersIcon,
   GlobalFill,
+  gradientRing,
   InfoCircleLine,
   InstagramLogo,
   ItunesLogo,
