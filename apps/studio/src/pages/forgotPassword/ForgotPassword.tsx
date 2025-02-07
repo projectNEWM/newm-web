@@ -4,7 +4,7 @@ import { FunctionComponent, useCallback, useMemo } from "react";
 import { FormikHelpers, FormikValues } from "formik";
 import theme from "@newm-web/theme";
 import { WizardForm } from "@newm-web/elements";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { PageNotFound } from "@newm-web/components";
 import { removeTrailingSlash } from "@newm-web/utils";
 import InitiateReset from "./InitiateReset";

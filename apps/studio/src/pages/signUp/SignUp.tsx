@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { FormikValues } from "formik";
 import { FunctionComponent, useCallback, useMemo } from "react";
 import { WizardForm } from "@newm-web/elements";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { PageNotFound } from "@newm-web/components";
 import { removeTrailingSlash } from "@newm-web/utils";
 import Verification from "./Verification";
