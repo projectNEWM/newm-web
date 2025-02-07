@@ -1,11 +1,12 @@
 import * as Yup from "yup";
 import { Box, Container } from "@mui/material";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useCallback, useMemo } from "react";
 import { FormikHelpers, FormikValues } from "formik";
 import theme from "@newm-web/theme";
 import { WizardForm } from "@newm-web/elements";
 import { useLocation } from "react-router";
 import { PageNotFound } from "@newm-web/components";
+import { removeTrailingSlash } from "@newm-web/utils";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
@@ -13,10 +14,11 @@ import { resetPassword, sendVerificationEmail } from "../../modules/session";
 import { commonYupValidation, useAppDispatch } from "../../common";
 import { ResponsiveNEWMLogo } from "../../components";
 
+const rootPath = "forgot-password";
+
 const ForgotPassword: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const [isValidPath, setIsValidPath] = useState(true); // State to track path validity
+  const currentPathLocation = useLocation();
 
   const initialValues = {
     authCode: "",
@@ -34,26 +36,62 @@ const ForgotPassword: FunctionComponent = () => {
     dispatch(resetPassword({ authCode, confirmPassword, email, newPassword }));
   };
 
-  const handleVerificationEmail = (
-    { email }: FormikValues,
-    { setSubmitting }: FormikHelpers<FormikValues>
-  ): void => {
-    dispatch(sendVerificationEmail({ email, mustExists: true }));
-    setSubmitting(false);
-  };
+  const handleVerificationEmail = useCallback(
+    (
+      { email }: FormikValues,
+      { setSubmitting }: FormikHelpers<FormikValues>
+    ): void => {
+      dispatch(sendVerificationEmail({ email, mustExists: true }));
+      setSubmitting(false);
+    },
+    [dispatch]
+  );
 
-  useEffect(() => {
-    const validPaths = [
-      "/forgot-password",
-      "/forgot-password/verification",
-      "/forgot-password/reset",
-    ];
+  const wizardRoutes = useMemo(
+    () => [
+      {
+        element: <InitiateReset />,
+        onSubmitStep: handleVerificationEmail,
+        path: "",
+        validationSchema: Yup.object().shape({
+          email: commonYupValidation.email,
+        }),
+      },
+      {
+        element: <VerifyEmail />,
+        path: "verification",
+        validationSchema: Yup.object().shape({
+          authCode: Yup.string().required("Verification code is required"),
+        }),
+      },
+      {
+        element: <ResetPassword />,
+        path: "reset",
+        validationSchema: Yup.object().shape({
+          confirmPassword: commonYupValidation.confirmPassword.required(
+            "Confirm password is required"
+          ),
+          newPassword: commonYupValidation.newPassword.required(
+            "Password is required"
+          ),
+        }),
+      },
+    ],
+    [handleVerificationEmail]
+  );
 
-    const normalizePath = (path: string) => path.replace(/\/+$/, ""); // Remove trailing slashes
-    const currentPath = normalizePath(location.pathname);
-
-    setIsValidPath(validPaths.map(normalizePath).includes(currentPath));
-  }, [location.pathname]);
+  /**
+   * Check if the current path is a valid path, if not, show a 404 page.
+   */
+  const currentPathName = removeTrailingSlash(currentPathLocation.pathname);
+  const validPaths = useMemo(
+    () =>
+      wizardRoutes.map((route) =>
+        removeTrailingSlash(`/${rootPath}/${route.path}`)
+      ),
+    [wizardRoutes]
+  );
+  const isValidPath = validPaths.includes(currentPathName);
 
   if (!isValidPath) {
     return <PageNotFound />;
@@ -77,36 +115,8 @@ const ForgotPassword: FunctionComponent = () => {
 
       <WizardForm
         initialValues={ initialValues }
-        rootPath="forgot-password"
-        routes={ [
-          {
-            element: <InitiateReset />,
-            onSubmitStep: handleVerificationEmail,
-            path: "",
-            validationSchema: Yup.object().shape({
-              email: commonYupValidation.email,
-            }),
-          },
-          {
-            element: <VerifyEmail />,
-            path: "verification",
-            validationSchema: Yup.object().shape({
-              authCode: Yup.string().required("Verification code is required"),
-            }),
-          },
-          {
-            element: <ResetPassword />,
-            path: "reset",
-            validationSchema: Yup.object().shape({
-              confirmPassword: commonYupValidation.confirmPassword.required(
-                "Confirm password is required"
-              ),
-              newPassword: commonYupValidation.newPassword.required(
-                "Password is required"
-              ),
-            }),
-          },
-        ] }
+        rootPath={ rootPath }
+        routes={ wizardRoutes }
         validateOnMount={ true }
         onSubmit={ handleSubmit }
       />
