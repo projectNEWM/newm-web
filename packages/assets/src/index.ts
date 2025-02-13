@@ -1,6 +1,7 @@
 import AddImage from "./lib/icons/AddImage";
 import AddSong from "./lib/icons/AddSong";
 import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
+import auroraBackground from "./lib/images/aurora-background.webp";
 import bgImage from "./lib/images/bg-img.webp";
 import Charli3Logo from "./lib/icons/Charli3Logo";
 import CheckboxIcon from "./lib/icons/CheckboxIcon";
@@ -13,6 +14,7 @@ import Document from "./lib/icons/Document";
 import DropdownAdornment from "./lib/icons/DropdownAdornment";
 import FoldersIcon from "./lib/icons/FoldersIcon";
 import GlobalFill from "./lib/icons/GlobalFill";
+import gradientRing from "./lib/images/gradient-ring.png";
 import InfoCircleLine from "./lib/icons/InfoCircleLine";
 import InstagramLogo from "./lib/icons/InstagramLogo";
 import ItunesLogo from "./lib/icons/ItunesLogo";
@@ -40,6 +42,7 @@ export {
   AddSong,
   AddImage,
   artistAgreementPreview,
+  auroraBackground,
   bgImage,
   Charli3Logo,
   CheckboxIcon,
@@ -52,6 +55,7 @@ export {
   DropdownAdornment,
   FoldersIcon,
   GlobalFill,
+  gradientRing,
   InfoCircleLine,
   InstagramLogo,
   ItunesLogo,

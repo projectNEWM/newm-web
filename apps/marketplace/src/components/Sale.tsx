@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { SongCard } from "@newm-web/components";
+import { SongCard, SongSmartLink } from "@newm-web/components";
 import * as Yup from "yup";
 import { FunctionComponent, useState } from "react";
 import {
@@ -170,7 +170,21 @@ const Sale: FunctionComponent<SaleProps> = ({
       </Box>
       <Stack gap={ [4, 4, 2.5] } pt={ [0, 0, 1.5] } width={ ["100%", 440, 440] }>
         <Stack gap={ 0.5 } textAlign={ ["center", "center", "left"] }>
-          <Typography variant="h3">{ sale.song.title }</Typography>
+          <Stack
+            alignItems="center"
+            flexDirection="row"
+            gap={ 2 }
+            justifyContent={ ["center", "center", "space-between"] }
+            pr={ [0, 0, "2px"] }
+          >
+            <Typography variant="h3">{ sale.song.title }</Typography>
+            <Stack flexDirection="row" gap={ 2 }>
+              { sale.song.smartLinks.map((smartLink) => {
+                return <SongSmartLink key={ smartLink.id } { ...smartLink } />;
+              }) }
+            </Stack>
+          </Stack>
+
           <Typography color={ theme.colors.grey300 } variant="subtitle2">
             { sale.song.isExplicit ? "Explicit" : null }
           </Typography>
