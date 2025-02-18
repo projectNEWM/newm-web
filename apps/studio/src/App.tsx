@@ -9,6 +9,7 @@ import { GOOGLE_CLIENT_ID } from "@newm-web/env";
 import {
   LDProvider,
   Maintenance,
+  PageNotFound,
   UnsupportedBrowserBanner,
 } from "@newm-web/components";
 import {
@@ -121,6 +122,9 @@ const App = () => {
                         }
                         path="create-profile/*"
                       />
+
+                      { /* Catch-all route for 404 Page Not Found */ }
+                      <Route element={ <PageNotFound /> } path="*" />
                     </Routes>
                   </BrowserRouter>
                 </Background>

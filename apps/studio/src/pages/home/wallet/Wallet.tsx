@@ -237,7 +237,7 @@ const Wallet: FunctionComponent = () => {
 
     return (
       <Container maxWidth={ false }>
-        <Box mx={ [null, null, 1.5] }>
+        <Box marginTop={ 10.5 } mx={ [null, null, 3] }>
           <Box
             sx={ {
               alignItems: "center",

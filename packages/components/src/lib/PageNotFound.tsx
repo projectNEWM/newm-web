@@ -1,27 +1,31 @@
-import { FunctionComponent, PropsWithChildren } from "react";
-import { useFlags } from "launchdarkly-react-client-sdk";
+import { FunctionComponent } from "react";
 import { Link, Stack, Typography } from "@mui/material";
-import { DiscordLogo, NEWMLogo, NEWMMonsterRock } from "@newm-web/assets";
+import { DiscordLogo, NEWMLogo, NEWMMonsterPercussion } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { NEWM_DISCORD_URL, getImageSrc } from "@newm-web/utils";
+import { Button } from "@newm-web/elements";
+import { useNavigate } from "react-router";
 
-interface MaintenanceProps extends PropsWithChildren {
-  readonly flagName: string;
+interface PageNotFoundProps {
+  redirectUrl?: string;
 }
 
-const Maintenance: FunctionComponent<MaintenanceProps> = ({
-  children,
-  flagName,
+const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
+  redirectUrl = "/",
 }) => {
-  const flags = useFlags();
-  const isMaintenanceModeEnabled = flags[flagName];
+  const navigate = useNavigate();
 
-  return isMaintenanceModeEnabled ? (
+  const handleGoBack = () => {
+    navigate(redirectUrl);
+  };
+
+  return (
     <Stack
       sx={ {
         alignItems: "center",
         backgroundColor: theme.colors.black,
-        minHeight: "100%",
+        gap: 3,
+        minWidth: "100%",
         px: [0.5, 1, 2],
         textAlign: "center",
       } }
@@ -29,7 +33,8 @@ const Maintenance: FunctionComponent<MaintenanceProps> = ({
       <Stack alignItems="center" gap={ 1.5 } pt={ 7.5 }>
         <NEWMLogo />
         <Typography color="white" component="h1" mt={ 10 } variant="h3">
-          Oops, we&apos;re fine tuning our instruments!
+          Whoops, that page doesn&apos;t exist. Let&apos;s get you back on the
+          right track.
         </Typography>
         <Typography
           color={ theme.colors.grey100 }
@@ -37,14 +42,17 @@ const Maintenance: FunctionComponent<MaintenanceProps> = ({
           fontWeight={ 500 }
           variant="h4"
         >
-          We&apos;re currently tweaking a few things backstage. We&apos;ll be
-          back super soon!
+          404 error
         </Typography>
+
+        <Button sx={ { mt: 4 } } width="compact" onClick={ handleGoBack }>
+          Back to NEWM
+        </Button>
         <img
           alt={ "NEWM Monster" }
           height={ 250 }
-          src={ getImageSrc(NEWMMonsterRock) }
-          style={ { marginTop: "28px" } }
+          src={ getImageSrc(NEWMMonsterPercussion) }
+          style={ { marginTop: "156px" } }
           width={ 250 }
         />
       </Stack>
@@ -62,7 +70,7 @@ const Maintenance: FunctionComponent<MaintenanceProps> = ({
           fontWeight={ 500 }
           variant="h4"
         >
-          Wanna wait with us? We&apos;re all here.
+          Wanna chat with us? We&apos;re all here.
         </Typography>
         <Link
           color={ theme.colors.grey100 }
@@ -74,9 +82,7 @@ const Maintenance: FunctionComponent<MaintenanceProps> = ({
         </Link>
       </Stack>
     </Stack>
-  ) : (
-    children
   );
 };
 
-export default Maintenance;
+export default PageNotFound;
