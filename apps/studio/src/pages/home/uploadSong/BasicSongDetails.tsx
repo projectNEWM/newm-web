@@ -15,6 +15,7 @@ import {
   UploadSongField,
 } from "@newm-web/elements";
 import {
+  LocalStorage,
   scrollToError,
   useExtractProperty,
   useWindowDimensions,
@@ -23,7 +24,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MintingStatus } from "@newm-web/types";
+import { LocalStorageKey, MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { UploadSongFormValues } from "./UploadSong";
 import {
@@ -117,6 +118,16 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     setIsPricingPlansOpen(true);
     setFieldValue("isMinting", true);
   };
+
+  useEffect(() => {
+    const hasAcceptedPricingPlan = localStorage.getItem(
+      LocalStorageKey.isStudioPricingPlanAccepted
+    );
+    if (hasAcceptedPricingPlan === "true") {
+      setFieldValue("isMinting", true);
+      LocalStorage.removeItem(LocalStorageKey.isStudioPricingPlanAccepted);
+    }
+  }, [setFieldValue]);
 
   const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;

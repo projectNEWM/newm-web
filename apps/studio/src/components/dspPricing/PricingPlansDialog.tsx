@@ -1,8 +1,9 @@
 import { Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { formatPriceToDecimal } from "@newm-web/utils";
+import { LocalStorage, formatPriceToDecimal } from "@newm-web/utils";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Check } from "@mui/icons-material";
+import { LocalStorageKey } from "@newm-web/types";
 import { useUpdateProfileThunk } from "../../modules/session";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 
@@ -19,6 +20,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
 
   const handleOptionClick = () => {
     updateProfile({ dspPlanSubscribed: true }).then(() => {
+      LocalStorage.setItem(LocalStorageKey.isStudioPricingPlanAccepted, "true");
       onClose();
     });
   };

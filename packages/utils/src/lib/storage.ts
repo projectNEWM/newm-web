@@ -10,6 +10,11 @@ export const LocalStorage = {
 
     return null;
   },
+  removeItem: (key: string): void => {
+    if (storageAvailable("localStorage")) {
+      localStorage.removeItem(key);
+    }
+  },
   setItem: (key: string, value: string): void => {
     if (storageAvailable("localStorage")) {
       localStorage.setItem(key, value);
