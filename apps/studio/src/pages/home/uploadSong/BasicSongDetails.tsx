@@ -16,7 +16,6 @@ import {
 } from "@newm-web/elements";
 import {
   scrollToError,
-  useEffectAfterMount,
   useExtractProperty,
   useWindowDimensions,
 } from "@newm-web/utils";
@@ -112,18 +111,12 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);
+    setFieldValue("isMinting", false);
   };
   const handlePricingPlanOpen = () => {
     setIsPricingPlansOpen(true);
+    setFieldValue("isMinting", true);
   };
-
-  useEffectAfterMount(() => {
-    if (!isPricingPlansOpen && isArtistPricePlanSelected) {
-      setFieldValue("isMinting", true);
-    } else {
-      setFieldValue("isMinting", false);
-    }
-  }, [isArtistPricePlanSelected, isPricingPlansOpen, setFieldValue]);
 
   const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
