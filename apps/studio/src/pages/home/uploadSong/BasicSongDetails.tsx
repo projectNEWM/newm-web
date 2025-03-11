@@ -15,8 +15,8 @@ import {
   UploadSongField,
 } from "@newm-web/elements";
 import {
+  LocalStorage,
   scrollToError,
-  useEffectAfterMount,
   useExtractProperty,
   useWindowDimensions,
 } from "@newm-web/utils";
@@ -24,7 +24,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MintingStatus } from "@newm-web/types";
+import { LocalStorageKey, MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { UploadSongFormValues } from "./UploadSong";
 import {
@@ -107,23 +107,38 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     dirty,
     initialValues,
   } = useFormikContext<UploadSongFormValues>();
-  // DSP pricing plan mint song toggling
 
+  // DSP pricing plan mint song toggling
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
   const handlePricingPlanClose = () => {
     setIsPricingPlansOpen(false);
+    setFieldValue("isMinting", false);
   };
   const handlePricingPlanOpen = () => {
     setIsPricingPlansOpen(true);
+    setFieldValue("isMinting", true);
   };
 
-  useEffectAfterMount(() => {
-    if (!isPricingPlansOpen && isArtistPricePlanSelected) {
-      setFieldValue("isMinting", true);
-    } else {
+  // Handle the one-time pricing plan acceptance
+  useEffect(() => {
+    const hasAcceptedPricingPlan =
+      LocalStorage.getItem(LocalStorageKey.isStudioPricingPlanAccepted) ===
+      "true";
+
+    if (hasAcceptedPricingPlan) {
+      if (!webStudioDisableTrackDistributionAndMinting) {
+        setFieldValue("isMinting", true);
+      }
+      LocalStorage.removeItem(LocalStorageKey.isStudioPricingPlanAccepted);
+    }
+  }, [setFieldValue, webStudioDisableTrackDistributionAndMinting]);
+
+  // Monitor feature flag changes, particularly seen for pricing plan acceptance
+  useEffect(() => {
+    if (webStudioDisableTrackDistributionAndMinting) {
       setFieldValue("isMinting", false);
     }
-  }, [isArtistPricePlanSelected, isPricingPlansOpen, setFieldValue]);
+  }, [webStudioDisableTrackDistributionAndMinting, setFieldValue]);
 
   const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
