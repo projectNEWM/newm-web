@@ -4,6 +4,7 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { PageNotFound } from "@newm-web/components";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
@@ -11,13 +12,16 @@ import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
+import { logOutExpiredSession } from "../../api/actions";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { useGetStudioClientConfigQuery } from "../../modules/content";
+import { useAppDispatch } from "../../common";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 
@@ -27,9 +31,15 @@ const Home: FunctionComponent = () => {
   const {
     data: { firstName = "", lastName = "", role, location } = emptyProfile,
     isFetching,
+    error,
   } = useGetProfileQuery();
 
   const hasBasicDetails = !!(firstName && lastName && role && location);
+
+  if (error && (error as FetchBaseQueryError).status === 401) {
+    dispatch(logOutExpiredSession());
+    return null;
+  }
 
   if (!hasBasicDetails && !isFetching) {
     if (!firstName || !lastName || !role) {
