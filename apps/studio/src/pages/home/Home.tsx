@@ -27,11 +27,12 @@ const Home: FunctionComponent = () => {
   const {
     data: { firstName = "", lastName = "", role, location } = emptyProfile,
     isFetching,
+    error,
   } = useGetProfileQuery();
 
   const hasBasicDetails = !!(firstName && lastName && role && location);
 
-  if (!hasBasicDetails && !isFetching) {
+  if (!hasBasicDetails && !isFetching && !error) {
     if (!firstName || !lastName || !role) {
       navigate("/create-profile");
       return null;
