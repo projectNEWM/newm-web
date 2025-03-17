@@ -96,6 +96,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       try {
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
+            if (error.code === "file-invalid-type") {
+              throw new Error("File type must be .jpg, .jpeg, or .png.");
+            }
             throw new Error(error.message);
           });
         });
