@@ -416,9 +416,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 <SwitchInputField
                   data-testid="isMinting"
                   description={
-                    "Minting a song will create an NFT that reflects " +
-                    "ownership, makes streaming royalties available for " +
-                    "purchase, and enables royalty distribution to your account."
+                    "Distribute your track to all major streaming platforms " +
+                    "and generate stream tokens for royalty claiming."
                   }
                   disabled={
                     isDeclined || webStudioDisableTrackDistributionAndMinting
