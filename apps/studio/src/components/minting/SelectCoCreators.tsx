@@ -4,7 +4,7 @@ import { Button, HorizontalLine, Tooltip } from "@newm-web/elements";
 import { Formik, FormikProps } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "@newm-web/theme";
-import { formatPriceToDecimal, usePrevious } from "@newm-web/utils";
+import { formatUsdAmount, usePrevious } from "@newm-web/utils";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 import {
@@ -165,14 +165,15 @@ const FormContent: FunctionComponent<FormContentProps> = ({
               setIsModalOpen(true);
             } }
           >
-            Add new owner
+            Add Collaborator
           </Button>
 
           <Typography mr={ 2 } mt={ 1.5 } variant="subtitle2">
-            { `For every additional artist who will receive royalties, the
-              fee to complete the minting process will increase by ≈₳${
-                formatPriceToDecimal(songEstimate?.collabPriceAda) || "N/A"
-              }.` }
+            { `An additional ${
+              formatUsdAmount(Number(songEstimate?.collabPriceUsd), {
+                precision: 2,
+              }) || "N/A"
+            } fee is added for every additional collaborator receiving royalty splits.` }
             <Tooltip
               title={
                 "This cost is increased with each additional artist because " +

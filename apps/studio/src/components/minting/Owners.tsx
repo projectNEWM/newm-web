@@ -101,8 +101,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
           >
             <Details
               email={ owner.email }
-              firstName={ collaboratorInfo.firstName }
-              lastName={ collaboratorInfo.lastName }
+              nickname={ collaboratorInfo.nickname }
               pictureUrl={ collaboratorInfo.pictureUrl }
               showStatus={ authorEmail !== owner.email }
               status={ owner.status }

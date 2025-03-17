@@ -59,8 +59,7 @@ const FeaturedArtists: FunctionComponent<FeaturedArtistsProps> = ({
           >
             <Details
               email={ featuredArtist.email }
-              firstName={ collaboratorInfo.firstName }
-              lastName={ collaboratorInfo.lastName }
+              nickname={ collaboratorInfo.nickname }
               pictureUrl={ collaboratorInfo.pictureUrl }
             />
 
