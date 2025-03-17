@@ -366,6 +366,7 @@ export const getCollaboratorInfo = (
     email: collaborator.email,
     firstName: collaborator.user.firstName,
     lastName: collaborator.user.lastName,
+    nickname: collaborator.user.nickname,
     pictureUrl: collaborator.user.pictureUrl,
   };
 };
