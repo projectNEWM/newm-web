@@ -74,16 +74,18 @@ export const generateCollaborators = (
     {}
   );
 
-  return emails.map((email) => {
+  return emails.map((email): Collaborator => {
     const collaborator = {
+      // Owner is the default spread to ensure percentage/royalty is included
       ...ownersMap[email],
-      ...creditorsMap[email],
+      // Featured is second to handle role updates not being overwritten
       ...featuredMap[email],
+      // Creditor is last to handle role updates not being overwritten
+      ...creditorsMap[email],
     };
 
     return {
       email,
-      isCreator: !!collaborator.isCreator,
       isCredited: !!collaborator.isCredited,
       isFeatured: !!collaborator.isFeatured,
       role: collaborator.role,

@@ -13,11 +13,7 @@ import {
   SwitchInputField,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import {
-  getUpdatedValues,
-  scrollToError,
-  useWindowDimensions,
-} from "@newm-web/utils";
+import { scrollToError, useWindowDimensions } from "@newm-web/utils";
 import { Formik, FormikValues } from "formik";
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -146,9 +142,8 @@ const MintSong = () => {
   });
 
   const handleSubmitForm = (values: FormikValues) => {
-    const updatedValues = getUpdatedValues(initialValues, values);
-
-    patchSong({ id: songId, ...updatedValues });
+    // Send values, not just updated values, so all collab details are available
+    patchSong({ id: songId, ...values });
   };
 
   return (
