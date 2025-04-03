@@ -42,13 +42,20 @@ const SignUp: FunctionComponent = () => {
   /**
    * Attempts to create an account on submit of the last form route.
    */
-  const handleSubmit = ({
+  const handleSubmit = async ({
     authCode,
     confirmPassword,
     email,
     newPassword,
-  }: FormikValues): void => {
-    dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
+  }: FormikValues): Promise<void> => {
+    await dispatch(
+      createAccount({ authCode, confirmPassword, email, newPassword })
+    );
+
+    const RH = (window as any).RH;
+    if (RH && typeof RH.pendingReferral === "function") {
+      RH.pendingReferral({ email });
+    }
   };
 
   /**
