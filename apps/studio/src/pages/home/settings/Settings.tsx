@@ -93,6 +93,7 @@ const Settings: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
+        marginTop: 10.5,
         marginX: [null, null, 3],
         overflow: "auto",
         paddingBottom: 8,

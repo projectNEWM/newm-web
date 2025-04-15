@@ -73,8 +73,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           >
             <Details
               email={ creditor.email }
-              firstName={ collaboratorInfo.firstName }
-              lastName={ collaboratorInfo.lastName }
+              nickname={ collaboratorInfo.nickname }
               pictureUrl={ collaboratorInfo.pictureUrl }
             />
 

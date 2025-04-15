@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import theme from "@newm-web/theme";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { Button } from "@newm-web/elements";
 import {
   EarningsClaimInProgress,
   NoConnectedWallet,
@@ -33,10 +32,8 @@ import {
   convertNewmiesToUsd,
 } from "@newm-web/utils";
 import { EarningsInProgress } from "@newm-web/types";
-import { useFlags } from "launchdarkly-react-client-sdk";
 import Portfolio from "./portfolio/Portfolio";
 import Transactions from "./transactions/Transactions";
-import { LegacyPortfolio, LegacyUnclaimedRoyalties } from "./legacyWallet";
 import {
   useGetAdaUsdConversionRateQuery,
   useGetNewmUsdConversionRateQuery,
@@ -89,7 +86,6 @@ const Wallet: FunctionComponent = () => {
   const [earningsInProgress, setEarningsInProgress] =
     useState<EarningsInProgress>();
   const { wallet } = useConnectWallet();
-  const { webStudioClaimWalletEarnings } = useFlags();
   const { walletAddress = "" } = useAppSelector(selectWallet);
   const {
     data: earningsData,
@@ -186,149 +182,103 @@ const Wallet: FunctionComponent = () => {
     };
   }, [handleSaleEndPending]);
 
-  // Current State of the Wallet Page
-  if (!webStudioClaimWalletEarnings) {
+  if (!wallet) {
     return (
-      <Container maxWidth={ false }>
-        <Box ml={ [null, null, 3] }>
-          <Box
-            sx={ {
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "space-between",
-              mb: 5,
-            } }
-          >
-            <Typography fontWeight={ 800 } variant="h3">
-              WALLET
-            </Typography>
-
-            { wallet ? (
-              <DisconnectWalletButton />
-            ) : (
-              <Button
-                gradient="crypto"
-                sx={ { mb: 5, mr: [0, 4.75] } }
-                width="compact"
-                onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
-              >
-                Connect Wallet
-              </Button>
-            ) }
-          </Box>
-
-          <LegacyUnclaimedRoyalties unclaimedRoyalties={ 0 } />
-
-          <Box mt={ 2.5 }>
-            <LegacyPortfolio />
-          </Box>
-        </Box>
-      </Container>
+      <NoConnectedWallet
+        onConnectWallet={ () => dispatch(setIsConnectWalletModalOpen(true)) }
+      />
     );
-  } else {
-    // New Wallet Royalties and Enhancement Features
-    if (!wallet) {
-      return (
-        <NoConnectedWallet
-          onConnectWallet={ () => dispatch(setIsConnectWalletModalOpen(true)) }
-        />
-      );
-    }
+  }
 
-    return (
-      <Container maxWidth={ false }>
-        <Box mx={ [null, null, 1.5] }>
-          <Box
-            sx={ {
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "space-between",
-              mb: 5,
-            } }
-          >
-            <Typography fontWeight={ 800 } variant="h3">
-              WALLET
-            </Typography>
-            <DisconnectWalletButton />
-          </Box>
+  return (
+    <Container maxWidth={ false }>
+      <Box marginTop={ 10.5 } mx={ [null, null, 3] }>
+        <Box
+          sx={ {
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            mb: 5,
+          } }
+        >
+          <Typography fontWeight={ 800 } variant="h3">
+            WALLET
+          </Typography>
+          <DisconnectWalletButton />
+        </Box>
 
-          { unclaimedEarnings?.length ? (
-            isEarningsInProgress ? (
-              <EarningsClaimInProgress
-                unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
-                unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
-              />
-            ) : (
-              <UnclaimedEarnings
-                isClaimEarningsLoading={ isClaimEarningsLoading }
-                isConversionLoading={ isConversionLoading }
-                isEarningsError={ isEarningsError }
-                isEarningsLoading={ isEarningsLoading }
-                transactionFeeInADA={ TRANSACTION_FEE_IN_ADA }
-                transactionFeeInUSD={ transactionFeeInUSD }
-                unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
-                unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
-                onClaimEarnings={ handleClaimEarnings }
-              />
-            )
+        { unclaimedEarnings?.length ? (
+          isEarningsInProgress ? (
+            <EarningsClaimInProgress
+              unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
+              unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
+            />
           ) : (
-            <NoPendingEarnings
-              isConversionError={ isConversionError }
+            <UnclaimedEarnings
+              isClaimEarningsLoading={ isClaimEarningsLoading }
               isConversionLoading={ isConversionLoading }
               isEarningsError={ isEarningsError }
               isEarningsLoading={ isEarningsLoading }
-              totalClaimedInNEWM={ totalClaimedInNEWM }
-              totalClaimedInUSD={ totalClaimedInUSD }
+              transactionFeeInADA={ TRANSACTION_FEE_IN_ADA }
+              transactionFeeInUSD={ transactionFeeInUSD }
+              unclaimedEarningsInNEWM={ unclaimedEarningsInNEWM }
+              unclaimedEarningsInUSD={ unclaimedEarningsInUSD }
+              onClaimEarnings={ handleClaimEarnings }
             />
-          ) }
+          )
+        ) : (
+          <NoPendingEarnings
+            isConversionError={ isConversionError }
+            isConversionLoading={ isConversionLoading }
+            isEarningsError={ isEarningsError }
+            isEarningsLoading={ isEarningsLoading }
+            totalClaimedInNEWM={ totalClaimedInNEWM }
+            totalClaimedInUSD={ totalClaimedInUSD }
+          />
+        ) }
 
-          <Box maxWidth={ 1000 } mt={ 5 } pb={ 5 }>
-            <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
-              <Tabs
-                aria-label="Wallet details"
-                sx={ {
-                  ".Mui-selected": {
-                    background: theme.gradients[colorMap[tab]],
-                    backgroundClip: "text",
-                    color: theme.colors[colorMap[tab]],
-                    textFillColor: "transparent",
-                  },
-                  ".MuiButtonBase-root.MuiTab-root": {
-                    minWidth: "auto",
-                    ...theme.typography.subtitle2,
-                    fontWeight: 600,
-                  },
-                  ".MuiTabs-flexContainer": {
-                    gap: 4,
-                    justifyContent: ["center", "center", "normal"],
-                  },
-                  ".MuiTabs-indicator": {
-                    background: theme.gradients[colorMap[tab]],
-                  },
-                } }
-                value={ tab }
-                onChange={ handleChange }
-              >
-                <Tab aria-controls="tabpanel-0" id="tab-0" label="PORTFOLIO" />
-                <Tab
-                  aria-controls="tabpanel-1"
-                  id="tab-1"
-                  label="TRANSACTIONS"
-                />
-              </Tabs>
-            </Box>
-
-            <TabPanel index={ 0 } value={ tab }>
-              <Portfolio />
-            </TabPanel>
-            <TabPanel index={ 1 } value={ tab }>
-              <Transactions />
-            </TabPanel>
+        <Box maxWidth={ 1000 } mt={ 5 } pb={ 5 }>
+          <Box borderBottom={ 1 } borderColor={ theme.colors.grey400 }>
+            <Tabs
+              aria-label="Wallet details"
+              sx={ {
+                ".Mui-selected": {
+                  background: theme.gradients[colorMap[tab]],
+                  backgroundClip: "text",
+                  color: theme.colors[colorMap[tab]],
+                  textFillColor: "transparent",
+                },
+                ".MuiButtonBase-root.MuiTab-root": {
+                  minWidth: "auto",
+                  ...theme.typography.subtitle2,
+                  fontWeight: 600,
+                },
+                ".MuiTabs-flexContainer": {
+                  gap: 4,
+                  justifyContent: ["center", "center", "normal"],
+                },
+                ".MuiTabs-indicator": {
+                  background: theme.gradients[colorMap[tab]],
+                },
+              } }
+              value={ tab }
+              onChange={ handleChange }
+            >
+              <Tab aria-controls="tabpanel-0" id="tab-0" label="PORTFOLIO" />
+              <Tab aria-controls="tabpanel-1" id="tab-1" label="TRANSACTIONS" />
+            </Tabs>
           </Box>
+
+          <TabPanel index={ 0 } value={ tab }>
+            <Portfolio />
+          </TabPanel>
+          <TabPanel index={ 1 } value={ tab }>
+            <Transactions />
+          </TabPanel>
         </Box>
-      </Container>
-    );
-  }
+      </Box>
+    </Container>
+  );
 };
 
 export default Wallet;
