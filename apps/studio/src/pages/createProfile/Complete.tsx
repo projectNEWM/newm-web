@@ -20,7 +20,7 @@ const Complete: FunctionComponent = () => {
       } }
     >
       <div>
-        <Box mb={ 4 }>
+        <Box display="flex" justifyContent="center" mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
         <Typography sx={ { display: "block" } } variant="h1">
