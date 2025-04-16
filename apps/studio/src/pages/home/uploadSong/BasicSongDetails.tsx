@@ -110,9 +110,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   // DSP pricing plan mint song toggling
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
-  const handlePricingPlanClose = () => {
+  const handlePricingPlanCancel = () => {
     setIsPricingPlansOpen(false);
     setFieldValue("isMinting", false);
+  };
+  const handlePricingPlanConfirm = () => {
+    setIsPricingPlansOpen(false);
+    setFieldValue("isMinting", true);
   };
   const handlePricingPlanOpen = () => {
     setIsPricingPlansOpen(true);
@@ -196,7 +200,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       { !isArtistPricePlanSelected && (
         <PricingPlansDialog
           open={ isPricingPlansOpen }
-          onClose={ handlePricingPlanClose }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
         />
       ) }
       <Stack direction="column" spacing={ 3 }>
