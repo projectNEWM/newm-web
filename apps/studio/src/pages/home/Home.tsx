@@ -27,6 +27,7 @@ const Home: FunctionComponent = () => {
   const {
     data: { firstName = "", lastName = "", role, location } = emptyProfile,
     isFetching,
+    isLoading,
     error,
   } = useGetProfileQuery();
 
@@ -44,7 +45,7 @@ const Home: FunctionComponent = () => {
     }
   }
 
-  if (isFetching) return null;
+  if (isLoading) return null;
 
   return (
     <Box
