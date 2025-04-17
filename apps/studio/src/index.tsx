@@ -4,6 +4,7 @@ import "global.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initializeSentry from "./sentryConfig";
+import loadReferralHeroScript from "./referralHeroConfig";
 
 // redirect from default firebase urls
 if (window.location.hostname.includes("newm-studio")) {
@@ -11,6 +12,7 @@ if (window.location.hostname.includes("newm-studio")) {
 }
 
 initializeSentry();
+loadReferralHeroScript();
 
 const isMac = navigator.userAgent.includes("Mac");
 
