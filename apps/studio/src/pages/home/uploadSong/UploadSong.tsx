@@ -125,12 +125,16 @@ const UploadSong: FunctionComponent = () => {
     ) => {
       if (values.isMinting) {
         helpers.setSubmitting(false);
+        const RH = (window as any).RH;
+        if (RH && typeof RH.pendingReferral === "function") {
+          RH.trackTransaction({ email });
+        }
         navigate("advanced-details");
       } else {
         await handleSubmit(values, helpers);
       }
     },
-    [navigate, handleSubmit]
+    [navigate, email, handleSubmit]
   );
 
   // Prepare Artist Agreement for confirmation page
