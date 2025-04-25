@@ -1,8 +1,8 @@
 name: Deploy NEWM Studio app to AWS on published release
 on:
- release:
-   types: [ published ]
- workflow_dispatch:
+  release:
+    types: [published]
+  workflow_dispatch:
 jobs:
   build_and_deploy_studio_release:
     if: ${{ startsWith(github.event.release.tag_name, 'studio') }}
@@ -26,6 +26,7 @@ jobs:
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_RECAPTCHA_SITE_KEY_PROD: ${{ secrets.RECAPTCHA_SITE_KEY_PROD }}
           VITE_LAUNCHDARKLY_CLIENT_ID_PROD: ${{ secrets.LAUNCHDARKLY_CLIENT_ID_PROD }}
+          VITE_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD: ${{ secrets.REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD }}
           VITE_DEXHUNTER_STUDIO_PARTNER_CODE: ${{ secrets.DEXHUNTER_STUDIO_PARTNER_CODE }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: production

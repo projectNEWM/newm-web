@@ -1,4 +1,8 @@
-const loadReferralHeroScript = () => {
+const loadReferralHeroScript = (referralUUID: string) => {
+  if (!referralUUID) {
+    return;
+  }
+
   const script = document.createElement("script");
 
   script.textContent = `
@@ -8,7 +12,7 @@ const loadReferralHeroScript = () => {
   [0],c=a.createElement('script');c.async=!0,c.src=
   'https://referralhero-global-code.s3.amazonaws.com/'+'production'+
   '/'+t+'.js',e.parentNode.insertBefore(c,e)}(window,document,
-  'https://app.referralhero.com/','RHa857ddbc7a');
+  'https://app.referralhero.com/','${referralUUID}');
 `;
 
   document.body.appendChild(script);
