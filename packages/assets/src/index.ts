@@ -36,6 +36,7 @@ import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
 import auroraBackground from "./lib/images/aurora-background.webp";
 import bgImage from "./lib/images/bg-img.webp";
 import gradientRing from "./lib/images/gradient-ring.png";
+import referralBannerBackground from "./lib/images/referral-banner-background.png";
 import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
 import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
 
@@ -68,6 +69,7 @@ export {
   Owner,
   PeopleIcon,
   PlayButton,
+  referralBannerBackground,
   Search,
   SelectedCheckboxIcon,
   SoundCloudLogo,

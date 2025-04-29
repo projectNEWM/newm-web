@@ -34,6 +34,7 @@ import {
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
+import { ReferralBanner } from "../../components";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -183,24 +184,35 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         </Box>
       </Box>
 
+      <Box sx={ { bottom: 0, mb: 2, mx: -1, position: "sticky", zIndex: 2 } }>
+        <ReferralBanner />
+      </Box>
       <Box
-        alignItems="center"
-        display="flex"
-        justifyContent="space-between"
-        pb={ 2.5 }
-        px={ 2.5 }
-        width="100%"
+        sx={ {
+          display: "flex",
+          flexDirection: "column",
+          width: "100%", // Push to the bottom
+        } }
       >
-        <Link
+        <Box
           alignItems="center"
           display="flex"
-          href={ NEWM_IO_URL }
-          justifyContent="center"
-          rel="noopener"
-          target="_blank"
+          justifyContent="space-between"
+          pb={ 2.5 }
+          px={ 2.5 }
+          width="100%"
         >
-          <NEWMLogo height="40" width="40" />
-        </Link>
+          <Link
+            alignItems="center"
+            display="flex"
+            href={ NEWM_IO_URL }
+            justifyContent="center"
+            rel="noopener"
+            target="_blank"
+          >
+            <NEWMLogo height="40" width="40" />
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
