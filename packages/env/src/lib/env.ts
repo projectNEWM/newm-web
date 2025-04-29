@@ -5,62 +5,63 @@ const getAppEnvVar = (name: string): string => {
   switch (name) {
     case "APPLE_CLIENT_ID":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_APPLE_CLIENT_ID
+        ? process.env.NEXT_PUBLIC_APPLE_CLIENT_ID ?? ""
         : import.meta.env.VITE_APPLE_CLIENT_ID;
     case "GOOGLE_CLIENT_ID":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+        ? process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""
         : import.meta.env.VITE_GOOGLE_CLIENT_ID;
     case "GA_STUDIO_ID":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_GA_STUDIO_ID
+        ? process.env.NEXT_PUBLIC_GA_STUDIO_ID ?? ""
         : import.meta.env.VITE_GA_STUDIO_ID;
     case "GA_MARKETPLACE_ID":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_GA_MARKETPLACE_ID
+        ? process.env.NEXT_PUBLIC_GA_MARKETPLACE_ID ?? ""
         : import.meta.env.VITE_GA_MARKETPLACE_ID;
     case "RECAPTCHA_SITE_KEY_STAGING":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING
+        ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING ?? ""
         : import.meta.env.VITE_RECAPTCHA_SITE_KEY_STAGING;
     case "RECAPTCHA_SITE_KEY_PROD":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD
+        ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_PROD ?? ""
         : import.meta.env.VITE_RECAPTCHA_SITE_KEY_PROD;
     case "DEXHUNTER_MARKETPLACE_PARTNER_CODE":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE ?? ""
         : import.meta.env.VITE_DEXHUNTER_MARKETPLACE_PARTNER_CODE;
     case "DEXHUNTER_TOOLS_PARTNER_CODE":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_TOOLS_PARTNER_CODE ?? ""
         : import.meta.env.VITE_DEXHUNTER_TOOLS_PARTNER_CODE;
     case "DEXHUNTER_STUDIO_PARTNER_CODE":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_DEXHUNTER_STUDIO_PARTNER_CODE
+        ? process.env.NEXT_PUBLIC_DEXHUNTER_STUDIO_PARTNER_CODE ?? ""
         : import.meta.env.VITE_DEXHUNTER_STUDIO_PARTNER_CODE;
     case "LAUNCHDARKLY_CLIENT_ID_STAGING":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING
+        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING ?? ""
         : import.meta.env.VITE_LAUNCHDARKLY_CLIENT_ID_STAGING;
     case "LAUNCHDARKLY_CLIENT_ID_PROD":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD
+        ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD ?? ""
         : import.meta.env.VITE_LAUNCHDARKLY_CLIENT_ID_PROD;
     case "REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING":
       return typeof process !== "undefined"
         ? process.env
-            .NEXT_PUBLIC_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING
+            .NEXT_PUBLIC_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING ??
+            ""
         : import.meta.env
             .VITE_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING;
     case "REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD":
       return typeof process !== "undefined"
         ? process.env
-            .NEXT_PUBLIC_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD
+            .NEXT_PUBLIC_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD ?? ""
         : import.meta.env.VITE_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD;
     case "ENV":
       return typeof process !== "undefined"
-        ? process.env.NEXT_PUBLIC_ENV
+        ? process.env.NEXT_PUBLIC_ENV ?? ""
         : import.meta.env.VITE_ENV;
     default:
       return "";
