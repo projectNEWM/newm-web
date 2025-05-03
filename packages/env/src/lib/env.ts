@@ -47,6 +47,10 @@ const getAppEnvVar = (name: string): string => {
       return typeof process !== "undefined"
         ? process.env.NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD ?? ""
         : import.meta.env.VITE_LAUNCHDARKLY_CLIENT_ID_PROD;
+    case "REFERRALHERO_TRACKING_ID":
+      return typeof process !== "undefined"
+        ? process.env.NEXT_PUBLIC_REFERRALHERO_TRACKING_ID ?? ""
+        : import.meta.env.VITE_REFERRALHERO_TRACKING_ID;
     case "REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING":
       return typeof process !== "undefined"
         ? process.env
@@ -99,6 +103,10 @@ const LAUNCHDARKLY_CLIENT_ID_STAGING = getAppEnvVar(
 export const LAUNCHDARKLY_CLIENT_ID = isProd
   ? LAUNCHDARKLY_CLIENT_ID_PROD
   : LAUNCHDARKLY_CLIENT_ID_STAGING;
+
+export const REFERRALHERO_TRACKING_ID = getAppEnvVar(
+  "REFERRALHERO_TRACKING_ID"
+);
 
 const REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD = getAppEnvVar(
   "_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_PROD"

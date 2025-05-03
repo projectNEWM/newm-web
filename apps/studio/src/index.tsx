@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "global.css";
-import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initializeSentry from "./sentryConfig";
@@ -13,7 +12,7 @@ if (window.location.hostname.includes("newm-studio")) {
 }
 
 initializeSentry();
-loadReferralHeroScript(REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID);
+loadReferralHeroScript();
 
 const isMac = navigator.userAgent.includes("Mac");
 

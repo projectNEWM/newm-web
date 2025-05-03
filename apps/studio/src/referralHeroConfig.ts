@@ -1,5 +1,7 @@
-const loadReferralHeroScript = (referralUUID: string) => {
-  if (!referralUUID) {
+import { REFERRALHERO_TRACKING_ID } from "@newm-web/env";
+
+const loadReferralHeroScript = () => {
+  if (!REFERRALHERO_TRACKING_ID) {
     return;
   }
 
@@ -12,7 +14,7 @@ const loadReferralHeroScript = (referralUUID: string) => {
   [0],c=a.createElement('script');c.async=!0,c.src=
   'https://referralhero-global-code.s3.amazonaws.com/'+'production'+
   '/'+t+'.js',e.parentNode.insertBefore(c,e)}(window,document,
-  'https://app.referralhero.com/','${referralUUID}');
+  'https://app.referralhero.com/','${REFERRALHERO_TRACKING_ID}');
 `;
 
   document.body.appendChild(script);
