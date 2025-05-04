@@ -42,3 +42,23 @@ export enum PortfolioTableFilter {
   Week = "week",
   Year = "year",
 }
+
+export interface ReferralHeroOptinData {
+  email: string;
+  people_referred?: number;
+  referral_link?: string;
+}
+
+export interface ReferralHeroObject {
+  getUserReferralCount?: () => number;
+  getUserWalletAddress?: () => string | null;
+  identify: (data: { email: string }, force?: boolean) => void;
+  optin_data?: ReferralHeroOptinData;
+}
+
+// Extend the Window interface
+declare global {
+  interface Window {
+    [key: `RH_${string}`]: ReferralHeroObject;
+  }
+}
