@@ -29,17 +29,18 @@ export const Sale = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isSaleEndPending, setIsSaleEndPending] = useState(false);
   const [isSaleStartPending, setIsSaleStartPending] = useState(false);
+  const [isSaleCompletedPending, setIsSaleCompletedPending] = useState(false);
   const [isPendingSalesLoading, setIsPendingSalesLoading] = useState(true);
   const { hasTokens, isLoading: isHasTokensLoading } = useHasSongTokens(songId);
   const {
-    data: activeOwnedSales = [],
-    isLoading: isGetActiveSalesLoading,
+    data: sales = [],
+    isLoading: isGetSalesLoading,
     isUninitialized: isGetSalesUninitialized,
     refetch: refetchSales,
   } = useGetSalesQuery(
     {
       addresses: [walletAddress],
-      saleStatuses: [SaleStatus.Started],
+      saleStatuses: [SaleStatus.Started, SaleStatus.SoldOut],
       songIds: [songId],
     },
     { skip: !walletAddress }
@@ -49,9 +50,10 @@ export const Sale = () => {
     isWalletLoading ||
     isPendingSalesLoading ||
     isHasTokensLoading ||
-    isGetActiveSalesLoading;
+    isGetSalesLoading;
 
-  const activeSale = activeOwnedSales[0];
+  const activeSale = sales.find((sale) => sale.status === SaleStatus.Started);
+  const soldOutSale = sales.find((sale) => sale.status === SaleStatus.SoldOut);
 
   /**
    * Handle the pending state for sale start.
@@ -134,7 +136,7 @@ export const Sale = () => {
     return <MarketplaceTabSkeleton />;
   }
 
-  if (!isConnected || (!activeSale && !hasTokens)) {
+  if (!isConnected || (!activeSale && !soldOutSale && !hasTokens)) {
     return <ConnectWallet />;
   }
 
@@ -146,5 +148,13 @@ export const Sale = () => {
     return <SaleEndPending />;
   }
 
-  return activeSale ? <ActiveSale sale={ activeSale } /> : <CreateSale />;
+  if (soldOutSale) {
+    return "sold out placeholder";
+  }
+
+  if (activeSale) {
+    return <ActiveSale sale={ activeSale } />;
+  }
+
+  return <CreateSale />;
 };
