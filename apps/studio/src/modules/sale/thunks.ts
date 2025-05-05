@@ -9,8 +9,10 @@ import { extendedApi as saleApi } from "./api";
 import { EndSaleThunkRequest, StartSaleThunkRequest } from "./types";
 import { setToastMessage } from "../ui";
 import {
+  LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY,
   LOCAL_STORAGE_SALE_END_PENDING_KEY,
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
+  SALE_COMPLETE_UPDATED_EVENT,
   SALE_END_UPDATED_EVENT,
   SALE_START_UPDATED_EVENT,
 } from "../../common";
@@ -125,6 +127,13 @@ export const endSale = createAsyncThunk(
   "sale/end",
   async (body: EndSaleThunkRequest, { dispatch }) => {
     try {
+      const pendingKey = body.isSoldOut
+        ? LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY
+        : LOCAL_STORAGE_SALE_END_PENDING_KEY;
+      const eventKey = body.isSoldOut
+        ? SALE_COMPLETE_UPDATED_EVENT
+        : SALE_END_UPDATED_EVENT;
+
       const wallet = await enableWallet();
       const changeAddress = await getWalletChangeAddress(wallet);
 
@@ -159,23 +168,18 @@ export const endSale = createAsyncThunk(
 
       await wallet.submitTx(signedTransaction);
 
-      const pendingSaleSongIds = localStorage.getItem(
-        LOCAL_STORAGE_SALE_END_PENDING_KEY
-      );
+      const pendingSaleSongIds = localStorage.getItem(pendingKey);
 
       if (pendingSaleSongIds) {
         localStorage.setItem(
-          LOCAL_STORAGE_SALE_END_PENDING_KEY,
+          pendingKey,
           JSON.stringify([...JSON.parse(pendingSaleSongIds), body.songId])
         );
       } else {
-        localStorage.setItem(
-          LOCAL_STORAGE_SALE_END_PENDING_KEY,
-          JSON.stringify([body.songId])
-        );
+        localStorage.setItem(pendingKey, JSON.stringify([body.songId]));
       }
 
-      window.dispatchEvent(new Event(SALE_END_UPDATED_EVENT));
+      window.dispatchEvent(new Event(eventKey));
 
       dispatch(
         setToastMessage({

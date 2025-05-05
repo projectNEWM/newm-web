@@ -48,6 +48,9 @@ export const SALE_START_UPDATED_EVENT = "saleStartUpdated";
 export const LOCAL_STORAGE_SALE_END_PENDING_KEY = "saleEndSongIds";
 export const SALE_END_UPDATED_EVENT = "saleEndUpdated";
 
+export const LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY = "saleCompleteSongIds";
+export const SALE_COMPLETE_UPDATED_EVENT = "saleCompleteUpdated";
+
 /**
  * Stream token sale default bundle amount
  */
