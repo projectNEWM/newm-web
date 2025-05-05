@@ -42,6 +42,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import store, { persistor } from "./store";
 import "./App.css";
 import LDUserUpdater from "./components/LDUserUpdater";
+import PingSaleComplete from "./components/sales/PingSaleComplete";
 
 const App = () => {
   const googleClientID = GOOGLE_CLIENT_ID;
@@ -70,6 +71,7 @@ const App = () => {
                 <WalletEnvMismatchModal />
                 <PingSaleStart />
                 <PingSaleEnd />
+                <PingSaleComplete />
                 <PingEarningsInProgressWrapper />
                 <UnsupportedBrowserBanner />
                 <LDUserUpdater />

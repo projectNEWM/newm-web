@@ -7,9 +7,13 @@ import { CreateSale } from "./CreateSale";
 import SaleEndPending from "./SaleEndPending";
 import SaleStartPending from "./SaleStartPending";
 import { ConnectWallet } from "./ConnectWallet";
+import { SoldOutSale } from "./SoldOutSale";
+import SaleCompletePending from "./SaleCompletePending";
 import {
+  LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY,
   LOCAL_STORAGE_SALE_END_PENDING_KEY,
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
+  SALE_COMPLETE_UPDATED_EVENT,
   SALE_END_UPDATED_EVENT,
   SALE_START_UPDATED_EVENT,
   SaleStartPendingSongs,
@@ -29,7 +33,7 @@ export const Sale = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isSaleEndPending, setIsSaleEndPending] = useState(false);
   const [isSaleStartPending, setIsSaleStartPending] = useState(false);
-  const [isSaleCompletedPending, setIsSaleCompletedPending] = useState(false);
+  const [isSaleCompletePending, setIsSaleCompletePending] = useState(false);
   const [isPendingSalesLoading, setIsPendingSalesLoading] = useState(true);
   const { hasTokens, isLoading: isHasTokensLoading } = useHasSongTokens(songId);
   const {
@@ -89,6 +93,22 @@ export const Sale = () => {
   }, [songId]);
 
   /**
+   * Handle the pending state for sold out sale close.
+   */
+  const handleSaleCompletePending = useCallback(() => {
+    const pendingSales = localStorage.getItem(
+      LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY
+    );
+
+    if (pendingSales) {
+      const parsedPendingSales: string[] = JSON.parse(pendingSales);
+      setIsSaleCompletePending(parsedPendingSales.includes(songId));
+    } else {
+      setIsSaleCompletePending(false);
+    }
+  }, [songId]);
+
+  /**
    * Refetch sales when the pending status changes.
    */
   useEffect(() => {
@@ -99,6 +119,7 @@ export const Sale = () => {
     isGetSalesUninitialized,
     isSaleEndPending,
     isSaleStartPending,
+    isSaleCompletePending,
     refetchSales,
   ]);
 
@@ -117,9 +138,14 @@ export const Sale = () => {
   useEffect(() => {
     handleSaleEndPending();
     handleSaleStartPending();
+    handleSaleCompletePending();
 
     window.addEventListener(SALE_END_UPDATED_EVENT, handleSaleEndPending);
     window.addEventListener(SALE_START_UPDATED_EVENT, handleSaleStartPending);
+    window.addEventListener(
+      SALE_COMPLETE_UPDATED_EVENT,
+      handleSaleCompletePending
+    );
 
     setIsPendingSalesLoading(false);
 
@@ -129,8 +155,14 @@ export const Sale = () => {
         SALE_START_UPDATED_EVENT,
         handleSaleStartPending
       );
+      window.removeEventListener(
+        SALE_COMPLETE_UPDATED_EVENT,
+        handleSaleCompletePending
+      );
     };
-  }, [handleSaleEndPending, handleSaleStartPending]);
+  }, [handleSaleEndPending, handleSaleStartPending, handleSaleCompletePending]);
+
+  console.log("sold out sale: ", soldOutSale);
 
   if (isLoading) {
     return <MarketplaceTabSkeleton />;
@@ -148,8 +180,12 @@ export const Sale = () => {
     return <SaleEndPending />;
   }
 
+  if (isSaleCompletePending) {
+    return <SaleCompletePending />;
+  }
+
   if (soldOutSale) {
-    return "sold out placeholder";
+    return <SoldOutSale sale={ soldOutSale } />;
   }
 
   if (activeSale) {
