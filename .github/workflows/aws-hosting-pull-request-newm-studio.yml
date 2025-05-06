@@ -13,7 +13,7 @@ jobs:
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
-      pull-requests: write  # Explicitly allow writing to pull requests
+      pull-requests: write # Explicitly allow writing to pull requests
     steps:
       - uses: actions/checkout@v3
       - run: npm install
@@ -25,6 +25,8 @@ jobs:
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
           VITE_LAUNCHDARKLY_CLIENT_ID_STAGING: ${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }}
+          VITE_REFERRALHERO_TRACKING_ID: ${{ secrets.REFERRALHERO_TRACKING_ID }}
+          VITE_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING: ${{ secrets.REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING }}
           VITE_DEXHUNTER_STUDIO_PARTNER_CODE: ${{ secrets.DEXHUNTER_STUDIO_PARTNER_CODE }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: staging
