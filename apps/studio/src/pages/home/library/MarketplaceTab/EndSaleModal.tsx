@@ -8,6 +8,7 @@ interface EndSaleModalProps {
   readonly handleEndSale: () => void;
   readonly isLoading: boolean;
   readonly isOpen: boolean;
+  readonly isSoldOut?: boolean;
 }
 
 export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
@@ -15,6 +16,7 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
   isOpen,
   handleEndSale,
   isLoading,
+  isSoldOut = false,
 }) => {
   return (
     <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ handleClose }>
@@ -42,11 +44,18 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
               Are you sure you want to end your stream token sale?
             </Typography>
 
-            <Typography variant="subtitle2">
-              The sale will be removed from the Marketplace, and all unsold
-              stream tokens will be returned to the wallet used when creating
-              the sale.
-            </Typography>
+            { isSoldOut ? (
+              <Typography variant="subtitle2">
+                All earnings from your sold out stream token sale will be moved
+                to your wallet.
+              </Typography>
+            ) : (
+              <Typography variant="subtitle2">
+                The sale will be removed from the Marketplace, and all unsold
+                stream tokens will be returned to the wallet used when creating
+                the sale.
+              </Typography>
+            ) }
           </Stack>
           <Stack flexDirection="row" gap={ 1 } justifyContent="end" mt={ 1 }>
             <Button
