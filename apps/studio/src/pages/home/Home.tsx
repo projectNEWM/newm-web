@@ -45,7 +45,8 @@ const Home: FunctionComponent = () => {
     if (webStudioArtistReferralCampaign && !isFetching && !error && email) {
       identifyReferralHeroUser(
         REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
-        email
+        email,
+        true
       );
     }
   }, [email, isFetching, error, webStudioArtistReferralCampaign]);

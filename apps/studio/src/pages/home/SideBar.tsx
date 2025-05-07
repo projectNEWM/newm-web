@@ -27,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import theme from "@newm-web/theme";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
@@ -49,6 +50,8 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
+
+  const { webStudioArtistReferralCampaign } = useFlags();
 
   return (
     <Box
@@ -184,35 +187,30 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         </Box>
       </Box>
 
-      <Box sx={ { bottom: 0, mb: 2, mx: -1, position: "sticky", zIndex: 2 } }>
-        <ReferralBanner />
-      </Box>
+      { webStudioArtistReferralCampaign && (
+        <Box bottom={ 0 } mb={ 2 } mt="auto" mx={ -1 } position="sticky" zIndex={ 2 }>
+          <ReferralBanner />
+        </Box>
+      ) }
+
       <Box
-        sx={ {
-          display: "flex",
-          flexDirection: "column",
-          width: "100%", // Push to the bottom
-        } }
+        alignItems="center"
+        display="flex"
+        justifyContent="space-between"
+        pb={ 2.5 }
+        px={ 2.5 }
+        width="100%"
       >
-        <Box
+        <Link
           alignItems="center"
           display="flex"
-          justifyContent="space-between"
-          pb={ 2.5 }
-          px={ 2.5 }
-          width="100%"
+          href={ NEWM_IO_URL }
+          justifyContent="center"
+          rel="noopener"
+          target="_blank"
         >
-          <Link
-            alignItems="center"
-            display="flex"
-            href={ NEWM_IO_URL }
-            justifyContent="center"
-            rel="noopener"
-            target="_blank"
-          >
-            <NEWMLogo height="40" width="40" />
-          </Link>
-        </Box>
+          <NEWMLogo height="40" width="40" />
+        </Link>
       </Box>
     </Box>
   );
