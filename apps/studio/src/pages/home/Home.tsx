@@ -46,7 +46,7 @@ const Home: FunctionComponent = () => {
       identifyReferralHeroUser(
         REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
         email,
-        true
+        true // ensures id check is forced if user logins with different account
       );
     }
   }, [email, isFetching, error, webStudioArtistReferralCampaign]);
