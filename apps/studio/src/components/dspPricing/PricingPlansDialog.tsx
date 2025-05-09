@@ -8,20 +8,25 @@ import { useUpdateProfileThunk } from "../../modules/session";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 
 interface PricingPlansDialogProps {
-  readonly onClose: () => void;
+  readonly onCancel: () => void;
+  readonly onConfirm: () => void;
   readonly open: boolean;
 }
 
 /**
  * Allows users to select a pricing plan.
  */
-const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
+const PricingPlansDialog = ({
+  onCancel,
+  onConfirm,
+  open,
+}: PricingPlansDialogProps) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
   const handleOptionClick = () => {
     updateProfile({ dspPlanSubscribed: true }).then(() => {
       LocalStorage.setItem(LocalStorageKey.isStudioPricingPlanAccepted, "true");
-      onClose();
+      onConfirm();
     });
   };
 
@@ -85,7 +90,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
 
         height: "100%",
       } }
-      onClose={ onClose }
+      onClose={ onCancel }
     >
       <Box
         sx={ {
@@ -178,7 +183,7 @@ const PricingPlansDialog = ({ onClose, open }: PricingPlansDialogProps) => {
             color="music"
             isLoading={ isLoading }
             variant="secondary"
-            onClick={ onClose }
+            onClick={ onCancel }
           >
             Cancel
           </Button>

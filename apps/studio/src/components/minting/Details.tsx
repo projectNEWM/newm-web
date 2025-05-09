@@ -7,8 +7,7 @@ import { CollaborationStatus } from "../../modules/song";
 
 interface DetailsProps {
   readonly email: string;
-  readonly firstName?: string;
-  readonly lastName?: string;
+  readonly nickname?: string;
   readonly pictureUrl?: string;
   readonly showStatus?: boolean;
   readonly status?: CollaborationStatus;
@@ -22,14 +21,11 @@ const pillMap: Record<Exclude<CollaborationStatus, "Editing">, PillProps> = {
 
 const Details: FunctionComponent<DetailsProps> = ({
   pictureUrl,
-  firstName,
-  lastName,
   email,
   status,
   showStatus = true,
+  nickname = "",
 }) => {
-  const name = `${firstName || ""} ${lastName || ""}`.trim();
-
   return (
     <Stack
       alignItems={ ["start", "center"] }
@@ -57,7 +53,7 @@ const Details: FunctionComponent<DetailsProps> = ({
         />
       ) }
       <Stack maxWidth={ ["150px", "300px"] } sx={ { overflowX: "auto" } }>
-        { name ? <Typography title={ name }>{ name }</Typography> : null }
+        <Typography title={ nickname }>{ nickname }</Typography>
 
         <Typography title={ email } variant="subtitle1">
           { email }

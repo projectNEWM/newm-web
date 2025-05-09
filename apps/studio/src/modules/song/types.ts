@@ -302,6 +302,7 @@ export interface CollaboratorInfo {
   genre?: string;
   id?: string;
   lastName?: string;
+  nickname?: string;
   pictureUrl?: string;
   role?: string;
   walletAddress?: string;

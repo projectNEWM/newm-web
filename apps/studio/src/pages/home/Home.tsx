@@ -1,9 +1,11 @@
 import { Box, IconButton } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import { PageNotFound } from "@newm-web/components";
+import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
 import Library from "./library/Library";
@@ -13,11 +15,13 @@ import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { useGetStudioClientConfigQuery } from "../../modules/content";
+import { identifyReferralHeroUser } from "../../common";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
   const theme = useTheme();
   const navigate = useNavigate();
+  const { webStudioArtistReferralCampaign } = useFlags();
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 
@@ -25,10 +29,27 @@ const Home: FunctionComponent = () => {
   useGetStudioClientConfigQuery();
 
   const {
-    data: { firstName = "", lastName = "", role, location } = emptyProfile,
+    data: {
+      email,
+      firstName = "",
+      lastName = "",
+      role,
+      location,
+    } = emptyProfile,
     isFetching,
+    isLoading,
     error,
   } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (webStudioArtistReferralCampaign && !isFetching && !error && email) {
+      identifyReferralHeroUser(
+        REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
+        email,
+        true // ensures id check is forced if user logins with different account
+      );
+    }
+  }, [email, isFetching, error, webStudioArtistReferralCampaign]);
 
   const hasBasicDetails = !!(firstName && lastName && role && location);
 
@@ -44,7 +65,7 @@ const Home: FunctionComponent = () => {
     }
   }
 
-  if (isFetching) return null;
+  if (isLoading) return null;
 
   return (
     <Box

@@ -29,6 +29,7 @@ export { default as ProfileSkeleton } from "./skeletons/ProfileSkeleton";
 export { default as PortfolioSkeleton } from "./skeletons/PortfolioSkeleton";
 export { default as MarketplaceTabSkeleton } from "./skeletons/MarketplaceTabSkeleton";
 export { default as LogoutButton } from "./home/LogoutButton";
+export { default as ReferralBanner } from "./referralHero/ReferralBanner";
 export { default as SquareGridCard } from "./SquareGridCard";
 export { default as Toast } from "./Toast";
 export { default as UpdateWalletAddressModal } from "./UpdateWalletAddressModal";

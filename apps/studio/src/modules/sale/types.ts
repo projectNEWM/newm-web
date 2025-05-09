@@ -25,6 +25,7 @@ export interface EndSaleTransactionRequest {
 }
 
 export interface EndSaleThunkRequest extends EndSaleAmountRequest {
+  readonly isSoldOut?: boolean;
   readonly songId: string;
 }
 

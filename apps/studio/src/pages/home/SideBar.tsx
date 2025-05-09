@@ -27,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
 import theme from "@newm-web/theme";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
@@ -34,6 +35,7 @@ import {
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
+import { ReferralBanner } from "../../components";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -48,6 +50,8 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
+
+  const { webStudioArtistReferralCampaign } = useFlags();
 
   return (
     <Box
@@ -182,6 +186,12 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
           </Stack>
         </Box>
       </Box>
+
+      { webStudioArtistReferralCampaign && (
+        <Box bottom={ 0 } mb={ 2 } mt="auto" mx={ -1 } position="sticky" zIndex={ 2 }>
+          <ReferralBanner />
+        </Box>
+      ) }
 
       <Box
         alignItems="center"
