@@ -6,6 +6,7 @@ const initialState: UIState = {
   isIdenfyModalOpen: false,
   isInvitesModalOpen: false,
   isProgressBarModalOpen: false,
+  isReferralDashboardModalOpen: false,
   isWalletEnvMismatchModalOpen: false,
   progressBarModal: {
     animationSeconds: 0,
@@ -56,6 +57,12 @@ const uiSlice = createSlice({
     setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isProgressBarModalOpen = payload;
     },
+    setIsReferralDashboardModalOpen: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isReferralDashboardModalOpen = payload;
+    },
     setIsWalletEnvMismatchModalOpen: (
       state,
       { payload }: PayloadAction<boolean>
@@ -81,16 +88,17 @@ const uiSlice = createSlice({
 });
 
 export const {
-  clearToastMessage,
-  setToastMessage,
-  setProgressBarModal,
-  setUpdateWalletAddressModal,
   clearProgressBarModal,
-  setIsProgressBarModalOpen,
-  setIsIdenfyModalOpen,
+  clearToastMessage,
   setIsConnectWalletModalOpen,
+  setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
+  setIsProgressBarModalOpen,
+  setIsReferralDashboardModalOpen,
   setIsWalletEnvMismatchModalOpen,
+  setProgressBarModal,
+  setToastMessage,
+  setUpdateWalletAddressModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

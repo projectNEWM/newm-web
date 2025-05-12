@@ -5,6 +5,7 @@ export interface UIState {
   isIdenfyModalOpen: boolean;
   isInvitesModalOpen: boolean;
   isProgressBarModalOpen: boolean;
+  isReferralDashboardModalOpen: boolean;
   isWalletEnvMismatchModalOpen: boolean;
   progressBarModal: {
     animationSeconds: number;
