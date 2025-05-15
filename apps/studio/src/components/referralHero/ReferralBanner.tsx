@@ -54,7 +54,11 @@ const ReferralBanner: FunctionComponent = () => {
           and invite more!
         </Typography>
 
-        <Button variant="primary" width="full">
+        <Button
+          variant="primary"
+          width="full"
+          onClick={ () => dispatch(setIsReferralDashboardModalOpen(true)) }
+        >
           Invite an Artist
         </Button>
       </Box>

@@ -1,4 +1,4 @@
-import { Box, Typography, alpha } from "@mui/material";
+import { Box, Typography, alpha, useTheme } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
 import { FunctionComponent } from "react";
 import { Button } from "@newm-web/elements";
@@ -10,11 +10,12 @@ interface WalletConnectionOverlayProps {
 const WalletConnectionOverlay: FunctionComponent<
   WalletConnectionOverlayProps
 > = ({ handleConnectWallet }) => {
+  const theme = useTheme();
   return (
     <Box
       sx={ {
         alignItems: "center",
-        backgroundColor: alpha("#121212", 0.85),
+        backgroundColor: alpha(`${theme.colors.grey600}`, 0.85),
         borderRadius: 2,
         bottom: 0,
         display: "flex",
@@ -44,8 +45,8 @@ const WalletConnectionOverlay: FunctionComponent<
         textAlign="center"
         variant="subtitle1"
       >
-        To access your referral program and earn rewards, connect your wallet
-        first.
+        You&apos;ll need to connect your wallet before you can refer an artist
+        and access your referral link.
       </Typography>
       <Button
         gradient="crypto"
