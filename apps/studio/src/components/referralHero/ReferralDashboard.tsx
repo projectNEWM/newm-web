@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import WalletConnectionOverlay from "./WalletConnectionOverlay";
 import ReferralDataBox from "./ReferralDataBox";
 import {
@@ -26,6 +25,11 @@ import {
   setIsReferralDashboardModalOpen,
   setToastMessage,
 } from "../../modules/ui";
+import {
+  emptyProfile,
+  selectSession,
+  useGetProfileQuery,
+} from "../../modules/session";
 
 interface ReferralDashboardProps {
   readonly campaignUUID: string;
@@ -40,8 +44,14 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
 }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector(selectSession);
   const { isReferralDashboardModalOpen } = useAppSelector(selectUi);
-  const { wallet } = useConnectWallet();
+
+  // Saved wallet address will be used for referral rewards
+  const { data: { walletAddress } = emptyProfile } = useGetProfileQuery(
+    undefined,
+    { skip: !isLoggedIn }
+  );
 
   const referralData = getReferralHeroUserCampaignData(campaignUUID);
   const {
@@ -74,6 +84,8 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
         );
       });
   };
+
+  // Connect wallet to add address, if none exist in profile, to get rewards
   const handleConnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
   };
@@ -121,7 +133,7 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
         <Box
           sx={ {
             display: "flex",
-            filter: !wallet ? "blur(3px)" : "none",
+            filter: !walletAddress ? "blur(3px)" : "none",
             flexDirection: "column",
             height: "100%",
             position: "relative",
@@ -258,7 +270,7 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
           </Box>
         </Box>
         { /* Wallet Connection Overlay */ }
-        { !wallet && (
+        { !walletAddress && (
           <WalletConnectionOverlay handleConnectWallet={ handleConnectWallet } />
         ) }
       </Box>
