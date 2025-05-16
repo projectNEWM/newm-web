@@ -47,6 +47,7 @@ export interface ReferralHeroOptinData {
   email: string;
   people_referred?: number;
   referral_link?: string;
+  referral_value?: number;
 }
 
 export interface ReferralHeroObject {

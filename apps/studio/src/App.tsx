@@ -5,7 +5,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import theme from "@newm-web/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GOOGLE_CLIENT_ID } from "@newm-web/env";
+import {
+  GOOGLE_CLIENT_ID,
+  REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
+} from "@newm-web/env";
 import {
   LDProvider,
   Maintenance,
@@ -25,6 +28,7 @@ import {
   PingSaleStart,
   PrivateRoute,
   ProgressBarModal,
+  ReferralDashboard,
   Toast,
   UpdateWalletAddressModal,
   WalletEnvMismatchModal,
@@ -65,6 +69,9 @@ const App = () => {
                 <IdenfyPingUserStatus />
                 <IdenfyModal />
                 <ConnectWalletModal />
+                <ReferralDashboard
+                  campaignUUID={ REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID }
+                />
                 <InvitesModal />
                 <ProgressBarModal />
                 <UpdateWalletAddressModal />
