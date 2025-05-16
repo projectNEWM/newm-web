@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { FunctionComponent } from "react";
 import {
   Box,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import WalletConnectionOverlay from "./WalletConnectionOverlay";
 import ReferralDataBox from "./ReferralDataBox";
 import {
@@ -42,6 +44,10 @@ interface ReferralDashboardProps {
 const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
   campaignUUID,
 }) => {
+  const { webStudioArtistReferralCampaign } = useFlags();
+  // Check if the referral campaign is enabled before rendering the wrapper component
+  if (!webStudioArtistReferralCampaign) return null;
+
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector(selectSession);
