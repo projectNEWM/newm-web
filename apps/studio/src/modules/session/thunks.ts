@@ -144,9 +144,9 @@ export const login = createAsyncThunk(
  */
 export const appleLogin = createAsyncThunk(
   "session/appleLogin",
-  async ({ code, redirectUri }: NewmOAuthRequest, { dispatch }) => {
+  async ({ code, redirectUri, referrer }: NewmOAuthRequest, { dispatch }) => {
     const loginResponse = dispatch(
-      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri })
+      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri, referrer })
     );
 
     if ("error" in loginResponse) return;
@@ -160,9 +160,9 @@ export const appleLogin = createAsyncThunk(
  */
 export const googleLogin = createAsyncThunk(
   "session/googleLogin",
-  async (accessToken: string, { dispatch }) => {
+  async ({ accessToken, referrer }: NewmOAuthRequest, { dispatch }) => {
     const loginResponse = dispatch(
-      sessionApi.endpoints.googleLogin.initiate({ accessToken })
+      sessionApi.endpoints.googleLogin.initiate({ accessToken, referrer })
     );
 
     if ("error" in loginResponse) return;

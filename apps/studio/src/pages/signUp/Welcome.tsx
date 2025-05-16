@@ -14,7 +14,7 @@ import { AppleLogin, GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 const SignUp: FunctionComponent = () => {
   const theme = useTheme();
   const { values } = useFormikContext();
-  const { newPassword, confirmPassword } = values as FormikValues;
+  const { referrer, newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
   const showEndAdornment = !!(newPassword || confirmPassword);
 
@@ -91,8 +91,8 @@ const SignUp: FunctionComponent = () => {
       </Stack>
 
       <Stack alignItems="center" my={ 3 } pb={ 8 } spacing={ 2 } width="100%">
-        <GoogleLogin>Join with Google</GoogleLogin>
-        <AppleLogin>Join with Apple</AppleLogin>
+        <GoogleLogin referrer={ referrer }>Join with Google</GoogleLogin>
+        <AppleLogin referrer={ referrer }>Join with Apple</AppleLogin>
       </Stack>
     </Box>
   );

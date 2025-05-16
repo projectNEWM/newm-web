@@ -18,6 +18,7 @@ interface AccountValues {
   readonly confirmPassword: string;
   readonly email: string;
   readonly newPassword: string;
+  readonly referrer: string;
 }
 
 const SignUp: FunctionComponent = () => {
@@ -25,11 +26,16 @@ const SignUp: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const currentPathLocation = useLocation();
 
+  // Parse query parameters for referral code
+  const queryParams = new URLSearchParams(currentPathLocation.search);
+  const referrerCode = queryParams.get("mwr") || "";
+
   const initialValues: AccountValues = {
     authCode: "",
     confirmPassword: "",
     email: "",
     newPassword: "",
+    referrer: referrerCode,
   };
 
   const handleVerificationEmail = useCallback(
@@ -47,8 +53,11 @@ const SignUp: FunctionComponent = () => {
     confirmPassword,
     email,
     newPassword,
+    referrer,
   }: FormikValues): void => {
-    dispatch(createAccount({ authCode, confirmPassword, email, newPassword }));
+    dispatch(
+      createAccount({ authCode, confirmPassword, email, newPassword, referrer })
+    );
   };
 
   /**

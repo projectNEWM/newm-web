@@ -17,9 +17,10 @@ import { useAppDispatch } from "../common";
 
 interface Props {
   readonly children?: ReactNode;
+  readonly referrer?: string;
 }
 
-const AppleLogin: FunctionComponent<Props> = ({ children }) => {
+const AppleLogin: FunctionComponent<Props> = ({ referrer, children }) => {
   useScript(appleAuthHelpers.APPLE_SCRIPT_SRC);
   const dispatch = useAppDispatch();
   const [logIn] = useAppleLoginThunk();
@@ -45,7 +46,7 @@ const AppleLogin: FunctionComponent<Props> = ({ children }) => {
           );
         }
 
-        logIn({ code, redirectUri });
+        logIn({ code, redirectUri, referrer });
       },
     });
 
