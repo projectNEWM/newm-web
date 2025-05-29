@@ -4,13 +4,17 @@ import { Button } from "@newm-web/elements";
 import { referralBannerBackground } from "@newm-web/assets";
 import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
 import { Link } from "react-router-dom";
-import { getReferralHeroUserCampaignData } from "../../common";
+import { getReferralHeroUserCampaignData, useAppDispatch } from "../../common";
+import { setIsReferralDashboardModalOpen } from "../../modules/ui";
 
 /**
  * Referral Hero campaign banner component for the artist referral campaign.
  */
 const ReferralBanner: FunctionComponent = () => {
   const theme = useTheme();
+
+  const dispatch = useAppDispatch();
+
   const referralUserData = getReferralHeroUserCampaignData(
     REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID
   );
@@ -50,7 +54,11 @@ const ReferralBanner: FunctionComponent = () => {
           and invite more!
         </Typography>
 
-        <Button variant="primary" width="full">
+        <Button
+          variant="primary"
+          width="full"
+          onClick={ () => dispatch(setIsReferralDashboardModalOpen(true)) }
+        >
           Invite an Artist
         </Button>
       </Box>
@@ -102,7 +110,11 @@ const ReferralBanner: FunctionComponent = () => {
           >
             Get rewarded when the artists you refer distribute their music!
           </Typography>
-          <Button variant="primary" width="full">
+          <Button
+            variant="primary"
+            width="full"
+            onClick={ () => dispatch(setIsReferralDashboardModalOpen(true)) }
+          >
             Invite an Artist
           </Button>
         </Stack>
