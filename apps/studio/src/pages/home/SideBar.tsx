@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import {
   Box,
   Drawer,
@@ -25,9 +25,14 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
-import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
+import {
+  LocalStorage,
+  resizeCloudinaryImage,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import theme from "@newm-web/theme";
 import { useFlags } from "launchdarkly-react-client-sdk";
+import { LocalStorageKey } from "@newm-web/types";
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
@@ -48,13 +53,69 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 }: SideBarProps) => {
   const theme = useTheme();
 
+  const [isReferralBannerDismissed, setIsReferralBannerDismissed] =
+    useState(true);
+
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
 
   const { webStudioArtistReferralCampaign } = useFlags();
 
+  const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(true);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const lastCallToActionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!webStudioArtistReferralCampaign) return;
+
+    setIsReferralBannerDismissed(
+      LocalStorage.getItem(LocalStorageKey.isReferralBannerDismissed) === "true"
+    );
+  }, [webStudioArtistReferralCampaign]);
+
+  const handleReferralBannerDismiss = () => {
+    setIsReferralBannerDismissed(true);
+    LocalStorage.setItem(LocalStorageKey.isReferralBannerDismissed, "true");
+  };
+
+  // Function to check if the banner is near the bottom
+  const checkIfBannerIsNearBottom = () => {
+    if (!sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+    const banner = sidebar.querySelector(".referral-banner") as HTMLElement;
+
+    if (!banner) return;
+
+    const bannerBottom = banner.offsetTop;
+
+    // Adjust the threshold as needed
+    if (!lastCallToActionRef.current) return;
+    const lastCallToAction = lastCallToActionRef.current;
+    const threshold =
+      lastCallToAction.offsetTop + lastCallToAction.clientHeight;
+
+    setIsCloseButtonVisible(bannerBottom < threshold);
+  };
+
+  useEffect(() => {
+    if (!sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+
+    sidebar.addEventListener("scroll", checkIfBannerIsNearBottom);
+
+    checkIfBannerIsNearBottom(); // Initial check
+
+    return () => {
+      sidebar.removeEventListener("scroll", checkIfBannerIsNearBottom);
+    };
+    // When referral banner is dismissed the banner position will change
+  }, [isReferralBannerDismissed]);
+
   return (
     <Box
+      ref={ sidebarRef }
       sx={ {
         background: theme.colors.black,
         borderRight: `2px solid ${theme.colors.grey600}`,
@@ -164,7 +225,12 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack
+            mt={ 1.5 }
+            ref={ lastCallToActionRef }
+            spacing={ 0.5 }
+            sx={ { width: "100%" } }
+          >
             <SideBarNavLink
               href={ NEWM_STUDIO_FAQ_URL }
               Icon={ FaqIcon }
@@ -188,8 +254,20 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
       </Box>
 
       { webStudioArtistReferralCampaign && (
-        <Box bottom={ 0 } mb={ 2 } mt="auto" mx={ -1 } position="sticky" zIndex={ 2 }>
-          <ReferralBanner />
+        <Box
+          bottom={ 0 }
+          className="referral-banner"
+          mb={ 2 }
+          mt="auto"
+          mx={ -1 }
+          position={ !isReferralBannerDismissed ? "sticky" : undefined }
+          zIndex={ 2 }
+        >
+          <ReferralBanner
+            isCloseButtonVisible={ isCloseButtonVisible }
+            isReferralBannerDismissed={ isReferralBannerDismissed }
+            onBannerDismiss={ handleReferralBannerDismiss }
+          />
         </Box>
       ) }
 
