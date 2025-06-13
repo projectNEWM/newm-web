@@ -12,7 +12,6 @@ import {
 import {
   LDProvider,
   Maintenance,
-  PageNotFound,
   UnsupportedBrowserBanner,
 } from "@newm-web/components";
 import {
@@ -38,6 +37,7 @@ import Home from "./pages/home";
 import SignUp from "./pages/signUp";
 import ForgotPassword from "./pages/forgotPassword";
 import CreateProfile from "./pages/createProfile";
+import NotFoundPage from "./pages/NotFoundPage";
 import BrowserRouter from "./common/BrowserRouter";
 import { history } from "./common/history";
 import OnboardingRedirect from "./components/OnboardingRedirect";
@@ -133,7 +133,7 @@ const App = () => {
                       />
 
                       { /* Catch-all route for 404 Page Not Found */ }
-                      <Route element={ <PageNotFound /> } path="*" />
+                      <Route element={ <NotFoundPage /> } path="*" />
                     </Routes>
                   </BrowserRouter>
                 </Background>

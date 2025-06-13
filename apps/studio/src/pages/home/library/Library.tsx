@@ -1,10 +1,10 @@
 import { Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { Route, Routes } from "react-router-dom";
-import { PageNotFound } from "@newm-web/components";
 import EditSong from "./EditSong";
 import Discography from "./Discography";
 import ViewDetails from "./ViewDetails";
+import NotFoundPage from "../../NotFoundPage";
 
 const Library: FunctionComponent = () => (
   <Container
@@ -25,7 +25,7 @@ const Library: FunctionComponent = () => (
       <Route element={ <EditSong /> } path="edit-song/:songId*" />
       <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
-      <Route element={ <PageNotFound redirectUrl="/home/library" /> } path="*" />
+      <Route element={ <NotFoundPage redirectUrl="/home/library" /> } path="*" />
     </Routes>
   </Container>
 );

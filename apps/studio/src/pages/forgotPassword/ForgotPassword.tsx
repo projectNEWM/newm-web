@@ -5,11 +5,11 @@ import { FormikHelpers, FormikValues } from "formik";
 import theme from "@newm-web/theme";
 import { WizardForm } from "@newm-web/elements";
 import { useLocation } from "react-router-dom";
-import { PageNotFound } from "@newm-web/components";
 import { removeTrailingSlash } from "@newm-web/utils";
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
+import NotFoundPage from "../NotFoundPage";
 import { resetPassword, sendVerificationEmail } from "../../modules/session";
 import { commonYupValidation, useAppDispatch } from "../../common";
 import { ResponsiveNEWMLogo } from "../../components";
@@ -94,7 +94,7 @@ const ForgotPassword: FunctionComponent = () => {
   const isValidPath = validPaths.includes(currentPathName);
 
   if (!isValidPath) {
-    return <PageNotFound />;
+    return <NotFoundPage />;
   }
 
   return (

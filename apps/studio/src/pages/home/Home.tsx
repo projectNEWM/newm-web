@@ -3,7 +3,6 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { PageNotFound } from "@newm-web/components";
 import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import SideBar from "./SideBar";
@@ -16,6 +15,7 @@ import Settings from "./settings/Settings";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { useGetStudioClientConfigQuery } from "../../modules/content";
 import { identifyReferralHeroUser } from "../../common";
+import NotFoundPage from "../NotFoundPage";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
@@ -101,7 +101,7 @@ const Home: FunctionComponent = () => {
           <Route element={ <Profile /> } path="profile" />
           <Route element={ <Settings /> } path="settings" />
 
-          <Route element={ <PageNotFound /> } path="*" />
+          <Route element={ <NotFoundPage /> } path="*" />
         </Routes>
       </Box>
     </Box>
