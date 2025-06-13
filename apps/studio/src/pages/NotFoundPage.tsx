@@ -12,6 +12,7 @@ const NotFoundPage: FunctionComponent<NotFoundPageProps> = ({
   const navigate = useNavigate();
   return (
     <PageNotFound
+      layout="sidebar"
       redirectUrl={ redirectUrl }
       onNavigate={ (url) => navigate(url) }
     />
