@@ -4,19 +4,26 @@ import { DiscordLogo, NEWMLogo, NEWMMonsterPercussion } from "@newm-web/assets";
 import theme from "@newm-web/theme";
 import { NEWM_DISCORD_URL, getImageSrc } from "@newm-web/utils";
 import { Button } from "@newm-web/elements";
-import { useNavigate } from "react-router";
+
+// TODO: Add in a custom style based on side bar or top bar navigation
 
 interface PageNotFoundProps {
+  onNavigate?: (url: string) => void;
   redirectUrl?: string;
 }
 
 const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
   redirectUrl = "/",
+  onNavigate,
 }) => {
-  const navigate = useNavigate();
-
   const handleGoBack = () => {
-    navigate(redirectUrl);
+    if (onNavigate) {
+      // Use provided navigation function if available
+      onNavigate(redirectUrl);
+    } else {
+      // Last resort fallback for environments with neither
+      window.location.href = redirectUrl;
+    }
   };
 
   return (

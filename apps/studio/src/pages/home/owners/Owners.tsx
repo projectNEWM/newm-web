@@ -1,9 +1,9 @@
 import { Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { Route, Routes } from "react-router-dom";
-import { PageNotFound } from "@newm-web/components";
 import Owner from "./Owner";
 import OwnersList from "./OwnersList";
+import NotFoundPage from "../../NotFoundPage";
 
 const Owners: FunctionComponent = () => (
   <Container
@@ -24,7 +24,7 @@ const Owners: FunctionComponent = () => (
       <Route element={ <Owner /> } path="/:userId" />
 
       <Route
-        element={ <PageNotFound redirectUrl="/home/collaborators" /> }
+        element={ <NotFoundPage redirectUrl="/home/collaborators" /> }
         path="*"
       />
     </Routes>

@@ -4,10 +4,10 @@ import { FormikValues } from "formik";
 import { FunctionComponent, useCallback, useMemo } from "react";
 import { WizardForm } from "@newm-web/elements";
 import { useLocation } from "react-router-dom";
-import { PageNotFound } from "@newm-web/components";
 import { removeTrailingSlash } from "@newm-web/utils";
 import Verification from "./Verification";
 import Welcome from "./Welcome";
+import NotFoundPage from "../NotFoundPage";
 import { commonYupValidation, useAppDispatch } from "../../common";
 import { createAccount, sendVerificationEmail } from "../../modules/session";
 
@@ -104,7 +104,7 @@ const SignUp: FunctionComponent = () => {
   const isValidPath = validPaths.includes(currentPathName);
 
   if (!isValidPath) {
-    return <PageNotFound redirectUrl="/sign-up" />;
+    return <NotFoundPage redirectUrl="/sign-up" />;
   }
 
   return (

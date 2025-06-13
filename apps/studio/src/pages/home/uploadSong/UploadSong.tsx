@@ -4,11 +4,11 @@ import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useCallback, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { PageNotFound } from "@newm-web/components";
 import { removeTrailingSlash } from "@newm-web/utils";
 import AdvancedSongDetails from "./AdvancedSongDetails";
 import BasicSongDetails from "./BasicSongDetails";
 import ConfirmAgreement from "./ConfirmAgreement";
+import NotFoundPage from "../../NotFoundPage";
 import { commonYupValidation } from "../../../common";
 import {
   useGetGenresQuery,
@@ -240,7 +240,7 @@ const UploadSong: FunctionComponent = () => {
   }, []);
 
   if (!isValidPath) {
-    return <PageNotFound redirectUrl="/home/upload-song" />;
+    return <NotFoundPage redirectUrl="/home/upload-song" />;
   }
 
   return (
