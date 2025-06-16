@@ -34,18 +34,19 @@ const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
         backgroundColor: theme.colors.black,
         gap: [2, 3],
         justifyContent: ["center", "start"],
-        mb: [0, 5],
+        mb: [0, 0],
         minHeight: "100vh",
+        pb: [4, 5],
+        pt: [4, 7.5],
         px: 0.5,
-        py: [4, 7.5],
         textAlign: "center" as const,
       } as SxProps,
       imageSpacing: {
-        mt: { md: 18, xs: 0 },
+        mt: { md: 15, xs: 0 },
       },
       newmLogo: { display: "block" },
       typographySpacing: {
-        mt: [3, 8.5],
+        mt: [3, 7],
       },
     },
     topbar: {
@@ -82,7 +83,7 @@ const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
           color="white"
           component="h3"
           fontSize={ { sm: "32px", xs: "24px" } }
-          lineHeight={ { sm: "40px", xs: "24px" } }
+          lineHeight={ { sm: "38px", xs: "24px" } }
           mt={ currentStyles.typographySpacing.mt }
           variant="h3"
         >
