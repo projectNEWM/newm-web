@@ -4,7 +4,6 @@ import { WizardForm } from "@newm-web/elements";
 import * as Yup from "yup";
 import { getUpdatedValues, removeTrailingSlash } from "@newm-web/utils";
 import { useLocation } from "react-router-dom";
-import { PageNotFound } from "@newm-web/components";
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -12,6 +11,7 @@ import Complete from "./Complete";
 import AddFirstName from "./AddFirstName";
 import AddLastName from "./AddLastName";
 import SelectLocation from "./SelectLocation";
+import NotFoundPage from "../NotFoundPage";
 import { useGetRolesQuery } from "../../modules/content";
 import { commonYupValidation } from "../../common";
 import {
@@ -117,7 +117,7 @@ const CreateProfile: FunctionComponent = () => {
   const isValidPath = validPaths.includes(currentPathName);
 
   if (!isValidPath) {
-    return <PageNotFound />;
+    return <NotFoundPage />;
   }
 
   return (
