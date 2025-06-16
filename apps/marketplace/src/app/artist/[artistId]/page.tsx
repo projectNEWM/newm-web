@@ -4,6 +4,7 @@ import { FunctionComponent, useState } from "react";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
 import { useGetArtistQuery } from "../../../modules/artist";
 import { ArtistSongs, BannerImage, SimilarArtists } from "../../../components";
+import NotFound from "../../not-found";
 
 interface ArtistProps {
   readonly params: {
@@ -23,6 +24,11 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
     websiteUrl: artist?.websiteUrl || "",
     xUrl: artist?.twitterUrl || "",
   };
+
+  // If the artist is not found, redirect to the 404 page, an error toast will display
+  if (!isLoading && !artist) {
+    return <NotFound />;
+  }
 
   return (
     <>
