@@ -140,20 +140,22 @@ export interface UploadSongThunkRequest
  */
 export interface PatchSongThunkRequest
   extends Omit<PatchSongRequest, "instrumental" | "coverArtUrl">,
-    Pick<
-      UploadSongThunkRequest,
-      | "artistName"
-      | "companyName"
-      | "consentsToContract"
-      | "coverArtUrl"
-      | "creditors"
-      | "featured"
-      | "ipi"
-      | "isExplicit"
-      | "isInstrumental"
-      | "isMinting"
-      | "owners"
-      | "stageName"
+    Partial<
+      Pick<
+        UploadSongThunkRequest,
+        | "artistName"
+        | "companyName"
+        | "consentsToContract"
+        | "coverArtUrl"
+        | "creditors"
+        | "featured"
+        | "ipi"
+        | "isExplicit"
+        | "isInstrumental"
+        | "isMinting"
+        | "owners"
+        | "stageName"
+      >
     > {
   readonly mintingStatus?: MintingStatus;
   readonly shouldRedirect?: boolean;
