@@ -2,10 +2,10 @@
 import { Container } from "@mui/material";
 import { FunctionComponent } from "react";
 import { HorizontalLine } from "@newm-web/elements";
+import { notFound } from "next/navigation";
 import { useGetSaleQuery } from "../../../modules/sale";
 import MoreSongs from "../../../components/MoreSongs";
 import { Sale, SaleMetadata, SimilarSongs } from "../../../components";
-import NotFound from "../../not-found";
 
 interface SingleSongProps {
   readonly params: {
@@ -18,7 +18,7 @@ const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
 
   // If the sale is not found, redirect to the 404 page, an error toast will display
   if (!isLoading && !sale) {
-    return <NotFound />;
+    notFound();
   }
 
   return (

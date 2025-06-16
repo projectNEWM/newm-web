@@ -2,9 +2,9 @@
 import { Container, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
+import { notFound } from "next/navigation";
 import { useGetArtistQuery } from "../../../modules/artist";
 import { ArtistSongs, BannerImage, SimilarArtists } from "../../../components";
-import NotFound from "../../not-found";
 
 interface ArtistProps {
   readonly params: {
@@ -27,7 +27,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
 
   // If the artist is not found, redirect to the 404 page, an error toast will display
   if (!isLoading && !artist) {
-    return <NotFound />;
+    notFound();
   }
 
   return (
