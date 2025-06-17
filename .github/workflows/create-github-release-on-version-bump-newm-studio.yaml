@@ -21,6 +21,8 @@ jobs:
         uses: MontyD/package-json-updated-action@1.0.1
         with:
           path: apps/studio/package.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get current version
         id: get-version
