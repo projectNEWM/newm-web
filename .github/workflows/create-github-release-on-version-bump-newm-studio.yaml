@@ -1,0 +1,69 @@
+name: Create Studio Github release on version bump
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if package.json version has been updated
+        id: version-updated
+        uses: MontyD/package-json-updated-action@1.0.1
+        with:
+          path: apps/studio/package.json
+
+      - name: Get current version
+        id: get-version
+        if: steps.version-updated.outputs.has-updated
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+        with:
+          path: apps/studio
+
+      - name: Get commits since last studio release
+        id: commit-log
+        if: steps.version-updated.outputs.has-updated
+        run: |
+          # Get the most recent tag starting with 'studio'
+          LAST_TAG=$(git tag --sort=-v:refname --list 'studio-*' | head -n 1)
+          if [ -z "$LAST_TAG" ]; then
+            # If no studio tags exist, get all commits
+            COMMITS=$(git log --pretty="- %s" --no-merges)
+          else
+            # Get commits since the last studio tag
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty="- %s" --no-merges)
+          fi
+          # Use fallback if no commits
+          if [ -z "$COMMITS" ]; then
+            COMMITS="- No changes since last release"
+          fi
+          # Escape special characters for GitHub Actions output
+          COMMITS="${COMMITS//'%'/'%25'}"
+          COMMITS="${COMMITS//$'\n'/'%0A'}"
+          COMMITS="${COMMITS//$'\r'/'%0D'}"
+          echo "commits=$COMMITS" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        if: steps.version-updated.outputs.has-updated
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: studio-${{ steps.get-version.outputs.current-version }}
+          name: Studio ${{ steps.get-version.outputs.current-version }} release
+          body: |
+            Automated release for Studio v${{ steps.get-version.outputs.current-version }}
+
+            ### Changes
+            ${{ steps.commit-log.outputs.commits }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
