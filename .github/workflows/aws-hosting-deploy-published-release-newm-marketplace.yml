@@ -41,7 +41,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "NEWM Marketplace updated in production. View at https://newm.marketplace . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event.release.tag_name }} ."
+              "text": "NEWM Marketplace updated in production. View at https://newm.marketplace . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.event.release.tag_name }} ."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MARKETPLACE_WEBHOOK }}
