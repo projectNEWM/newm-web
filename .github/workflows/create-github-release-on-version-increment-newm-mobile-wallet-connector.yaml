@@ -1,4 +1,4 @@
-name: Create Studio Github release on version bump
+name: Create Mobile Wallet Connector Github release on version increment
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         id: version-updated
         uses: MontyD/package-json-updated-action@1.0.1
         with:
-          path: apps/studio/package.json
+          path: apps/mobile-wallet-connector/package.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -30,13 +30,13 @@ jobs:
         if: steps.version-updated.outputs.has-updated
         uses: martinbeentjes/npm-get-version-action@v1.3.1
         with:
-          path: apps/studio
+          path: apps/mobile-wallet-connector
 
       - name: Create Release
         if: steps.version-updated.outputs.has-updated
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: studio-${{ steps.get-version.outputs.current-version }}
+          tag_name: mobile-wallet-connector-${{ steps.get-version.outputs.current-version }}
           generate_release_notes: true
           draft: false
           prerelease: false
@@ -51,8 +51,8 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository }}/actions/workflows/aws-hosting-deploy-published-release-newm-studio.yml/dispatches \
-            -d '{"ref":"master","inputs":{"release_tag":"studio-${{ steps.get-version.outputs.current-version }}"}}')
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/aws-hosting-deploy-published-release-newm-mobile-wallet-connector.yml/dispatches \
+            -d '{"ref":"master","inputs":{"release_tag":"mobile-wallet-connector-${{ steps.get-version.outputs.current-version }}"}}')
           http_code=$(echo "$response" | tail -n1)
           if [ "$http_code" -ne 204 ]; then
             echo "Failed to trigger deploy workflow. HTTP Code: $http_code"
