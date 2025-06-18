@@ -3,9 +3,14 @@ on:
  release:
    types: [ published ]
  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Tools release tag'
+        required: true
+
 jobs:
   build_and_deploy_tools_release:
-    if: ${{ startsWith(github.event.release.tag_name, 'tools') }}
+    if: ${{ github.event_name == 'workflow_dispatch' && startsWith(inputs.release_tag, 'tools') || github.event_name == 'release' && startsWith(github.event.release.tag_name, 'tools') }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
