@@ -3,6 +3,7 @@ import AddSong from "./lib/icons/AddSong";
 import Charli3Logo from "./lib/icons/Charli3Logo";
 import CheckboxIcon from "./lib/icons/CheckboxIcon";
 import CheckCircle from "./lib/icons/CheckCircle";
+import CheckCircleRadioIcon from "./lib/icons/CheckCircleRadioIcon";
 import CheckIcon from "./lib/icons/CheckIcon";
 import CloseCircleFill from "./lib/icons/CloseCircleFill";
 import CloseIcon from "./lib/icons/CloseIcon";
@@ -49,6 +50,7 @@ export {
   Charli3Logo,
   CheckboxIcon,
   CheckCircle,
+  CheckCircleRadioIcon,
   CheckIcon,
   CloseCircleFill,
   CloseIcon,

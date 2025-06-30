@@ -98,6 +98,7 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
+    paymentType: "NEWM",
     phonographicCopyrightOwner: undefined,
     phonographicCopyrightYear: undefined,
     publicationDate: undefined,
