@@ -36,6 +36,7 @@ declare module "@mui/material/styles" {
       yellow: string;
     };
     gradients: {
+      activeBackground: string;
       company: string;
       crypto: string;
       magazine: string;
@@ -91,6 +92,7 @@ declare module "@mui/material/styles" {
       yellow?: string;
     };
     gradients?: {
+      activeBackground?: string;
       company?: string;
       crypto?: string;
       magazine?: string;
@@ -204,6 +206,7 @@ const theme = createTheme({
   },
 
   gradients: {
+    activeBackground: "linear-gradient(53deg, #C341F014 0%, #F53C6914 100%)",
     company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%);",
     crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
     magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
