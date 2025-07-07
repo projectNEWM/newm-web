@@ -195,6 +195,7 @@ const EditSong: FunctionComponent = () => {
               status: CollaborationStatus.Editing,
             },
           ],
+    paymentType: "NEWM",
     phonographicCopyrightOwner,
     phonographicCopyrightYear,
     publicationDate,
