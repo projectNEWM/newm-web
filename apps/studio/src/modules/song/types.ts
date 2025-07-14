@@ -131,7 +131,7 @@ export interface UploadSongThunkRequest
   readonly isInstrumental?: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
-  readonly paymentType?: "ADA" | "NEWM" | "PAYPAL";
+  readonly paymentType?: PaymentType;
   readonly stageName: string;
 }
 
@@ -345,6 +345,10 @@ export interface ProcessStreamTokenAgreementRequest {
   songId: string;
 }
 
+export interface CreateMintSongPaymentResponse {
+  readonly cborHex: string;
+}
+
 export interface CreateMintSongPaymentRequest {
   readonly changeAddress: string;
   readonly songId: string;
@@ -356,8 +360,15 @@ export interface SubmitTransactionRequest {
   readonly songId: string;
 }
 
-export interface CborHexResponse {
+export interface getMintSongPaymentResponse {
+  /** @deprecated Use mintPaymentOptions instead */
   readonly cborHex: string;
+  readonly mintPaymentOptions: ReadonlyArray<MintPaymentOptions>;
+}
+
+export interface getMintSongPaymentRequest {
+  paymentType?: PaymentType;
+  songId: string;
 }
 
 export interface GetEarliestReleaseDateResponse {

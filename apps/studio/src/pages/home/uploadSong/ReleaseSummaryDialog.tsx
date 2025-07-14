@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useFormikContext } from "formik";
 import {
   DialogActions,
@@ -33,6 +33,15 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
   const { values, submitForm, setFieldValue } =
     useFormikContext<UploadSongThunkRequest>();
 
+  useEffect(() => {
+    if (!values.paymentType) {
+      setFieldValue("paymentType", PaymentType.NEWM);
+    }
+  }, [setFieldValue, values.paymentType]);
+
+  const isNewmPayment = values.paymentType === PaymentType.NEWM;
+  const isPaypalPayment = values.paymentType === PaymentType.PAYPAL;
+
   const { data: songEstimate } = useGetMintSongEstimateQuery({
     collaborators: values.owners.length,
   });
@@ -45,9 +54,6 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
     songEstimate?.mintPaymentOptions?.find(
       (option) => option.paymentType === PaymentType.PAYPAL
     )?.dspPriceUsd || songEstimate?.dspPriceUsd;
-
-  const isNewmPayment = values.paymentType === "NEWM";
-  const isPaypalPayment = values.paymentType === "PAYPAL";
 
   const handlePaymentMethodChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -69,7 +75,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
           <Stack py={ 2 }>
             <FormControl component="fieldset">
               <RadioGroup
-                value={ values.paymentType || "NEWM" }
+                value={ values.paymentType }
                 onChange={ handlePaymentMethodChange }
               >
                 <Stack direction="row" width="100%">
@@ -117,7 +123,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       px: 1.5,
                       py: 1,
                     } }
-                    value="NEWM"
+                    value={ PaymentType.NEWM }
                   />
 
                   { /* Paypal payment option */ }
@@ -150,7 +156,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       px: 1.5,
                       py: 1,
                     } }
-                    value="PAYPAL"
+                    value={ PaymentType.PAYPAL }
                   />
                 </Stack>
               </RadioGroup>

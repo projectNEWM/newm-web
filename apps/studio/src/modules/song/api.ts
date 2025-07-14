@@ -1,11 +1,11 @@
 import { CustomError, EmptyResponse } from "@newm-web/utils";
 import { MarketplaceStatus, MintingStatus, Song } from "@newm-web/types";
 import {
-  CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
   CreateMintSongPaymentRequest,
+  CreateMintSongPaymentResponse,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -33,6 +33,8 @@ import {
   UploadSongAudioRequest,
   UploadSongAudioResponse,
   UploadSongResponse,
+  getMintSongPaymentRequest,
+  getMintSongPaymentResponse,
 } from "./types";
 import { CloudinaryUploadOptions, Tags, newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
@@ -98,7 +100,7 @@ export const extendedApi = newmApi.injectEndpoints({
       }),
     }),
     createMintSongPayment: build.mutation<
-      CborHexResponse,
+      CreateMintSongPaymentResponse,
       CreateMintSongPaymentRequest
     >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -337,7 +339,10 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/songs/mint/estimate",
       }),
     }),
-    getMintSongPayment: build.query<CborHexResponse, string>({
+    getMintSongPayment: build.query<
+      getMintSongPaymentResponse,
+      getMintSongPaymentRequest
+    >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -350,9 +355,9 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-      query: (songId) => ({
+      query: ({ songId, ...params }) => ({
         method: "GET",
-        songId,
+        params,
         url: `v1/songs/${songId}/mint/payment`,
       }),
     }),
