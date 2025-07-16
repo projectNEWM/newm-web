@@ -28,7 +28,7 @@ export const claimEarnings = createAsyncThunk(
 
       if (!utxoCborHexList) {
         throw new Error(
-          "Insufficient NEWM in wallet. Please add NEWM to your wallet and try again."
+          "Insufficient ADA in wallet. Please add ADA to your wallet and try again."
         );
       }
 
