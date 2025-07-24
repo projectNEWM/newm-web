@@ -355,11 +355,15 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-      query: ({ songId, ...params }) => ({
-        method: "GET",
-        params,
-        url: `v1/songs/${songId}/mint/payment`,
-      }),
+      query: (request) => {
+        const { songId, ...params } = request;
+
+        return {
+          method: "GET",
+          params,
+          url: `v1/songs/${songId}/mint/payment`,
+        };
+      },
     }),
     getSong: build.query<Song, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
