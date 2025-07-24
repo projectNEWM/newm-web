@@ -320,7 +320,13 @@ export const submitMintSongPayment = async (
       (option) => option.paymentType === paymentType
     );
 
-    paymentHex = paymentOptionSelected?.cborHex || "";
+    if (!paymentOptionSelected) {
+      throw new SilentError(
+        "No valid payment option found for the selected payment type."
+      );
+    }
+
+    paymentHex = paymentOptionSelected.cborHex;
   } else {
     paymentHex = getPaymentResp.data.cborHex;
   }
