@@ -295,7 +295,7 @@ export const convertMillisecondsToSongFormat = (
 export const submitMintSongPayment = async (
   songId: string,
   dispatch: ThunkDispatch<unknown, unknown, AnyAction>,
-  paymentType?: PaymentType
+  paymentType: PaymentType = PaymentType.ADA
 ) => {
   const wallet = await enableWallet();
 
