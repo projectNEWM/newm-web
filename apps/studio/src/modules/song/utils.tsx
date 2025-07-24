@@ -318,9 +318,9 @@ export const submitMintSongPayment = async (
   if (paymentType === PaymentType.NEWM) {
     const paymentOptionSelected = getPaymentResp.data.mintPaymentOptions.find(
       (option) => option.paymentType === paymentType
-    ) as MintPaymentOptions;
+    );
 
-    paymentHex = paymentOptionSelected.cborHex;
+    paymentHex = paymentOptionSelected?.cborHex || "";
   } else {
     paymentHex = getPaymentResp.data.cborHex;
   }
