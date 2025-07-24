@@ -367,7 +367,7 @@ export interface getMintSongPaymentResponse {
 }
 
 export interface getMintSongPaymentRequest {
-  paymentType: PaymentType;
+  paymentType?: PaymentType;
   songId: string;
 }
 

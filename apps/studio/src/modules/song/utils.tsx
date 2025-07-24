@@ -295,12 +295,17 @@ export const convertMillisecondsToSongFormat = (
 export const submitMintSongPayment = async (
   songId: string,
   dispatch: ThunkDispatch<unknown, unknown, AnyAction>,
-  paymentType: PaymentType = PaymentType.ADA
+  paymentType?: PaymentType
 ) => {
   const wallet = await enableWallet();
 
+  const getMintSongPaymentParams = {
+    songId,
+    ...(paymentType !== undefined ? { paymentType } : {}),
+  };
+
   const getPaymentResp = await dispatch(
-    songApi.endpoints.getMintSongPayment.initiate({ paymentType, songId })
+    songApi.endpoints.getMintSongPayment.initiate(getMintSongPaymentParams)
   );
 
   if ("error" in getPaymentResp || !getPaymentResp.data) {
