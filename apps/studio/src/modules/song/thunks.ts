@@ -238,7 +238,7 @@ export const uploadSong = createAsyncThunk(
           })
         );
 
-        await submitMintSongPayment(songId, dispatch);
+        await submitMintSongPayment(songId, dispatch, body.paymentType);
       }
 
       // display most recent status and allow progress animation to complete
@@ -487,7 +487,7 @@ export const patchSong = createAsyncThunk(
 
             if ("error" in reprocessSongResp) return;
           } else {
-            await submitMintSongPayment(body.id, dispatch);
+            await submitMintSongPayment(body.id, dispatch, body.paymentType);
           }
         }
       }
