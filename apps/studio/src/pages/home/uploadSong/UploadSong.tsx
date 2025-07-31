@@ -18,6 +18,7 @@ import {
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
+  PaymentType,
   UploadSongThunkRequest,
   useGenerateArtistAgreementThunk,
   useGetEarliestReleaseDateQuery,
@@ -98,7 +99,7 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
-    paymentType: undefined,
+    paymentType: PaymentType.ADA,
     phonographicCopyrightOwner: undefined,
     phonographicCopyrightYear: undefined,
     publicationDate: undefined,

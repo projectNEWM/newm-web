@@ -26,6 +26,7 @@ import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
   PatchSongThunkRequest,
+  PaymentType,
   emptySong,
   getIsSongDeletable,
   useDeleteSongThunk,
@@ -195,7 +196,7 @@ const EditSong: FunctionComponent = () => {
               status: CollaborationStatus.Editing,
             },
           ],
-    paymentType: undefined,
+    paymentType: PaymentType.ADA,
     phonographicCopyrightOwner,
     phonographicCopyrightYear,
     publicationDate,
