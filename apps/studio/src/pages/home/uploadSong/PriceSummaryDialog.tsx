@@ -78,8 +78,7 @@ const PriceSummaryDialog: FunctionComponent<PriceSummaryDialogProps> = ({
             Total amount
           </Typography>
           <Typography variant="h3">
-            { /* TODO: Replace formatPriceToDecimal to formatADAAmount */ }₳
-            { formatPriceToDecimal(displayPrices?.price) || "N/A" }
+            ₳{ formatPriceToDecimal(displayPrices?.price) || "N/A" }
           </Typography>
           <Typography variant="subtitle1">
             ${ formatPriceToDecimal(displayPrices?.priceUsd) || "N/A" }
