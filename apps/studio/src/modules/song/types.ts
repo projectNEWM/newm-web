@@ -361,8 +361,6 @@ export interface SubmitTransactionRequest {
 }
 
 export interface getMintSongPaymentResponse {
-  /** @deprecated Use mintPaymentOptions instead */
-  readonly cborHex: string;
   readonly mintPaymentOptions: ReadonlyArray<MintPaymentOptions>;
 }
 
