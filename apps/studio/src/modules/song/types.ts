@@ -131,7 +131,7 @@ export interface UploadSongThunkRequest
   readonly isInstrumental?: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
-  readonly paymentType?: PaymentType;
+  readonly paymentType: PaymentType;
   readonly stageName: string;
 }
 
@@ -367,7 +367,7 @@ export interface getMintSongPaymentResponse {
 }
 
 export interface getMintSongPaymentRequest {
-  paymentType?: PaymentType;
+  paymentType: PaymentType;
   songId: string;
 }
 

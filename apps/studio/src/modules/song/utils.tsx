@@ -295,41 +295,29 @@ export const convertMillisecondsToSongFormat = (
 export const submitMintSongPayment = async (
   songId: string,
   dispatch: ThunkDispatch<unknown, unknown, AnyAction>,
-  paymentType?: PaymentType
+  paymentType: PaymentType
 ) => {
   const wallet = await enableWallet();
 
-  const getMintSongPaymentParams = {
-    songId,
-    ...(paymentType !== undefined ? { paymentType } : {}),
-  };
-
   const getPaymentResp = await dispatch(
-    songApi.endpoints.getMintSongPayment.initiate(getMintSongPaymentParams)
+    songApi.endpoints.getMintSongPayment.initiate({ paymentType, songId })
   );
 
   if ("error" in getPaymentResp || !getPaymentResp.data) {
     throw new SilentError();
   }
 
-  // Determine payment hex based on payment type
-  let paymentHex: string;
+  const paymentOptionSelected = getPaymentResp.data.mintPaymentOptions.find(
+    (option) => option.paymentType === paymentType
+  );
 
-  if (paymentType === PaymentType.NEWM) {
-    const paymentOptionSelected = getPaymentResp.data.mintPaymentOptions.find(
-      (option) => option.paymentType === paymentType
+  if (!paymentOptionSelected) {
+    throw new SilentError(
+      "No valid payment option found for the selected payment type."
     );
-
-    if (!paymentOptionSelected) {
-      throw new SilentError(
-        "No valid payment option found for the selected payment type."
-      );
-    }
-
-    paymentHex = paymentOptionSelected.cborHex;
-  } else {
-    paymentHex = getPaymentResp.data.cborHex;
   }
+
+  const paymentHex = paymentOptionSelected.cborHex;
 
   const utxoCborHexList = await wallet.getUtxos(paymentHex);
   const changeAddress = await getWalletChangeAddress(wallet);
