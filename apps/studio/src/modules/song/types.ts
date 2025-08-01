@@ -131,6 +131,7 @@ export interface UploadSongThunkRequest
   readonly isInstrumental?: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
+  readonly paymentType?: PaymentType;
   readonly stageName: string;
 }
 
@@ -154,6 +155,7 @@ export interface PatchSongThunkRequest
       | "isMinting"
       | "owners"
       | "stageName"
+      | "paymentType"
     > {
   readonly mintingStatus?: MintingStatus;
   readonly shouldRedirect?: boolean;
@@ -343,6 +345,10 @@ export interface ProcessStreamTokenAgreementRequest {
   songId: string;
 }
 
+export interface CreateMintSongPaymentResponse {
+  readonly cborHex: string;
+}
+
 export interface CreateMintSongPaymentRequest {
   readonly changeAddress: string;
   readonly songId: string;
@@ -354,8 +360,15 @@ export interface SubmitTransactionRequest {
   readonly songId: string;
 }
 
-export interface CborHexResponse {
+export interface getMintSongPaymentResponse {
+  /** @deprecated Use mintPaymentOptions instead */
   readonly cborHex: string;
+  readonly mintPaymentOptions: ReadonlyArray<MintPaymentOptions>;
+}
+
+export interface getMintSongPaymentRequest {
+  paymentType?: PaymentType;
+  songId: string;
 }
 
 export interface GetEarliestReleaseDateResponse {
@@ -414,17 +427,44 @@ export interface GetMintSongEstimateRequest {
   readonly collaborators: number;
 }
 
+export enum PaymentType {
+  ADA = "ADA",
+  NEWM = "NEWM",
+  PAYPAL = "PAYPAL",
+}
+
+export interface MintPaymentOptions {
+  readonly cborHex: string;
+  readonly collabPrice: string;
+  readonly collabPricePerArtist: string;
+  readonly collabPricePerArtistUsd: string;
+  readonly collabPriceUsd: string;
+  readonly dspPrice: string;
+  readonly dspPriceUsd: string;
+  readonly mintPrice: string;
+  readonly mintPriceUsd: string;
+  readonly paymentType: PaymentType;
+  readonly price: string;
+  readonly priceUsd: string;
+  readonly usdToPaymentTypeExchangeRate: string;
+}
+
 export interface GetMintSongEstimateResponse {
   readonly adaPrice: string;
   readonly cborHex: string;
   readonly collabPerArtistPriceAda: string;
   readonly collabPerArtistPriceUsd: string;
+  readonly collabPrice?: string;
   readonly collabPriceAda: string;
+  readonly collabPricePerArtist?: string;
   readonly collabPriceUsd: string;
   readonly dspPriceAda: string;
   readonly dspPriceUsd: string;
+  readonly mintPaymentOptions?: ReadonlyArray<MintPaymentOptions>;
+  readonly mintPrice?: string;
   readonly mintPriceAda: string;
   readonly mintPriceUsd: string;
   readonly usdAdaExchangeRate: string;
   readonly usdPrice: string;
+  readonly usdToPaymentTypeExchangeRate?: string;
 }

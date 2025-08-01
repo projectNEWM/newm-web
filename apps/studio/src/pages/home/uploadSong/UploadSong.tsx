@@ -98,6 +98,7 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
+    paymentType: undefined,
     phonographicCopyrightOwner: undefined,
     phonographicCopyrightYear: undefined,
     publicationDate: undefined,
