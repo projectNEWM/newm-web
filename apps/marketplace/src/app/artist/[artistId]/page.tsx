@@ -25,7 +25,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
     xUrl: artist?.twitterUrl || "",
   };
 
-  // If the artist is not found, redirect to the 404 page, an error toast will display
+  // If the artist is not found, redirect to the 404 page
   if (!isLoading && (!artist || error)) {
     notFound();
   }
