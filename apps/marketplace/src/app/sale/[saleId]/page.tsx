@@ -14,10 +14,10 @@ interface SingleSongProps {
 }
 
 const SingleSong: FunctionComponent<SingleSongProps> = ({ params }) => {
-  const { isLoading, data: sale } = useGetSaleQuery(params.saleId);
+  const { isLoading, data: sale, error } = useGetSaleQuery(params.saleId);
 
   // If the sale is not found, redirect to the 404 page, an error toast will display
-  if (!isLoading && !sale) {
+  if (!isLoading && (!sale || error)) {
     notFound();
   }
 

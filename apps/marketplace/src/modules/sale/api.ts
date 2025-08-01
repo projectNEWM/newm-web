@@ -84,19 +84,6 @@ export const extendedApi = newmApi.injectEndpoints({
       query: () => ({ method: "GET", url: "v1/marketplace/orders/fees" }),
     }),
     getSale: build.query<GetSaleResponse, string>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching sale details",
-              severity: "error",
-            })
-          );
-        }
-      },
-
       providesTags: [Tags.Sale],
 
       query: (saleId) => ({

@@ -13,7 +13,7 @@ interface ArtistProps {
 }
 
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
-  const { isLoading, data: artist } = useGetArtistQuery(params.artistId);
+  const { isLoading, data: artist, error } = useGetArtistQuery(params.artistId);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   const socials = {
@@ -26,7 +26,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   };
 
   // If the artist is not found, redirect to the 404 page, an error toast will display
-  if (!isLoading && !artist) {
+  if (!isLoading && (!artist || error)) {
     notFound();
   }
 

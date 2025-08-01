@@ -12,19 +12,6 @@ import { Tags } from "../../api/newm/types";
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
     getArtist: build.query<GetArtistResponse, string>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          dispatch(
-            setToastMessage({
-              message: "An error occurred while fetching artist",
-              severity: "error",
-            })
-          );
-        }
-      },
-
       providesTags: [Tags.Artist],
 
       query: (id) => ({
