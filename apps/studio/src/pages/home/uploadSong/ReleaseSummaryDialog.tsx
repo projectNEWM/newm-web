@@ -34,7 +34,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
     useFormikContext<UploadSongThunkRequest>();
 
   useEffect(() => {
-    if (!values.paymentType) {
+    if (values.paymentType === PaymentType.ADA) {
       setFieldValue("paymentType", PaymentType.NEWM);
     }
   }, [setFieldValue, values.paymentType]);
