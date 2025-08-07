@@ -506,6 +506,11 @@ export const patchSong = createAsyncThunk(
         history.push("/home/library");
       }
     } catch (error) {
+      // if error is a SilentError, do nothing so it doesn't clear toast
+      if (error instanceof SilentError) {
+        return;
+      }
+
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
         dispatch(
