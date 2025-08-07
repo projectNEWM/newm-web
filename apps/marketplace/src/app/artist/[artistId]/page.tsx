@@ -2,6 +2,7 @@
 import { Container, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
+import { notFound } from "next/navigation";
 import { useGetArtistQuery } from "../../../modules/artist";
 import { ArtistSongs, BannerImage, SimilarArtists } from "../../../components";
 
@@ -12,7 +13,7 @@ interface ArtistProps {
 }
 
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
-  const { isLoading, data: artist } = useGetArtistQuery(params.artistId);
+  const { isLoading, data: artist, error } = useGetArtistQuery(params.artistId);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   const socials = {
@@ -23,6 +24,11 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
     websiteUrl: artist?.websiteUrl || "",
     xUrl: artist?.twitterUrl || "",
   };
+
+  // If the artist is not found, redirect to the 404 page
+  if (!isLoading && (!artist || error)) {
+    notFound();
+  }
 
   return (
     <>
