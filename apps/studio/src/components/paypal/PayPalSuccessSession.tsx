@@ -8,10 +8,6 @@ const PayPalSuccessSession: FunctionComponent = () => {
     window.opener?.postMessage("paypal-payment-success");
   }, []);
 
-  const handleClick = () => {
-    window.parent.postMessage("paypal-popup-close");
-  };
-
   return (
     <Stack
       sx={ {
@@ -23,10 +19,10 @@ const PayPalSuccessSession: FunctionComponent = () => {
     >
       <Typography variant="h1">THANK YOU!</Typography>
       <GradientTypography
-        style={ { ...theme.typography.emphasized } }
+        style={ { ...theme.typography.emphasized, textAlign: "center" } }
         variant="h1"
       >
-        Head back to the upload process.
+        Heading back to the upload process.
       </GradientTypography>
       <Typography
         sx={ {
@@ -36,7 +32,6 @@ const PayPalSuccessSession: FunctionComponent = () => {
       >
         Get ready to share your music and to claim royalties.
       </Typography>
-      <Button onClick={ handleClick }>Got it</Button>
     </Stack>
   );
 };

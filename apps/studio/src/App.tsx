@@ -47,6 +47,12 @@ import store, { persistor } from "./store";
 import "./App.css";
 import LDUserUpdater from "./components/LDUserUpdater";
 import PingSaleComplete from "./components/sales/PingSaleComplete";
+import {
+  PayPalCancelledSession,
+  PayPalLoadingSession,
+  PayPalModal,
+  PayPalSuccessSession,
+} from "./components/paypal";
 
 const App = () => {
   const googleClientID = GOOGLE_CLIENT_ID;
@@ -68,6 +74,7 @@ const App = () => {
                 <CssBaseline />
                 <IdenfyPingUserStatus />
                 <IdenfyModal />
+                <PayPalModal />
                 <ConnectWalletModal />
                 <ReferralDashboard
                   campaignUUID={ REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID }
@@ -112,6 +119,21 @@ const App = () => {
                       <Route
                         element={ <IdenfyFailSession /> }
                         path="idenfy-fail-session"
+                      />
+
+                      <Route
+                        element={ <PayPalSuccessSession /> }
+                        path="paypal-success-session"
+                      />
+
+                      <Route
+                        element={ <PayPalCancelledSession /> }
+                        path="paypal-cancelled-session"
+                      />
+
+                      <Route
+                        element={ <PayPalLoadingSession /> }
+                        path="paypal-loading-session"
                       />
 
                       <Route

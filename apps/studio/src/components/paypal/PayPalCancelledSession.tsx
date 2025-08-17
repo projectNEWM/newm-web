@@ -2,14 +2,14 @@ import { Stack, Typography } from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
 import { Button } from "@newm-web/elements";
 import theme from "@newm-web/theme";
+import { NEWMLogo } from "@newm-web/assets";
 
 const PayPalCancelledSession: FunctionComponent = () => {
-  useEffect(() => {
-    window.opener?.postMessage("paypal-payment-cancelled");
-  }, []);
-
   const handleClick = () => {
-    window.parent.postMessage("paypal-popup-close");
+    window.opener?.postMessage(
+      "paypal-popup-cancelled",
+      window.location.origin
+    );
   };
 
   return (
@@ -21,12 +21,21 @@ const PayPalCancelledSession: FunctionComponent = () => {
         justifyContent: "center",
       } }
     >
-      <Typography variant="h1">OOPS!</Typography>
+      <NEWMLogo />
+      <Typography
+        sx={ {
+          mt: [2, 3, 4],
+        } }
+        variant="h1"
+      >
+        OOPS!
+      </Typography>
       <Typography
         sx={ {
           fontWeight: 400,
           my: [2, 3, 4],
           px: [2, 3],
+          textAlign: "center",
         } }
       >
         Sorry, we couldn&apos;t complete payment. Please attempt payment again.

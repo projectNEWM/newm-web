@@ -36,6 +36,9 @@ export const NONE_OPTION = "-";
 export const SKIP_FETCH_INVITE_PATH_LIST = [
   "/idenfy-success-session",
   "/idenfy-fail-session",
+  "/paypal-loading-session",
+  "/paypal-cancelled-session",
+  "/paypal-success-session",
 ];
 
 export const NEWM_MARKETPLACE_URL = isProd
