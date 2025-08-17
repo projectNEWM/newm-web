@@ -20,6 +20,7 @@ import {
   UploadSongThunkRequest,
   useGetMintSongEstimateQuery,
 } from "../../../modules/song";
+import { openPayPalPopup } from "../../../common/paypalUtils";
 
 interface ReleaseSummaryDialogProps {
   readonly onClose: () => void;
@@ -59,6 +60,13 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setFieldValue("paymentType", event.target.value);
+  };
+
+  const handleConfirmAndPay = () => {
+    if (values.paymentType === PaymentType.PAYPAL) {
+      openPayPalPopup(); // opens synchronously; avoids popup blocker
+    }
+    submitForm(); // your thunk will later navigate the popup to approval URL
   };
 
   return (
@@ -420,9 +428,9 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
             </Button>
             <Button
               disabled={ !displayPrices }
-              type="submit"
+              type="button"
               width="compact"
-              onClick={ submitForm }
+              onClick={ handleConfirmAndPay }
             >
               Confirm & Pay
             </Button>
