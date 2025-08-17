@@ -141,7 +141,7 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while creating PayPal order",
+              message: "An error occurred while creating the PayPal order",
               severity: "error",
             })
           );
@@ -671,7 +671,7 @@ export const extendedApi = newmApi.injectEndpoints({
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while submitting PayPal order",
+              message: "An error occurred while submitting the PayPal order",
               severity: "error",
             })
           );
