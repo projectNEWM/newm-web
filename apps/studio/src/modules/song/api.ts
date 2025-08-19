@@ -6,6 +6,8 @@ import {
   CreateCollaborationResponse,
   CreateMintSongPaymentRequest,
   CreateMintSongPaymentResponse,
+  CreatePayPalOrderPaymentRequest,
+  CreatePayPalOrderPaymentResponse,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -28,6 +30,7 @@ import {
   PostSongRequest,
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
+  SubmitPayPalOrderPaymentRequest,
   SubmitTransactionRequest,
   UpdateCollaborationRequest,
   UploadSongAudioRequest,
@@ -126,6 +129,29 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: `v1/songs/${songId}/mint/payment`,
+      }),
+    }),
+    createPayPalOrderPayment: build.mutation<
+      CreatePayPalOrderPaymentResponse,
+      CreatePayPalOrderPaymentRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while creating the PayPal order",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/paypal/minting-distribution/orders",
       }),
     }),
     deleteCollaboration: build.mutation<void, string>({
@@ -612,6 +638,7 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `v1/songs/${songId}/redistribute`,
       }),
     }),
+
     submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       invalidatesTags: [Tags.Song],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -631,6 +658,28 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: "v1/cardano/submitTransaction",
+      }),
+    }),
+    submitPayPalOrderPayment: build.mutation<
+      void,
+      SubmitPayPalOrderPaymentRequest
+    >({
+      invalidatesTags: [Tags.Song],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while submitting the PayPal order",
+              severity: "error",
+            })
+          );
+        }
+      },
+      query: ({ orderId }) => ({
+        method: "POST",
+        url: `v1/paypal/minting-distribution/orders/${orderId}/capture`,
       }),
     }),
     updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({

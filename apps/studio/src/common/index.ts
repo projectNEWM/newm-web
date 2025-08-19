@@ -8,3 +8,4 @@ export * from "./regex";
 export * from "./song";
 export * from "./testUtils";
 export * from "./types";
+export * from "./paypalUtils";

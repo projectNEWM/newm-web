@@ -466,3 +466,16 @@ export interface GetMintSongEstimateResponse {
   readonly usdPrice: string;
   readonly usdToPaymentTypeExchangeRate?: string;
 }
+
+export interface CreatePayPalOrderPaymentResponse {
+  readonly checkoutUrl: string;
+  readonly orderId: string;
+}
+
+export interface CreatePayPalOrderPaymentRequest {
+  readonly songId: string;
+}
+
+export interface SubmitPayPalOrderPaymentRequest {
+  readonly orderId: string;
+}

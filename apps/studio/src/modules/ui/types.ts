@@ -4,6 +4,7 @@ export interface UIState {
   isConnectWalletModalOpen: boolean;
   isIdenfyModalOpen: boolean;
   isInvitesModalOpen: boolean;
+  isPayPalModalOpen: boolean;
   isProgressBarModalOpen: boolean;
   isReferralDashboardModalOpen: boolean;
   isWalletEnvMismatchModalOpen: boolean;

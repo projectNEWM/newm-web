@@ -5,6 +5,7 @@ const initialState: UIState = {
   isConnectWalletModalOpen: false,
   isIdenfyModalOpen: false,
   isInvitesModalOpen: false,
+  isPayPalModalOpen: false,
   isProgressBarModalOpen: false,
   isReferralDashboardModalOpen: false,
   isWalletEnvMismatchModalOpen: false,
@@ -54,6 +55,9 @@ const uiSlice = createSlice({
     setIsInvitesModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isInvitesModalOpen = payload;
     },
+    setIsPayPalModalOpen: (state, { payload }: PayloadAction<boolean>) => {
+      state.isPayPalModalOpen = payload;
+    },
     setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isProgressBarModalOpen = payload;
     },
@@ -93,6 +97,7 @@ export const {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
+  setIsPayPalModalOpen,
   setIsProgressBarModalOpen,
   setIsReferralDashboardModalOpen,
   setIsWalletEnvMismatchModalOpen,
