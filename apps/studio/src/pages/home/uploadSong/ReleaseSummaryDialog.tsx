@@ -70,7 +70,12 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
   };
 
   return (
-    <Dialog fullWidth={ true } open={ open } onClose={ onClose }>
+    <Dialog
+      fullWidth={ true }
+      open={ open }
+      sx={ { "& .MuiDialog-paper": { maxWidth: 512, width: "100%" } } }
+      onClose={ onClose }
+    >
       <DialogTitle sx={ { pb: 0, pt: 3 } }>
         <Typography fontSize={ 20 } fontWeight={ 800 } variant="body2">
           Release Summary
@@ -146,7 +151,13 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                         } }
                       />
                     }
-                    label={ <Typography>Pay with PayPal</Typography> }
+                    label={
+                      <Typography
+                        fontWeight={ theme.typography.fontWeightMedium }
+                      >
+                        Pay with PayPal, Credit, or Debit Card
+                      </Typography>
+                    }
                     sx={ {
                       background: isPaypalPayment
                         ? theme.gradients.activeBackground
@@ -182,21 +193,36 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
               } }
             >
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Release name
                 </Typography>
                 <Typography>{ values.title }</Typography>
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Number of collaborators
                 </Typography>
                 <Typography>{ values.owners.length }</Typography>
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Release date
                 </Typography>
                 <Typography>
@@ -218,7 +244,12 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
               } }
             >
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Distribution cost
                 </Typography>
                 <Stack direction={ "row" } gap={ 1 }>
@@ -291,7 +322,12 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Stream Token minting
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
@@ -307,7 +343,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       )
                     </Typography>
                   ) }
-                  <Typography fontWeight={ 600 }>
+                  <Typography>
                     { displayPrices?.mintPriceUsd
                       ? formatUsdAmount(Number(displayPrices?.mintPriceUsd), {
                           precision: 2,
@@ -318,7 +354,12 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
-                <Typography sx={ { color: theme.colors.grey200 } }>
+                <Typography
+                  sx={ {
+                    color: theme.colors.grey200,
+                    fontWeight: theme.typography.fontWeightRegular,
+                  } }
+                >
                   Royalty splits
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
@@ -334,7 +375,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       )
                     </Typography>
                   ) }
-                  <Typography fontWeight={ 600 }>
+                  <Typography>
                     { displayPrices?.collabPriceUsd
                       ? formatUsdAmount(Number(displayPrices?.collabPriceUsd), {
                           precision: 2,
@@ -355,7 +396,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
               } }
             >
               <Stack direction="row" justifyContent="space-between">
-                <Typography fontWeight={ 600 }>Total</Typography>
+                <Typography>Total</Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { songEstimate?.adaPrice && (
                     <Typography variant="subtitle2">
@@ -369,7 +410,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       )
                     </Typography>
                   ) }
-                  <Typography fontWeight={ 600 }>
+                  <Typography>
                     { displayPrices?.priceUsd
                       ? formatUsdAmount(Number(displayPrices?.priceUsd), {
                           precision: 2,
@@ -379,8 +420,8 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 </Stack>
               </Stack>
             </Stack>
-          </Stack>{ " " }
-          <Typography variant="subtitle2">
+          </Stack>
+          <Typography mt={ 0.5 } variant="subtitle2">
             Total does not include the Cardano blockchain network fee. Fee
             prices are not guaranteed, costs may vary.
           </Typography>
