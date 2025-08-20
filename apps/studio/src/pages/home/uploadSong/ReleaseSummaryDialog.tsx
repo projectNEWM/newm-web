@@ -66,7 +66,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
     if (values.paymentType === PaymentType.PAYPAL) {
       openPayPalPopup(); // opens synchronously; avoids popup blocker
     }
-    submitForm(); // your thunk will later navigate the popup to approval URL
+    submitForm(); // will later navigate the paypal popup to the approval URL
   };
 
   return (
@@ -258,7 +258,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       <Typography variant="subtitle2">
                         (
                         { displayPrices?.dspPrice
-                          ? formatNewmAmount(Number(displayPrices?.dspPrice), {
+                          ? formatNewmAmount(Number(displayPrices.dspPrice), {
                               includeEstimateSymbol: true,
                               precision: 2,
                             })
@@ -285,38 +285,20 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                         } }
                       >
                         { displayPrices?.dspPriceUsd
-                          ? formatUsdAmount(
-                              Number(displayPrices?.dspPriceUsd),
-                              {
-                                precision: 2,
-                              }
-                            )
+                          ? formatUsdAmount(Number(displayPrices.dspPriceUsd), {
+                              precision: 2,
+                            })
                           : "N/A" }
                       </Typography>
                     </>
                   ) : (
-                    <>
-                      <Typography variant="subtitle2">
-                        (
-                        { displayPrices?.dspPrice
-                          ? formatNewmAmount(Number(displayPrices?.dspPrice), {
-                              includeEstimateSymbol: true,
-                              precision: 2,
-                            })
-                          : "N/A" }
-                        )
-                      </Typography>
-                      <Typography>
-                        { displayPrices?.dspPriceUsd
-                          ? formatUsdAmount(
-                              Number(displayPrices?.dspPriceUsd),
-                              {
-                                precision: 2,
-                              }
-                            )
-                          : "N/A" }
-                      </Typography>
-                    </>
+                    <Typography>
+                      { displayPrices?.dspPriceUsd
+                        ? formatUsdAmount(Number(displayPrices.dspPriceUsd), {
+                            precision: 2,
+                          })
+                        : "N/A" }
+                    </Typography>
                   ) }
                 </Stack>
               </Stack>
@@ -332,10 +314,13 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { songEstimate?.mintPriceAda && (
-                    <Typography variant="subtitle2">
+                    <Typography
+                      display={ isNewmPayment ? "block" : "none" }
+                      variant="subtitle2"
+                    >
                       (
                       { displayPrices?.mintPrice
-                        ? formatNewmAmount(Number(displayPrices?.mintPrice), {
+                        ? formatNewmAmount(Number(displayPrices.mintPrice), {
                             includeEstimateSymbol: true,
                             precision: 2,
                           })
@@ -345,7 +330,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                   ) }
                   <Typography>
                     { displayPrices?.mintPriceUsd
-                      ? formatUsdAmount(Number(displayPrices?.mintPriceUsd), {
+                      ? formatUsdAmount(Number(displayPrices.mintPriceUsd), {
                           precision: 2,
                         })
                       : "N/A" }
@@ -364,10 +349,13 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { songEstimate?.collabPriceAda && (
-                    <Typography variant="subtitle2">
+                    <Typography
+                      display={ isNewmPayment ? "block" : "none" }
+                      variant="subtitle2"
+                    >
                       (
                       { displayPrices?.collabPrice
-                        ? formatNewmAmount(Number(displayPrices?.collabPrice), {
+                        ? formatNewmAmount(Number(displayPrices.collabPrice), {
                             includeEstimateSymbol: true,
                             precision: 2,
                           })
@@ -377,7 +365,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                   ) }
                   <Typography>
                     { displayPrices?.collabPriceUsd
-                      ? formatUsdAmount(Number(displayPrices?.collabPriceUsd), {
+                      ? formatUsdAmount(Number(displayPrices.collabPriceUsd), {
                           precision: 2,
                         })
                       : "N/A" }
@@ -399,10 +387,13 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 <Typography>Total</Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { songEstimate?.adaPrice && (
-                    <Typography variant="subtitle2">
+                    <Typography
+                      display={ isNewmPayment ? "block" : "none" }
+                      variant="subtitle2"
+                    >
                       (
                       { displayPrices?.price
-                        ? formatNewmAmount(Number(displayPrices?.price), {
+                        ? formatNewmAmount(Number(displayPrices.price), {
                             includeEstimateSymbol: true,
                             precision: 2,
                           })
