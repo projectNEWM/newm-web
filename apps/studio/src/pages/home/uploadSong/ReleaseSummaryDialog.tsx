@@ -161,12 +161,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
   };
 
   return (
-    <Dialog
-      fullWidth={ true }
-      open={ open }
-      sx={ { "& .MuiDialog-paper": { maxWidth: 512, width: "100%" } } }
-      onClose={ onClose }
-    >
+    <Dialog fullWidth={ true } open={ open } onClose={ onClose }>
       <DialogTitle sx={ { pb: 0, pt: 3 } }>
         <Typography fontSize={ 20 } fontWeight={ 800 } variant="body2">
           Release Summary
