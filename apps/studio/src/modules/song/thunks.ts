@@ -169,6 +169,13 @@ export const uploadSong = createAsyncThunk(
 
       if ("error" in uploadSongAudioResponse) throw new UploadSongError();
 
+      const paymentMessage =
+        body.paymentType === PaymentType.PAYPAL
+          ? "Creating PayPal order. " +
+            "Please complete PayPal payment when prompted."
+          : "Requesting minting payment. " +
+            "Please sign transaction when prompted.";
+
       if (body.isMinting) {
         const collaborators = generateCollaborators(
           body.owners,
@@ -233,9 +240,8 @@ export const uploadSong = createAsyncThunk(
           setProgressBarModal({
             animationSeconds: 6,
             disclaimer: progressDisclaimer,
-            message:
-              "Requesting minting payment. " +
-              "Please sign transaction when prompted.",
+            message: paymentMessage,
+
             progress: 95,
           })
         );
@@ -252,10 +258,7 @@ export const uploadSong = createAsyncThunk(
         setProgressBarModal({
           animationSeconds: 0.25,
           disclaimer: progressDisclaimer,
-          message: body.isMinting
-            ? "Requesting minting payment. " +
-              "Please sign transaction when prompted."
-            : "Uploading song audio...",
+          message: body.isMinting ? paymentMessage : "Uploading song audio...",
           progress: 100,
         })
       );
