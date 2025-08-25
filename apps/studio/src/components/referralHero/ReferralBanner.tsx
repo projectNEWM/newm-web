@@ -4,7 +4,6 @@ import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
 import { Button } from "@newm-web/elements";
 import { referralBannerBackground } from "@newm-web/assets";
 import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
-import { Link } from "react-router-dom";
 import { getReferralHeroUserCampaignData, useAppDispatch } from "../../common";
 import { setIsReferralDashboardModalOpen } from "../../modules/ui";
 
@@ -44,55 +43,11 @@ const ReferralBanner: FunctionComponent<ReferralBannerProps> = ({
     return (
       <Box
         sx={ {
-          backgroundColor: theme.colors.grey700,
-          border: `2px solid ${theme.colors.grey500}`,
-          borderRadius: 2,
-          px: 1,
-          py: 1,
+          mt: -2,
+          px: 2,
+          py: 2,
         } }
       >
-        { !isReferralBannerDismissed && (
-          <IconButton
-            aria-label="close"
-            size="small"
-            sx={ {
-              color: theme.colors.white,
-              display: isCloseButtonVisible ? "block" : "none",
-              position: "absolute",
-              px: 0.5,
-              py: 0,
-              right: 0,
-              top: 0,
-            } }
-            onClick={ handleBannerDismiss }
-          >
-            <CloseIcon
-              sx={ {
-                fontSize: 12,
-              } }
-            />
-          </IconButton>
-        ) }
-        <Typography fontSize={ 12 } fontWeight={ 500 } mb={ 1 } textAlign="center">
-          You&apos;ve referred{ " " }
-          <Typography
-            component="span"
-            fontSize={ 14 }
-            fontWeight={ theme.typography.fontWeightBold }
-            variant="body2"
-          >
-            { usersSuccessfullyReferred }
-          </Typography>{ " " }
-          artists! Check your{ " " }
-          <Typography
-            component="span"
-            fontWeight={ theme.typography.fontWeightBold }
-            variant="inherit"
-          >
-            <Link to="/home/wallet">reward</Link>
-          </Typography>{ " " }
-          and invite more!
-        </Typography>
         <Button variant="primary" width="full" onClick={ handleBannerClick }>
           Invite an Artist
         </Button>
