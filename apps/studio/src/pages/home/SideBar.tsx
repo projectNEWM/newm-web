@@ -160,7 +160,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
           </Typography>
         </Stack>
 
-        <Box mb={ 3 } mt={ 4 } width="100%">
+        <Box mb={ 2 } mt={ 3 } width="100%">
           <SideBarNavLink
             Icon={ UploadIcon }
             label="UPLOAD A SONG"
@@ -168,7 +168,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             onClick={ () => setMobileOpen(false) }
           />
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2 } mt={ 3 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
@@ -188,7 +188,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
@@ -201,7 +201,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
@@ -221,7 +221,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 4 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
@@ -257,7 +257,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         <Box
           bottom={ 0 }
           className="referral-banner"
-          mb={ 2 }
+          mb={ 1 }
           mt="auto"
           mx={ -1 }
           position={ !isReferralBannerDismissed ? "sticky" : undefined }
