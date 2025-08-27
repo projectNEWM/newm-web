@@ -1,5 +1,10 @@
 let paypalPopup: Window | null = null;
 
+const paypalLoadingPopupWidth = 300;
+const paypalLoadingPopupHeight = 225;
+const paypalResizePopupWidth = 400;
+const paypalResizePopupHeight = 650;
+
 const calculatePopUpLocation = (width: number, height: number) => {
   const openerX = (window.screenX ?? (window as any).screenLeft ?? 0) as number;
   const openerY = (window.screenY ?? (window as any).screenTop ?? 0) as number;
@@ -15,8 +20,14 @@ const calculatePopUpLocation = (width: number, height: number) => {
 };
 
 export const openPayPalPopup = (): Window | null => {
+  const { left, top } = calculatePopUpLocation(
+    paypalLoadingPopupWidth,
+    paypalResizePopupHeight
+  );
+
   // No "noopener"/"noreferrer" so window.opener works for postMessage
-  const features = `width=300,height=300,left=${window.screenX},top=${window.screenY},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
+  const features = `width=${paypalLoadingPopupWidth},height=${paypalLoadingPopupHeight},
+  left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
 
   paypalPopup =
     window.open(
@@ -39,8 +50,11 @@ export const navigatePayPalPopup = async (url: string): Promise<boolean> => {
   }
 
   try {
-    paypalPopup.resizeTo(400, 650);
-    const { left, top } = calculatePopUpLocation(400, 650);
+    paypalPopup.resizeTo(paypalResizePopupWidth, paypalResizePopupHeight);
+    const { left, top } = calculatePopUpLocation(
+      paypalResizePopupWidth,
+      paypalResizePopupHeight
+    );
     paypalPopup.moveTo(left, top);
   } catch {
     // Intentionally ignore: some browsers/OSes block programmatic move/resize.
