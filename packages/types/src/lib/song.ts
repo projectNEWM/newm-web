@@ -3,6 +3,12 @@ export enum MarketplaceStatus {
   Selling = "Selling",
 }
 
+export enum PaymentType {
+  ADA = "ADA",
+  NEWM = "NEWM",
+  PAYPAL = "PAYPAL",
+}
+
 export enum MintingStatus {
   ArweaveUploadException = "ArweaveUploadException",
   AwaitingAudioEncoding = "AwaitingAudioEncoding",
@@ -49,7 +55,8 @@ export interface Song {
   readonly language?: string;
   readonly lyricsUrl?: string;
   readonly marketplaceStatus: MarketplaceStatus;
-  readonly mintCostLovelace?: number;
+  readonly mintCost?: number;
+  readonly mintPaymentType?: PaymentType;
   readonly mintingStatus: MintingStatus;
   readonly moods?: ReadonlyArray<string>;
   readonly nftName?: string;

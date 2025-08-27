@@ -11,8 +11,8 @@ import { Charli3Logo } from "@newm-web/assets";
 import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { formatPriceToDecimal } from "@newm-web/utils";
+import { PaymentType } from "@newm-web/types";
 import {
-  PaymentType,
   UploadSongThunkRequest,
   getCollaboratorInfo,
   useGetCollaboratorsQuery,

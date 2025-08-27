@@ -6,22 +6,46 @@ import { HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
   convertLovelaceToAda,
+  convertMicroUsdToUsd,
   convertNewmiesToNewm,
   formatAdaAmount,
   formatNewmAmount,
   formatTimeFromISO,
+  formatUsdAmount,
 } from "@newm-web/utils";
+import { PaymentType } from "@newm-web/types";
 import {
+  PaymentConfig,
   SingleTransactionProps,
   TransactionConfig,
   TransactionType,
 } from "./types";
 
+// Payment type configurations
+const paymentConfig: Record<
+  PaymentType,
+  {
+    converter: (amount: number) => number;
+    formatter: (amount: number) => string;
+  }
+> = {
+  ADA: {
+    converter: convertLovelaceToAda,
+    formatter: formatAdaAmount,
+  },
+  NEWM: {
+    converter: convertNewmiesToNewm,
+    formatter: formatNewmAmount,
+  },
+  PAYPAL: {
+    converter: convertMicroUsdToUsd,
+    formatter: formatUsdAmount,
+  },
+};
+
 const config: Record<TransactionType, TransactionConfig> = {
   claim: {
     amountColor: theme.colors.green,
-    converter: convertNewmiesToNewm,
-    formatter: formatNewmAmount,
     heading: "Earnings claimed",
     icon: <CheckCircleIcon sx={ { height: 20, width: 20 } } />,
     iconBackground: theme.gradients.crypto,
@@ -29,8 +53,6 @@ const config: Record<TransactionType, TransactionConfig> = {
   },
   mint: {
     amountColor: theme.colors.red,
-    converter: convertLovelaceToAda,
-    formatter: formatAdaAmount,
     heading: "Track distribution and minting",
     icon: (
       <SellSharpIcon sx={ { height: 20, transform: "scaleX(-1)", width: 20 } } />
@@ -40,14 +62,17 @@ const config: Record<TransactionType, TransactionConfig> = {
   },
 };
 
-const defaultConfig: TransactionConfig = {
+const defaultTransactionConfig: TransactionConfig = {
   amountColor: theme.colors.grey200,
-  converter: () => 0,
-  formatter: () => "0",
   heading: "Unknown transaction",
   icon: null,
   iconBackground: theme.colors.red,
   isPositive: false,
+};
+
+const defaultPaymentConfig: PaymentConfig = {
+  converter: (amount: number) => 0,
+  formatter: (amount: number) => "0",
 };
 
 const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
@@ -55,17 +80,18 @@ const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   subheading,
   amount,
   type,
+  mintPaymentType,
 }) => {
-  // Fallback for unknown types
-  const {
-    heading,
-    amountColor,
-    iconBackground,
-    icon,
-    isPositive,
-    formatter,
-    converter,
-  } = config[type] || defaultConfig;
+  // Get transaction config
+  const transactionConfig = config[type] || defaultTransactionConfig;
+
+  // Get payment config
+  const paymentConfigData =
+    paymentConfig[mintPaymentType] || defaultPaymentConfig;
+
+  const { converter, formatter } = paymentConfigData;
+  const { heading, amountColor, iconBackground, icon, isPositive } =
+    transactionConfig;
 
   const formattedAmount = `${isPositive ? "+" : "-"}${formatter(
     converter(amount)

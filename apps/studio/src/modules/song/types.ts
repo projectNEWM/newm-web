@@ -1,6 +1,7 @@
 import {
   MintingStatus,
   OnUploadProgress,
+  PaymentType,
   Song,
   SortOrder,
 } from "@newm-web/types";
@@ -423,12 +424,6 @@ export interface GetUserWalletSongsResponse {
 
 export interface GetMintSongEstimateRequest {
   readonly collaborators: number;
-}
-
-export enum PaymentType {
-  ADA = "ADA",
-  NEWM = "NEWM",
-  PAYPAL = "PAYPAL",
 }
 
 export interface MintPaymentOptions {

@@ -15,8 +15,8 @@ import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { formatNewmAmount, formatUsdAmount } from "@newm-web/utils";
 import { Charli3Logo, CheckCircleRadioIcon } from "@newm-web/assets";
+import { PaymentType } from "@newm-web/types";
 import {
-  PaymentType,
   UploadSongThunkRequest,
   useGetMintSongEstimateQuery,
 } from "../../../modules/song";
