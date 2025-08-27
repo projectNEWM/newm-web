@@ -162,7 +162,7 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
               </Typography>
 
               <Typography align="center" fontWeight={ 600 } variant="subtitle1">
-                Earn rewards by bringing New Artists to NEWM Studio!
+                Earn rewards by bringing new artists to NEWM Studio!
               </Typography>
             </Stack>
 
@@ -177,7 +177,7 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
             { /* How it Works Section */ }
             <Box sx={ { mb: [0, 2], width: "100%" } }>
               <Typography mb={ 1 } variant="subtitle1">
-                How it Works: (Refer and Earn)
+                How it works:
               </Typography>
 
               <Typography mb={ 0.5 } variant="body1">
@@ -187,16 +187,16 @@ const ReferralDashboard: FunctionComponent<ReferralDashboardProps> = ({
                 2. A new artist signs up for NEWM Studio using your link.
               </Typography>
               <Typography mb={ 1 } variant="body1">
-                3. Once they distribute their first track, you earn $5 in $NEWM
-                tokens as a reward!
+                3. Once their first release is approved for distribution, you
+                both earn $5 in $NEWM tokens as a reward!
               </Typography>
 
               <Typography mb={ 0.5 } variant="subtitle1">
                 Note:
               </Typography>
               <Typography mb={ 2 } variant="body1">
-                There&apos;s no limit—invite as many friends as you want and
-                stack up rewards!
+                There&apos;s no limit — invite as many artists as you want and
+                stack up the rewards!
               </Typography>
             </Box>
             <Box
