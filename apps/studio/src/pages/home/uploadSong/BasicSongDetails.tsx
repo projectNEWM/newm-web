@@ -432,9 +432,9 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                   title="DISTRIBUTE & MINT SONG"
                   toggleTooltipText={
                     webStudioDisableTrackDistributionAndMinting
-                      ? "Track distribution and minting is temporarily disabled. " +
-                        "Please review and update your song details, and check back " +
-                        "later to finish the distribution process."
+                      ? "Track distribution and minting are temporarily disabled, " +
+                        "but we're working on it! You can still upload your tracks and " +
+                        "song details to save for later. Check back in a bit for updates."
                       : undefined
                   }
                   onClick={ () => {
