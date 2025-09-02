@@ -1,0 +1,1 @@
+(self.webpackChunkyoroi=self.webpackChunkyoroi||[]).push([[8066,5262],{68066:o=>{function e(o){var e=new Error("Cannot find module '"+o+"'");throw e.code="MODULE_NOT_FOUND",e}e.keys=()=>[],e.resolve=e,e.id=68066,o.exports=e}}]);
