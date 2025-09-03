@@ -14,44 +14,37 @@ import {
   formatUsdAmount,
 } from "@newm-web/utils";
 import { PaymentType } from "@newm-web/types";
-import {
-  PaymentConfig,
-  SingleTransactionProps,
-  TransactionConfig,
-  TransactionType,
-} from "./types";
+import { SingleTransactionProps, TransactionType } from "./types";
 
-// Payment type configurations
-const paymentConfig: Record<
-  PaymentType,
-  {
-    converter: (amount: number) => number;
-    formatter: (amount: number) => string;
-  }
-> = {
-  ADA: {
+const PAYMENT_CONFIG = {
+  [PaymentType.ADA]: {
     converter: convertLovelaceToAda,
-    formatter: formatAdaAmount,
+    formatter: (amount: number) => formatAdaAmount(amount, { precision: 2 }),
   },
-  NEWM: {
+  [PaymentType.NEWM]: {
     converter: convertNewmiesToNewm,
-    formatter: formatNewmAmount,
+    formatter: (amount: number) => formatNewmAmount(amount, { precision: 2 }),
   },
-  PAYPAL: {
+  [PaymentType.PAYPAL]: {
     converter: convertMicroUsdToUsd,
-    formatter: formatUsdAmount,
+    formatter: (amount: number) => formatUsdAmount(amount, { precision: 2 }),
   },
-};
+} as const;
 
-const config: Record<TransactionType, TransactionConfig> = {
-  claim: {
+const DEFAULT_PAYMENT_CONFIG = {
+  converter: (amount: number) => 0,
+  formatter: (amount: number) => "0",
+} as const;
+
+const TRANSACTION_CONFIG = {
+  [TransactionType.Claim]: {
     amountColor: theme.colors.green,
     heading: "Earnings claimed",
     icon: <CheckCircleIcon sx={ { height: 20, width: 20 } } />,
     iconBackground: theme.gradients.crypto,
     isPositive: true,
   },
-  mint: {
+  [TransactionType.Mint]: {
     amountColor: theme.colors.red,
     heading: "Track distribution and minting",
     icon: (
@@ -60,20 +53,15 @@ const config: Record<TransactionType, TransactionConfig> = {
     iconBackground: theme.gradients.magazine,
     isPositive: false,
   },
-};
+} as const;
 
-const defaultTransactionConfig: TransactionConfig = {
+const DEFAULT_TRANSACTION_CONFIG = {
   amountColor: theme.colors.grey200,
   heading: "Unknown transaction",
   icon: null,
   iconBackground: theme.colors.red,
   isPositive: false,
-};
-
-const defaultPaymentConfig: PaymentConfig = {
-  converter: (amount: number) => 0,
-  formatter: (amount: number) => "0",
-};
+} as const;
 
 const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   date,
@@ -82,19 +70,19 @@ const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   type,
   mintPaymentType,
 }) => {
-  // Get transaction config
-  const transactionConfig = config[type] || defaultTransactionConfig;
-
-  // Get payment config
+  const transactionConfig =
+    TRANSACTION_CONFIG[type] ?? DEFAULT_TRANSACTION_CONFIG;
   const paymentConfigData =
-    paymentConfig[mintPaymentType] || defaultPaymentConfig;
+    (mintPaymentType && PAYMENT_CONFIG[mintPaymentType]) ??
+    DEFAULT_PAYMENT_CONFIG;
 
   const { converter, formatter } = paymentConfigData;
   const { heading, amountColor, iconBackground, icon, isPositive } =
     transactionConfig;
 
+  const convertedAmount = converter(amount);
   const formattedAmount = `${isPositive ? "+" : "-"}${formatter(
-    converter(amount)
+    convertedAmount
   )}`;
 
   return (

@@ -101,7 +101,7 @@ const Transactions: FunctionComponent = () => {
         amount: song.mintCost ?? 0,
         date: song.createdAt || "",
         id: song.id,
-        mintPaymentType: song.mintPaymentType!,
+        mintPaymentType: song.mintPaymentType,
         subheading: song.title,
         type: TransactionType.Mint,
       })) ?? [];
