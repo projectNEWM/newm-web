@@ -23,3 +23,11 @@ export interface SingleTransactionProps {
   readonly subheading?: string;
   readonly type: TransactionType;
 }
+
+export interface TransactionVisualConfig {
+  amountColor: string;
+  heading: string;
+  icon: React.ReactNode;
+  iconBackground: string;
+  isPositive: boolean;
+}

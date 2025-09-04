@@ -14,7 +14,11 @@ import {
   formatUsdAmount,
 } from "@newm-web/utils";
 import { PaymentType } from "@newm-web/types";
-import { SingleTransactionProps, TransactionType } from "./types";
+import {
+  SingleTransactionProps,
+  TransactionType,
+  TransactionVisualConfig,
+} from "./types";
 
 const PAYMENT_CONFIG = {
   [PaymentType.ADA]: {
@@ -55,7 +59,7 @@ const TRANSACTION_CONFIG = {
   },
 } as const;
 
-const DEFAULT_TRANSACTION_CONFIG = {
+const DEFAULT_TRANSACTION_CONFIG: TransactionVisualConfig = {
   amountColor: theme.colors.grey200,
   heading: "Unknown transaction",
   icon: null,
@@ -63,6 +67,26 @@ const DEFAULT_TRANSACTION_CONFIG = {
   isPositive: false,
 } as const;
 
+function getTransactionConfig(
+  type: TransactionType,
+  mintPaymentType?: PaymentType
+): TransactionVisualConfig {
+  const baseVisuals = TRANSACTION_CONFIG[type];
+
+  if (!baseVisuals) {
+    return DEFAULT_TRANSACTION_CONFIG;
+  }
+
+  return {
+    amountColor: mintPaymentType
+      ? baseVisuals.amountColor
+      : theme.colors.grey200,
+    heading: baseVisuals.heading,
+    icon: baseVisuals.icon,
+    iconBackground: baseVisuals.iconBackground,
+    isPositive: baseVisuals.isPositive,
+  };
+}
 const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   date,
   subheading,
@@ -70,11 +94,11 @@ const SingleTransaction: FunctionComponent<SingleTransactionProps> = ({
   type,
   mintPaymentType,
 }) => {
-  const transactionConfig =
-    TRANSACTION_CONFIG[type] ?? DEFAULT_TRANSACTION_CONFIG;
   const paymentConfigData =
-    (mintPaymentType && PAYMENT_CONFIG[mintPaymentType]) ??
+    (mintPaymentType && PAYMENT_CONFIG[mintPaymentType]) ||
     DEFAULT_PAYMENT_CONFIG;
+
+  const transactionConfig = getTransactionConfig(type, mintPaymentType);
 
   const { converter, formatter } = paymentConfigData;
   const { heading, amountColor, iconBackground, icon, isPositive } =
