@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { MintingStatus, Song, SortOrder } from "@newm-web/types";
+import { MintingStatus, PaymentType, Song, SortOrder } from "@newm-web/types";
 import moment from "moment";
 import { EmptyTransactions } from "./EmptyTransactions";
 import SingleTransaction from "./SingleTransaction";
@@ -92,14 +92,16 @@ const Transactions: FunctionComponent = () => {
         amount: earning.amount ?? 0,
         date: earning.claimedAt || "",
         id: earning.id ?? "",
+        mintPaymentType: PaymentType.NEWM,
         subheading: earning.memo || "",
         type: TransactionType.Claim,
       })) ?? [];
     const mintTransactions =
       songsDataCollection?.map((song) => ({
-        amount: song.mintCostLovelace ?? 0,
+        amount: song.mintCost ?? 0,
         date: song.createdAt || "",
         id: song.id,
+        mintPaymentType: song.mintPaymentType,
         subheading: song.title,
         type: TransactionType.Mint,
       })) ?? [];
@@ -160,6 +162,7 @@ const Transactions: FunctionComponent = () => {
                   amount={ transaction.amount }
                   date={ transaction.date }
                   key={ transaction.id }
+                  mintPaymentType={ transaction.mintPaymentType }
                   subheading={ transaction.subheading }
                   type={ transaction.type }
                 />
