@@ -11,7 +11,7 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.13.5",
     "@mui/material-nextjs": "^5.15.6",
-    "@newm.io/cardano-dapp-wallet-connector": "^1.5.4",
+    "@newm.io/cardano-dapp-wallet-connector": "^1.5.5",
     "@next/third-parties": "^15.0.3",
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^2.1.0",
