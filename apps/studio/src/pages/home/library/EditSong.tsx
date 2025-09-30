@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { resizeCloudinaryImage } from "@newm-web/utils";
-import { MintingStatus } from "@newm-web/types";
+import { MintingStatus, PaymentType } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
@@ -26,7 +26,6 @@ import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
   PatchSongThunkRequest,
-  PaymentType,
   emptySong,
   getIsSongDeletable,
   useDeleteSongThunk,

@@ -5,6 +5,7 @@ import { FunctionComponent, useCallback, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { removeTrailingSlash } from "@newm-web/utils";
+import { PaymentType } from "@newm-web/types";
 import AdvancedSongDetails from "./AdvancedSongDetails";
 import BasicSongDetails from "./BasicSongDetails";
 import ConfirmAgreement from "./ConfirmAgreement";
@@ -18,7 +19,6 @@ import {
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import {
   CollaborationStatus,
-  PaymentType,
   UploadSongThunkRequest,
   useGenerateArtistAgreementThunk,
   useGetEarliestReleaseDateQuery,

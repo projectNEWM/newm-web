@@ -157,6 +157,10 @@ export const convertLovelaceToAda = (lovelace: number): number => {
   return lovelace / LOVELACE_CONVERSION;
 };
 
+export const convertMicroUsdToUsd = (microUsd: number): number => {
+  return microUsd / LOVELACE_CONVERSION;
+};
+
 export const convertNewmiesToUsd = (
   newmies: number,
   preConvertedUsdPrice: number
