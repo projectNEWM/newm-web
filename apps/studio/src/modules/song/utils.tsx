@@ -6,7 +6,7 @@ import {
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { SilentError } from "@newm-web/utils";
-import { MintingStatus } from "@newm-web/types";
+import { MintingStatus, PaymentType } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
@@ -18,7 +18,6 @@ import {
   Featured,
   Invite,
   Owner,
-  PaymentType,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";

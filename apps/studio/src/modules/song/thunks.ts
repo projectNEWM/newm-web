@@ -7,14 +7,13 @@ import {
   isCloudinaryUrl,
   sleep,
 } from "@newm-web/utils";
-import { MintingStatus, Song } from "@newm-web/types";
+import { MintingStatus, PaymentType, Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
   GetUserWalletSongsRequest,
   PatchSongThunkRequest,
-  PaymentType,
   UpdateCollaborationsRequest,
   UploadSongThunkRequest,
 } from "./types";
