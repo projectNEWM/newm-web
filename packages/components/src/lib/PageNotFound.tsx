@@ -15,7 +15,7 @@ interface PageNotFoundProps {
 const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
   redirectUrl = "/",
   onNavigate,
-  layout = "topbar",
+  layout = "sidebar",
   originAppName,
 }) => {
   const handleGoBack = () => {
@@ -42,6 +42,7 @@ const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
         pt: [4, 7.5],
         px: 0.5,
         textAlign: "center" as const,
+        width: "100%",
       } as SxProps,
       imageSpacing: {
         mt: { md: 15, xs: 0 },
