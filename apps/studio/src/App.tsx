@@ -154,8 +154,14 @@ const App = () => {
                         path="create-profile/*"
                       />
 
-                      { /* Catch-all route for 404 Page Not Found */ }
-                      <Route element={ <NotFoundPage /> } path="*" />
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <NotFoundPage />
+                          </PrivateRoute>
+                        }
+                        path="*"
+                      />
                     </Routes>
                   </BrowserRouter>
                 </Background>
