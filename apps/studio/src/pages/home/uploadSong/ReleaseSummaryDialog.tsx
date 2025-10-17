@@ -15,7 +15,7 @@ import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
   LOVELACE_CONVERSION,
-  formatISODateToUTCLocaleDate,
+  formatISODateToLocaleDateAtUTC,
   formatNewmAmount,
   formatUsdAmount,
 } from "@newm-web/utils";
@@ -313,7 +313,9 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                   Release date
                 </Typography>
                 <Typography>
-                  { formatISODateToUTCLocaleDate(values.releaseDate) }
+                  { values.releaseDate
+                    ? formatISODateToLocaleDateAtUTC(values.releaseDate)
+                    : "N/A" }
                 </Typography>
               </Stack>
             </Stack>

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "global.css";
+import moment from "moment/min/moment-with-locales";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initializeSentry from "./sentryConfig";
@@ -13,6 +14,9 @@ if (window.location.hostname.includes("newm-studio")) {
 
 initializeSentry();
 loadReferralHeroScript();
+
+const browserLocale = navigator.language.toLowerCase();
+moment.locale(browserLocale);
 
 const isMac = navigator.userAgent.includes("Mac");
 
