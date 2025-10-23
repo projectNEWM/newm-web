@@ -15,6 +15,7 @@ interface DistributionPricingModalProps {
 }
 
 // TODO: Verify if Modal or Dialog component is more appropriate for UX, general Modal def is the UX necessary here
+// TODO: Add figma changes to this component
 
 /**
  * Allows users to select a pricing plan.
