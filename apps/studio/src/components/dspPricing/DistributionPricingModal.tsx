@@ -1,9 +1,9 @@
-import { Button, Dialog } from "@newm-web/elements";
+import { Button, Modal } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { LocalStorage, formatPriceToDecimal } from "@newm-web/utils";
+import { LocalStorage, formatUsdAmount } from "@newm-web/utils";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Check } from "@mui/icons-material";
-import { LocalStorageKey } from "@newm-web/types";
+import { LocalStorageKey, PaymentType } from "@newm-web/types";
 import { FunctionComponent } from "react";
 import { useUpdateProfileThunk } from "../../modules/session";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
@@ -14,11 +14,8 @@ interface DistributionPricingModalProps {
   readonly open: boolean;
 }
 
-// TODO: Verify if Modal or Dialog component is more appropriate for UX, general Modal def is the UX necessary here
-// TODO: Add figma changes to this component
-
 /**
- * Allows users to select a pricing plan.
+ * Allows users to select a pricing plan for music distribution.
  */
 const DistributionPricingModal: FunctionComponent<
   DistributionPricingModalProps
@@ -32,76 +29,53 @@ const DistributionPricingModal: FunctionComponent<
     });
   };
 
-  const {
-    data: {
-      dspPriceAda,
-      dspPriceUsd,
-      mintPriceAda,
-      collabPerArtistPriceAda,
-    } = {},
-  } = useGetMintSongEstimateQuery({
+  const { data: { mintPaymentOptions } = {} } = useGetMintSongEstimateQuery({
     collaborators: 1,
   });
 
-  const dspFormattedPricingUsd = dspPriceUsd
-    ? `$${formatPriceToDecimal(dspPriceUsd)}/RELEASE`
-    : "N/A";
+  const dspPriceUsd = mintPaymentOptions?.find(
+    (option) => option.paymentType === PaymentType.PAYPAL
+  )?.dspPriceUsd;
 
-  const dspFormattedPricingAda = dspPriceAda
-    ? `(≈₳${formatPriceToDecimal(dspPriceAda)}/RELEASE)`
-    : undefined;
-
-  const collabFormattedPricing = collabPerArtistPriceAda
-    ? ` (≈₳${formatPriceToDecimal(collabPerArtistPriceAda, 1)}/each)`
-    : "";
-
-  const totalMintFormattedPricing =
-    mintPriceAda && collabPerArtistPriceAda
-      ? ` (≈₳${formatPriceToDecimal(
-          String(
-            parseFloat(mintPriceAda) + parseFloat(collabPerArtistPriceAda)
-          ),
-          1
-        )}/release)`
-      : "";
+  const dspFormattedPricingUsd = formatUsdAmount(Number(dspPriceUsd), {
+    precision: 2,
+    returnZeroValue: false,
+  });
 
   const pricingPlanCriteria = [
-    "Customize artist profile",
-    "Track catalog status",
-    "Accept/decline collaborations",
-    "Connect wallet to receive royalty splits",
-    "View collaborator details",
-    "Upload your music",
-    `Invite collaborators${collabFormattedPricing}`,
-    "Free EAN barcode & ISRCs",
-    "Distribute music to 130+ global platforms",
-    `Mint music${totalMintFormattedPricing}`,
-    "Automate royalty splits to collaborators",
-    "List your music on NEWMMarketplace (coming soon)",
+    { text: "Distribute your music to 130+ global platforms" },
+    {
+      highlight: "20% discount",
+      highlightColor: theme.colors.baseGreen,
+      text: " for paying in $NEWM Tokens",
+    },
+    { text: "Automate royalty splits" },
+    { text: "Free EAN Release Code & ISRC generation" },
+    { text: "Add and manage release collaborators" },
+    { text: "Customize your artist profile" },
+    { text: "Track catalog status" },
+    { text: "Sell music rights to your fans on the NEWM Marketplace!" },
   ];
 
   return (
-    <Dialog
-      open={ open }
-      sx={ {
-        "& .MuiPaper-root": {
-          backgroundColor: theme.colors.grey600,
-          border: `1px solid ${theme.colors.grey400}`,
-          borderRadius: "12px",
-        },
-
-        height: "100%",
-      } }
+    <Modal
+      isCloseButtonVisible={ false }
+      isCloseOnClickBackgroundEnabled={ true }
+      isFullScreen={ false }
+      isOpen={ open }
       onClose={ onCancel }
     >
       <Box
         sx={ {
+          backgroundColor: theme.colors.grey600,
+          border: `1px solid ${theme.colors.grey400}`,
+          borderRadius: "12px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: 5,
+          maxWidth: "430px",
+          padding: [2, 4],
           position: "relative",
-          [theme.breakpoints.down("xl")]: { paddingX: 2 },
         } }
       >
         <Stack
@@ -109,71 +83,69 @@ const DistributionPricingModal: FunctionComponent<
             alignItems: "center",
             display: "flex",
             flex: 1,
-            gap: 4,
+            gap: 3.75,
           } }
         >
-          <Stack textAlign="center">
+          <Stack sx={ { gap: 2 } } textAlign="center">
             <Typography
               sx={ {
                 display: "flex",
                 flexDirection: "column",
                 fontWeight: 700,
-                height: "40px",
-                justifyContent: "center",
-                pb: 4,
+                gap: 0.5,
               } }
               variant="h4"
             >
-              <Box>
-                <Box
-                  component="span"
-                  sx={ { mr: 1, textDecoration: "line-through" } }
-                >
-                  $14/RELEASE
-                </Box>
-                { dspFormattedPricingUsd }
-              </Box>
-              <Typography variant="subtitle1">
-                { dspFormattedPricingAda }
-              </Typography>
+              <Box> { dspFormattedPricingUsd } / RELEASE</Box>
             </Typography>
 
             <Stack>
-              <Typography variant="h2">The Artist</Typography>
+              <Typography variant="h2">Your music, your way</Typography>
               <Typography
                 sx={ {
+                  color: theme.colors.grey100,
                   fontWeight: 500,
-                  [theme.breakpoints.up("lg")]: { height: "48px" },
-                  width: ["auto", "320px"],
+                  maxWidth: "420px",
                 } }
                 variant="subtitle1"
               >
-                Release your music with NEWM and ensure correct royalty splits.
+                Pay once to distribute and keep 100% of your future royalties!
               </Typography>
             </Stack>
           </Stack>
 
-          <Stack gap={ 1.25 }>
+          <Stack gap={ 1 } sx={ { maxWidth: "420px", width: "100%" } }>
             { pricingPlanCriteria.map((criterion, index) => (
-              <Stack
+              <Box
                 key={ index }
                 sx={ {
                   display: "flex",
                   flexDirection: "row",
                   gap: 1.5,
-                  [theme.breakpoints.down("xl")]: { paddingX: 3 },
                 } }
               >
-                <Check sx={ { color: theme.colors.green } } />
+                <Check sx={ { color: theme.colors.baseGreen } } />
 
                 <Typography
                   alignSelf={ "center" }
                   fontWeight={ 500 }
                   variant="body1"
                 >
-                  { criterion }
+                  { criterion.highlight ? (
+                    <>
+                      <Box
+                        component="span"
+                        sx={ { color: criterion.highlightColor } }
+                      >
+                        { criterion.highlight }
+                      </Box>
+                      { criterion.text }
+                    </>
+                  ) : (
+                    criterion.text
+                  ) }
                 </Typography>
-              </Stack>
+              </Box>
             )) }
           </Stack>
 
@@ -191,7 +163,7 @@ const DistributionPricingModal: FunctionComponent<
           </Button>
         </Stack>
       </Box>
-    </Dialog>
+    </Modal>
   );
 };
 
