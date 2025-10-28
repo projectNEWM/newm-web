@@ -1,8 +1,8 @@
 import { fireEvent, waitFor } from "@testing-library/react";
 import { LocalStorage } from "@newm-web/utils";
 import { LocalStorageKey, PaymentType } from "@newm-web/types";
-import { renderWithContext } from "../../common";
-import * as sessionModule from "../../modules/session";
+import { renderWithContext } from "../../../common";
+import * as sessionModule from "../../../modules/session";
 /**
  * Note: DistributionPricingModal must be imported AFTER renderWithContext.
  * If imported before, it causes "baseReducer is not a function" errors because
@@ -10,7 +10,7 @@ import * as sessionModule from "../../modules/session";
  * are properly initialized.
  */
 // eslint-disable-next-line import/order
-import DistributionPricingModal from "./DistributionPricingModal";
+import DistributionPricingModal from "../DistributionPricingModal";
 
 // Mock functions that will be used in jest.mock factories
 const mockUpdateProfile = jest.fn();
@@ -25,8 +25,8 @@ jest.mock("@newm-web/utils", () => ({
 }));
 
 // Mock the session module
-jest.mock("../../modules/session", () => {
-  const actual = jest.requireActual("../../modules/session");
+jest.mock("../../../modules/session", () => {
+  const actual = jest.requireActual("../../../modules/session");
   return {
     ...actual,
     useUpdateProfileThunk: jest.fn(() => [
@@ -37,8 +37,8 @@ jest.mock("../../modules/session", () => {
 });
 
 // Mock the song module
-jest.mock("../../modules/song", () => {
-  const actual = jest.requireActual("../../modules/song");
+jest.mock("../../../modules/song", () => {
+  const actual = jest.requireActual("../../../modules/song");
   return {
     ...actual,
     useGetMintSongEstimateQuery: jest.fn(() =>
