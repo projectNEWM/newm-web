@@ -47,7 +47,7 @@ const DistributionPricingModal: FunctionComponent<
     {
       highlight: "20% discount",
       highlightColor: theme.colors.baseGreen,
-      text: " for paying in $NEWM Tokens",
+      text: "for paying in $NEWM Tokens",
     },
     { text: "Automate royalty splits" },
     { text: "Free EAN Release Code & ISRC generation" },
@@ -139,7 +139,7 @@ const DistributionPricingModal: FunctionComponent<
                       >
                         { criterion.highlight }
                       </Box>
-                      { criterion.text }
+                      { " " + criterion.text }
                     </>
                   ) : (
                     criterion.text
