@@ -32,9 +32,9 @@ export type CustomError = {
 
 export type CloudinaryError = {
   error: {
-    data: {
-      error: {
-        message: string;
+    data?: {
+      error?: {
+        message?: string;
       };
     };
   };

@@ -22,7 +22,7 @@ const api = createApi({
           // Replace generic message with API error message if present
           if (error && typeof error === "object" && "error" in error) {
             const apiError = error as CloudinaryError;
-            const apiErrorMessage = apiError.error.data.error.message;
+            const apiErrorMessage = apiError.error.data?.error?.message;
 
             if (apiErrorMessage) {
               message = apiErrorMessage;
