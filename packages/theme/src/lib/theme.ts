@@ -386,6 +386,13 @@ const responsiveTheme: Theme = {
         lineHeight: "48px",
       },
     },
+    h2: {
+      ...theme.typography.h2,
+      [breakpoints.down("md")]: {
+        fontSize: "28px",
+        lineHeight: "36px",
+      },
+    },
   },
 };
 

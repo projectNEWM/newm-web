@@ -4,13 +4,13 @@ import { LocalStorageKey, PaymentType } from "@newm-web/types";
 import { renderWithContext } from "../../../common";
 import * as sessionModule from "../../../modules/session";
 /**
- * Note: DistributionPricingModal must be imported AFTER renderWithContext.
+ * Note: DistributionPricingDialog must be imported AFTER renderWithContext.
  * If imported before, it causes "baseReducer is not a function" errors because
  * the component's dependencies try to load before the test utilities and mocks
  * are properly initialized.
  */
 // eslint-disable-next-line import/order
-import DistributionPricingModal from "../DistributionPricingModal";
+import DistributionPricingDialog from "../DistributionPricingDialog";
 
 // Mock functions that will be used in jest.mock factories
 const mockUpdateProfile = jest.fn();
@@ -47,7 +47,7 @@ jest.mock("../../../modules/song", () => {
   };
 });
 
-describe("<DistributionPricingModal />", () => {
+describe("<DistributionPricingDialog />", () => {
   const mockOnCancel = jest.fn();
   const mockOnConfirm = jest.fn();
 
@@ -71,7 +71,7 @@ describe("<DistributionPricingModal />", () => {
   describe("when the modal is open", () => {
     it("renders the modal with pricing information", () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -89,7 +89,7 @@ describe("<DistributionPricingModal />", () => {
 
     it("renders all pricing criteria", () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -122,7 +122,7 @@ describe("<DistributionPricingModal />", () => {
 
     it("renders Get started and Cancel buttons", () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -137,7 +137,7 @@ describe("<DistributionPricingModal />", () => {
   describe("when the modal is closed", () => {
     it("does not render the modal content", () => {
       const { queryByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ false }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -151,7 +151,7 @@ describe("<DistributionPricingModal />", () => {
   describe("when the Get started button is clicked", () => {
     it("calls updateProfile with dspPlanSubscribed: true", async () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -170,7 +170,7 @@ describe("<DistributionPricingModal />", () => {
 
     it("sets the pricing plan accepted flag in localStorage", async () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -190,7 +190,7 @@ describe("<DistributionPricingModal />", () => {
 
     it("calls the onConfirm callback", async () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -209,7 +209,7 @@ describe("<DistributionPricingModal />", () => {
   describe("when the Cancel button is clicked", () => {
     it("calls the onCancel callback", () => {
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -232,7 +232,7 @@ describe("<DistributionPricingModal />", () => {
       ]);
 
       const { getAllByRole } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }
@@ -255,7 +255,7 @@ describe("<DistributionPricingModal />", () => {
       });
 
       const { getByText } = renderWithContext(
-        <DistributionPricingModal
+        <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
           onConfirm={ mockOnConfirm }

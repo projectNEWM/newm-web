@@ -1,14 +1,21 @@
-import { Button, Modal } from "@newm-web/elements";
+import { Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { LocalStorage, formatUsdAmount } from "@newm-web/utils";
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  DialogActions,
+  DialogContent,
+  Divider,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Check } from "@mui/icons-material";
 import { LocalStorageKey, PaymentType } from "@newm-web/types";
 import { FunctionComponent } from "react";
 import { useUpdateProfileThunk } from "../../modules/session";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 
-interface DistributionPricingModalProps {
+interface DistributionPricingDialogProps {
   readonly onCancel: () => void;
   readonly onConfirm: () => void;
   readonly open: boolean;
@@ -17,8 +24,8 @@ interface DistributionPricingModalProps {
 /**
  * Allows users to select a pricing plan for music distribution.
  */
-const DistributionPricingModal: FunctionComponent<
-  DistributionPricingModalProps
+const DistributionPricingDialog: FunctionComponent<
+  DistributionPricingDialogProps
 > = ({ onCancel, onConfirm, open }) => {
   const [updateProfile, { isLoading }] = useUpdateProfileThunk();
 
@@ -58,26 +65,23 @@ const DistributionPricingModal: FunctionComponent<
   ];
 
   return (
-    <Modal
-      isCloseButtonVisible={ false }
-      isCloseOnClickBackgroundEnabled={ true }
-      isFullScreen={ false }
-      isOpen={ open }
-      onClose={ onCancel }
-    >
-      <Box
-        sx={ {
+    <Dialog
+      maxWidth="xs"
+      open={ open }
+      sx={ {
+        "& .MuiPaper-root": {
           backgroundColor: theme.colors.grey600,
           border: `1px solid ${theme.colors.grey400}`,
           borderRadius: "12px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+          gap: 3.75,
           maxWidth: "430px",
           padding: [2, 4],
-          position: "relative",
-        } }
-      >
+        },
+      } }
+      fullWidth
+      onClose={ onCancel }
+    >
+      <DialogContent sx={ { p: 0 } }>
         <Stack
           sx={ {
             alignItems: "center",
@@ -150,21 +154,34 @@ const DistributionPricingModal: FunctionComponent<
           </Stack>
 
           <Divider color={ theme.colors.grey400 } sx={ { width: "70%" } } />
-          <Button isLoading={ isLoading } onClick={ handleOptionClick }>
-            Get started
-          </Button>
-          <Button
-            color="music"
-            isLoading={ isLoading }
-            variant="secondary"
-            onClick={ onCancel }
-          >
-            Cancel
-          </Button>
         </Stack>
-      </Box>
-    </Modal>
+      </DialogContent>
+      <DialogActions
+        sx={ {
+          // Override MUI default DialogActions gap/margin on last button
+          "& > :not(:first-of-type)": {
+            marginLeft: 0,
+          },
+          flexDirection: "column",
+          gap: 3.75,
+          justifyContent: "center",
+          p: 0,
+        } }
+      >
+        <Button isLoading={ isLoading } onClick={ handleOptionClick }>
+          Get started
+        </Button>
+        <Button
+          color="music"
+          isLoading={ isLoading }
+          variant="secondary"
+          onClick={ onCancel }
+        >
+          Cancel
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
-export default DistributionPricingModal;
+export default DistributionPricingDialog;

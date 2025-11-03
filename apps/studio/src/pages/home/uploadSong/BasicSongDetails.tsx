@@ -33,7 +33,7 @@ import {
   useAppDispatch,
 } from "../../../common";
 import {
-  DistributionPricingModal,
+  DistributionPricingDialog,
   PlaySong,
   PricingPlansDialog,
 } from "../../../components";
@@ -205,7 +205,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     <Stack>
       { !isArtistPricePlanSelected &&
         (webStudioReleaseDistributionPaymentEnhancements ? (
-          <DistributionPricingModal
+          <DistributionPricingDialog
             open={ isPricingPlansOpen }
             onCancel={ handlePricingPlanCancel }
             onConfirm={ handlePricingPlanConfirm }

@@ -7,7 +7,7 @@ export { default as ConnectWalletModal } from "./ConnectWalletModal";
 export { CoverRemixSample } from "./minting/CoverRemixSample";
 export { default as Creditors } from "./minting/Creditors";
 export { default as DisconnectWalletButton } from "./DisconnectWalletButton";
-export { default as DistributionPricingModal } from "./dspPricing/DistributionPricingModal";
+export { default as DistributionPricingDialog } from "./dspPricing/DistributionPricingDialog";
 export { default as AppleLogin } from "./AppleLogin";
 export { default as GoogleLogin } from "./GoogleLogin";
 export * from "./library/IconStatus";
