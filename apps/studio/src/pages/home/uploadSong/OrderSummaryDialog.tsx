@@ -162,10 +162,8 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
 
   return (
     <Dialog fullWidth={ true } open={ open } onClose={ onClose }>
-      <DialogTitle sx={ { pb: 0, pt: 3 } }>
-        <Typography fontSize={ 20 } fontWeight={ 800 } variant="body2">
-          Order Summary
-        </Typography>
+      <DialogTitle sx={ { pb: 0, pt: 3 } } variant="body2">
+        Order Summary
       </DialogTitle>
 
       <DialogContent sx={ { pb: 2, px: 3 } }>
