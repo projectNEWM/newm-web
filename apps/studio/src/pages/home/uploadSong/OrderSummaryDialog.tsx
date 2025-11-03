@@ -28,12 +28,12 @@ import {
 import { useGetNewmUsdConversionRateQuery } from "../../../modules/crypto";
 import { openPayPalPopup } from "../../../common/paypalUtils";
 
-interface ReleaseSummaryDialogProps {
+interface OrderSummaryDialogProps {
   readonly onClose: () => void;
   readonly open: boolean;
 }
 
-const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
+const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
   open,
   onClose,
 }) => {
@@ -164,7 +164,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
     <Dialog fullWidth={ true } open={ open } onClose={ onClose }>
       <DialogTitle sx={ { pb: 0, pt: 3 } }>
         <Typography fontSize={ 20 } fontWeight={ 800 } variant="body2">
-          Release Summary
+          Order Summary
         </Typography>
       </DialogTitle>
 
@@ -492,4 +492,4 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
   );
 };
 
-export default ReleaseSummaryDialog;
+export default OrderSummaryDialog;
