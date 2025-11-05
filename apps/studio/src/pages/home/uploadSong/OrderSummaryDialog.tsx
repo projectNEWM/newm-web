@@ -15,11 +15,7 @@ import {
 import HelpIcon from "@mui/icons-material/Help";
 import { Button, Dialog, HorizontalLine, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import {
-  LOVELACE_CONVERSION,
-  formatNewmAmount,
-  formatUsdAmount,
-} from "@newm-web/utils";
+import { formatNewmAmount, formatUsdAmount } from "@newm-web/utils";
 import { Charli3Logo, CheckCircleRadioIcon } from "@newm-web/assets";
 import { PaymentType } from "@newm-web/types";
 import {
@@ -61,9 +57,6 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
       }
     );
 
-  const { data: { usdPrice: newmiesUsdConversionRate = 0 } = {} } =
-    useGetNewmUsdConversionRateQuery();
-
   const songEstimatePrices = songEstimate?.mintPaymentOptions?.find(
     (option) => option.paymentType === values.paymentType
   );
@@ -73,24 +66,12 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
     { precision: 2, returnZeroValue: false }
   );
 
-  const newmUsdConversionRate = newmiesUsdConversionRate / LOVELACE_CONVERSION;
-
-  const convertUsdToNewm = (usdValue?: string) => {
-    if (!usdValue || !newmUsdConversionRate) return undefined;
-    return Number(usdValue) / newmUsdConversionRate;
-  };
-
   const displayPrices = {
-    collabPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.collabPrice))
-        : Number(songEstimatePrices?.collabPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    collabPriceNewm: formatNewmAmount(Number(songEstimatePrices?.collabPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     collabPriceUsd: formatUsdAmount(
       Number(songEstimatePrices?.collabPriceUsd),
       {
@@ -98,44 +79,29 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
         returnZeroValue: false,
       }
     ),
-    dspPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.dspPrice))
-        : Number(songEstimatePrices?.dspPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    dspPriceNewm: formatNewmAmount(Number(songEstimatePrices?.dspPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     dspPriceUsd: formatUsdAmount(Number(songEstimatePrices?.dspPriceUsd), {
       precision: 2,
       returnZeroValue: false,
     }),
-    mintPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.mintPrice))
-        : Number(songEstimatePrices?.mintPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    mintPriceNewm: formatNewmAmount(Number(songEstimatePrices?.mintPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     mintPriceUsd: formatUsdAmount(Number(songEstimatePrices?.mintPriceUsd), {
       precision: 2,
       returnZeroValue: false,
     }),
-    priceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.price))
-        : Number(songEstimatePrices?.price),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    priceNewm: formatNewmAmount(Number(songEstimatePrices?.price), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     priceUsd: formatUsdAmount(Number(songEstimatePrices?.priceUsd), {
       precision: 2,
       returnZeroValue: false,
@@ -379,12 +345,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                       </Typography>
                     </>
                   ) : (
-                    <>
-                      <Typography variant="subtitle2">
-                        ({ displayPrices.dspPriceNewm })
-                      </Typography>
-                      <Typography>{ displayPrices.dspPriceUsd }</Typography>
-                    </>
+                    <Typography>{ displayPrices.dspPriceUsd }</Typography>
                   ) }
                 </Stack>
               </Stack>
@@ -414,11 +375,11 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                   </Tooltip>
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
                       ({ displayPrices.collabPriceNewm })
                     </Typography>
-                  }
+                  ) }
                   <Typography>{ displayPrices.collabPriceUsd }</Typography>
                 </Stack>
               </Stack>
@@ -446,11 +407,11 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                   </Tooltip>
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
                       ({ displayPrices.mintPriceNewm })
                     </Typography>
-                  }
+                  ) }
                   <Typography>{ displayPrices.mintPriceUsd }</Typography>
                 </Stack>
               </Stack>
@@ -468,19 +429,21 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
               <Stack direction="row" justifyContent="space-between">
                 <Typography>Total</Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
                       ({ displayPrices.priceNewm })
                     </Typography>
-                  }
+                  ) }
                   <Typography>{ displayPrices.priceUsd }</Typography>
                 </Stack>
               </Stack>
             </Stack>
           </Stack>
           <Typography mt={ 0.5 } variant="subtitle2">
-            Total does not include the Cardano blockchain network fee. Fee
-            prices are not guaranteed, costs may vary.
+            { isNewmPayment
+              ? "Total does not include the blockchain network fee. Fee " +
+                "prices are not guaranteed, costs may vary."
+              : "Fee prices are not guaranteed, costs may vary." }
           </Typography>
         </Stack>
       </DialogContent>
