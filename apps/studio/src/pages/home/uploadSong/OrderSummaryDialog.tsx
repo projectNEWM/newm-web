@@ -68,6 +68,11 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
     (option) => option.paymentType === values.paymentType
   );
 
+  const royaltySplitFeePerCollab = formatUsdAmount(
+    Number(songEstimatePrices?.collabPricePerArtistUsd),
+    { precision: 2, returnZeroValue: false }
+  );
+
   const newmUsdConversionRate = newmiesUsdConversionRate / LOVELACE_CONVERSION;
 
   const convertUsdToNewm = (usdValue?: string) => {
@@ -383,7 +388,6 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                   ) }
                 </Stack>
               </Stack>
-
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
@@ -391,15 +395,31 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Stream Token minting
+                  Royalty split(s) fee
+                  <Tooltip
+                    title={
+                      "As previously mentioned during the upload process, an " +
+                      `additional ${royaltySplitFeePerCollab} fee is ` +
+                      "required to transfer streaming rights to each royalty " +
+                      "split holder."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey200,
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   {
                     <Typography variant="subtitle2">
-                      ({ displayPrices.mintPriceNewm })
+                      ({ displayPrices.collabPriceNewm })
                     </Typography>
                   }
-                  <Typography>{ displayPrices.mintPriceUsd }</Typography>
+                  <Typography>{ displayPrices.collabPriceUsd }</Typography>
                 </Stack>
               </Stack>
 
@@ -410,15 +430,28 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Royalty splits
+                  Service fee
+                  <Tooltip
+                    title={
+                      "This fee covers the cost of digital contract creation."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey200,
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   {
                     <Typography variant="subtitle2">
-                      ({ displayPrices.collabPriceNewm })
+                      ({ displayPrices.mintPriceNewm })
                     </Typography>
                   }
-                  <Typography>{ displayPrices.collabPriceUsd }</Typography>
+                  <Typography>{ displayPrices.mintPriceUsd }</Typography>
                 </Stack>
               </Stack>
             </Stack>
