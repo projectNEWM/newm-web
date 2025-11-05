@@ -6,12 +6,14 @@ import {
   DialogTitle,
   FormControl,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
-import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
+import HelpIcon from "@mui/icons-material/Help";
+import { Button, Dialog, HorizontalLine, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
   LOVELACE_CONVERSION,
@@ -283,7 +285,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Release name
+                  Release title
                 </Typography>
                 <Typography>{ values.title }</Typography>
               </Stack>
@@ -293,9 +295,23 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                   sx={ {
                     color: theme.colors.grey200,
                     fontWeight: theme.typography.fontWeightRegular,
+                    gap: 1,
                   } }
                 >
                   Number of collaborators
+                  <Tooltip
+                    title={
+                      "This is the total number of collaborators, including yourself."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey200,
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
                 <Typography>{ values.owners.length }</Typography>
               </Stack>
