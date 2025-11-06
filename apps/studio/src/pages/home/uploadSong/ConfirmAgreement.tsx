@@ -5,7 +5,7 @@ import { useWindowDimensions } from "@newm-web/utils";
 import { Button } from "@newm-web/elements";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import PriceSummaryDialog from "./PriceSummaryDialog";
-import ReleaseSummaryDialog from "./ReleaseSummaryDialog";
+import OrderSummaryDialog from "./OrderSummaryDialog";
 import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
 
@@ -73,7 +73,7 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
 
         { shouldShowPriceSummary &&
           (webStudioReleaseDistributionPaymentEnhancements ? (
-            <ReleaseSummaryDialog
+            <OrderSummaryDialog
               open={ isPaymentSummaryOpen }
               onClose={ () => setIsPaymentSummaryOpen(false) }
             />

@@ -30,6 +30,16 @@ export type CustomError = {
   status: number;
 };
 
+export type CloudinaryError = {
+  error: {
+    data?: {
+      error?: {
+        message?: string;
+      };
+    };
+  };
+};
+
 export interface EmptyResponse {
   readonly data: null;
 }

@@ -6,15 +6,16 @@ import {
   DialogTitle,
   FormControl,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
-import { Button, Dialog, HorizontalLine } from "@newm-web/elements";
+import HelpIcon from "@mui/icons-material/Help";
+import { Button, Dialog, HorizontalLine, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
-  LOVELACE_CONVERSION,
   formatISODateToLocaleDateAtUTC,
   formatNewmAmount,
   formatUsdAmount,
@@ -25,16 +26,14 @@ import {
   UploadSongThunkRequest,
   useGetMintSongEstimateQuery,
 } from "../../../modules/song";
-
-import { useGetNewmUsdConversionRateQuery } from "../../../modules/crypto";
 import { openPayPalPopup } from "../../../common/paypalUtils";
 
-interface ReleaseSummaryDialogProps {
+interface OrderSummaryDialogProps {
   readonly onClose: () => void;
   readonly open: boolean;
 }
 
-const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
+const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
   open,
   onClose,
 }) => {
@@ -60,31 +59,21 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
       }
     );
 
-  const { data: { usdPrice: newmiesUsdConversionRate = 0 } = {} } =
-    useGetNewmUsdConversionRateQuery();
-
   const songEstimatePrices = songEstimate?.mintPaymentOptions?.find(
     (option) => option.paymentType === values.paymentType
   );
 
-  const newmUsdConversionRate = newmiesUsdConversionRate / LOVELACE_CONVERSION;
-
-  const convertUsdToNewm = (usdValue?: string) => {
-    if (!usdValue || !newmUsdConversionRate) return undefined;
-    return Number(usdValue) / newmUsdConversionRate;
-  };
+  const royaltySplitFeePerCollab = formatUsdAmount(
+    Number(songEstimatePrices?.collabPricePerArtistUsd),
+    { precision: 2, returnZeroValue: false }
+  );
 
   const displayPrices = {
-    collabPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.collabPrice))
-        : Number(songEstimatePrices?.collabPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    collabPriceNewm: formatNewmAmount(Number(songEstimatePrices?.collabPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     collabPriceUsd: formatUsdAmount(
       Number(songEstimatePrices?.collabPriceUsd),
       {
@@ -92,44 +81,29 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
         returnZeroValue: false,
       }
     ),
-    dspPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.dspPrice))
-        : Number(songEstimatePrices?.dspPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    dspPriceNewm: formatNewmAmount(Number(songEstimatePrices?.dspPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     dspPriceUsd: formatUsdAmount(Number(songEstimatePrices?.dspPriceUsd), {
       precision: 2,
       returnZeroValue: false,
     }),
-    mintPriceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.mintPrice))
-        : Number(songEstimatePrices?.mintPrice),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    mintPriceNewm: formatNewmAmount(Number(songEstimatePrices?.mintPrice), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     mintPriceUsd: formatUsdAmount(Number(songEstimatePrices?.mintPriceUsd), {
       precision: 2,
       returnZeroValue: false,
     }),
-    priceNewm: formatNewmAmount(
-      isPaypalPayment
-        ? Number(convertUsdToNewm(songEstimatePrices?.price))
-        : Number(songEstimatePrices?.price),
-      {
-        includeEstimateSymbol: true,
-        precision: 2,
-        returnZeroValue: false,
-      }
-    ),
+    priceNewm: formatNewmAmount(Number(songEstimatePrices?.price), {
+      includeEstimateSymbol: true,
+      precision: 0,
+      returnZeroValue: false,
+    }),
     priceUsd: formatUsdAmount(Number(songEstimatePrices?.priceUsd), {
       precision: 2,
       returnZeroValue: false,
@@ -163,10 +137,8 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
 
   return (
     <Dialog fullWidth={ true } open={ open } onClose={ onClose }>
-      <DialogTitle sx={ { pb: 0, pt: 3 } }>
-        <Typography fontSize={ 20 } fontWeight={ 800 } variant="body2">
-          Release Summary
-        </Typography>
+      <DialogTitle sx={ { pb: 0, pt: 3 } } variant="body2">
+        Order Summary
       </DialogTitle>
 
       <DialogContent sx={ { pb: 2, px: 3 } }>
@@ -286,20 +258,39 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Release name
+                  Release title
                 </Typography>
+
                 <Typography>{ values.title }</Typography>
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
                   Number of collaborators
+                  <Tooltip
+                    title={
+                      "This is the total number of collaborators, including yourself."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
+
                 <Typography>{ values.owners.length }</Typography>
               </Stack>
 
@@ -312,6 +303,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 >
                   Release date
                 </Typography>
+
                 <Typography>
                   { values.releaseDate
                     ? formatISODateToLocaleDateAtUTC(values.releaseDate)
@@ -339,6 +331,7 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                 >
                   Distribution cost
                 </Typography>
+
                 <Stack direction={ "row" } gap={ 1 }>
                   { isNewmPayment ? (
                     <>
@@ -361,51 +354,84 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
                       </Typography>
                     </>
                   ) : (
-                    <>
-                      <Typography variant="subtitle2">
-                        ({ displayPrices.dspPriceNewm })
-                      </Typography>
-                      <Typography>{ displayPrices.dspPriceUsd }</Typography>
-                    </>
+                    <Typography>{ displayPrices.dspPriceUsd }</Typography>
                   ) }
                 </Stack>
               </Stack>
-
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Stream Token minting
+                  Royalty split(s) fee
+                  <Tooltip
+                    title={
+                      "As previously mentioned during the upload process, an " +
+                      `additional ${royaltySplitFeePerCollab} fee is ` +
+                      "required to transfer streaming rights to each royalty " +
+                      "split holder."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
-                      ({ displayPrices.mintPriceNewm })
+                      ({ displayPrices.collabPriceNewm })
                     </Typography>
-                  }
-                  <Typography>{ displayPrices.mintPriceUsd }</Typography>
+                  ) }
+                  <Typography>{ displayPrices.collabPriceUsd }</Typography>
                 </Stack>
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
-                  Royalty splits
+                  Service fee
+                  <Tooltip
+                    title={
+                      "This fee covers the cost of digital contract creation."
+                    }
+                  >
+                    <IconButton sx={ { ml: 0.5, padding: 0 } }>
+                      <HelpIcon
+                        sx={ {
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
+                        } }
+                      />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
-                      ({ displayPrices.collabPriceNewm })
+                      ({ displayPrices.mintPriceNewm })
                     </Typography>
-                  }
-                  <Typography>{ displayPrices.collabPriceUsd }</Typography>
+                  ) }
+                  <Typography>{ displayPrices.mintPriceUsd }</Typography>
                 </Stack>
               </Stack>
             </Stack>
@@ -421,20 +447,23 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
             >
               <Stack direction="row" justifyContent="space-between">
                 <Typography>Total</Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
-                  {
+                  { isNewmPayment && (
                     <Typography variant="subtitle2">
                       ({ displayPrices.priceNewm })
                     </Typography>
-                  }
+                  ) }
                   <Typography>{ displayPrices.priceUsd }</Typography>
                 </Stack>
               </Stack>
             </Stack>
           </Stack>
           <Typography mt={ 0.5 } variant="subtitle2">
-            Total does not include the Cardano blockchain network fee. Fee
-            prices are not guaranteed, costs may vary.
+            { isNewmPayment
+              ? "Total does not include the blockchain network fee. Fee " +
+                "prices are not guaranteed, costs may vary."
+              : "Fee prices are not guaranteed, costs may vary." }
           </Typography>
         </Stack>
       </DialogContent>
@@ -493,4 +522,4 @@ const ReleaseSummaryDialog: FunctionComponent<ReleaseSummaryDialogProps> = ({
   );
 };
 
-export default ReleaseSummaryDialog;
+export default OrderSummaryDialog;
