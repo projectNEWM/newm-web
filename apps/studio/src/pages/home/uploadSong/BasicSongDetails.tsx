@@ -32,7 +32,11 @@ import {
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
   useAppDispatch,
 } from "../../../common";
-import { PlaySong, PricingPlansDialog } from "../../../components";
+import {
+  DistributionPricingDialog,
+  PlaySong,
+  PricingPlansDialog,
+} from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -64,6 +68,8 @@ interface BasicDonDetailsProps {
 const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   isInEditMode,
 }) => {
+  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
+
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -197,13 +203,20 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected && (
-        <PricingPlansDialog
-          open={ isPricingPlansOpen }
-          onCancel={ handlePricingPlanCancel }
-          onConfirm={ handlePricingPlanConfirm }
-        />
-      ) }
+      { !isArtistPricePlanSelected &&
+        (webStudioReleaseDistributionPaymentEnhancements ? (
+          <DistributionPricingDialog
+            open={ isPricingPlansOpen }
+            onCancel={ handlePricingPlanCancel }
+            onConfirm={ handlePricingPlanConfirm }
+          />
+        ) : (
+          <PricingPlansDialog
+            open={ isPricingPlansOpen }
+            onCancel={ handlePricingPlanCancel }
+            onConfirm={ handlePricingPlanConfirm }
+          />
+        )) }
       <Stack direction="column" spacing={ 3 }>
         { shouldShowOutletsWarning && (
           <Stack
