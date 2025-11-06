@@ -258,15 +258,17 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                 >
                   Release title
                 </Typography>
+
                 <Typography>{ values.title }</Typography>
               </Stack>
 
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
-                    gap: 1,
                   } }
                 >
                   Number of collaborators
@@ -278,12 +280,15 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     <IconButton sx={ { ml: 0.5, padding: 0 } }>
                       <HelpIcon
                         sx={ {
-                          color: theme.colors.grey200,
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
                         } }
                       />
                     </IconButton>
                   </Tooltip>
                 </Typography>
+
                 <Typography>{ values.owners.length }</Typography>
               </Stack>
 
@@ -296,6 +301,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                 >
                   Release date
                 </Typography>
+
                 <Typography>
                   { values.releaseDate
                     ? new Date(values.releaseDate).toLocaleDateString()
@@ -323,6 +329,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                 >
                   Distribution cost
                 </Typography>
+
                 <Stack direction={ "row" } gap={ 1 }>
                   { isNewmPayment ? (
                     <>
@@ -352,7 +359,9 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
@@ -368,12 +377,15 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     <IconButton sx={ { ml: 0.5, padding: 0 } }>
                       <HelpIcon
                         sx={ {
-                          color: theme.colors.grey200,
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
                         } }
                       />
                     </IconButton>
                   </Tooltip>
                 </Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { isNewmPayment && (
                     <Typography variant="subtitle2">
@@ -387,7 +399,9 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
               <Stack direction="row" justifyContent="space-between">
                 <Typography
                   sx={ {
+                    alignItems: "center",
                     color: theme.colors.grey200,
+                    display: "inline-flex",
                     fontWeight: theme.typography.fontWeightRegular,
                   } }
                 >
@@ -400,12 +414,15 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
                     <IconButton sx={ { ml: 0.5, padding: 0 } }>
                       <HelpIcon
                         sx={ {
-                          color: theme.colors.grey200,
+                          color: theme.colors.grey100,
+                          height: "18px",
+                          width: "18px",
                         } }
                       />
                     </IconButton>
                   </Tooltip>
                 </Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { isNewmPayment && (
                     <Typography variant="subtitle2">
@@ -428,6 +445,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
             >
               <Stack direction="row" justifyContent="space-between">
                 <Typography>Total</Typography>
+
                 <Stack alignItems="center" direction={ "row" } gap={ 1 }>
                   { isNewmPayment && (
                     <Typography variant="subtitle2">
