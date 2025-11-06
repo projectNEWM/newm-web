@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { TimeRemaining } from "./types";
 
 /**
@@ -109,4 +109,20 @@ export function formatTimeFromISO(isoDateString: string): string {
  */
 export const formatDateToISODateTime = (date: Date): string => {
   return date.toISOString().slice(0, 19);
+};
+
+/**
+ * Formats an ISO date string into a locale-specific date string, while
+ * ensuring the date is interpreted as UTC to prevent timezone-related date
+ * shifts.
+ *
+ * @param {string} isoDateString - The ISO date string to format.
+ * @returns {string} The formatted date string (e.g., "10/13/2025") or "N/A".
+ */
+export const formatISODateToLocaleDateAtUTC = (
+  isoDateString: string
+): string => {
+  const date = moment.utc(isoDateString);
+
+  return date.format("L");
 };

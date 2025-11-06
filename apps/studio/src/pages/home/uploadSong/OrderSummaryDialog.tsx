@@ -15,15 +15,17 @@ import {
 import HelpIcon from "@mui/icons-material/Help";
 import { Button, Dialog, HorizontalLine, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { formatNewmAmount, formatUsdAmount } from "@newm-web/utils";
+import {
+  formatISODateToLocaleDateAtUTC,
+  formatNewmAmount,
+  formatUsdAmount,
+} from "@newm-web/utils";
 import { Charli3Logo, CheckCircleRadioIcon } from "@newm-web/assets";
 import { PaymentType } from "@newm-web/types";
 import {
   UploadSongThunkRequest,
   useGetMintSongEstimateQuery,
 } from "../../../modules/song";
-
-import { useGetNewmUsdConversionRateQuery } from "../../../modules/crypto";
 import { openPayPalPopup } from "../../../common/paypalUtils";
 
 interface OrderSummaryDialogProps {
@@ -304,8 +306,8 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
 
                 <Typography>
                   { values.releaseDate
-                    ? new Date(values.releaseDate).toLocaleDateString()
-                    : new Date().toLocaleDateString() }
+                    ? formatISODateToLocaleDateAtUTC(values.releaseDate)
+                    : "N/A" }
                 </Typography>
               </Stack>
             </Stack>
