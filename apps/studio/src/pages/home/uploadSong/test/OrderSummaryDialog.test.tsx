@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useFormikContext } from "formik";
 import { PaymentType } from "@newm-web/types";
-import ReleaseSummaryDialog from "../ReleaseSummaryDialog";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "@newm-web/theme";
+import OrderSummaryDialog from "../OrderSummaryDialog";
 import {
   UploadSongThunkRequest,
   useGetMintSongEstimateQuery,
@@ -14,6 +16,11 @@ jest.mock("formik");
 jest.mock("../../../../modules/song");
 jest.mock("../../../../modules/crypto");
 jest.mock("../../../../common/paypalUtils");
+
+// Helper to render with theme
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(<ThemeProvider theme={ theme }>{ component }</ThemeProvider>);
+};
 
 const mockUseFormikContext = useFormikContext as jest.MockedFunction<
   typeof useFormikContext
@@ -30,7 +37,7 @@ const mockOpenPayPalPopup = openPayPalPopup as jest.MockedFunction<
   typeof openPayPalPopup
 >;
 
-describe("ReleaseSummaryDialog", () => {
+describe("OrderSummaryDialog", () => {
   const mockSubmitForm = jest.fn();
   const mockSetFieldValue = jest.fn();
   const mockOnClose = jest.fn();
@@ -73,6 +80,7 @@ describe("ReleaseSummaryDialog", () => {
     mintPaymentOptions: [
       {
         collabPrice: "20",
+        collabPricePerArtistUsd: "1.25",
         collabPriceUsd: "2",
         dspPrice: "30",
         dspPriceUsd: "3",
@@ -84,6 +92,7 @@ describe("ReleaseSummaryDialog", () => {
       },
       {
         collabPrice: "25",
+        collabPricePerArtistUsd: "1.25",
         collabPriceUsd: "2.50",
         dspPrice: "37.5",
         dspPriceUsd: "3.75",
@@ -117,19 +126,21 @@ describe("ReleaseSummaryDialog", () => {
 
   describe("Rendering", () => {
     it("should render the dialog when open", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
-      expect(screen.getByText("Release Summary")).toBeInTheDocument();
+      expect(screen.getByText("Order Summary")).toBeInTheDocument();
     });
 
     it("should not render the dialog when closed", () => {
-      render(<ReleaseSummaryDialog open={ false } onClose={ mockOnClose } />);
+      renderWithTheme(
+        <OrderSummaryDialog open={ false } onClose={ mockOnClose } />
+      );
 
-      expect(screen.queryByText("Release Summary")).not.toBeInTheDocument();
+      expect(screen.queryByText("Order Summary")).not.toBeInTheDocument();
     });
 
     it("should display release details correctly", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("Test Song")).toBeInTheDocument();
       expect(screen.getByText("2")).toBeInTheDocument(); // Number of collaborators
@@ -139,7 +150,7 @@ describe("ReleaseSummaryDialog", () => {
 
   describe("Payment Method Selection", () => {
     it("should display both payment options", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("Pay with $NEWM")).toBeInTheDocument();
       expect(screen.getByText("20% discount")).toBeInTheDocument();
@@ -149,7 +160,7 @@ describe("ReleaseSummaryDialog", () => {
     });
 
     it("should have NEWM payment selected by default", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const newmRadio = screen.getByRole("radio", {
         name: /Pay with \$NEWM/i,
@@ -158,7 +169,7 @@ describe("ReleaseSummaryDialog", () => {
     });
 
     it("should update payment type when PayPal is selected", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const paypalRadio = screen.getByRole("radio", {
         name: /Pay with PayPal/i,
@@ -178,7 +189,7 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, paymentType: PaymentType.ADA },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(mockSetFieldValue).toHaveBeenCalledWith(
         "paymentType",
@@ -189,16 +200,16 @@ describe("ReleaseSummaryDialog", () => {
 
   describe("Cost Breakdown Display", () => {
     it("should display cost breakdown for NEWM payment", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("Distribution cost")).toBeInTheDocument();
-      expect(screen.getByText("Stream Token minting")).toBeInTheDocument();
-      expect(screen.getByText("Royalty splits")).toBeInTheDocument();
+      expect(screen.getByText("Royalty split(s) fee")).toBeInTheDocument();
+      expect(screen.getByText("Service fee")).toBeInTheDocument();
       expect(screen.getByText("Total")).toBeInTheDocument();
     });
 
     it("should show discount strikethrough for NEWM payment", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       // Distribution cost should show strikethrough for non-discounted price
       const distributionSection = screen
@@ -214,25 +225,144 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, paymentType: PaymentType.PAYPAL },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("Distribution cost")).toBeInTheDocument();
-      expect(screen.getByText("Stream Token minting")).toBeInTheDocument();
-      expect(screen.getByText("Royalty splits")).toBeInTheDocument();
+      expect(screen.getByText("Royalty split(s) fee")).toBeInTheDocument();
+      expect(screen.getByText("Service fee")).toBeInTheDocument();
     });
 
-    it("should display disclaimer about fees", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+    it("should display disclaimer about fees for NEWM payment", () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(
-        screen.getByText(/Total does not include the Cardano blockchain/i)
+        screen.getByText(/Total does not include the blockchain network fee/i)
       ).toBeInTheDocument();
+    });
+
+    it("should display disclaimer about fees for PayPal payment", () => {
+      mockUseFormikContext.mockReturnValue({
+        setFieldValue: mockSetFieldValue,
+        submitForm: mockSubmitForm,
+        values: { ...defaultFormValues, paymentType: PaymentType.PAYPAL },
+      } as any);
+
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      expect(
+        screen.getByText(/Fee prices are not guaranteed, costs may vary/i)
+      ).toBeInTheDocument();
+      // Should NOT show blockchain network fee text for PayPal
+      expect(
+        screen.queryByText(/Total does not include the blockchain network fee/i)
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Tooltips", () => {
+    it("should display tooltip for Number of collaborators", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const numberCollabsText = screen.getByText("Number of collaborators");
+      const helpIcon = numberCollabsText.parentElement?.querySelector(
+        "[data-testid=\"HelpIcon\"]"
+      );
+
+      expect(helpIcon).toBeInTheDocument();
+    });
+
+    it("should display tooltip for Royalty split(s) fee", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const royaltySplitText = screen.getByText("Royalty split(s) fee");
+      const helpIcon = royaltySplitText.parentElement?.querySelector(
+        "[data-testid=\"HelpIcon\"]"
+      );
+
+      expect(helpIcon).toBeInTheDocument();
+    });
+
+    it("should display tooltip for Service fee", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const serviceFeeText = screen.getByText("Service fee");
+      const helpIcon = serviceFeeText.parentElement?.querySelector(
+        "[data-testid=\"HelpIcon\"]"
+      );
+
+      expect(helpIcon).toBeInTheDocument();
+    });
+
+    it("should show correct tooltip text for Number of collaborators on hover", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const helpIcon = screen
+        .getByText("Number of collaborators")
+        .parentElement?.querySelector("[data-testid=\"HelpIcon\"]");
+
+      if (helpIcon) {
+        fireEvent.mouseOver(helpIcon);
+
+        await waitFor(() => {
+          expect(
+            screen.getByText(
+              "This is the total number of collaborators, including yourself."
+            )
+          ).toBeInTheDocument();
+        });
+      }
+    });
+
+    it("should show correct tooltip text for Royalty split(s) fee on hover", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const royaltySplitText = screen.getByText("Royalty split(s) fee");
+      const helpIcon = royaltySplitText.parentElement?.querySelector(
+        "[data-testid=\"HelpIcon\"]"
+      );
+
+      if (helpIcon) {
+        fireEvent.mouseOver(helpIcon);
+
+        await waitFor(() => {
+          expect(
+            screen.getByText(
+              /As previously mentioned during the upload process/i
+            )
+          ).toBeInTheDocument();
+          // Verify the specific pricing per artist is shown (from collabPricePerArtistUsd)
+          expect(
+            screen.getByText(/additional \$1\.25 fee is required/i)
+          ).toBeInTheDocument();
+        });
+      }
+    });
+
+    it("should show correct tooltip text for Service fee on hover", async () => {
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      const serviceFeeText = screen.getByText("Service fee");
+      const helpIcon = serviceFeeText.parentElement?.querySelector(
+        "[data-testid=\"HelpIcon\"]"
+      );
+
+      if (helpIcon) {
+        fireEvent.mouseOver(helpIcon);
+
+        await waitFor(() => {
+          expect(
+            screen.getByText(
+              "This fee covers the cost of digital contract creation."
+            )
+          ).toBeInTheDocument();
+        });
+      }
     });
   });
 
   describe("Actions", () => {
     it("should call onClose when Cancel button is clicked", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const cancelButton = screen.getByRole("button", { name: /Cancel/i });
       fireEvent.click(cancelButton);
@@ -241,7 +371,7 @@ describe("ReleaseSummaryDialog", () => {
     });
 
     it("should call submitForm when Confirm & Pay is clicked with NEWM payment", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const confirmButton = screen.getByRole("button", {
         name: /Confirm & Pay/i,
@@ -259,7 +389,7 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, paymentType: PaymentType.PAYPAL },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const confirmButton = screen.getByRole("button", {
         name: /Confirm & Pay/i,
@@ -276,7 +406,7 @@ describe("ReleaseSummaryDialog", () => {
         isError: true,
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       const confirmButton = screen.getByRole("button", {
         name: /Confirm & Pay/i,
@@ -293,7 +423,7 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, paymentType: PaymentType.PAYPAL },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       // With conversion rate of 0.1 USD per NEWM (100000 newmies / 1000000)
       // PayPal prices should be converted to NEWM equivalent
@@ -305,16 +435,16 @@ describe("ReleaseSummaryDialog", () => {
         data: undefined,
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       // Should still render without crashing
-      expect(screen.getByText("Release Summary")).toBeInTheDocument();
+      expect(screen.getByText("Order Summary")).toBeInTheDocument();
     });
   });
 
   describe("Charli3 Branding", () => {
     it("should display Charli3 powered by text", () => {
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("Prices powered by Charli3")).toBeInTheDocument();
     });
@@ -327,10 +457,10 @@ describe("ReleaseSummaryDialog", () => {
         isError: false,
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       // Should still render dialog
-      expect(screen.getByText("Release Summary")).toBeInTheDocument();
+      expect(screen.getByText("Order Summary")).toBeInTheDocument();
     });
 
     it("should handle empty collaborators list", () => {
@@ -340,7 +470,7 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, owners: [] },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("0")).toBeInTheDocument(); // Number of collaborators
     });
@@ -352,7 +482,7 @@ describe("ReleaseSummaryDialog", () => {
         values: { ...defaultFormValues, releaseDate: undefined },
       } as any);
 
-      render(<ReleaseSummaryDialog open={ true } onClose={ mockOnClose } />);
+      renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
 
       expect(screen.getByText("N/A")).toBeInTheDocument();
     });
