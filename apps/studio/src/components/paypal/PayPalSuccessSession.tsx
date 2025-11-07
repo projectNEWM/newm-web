@@ -17,21 +17,15 @@ const PayPalSuccessSession: FunctionComponent = () => {
         justifyContent: "center",
       } }
     >
-      <Typography variant="h1">THANK YOU!</Typography>
+      <Typography textTransform={ "uppercase" } variant="h1">
+        Payment Complete!
+      </Typography>
       <GradientTypography
         style={ { ...theme.typography.emphasized, textAlign: "center" } }
         variant="h1"
       >
-        Heading back to the upload process.
+        Heading back to your Library.
       </GradientTypography>
-      <Typography
-        sx={ {
-          fontWeight: 400,
-          my: [2, 3, 4],
-        } }
-      >
-        Get ready to share your music and to claim royalties.
-      </Typography>
     </Stack>
   );
 };
