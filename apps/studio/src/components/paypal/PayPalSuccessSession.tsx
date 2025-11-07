@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect } from "react";
 import { Stack, Typography } from "@mui/material";
-import { Button, GradientTypography } from "@newm-web/elements";
+import { GradientTypography } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
 const PayPalSuccessSession: FunctionComponent = () => {
