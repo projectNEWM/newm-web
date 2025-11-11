@@ -36,6 +36,18 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
     }
   };
 
+  const getButtonText = () => {
+    if (!webStudioReleaseDistributionPaymentEnhancements) {
+      return "Distribute & Mint";
+    }
+
+    if (shouldShowPriceSummary) {
+      return "Proceed to checkout";
+    } else {
+      return "Resubmit release";
+    }
+  };
+
   // Reset consent to contract when unmounting
   useEffect(() => {
     return () => {
@@ -46,8 +58,9 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   return (
     <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
       <Typography mb={ 1.5 }>
-        You&apos;re almost ready. Please ensure all necessary track details have
-        been updated and review your ownership contract.
+        You&apos;re almost ready. Please ensure all necessary{ " " }
+        { webStudioReleaseDistributionPaymentEnhancements ? "release" : "track" }{ " " }
+        details have been updated and review your ownership contract.
       </Typography>
 
       <ConfirmContract
@@ -56,7 +69,7 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
         onConfirm={ handleConsentToContract }
       />
 
-      <Box mt={ 6 }>
+      <Box mt={ webStudioReleaseDistributionPaymentEnhancements ? 3 : 6 }>
         <Button
           disabled={ !values.consentsToContract }
           isLoading={ isSubmitting }
@@ -68,7 +81,7 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
           }
           onClick={ handleButtonClick }
         >
-          Distribute & Mint
+          { getButtonText() }
         </Button>
 
         { shouldShowPriceSummary &&
