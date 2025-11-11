@@ -36,18 +36,6 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
     }
   };
 
-  const getButtonText = () => {
-    if (!webStudioReleaseDistributionPaymentEnhancements) {
-      return "Distribute & Mint";
-    }
-
-    if (shouldShowPriceSummary) {
-      return "Proceed to checkout";
-    } else {
-      return "Resubmit release";
-    }
-  };
-
   // Reset consent to contract when unmounting
   useEffect(() => {
     return () => {
@@ -55,12 +43,55 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
     };
   }, [setFieldValue]);
 
+  if (webStudioReleaseDistributionPaymentEnhancements) {
+    return (
+      <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
+        <Typography mb={ 1.5 }>
+          You&apos;re almost ready. Please ensure all necessary release details
+          have been updated and review your ownership contract.
+        </Typography>
+
+        <ConfirmContract
+          isCoCreator={ values.owners.length > 1 }
+          songTitle={ values.title }
+          onConfirm={ handleConsentToContract }
+        />
+
+        <Box mt={ 3 }>
+          <Button
+            disabled={ !values.consentsToContract }
+            isLoading={ isSubmitting }
+            type={ shouldShowPriceSummary ? "button" : "submit" }
+            width={
+              windowWidth && windowWidth > theme.breakpoints.values.md
+                ? "compact"
+                : "default"
+            }
+            onClick={ handleButtonClick }
+          >
+            { shouldShowPriceSummary
+              ? "Proceed to checkout"
+              : "Resubmit release" }
+          </Button>
+
+          { shouldShowPriceSummary && (
+            <OrderSummaryDialog
+              open={ isPaymentSummaryOpen }
+              onClose={ () => setIsPaymentSummaryOpen(false) }
+            />
+          ) }
+        </Box>
+      </Box>
+    );
+  }
+
+  // Legacy Flow, remove when webStudioReleaseDistributionPaymentEnhancements flag is removed
+
   return (
     <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
       <Typography mb={ 1.5 }>
-        You&apos;re almost ready. Please ensure all necessary{ " " }
-        { webStudioReleaseDistributionPaymentEnhancements ? "release" : "track" }{ " " }
-        details have been updated and review your ownership contract.
+        You&apos;re almost ready. Please ensure all necessary track details have
+        been updated and review your ownership contract.
       </Typography>
 
       <ConfirmContract
@@ -69,7 +100,7 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
         onConfirm={ handleConsentToContract }
       />
 
-      <Box mt={ webStudioReleaseDistributionPaymentEnhancements ? 3 : 6 }>
+      <Box mt={ 6 }>
         <Button
           disabled={ !values.consentsToContract }
           isLoading={ isSubmitting }
@@ -81,21 +112,15 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
           }
           onClick={ handleButtonClick }
         >
-          { getButtonText() }
+          Distribute & Mint
         </Button>
 
-        { shouldShowPriceSummary &&
-          (webStudioReleaseDistributionPaymentEnhancements ? (
-            <OrderSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          ) : (
-            <PriceSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          )) }
+        { shouldShowPriceSummary && (
+          <PriceSummaryDialog
+            open={ isPaymentSummaryOpen }
+            onClose={ () => setIsPaymentSummaryOpen(false) }
+          />
+        ) }
       </Box>
     </Box>
   );
