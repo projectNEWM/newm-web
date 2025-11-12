@@ -87,9 +87,9 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           disabled={ !values.hasViewedAgreement }
           label={
             <Typography
+              color={ theme.colors.white }
+              fontSize={ 12 }
               sx={ {
-                color: theme.colors.white,
-                fontSize: 12,
                 opacity: values.hasViewedAgreement ? 1 : 0.5,
               } }
               variant="subtitle1"
