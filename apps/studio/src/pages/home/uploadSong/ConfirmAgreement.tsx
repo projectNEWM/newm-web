@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useFormikContext } from "formik";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import PriceSummaryDialog from "./PriceSummaryDialog";
@@ -15,7 +15,6 @@ interface ConfirmAgreementProps {
 const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   shouldShowPriceSummary = true,
 }) => {
-  const theme = useTheme();
   const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
 
   const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
