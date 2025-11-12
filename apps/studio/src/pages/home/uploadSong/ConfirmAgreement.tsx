@@ -1,7 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { useFormikContext } from "formik";
 import { Box, Typography, useTheme } from "@mui/material";
-import { useWindowDimensions } from "@newm-web/utils";
 import { Button } from "@newm-web/elements";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import PriceSummaryDialog from "./PriceSummaryDialog";
@@ -24,8 +23,6 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   const { values, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongThunkRequest>();
 
-  const windowWidth = useWindowDimensions()?.width;
-
   const handleConsentToContract = (value: boolean) => {
     setFieldValue("consentsToContract", value);
   };
@@ -43,84 +40,41 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
     };
   }, [setFieldValue]);
 
-  if (webStudioReleaseDistributionPaymentEnhancements) {
-    return (
-      <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
-        <Typography mb={ 1.5 }>
-          You&apos;re almost ready. Please ensure all necessary release details
-          have been updated and review your ownership contract.
-        </Typography>
-
-        <ConfirmContract
-          isCoCreator={ values.owners.length > 1 }
-          songTitle={ values.title }
-          onConfirm={ handleConsentToContract }
-        />
-
-        <Box mt={ 3 }>
-          <Button
-            disabled={ !values.consentsToContract }
-            isLoading={ isSubmitting }
-            type={ shouldShowPriceSummary ? "button" : "submit" }
-            width={
-              windowWidth && windowWidth > theme.breakpoints.values.md
-                ? "compact"
-                : "default"
-            }
-            onClick={ handleButtonClick }
-          >
-            { shouldShowPriceSummary
-              ? "Proceed to checkout"
-              : "Resubmit release" }
-          </Button>
-
-          { shouldShowPriceSummary && (
-            <OrderSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          ) }
-        </Box>
-      </Box>
-    );
-  }
-
-  // Legacy Flow, remove when webStudioReleaseDistributionPaymentEnhancements flag is removed
-
   return (
     <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
       <Typography mb={ 1.5 }>
-        You&apos;re almost ready. Please ensure all necessary track details have
-        been updated and review your ownership contract.
+        You&apos;re almost ready. Please ensure all necessary release details
+        have been updated and review your ownership contract.
       </Typography>
 
       <ConfirmContract
-        isCoCreator={ values.owners.length > 1 }
         songTitle={ values.title }
         onConfirm={ handleConsentToContract }
       />
 
-      <Box mt={ 6 }>
+      <Box mt={ 3 }>
         <Button
           disabled={ !values.consentsToContract }
           isLoading={ isSubmitting }
           type={ shouldShowPriceSummary ? "button" : "submit" }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
+          width="compact"
           onClick={ handleButtonClick }
         >
-          Distribute & Mint
+          { shouldShowPriceSummary ? "Proceed to checkout" : "Resubmit release" }
         </Button>
 
-        { shouldShowPriceSummary && (
-          <PriceSummaryDialog
-            open={ isPaymentSummaryOpen }
-            onClose={ () => setIsPaymentSummaryOpen(false) }
-          />
-        ) }
+        { shouldShowPriceSummary &&
+          (webStudioReleaseDistributionPaymentEnhancements ? (
+            <OrderSummaryDialog
+              open={ isPaymentSummaryOpen }
+              onClose={ () => setIsPaymentSummaryOpen(false) }
+            />
+          ) : (
+            <PriceSummaryDialog
+              open={ isPaymentSummaryOpen }
+              onClose={ () => setIsPaymentSummaryOpen(false) }
+            />
+          )) }
       </Box>
     </Box>
   );

@@ -50,7 +50,6 @@ const EditSong: FunctionComponent = () => {
   const { songId } = useParams<"songId">() as SongRouteParams;
 
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -409,9 +408,7 @@ const EditSong: FunctionComponent = () => {
                 <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
               ),
               path: "confirm",
-              progressStepTitle: webStudioReleaseDistributionPaymentEnhancements
-                ? "Distribute"
-                : "Distribute & Mint",
+              progressStepTitle: "Distribute",
               validationSchema: Yup.object().shape({
                 consentsToContract: validations.consentsToContract,
               }),

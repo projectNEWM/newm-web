@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { removeTrailingSlash } from "@newm-web/utils";
 import { PaymentType } from "@newm-web/types";
-import { useFlags } from "launchdarkly-react-client-sdk";
 import AdvancedSongDetails from "./AdvancedSongDetails";
 import BasicSongDetails from "./BasicSongDetails";
 import ConfirmAgreement from "./ConfirmAgreement";
@@ -35,8 +34,6 @@ export interface UploadSongFormValues extends UploadSongThunkRequest {
 const UploadSong: FunctionComponent = () => {
   const navigate = useNavigate();
   const currentPathLocation = useLocation();
-
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -199,9 +196,7 @@ const UploadSong: FunctionComponent = () => {
       {
         element: <ConfirmAgreement />,
         path: "confirm",
-        progressStepTitle: webStudioReleaseDistributionPaymentEnhancements
-          ? "Distribute"
-          : "Distribute & Mint",
+        progressStepTitle: "Distribute",
         validationSchema: Yup.object().shape({
           consentsToContract: commonYupValidation.consentsToContract,
         }),
