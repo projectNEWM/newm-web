@@ -9,7 +9,6 @@ import { useAppSelector } from "../../common";
 import ViewPDF from "../ViewPDF";
 
 interface ConfirmContractProps {
-  readonly isCoCreator?: boolean;
   readonly onConfirm: (value: boolean) => void;
   readonly songTitle: string;
 }
@@ -29,7 +28,6 @@ type FormContentProps = FormikProps<FormValues> &
  */
 const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
   songTitle,
-  isCoCreator = false,
   onConfirm,
 }) => {
   const initialValues: FormValues = {
@@ -53,20 +51,13 @@ const ConfirmContract: FunctionComponent<ConfirmContractProps> = ({
 
   return (
     <Formik initialValues={ initialValues } onSubmit={ handleChange }>
-      { (formikProps) => (
-        <FormContent
-          isCoCreator={ isCoCreator }
-          songTitle={ songTitle }
-          { ...formikProps }
-        />
-      ) }
+      { (formikProps) => <FormContent songTitle={ songTitle } { ...formikProps } /> }
     </Formik>
   );
 };
 
 const FormContent: FunctionComponent<FormContentProps> = ({
   songTitle,
-  isCoCreator,
   values,
   setFieldValue,
   handleSubmit,
@@ -82,11 +73,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
   return (
     <Box>
-      <Stack direction="column" spacing={ 1 }>
-        <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
-          View your contract here
-        </Typography>
-
+      <Stack direction="column" mt={ 3 } spacing={ 1 }>
         <ViewPDF
           data={ artistAgreement }
           isViewed={ values.hasViewedAgreement }
@@ -97,38 +84,12 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
       <Stack direction="column" mt={ 3 } spacing={ 2 } textAlign="left">
         <CheckboxField
-          label={
-            isCoCreator ? (
-              <Typography
-                color={ theme.colors.white }
-                fontSize={ 12 }
-                variant="subtitle1"
-              >
-                I possess all necessary rights, permissions, and licenses from
-                any third-party holding rights to <strong>{ songTitle }</strong>{ " " }
-                and confirm the accuracy of all mentioned collaborators.
-              </Typography>
-            ) : (
-              <Typography
-                color={ theme.colors.white }
-                fontSize={ 12 }
-                variant="subtitle1"
-              >
-                I possess all necessary rights, permissions, and licenses from
-                any third-party holding rights to <strong>{ songTitle }.</strong>
-              </Typography>
-            )
-          }
-          name="isCreator"
-        />
-
-        <CheckboxField
           disabled={ !values.hasViewedAgreement }
           label={
             <Typography
+              color={ theme.colors.white }
+              fontSize={ 12 }
               sx={ {
-                color: "white",
-                fontSize: 12,
                 opacity: values.hasViewedAgreement ? 1 : 0.5,
               } }
               variant="subtitle1"
@@ -139,36 +100,39 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           name="agreesToContract"
         />
 
-        <Typography
-          color={ theme.colors.white }
-          fontSize={ 12 }
-          variant="subtitle1"
-        >
-          <CheckboxField
-            label={
-              <Typography
-                color={ theme.colors.white }
-                fontSize={ 12 }
-                variant="subtitle1"
-              >
-                By selecting &lsquo;Distribute & Mint&rsquo; you agree to
-                distribute this song to all current and future available stores
-                including digital downloads.
-              </Typography>
-            }
-            name="agreesToDistribution"
-          />
-        </Typography>
+        <CheckboxField
+          label={
+            <Typography
+              color={ theme.colors.white }
+              fontSize={ 12 }
+              variant="subtitle1"
+            >
+              I possess all necessary rights, permissions, and licenses from any
+              third-party holding rights to{ " " }
+              <strong>
+                <em>{ songTitle }</em>
+              </strong>
+              .
+            </Typography>
+          }
+          name="isCreator"
+        />
+
+        <CheckboxField
+          label={
+            <Typography
+              color={ theme.colors.white }
+              fontSize={ 12 }
+              variant="subtitle1"
+            >
+              I agree to distribute this release to all current and future
+              available stores, including digital downloads.
+            </Typography>
+          }
+          name="agreesToDistribution"
+        />
 
         <HorizontalLine style={ { marginTop: "24px" } } />
-
-        <Typography
-          color={ theme.colors.white }
-          fontSize={ 12 }
-          variant="subtitle1"
-        >
-          The distribution and minting process may take 3-15 days to complete.
-        </Typography>
       </Stack>
     </Box>
   );

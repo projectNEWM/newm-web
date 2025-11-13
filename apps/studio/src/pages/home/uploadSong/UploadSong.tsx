@@ -196,7 +196,7 @@ const UploadSong: FunctionComponent = () => {
       {
         element: <ConfirmAgreement />,
         path: "confirm",
-        progressStepTitle: "Distribute & Mint",
+        progressStepTitle: "Distribute",
         validationSchema: Yup.object().shape({
           consentsToContract: commonYupValidation.consentsToContract,
         }),
