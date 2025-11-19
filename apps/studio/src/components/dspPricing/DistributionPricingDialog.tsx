@@ -6,12 +6,14 @@ import {
   DialogActions,
   DialogContent,
   Divider,
+  Link,
   Stack,
   Typography,
 } from "@mui/material";
 import { Check } from "@mui/icons-material";
 import { LocalStorageKey, PaymentType } from "@newm-web/types";
 import { FunctionComponent } from "react";
+import { NEWM_STUDIO_OUTLETS_URL } from "../../common/constants";
 import { useUpdateProfileThunk } from "../../modules/session";
 import { useGetMintSongEstimateQuery } from "../../modules/song";
 
@@ -24,6 +26,10 @@ interface DistributionPricingDialogProps {
 /**
  * Allows users to select a pricing plan for music distribution.
  */
+type PricingPlanCriterion = {
+  details: React.ReactNode;
+};
+
 const DistributionPricingDialog: FunctionComponent<
   DistributionPricingDialogProps
 > = ({ onCancel, onConfirm, open }) => {
@@ -49,19 +55,47 @@ const DistributionPricingDialog: FunctionComponent<
     returnZeroValue: false,
   });
 
-  const pricingPlanCriteria = [
-    { text: "Distribute your music to 130+ global platforms" },
+  const pricingPlanCriteria: PricingPlanCriterion[] = [
     {
-      highlight: "20% discount",
-      highlightColor: theme.colors.baseGreen,
-      text: "for paying in $NEWM Tokens",
+      details: (
+        <>
+          Distribute your music to all major platforms
+          <br />
+          { "(" }
+          <Link
+            href={ NEWM_STUDIO_OUTLETS_URL }
+            rel="noopener"
+            sx={ {
+              "&:hover": {
+                textDecoration: "underline",
+              },
+              color: theme.colors.music,
+              textDecoration: "none",
+            } }
+            target="_blank"
+          >
+            view full list
+          </Link>
+          { ")" }
+        </>
+      ),
     },
-    { text: "Automate royalty splits" },
-    { text: "Free EAN Release Code & ISRC generation" },
-    { text: "Add and manage release collaborators" },
-    { text: "Customize your artist profile" },
-    { text: "Track catalog status" },
-    { text: "Sell music rights to your fans on the NEWM Marketplace!" },
+    {
+      details: (
+        <>
+          <Box component="span" sx={ { color: theme.colors.baseGreen } }>
+            20% discount
+          </Box>{ " " }
+          for paying in $NEWM Tokens
+        </>
+      ),
+    },
+    { details: "Automate royalty splits" },
+    { details: "Free EAN Release Code & ISRC generation" },
+    { details: "Add and manage release collaborators" },
+    { details: "Customize your artist profile" },
+    { details: "Track catalog status" },
+    { details: "Sell music rights to your fans on the NEWM Marketplace!" },
   ];
 
   return (
@@ -123,6 +157,7 @@ const DistributionPricingDialog: FunctionComponent<
               <Box
                 key={ index }
                 sx={ {
+                  alignItems: "center",
                   display: "flex",
                   flexDirection: "row",
                   gap: 1.5,
@@ -130,24 +165,8 @@ const DistributionPricingDialog: FunctionComponent<
               >
                 <Check sx={ { color: theme.colors.baseGreen } } />
 
-                <Typography
-                  alignSelf={ "center" }
-                  fontWeight={ 500 }
-                  variant="body1"
-                >
-                  { criterion.highlight ? (
-                    <>
-                      <Box
-                        component="span"
-                        sx={ { color: criterion.highlightColor } }
-                      >
-                        { criterion.highlight }
-                      </Box>
-                      { " " + criterion.text }
-                    </>
-                  ) : (
-                    criterion.text
-                  ) }
+                <Typography fontWeight={ 500 } variant="body1">
+                  { criterion.details }
                 </Typography>
               </Box>
             )) }
