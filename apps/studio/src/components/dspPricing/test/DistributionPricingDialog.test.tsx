@@ -1,7 +1,7 @@
 import { fireEvent, waitFor } from "@testing-library/react";
 import { LocalStorage } from "@newm-web/utils";
 import { LocalStorageKey, PaymentType } from "@newm-web/types";
-import { renderWithContext } from "../../../common";
+import { NEWM_STUDIO_OUTLETS_URL, renderWithContext } from "../../../common";
 import * as sessionModule from "../../../modules/session";
 /**
  * Note: DistributionPricingDialog must be imported AFTER renderWithContext.
@@ -88,7 +88,7 @@ describe("<DistributionPricingDialog />", () => {
     });
 
     it("renders all pricing criteria", () => {
-      const { getByText } = renderWithContext(
+      const { getByText, getByRole } = renderWithContext(
         <DistributionPricingDialog
           open={ true }
           onCancel={ mockOnCancel }
@@ -96,16 +96,19 @@ describe("<DistributionPricingDialog />", () => {
         />
       );
 
+      // Normal details with a link at the end
       expect(
-        getByText("Distribute your music to 130+ global platforms")
+        getByText(/Distribute your music to all major platforms/)
       ).toBeInTheDocument();
+      const viewFullListLink = getByRole("link", { name: "view full list" });
+      expect(viewFullListLink).toBeInTheDocument();
+      expect(viewFullListLink).toHaveAttribute("href", NEWM_STUDIO_OUTLETS_URL);
 
-      // These next two parts will be different styles
-      const discountText = getByText("20% discount");
-      expect(discountText).toBeInTheDocument();
-      expect(discountText.nextSibling?.textContent ?? "").toContain(
-        "for paying in $NEWM Tokens"
-      );
+      // highlighted text for the first part and normal details followed
+      expect(getByText("20% discount")).toBeInTheDocument();
+      expect(getByText(/for paying in \$NEWM Tokens/)).toBeInTheDocument();
+
+      // All other details are normal text
       expect(getByText("Automate royalty splits")).toBeInTheDocument();
       expect(
         getByText("Free EAN Release Code & ISRC generation")
