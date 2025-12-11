@@ -18,22 +18,23 @@ interface FormatCurrencyOptions {
 /**
  * Formats a numerical NEWM amount with three decimal
  * places and the correct symbol.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places (default: 3)
+ * @param options.includeCurrencySymbol - Include currency symbol "Ɲ" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValue - Return "Ɲ0" instead of "N/A" (default: true)
  */
 export const formatNewmAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 3,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 3,
     returnZeroValue = true,
-  } = options;
+  } = options ?? {};
 
   if (!amount) {
     if (returnZeroValue) {
@@ -59,22 +60,23 @@ export const formatNewmAmount = (
 /**
  * Formats a numerical ADA amount with the correct decimal
  * places and symbol.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places (default: 2)
+ * @param options.includeCurrencySymbol - Include currency symbol "₳" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValue - Return "₳0" instead of "N/A" (default: true)
  */
 export const formatAdaAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 2,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 2,
     returnZeroValue = true,
-  } = options;
+  } = options ?? {};
 
   if (!amount) {
     if (returnZeroValue) {
@@ -97,22 +99,23 @@ export const formatAdaAmount = (
  * Formats a numerical USD amount to four decimal places
  * rather than the standard two, based on the exchange rate
  * for NEWM to USD.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places (default: 4)
+ * @param options.includeCurrencySymbol - Include currency symbol "$" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValue - Return "$0" instead of "N/A" (default: true)
  */
 export const formatUsdAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 4,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 4,
     returnZeroValue = true,
-  } = options;
+  } = options ?? {};
 
   if (!amount) {
     if (returnZeroValue) {
