@@ -120,7 +120,10 @@ export const commonYupValidation = {
     .required("Email is required"),
   firstName: Yup.string()
     .trim()
-    .max(15, "Must be 15 characters or less")
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("First name is required"),
   genre: (genreOptions: string[]) =>
     Yup.string().test(
@@ -165,7 +168,10 @@ export const commonYupValidation = {
   ),
   lastName: Yup.string()
     .trim()
-    .max(20, "Must be 20 characters or less")
+    .max(
+      MAX_CHARACTER_COUNT,
+      `Must be ${MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("Last name is required"),
   location: Yup.string().required("This field is required"),
   moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
