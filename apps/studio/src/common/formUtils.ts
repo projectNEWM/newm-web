@@ -21,6 +21,7 @@ import {
   MAX_CHARACTER_COUNT,
   MIN_DISTRIBUTION_TIME,
   NONE_OPTION,
+  OFFICIAL_NAME_MAX_CHARACTER_COUNT,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "./constants";
 
@@ -120,7 +121,10 @@ export const commonYupValidation = {
     .required("Email is required"),
   firstName: Yup.string()
     .trim()
-    .max(15, "Must be 15 characters or less")
+    .max(
+      OFFICIAL_NAME_MAX_CHARACTER_COUNT,
+      `Must be ${OFFICIAL_NAME_MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("First name is required"),
   genre: (genreOptions: string[]) =>
     Yup.string().test(
@@ -165,7 +169,10 @@ export const commonYupValidation = {
   ),
   lastName: Yup.string()
     .trim()
-    .max(20, "Must be 20 characters or less")
+    .max(
+      OFFICIAL_NAME_MAX_CHARACTER_COUNT,
+      `Must be ${OFFICIAL_NAME_MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("Last name is required"),
   location: Yup.string().required("This field is required"),
   moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
