@@ -25,7 +25,7 @@ interface FormatCurrencyOptions {
  * @param options.returnZeroValueForNullish - Return "Ɲ0" instead of "N/A" (default: true)
  */
 export const formatNewmAmount = (
-  amount: number,
+  amount?: number,
   options?: FormatCurrencyOptions
 ) => {
   const {
@@ -72,7 +72,7 @@ export const formatNewmAmount = (
  * @param options.returnZeroValueForNullish - Return "₳0" instead of "N/A" (default: true)
  */
 export const formatAdaAmount = (
-  amount: number,
+  amount?: number,
   options?: FormatCurrencyOptions
 ) => {
   const {
@@ -117,7 +117,7 @@ export const formatAdaAmount = (
  * @param options.returnZeroValueForNullish - Return "$0" instead of "N/A" (default: true)
  */
 export const formatUsdAmount = (
-  amount: number,
+  amount?: number,
   options?: FormatCurrencyOptions
 ) => {
   const {
