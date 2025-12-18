@@ -52,7 +52,7 @@ const DistributionPricingDialog: FunctionComponent<
 
   const dspFormattedPricingUsd = formatUsdAmount(Number(dspPriceUsd), {
     precision: 2,
-    returnZeroValue: false,
+    returnZeroValueForNullish: false,
   });
 
   const pricingPlanCriteria: PricingPlanCriterion[] = [
