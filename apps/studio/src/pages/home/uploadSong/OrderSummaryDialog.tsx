@@ -65,48 +65,48 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
 
   const royaltySplitFeePerCollab = formatUsdAmount(
     Number(songEstimatePrices?.collabPricePerArtistUsd),
-    { precision: 2, returnZeroValue: false }
+    { precision: 2, returnZeroValueForNullish: false }
   );
 
   const displayPrices = {
     collabPriceNewm: formatNewmAmount(Number(songEstimatePrices?.collabPrice), {
       includeEstimateSymbol: true,
       precision: 0,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     collabPriceUsd: formatUsdAmount(
       Number(songEstimatePrices?.collabPriceUsd),
       {
         precision: 2,
-        returnZeroValue: false,
+        returnZeroValueForNullish: false,
       }
     ),
     dspPriceNewm: formatNewmAmount(Number(songEstimatePrices?.dspPrice), {
       includeEstimateSymbol: true,
       precision: 0,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     dspPriceUsd: formatUsdAmount(Number(songEstimatePrices?.dspPriceUsd), {
       precision: 2,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     mintPriceNewm: formatNewmAmount(Number(songEstimatePrices?.mintPrice), {
       includeEstimateSymbol: true,
       precision: 0,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     mintPriceUsd: formatUsdAmount(Number(songEstimatePrices?.mintPriceUsd), {
       precision: 2,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     priceNewm: formatNewmAmount(Number(songEstimatePrices?.price), {
       includeEstimateSymbol: true,
       precision: 0,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
     priceUsd: formatUsdAmount(Number(songEstimatePrices?.priceUsd), {
       precision: 2,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }),
   };
 
@@ -118,7 +118,7 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
     ),
     {
       precision: 2,
-      returnZeroValue: false,
+      returnZeroValueForNullish: false,
     }
   );
 

@@ -12,35 +12,41 @@ interface FormatCurrencyOptions {
   readonly includeCurrencySymbol?: boolean;
   readonly includeEstimateSymbol?: boolean;
   readonly precision?: number;
-  readonly returnZeroValue?: boolean;
+  readonly returnZeroValueForNullish?: boolean;
 }
 
 /**
- * Formats a numerical NEWM amount with three decimal
- * places and the correct symbol.
+ * Formats a numerical NEWM amount with three decimal places and the correct symbol.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places, if not explicitly set, amount of 0 will be "Ɲ0" (default: 3)
+ * @param options.includeCurrencySymbol - Include currency symbol "Ɲ" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValueForNullish - Return "Ɲ0" instead of "N/A" (default: true)
  */
 export const formatNewmAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 3,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 3,
-    returnZeroValue = true,
-  } = options;
+    returnZeroValueForNullish = true,
+  } = options ?? {};
 
-  if (!amount) {
-    if (returnZeroValue) {
+  const isPrecisionExplicit = options?.precision !== undefined;
+
+  if (!amount && amount !== 0) {
+    if (returnZeroValueForNullish) {
       return "Ɲ0";
     } else {
       return "N/A";
     }
+  }
+
+  if (!isPrecisionExplicit && amount === 0) {
+    return includeCurrencySymbol ? "Ɲ0" : "0";
   }
 
   if (precision === 3 && amount < 0.001 && amount > 0) {
@@ -57,31 +63,37 @@ export const formatNewmAmount = (
 };
 
 /**
- * Formats a numerical ADA amount with the correct decimal
- * places and symbol.
+ * Formats a numerical ADA amount with the correct decimal places and symbol.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places, if not explicitly set, amount of 0 will be "₳0" (default: 2)
+ * @param options.includeCurrencySymbol - Include currency symbol "₳" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValueForNullish - Return "₳0" instead of "N/A" (default: true)
  */
 export const formatAdaAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 2,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 2,
-    returnZeroValue = true,
-  } = options;
+    returnZeroValueForNullish = true,
+  } = options ?? {};
 
-  if (!amount) {
-    if (returnZeroValue) {
+  const isPrecisionExplicit = options?.precision !== undefined;
+
+  if (!amount && amount !== 0) {
+    if (returnZeroValueForNullish) {
       return "₳0";
     } else {
       return "N/A";
     }
+  }
+
+  if (!isPrecisionExplicit && amount === 0) {
+    return includeCurrencySymbol ? "₳0" : "0";
   }
 
   const formattedAmount = currency(amount, {
@@ -97,29 +109,36 @@ export const formatAdaAmount = (
  * Formats a numerical USD amount to four decimal places
  * rather than the standard two, based on the exchange rate
  * for NEWM to USD.
+ * @param amount - The amount to format
+ * @param options - Format options
+ * @param options.precision - Number of decimal places, if not explicitly set, amount of 0 will be "$0" (default: 4)
+ * @param options.includeCurrencySymbol - Include currency symbol "$" (default: true)
+ * @param options.includeEstimateSymbol - Include estimate symbol "≈" (default: false)
+ * @param options.returnZeroValueForNullish - Return "$0" instead of "N/A" (default: true)
  */
 export const formatUsdAmount = (
   amount?: number,
-  options: FormatCurrencyOptions = {
-    includeCurrencySymbol: true,
-    includeEstimateSymbol: false,
-    precision: 4,
-    returnZeroValue: true,
-  }
+  options?: FormatCurrencyOptions
 ) => {
   const {
     includeCurrencySymbol = true,
     includeEstimateSymbol = false,
     precision = 4,
-    returnZeroValue = true,
-  } = options;
+    returnZeroValueForNullish = true,
+  } = options ?? {};
 
-  if (!amount) {
-    if (returnZeroValue) {
+  const isPrecisionExplicit = options?.precision !== undefined;
+
+  if (!amount && amount !== 0) {
+    if (returnZeroValueForNullish) {
       return "$0";
     } else {
       return "N/A";
     }
+  }
+
+  if (!isPrecisionExplicit && amount === 0) {
+    return includeCurrencySymbol ? "$0" : "0";
   }
 
   if (precision === 4 && amount < 0.0001 && amount > 0) {
