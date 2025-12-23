@@ -304,7 +304,10 @@ export const submitMintSongPayment = async (
   const wallet = await enableWallet();
 
   const getPaymentResp = await dispatch(
-    songApi.endpoints.getMintSongPayment.initiate({ paymentType, songId })
+    songApi.endpoints.getMintSongPayment.initiate(
+      { paymentType, songId },
+      { forceRefetch: true }
+    )
   );
 
   if ("error" in getPaymentResp || !getPaymentResp.data) {
