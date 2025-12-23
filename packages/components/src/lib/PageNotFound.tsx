@@ -8,13 +8,15 @@ import { Button } from "@newm-web/elements";
 interface PageNotFoundProps {
   readonly layout?: "sidebar" | "topbar";
   readonly onNavigate?: (url: string) => void;
+  readonly originAppName?: "Studio" | "Marketplace";
   readonly redirectUrl?: string;
 }
 
 const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
   redirectUrl = "/",
   onNavigate,
-  layout = "topbar",
+  layout = "sidebar",
+  originAppName,
 }) => {
   const handleGoBack = () => {
     if (onNavigate) {
@@ -40,6 +42,7 @@ const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
         pt: [4, 7.5],
         px: 0.5,
         textAlign: "center" as const,
+        width: "100%",
       } as SxProps,
       imageSpacing: {
         mt: { md: 15, xs: 0 },
@@ -101,7 +104,7 @@ const PageNotFound: FunctionComponent<PageNotFoundProps> = ({
       </Stack>
 
       <Button sx={ { mt: 2.5 } } width="compact" onClick={ handleGoBack }>
-        Back to NEWM
+        Back to NEWM{ originAppName ? ` ${originAppName}` : "" }
       </Button>
       <Box
         alt="NEWM Monster"
