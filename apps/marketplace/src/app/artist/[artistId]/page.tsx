@@ -1,4 +1,5 @@
 "use client";
+
 import { Container, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
@@ -15,6 +16,9 @@ interface ArtistProps {
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   const { isLoading, data: artist, error } = useGetArtistQuery(params.artistId);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
+  const artistBannerUrl = artist?.bannerUrl;
+  const profileHeaderLayout = artistBannerUrl ? "overlay" : "inline";
 
   const socials = {
     instagramUrl: artist?.instagramUrl || "",
@@ -33,12 +37,17 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   return (
     <>
       <Stack direction="column">
-        <BannerImage imageUrl={ artist?.bannerUrl } isLoading={ isLoading } />
+        { artistBannerUrl && (
+          <BannerImage imageUrl={ artistBannerUrl } isLoading={ isLoading } />
+        ) }
 
-        <Container sx={ { flexGrow: 1 } }>
+        <Container
+          sx={ { flexGrow: 1, marginTop: artistBannerUrl ? 0 : "3.5rem" } }
+        >
           <ProfileHeader
             isLoading={ isLoading }
             isVerified={ true }
+            layout={ profileHeaderLayout }
             location={ artist?.location }
             name={ artist?.name }
             pictureUrl={ artist?.pictureUrl }
