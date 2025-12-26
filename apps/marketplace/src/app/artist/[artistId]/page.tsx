@@ -18,7 +18,8 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   const artistBannerUrl = artist?.bannerUrl;
-  const profileHeaderLayout = artistBannerUrl ? "overlay" : "inline";
+  const showBannerArea = isLoading || !!artistBannerUrl;
+  const profileHeaderLayout = showBannerArea ? "overlay" : "inline";
 
   const socials = {
     instagramUrl: artist?.instagramUrl || "",
@@ -37,13 +38,11 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
   return (
     <>
       <Stack direction="column">
-        { artistBannerUrl && (
+        { showBannerArea && (
           <BannerImage imageUrl={ artistBannerUrl } isLoading={ isLoading } />
         ) }
 
-        <Container
-          sx={ { flexGrow: 1, marginTop: artistBannerUrl ? 0 : "3.5rem" } }
-        >
+        <Container sx={ { flexGrow: 1, marginTop: showBannerArea ? 0 : "3.5rem" } }>
           <ProfileHeader
             isLoading={ isLoading }
             isVerified={ true }
