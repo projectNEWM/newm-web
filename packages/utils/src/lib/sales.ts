@@ -81,3 +81,48 @@ export const formatPercentageAdaptive = (percentage: number) => {
 
   return parseFloat(formattedPercentage);
 };
+
+/**
+ * * Formats ownership percentage for display.
+ *
+ * * Rules:
+ * * - Shows "100%" ONLY when the owned token count exactly equals the total minted supply.
+ * * - Whole-number percentages (other than 100) are displayed without decimals.
+ * * - Fractional percentages are displayed with up to 6 decimal places,
+ * *   and trimming trailing zeros to avoid misleading precision.
+ *
+ * * This prevents cases where values like 99.999901% are incorrectly shown as "100%".
+ *
+ * @param tokens - Number of tokens owned
+ * @param totalTokens - Total minted stream tokens (default: FULL_OWNERSHIP_STREAM_TOKENS)
+ * @returns Formatted percentage string (e.g. "50%", "49.999223%", "99.999901%")
+ */
+export const formatOwnershipPercentage = (
+  tokens: number,
+  totalTokens: number = FULL_OWNERSHIP_STREAM_TOKENS
+): string => {
+  if (!Number.isFinite(tokens) || tokens <= 0) {
+    return "0%";
+  }
+
+  if (tokens === totalTokens) {
+    return "100%";
+  }
+
+  const percentage =
+    totalTokens === FULL_OWNERSHIP_STREAM_TOKENS
+      ? calculateOwnershipPerecentage(tokens)
+      : (tokens / totalTokens) * 100;
+
+  // * Whole numbers (excluding 100, which is already handled)
+  if (Number.isInteger(percentage)) {
+    return `${percentage}%`;
+  }
+
+  // * Fractional values:
+  // * - Use fixed precision to avoid floating-point artifacts
+  // * - Trim trailing zeros for clean display
+  const formatted = percentage.toFixed(6).replace(/\.?0+$/, "");
+
+  return `${formatted}%`;
+};
