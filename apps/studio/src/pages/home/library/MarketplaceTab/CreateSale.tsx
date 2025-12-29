@@ -15,9 +15,8 @@ import {
 import theme from "@newm-web/theme";
 import {
   Currency,
-  calculateOwnershipPerecentage,
   formatNewmAmount,
-  formatPercentageAdaptive,
+  formatOwnershipPercentage,
   formatUsdAmount,
   useWindowDimensions,
 } from "@newm-web/utils";
@@ -78,9 +77,9 @@ export const CreateSale = () => {
   }, [getUserWalletSongs, songId, wallet]);
 
   const streamTokensInWallet = currentSong?.token_amount || 0;
-  const streamTokensPercentage = formatPercentageAdaptive(
-    calculateOwnershipPerecentage(streamTokensInWallet)
-  );
+  const streamTokensPercentage =
+    formatOwnershipPercentage(streamTokensInWallet);
+
   const formattedStreamTokensInWallet = currency(streamTokensInWallet, {
     precision: 0,
     symbol: "",
@@ -132,7 +131,7 @@ export const CreateSale = () => {
           fontWeight={ 500 }
           variant="subtitle1"
         >
-          { `This accounts for ${streamTokensPercentage}% of this track's total minted stream tokens.` }
+          { `This accounts for ${streamTokensPercentage} of this track's total minted stream tokens.` }
         </Typography>
       </Alert>
 
