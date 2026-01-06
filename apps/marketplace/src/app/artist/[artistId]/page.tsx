@@ -42,7 +42,7 @@ const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
           <BannerImage imageUrl={ artistBannerUrl } isLoading={ isLoading } />
         ) }
 
-        <Container sx={ { flexGrow: 1, marginTop: showBannerArea ? 0 : "3.5rem" } }>
+        <Container sx={ { flexGrow: 1, marginTop: showBannerArea ? 0 : 7 } }>
           <ProfileHeader
             isLoading={ isLoading }
             isVerified={ true }
