@@ -9,6 +9,7 @@ import ProfileHeaderSkeleton from "./skeletons/ProfileHeaderSkeleton";
 interface ProfileHeaderProps {
   readonly isLoading?: boolean;
   readonly isVerified?: boolean;
+  readonly layout?: "overlay" | "inline";
   readonly location?: string;
   readonly name?: string;
   readonly onClickAbout: VoidFunction;
@@ -24,8 +25,11 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
   socials,
   isLoading,
   isVerified = false,
+  layout = "overlay",
 }) => {
   const theme = useTheme();
+
+  const isOverlay = layout === "overlay";
 
   const isBelowMdBreakpoint = useBetterMediaQuery(
     `(max-width: ${theme.breakpoints.values.md}px)`
@@ -40,7 +44,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
       alignItems={ ["center", "center", "flex-start"] }
       direction={ ["column", "column", "row"] }
       justifyContent="space-between"
-      mt={ [-12.5, -12.5, 0] }
+      mt={ isOverlay ? [-12.5, -12.5, 0] : 0 }
       px={ 2.5 }
     >
       <Stack
@@ -110,7 +114,7 @@ const ProfileHeader: FunctionComponent<ProfileHeaderProps> = ({
         </Stack>
       </Stack>
 
-      <Box mt={ 2.5 }>
+      <Box mt={ isOverlay ? 2.5 : isBelowMdBreakpoint ? 3 : -2 }>
         <Socials
           instagramUrl={ socials.instagramUrl }
           itunesUrl={ socials.itunesUrl }
