@@ -9,6 +9,7 @@ const NotFound: FunctionComponent = () => {
   return (
     <PageNotFound
       layout="topbar"
+      originAppName="Marketplace"
       redirectUrl="/"
       onNavigate={ (url) => router.push(url) }
     />
