@@ -4,7 +4,7 @@
 // import { extendedApi } from "@newm-web/studio/modules/song/api";
 // import * as api from "@newm-web/studio/modules/song";
 // import { mockUseGetSongsQueryResponse } from "@newm-web/studio/common";
-import Library from "../Library";
+import Releases from "../Releases";
 
 // jest.mock("modules/song/api", () => ({
 //   ...jest.requireActual("modules/song/api"),
@@ -33,17 +33,17 @@ import Library from "../Library";
 // jest.mock("modules/song/api");
 // extendedApi.useGetSongsQuery.mockResolvedValue(mockUseGetSongsQueryResponse);
 // Doesnt work: TS2339: Property 'mockResolvedValue' does not exist on
-//type 'UseQuery<QueryDefinition<void, BaseQueryFn<string | FetchArgs,
-//unknown, FetchBaseQueryError, RetryOptions, {} >, never, GetSongsResponse, "newmApi" >> '
+// type 'UseQuery<QueryDefinition<void, BaseQueryFn<string | FetchArgs,
+// unknown, FetchBaseQueryError, RetryOptions, {} >, never, GetSongsResponse, "newmApi" >> '
 
-// describe("<Library>", () => {
+// describe("<Releases>", () => {
 //   it("Calls the getSongs endpoint", async () => {
-//     const { getByText } = renderWithContext(<Library />);
+//     const { getByText } = renderWithContext(<Releases />);
 
 //     expect(api.useGetSongsQuery).toHaveBeenCalled();
 //   });
 // });
 
 it("Pass", async () => {
-  expect(true);
+  expect(true).toBe(true);
 });

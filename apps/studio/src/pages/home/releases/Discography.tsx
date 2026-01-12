@@ -19,7 +19,7 @@ const Discography: FunctionComponent = () => {
   return (
     <>
       <Typography sx={ { pb: 4 } } variant="h3">
-        LIBRARY
+        RELEASES
       </Typography>
 
       { totalCountOfSongs || query ? (

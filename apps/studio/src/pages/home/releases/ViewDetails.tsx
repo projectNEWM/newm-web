@@ -87,7 +87,7 @@ const ViewDetails: FunctionComponent = () => {
 
   // TODO: show "Not found" content if not available for user
   if (error || !hasAccess) {
-    navigate("/home/library");
+    navigate("/home/releases");
 
     dispatch(
       setToastMessage({
@@ -101,7 +101,7 @@ const ViewDetails: FunctionComponent = () => {
    * Redirect if user manually navigates to this page before minting is complete
    */
   if (!isLoading && isSongEditable(mintingStatus)) {
-    navigate(`/home/library/edit-song/${songId}`, { replace: true });
+    navigate(`/home/releases/edit-song/${songId}`, { replace: true });
   }
 
   return (

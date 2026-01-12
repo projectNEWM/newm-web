@@ -6,7 +6,7 @@ import Discography from "./Discography";
 import ViewDetails from "./ViewDetails";
 import NotFoundPage from "../../NotFoundPage";
 
-const Library: FunctionComponent = () => (
+const Releases: FunctionComponent = () => (
   <Container
     maxWidth={ false }
     sx={ {
@@ -25,9 +25,9 @@ const Library: FunctionComponent = () => (
       <Route element={ <EditSong /> } path="edit-song/:songId*" />
       <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
-      <Route element={ <NotFoundPage redirectUrl="/home/library" /> } path="*" />
+      <Route element={ <NotFoundPage redirectUrl="/home/releases" /> } path="*" />
     </Routes>
   </Container>
 );
 
-export default Library;
+export default Releases;

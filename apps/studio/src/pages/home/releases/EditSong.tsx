@@ -207,7 +207,7 @@ const EditSong: FunctionComponent = () => {
 
   // TODO: show "Not found" content if not available for user
   if (error || !hasAccess) {
-    navigate("/home/library");
+    navigate("/home/releases");
 
     dispatch(
       setToastMessage({
@@ -224,7 +224,7 @@ const EditSong: FunctionComponent = () => {
    * to edit page after minting process started.
    */
   if (!isLoading && !isSongEditable(mintingStatus)) {
-    navigate(`/home/library/view-details/${songId}`, { replace: true });
+    navigate(`/home/releases/view-details/${songId}`, { replace: true });
   }
 
   const handleSubmit = async (
@@ -264,7 +264,7 @@ const EditSong: FunctionComponent = () => {
    * TODO: remove this when form values are persisted on refresh
    */
   useEffect(() => {
-    navigate(`/home/library/edit-song/${songId}`, { replace: true });
+    navigate(`/home/releases/edit-song/${songId}`, { replace: true });
     // useNavigate doesn't return memoized function, including it
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.
@@ -362,7 +362,7 @@ const EditSong: FunctionComponent = () => {
           enableReinitialize={ true }
           initialValues={ initialValues }
           isProgressStepperVisible={ true }
-          rootPath={ `home/library/edit-song/${songId}` }
+          rootPath={ `home/releases/edit-song/${songId}` }
           routes={ [
             {
               element: <BasicSongDetails isInEditMode={ true } />,

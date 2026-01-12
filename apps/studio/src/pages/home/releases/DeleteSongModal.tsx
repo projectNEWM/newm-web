@@ -40,7 +40,7 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
         <Typography variant="body2">Delete Song</Typography>
         <Typography variant="subtitle1">
           Are you sure you want to delete this song? Clicking &quot;Yes,&quot;
-          will immediately remove this song from your library.
+          will immediately remove this song from your releases.
         </Typography>
       </Stack>
       <Stack
