@@ -3,11 +3,17 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
+import {
+  REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
+  isProd,
+} from "@newm-web/env";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
+
 import Library from "./library/Library";
+import Releases from "./releases/Releases";
+
 import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
@@ -16,6 +22,10 @@ import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { useGetStudioClientConfigQuery } from "../../modules/content";
 import { identifyReferralHeroUser } from "../../common";
 import NotFoundPage from "../NotFoundPage";
+
+// TODO: Remove this once the releases feature is enabled for all users.
+// TODO: Remove condition wrapping the Releases route in the Home component.
+const isReleasesPageEnabled = !isProd;
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
@@ -96,6 +106,11 @@ const Home: FunctionComponent = () => {
 
           <Route element={ <UploadSong /> } path="upload-song/*" />
           <Route element={ <Library /> } path="library/*" />
+
+          { isReleasesPageEnabled && (
+            <Route element={ <Releases /> } path="releases/*" />
+          ) }
+
           <Route element={ <Owners /> } path="collaborators/*" />
           <Route element={ <Wallet /> } path="wallet" />
           <Route element={ <Profile /> } path="profile" />
