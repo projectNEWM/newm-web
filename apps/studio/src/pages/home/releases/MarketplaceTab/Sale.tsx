@@ -162,8 +162,6 @@ export const Sale = () => {
     };
   }, [handleSaleEndPending, handleSaleStartPending, handleSaleCompletePending]);
 
-  console.log("sold out sale: ", soldOutSale);
-
   if (isLoading) {
     return <MarketplaceTabSkeleton />;
   }
