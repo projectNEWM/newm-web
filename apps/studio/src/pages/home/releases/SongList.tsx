@@ -423,6 +423,12 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 <TableCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
                   { song.genres.join(", ") }
                 </TableCell>
+
+                <TableCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
+                  { /* // ! Phase 1 → NO. OF TRACKS = 1; single-track until /v1/releases supports 'trackCount' */ }
+                  1
+                </TableCell>
+
                 <TableCell
                   sx={ {
                     display: { md: "table-cell", xs: "none" },
