@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import GradientDashedOutline from "./GradientDashedOutline";
+import GradientDashedOutline from "../styled/GradientDashedOutline";
 
 const getEmotionClassName = (className: string): string | undefined =>
   className
