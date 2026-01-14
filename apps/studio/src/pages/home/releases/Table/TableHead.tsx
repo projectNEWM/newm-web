@@ -5,12 +5,15 @@ const TableHead = () => {
   return (
     <MUITableHead>
       <TableRow>
-        <TableHeadCell>SONG NAME</TableHeadCell>
+        <TableHeadCell>RELEASE NAME</TableHeadCell>
         <TableHeadCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
-          MINTING
+          RELEASE STATUS
         </TableHeadCell>
         <TableHeadCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
           GENRE
+        </TableHeadCell>
+        <TableHeadCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
+          NO. OF TRACKS
         </TableHeadCell>
         <TableHeadCell
           sx={ {
