@@ -33,6 +33,7 @@ export { default as ErrorMessage } from "./lib/styled/ErrorMessage";
 export { default as Pill } from "./lib/styled/Pill";
 export * from "./lib/styled/Pill";
 export { default as DashedOutline } from "./lib/styled/DashedOutline";
+export { default as GradientDashedOutline } from "./lib/styled/GradientDashedOutline";
 export { default as PaperInput } from "./lib/styled/PaperInput";
 export { default as ProfileImage } from "./lib/styled/ProfileImage";
 export { default as SolidOutline } from "./lib/styled/SolidOutline";
