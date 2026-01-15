@@ -482,7 +482,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         { totalCountOfSongs > songData.length && (
           <TablePagination
             cellStyles={ { paddingTop: "12px" } }
-            colSpan={ 5 }
+            colSpan={ 6 }
             handlePageChange={ handlePageChange }
             lastRowOnPage={ lastRowOnPage }
             numberOfRows={ totalCountOfSongs }
