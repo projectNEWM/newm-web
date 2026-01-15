@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Link, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
+import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,8 @@ import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
 import { SongRouteParams } from "./types";
 import { MarketplaceTab } from "./MarketplaceTab";
-import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
+import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
+import { isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
   emptySong,
@@ -122,19 +123,7 @@ const ViewDetails: FunctionComponent = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
-        <Tooltip
-          title={
-            <span>
-              To delete a song for which minting and distribution is in process
-              or has completed, please send a deletion request email to{ " " }
-              <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
-                { NEWM_SUPPORT_EMAIL }
-              </Link>
-              . Please note that artists not holding 100% of Stream Tokens for a
-              given track are unable to cease minting and distribution.
-            </span>
-          }
-        >
+        <Tooltip title={ <ReleaseDeletionHelp /> } arrow>
           <Stack ml="auto">
             <Button
               color="white"

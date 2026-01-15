@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Link, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -12,11 +12,8 @@ import { MintingStatus, PaymentType } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
 import { SongRouteParams } from "./types";
-import {
-  NEWM_SUPPORT_EMAIL,
-  commonYupValidation,
-  isSongEditable,
-} from "../../../common";
+import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
+import { commonYupValidation, isSongEditable } from "../../../common";
 import {
   useGetGenresQuery,
   useGetISRCCountryCodesQuery,
@@ -315,20 +312,7 @@ const EditSong: FunctionComponent = () => {
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
-          <Tooltip
-            title={
-              <span>
-                To delete a song for which minting and distribution is in
-                process or has completed, please send a deletion request email
-                to{ " " }
-                <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
-                  { NEWM_SUPPORT_EMAIL }
-                </Link>
-                . Please note that artists not holding 100% of Stream Tokens for
-                a given track are unable to cease minting and distribution.
-              </span>
-            }
-          >
+          <Tooltip title={ <ReleaseDeletionHelp /> } arrow>
             <Stack ml="auto">
               <Button
                 color="white"
