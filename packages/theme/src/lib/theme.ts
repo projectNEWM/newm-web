@@ -212,7 +212,7 @@ const theme = createTheme({
     magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%)",
     music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%)",
     // eslint-disable-next-line max-len
-    newm: "linear-gradient(45.38deg, #FFC33C 14.22%, #FF6E32 28.39%, #F53C69 42.57%, #C341F0 56.74%, #5091EB 70.91%, #41BE91 85.83%)",
+    newm: "linear-gradient(12deg, #FFC33C 0%, #FF6E32 24%, #F53C69 41%, #C341F0 59%, #5091EB 70%, #41BE91 90%)",
     partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%)",
   },
 
