@@ -47,7 +47,7 @@ const Discography: FunctionComponent = () => {
 
       { totalCountOfSongs || query ? (
         <SearchBox
-          placeholder="Search songs"
+          placeholder="Search by release name"
           query={ query }
           onSearch={ handleSearch }
         />
