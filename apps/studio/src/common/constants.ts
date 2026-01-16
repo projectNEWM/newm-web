@@ -4,6 +4,8 @@ import { isProd } from "@newm-web/env";
  * NEWM External Links and Support
  */
 export const NEWM_SUPPORT_EMAIL = "support@newm.io";
+export const NEWM_SUPPORT_LINK =
+  "https://projectnewm.atlassian.net/servicedesk/customer/portals";
 export const NEWM_CLICKUP_FORM_URL =
   "https://projectnewm.atlassian.net/servicedesk/customer/portal/1";
 export const NEWM_IO_URL = "https://newm.io/";
