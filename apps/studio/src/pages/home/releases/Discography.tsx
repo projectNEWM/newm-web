@@ -1,5 +1,10 @@
 import { FunctionComponent, useState } from "react";
-import { Typography } from "@mui/material";
+
+import { Box, Typography } from "@mui/material";
+
+import { GradientDashedOutline, IconMessage, Link } from "@newm-web/elements";
+import { AddSong } from "@newm-web/assets";
+
 import SongList from "./SongList";
 import { SearchBox } from "../../../components";
 import { useGetSongCountQuery } from "../../../modules/song";
@@ -21,6 +26,24 @@ const Discography: FunctionComponent = () => {
       <Typography sx={ { pb: 4 } } variant="h3">
         RELEASES
       </Typography>
+
+      <Box sx={ { mb: 5.5 } }>
+        <Link
+          aria-label="Create New Release"
+          sx={ {
+            textDecoration: "none",
+          } }
+          to="/home/upload-song"
+        >
+          <GradientDashedOutline
+            sx={ {
+              padding: 3,
+            } }
+          >
+            <IconMessage icon={ <AddSong /> } message="Create New Release" />
+          </GradientDashedOutline>
+        </Link>
+      </Box>
 
       { totalCountOfSongs || query ? (
         <SearchBox
