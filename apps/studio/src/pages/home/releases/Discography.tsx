@@ -1,9 +1,8 @@
 import { FunctionComponent, useState } from "react";
-import { Link } from "react-router-dom";
 
 import { Box, Typography } from "@mui/material";
 
-import { GradientDashedOutline, IconMessage } from "@newm-web/elements";
+import { GradientDashedOutline, IconMessage, Link } from "@newm-web/elements";
 import { AddSong } from "@newm-web/assets";
 
 import SongList from "./SongList";
@@ -29,7 +28,13 @@ const Discography: FunctionComponent = () => {
       </Typography>
 
       <Box sx={ { mb: 5.5 } }>
-        <Link aria-label="Create New Release" to="/home/upload-song">
+        <Link
+          aria-label="Create New Release"
+          sx={ {
+            textDecoration: "none",
+          } }
+          to="/home/upload-song"
+        >
           <GradientDashedOutline
             sx={ {
               padding: 3,
