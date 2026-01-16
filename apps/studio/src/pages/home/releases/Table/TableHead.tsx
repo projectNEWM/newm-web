@@ -5,7 +5,7 @@ const TableHead = () => {
   return (
     <MUITableHead>
       <TableRow>
-        <TableHeadCell>RELEASE NAME</TableHeadCell>
+        <TableHeadCell>RELEASE TITLE</TableHeadCell>
         <TableHeadCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
           RELEASE STATUS
         </TableHeadCell>
@@ -23,6 +23,7 @@ const TableHead = () => {
         >
           LENGTH
         </TableHeadCell>
+        <TableHeadCell sx={ { textAlign: "end" } } />
       </TableRow>
     </MUITableHead>
   );
