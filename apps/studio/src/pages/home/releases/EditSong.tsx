@@ -104,6 +104,8 @@ const EditSong: FunctionComponent = () => {
     isLoading: isGetSongLoading,
   } = useGetSongQuery(songId);
 
+  const isSongDeletable = getIsSongDeletable(mintingStatus);
+
   const isDeclined = mintingStatus === MintingStatus.Declined;
 
   const owners = collaborations
@@ -312,11 +314,17 @@ const EditSong: FunctionComponent = () => {
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
-          <Tooltip title={ <ReleaseDeletionHelp /> }>
+          <Tooltip
+            disableFocusListener={ isSongDeletable }
+            disableHoverListener={ isSongDeletable }
+            disableTouchListener={ isSongDeletable }
+            title={ isSongDeletable ? "" : <ReleaseDeletionHelp /> }
+          >
             <Stack ml="auto">
               <Button
                 color="white"
-                disabled={ !getIsSongDeletable(mintingStatus) }
+                // render other status for
+                disabled={ !isSongDeletable }
                 sx={ { marginLeft: "auto" } }
                 variant="outlined"
                 width="icon"
