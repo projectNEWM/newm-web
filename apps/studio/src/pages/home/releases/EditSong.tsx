@@ -1,7 +1,7 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Stack, Tooltip, Typography } from "@mui/material";
-import { Button, ProfileImage, WizardForm } from "@newm-web/elements";
+import { Box, Stack, Typography } from "@mui/material";
+import { Button, ProfileImage, Tooltip, WizardForm } from "@newm-web/elements";
 import { FormikHelpers, FormikValues } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -312,7 +312,7 @@ const EditSong: FunctionComponent = () => {
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
-          <Tooltip title={ <ReleaseDeletionHelp /> } arrow>
+          <Tooltip title={ <ReleaseDeletionHelp /> }>
             <Stack ml="auto">
               <Button
                 color="white"

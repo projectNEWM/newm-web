@@ -123,7 +123,7 @@ const ViewDetails: FunctionComponent = () => {
           width="90px"
         />
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
-        <Tooltip title={ <ReleaseDeletionHelp /> } arrow>
+        <Tooltip title={ <ReleaseDeletionHelp /> }>
           <Stack ml="auto">
             <Button
               color="white"
