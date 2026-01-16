@@ -211,6 +211,10 @@ const theme = createTheme({
     crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%)",
     magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%)",
     music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%)",
+
+    // * 'newm' uses an adjusted NEWM gradient to visually match the CTA design.
+    // * Slight deviation from Figma's var(--Gradients-Gradient-NEWM-45).
+    // * Meets the same intent as the design pattern.
     // eslint-disable-next-line max-len
     newm: "linear-gradient(12deg, #FFC33C 0%, #FF6E32 24%, #F53C69 41%, #C341F0 59%, #5091EB 70%, #41BE91 90%)",
     partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%)",
