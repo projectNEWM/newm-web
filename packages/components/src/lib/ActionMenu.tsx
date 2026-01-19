@@ -22,6 +22,11 @@ export type ActionMenuItem = {
   readonly icon?: ReactNode;
   readonly id: string;
   readonly label: string;
+  readonly link?: {
+    readonly href: string;
+    readonly rel?: string;
+    readonly target?: string;
+  };
   readonly onClick?: (event: MouseEvent<HTMLLIElement>) => void;
   readonly tooltip?: ReactNode;
   readonly tooltipPlacement?: TooltipProps["placement"];
@@ -132,9 +137,27 @@ const ActionMenu: FunctionComponent<ActionMenuProps> = ({
         const shouldShowDivider =
           showDividers && index < items.length - 1 && !item.dividerAbove;
 
+        const linkRel =
+          item.link?.target === "_blank" && !item.link.rel
+            ? "noopener noreferrer"
+            : item.link?.rel;
+
+        const linkProps = item.link
+          ? {
+              component: "a" as const,
+              href: item.link.href,
+              rel: linkRel,
+              style: {
+                width: "100%",
+              },
+              target: item.link.target,
+            }
+          : {};
+
         const menuItem = (
           <MenuItem
             disabled={ item.disabled }
+            { ...linkProps }
             sx={ {
               "&:hover": {
                 backgroundColor: theme.colors.grey500,

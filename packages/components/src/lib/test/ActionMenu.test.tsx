@@ -47,6 +47,34 @@ describe("<ActionMenu />", () => {
     document.body.removeChild(anchorEl);
   });
 
+  it("renders menu items as links when href is provided", () => {
+    const anchorEl = buildAnchor();
+
+    renderWithContext(
+      <ActionMenu
+        anchorEl={ anchorEl }
+        items={ [
+          {
+            id: "support",
+            label: "Support",
+            link: {
+              href: "https://example.com/support",
+              target: "_blank",
+            },
+          },
+        ] }
+        open={ true }
+        onClose={ jest.fn() }
+      />
+    );
+
+    const supportItem = screen.getByRole("menuitem", { name: "Support" });
+
+    expect(supportItem).toHaveAttribute("href", "https://example.com/support");
+
+    document.body.removeChild(anchorEl);
+  });
+
   it("invokes item click and closes by default", async () => {
     const anchorEl = buildAnchor();
     const onClose = jest.fn();
