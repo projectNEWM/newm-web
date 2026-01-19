@@ -1,4 +1,10 @@
-import React, { MouseEvent, useEffect, useMemo, useState } from "react";
+import React, {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   Box,
   IconButton,
@@ -12,9 +18,14 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import theme from "@newm-web/theme";
 import {
-  Button,
+  ActionMenu,
+  type ActionMenuItem,
+  ActionMenuTrigger,
+} from "@newm-web/components";
+import {
   TableCell,
   TablePagination,
   TableSkeleton,
@@ -33,18 +44,26 @@ import {
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
+import DeleteSongModal from "./DeleteSongModal";
+import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
 import { SongStreamPlaybackIcon } from "../../../components";
 import {
   convertMillisecondsToSongFormat,
+  getIsSongDeletable,
+  songApi,
   useFetchSongStreamThunk,
   useGetSongsQuery,
 } from "../../../modules/song";
 import {
+  LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY,
+  LOCAL_STORAGE_SALE_END_PENDING_KEY,
+  LOCAL_STORAGE_SALE_START_PENDING_KEY,
   NEWM_SUPPORT_EMAIL,
   PlayerState,
   isSongEditable as isSongEditableUtil,
+  useAppDispatch,
 } from "../../../common";
 
 interface SongListProps {
@@ -64,6 +83,7 @@ const FINAL_STEP_MINTING_PROCESS = [
 ];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const headerHeight = 245;
   const footerHeight = 40;
@@ -78,6 +98,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   });
   const [page, setPage] = useState(1);
   const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuSong, setMenuSong] = useState<Song | null>(null);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
 
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
   const totalPagesCount = Math.ceil(totalCountOfSongs / rowsPerPage);
@@ -231,17 +255,100 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     stopSong();
   };
 
-  const handleEmailSupport = (event: MouseEvent, songId: string) => {
-    event.stopPropagation();
+  const handleMenuOpen =
+    (song: Song) => (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      setMenuAnchorEl(event.currentTarget);
+      setMenuSong(song);
+    };
 
-    const mailtoLink =
-      `mailto:${NEWM_SUPPORT_EMAIL}` +
-      "?subject=Support Request" +
-      "&body=" +
-      encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
-
-    window.location.href = mailtoLink;
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
   };
+
+  const clearPendingSaleStorage = (songId: string) => {
+    const clearSongFromArray = (storageKey: string) => {
+      const pending = localStorage.getItem(storageKey);
+      if (!pending) return;
+
+      try {
+        const parsed = JSON.parse(pending);
+        if (!Array.isArray(parsed)) return;
+
+        const nextValue = parsed.filter((id) => id !== songId);
+        if (nextValue.length) {
+          localStorage.setItem(storageKey, JSON.stringify(nextValue));
+        } else {
+          localStorage.removeItem(storageKey);
+        }
+      } catch (error) {
+        // * Ignores invalid localStorage payloads.
+      }
+    };
+
+    const clearSongFromMap = (storageKey: string) => {
+      const pending = localStorage.getItem(storageKey);
+      if (!pending) return;
+
+      try {
+        const parsed = JSON.parse(pending);
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          return;
+        }
+
+        if (!(songId in parsed)) return;
+
+        delete parsed[songId];
+
+        if (Object.keys(parsed).length) {
+          localStorage.setItem(storageKey, JSON.stringify(parsed));
+        } else {
+          localStorage.removeItem(storageKey);
+        }
+      } catch (error) {
+        // * Ignores invalid localStorage payloads.
+      }
+    };
+
+    clearSongFromMap(LOCAL_STORAGE_SALE_START_PENDING_KEY);
+    clearSongFromArray(LOCAL_STORAGE_SALE_END_PENDING_KEY);
+    clearSongFromArray(LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!menuSong) return;
+
+    if (menuSong.id === playerState.currentPlayingSongId) {
+      stopSong();
+    }
+
+    clearPendingSaleStorage(menuSong.id);
+    await dispatch(
+      songApi.endpoints.deleteSong.initiate({
+        archived: true,
+        songId: menuSong.id,
+      })
+    );
+
+    setIsDeleteModalActive(false);
+    setMenuAnchorEl(null);
+    setMenuSong(null);
+  };
+
+  const handleEmailSupport = useCallback(
+    (event: MouseEvent, songId: string) => {
+      event.stopPropagation();
+
+      const mailtoLink =
+        `mailto:${NEWM_SUPPORT_EMAIL}` +
+        "?subject=Support Request" +
+        "&body=" +
+        encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
+
+      window.location.href = mailtoLink;
+    },
+    []
+  );
 
   const getTooltipContent = (mintingStatus: MintingStatusType) => {
     const isErrorMintingStatus =
@@ -268,6 +375,65 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
     return content;
   };
+
+  const isMenuOpen = Boolean(menuAnchorEl);
+  const menuSongIsEditable = menuSong
+    ? isSongEditableUtil(menuSong.mintingStatus)
+    : false;
+  const isMenuSongDeletable = menuSong
+    ? getIsSongDeletable(menuSong.mintingStatus)
+    : false;
+  const isMenuSongStale =
+    !!menuSong &&
+    isMoreThanThresholdSecondsLater(menuSong.createdAt, 1200) &&
+    !menuSong.streamUrl;
+
+  const actionMenuItems = useMemo<ReadonlyArray<ActionMenuItem>>(() => {
+    if (!menuSong) return [];
+
+    const items: ActionMenuItem[] = [
+      {
+        icon: menuSongIsEditable ? <EditIcon /> : <VisibilityIcon />,
+        id: "view-edit",
+        label: "View / Edit",
+        onClick: () => {
+          navigate(`/home/releases/edit-song/${menuSong.id}`);
+        },
+      },
+      {
+        color: "danger",
+        disabled: !isMenuSongDeletable,
+        icon: <DeleteIcon fontSize="small" />,
+        id: "delete",
+        label: "Delete",
+        onClick: () => {
+          setIsDeleteModalActive(true);
+        },
+        tooltip: !isMenuSongDeletable ? <ReleaseDeletionHelp /> : undefined,
+        tooltipPlacement: "right",
+      },
+    ];
+
+    if (isMenuSongStale) {
+      items.push({
+        dividerAbove: true,
+        id: "support",
+        label: "Support",
+        onClick: (event) => {
+          handleEmailSupport(event, menuSong.id);
+        },
+      });
+    }
+
+    return items;
+  }, [
+    handleEmailSupport,
+    isMenuSongDeletable,
+    isMenuSongStale,
+    menuSong,
+    menuSongIsEditable,
+    navigate,
+  ]);
 
   useEffect(() => {
     setPage(1);
@@ -447,32 +613,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     width: "0",
                   } }
                 >
-                  { isSongStale ? (
-                    <Button
-                      color="music"
-                      variant="secondary"
-                      onClick={ (event) => handleEmailSupport(event, song.id) }
-                    >
-                      Support
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="secondary"
-                      width="icon"
-                      onClick={ (event) =>
-                        handleRowClick(event, {
-                          isSongEditable,
-                          songId: song.id,
-                        })
-                      }
-                    >
-                      { isSongEditable ? (
-                        <EditIcon sx={ { color: theme.colors.music } } />
-                      ) : (
-                        <VisibilityIcon sx={ { color: theme.colors.music } } />
-                      ) }
-                    </Button>
-                  ) }
+                  <ActionMenuTrigger onClick={ handleMenuOpen(song) } />
                 </TableCell>
               </TableRow>
             );
@@ -492,6 +633,25 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
           />
         ) }
       </Table>
+
+      <ActionMenu
+        anchorEl={ menuAnchorEl }
+        anchorOrigin={ { horizontal: "left", vertical: "bottom" } }
+        items={ actionMenuItems }
+        menuPaperSx={ { marginLeft: 5 } }
+        open={ isMenuOpen }
+        transformOrigin={ { horizontal: "right", vertical: "top" } }
+        onClose={ handleMenuClose }
+      />
+
+      { isDeleteModalActive && (
+        <DeleteSongModal
+          primaryAction={ handleDeleteConfirm }
+          secondaryAction={ () => {
+            setIsDeleteModalActive(false);
+          } }
+        />
+      ) }
     </TableContainer>
   ) : (
     <Typography>No songs matched your search.</Typography>
