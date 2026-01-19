@@ -393,7 +393,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
     const items: ActionMenuItem[] = [
       {
-        icon: menuSongIsEditable ? <EditIcon /> : <VisibilityIcon />,
+        icon: menuSongIsEditable ? (
+          <EditIcon fontSize="small" />
+        ) : (
+          <VisibilityIcon fontSize="small" />
+        ),
         id: "view-edit",
         label: "View / Edit",
         onClick: () => {
