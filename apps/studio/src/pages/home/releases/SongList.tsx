@@ -401,7 +401,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         id: "view-edit",
         label: "View / Edit",
         onClick: () => {
-          navigate(`/home/releases/edit-song/${menuSong.id}`);
+          if (menuSongIsEditable) {
+            navigate(`/home/releases/edit-song/${menuSong.id}`);
+          } else {
+            navigate(`/home/releases/view-details/${menuSong.id}`);
+          }
         },
       },
       {
