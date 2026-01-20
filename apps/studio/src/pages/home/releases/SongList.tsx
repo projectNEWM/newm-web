@@ -28,7 +28,6 @@ import {
 } from "@newm-web/elements";
 import {
   isMoreThanThresholdSecondsLater,
-  parseStoredJSON,
   resizeCloudinaryImage,
   useHlsJs,
   useWindowDimensions,
@@ -54,9 +53,6 @@ import {
   useGetSongsQuery,
 } from "../../../modules/song";
 import {
-  LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY,
-  LOCAL_STORAGE_SALE_END_PENDING_KEY,
-  LOCAL_STORAGE_SALE_START_PENDING_KEY,
   NEWM_SUPPORT_EMAIL,
   NEWM_SUPPORT_LINK,
   PlayerState,
@@ -267,41 +263,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     setMenuSong(null);
   };
 
-  const clearPendingSaleStorage = (songId: string) => {
-    const clearSongFromArray = (storageKey: string) => {
-      const parsed = parseStoredJSON<string[]>(storageKey);
-      if (!Array.isArray(parsed)) return;
-
-      const nextValue = parsed.filter((id) => id !== songId);
-      if (nextValue.length) {
-        localStorage.setItem(storageKey, JSON.stringify(nextValue));
-      } else {
-        localStorage.removeItem(storageKey);
-      }
-    };
-
-    const clearSongFromMap = (storageKey: string) => {
-      const parsed = parseStoredJSON<Record<string, unknown>>(storageKey);
-      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-        return;
-      }
-
-      if (!(songId in parsed)) return;
-
-      delete parsed[songId];
-
-      if (Object.keys(parsed).length) {
-        localStorage.setItem(storageKey, JSON.stringify(parsed));
-      } else {
-        localStorage.removeItem(storageKey);
-      }
-    };
-
-    clearSongFromMap(LOCAL_STORAGE_SALE_START_PENDING_KEY);
-    clearSongFromArray(LOCAL_STORAGE_SALE_END_PENDING_KEY);
-    clearSongFromArray(LOCAL_STORAGE_SALE_COMPLETE_PENDING_KEY);
-  };
-
   const handleDeleteConfirm = async () => {
     if (!pendingDeleteSong) return;
 
@@ -309,7 +270,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       stopSong();
     }
 
-    clearPendingSaleStorage(pendingDeleteSong.id);
     await deleteSong({
       redirectToReleases: Boolean(webStudioAlbumPhaseOne),
       request: {
