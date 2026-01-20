@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { MouseEvent, useEffect, useMemo, useState } from "react";
 import {
   Box,
   IconButton,
@@ -26,6 +20,7 @@ import {
   ActionMenuTrigger,
 } from "@newm-web/components";
 import {
+  Button,
   TableCell,
   TablePagination,
   TableSkeleton,
@@ -61,6 +56,7 @@ import {
   LOCAL_STORAGE_SALE_END_PENDING_KEY,
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
   NEWM_SUPPORT_EMAIL,
+  NEWM_SUPPORT_LINK,
   PlayerState,
   isSongEditable as isSongEditableUtil,
   useAppDispatch,
@@ -335,21 +331,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     setMenuSong(null);
   };
 
-  const handleEmailSupport = useCallback(
-    (event: MouseEvent, songId: string) => {
-      event.stopPropagation();
-
-      const mailtoLink =
-        `mailto:${NEWM_SUPPORT_EMAIL}` +
-        "?subject=Support Request" +
-        "&body=" +
-        encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
-
-      window.location.href = mailtoLink;
-    },
-    []
-  );
-
   const getTooltipContent = (mintingStatus: MintingStatusType) => {
     const isErrorMintingStatus =
       ErrorOccurredMintingStatuses.includes(mintingStatus);
@@ -422,26 +403,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       },
     ];
 
-    if (isMenuSongStale) {
-      items.push({
-        dividerAbove: true,
-        id: "support",
-        label: "Support",
-        onClick: (event) => {
-          handleEmailSupport(event, menuSong.id);
-        },
-      });
-    }
-
     return items;
-  }, [
-    handleEmailSupport,
-    isMenuSongDeletable,
-    isMenuSongStale,
-    menuSong,
-    menuSongIsEditable,
-    navigate,
-  ]);
+  }, [isMenuSongDeletable, menuSong, menuSongIsEditable, navigate]);
 
   useEffect(() => {
     setPage(1);
@@ -621,7 +584,29 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     width: "0",
                   } }
                 >
-                  <ActionMenuTrigger onClick={ handleMenuOpen(song) } />
+                  { isMenuSongStale ? (
+                    <Tooltip
+                      placement="right"
+                      title="There was an issue processing your release's audio. Please contact support for assistance."
+                    >
+                      <Link
+                        href={ NEWM_SUPPORT_LINK }
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <Button
+                          aria-label="Contact support"
+                          color="music"
+                          variant="secondary"
+                          onClick={ (event) => event.stopPropagation() }
+                        >
+                          Support
+                        </Button>
+                      </Link>
+                    </Tooltip>
+                  ) : (
+                    <ActionMenuTrigger onClick={ handleMenuOpen(song) } />
+                  ) }
                 </TableCell>
               </TableRow>
             );
