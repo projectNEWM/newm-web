@@ -42,11 +42,12 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 }
 
 const EditSong: FunctionComponent = () => {
+  const { webStudioAlbumPhaseOne } = useFlags();
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { songId } = useParams<"songId">() as SongRouteParams;
-
-  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -340,7 +341,10 @@ const EditSong: FunctionComponent = () => {
           { isDeleteModalActive && (
             <DeleteSongModal
               primaryAction={ () => {
-                deleteSong({ songId });
+                deleteSong({
+                  redirectToReleases: Boolean(webStudioAlbumPhaseOne),
+                  request: { songId },
+                });
               } }
               secondaryAction={ () => {
                 setIsDeleteModalActive(false);
