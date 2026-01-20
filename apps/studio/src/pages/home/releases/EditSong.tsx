@@ -343,7 +343,10 @@ const EditSong: FunctionComponent = () => {
               primaryAction={ () => {
                 deleteSong({
                   redirectToReleases: Boolean(webStudioAlbumPhaseOne),
-                  request: { songId },
+                  request: {
+                    archived: true,
+                    songId,
+                  },
                 });
               } }
               secondaryAction={ () => {
