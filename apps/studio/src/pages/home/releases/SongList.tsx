@@ -398,6 +398,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     setPage(1);
   }, [query]);
 
+  useEffect(() => {
+    setMenuAnchorEl(null);
+    setMenuSong(null);
+  }, [page, query, songData]);
+
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
     const isSongFound = !!songData?.find((song) => {
