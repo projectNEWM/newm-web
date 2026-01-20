@@ -28,6 +28,7 @@ import {
 } from "@newm-web/elements";
 import {
   isMoreThanThresholdSecondsLater,
+  parseStoredJSON,
   resizeCloudinaryImage,
   useHlsJs,
   useWindowDimensions,
@@ -264,45 +265,31 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const clearPendingSaleStorage = (songId: string) => {
     const clearSongFromArray = (storageKey: string) => {
-      const pending = localStorage.getItem(storageKey);
-      if (!pending) return;
+      const parsed = parseStoredJSON<string[]>(storageKey);
+      if (!Array.isArray(parsed)) return;
 
-      try {
-        const parsed = JSON.parse(pending);
-        if (!Array.isArray(parsed)) return;
-
-        const nextValue = parsed.filter((id) => id !== songId);
-        if (nextValue.length) {
-          localStorage.setItem(storageKey, JSON.stringify(nextValue));
-        } else {
-          localStorage.removeItem(storageKey);
-        }
-      } catch (error) {
-        // * Ignores invalid localStorage payloads.
+      const nextValue = parsed.filter((id) => id !== songId);
+      if (nextValue.length) {
+        localStorage.setItem(storageKey, JSON.stringify(nextValue));
+      } else {
+        localStorage.removeItem(storageKey);
       }
     };
 
     const clearSongFromMap = (storageKey: string) => {
-      const pending = localStorage.getItem(storageKey);
-      if (!pending) return;
+      const parsed = parseStoredJSON<Record<string, unknown>>(storageKey);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return;
+      }
 
-      try {
-        const parsed = JSON.parse(pending);
-        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-          return;
-        }
+      if (!(songId in parsed)) return;
 
-        if (!(songId in parsed)) return;
+      delete parsed[songId];
 
-        delete parsed[songId];
-
-        if (Object.keys(parsed).length) {
-          localStorage.setItem(storageKey, JSON.stringify(parsed));
-        } else {
-          localStorage.removeItem(storageKey);
-        }
-      } catch (error) {
-        // * Ignores invalid localStorage payloads.
+      if (Object.keys(parsed).length) {
+        localStorage.setItem(storageKey, JSON.stringify(parsed));
+      } else {
+        localStorage.removeItem(storageKey);
       }
     };
 
