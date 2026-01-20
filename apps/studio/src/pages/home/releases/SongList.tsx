@@ -261,6 +261,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const handleMenuClose = () => {
     setMenuAnchorEl(null);
+    setMenuSong(null);
   };
 
   const clearPendingSaleStorage = (songId: string) => {
