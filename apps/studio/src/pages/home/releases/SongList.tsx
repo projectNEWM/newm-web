@@ -39,6 +39,7 @@ import {
   SortOrder,
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
 import DeleteSongModal from "./DeleteSongModal";
 import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
@@ -48,7 +49,7 @@ import { SongStreamPlaybackIcon } from "../../../components";
 import {
   convertMillisecondsToSongFormat,
   getIsSongDeletable,
-  songApi,
+  useDeleteSongThunk,
   useFetchSongStreamThunk,
   useGetSongsQuery,
 } from "../../../modules/song";
@@ -60,7 +61,6 @@ import {
   NEWM_SUPPORT_LINK,
   PlayerState,
   isSongEditable as isSongEditableUtil,
-  useAppDispatch,
 } from "../../../common";
 
 interface SongListProps {
@@ -80,7 +80,8 @@ const FINAL_STEP_MINTING_PROCESS = [
 ];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
-  const dispatch = useAppDispatch();
+  const { webStudioAlbumPhaseOne } = useFlags();
+
   const navigate = useNavigate();
   const headerHeight = 245;
   const footerHeight = 40;
@@ -95,9 +96,11 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   });
   const [page, setPage] = useState(1);
   const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
+  const [deleteSong] = useDeleteSongThunk();
 
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [menuSong, setMenuSong] = useState<Song | null>(null);
+  const [pendingDeleteSong, setPendingDeleteSong] = useState<Song | null>(null);
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
 
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
@@ -300,23 +303,25 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   };
 
   const handleDeleteConfirm = async () => {
-    if (!menuSong) return;
+    if (!pendingDeleteSong) return;
 
-    if (menuSong.id === playerState.currentPlayingSongId) {
+    if (pendingDeleteSong.id === playerState.currentPlayingSongId) {
       stopSong();
     }
 
-    clearPendingSaleStorage(menuSong.id);
-    await dispatch(
-      songApi.endpoints.deleteSong.initiate({
+    clearPendingSaleStorage(pendingDeleteSong.id);
+    await deleteSong({
+      redirectToReleases: Boolean(webStudioAlbumPhaseOne),
+      request: {
         archived: true,
-        songId: menuSong.id,
-      })
-    );
+        songId: pendingDeleteSong.id,
+      },
+    });
 
     setIsDeleteModalActive(false);
     setMenuAnchorEl(null);
     setMenuSong(null);
+    setPendingDeleteSong(null);
   };
 
   const getTooltipContent = (mintingStatus: MintingStatusType) => {
@@ -384,6 +389,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         id: "delete",
         label: "Delete",
         onClick: () => {
+          setPendingDeleteSong(menuSong);
           setIsDeleteModalActive(true);
         },
         tooltip: !isMenuSongDeletable ? <ReleaseDeletionHelp /> : undefined,
@@ -635,6 +641,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
           primaryAction={ handleDeleteConfirm }
           secondaryAction={ () => {
             setIsDeleteModalActive(false);
+            setPendingDeleteSong(null);
           } }
         />
       ) }
