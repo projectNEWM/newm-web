@@ -20,9 +20,7 @@ const ActionMenuTrigger: FunctionComponent<ActionMenuTriggerProps> = ({
   return (
     <Button
       aria-label={ ariaLabel }
-      sx={ {
-        ...sx,
-      } }
+      sx={ sx }
       variant="secondary"
       width="icon"
       onClick={ onClick }
