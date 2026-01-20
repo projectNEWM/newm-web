@@ -317,10 +317,6 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   const isMenuSongDeletable = menuSong
     ? getIsSongDeletable(menuSong.mintingStatus)
     : false;
-  const isMenuSongStale =
-    !!menuSong &&
-    isMoreThanThresholdSecondsLater(menuSong.createdAt, 1200) &&
-    !menuSong.streamUrl;
 
   const actionMenuItems = useMemo<ReadonlyArray<ActionMenuItem>>(() => {
     if (!menuSong) return [];
@@ -543,7 +539,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     width: "0",
                   } }
                 >
-                  { isMenuSongStale ? (
+                  { isSongStale ? (
                     <Tooltip
                       placement="right"
                       title="There was an issue processing your release's audio. Please contact support for assistance."
