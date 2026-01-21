@@ -51,6 +51,10 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
   mobileVersion,
   setMobileOpen,
 }: SideBarProps) => {
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
+    useFlags();
+
   const theme = useTheme();
 
   const [isReferralBannerDismissed, setIsReferralBannerDismissed] =
@@ -58,8 +62,6 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
-
-  const { webStudioArtistReferralCampaign } = useFlags();
 
   const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(true);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -161,12 +163,14 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         </Stack>
 
         <Box mb={ 2 } mt={ 3 } width="100%">
-          <SideBarNavLink
-            Icon={ UploadIcon }
-            label="UPLOAD A SONG"
-            to="/home/upload-song"
-            onClick={ () => setMobileOpen(false) }
-          />
+          { !webStudioAlbumPhaseOne && (
+            <SideBarNavLink
+              Icon={ UploadIcon }
+              label="UPLOAD A SONG"
+              to="/home/upload-song"
+              onClick={ () => setMobileOpen(false) }
+            />
+          ) }
 
           <Box ml={ 2 } mt={ 3 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
@@ -175,8 +179,8 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               Icon={ LibraryIcon }
-              label="LIBRARY"
-              to="/home/library"
+              label={ webStudioAlbumPhaseOne ? "RELEASES" : "LIBRARY" }
+              to={ webStudioAlbumPhaseOne ? "/home/releases" : "/home/library" }
               onClick={ () => setMobileOpen(false) }
             />
 

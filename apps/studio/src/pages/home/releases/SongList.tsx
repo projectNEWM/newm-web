@@ -38,7 +38,6 @@ import {
   SortOrder,
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
-import { useFlags } from "launchdarkly-react-client-sdk";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
 import DeleteSongModal from "./DeleteSongModal";
 import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
@@ -75,9 +74,6 @@ const FINAL_STEP_MINTING_PROCESS = [
 ];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
-  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseOne } = useFlags();
-
   const navigate = useNavigate();
   const headerHeight = 245;
   const footerHeight = 40;
@@ -271,11 +267,8 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     }
 
     await deleteSong({
-      redirectToReleases: Boolean(webStudioAlbumPhaseOne),
-      request: {
-        archived: true,
-        songId: pendingDeleteSong.id,
-      },
+      archived: true,
+      songId: pendingDeleteSong.id,
     });
 
     setIsDeleteModalActive(false);
