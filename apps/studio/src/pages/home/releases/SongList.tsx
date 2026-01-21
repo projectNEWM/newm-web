@@ -444,22 +444,15 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 <TableCell>
                   <Box sx={ { alignItems: "center", display: "flex" } }>
                     { isSongStale ? (
-                      <Tooltip
-                        title={
-                          "The file couldn't be uploaded. Please try again, " +
-                          `or reach out to ${NEWM_SUPPORT_EMAIL} for further assistance.`
-                        }
-                      >
-                        <CloseIcon
-                          color="error"
-                          sx={ {
-                            height: "24px",
-                            marginLeft: [0, 1],
-                            marginRight: [2, 4],
-                            width: "40px",
-                          } }
-                        />
-                      </Tooltip>
+                      <CloseIcon
+                        color="error"
+                        sx={ {
+                          height: "24px",
+                          marginLeft: [0, 1],
+                          marginRight: [2, 4],
+                          width: "40px",
+                        } }
+                      />
                     ) : (
                       <IconButton
                         sx={ {
@@ -541,23 +534,20 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 >
                   { isSongStale ? (
                     <Tooltip
-                      placement="right"
+                      placement="left"
                       title="There was an issue processing your release's audio. Please contact support for assistance."
                     >
-                      <Link
+                      <Button
+                        aria-label="Contact support"
+                        color="music"
                         href={ NEWM_SUPPORT_LINK }
                         rel="noopener noreferrer"
                         target="_blank"
+                        variant="secondary"
+                        onClick={ (event) => event.stopPropagation() }
                       >
-                        <Button
-                          aria-label="Contact support"
-                          color="music"
-                          variant="secondary"
-                          onClick={ (event) => event.stopPropagation() }
-                        >
-                          Support
-                        </Button>
-                      </Link>
+                        Support
+                      </Button>
                     </Tooltip>
                   ) : (
                     <ActionMenuTrigger onClick={ handleMenuOpen(song) } />
