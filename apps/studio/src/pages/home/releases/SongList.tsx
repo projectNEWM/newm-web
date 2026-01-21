@@ -53,7 +53,6 @@ import {
   useGetSongsQuery,
 } from "../../../modules/song";
 import {
-  NEWM_SUPPORT_EMAIL,
   NEWM_SUPPORT_LINK,
   PlayerState,
   isSongEditable as isSongEditableUtil,
@@ -76,6 +75,7 @@ const FINAL_STEP_MINTING_PROCESS = [
 ];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
   const { webStudioAlbumPhaseOne } = useFlags();
 
   const navigate = useNavigate();
@@ -293,9 +293,14 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     if (isErrorMintingStatus) {
       content = (
         <span>
-          An error has occurred. Please reach out to{ " " }
-          <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
-            { NEWM_SUPPORT_EMAIL }
+          An error has occurred. Please reach out via the{ " " }
+          <Link
+            href={ NEWM_SUPPORT_LINK }
+            rel="noopener noreferrer"
+            target="_blank"
+            onClick={ (event) => event.stopPropagation() }
+          >
+            NEWM Support Portal
           </Link>{ " " }
           for assistance distributing your release.
         </span>
@@ -349,7 +354,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
           setIsDeleteModalActive(true);
         },
         tooltip: !isMenuSongDeletable ? <ReleaseDeletionHelp /> : undefined,
-        tooltipPlacement: "right",
+        tooltipPlacement: "left",
       },
     ];
 
