@@ -42,11 +42,13 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 }
 
 const EditSong: FunctionComponent = () => {
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseOne } = useFlags();
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { songId } = useParams<"songId">() as SongRouteParams;
-
-  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -103,6 +105,8 @@ const EditSong: FunctionComponent = () => {
     error,
     isLoading: isGetSongLoading,
   } = useGetSongQuery(songId);
+
+  const isSongDeletable = getIsSongDeletable(mintingStatus);
 
   const isDeclined = mintingStatus === MintingStatus.Declined;
 
@@ -312,11 +316,17 @@ const EditSong: FunctionComponent = () => {
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
-          <Tooltip title={ <ReleaseDeletionHelp /> }>
+          <Tooltip
+            disableFocusListener={ isSongDeletable }
+            disableHoverListener={ isSongDeletable }
+            disableTouchListener={ isSongDeletable }
+            title={ isSongDeletable ? "" : <ReleaseDeletionHelp /> }
+          >
             <Stack ml="auto">
               <Button
                 color="white"
-                disabled={ !getIsSongDeletable(mintingStatus) }
+                // render other status for
+                disabled={ !isSongDeletable }
                 sx={ { marginLeft: "auto" } }
                 variant="outlined"
                 width="icon"
@@ -332,7 +342,13 @@ const EditSong: FunctionComponent = () => {
           { isDeleteModalActive && (
             <DeleteSongModal
               primaryAction={ () => {
-                deleteSong({ songId });
+                deleteSong({
+                  redirectToReleases: Boolean(webStudioAlbumPhaseOne),
+                  request: {
+                    archived: true,
+                    songId,
+                  },
+                });
               } }
               secondaryAction={ () => {
                 setIsDeleteModalActive(false);

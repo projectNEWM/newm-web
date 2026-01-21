@@ -15,7 +15,7 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
   <Stack
     sx={ {
       alignItems: "center",
-      backgroundColor: "black",
+      backgroundColor: theme.colors.backdropBlur,
       bottom: 0,
       display: "flex",
       justifyContent: "center",
@@ -29,29 +29,37 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
     <Stack p={ 2 }>
       <Stack
         sx={ {
-          backgroundColor: theme.colors.grey500,
+          backgroundColor: theme.colors.black,
           borderTopLeftRadius: "8px",
           borderTopRightRadius: "8px",
-          maxWidth: "512px",
-          padding: "24px 24px 16px",
+          maxWidth: "670px",
+          padding: "24px 24px 10px",
           rowGap: 1,
         } }
       >
-        <Typography variant="body2">Delete Song</Typography>
-        <Typography variant="subtitle1">
-          Are you sure you want to delete this song? Clicking &quot;Yes,&quot;
-          will immediately remove this song from your releases.
+        <Typography fontWeight="fontWeightBold" variant="body2">
+          DELETE RELEASE
+        </Typography>
+        <Typography
+          sx={ {
+            borderBottom: `2px solid ${theme.colors.grey600}`,
+            paddingBottom: 2.5,
+          } }
+          variant="subtitle1"
+        >
+          Are you sure you want to delete this release? All progress and
+          existing metadata will be lost.
         </Typography>
       </Stack>
       <Stack
         sx={ {
-          backgroundColor: theme.colors.grey600,
+          backgroundColor: theme.colors.black,
           borderBottomLeftRadius: "8px",
           borderBottomRightRadius: "8px",
           columnGap: 1.5,
           flexDirection: "row",
           justifyContent: "end",
-          padding: "12px 24px",
+          padding: "10px 24px 24px",
         } }
       >
         <Button
@@ -63,7 +71,7 @@ const DeleteSongModal: FunctionComponent<DeleteSongModalProps> = ({
           Cancel
         </Button>
         <Button width="compact" onClick={ primaryAction }>
-          Yes
+          Delete
         </Button>
       </Stack>
     </Stack>

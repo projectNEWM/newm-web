@@ -560,19 +560,29 @@ export const getUserWalletSongs = createAsyncThunk(
 
 /**
  * Request to delete user song. If successful, navigate to
- * library and fetch new songs.
+ * library / releases (flag variant) and fetch new songs.
  */
+// TODO(webStudioAlbumPhaseOne): Remove redirectToReleases variant once flag is retired.
+type DeleteSongRedirectVariant = {
+  redirectToReleases?: boolean;
+  request: DeleteSongRequest;
+};
+
 export const deleteSong = createAsyncThunk(
   "song/deleteSong",
-  async (body: DeleteSongRequest, { dispatch }) => {
+  async (body: DeleteSongRequest | DeleteSongRedirectVariant, { dispatch }) => {
     try {
-      // navigate to library page before deleting due to known
+      const request = "request" in body ? body.request : body;
+      const redirectToReleases =
+        "redirectToReleases" in body ? body.redirectToReleases : false;
+
+      // navigate before deleting due to known
       // issue where RTK Query hook will re-fetch data after
       // delete call invalidates cache tag, causing 404 error to
       // display: https://github.com/reduxjs/redux-toolkit/issues/1672
-      history.replace("/home/library");
+      history.replace(redirectToReleases ? "/home/releases" : "/home/library");
 
-      await dispatch(songApi.endpoints.deleteSong.initiate(body));
+      await dispatch(songApi.endpoints.deleteSong.initiate(request));
     } catch (err) {
       // do nothing, errors handled by endpoints
     }

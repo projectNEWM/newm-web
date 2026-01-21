@@ -1,4 +1,8 @@
 export { default as Alert } from "./lib/Alert";
+export * from "./lib/ActionMenu";
+export { default as ActionMenu } from "./lib/ActionMenu";
+export * from "./lib/ActionMenuTrigger";
+export { default as ActionMenuTrigger } from "./lib/ActionMenuTrigger";
 export * from "./lib/buttons/DisconnectWalletButton";
 export { default as DisconnectWalletButton } from "./lib/buttons/DisconnectWalletButton";
 export { default as EarningsClaimInProgress } from "./lib/earnings/EarningsClaimInProgress";

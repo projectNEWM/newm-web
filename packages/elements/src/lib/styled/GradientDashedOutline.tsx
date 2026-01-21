@@ -25,8 +25,8 @@ const GradientDashedOutline = styled(Box, {
 
   backgroundImage: `linear-gradient(${theme.colors.grey700}, ${theme.colors.grey700}), ${theme.gradients[gradient]}`,
   backgroundOrigin: "padding-box, border-box",
-  border: `2px dashed ${theme.colors.grey700}`,
-
-  borderRadius: 4,
+  border: `2.5px dashed ${theme.colors.grey700}`,
+  borderRadius: 5,
 }));
+
 export default GradientDashedOutline;

@@ -12,7 +12,13 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import theme from "@newm-web/theme";
+import {
+  ActionMenu,
+  type ActionMenuItem,
+  ActionMenuTrigger,
+} from "@newm-web/components";
 import {
   Button,
   TableCell,
@@ -32,17 +38,22 @@ import {
   SortOrder,
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
+import DeleteSongModal from "./DeleteSongModal";
+import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
 import { SongStreamPlaybackIcon } from "../../../components";
 import {
   convertMillisecondsToSongFormat,
+  getIsSongDeletable,
+  useDeleteSongThunk,
   useFetchSongStreamThunk,
   useGetSongsQuery,
 } from "../../../modules/song";
 import {
-  NEWM_SUPPORT_EMAIL,
+  NEWM_SUPPORT_LINK,
   PlayerState,
   isSongEditable as isSongEditableUtil,
 } from "../../../common";
@@ -64,6 +75,9 @@ const FINAL_STEP_MINTING_PROCESS = [
 ];
 
 export default function SongList({ totalCountOfSongs, query }: SongListProps) {
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseOne } = useFlags();
+
   const navigate = useNavigate();
   const headerHeight = 245;
   const footerHeight = 40;
@@ -78,6 +92,12 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
   });
   const [page, setPage] = useState(1);
   const [fetchStreamData, fetchStreamDataResp] = useFetchSongStreamThunk();
+  const [deleteSong] = useDeleteSongThunk();
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuSong, setMenuSong] = useState<Song | null>(null);
+  const [pendingDeleteSong, setPendingDeleteSong] = useState<Song | null>(null);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
 
   const lastRowOnPage = (page - 1) * rowsPerPage + rowsPerPage;
   const totalPagesCount = Math.ceil(totalCountOfSongs / rowsPerPage);
@@ -231,16 +251,37 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     stopSong();
   };
 
-  const handleEmailSupport = (event: MouseEvent, songId: string) => {
-    event.stopPropagation();
+  const handleMenuOpen =
+    (song: Song) => (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      setMenuAnchorEl(event.currentTarget);
+      setMenuSong(song);
+    };
 
-    const mailtoLink =
-      `mailto:${NEWM_SUPPORT_EMAIL}` +
-      "?subject=Support Request" +
-      "&body=" +
-      encodeURIComponent(`The following Song ID failed to encode: ${songId}`);
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+    setMenuSong(null);
+  };
 
-    window.location.href = mailtoLink;
+  const handleDeleteConfirm = async () => {
+    if (!pendingDeleteSong) return;
+
+    if (pendingDeleteSong.id === playerState.currentPlayingSongId) {
+      stopSong();
+    }
+
+    await deleteSong({
+      redirectToReleases: Boolean(webStudioAlbumPhaseOne),
+      request: {
+        archived: true,
+        songId: pendingDeleteSong.id,
+      },
+    });
+
+    setIsDeleteModalActive(false);
+    setMenuAnchorEl(null);
+    setMenuSong(null);
+    setPendingDeleteSong(null);
   };
 
   const getTooltipContent = (mintingStatus: MintingStatusType) => {
@@ -252,9 +293,14 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     if (isErrorMintingStatus) {
       content = (
         <span>
-          An error has occurred. Please reach out to{ " " }
-          <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
-            { NEWM_SUPPORT_EMAIL }
+          An error has occurred. Please reach out via the{ " " }
+          <Link
+            href={ NEWM_SUPPORT_LINK }
+            rel="noopener noreferrer"
+            target="_blank"
+            onClick={ (event) => event.stopPropagation() }
+          >
+            NEWM Support Portal
           </Link>{ " " }
           for assistance distributing your release.
         </span>
@@ -269,9 +315,60 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     return content;
   };
 
+  const isMenuOpen = Boolean(menuAnchorEl);
+  const menuSongIsEditable = menuSong
+    ? isSongEditableUtil(menuSong.mintingStatus)
+    : false;
+  const isMenuSongDeletable = menuSong
+    ? getIsSongDeletable(menuSong.mintingStatus)
+    : false;
+
+  const actionMenuItems = useMemo<ReadonlyArray<ActionMenuItem>>(() => {
+    if (!menuSong) return [];
+
+    const items: ActionMenuItem[] = [
+      {
+        icon: menuSongIsEditable ? (
+          <EditIcon fontSize="small" />
+        ) : (
+          <VisibilityIcon fontSize="small" />
+        ),
+        id: "view-edit",
+        label: "View / Edit",
+        onClick: () => {
+          if (menuSongIsEditable) {
+            navigate(`/home/releases/edit-song/${menuSong.id}`);
+          } else {
+            navigate(`/home/releases/view-details/${menuSong.id}`);
+          }
+        },
+      },
+      {
+        color: "danger",
+        disabled: !isMenuSongDeletable,
+        icon: <DeleteIcon fontSize="small" />,
+        id: "delete",
+        label: "Delete",
+        onClick: () => {
+          setPendingDeleteSong(menuSong);
+          setIsDeleteModalActive(true);
+        },
+        tooltip: !isMenuSongDeletable ? <ReleaseDeletionHelp /> : undefined,
+        tooltipPlacement: "left",
+      },
+    ];
+
+    return items;
+  }, [isMenuSongDeletable, menuSong, menuSongIsEditable, navigate]);
+
   useEffect(() => {
     setPage(1);
   }, [query]);
+
+  useEffect(() => {
+    setMenuAnchorEl(null);
+    setMenuSong(null);
+  }, [page, query, songData]);
 
   // Keep song in a playing state till the song has been filtered out
   useEffect(() => {
@@ -352,22 +449,15 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                 <TableCell>
                   <Box sx={ { alignItems: "center", display: "flex" } }>
                     { isSongStale ? (
-                      <Tooltip
-                        title={
-                          "The file couldn't be uploaded. Please try again, " +
-                          `or reach out to ${NEWM_SUPPORT_EMAIL} for further assistance.`
-                        }
-                      >
-                        <CloseIcon
-                          color="error"
-                          sx={ {
-                            height: "24px",
-                            marginLeft: [0, 1],
-                            marginRight: [2, 4],
-                            width: "40px",
-                          } }
-                        />
-                      </Tooltip>
+                      <CloseIcon
+                        color="error"
+                        sx={ {
+                          height: "24px",
+                          marginLeft: [0, 1],
+                          marginRight: [2, 4],
+                          width: "40px",
+                        } }
+                      />
                     ) : (
                       <IconButton
                         sx={ {
@@ -448,30 +538,24 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                   } }
                 >
                   { isSongStale ? (
-                    <Button
-                      color="music"
-                      variant="secondary"
-                      onClick={ (event) => handleEmailSupport(event, song.id) }
+                    <Tooltip
+                      placement="left"
+                      title="There was an issue processing your release's audio. Please contact support for assistance."
                     >
-                      Support
-                    </Button>
+                      <Button
+                        aria-label="Contact support"
+                        color="music"
+                        href={ NEWM_SUPPORT_LINK }
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        variant="secondary"
+                        onClick={ (event) => event.stopPropagation() }
+                      >
+                        Support
+                      </Button>
+                    </Tooltip>
                   ) : (
-                    <Button
-                      variant="secondary"
-                      width="icon"
-                      onClick={ (event) =>
-                        handleRowClick(event, {
-                          isSongEditable,
-                          songId: song.id,
-                        })
-                      }
-                    >
-                      { isSongEditable ? (
-                        <EditIcon sx={ { color: theme.colors.music } } />
-                      ) : (
-                        <VisibilityIcon sx={ { color: theme.colors.music } } />
-                      ) }
-                    </Button>
+                    <ActionMenuTrigger onClick={ handleMenuOpen(song) } />
                   ) }
                 </TableCell>
               </TableRow>
@@ -492,6 +576,26 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
           />
         ) }
       </Table>
+
+      <ActionMenu
+        anchorEl={ menuAnchorEl }
+        anchorOrigin={ { horizontal: "left", vertical: "bottom" } }
+        items={ actionMenuItems }
+        menuPaperSx={ { marginLeft: 5 } }
+        open={ isMenuOpen }
+        transformOrigin={ { horizontal: "right", vertical: "top" } }
+        onClose={ handleMenuClose }
+      />
+
+      { isDeleteModalActive && (
+        <DeleteSongModal
+          primaryAction={ handleDeleteConfirm }
+          secondaryAction={ () => {
+            setIsDeleteModalActive(false);
+            setPendingDeleteSong(null);
+          } }
+        />
+      ) }
     </TableContainer>
   ) : (
     <Typography>No songs matched your search.</Typography>

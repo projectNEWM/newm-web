@@ -22,6 +22,17 @@ export const LocalStorage = {
   },
 };
 
+export const parseStoredJSON = <T = unknown>(key: string): T | undefined => {
+  const value = LocalStorage.getItem(key);
+  if (!value) return undefined;
+
+  try {
+    return JSON.parse(value) as T;
+  } catch (error) {
+    return undefined;
+  }
+};
+
 const storageAvailable = (type: string) => {
   let storage;
 
