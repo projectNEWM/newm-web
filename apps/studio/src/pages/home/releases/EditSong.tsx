@@ -42,6 +42,7 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 }
 
 const EditSong: FunctionComponent = () => {
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
   const { webStudioAlbumPhaseOne } = useFlags();
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 

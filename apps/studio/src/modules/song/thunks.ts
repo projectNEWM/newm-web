@@ -560,8 +560,9 @@ export const getUserWalletSongs = createAsyncThunk(
 
 /**
  * Request to delete user song. If successful, navigate to
- * library and fetch new songs.
+ * library / releases (flag variant) and fetch new songs.
  */
+// TODO(webStudioAlbumPhaseOne): Remove redirectToReleases variant once flag is retired.
 type DeleteSongRedirectVariant = {
   redirectToReleases?: boolean;
   request: DeleteSongRequest;
