@@ -1,8 +1,7 @@
 import { CSSProperties, FunctionComponent, ReactNode } from "react";
-import { useMatch, useResolvedPath } from "react-router-dom";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { Box, Stack, SvgIconProps } from "@mui/material";
 import theme from "@newm-web/theme";
-import Link from "./Link";
 
 interface ButtonProps {
   readonly children: ReactNode;
