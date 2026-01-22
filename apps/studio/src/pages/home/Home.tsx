@@ -112,7 +112,15 @@ const Home: FunctionComponent = () => {
           </IconButton>
         </Box>
         <Routes>
-          <Route element={ <Navigate to="upload-song" replace /> } path="" />
+          <Route
+            element={
+              <Navigate
+                to={ webStudioAlbumPhaseOne ? "releases" : "upload-song" }
+                replace
+              />
+            }
+            path=""
+          />
 
           <Route element={ <UploadSong /> } path="upload-song/*" />
 

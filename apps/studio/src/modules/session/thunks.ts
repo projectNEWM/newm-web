@@ -125,7 +125,7 @@ export const updateInitialProfile = createAsyncThunk(
 );
 
 /**
- * Logs in and navigates to the library page.
+ * Logs in and navigates to the home route.
  */
 export const login = createAsyncThunk(
   "session/login",
@@ -136,11 +136,11 @@ export const login = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 /**
- * Logs in using Apple and navigates to the library page.
+ * Logs in using Apple and navigates to the home route.
  */
 export const appleLogin = createAsyncThunk(
   "session/appleLogin",
@@ -151,12 +151,12 @@ export const appleLogin = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 
 /**
- * Logs in using Google and navigates to the library page.
+ * Logs in using Google and navigates to the home route.
  */
 export const googleLogin = createAsyncThunk(
   "session/googleLogin",
@@ -167,7 +167,7 @@ export const googleLogin = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 
