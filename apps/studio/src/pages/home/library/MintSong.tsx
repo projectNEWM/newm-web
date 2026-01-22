@@ -23,7 +23,7 @@ import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { MintingStatus } from "@newm-web/types";
-import { SongRouteParams } from "./types";
+import { SongRouteParams } from "../../../common/types";
 import { commonYupValidation } from "../../../common";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import { useGetRolesQuery } from "../../../modules/content";

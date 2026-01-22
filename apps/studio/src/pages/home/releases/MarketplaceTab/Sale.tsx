@@ -20,7 +20,7 @@ import {
 } from "../../../../common";
 import { MarketplaceTabSkeleton } from "../../../../components";
 import { useGetSalesQuery, useHasSongTokens } from "../../../../modules/sale";
-import { SongRouteParams } from "../types";
+import { SongRouteParams } from "../../../../common/types";
 
 export const Sale = () => {
   const {

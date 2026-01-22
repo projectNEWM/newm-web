@@ -22,7 +22,7 @@ import {
 } from "@newm-web/utils";
 import StartSaleModal from "./StartSaleModal";
 import { SALE_DEFAULT_BUNDLE_AMOUNT } from "../../../../common";
-import { SongRouteParams } from "../types";
+import { SongRouteParams } from "../../../../common/types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
 import { useGetProfileQuery } from "../../../../modules/session";

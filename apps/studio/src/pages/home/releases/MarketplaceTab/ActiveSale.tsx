@@ -6,7 +6,7 @@ import { Alert, Button, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { Sale } from "@newm-web/types";
 import { EndSaleModal } from "./EndSaleModal";
-import { SongRouteParams } from "../types";
+import { SongRouteParams } from "../../../../common/types";
 import { useEndSaleThunk } from "../../../../modules/sale";
 import { NEWM_MARKETPLACE_URL } from "../../../../common";
 

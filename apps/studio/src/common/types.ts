@@ -27,6 +27,10 @@ export interface PlayerState {
   readonly song?: Song;
 }
 
+export interface SongRouteParams {
+  songId: string;
+}
+
 interface SaleDetails {
   tokensToSell: string;
   totalSaleValue: string;

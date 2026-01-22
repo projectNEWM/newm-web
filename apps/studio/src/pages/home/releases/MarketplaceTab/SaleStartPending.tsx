@@ -4,7 +4,7 @@ import { AlertTitle, Stack, Typography } from "@mui/material";
 import { Alert, HorizontalLine } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { useEffect, useState } from "react";
-import { SongRouteParams } from "../types";
+import { SongRouteParams } from "../../../../common/types";
 import {
   LOCAL_STORAGE_SALE_START_PENDING_KEY,
   SaleStartPendingSongs,

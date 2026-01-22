@@ -12,7 +12,7 @@ import {
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import { Formik } from "formik";
-import { SongRouteParams } from "./types";
+import { SongRouteParams } from "../../../common/types";
 import { emptySong, useGetSongQuery } from "../../../modules/song";
 import { CoverRemixSample, PlaySong } from "../../../components";
 
