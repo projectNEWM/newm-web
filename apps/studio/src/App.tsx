@@ -52,7 +52,6 @@ import {
 
 const App = () => {
   const googleClientID = GOOGLE_CLIENT_ID;
-  // Define context for LaunchDarkly
 
   return (
     <ThemeProvider theme={ theme }>
