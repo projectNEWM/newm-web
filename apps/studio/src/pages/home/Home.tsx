@@ -35,7 +35,6 @@ const Home: FunctionComponent = () => {
   const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
     useFlags();
 
-  const isReleasesPageEnabled = webStudioAlbumPhaseOne;
   const routeLocation = useLocation();
 
   const libraryRedirectPath = routeLocation.pathname.replace(
@@ -138,7 +137,7 @@ const Home: FunctionComponent = () => {
             path="library/*"
           />
 
-          { isReleasesPageEnabled && (
+          { webStudioAlbumPhaseOne && (
             <Route element={ <Releases /> } path="releases/*" />
           ) }
 
