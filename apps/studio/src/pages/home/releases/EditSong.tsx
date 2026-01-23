@@ -11,7 +11,7 @@ import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus, PaymentType } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
-import { SongRouteParams } from "./types";
+import { SongRouteParams } from "../../../common/types";
 import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
 import { commonYupValidation, isSongEditable } from "../../../common";
 import {
@@ -42,8 +42,6 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 }
 
 const EditSong: FunctionComponent = () => {
-  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseOne } = useFlags();
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 
   const navigate = useNavigate();
@@ -343,11 +341,8 @@ const EditSong: FunctionComponent = () => {
             <DeleteSongModal
               primaryAction={ () => {
                 deleteSong({
-                  redirectToReleases: Boolean(webStudioAlbumPhaseOne),
-                  request: {
-                    archived: true,
-                    songId,
-                  },
+                  archived: true,
+                  songId,
                 });
               } }
               secondaryAction={ () => {

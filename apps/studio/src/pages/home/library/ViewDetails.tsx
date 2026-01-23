@@ -11,7 +11,7 @@ import { MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
-import { SongRouteParams } from "./types";
+import { SongRouteParams } from "../../../common/types";
 import { MarketplaceTab } from "./MarketplaceTab";
 import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";

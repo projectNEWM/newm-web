@@ -1,12 +1,15 @@
 import { Box, IconButton } from "@mui/material";
 import { FunctionComponent, useEffect, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
-  isProd,
-} from "@newm-web/env";
+import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
@@ -23,15 +26,21 @@ import { useGetStudioClientConfigQuery } from "../../modules/content";
 import { identifyReferralHeroUser } from "../../common";
 import NotFoundPage from "../NotFoundPage";
 
-// TODO: Remove this once the releases feature is enabled for all users.
-// TODO: Remove condition wrapping the Releases route in the Home component.
-const isReleasesPageEnabled = !isProd;
-
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
   const theme = useTheme();
   const navigate = useNavigate();
-  const { webStudioArtistReferralCampaign } = useFlags();
+
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
+    useFlags();
+
+  const routeLocation = useLocation();
+
+  const libraryRedirectPath = routeLocation.pathname.replace(
+    "/home/library",
+    "/home/releases"
+  );
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 
@@ -102,12 +111,33 @@ const Home: FunctionComponent = () => {
           </IconButton>
         </Box>
         <Routes>
-          <Route element={ <Navigate to="upload-song" replace /> } path="" />
+          <Route
+            element={
+              <Navigate
+                to={ webStudioAlbumPhaseOne ? "releases" : "upload-song" }
+                replace
+              />
+            }
+            path=""
+          />
 
           <Route element={ <UploadSong /> } path="upload-song/*" />
-          <Route element={ <Library /> } path="library/*" />
 
-          { isReleasesPageEnabled && (
+          <Route
+            element={
+              webStudioAlbumPhaseOne ? (
+                <Navigate
+                  to={ `${libraryRedirectPath}${routeLocation.search}${routeLocation.hash}` }
+                  replace
+                />
+              ) : (
+                <Library />
+              )
+            }
+            path="library/*"
+          />
+
+          { webStudioAlbumPhaseOne && (
             <Route element={ <Releases /> } path="releases/*" />
           ) }
 

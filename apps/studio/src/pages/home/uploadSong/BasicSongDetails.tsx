@@ -59,7 +59,7 @@ import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
 } from "../../../modules/ui";
-import { SongRouteParams } from "../library/types";
+import { SongRouteParams } from "../../../common/types";
 
 interface BasicDonDetailsProps {
   readonly isInEditMode?: boolean;
