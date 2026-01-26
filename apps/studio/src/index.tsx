@@ -56,27 +56,15 @@ if (rootDomNode) {
     clientSideID: LAUNCHDARKLY_CLIENT_ID,
     context: ldContext,
     timeout: 5,
-  })
-    .then((StudioLDProvider) => {
-      root.render(
-        <React.StrictMode>
-          <StudioLDProvider>
-            <App />
-          </StudioLDProvider>
-        </React.StrictMode>
-      );
-    })
-    .catch((error) => {
-      // * Keep this fallback: asyncWithLDProvider rarely rejects, but if it does we still render.
-      // eslint-disable-next-line no-console
-      console.error("Failed to initialize LaunchDarkly:", error);
-
-      root.render(
-        <React.StrictMode>
+  }).then((StudioLDProvider) => {
+    root.render(
+      <React.StrictMode>
+        <StudioLDProvider>
           <App />
-        </React.StrictMode>
-      );
-    });
+        </StudioLDProvider>
+      </React.StrictMode>
+    );
+  });
 }
 
 // * If you want to start measuring performance in your app, pass a function
