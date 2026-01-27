@@ -59,98 +59,102 @@ const App = () => {
         <Maintenance flagName="webStudioMaintenanceMode">
           <Provider store={ store }>
             <PersistGate loading={ null } persistor={ persistor }>
-              <Toast />
-              <CssBaseline />
-              <IdenfyPingUserStatus />
-              <IdenfyModal />
-              <PayPalModal />
-              <ConnectWalletModal />
-              <ReferralDashboard
-                campaignUUID={ REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID }
-              />
-              <InvitesModal />
-              <ProgressBarModal />
-              <UpdateWalletAddressModal />
-              <WalletEnvMismatchModal />
-              <PingSaleStart />
-              <PingSaleEnd />
-              <PingSaleComplete />
-              <PingEarningsInProgressWrapper />
-              <UnsupportedBrowserBanner />
-              <LDUserUpdater />
-              <ScrollToTop />
+              <LDUserUpdater>
+                <Toast />
+                <CssBaseline />
+                <IdenfyPingUserStatus />
+                <IdenfyModal />
+                <PayPalModal />
+                <ConnectWalletModal />
+                <ReferralDashboard
+                  campaignUUID={ REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID }
+                />
+                <InvitesModal />
+                <ProgressBarModal />
+                <UpdateWalletAddressModal />
+                <WalletEnvMismatchModal />
+                <PingSaleStart />
+                <PingSaleEnd />
+                <PingSaleComplete />
+                <PingEarningsInProgressWrapper />
+                <UnsupportedBrowserBanner />
+                <ScrollToTop />
 
-              <Background>
-                <BrowserRouter history={ history }>
-                  <GoogleAnalytics />
-                  <OnboardingRedirect />
+                <Background>
+                  <BrowserRouter history={ history }>
+                    <GoogleAnalytics />
+                    <OnboardingRedirect />
 
-                  <Routes>
-                    <Route element={ <Navigate to="home" replace /> } path="/" />
+                    <Routes>
+                      <Route
+                        element={ <Navigate to="home" replace /> }
+                        path="/"
+                      />
 
-                    <Route element={ <Login /> } path="login" />
+                      <Route element={ <Login /> } path="login" />
 
-                    <Route
-                      element={ <ForgotPassword /> }
-                      path="forgot-password/*"
-                    />
+                      <Route
+                        element={ <ForgotPassword /> }
+                        path="forgot-password/*"
+                      />
 
-                    <Route element={ <SignUp /> } path="sign-up/*" />
+                      <Route element={ <SignUp /> } path="sign-up/*" />
 
-                    <Route
-                      element={ <IdenfySuccessSession /> }
-                      path="idenfy-success-session"
-                    />
+                      <Route
+                        element={ <IdenfySuccessSession /> }
+                        path="idenfy-success-session"
+                      />
 
-                    <Route
-                      element={ <IdenfyFailSession /> }
-                      path="idenfy-fail-session"
-                    />
+                      <Route
+                        element={ <IdenfyFailSession /> }
+                        path="idenfy-fail-session"
+                      />
 
-                    <Route
-                      element={ <PayPalSuccessSession /> }
-                      path="paypal-success-session"
-                    />
+                      <Route
+                        element={ <PayPalSuccessSession /> }
+                        path="paypal-success-session"
+                      />
 
-                    <Route
-                      element={ <PayPalCancelledSession /> }
-                      path="paypal-cancelled-session"
-                    />
+                      <Route
+                        element={ <PayPalCancelledSession /> }
+                        path="paypal-cancelled-session"
+                      />
 
-                    <Route
-                      element={ <PayPalLoadingSession /> }
-                      path="paypal-loading-session"
-                    />
+                      <Route
+                        element={ <PayPalLoadingSession /> }
+                        path="paypal-loading-session"
+                      />
 
-                    <Route
-                      element={
-                        <PrivateRoute>
-                          <Home />
-                        </PrivateRoute>
-                      }
-                      path="home/*"
-                    />
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <Home />
+                          </PrivateRoute>
+                        }
+                        path="home/*"
+                      />
 
-                    <Route
-                      element={
-                        <PrivateRoute>
-                          <CreateProfile />
-                        </PrivateRoute>
-                      }
-                      path="create-profile/*"
-                    />
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <CreateProfile />
+                          </PrivateRoute>
+                        }
+                        path="create-profile/*"
+                      />
 
-                    <Route
-                      element={
-                        <PrivateRoute>
-                          <NotFoundPage />
-                        </PrivateRoute>
-                      }
-                      path="*"
-                    />
-                  </Routes>
-                </BrowserRouter>
-              </Background>
+                      <Route
+                        element={
+                          <PrivateRoute>
+                            <NotFoundPage />
+                          </PrivateRoute>
+                        }
+                        path="*"
+                      />
+                    </Routes>
+                  </BrowserRouter>
+                </Background>
+              </LDUserUpdater>
             </PersistGate>
           </Provider>
         </Maintenance>

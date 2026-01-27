@@ -1,4 +1,10 @@
-import { useEffect } from "react";
+import {
+  FunctionComponent,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useLDClient } from "launchdarkly-react-client-sdk";
 import { selectSession, useGetProfileQuery } from "../modules/session";
 import { useAppSelector } from "../common";
@@ -10,10 +16,11 @@ import { useAppSelector } from "../common";
  * the LaunchDarkly client context accordingly, which enables personalized feature flags for the user.
  *
  * @component
- * @returns {null} - This component does not render anything on the screen.
  */
-const LDUserUpdater = () => {
+const LDUserUpdater: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const { isLoggedIn } = useAppSelector(selectSession);
+  const [isLDReady, setIsLDReady] = useState(!isLoggedIn);
+  const hasIdentified = useRef(false);
 
   // Retrieve the user's profile data if they are logged in.
   const { data: profile } = useGetProfileQuery(undefined, {
@@ -23,20 +30,37 @@ const LDUserUpdater = () => {
   const ldClient = useLDClient();
 
   useEffect(() => {
-    // Update the LaunchDarkly client with the user's profile if available.
-    if (profile && ldClient) {
-      ldClient.identify({
-        email: profile.email,
-        key: profile.id,
-        kind: "user",
-        lastName: profile.lastName,
-        name: profile.firstName,
-        nickname: profile.nickname,
-      });
+    // Reset when user logs out
+    if (!isLoggedIn) {
+      setIsLDReady(true);
+      hasIdentified.current = false;
+      return;
     }
-  }, [profile, ldClient]);
 
-  return null;
+    // Update the LaunchDarkly client with the user's profile if available.
+    if (profile && ldClient && !hasIdentified.current) {
+      const identifyUser = async () => {
+        hasIdentified.current = true;
+        await ldClient.identify({
+          email: profile.email,
+          key: profile.id,
+          kind: "user",
+          lastName: profile.lastName,
+          name: profile.firstName,
+          nickname: profile.nickname,
+        });
+        setIsLDReady(true);
+      };
+
+      identifyUser();
+    }
+  }, [profile, ldClient, isLoggedIn]);
+
+  if (!isLDReady) {
+    return null;
+  }
+
+  return children;
 };
 
 export default LDUserUpdater;
