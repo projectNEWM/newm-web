@@ -26,20 +26,26 @@ import { useGetStudioClientConfigQuery } from "../../modules/content";
 import { identifyReferralHeroUser } from "../../common";
 import NotFoundPage from "../NotFoundPage";
 
+const RELEASES_BASE_PATH = "releases";
+
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
   const theme = useTheme();
   const navigate = useNavigate();
 
   // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
-    useFlags();
+  // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
+  const {
+    webStudioAlbumPhaseOne,
+    webStudioAlbumPhaseTwo,
+    webStudioArtistReferralCampaign,
+  } = useFlags();
 
   const routeLocation = useLocation();
 
   const libraryRedirectPath = routeLocation.pathname.replace(
     "/home/library",
-    "/home/releases"
+    `/home/${RELEASES_BASE_PATH}`
   );
 
   const [isMobileOpen, setMobileOpen] = useState(false);
@@ -114,7 +120,11 @@ const Home: FunctionComponent = () => {
           <Route
             element={
               <Navigate
-                to={ webStudioAlbumPhaseOne ? "releases" : "upload-song" }
+                to={
+                  webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo
+                    ? RELEASES_BASE_PATH
+                    : "upload-song"
+                }
                 replace
               />
             }
@@ -125,7 +135,7 @@ const Home: FunctionComponent = () => {
 
           <Route
             element={
-              webStudioAlbumPhaseOne ? (
+              webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo ? (
                 <Navigate
                   to={ `${libraryRedirectPath}${routeLocation.search}${routeLocation.hash}` }
                   replace
@@ -137,8 +147,8 @@ const Home: FunctionComponent = () => {
             path="library/*"
           />
 
-          { webStudioAlbumPhaseOne && (
-            <Route element={ <Releases /> } path="releases/*" />
+          { (webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo) && (
+            <Route element={ <Releases /> } path={ `${RELEASES_BASE_PATH}/*` } />
           ) }
 
           <Route element={ <Owners /> } path="collaborators/*" />

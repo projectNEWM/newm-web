@@ -5,11 +5,16 @@ import { Box, Typography } from "@mui/material";
 import { GradientDashedOutline, IconMessage, Link } from "@newm-web/elements";
 import { AddSong } from "@newm-web/assets";
 
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import SongList from "./SongList";
 import { SearchBox } from "../../../components";
 import { useGetSongCountQuery } from "../../../modules/song";
 
 const Discography: FunctionComponent = () => {
+  // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseTwo } = useFlags();
+
   const [query, setQuery] = useState("");
 
   const { data: { count: totalCountOfSongs = 0 } = {} } = useGetSongCountQuery({
@@ -33,7 +38,9 @@ const Discography: FunctionComponent = () => {
           sx={ {
             textDecoration: "none",
           } }
-          to="/home/upload-song"
+          to={
+            webStudioAlbumPhaseTwo ? "/home/releases/new" : "/home/upload-song"
+          }
         >
           <GradientDashedOutline
             sx={ {
