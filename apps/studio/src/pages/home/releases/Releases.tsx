@@ -1,13 +1,9 @@
 import { FunctionComponent } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { Container } from "@mui/material";
-
 import { useFlags } from "launchdarkly-react-client-sdk";
 
 import { Container } from "@mui/material";
-
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 import EditSong from "./EditSong";
 import Discography from "./Discography";
