@@ -5,6 +5,10 @@ import { Container } from "@mui/material";
 
 import { useFlags } from "launchdarkly-react-client-sdk";
 
+import { Container } from "@mui/material";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import EditSong from "./EditSong";
 import Discography from "./Discography";
 import ViewDetails from "./ViewDetails";
