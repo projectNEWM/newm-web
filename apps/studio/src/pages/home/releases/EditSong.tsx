@@ -11,8 +11,8 @@ import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus, PaymentType } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
-import { SongRouteParams } from "../../../common/types";
 import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
+import { SongRouteParams } from "../../../common/types";
 import { commonYupValidation, isSongEditable } from "../../../common";
 import {
   useGetGenresQuery,

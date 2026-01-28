@@ -9,7 +9,9 @@ import EditSong from "./EditSong";
 import Discography from "./Discography";
 import ViewDetails from "./ViewDetails";
 import ReleaseDetails from "./release/ReleaseDetails";
-import TrackDetails from "./release/tracks/TrackDetails";
+import TrackDetailsRouter from "./release/tracks/TrackDetailsRouter";
+import Distribute from "./release/distribute/Distribute";
+import NewTrack from "./release/tracks/NewTrack";
 import NotFoundPage from "../../NotFoundPage";
 
 const Releases: FunctionComponent = () => {
@@ -32,20 +34,27 @@ const Releases: FunctionComponent = () => {
     >
       <Routes>
         <Route element={ <Discography /> } path="/" />
-        <Route element={ <EditSong /> } path="edit-song/:songId*" />
-        <Route element={ <ViewDetails /> } path="view-details/:songId" />
+
+        { !webStudioAlbumPhaseTwo && (
+          <>
+            <Route element={ <EditSong /> } path="edit-song/:songId*" />
+            <Route element={ <ViewDetails /> } path="view-details/:songId" />
+          </>
+        ) }
 
         { webStudioAlbumPhaseTwo && (
           <>
             <Route element={ <ReleaseDetails /> } path="new/*" />
             <Route element={ <ReleaseDetails /> } path=":releaseId/*" />
 
-            <Route element={ <TrackDetails /> } path="new/track/new" />
-            <Route element={ <TrackDetails /> } path=":releaseId/track/new" />
+            <Route element={ <NewTrack /> } path="new/track/new" />
+            <Route element={ <NewTrack /> } path=":releaseId/track/new" />
             <Route
-              element={ <TrackDetails /> }
+              element={ <TrackDetailsRouter /> }
               path=":releaseId/track/:trackId"
             />
+
+            <Route element={ <Distribute /> } path=":releaseId/distribute" />
           </>
         ) }
 
