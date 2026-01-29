@@ -44,16 +44,25 @@ const StartSaleModal: FunctionComponent<StartSaleModalProps> = ({
   const NEWMPriceInUSD = NEWMPriceData?.usdPrice
     ? NEWMPriceData?.usdPrice / LOVELACE_CONVERSION
     : 0;
+
   const isNEWMPriceUnavailable = NEWMPriceInUSD === 0;
+
   const totalSaleValueInNEWM =
     saleCurrency === Currency.NEWM
       ? totalSaleValue
-      : totalSaleValue / NEWMPriceInUSD;
+      : NEWMPriceInUSD > 0
+      ? totalSaleValue / NEWMPriceInUSD
+      : 0;
+
   const totalSaleValueInUSD =
     saleCurrency === Currency.USD
       ? totalSaleValue
-      : totalSaleValue * NEWMPriceInUSD;
-  const pricePerStreamTokenInUSD = totalSaleValueInUSD / tokensToSell;
+      : NEWMPriceInUSD > 0
+      ? totalSaleValue * NEWMPriceInUSD
+      : 0;
+
+  const pricePerStreamTokenInUSD =
+    tokensToSell > 0 ? totalSaleValueInUSD / tokensToSell : 0;
 
   return (
     <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ handleClose }>
