@@ -114,7 +114,7 @@ const EditTrack: FunctionComponent = () => {
       title,
     } = emptySong,
     error,
-  } = useGetSongQuery(trackId ?? "");
+  } = useGetSongQuery(trackId as string, { skip: !trackId });
 
   const isSongDeletable = getIsSongDeletable(mintingStatus);
 

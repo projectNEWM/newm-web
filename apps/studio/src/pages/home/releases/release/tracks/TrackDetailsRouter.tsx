@@ -14,7 +14,7 @@ const TrackDetailsRouter: FunctionComponent = () => {
     data: { mintingStatus } = {},
     isLoading,
     error,
-  } = useGetSongQuery(trackId ?? "");
+  } = useGetSongQuery(trackId as string, { skip: !trackId });
   const hasAccess = useHasSongAccess(trackId ?? "");
 
   if (!trackId || isLoading) return null;
