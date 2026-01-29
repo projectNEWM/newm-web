@@ -1,25 +1,36 @@
+import { FunctionComponent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch } from "react-redux";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { Form, Formik, FormikHelpers } from "formik";
+
+import * as Yup from "yup";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Stack, Typography } from "@mui/material";
-import { Button, ProfileImage, Tooltip, WizardForm } from "@newm-web/elements";
-import { FormikHelpers, FormikValues } from "formik";
-import { FunctionComponent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router";
-import * as Yup from "yup";
-import { resizeCloudinaryImage } from "@newm-web/utils";
+import { useTheme } from "@mui/material/styles";
+
+import { Button, HorizontalLine, Tooltip } from "@newm-web/elements";
+import { useWindowDimensions } from "@newm-web/utils";
 import { MintingStatus, PaymentType } from "@newm-web/types";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import DeleteSongModal from "./DeleteSongModal";
-import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
-import { SongRouteParams } from "../../../common/types";
-import { commonYupValidation, isSongEditable } from "../../../common";
+
+import AdvancedTrackDetails from "./AdvancedTrackDetails";
+import BasicTrackDetails from "./BasicTrackDetails";
+import DeleteSongModal from "../../DeleteSongModal";
+import ReleaseDeletionHelp from "../../ReleaseDeletionHelp";
+import { commonYupValidation, isSongEditable } from "../../../../../common";
 import {
   useGetGenresQuery,
   useGetISRCCountryCodesQuery,
   useGetRolesQuery,
-} from "../../../modules/content";
-import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
+} from "../../../../../modules/content";
+import {
+  emptyProfile,
+  useGetProfileQuery,
+} from "../../../../../modules/session";
 import {
   CollaborationStatus,
   PatchSongThunkRequest,
@@ -31,22 +42,24 @@ import {
   useGetSongQuery,
   useHasSongAccess,
   usePatchSongThunk,
-} from "../../../modules/song";
-import { setToastMessage } from "../../../modules/ui";
-import AdvancedSongDetails from "../../../pages/home/uploadSong/AdvancedSongDetails";
-import BasicSongDetails from "../../../pages/home/uploadSong/BasicSongDetails";
-import ConfirmAgreement from "../../../pages/home/uploadSong/ConfirmAgreement";
+} from "../../../../../modules/song";
+import { setToastMessage } from "../../../../../modules/ui";
 
-interface EditSongFormValues extends PatchSongThunkRequest {
+interface EditTrackFormValues extends PatchSongThunkRequest {
   agreesToCoverArtGuidelines?: boolean;
 }
 
-const EditSong: FunctionComponent = () => {
+const EditTrack: FunctionComponent = () => {
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { songId } = useParams<"songId">() as SongRouteParams;
+  const theme = useTheme();
+  const { releaseId, trackId } = useParams<"releaseId" | "trackId">() as {
+    releaseId?: string;
+    trackId?: string;
+  };
+  const windowWidth = useWindowDimensions()?.width;
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -64,14 +77,14 @@ const EditSong: FunctionComponent = () => {
   const { data: languageCodes = [] } = useGetISRCCountryCodesQuery();
 
   const { data: collaborations = [] } = useGetCollaborationsQuery({
-    songIds: songId,
+    songIds: trackId ?? "",
   });
   const { data: { date: earliestReleaseDate } = {} } =
     useGetEarliestReleaseDateQuery();
 
-  const [patchSong, { isLoading: isPatchSongLoading }] = usePatchSongThunk();
+  const [patchSong] = usePatchSongThunk();
 
-  const hasAccess = useHasSongAccess(songId);
+  const hasAccess = useHasSongAccess(trackId ?? "");
   const artistName = `${firstName} ${lastName}`;
 
   const [deleteSong] = useDeleteSongThunk();
@@ -101,8 +114,7 @@ const EditSong: FunctionComponent = () => {
       title,
     } = emptySong,
     error,
-    isLoading: isGetSongLoading,
-  } = useGetSongQuery(songId);
+  } = useGetSongQuery(trackId as string, { skip: !trackId });
 
   const isSongDeletable = getIsSongDeletable(mintingStatus);
 
@@ -146,7 +158,7 @@ const EditSong: FunctionComponent = () => {
       status: collaboration.status,
     }));
 
-  const initialValues: EditSongFormValues = {
+  const initialValues: EditTrackFormValues = {
     agreesToCoverArtGuidelines: true,
     artistName,
     barcodeNumber,
@@ -170,7 +182,7 @@ const EditSong: FunctionComponent = () => {
     description,
     featured,
     genres: songGenres,
-    id: songId,
+    id: trackId ?? "",
     ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
     isInstrumental: instrumental,
@@ -216,43 +228,22 @@ const EditSong: FunctionComponent = () => {
     );
   }
 
-  const isLoading = isPatchSongLoading || isGetSongLoading;
-
-  /**
-   * Redirect if user manually navigates
-   * to edit page after minting process started.
-   */
-  if (!isLoading && !isSongEditable(mintingStatus)) {
-    navigate(`/home/releases/view-details/${songId}`, { replace: true });
-  }
-
   const handleSubmit = async (
-    step: "basic-details" | "advanced-details" | "confirm",
-    values: EditSongFormValues,
-    helpers: FormikHelpers<FormikValues>
+    values: EditTrackFormValues,
+    helpers: FormikHelpers<EditTrackFormValues>
   ) => {
-    const patchValues = {
+    await patchSong({
       ...values,
-      isMinting: false,
       mintingStatus,
-      shouldRedirect: false,
-    };
-
-    if (step === "basic-details") {
-      patchValues.shouldRedirect = !values.isMinting;
-    } else if (step === "advanced-details") {
-      patchValues.isMinting = true;
-    } else if (step === "confirm") {
-      patchValues.isMinting = true;
-      patchValues.shouldRedirect = true;
-    }
-
-    await patchSong(patchValues);
+      shouldRedirect: values.isMinting,
+    });
 
     helpers.setSubmitting(false);
 
-    if (step === "basic-details" && values.isMinting) {
-      navigate("advanced-details");
+    if (releaseId) {
+      navigate(`/home/releases/${releaseId}`);
+    } else {
+      navigate("/home/releases");
     }
   };
 
@@ -263,7 +254,11 @@ const EditSong: FunctionComponent = () => {
    * TODO: remove this when form values are persisted on refresh
    */
   useEffect(() => {
-    navigate(`/home/releases/edit-song/${songId}`, { replace: true });
+    if (releaseId && trackId) {
+      navigate(`/home/releases/${releaseId}/track/${trackId}`, {
+        replace: true,
+      });
+    }
     // useNavigate doesn't return memoized function, including it
     // as dependency will run this when navigation occurs. Exclude
     // to only run on mount.
@@ -274,7 +269,6 @@ const EditSong: FunctionComponent = () => {
     agreesToCoverArtGuidelines: commonYupValidation.agreesToCoverArtGuidelines,
     barcodeNumber: commonYupValidation.barcodeNumber,
     barcodeType: commonYupValidation.barcodeType,
-    consentsToContract: commonYupValidation.consentsToContract,
     copyrightOwner: commonYupValidation.copyright,
     copyrightYear: commonYupValidation.year,
     coverArtUrl: commonYupValidation.coverArtUrl,
@@ -305,12 +299,7 @@ const EditSong: FunctionComponent = () => {
         >
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
-        <ProfileImage
-          alt="Song cover art"
-          height="90px"
-          src={ resizeCloudinaryImage(coverArtUrl, { height: 180, width: 180 }) }
-          width="90px"
-        />
+
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
         <>
@@ -342,7 +331,7 @@ const EditSong: FunctionComponent = () => {
               primaryAction={ () => {
                 deleteSong({
                   archived: true,
-                  songId,
+                  songId: trackId ?? "",
                 });
               } }
               secondaryAction={ () => {
@@ -353,70 +342,83 @@ const EditSong: FunctionComponent = () => {
         </>
       </Stack>
       <Box pb={ 7 } pt={ 5 }>
-        <WizardForm
+        <Formik
           enableReinitialize={ true }
           initialValues={ initialValues }
-          isProgressStepperVisible={ true }
-          rootPath={ `home/releases/edit-song/${songId}` }
-          routes={ [
-            {
-              element: <BasicSongDetails isInEditMode={ true } />,
-              navigateOnSubmitStep: false,
-              onSubmitStep: (values, helpers) =>
-                handleSubmit("basic-details", values, helpers),
-              path: "",
-              progressStepTitle: "Basic details",
-              validationSchema: Yup.object().shape({
-                agreesToCoverArtGuidelines:
-                  validations.agreesToCoverArtGuidelines,
-                coverArtUrl: validations.coverArtUrl,
-                creditors: validations.creditors,
-                description: validations.description,
-                genres: validations.genres,
-                moods: validations.moods,
-                owners: validations.owners,
-                title: validations.title,
-              }),
-            },
-            {
-              element: <AdvancedSongDetails />,
-              onSubmitStep: (values, helpers) =>
-                handleSubmit("advanced-details", values, helpers),
-              path: "advanced-details",
-              progressStepTitle: "Advanced details",
-              validationSchema: Yup.object({
-                barcodeNumber: validations.barcodeNumber,
-                barcodeType: validations.barcodeType,
-                compositionCopyrightOwner: validations.copyrightOwner,
-                compositionCopyrightYear: validations.copyrightYear,
-                ipi: validations.ipi,
-                isrc: validations.isrc,
-                iswc: validations.iswc,
-                phonographicCopyrightOwner: validations.copyrightOwner,
-                phonographicCopyrightYear: validations.copyrightYear,
-                publicationDate: validations.publicationDate,
-                releaseDate: validations.releaseDate,
-              }),
-            },
-            {
-              element: (
-                <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
-              ),
-              path: "confirm",
-              progressStepTitle: "Distribute",
-              validationSchema: Yup.object().shape({
-                consentsToContract: validations.consentsToContract,
-              }),
-            },
-          ] }
-          validateOnMount={ true }
-          onSubmit={ (values, helpers) =>
-            handleSubmit("confirm", values, helpers)
-          }
-        />
+          validationSchema={ Yup.object().shape({
+            agreesToCoverArtGuidelines: validations.agreesToCoverArtGuidelines,
+            barcodeNumber: validations.barcodeNumber,
+            barcodeType: validations.barcodeType,
+            compositionCopyrightOwner: validations.copyrightOwner,
+            compositionCopyrightYear: validations.copyrightYear,
+            coverArtUrl: validations.coverArtUrl,
+            creditors: validations.creditors,
+            description: validations.description,
+            genres: validations.genres,
+            ipi: validations.ipi,
+            isrc: validations.isrc,
+            iswc: validations.iswc,
+            moods: validations.moods,
+            owners: validations.owners,
+            publicationDate: validations.publicationDate,
+            releaseDate: validations.releaseDate,
+            title: validations.title,
+          }) }
+          onSubmit={ handleSubmit }
+        >
+          { ({ isSubmitting }) => (
+            <Form noValidate>
+              <Stack
+                spacing={ 6 }
+                sx={ {
+                  alignItems: ["center", "center", "unset"],
+                } }
+              >
+                <Stack spacing={ 2 }>
+                  <Typography variant="h4">BASIC DETAILS</Typography>
+                  <BasicTrackDetails
+                    isDeclined={ isDeclined }
+                    isInEditMode={ true }
+                    trackId={ trackId }
+                  />
+                </Stack>
+
+                <Stack spacing={ 2 }>
+                  <Typography variant="h4">ADVANCED DETAILS</Typography>
+                  <AdvancedTrackDetails />
+                </Stack>
+
+                <Box>
+                  <HorizontalLine mb={ 5 } />
+                  <Stack direction="row" gap={ 2 }>
+                    <Button
+                      isLoading={ isSubmitting }
+                      type="submit"
+                      width={
+                        windowWidth && windowWidth > theme.breakpoints.values.md
+                          ? "compact"
+                          : "default"
+                      }
+                    >
+                      Save
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      width="compact"
+                      onClick={ () => navigate(-1) }
+                    >
+                      Cancel
+                    </Button>
+                  </Stack>
+                </Box>
+              </Stack>
+            </Form>
+          ) }
+        </Formik>
       </Box>
     </>
   );
 };
 
-export default EditSong;
+export default EditTrack;

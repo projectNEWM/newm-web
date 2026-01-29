@@ -1,26 +1,27 @@
 import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Box, Stack, Tab, Tabs, Theme, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
+
+import { Button, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { resizeCloudinaryImage } from "@newm-web/utils";
 import { MintingStatus } from "@newm-web/types";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import MintSong from "./MintSong";
-import SongInfo from "./SongInfo";
-import { MarketplaceTab } from "./MarketplaceTab";
-import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
-import { SongRouteParams } from "../../../common/types";
-import { isSongEditable } from "../../../common";
-import { setToastMessage } from "../../../modules/ui";
+
+import TrackInfo from "./tabs/TrackInfo";
+import MintTrack from "./tabs/MintTrack";
+import { MarketplaceTab } from "./tabs/MarketplaceTab";
+import ReleaseDeletionHelp from "../../ReleaseDeletionHelp";
+import { setToastMessage } from "../../../../../modules/ui";
 import {
   emptySong,
   useGetSongQuery,
   useHasSongAccess,
-} from "../../../modules/song";
+} from "../../../../../modules/song";
 
 interface TabPanelProps {
   children: ReactNode;
@@ -57,23 +58,21 @@ const colorMap: ColorMap = {
   2: "partners",
 };
 
-const ViewDetails: FunctionComponent = () => {
+const ViewTrack: FunctionComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [tab, setTab] = useState(0);
 
-  const { songId } = useParams<"songId">() as SongRouteParams;
+  const { trackId } = useParams<"trackId">() as { trackId: string | undefined };
 
-  const {
-    data: { title, coverArtUrl, mintingStatus } = emptySong,
-    error,
-    isLoading,
-  } = useGetSongQuery(songId);
+  const { data: { title, mintingStatus } = emptySong, error } = useGetSongQuery(
+    trackId ?? ""
+  );
 
   const { webStudioManageMarketplaceSales } = useFlags();
 
-  const hasAccess = useHasSongAccess(songId);
+  const hasAccess = useHasSongAccess(trackId ?? "");
   const isSongMintedOrReleased = [
     MintingStatus.Minted,
     MintingStatus.Released,
@@ -98,13 +97,6 @@ const ViewDetails: FunctionComponent = () => {
     );
   }
 
-  /**
-   * Redirect if user manually navigates to this page before minting is complete
-   */
-  if (!isLoading && isSongEditable(mintingStatus)) {
-    navigate(`/home/releases/edit-song/${songId}`, { replace: true });
-  }
-
   return (
     <>
       <Stack alignItems="center" direction="row" gap={ 2.5 }>
@@ -116,13 +108,9 @@ const ViewDetails: FunctionComponent = () => {
         >
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
-        <ProfileImage
-          alt="Song cover art"
-          height="90px"
-          src={ resizeCloudinaryImage(coverArtUrl, { height: 180, width: 180 }) }
-          width="90px"
-        />
+
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
+
         <Tooltip title={ <ReleaseDeletionHelp /> }>
           <Stack ml="auto">
             <Button
@@ -172,10 +160,10 @@ const ViewDetails: FunctionComponent = () => {
         </Tabs>
 
         <TabPanel index={ 0 } value={ tab }>
-          <SongInfo />
+          <TrackInfo />
         </TabPanel>
         <TabPanel index={ 1 } value={ tab }>
-          <MintSong />
+          <MintTrack />
         </TabPanel>
         <TabPanel index={ 2 } value={ tab }>
           <MarketplaceTab />
@@ -185,4 +173,4 @@ const ViewDetails: FunctionComponent = () => {
   );
 };
 
-export default ViewDetails;
+export default ViewTrack;
