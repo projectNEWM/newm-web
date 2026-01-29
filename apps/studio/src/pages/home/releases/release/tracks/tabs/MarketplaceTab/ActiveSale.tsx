@@ -9,7 +9,6 @@ import theme from "@newm-web/theme";
 import { Sale } from "@newm-web/types";
 
 import { EndSaleModal } from "./EndSaleModal";
-import { SongRouteParams } from "../../../../../../../common/types";
 import { useEndSaleThunk } from "../../../../../../../modules/sale";
 import { NEWM_MARKETPLACE_URL } from "../../../../../../../common";
 
@@ -19,21 +18,21 @@ interface ActiveSaleProps {
 
 export const ActiveSale: FunctionComponent<ActiveSaleProps> = ({ sale }) => {
   const [isEndSaleModalOpen, setIsEndSaleModalOpen] = useState(false);
-  const { songId } = useParams<"songId">() as SongRouteParams;
+  const { trackId } = useParams<"trackId">() as { trackId: string };
   const [endSale, { isLoading: isEndSaleLoading }] = useEndSaleThunk();
   const saleId = sale?.id;
 
   const handleEndSale = async () => {
-    if (!saleId) {
+    if (!saleId || !trackId) {
       return;
     }
 
-    await endSale({ saleId, songId });
+    await endSale({ saleId, songId: trackId });
 
     setIsEndSaleModalOpen(false);
   };
 
-  if (!sale) {
+  if (!sale || !trackId) {
     return null;
   }
 
