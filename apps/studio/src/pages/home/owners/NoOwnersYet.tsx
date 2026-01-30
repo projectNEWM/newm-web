@@ -1,8 +1,11 @@
 import { FunctionComponent } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Box, Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
 import { Owner } from "@newm-web/assets";
-import { useNavigate } from "react-router-dom";
 
 interface NoOwnersYetProps {
   hasSongsUploaded: boolean;
@@ -11,6 +14,9 @@ interface NoOwnersYetProps {
 const NoOwnersYet: FunctionComponent<NoOwnersYetProps> = ({
   hasSongsUploaded,
 }) => {
+  // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
+  const { webStudioAlbumPhaseTwo } = useFlags();
+
   const navigate = useNavigate();
 
   return (
@@ -37,10 +43,16 @@ const NoOwnersYet: FunctionComponent<NoOwnersYetProps> = ({
         color="music"
         variant="secondary"
         width="compact"
-        onClick={ () => navigate("/home/upload-song") }
+        onClick={ () =>
+          navigate(
+            webStudioAlbumPhaseTwo ? "/home/releases/new" : "/home/upload-song"
+          )
+        }
       >
-        { hasSongsUploaded
+        { hasSongsUploaded && !webStudioAlbumPhaseTwo
           ? "Invite other collaborators"
+          : webStudioAlbumPhaseTwo
+          ? "Create your first release"
           : "Upload your first song" }
       </Button>
     </Box>
