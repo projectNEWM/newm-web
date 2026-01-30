@@ -5,7 +5,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import { Form, Formik, useFormikContext } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
@@ -29,15 +28,12 @@ import {
   Tooltip,
   UploadImageField,
 } from "@newm-web/elements";
-import { UnsavedChangesModal } from "@newm-web/components";
 import { scrollToError } from "@newm-web/utils";
 
+import { useUnsavedChanges } from "../../../../contexts/UnsavedChangesContext";
 import { NONE_OPTION, commonYupValidation } from "../../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../../modules/session";
 import ReleaseDeletionHelp from "../ReleaseDeletionHelp";
-
-const UNSAVED_MESSAGE =
-  "You have unsaved changes. If you leave, your data will be lost.";
 
 const RELEASE_CODE_TYPE_OPTIONS = [NONE_OPTION, "EAN", "UPC", "JAN"] as const;
 
@@ -61,12 +57,11 @@ interface ReleaseDetailsFormContentProps {
   readonly addTrackPath: string;
   readonly coverArtUrlRef: React.RefObject<HTMLDivElement | null>;
   readonly isDirtyRef: React.MutableRefObject<boolean>;
-  readonly isLeaveModalOpen: boolean;
-  readonly onStay: () => void;
   readonly releaseDateRef: React.RefObject<HTMLInputElement | null>;
   readonly releaseId: string | undefined;
   readonly releaseTitleRef: React.RefObject<HTMLInputElement | null>;
-  readonly setIsLeaveModalOpen: (open: boolean) => void;
+  readonly requestNavigation: (path: string | null) => void;
+  readonly setHasUnsavedChanges: (value: boolean) => void;
 }
 
 /**
@@ -80,19 +75,20 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
       addTrackPath,
       coverArtUrlRef,
       isDirtyRef,
-      isLeaveModalOpen,
-      onStay,
       releaseDateRef,
       releaseId,
       releaseTitleRef,
-      setIsLeaveModalOpen,
+      requestNavigation,
+      setHasUnsavedChanges,
     }) => {
       const navigate = useNavigate();
       const theme = useTheme();
       const { dirty, errors, isSubmitting, setTouched, validateForm, values } =
         useFormikContext<ReleaseFormValues>();
 
-      const leaveDestinationRef = useRef<string | null>(null);
+      useEffect(() => {
+        setHasUnsavedChanges(dirty);
+      }, [dirty, setHasUnsavedChanges]);
 
       useEffect(() => {
         scrollToError(errors, isSubmitting, [
@@ -142,31 +138,21 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
 
       const handleBackClick = useCallback(() => {
         if (dirty) {
-          leaveDestinationRef.current = null;
-          setIsLeaveModalOpen(true);
+          requestNavigation(null);
         } else {
           navigate(-1);
         }
-      }, [dirty, navigate, setIsLeaveModalOpen]);
+      }, [dirty, navigate, requestNavigation]);
 
       const handleAddTrackClick = useCallback(
         (event: React.MouseEvent) => {
           if (dirty) {
             event.preventDefault();
-            leaveDestinationRef.current = addTrackPath;
-            setIsLeaveModalOpen(true);
+            requestNavigation(addTrackPath);
           }
         },
-        [addTrackPath, dirty, setIsLeaveModalOpen]
+        [addTrackPath, dirty, requestNavigation]
       );
-
-      const handleLeaveConfirm = useCallback(() => {
-        const dest = leaveDestinationRef.current;
-        leaveDestinationRef.current = null;
-        setIsLeaveModalOpen(false);
-        if (dest !== null) navigate(dest);
-        else navigate(-1);
-      }, [navigate, setIsLeaveModalOpen]);
 
       isDirtyRef.current = dirty;
 
@@ -384,13 +370,6 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
               </Box>
             </Box>
           </Form>
-
-          <UnsavedChangesModal
-            isOpen={ isLeaveModalOpen }
-            message={ UNSAVED_MESSAGE }
-            onLeave={ handleLeaveConfirm }
-            onStay={ onStay }
-          />
         </>
       );
     }
@@ -403,13 +382,12 @@ ReleaseDetailsFormContent.displayName = "ReleaseDetailsFormContent";
  */
 const ReleaseDetails: FunctionComponent = () => {
   const { releaseId } = useParams<"releaseId">();
+  const { requestNavigation, setHasUnsavedChanges } = useUnsavedChanges();
 
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
   const isDirtyRef = useRef(false);
   const releaseDateRef = useRef<HTMLInputElement>(null);
   const releaseTitleRef = useRef<HTMLInputElement>(null);
-
-  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
   const { data: { firstName = "", lastName = "" } = emptyProfile } =
     useGetProfileQuery();
@@ -449,9 +427,9 @@ const ReleaseDetails: FunctionComponent = () => {
       ? "/home/releases/new/track/new"
       : `/home/releases/${releaseId}/track/new`;
 
-  const handleCloseLeaveModal = useCallback(() => {
-    setIsLeaveModalOpen(false);
-  }, []);
+  useEffect(() => {
+    return () => setHasUnsavedChanges(false);
+  }, [setHasUnsavedChanges]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -477,12 +455,11 @@ const ReleaseDetails: FunctionComponent = () => {
         addTrackPath={ addTrackPath }
         coverArtUrlRef={ coverArtUrlRef }
         isDirtyRef={ isDirtyRef }
-        isLeaveModalOpen={ isLeaveModalOpen }
         releaseDateRef={ releaseDateRef }
         releaseId={ releaseId }
         releaseTitleRef={ releaseTitleRef }
-        setIsLeaveModalOpen={ setIsLeaveModalOpen }
-        onStay={ handleCloseLeaveModal }
+        requestNavigation={ requestNavigation }
+        setHasUnsavedChanges={ setHasUnsavedChanges }
       />
     </Formik>
   );
