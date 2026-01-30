@@ -197,7 +197,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                 alignItems: { md: "stretch", xs: "center" },
                 display: "flex",
                 flexDirection: ["column", "column", "row"],
-                gap: 8,
+                gap: [8, 2, 2],
                 justifyContent: { md: "flex-start", xs: "center" },
                 maxWidth: "970px",
               } }
@@ -209,6 +209,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                   flex: 1,
                   justifyContent: { md: "flex-start", xs: "center" },
                   minWidth: 368,
+                  order: { md: 0, xs: 0 },
                 } }
               >
                 <Stack gap={ 1 }>
@@ -281,6 +282,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       flex: 1,
                       gap: 1.5,
                       justifyContent: { md: "flex-start", xs: "center" },
+                      mb: 1,
                       minWidth: 0,
                       mt: 2,
                     } }
@@ -306,8 +308,15 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                 </Stack>
               </Box>
 
-              <Box sx={ { flex: "0 0 auto", minWidth: 0 } }>
-                <Stack gap={ 3 }>
+              <Box
+                sx={ {
+                  display: { md: "flex", xs: "contents" },
+                  flex: "0 0 auto",
+                  flexDirection: "column",
+                  minWidth: 0,
+                } }
+              >
+                <Box sx={ { order: { md: 0, xs: -1 }, paddingBottom: 3 } }>
                   <Stack
                     gap={ 2 }
                     sx={ {
@@ -340,10 +349,14 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       }
                     />
                   </Stack>
+                </Box>
 
+                <Box sx={ { order: { md: 0, xs: 0 }, width: "100%" } }>
                   <HorizontalLine />
 
-                  <Typography variant="h4">TRACKS</Typography>
+                  <Typography pt={ 2.5 } variant="h4">
+                    TRACKS
+                  </Typography>
 
                   <Box sx={ { padding: 2 } }>Track list (placeholder)</Box>
 
@@ -352,6 +365,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       display: "flex",
                       flexDirection: ["column", "column", "row"],
                       gap: 2,
+                      paddingBottom: 2.5,
                     } }
                   >
                     <Box width="100%">
@@ -378,7 +392,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                   </Box>
 
                   <HorizontalLine />
-                </Stack>
+                </Box>
               </Box>
             </Box>
           </Form>
