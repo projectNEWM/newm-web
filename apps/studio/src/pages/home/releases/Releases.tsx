@@ -35,12 +35,8 @@ const Releases: FunctionComponent = () => {
       <Routes>
         <Route element={ <Discography /> } path="/" />
 
-        { !webStudioAlbumPhaseTwo && (
-          <>
-            <Route element={ <EditSong /> } path="edit-song/:songId*" />
-            <Route element={ <ViewDetails /> } path="view-details/:songId" />
-          </>
-        ) }
+        <Route element={ <EditSong /> } path="edit-song/:songId*" />
+        <Route element={ <ViewDetails /> } path="view-details/:songId" />
 
         { webStudioAlbumPhaseTwo && (
           <>
