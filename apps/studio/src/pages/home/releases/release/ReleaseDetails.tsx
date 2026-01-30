@@ -92,6 +92,8 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
       const { dirty, errors, isSubmitting, setTouched, validateForm, values } =
         useFormikContext<ReleaseFormValues>();
 
+      const leaveDestinationRef = useRef<string | null>(null);
+
       useEffect(() => {
         scrollToError(errors, isSubmitting, [
           { element: coverArtUrlRef.current, error: errors.coverArtUrl },
@@ -140,15 +142,30 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
 
       const handleBackClick = useCallback(() => {
         if (dirty) {
+          leaveDestinationRef.current = null;
           setIsLeaveModalOpen(true);
         } else {
           navigate(-1);
         }
       }, [dirty, navigate, setIsLeaveModalOpen]);
 
+      const handleAddTrackClick = useCallback(
+        (event: React.MouseEvent) => {
+          if (dirty) {
+            event.preventDefault();
+            leaveDestinationRef.current = addTrackPath;
+            setIsLeaveModalOpen(true);
+          }
+        },
+        [addTrackPath, dirty, setIsLeaveModalOpen]
+      );
+
       const handleLeaveConfirm = useCallback(() => {
+        const dest = leaveDestinationRef.current;
+        leaveDestinationRef.current = null;
         setIsLeaveModalOpen(false);
-        navigate(-1);
+        if (dest !== null) navigate(dest);
+        else navigate(-1);
       }, [navigate, setIsLeaveModalOpen]);
 
       isDirtyRef.current = dirty;
@@ -344,6 +361,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                         aria-label="Add new track"
                         sx={ { textDecoration: "none" } }
                         to={ addTrackPath }
+                        onClick={ handleAddTrackClick }
                       >
                         <DashedOutline
                           sx={ {
