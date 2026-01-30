@@ -26,6 +26,7 @@ const Modal: FunctionComponent<ModalProps> = ({
   isCloseOnClickBackgroundEnabled = false,
   isFullScreen = true,
   children,
+  ...rest
 }) => {
   const theme = useTheme();
 
@@ -44,6 +45,7 @@ const Modal: FunctionComponent<ModalProps> = ({
       open={ isOpen }
       sx={ { display: isFullScreen ? "flex" : "grid", overflow: "auto" } }
       onClose={ isCloseOnClickBackgroundEnabled ? onClose : undefined }
+      { ...rest }
     >
       <Box
         sx={ {
