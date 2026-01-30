@@ -197,7 +197,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                 alignItems: { md: "stretch", xs: "center" },
                 display: "flex",
                 flexDirection: ["column", "column", "row"],
-                gap: [8, 2, 2],
+                gap: 2,
                 justifyContent: { md: "flex-start", xs: "center" },
                 maxWidth: "970px",
               } }
