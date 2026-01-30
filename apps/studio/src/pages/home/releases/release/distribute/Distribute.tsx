@@ -8,6 +8,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import * as Yup from "yup";
 
 import { Button } from "@newm-web/elements";
+import { PaymentType } from "@newm-web/types";
 import ConfirmAgreement from "./ConfirmAgreement";
 import DistributionAlerts from "./DistributionAlerts";
 import { TrackDistributeFormValues } from "./types";
@@ -26,6 +27,7 @@ const Distribute = () => {
 
   const initialValues: TrackDistributeFormValues = {
     consentsToContract: false,
+    paymentType: PaymentType.NEWM,
     title,
   };
 

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 
 import { useFormikContext } from "formik";
 
@@ -43,12 +43,6 @@ const OrderSummaryDialog: FunctionComponent<OrderSummaryDialogProps> = ({
 }) => {
   const { values, submitForm, setFieldValue } =
     useFormikContext<UploadSongThunkRequest>();
-
-  useEffect(() => {
-    if (values.paymentType === PaymentType.ADA) {
-      setFieldValue("paymentType", PaymentType.NEWM);
-    }
-  }, [setFieldValue, values.paymentType]);
 
   const isNewmPayment = values.paymentType === PaymentType.NEWM;
   const isPaypalPayment = values.paymentType === PaymentType.PAYPAL;
