@@ -400,7 +400,7 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: (
-                <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
+                <ConfirmAgreement shouldShowOrderSummary={ !isDeclined } />
               ),
               path: "confirm",
               progressStepTitle: "Distribute",
