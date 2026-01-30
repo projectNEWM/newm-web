@@ -2,8 +2,6 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useFormikContext } from "formik";
 import { Box, Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import PriceSummaryDialog from "./PriceSummaryDialog";
 import OrderSummaryDialog from "./OrderSummaryDialog";
 import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
@@ -16,8 +14,6 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   shouldShowPriceSummary = true,
 }) => {
   const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
-
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
 
   const { values, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongThunkRequest>();
@@ -62,18 +58,12 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
           { shouldShowPriceSummary ? "Proceed to checkout" : "Resubmit release" }
         </Button>
 
-        { shouldShowPriceSummary &&
-          (webStudioReleaseDistributionPaymentEnhancements ? (
-            <OrderSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          ) : (
-            <PriceSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          )) }
+        { shouldShowPriceSummary && (
+          <OrderSummaryDialog
+            open={ isPaymentSummaryOpen }
+            onClose={ () => setIsPaymentSummaryOpen(false) }
+          />
+        ) }
       </Box>
     </Box>
   );
