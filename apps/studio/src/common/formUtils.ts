@@ -152,7 +152,8 @@ export const commonYupValidation = {
   ),
   isni: Yup.string().matches(
     REGEX_ISNI_FORMAT,
-    "Invalid ISNI format. The first 15 characters are digits and the last character can be either a digit or the letter 'X'."
+    "Invalid ISNI format. The first 15 characters are digits and the last " +
+      "character can be either a digit or the letter 'X'."
   ),
   isrc: (languageCodes: string[]) =>
     Yup.string()
@@ -242,12 +243,14 @@ export const commonYupValidation = {
     return Yup.date()
       .required("This field is required")
       .min(
-        minReleaseDate.toISOString().split("T")[0], // Compare using ISO format
+        minReleaseDate.toISOString().split("T")[0],
         `Release date must be on or after ${
           minReleaseDate.toISOString().split("T")[0]
         }`
       );
   },
+  /** Required release date for release-level form (no min-date constraint). */
+  releaseReleaseDate: Yup.date().required("This field is required"),
   role: (roles: string[]) =>
     Yup.string()
       .required("Role is required")

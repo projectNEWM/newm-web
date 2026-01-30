@@ -1,168 +1,472 @@
+import {
+  type FunctionComponent,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Form, Formik, useFormikContext } from "formik";
+import { useNavigate, useParams } from "react-router-dom";
+
+import * as Yup from "yup";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LockIcon from "@mui/icons-material/Lock";
+import { AddOutlined } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 import {
   Button,
   DashedOutline,
+  DropdownSelectField,
   HorizontalLine,
   Link,
+  TextInputField,
   Tooltip,
+  UploadImageField,
 } from "@newm-web/elements";
-import { FunctionComponent } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { AddOutlined } from "@mui/icons-material";
+import { UnsavedChangesModal } from "@newm-web/components";
+import { scrollToError } from "@newm-web/utils";
+
+import { NONE_OPTION, commonYupValidation } from "../../../../common";
+import { emptyProfile, useGetProfileQuery } from "../../../../modules/session";
 import ReleaseDeletionHelp from "../ReleaseDeletionHelp";
+
+const UNSAVED_MESSAGE =
+  "You have unsaved changes. If you leave, your data will be lost.";
+
+const RELEASE_CODE_TYPE_OPTIONS = [NONE_OPTION, "EAN", "UPC", "JAN"] as const;
+
+const REQUIRED_FIELDS = {
+  coverArtUrl: true,
+  releaseDate: true,
+  releaseTitle: true,
+} as const;
+
+export interface ReleaseFormValues {
+  artistName: string;
+  coverArtUrl: File | undefined;
+  originalReleaseDate: string;
+  releaseCodeNumber: string;
+  releaseCodeType: string;
+  releaseDate: string;
+  releaseTitle: string;
+}
+
+interface ReleaseDetailsFormContentProps {
+  readonly addTrackPath: string;
+  readonly coverArtUrlRef: React.RefObject<HTMLDivElement | null>;
+  readonly isDirtyRef: React.MutableRefObject<boolean>;
+  readonly isLeaveModalOpen: boolean;
+  readonly onStay: () => void;
+  readonly releaseDateRef: React.RefObject<HTMLInputElement | null>;
+  readonly releaseId: string | undefined;
+  readonly releaseTitleRef: React.RefObject<HTMLInputElement | null>;
+  readonly setIsLeaveModalOpen: (open: boolean) => void;
+}
+
+/**
+ * @internal
+ * Props are typed via ReleaseDetailsFormContentProps; no prop-types needed.
+ */
+/* eslint-disable react/prop-types */
+const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProps> =
+  memo(
+    ({
+      addTrackPath,
+      coverArtUrlRef,
+      isDirtyRef,
+      isLeaveModalOpen,
+      onStay,
+      releaseDateRef,
+      releaseId,
+      releaseTitleRef,
+      setIsLeaveModalOpen,
+    }) => {
+      const navigate = useNavigate();
+      const theme = useTheme();
+      const { dirty, errors, isSubmitting, setTouched, validateForm, values } =
+        useFormikContext<ReleaseFormValues>();
+
+      useEffect(() => {
+        scrollToError(errors, isSubmitting, [
+          { element: coverArtUrlRef.current, error: errors.coverArtUrl },
+          { element: releaseDateRef.current, error: errors.releaseDate },
+          {
+            element: releaseTitleRef.current,
+            error: errors.releaseTitle,
+          },
+        ]);
+      }, [
+        errors,
+        isSubmitting,
+        coverArtUrlRef,
+        releaseDateRef,
+        releaseTitleRef,
+      ]);
+
+      const handleProceedOrSave = useCallback(
+        (action: "proceed" | "save") => {
+          validateForm()
+            .then((formErrors) => {
+              const hasErrors = Object.keys(formErrors).length > 0;
+              if (hasErrors) {
+                setTouched(REQUIRED_FIELDS);
+                return;
+              }
+
+              if (action === "save") {
+                // TODO: Add save logic here...........................................
+                navigate("/home/releases/");
+              } else {
+                // TODO: Add proceed logic here...........................................
+                navigate(
+                  releaseId
+                    ? `/home/releases/${releaseId}/distribute`
+                    : "/home/releases/"
+                );
+              }
+            })
+            .catch(() => {
+              setTouched(REQUIRED_FIELDS);
+            });
+        },
+        [navigate, releaseId, setTouched, validateForm]
+      );
+
+      const handleBackClick = useCallback(() => {
+        if (dirty) {
+          setIsLeaveModalOpen(true);
+        } else {
+          navigate(-1);
+        }
+      }, [dirty, navigate, setIsLeaveModalOpen]);
+
+      const handleLeaveConfirm = useCallback(() => {
+        setIsLeaveModalOpen(false);
+        navigate(-1);
+      }, [navigate, setIsLeaveModalOpen]);
+
+      isDirtyRef.current = dirty;
+
+      return (
+        <>
+          <Stack alignItems="center" direction="row" gap={ 2.5 } mb={ 2 }>
+            <Button
+              color="white"
+              variant="outlined"
+              width="icon"
+              onClick={ handleBackClick }
+            >
+              <ArrowBackIcon />
+            </Button>
+
+            <Typography variant="h3">
+              { releaseId ? "RELEASE DETAILS" : "CREATE NEW RELEASE" }
+            </Typography>
+
+            { releaseId && (
+              <Tooltip title={ <ReleaseDeletionHelp /> }>
+                <Stack ml="auto">
+                  <Button
+                    color="white"
+                    disabled={ true }
+                    sx={ { marginLeft: "auto" } }
+                    variant="outlined"
+                    width="icon"
+                  >
+                    <DeleteIcon fontSize="small" sx={ { color: "white" } } />
+                  </Button>
+                </Stack>
+              </Tooltip>
+            ) }
+          </Stack>
+
+          <Form noValidate>
+            <Box
+              pb={ 7 }
+              pt={ 3 }
+              sx={ {
+                display: "flex",
+                flexDirection: ["column", "column", "row"],
+                gap: 8,
+              } }
+            >
+              <Box sx={ { flex: 1, minWidth: 0 } }>
+                <Stack gap={ 1 }>
+                  <Typography variant="h4">COVER ART</Typography>
+                  <Box ref={ coverArtUrlRef }>
+                    <UploadImageField
+                      emptyMessage="Drag and drop or browse to add your file"
+                      minDimensions={ { height: 1400, width: 1400 } }
+                      minFileSizeMB={ 0.1 }
+                      name="coverArtUrl"
+                      rootSx={ {
+                        alignSelf: "center",
+                        height: "330px",
+                        mb: 2.5,
+                        width: "100%",
+                      } }
+                      hasPreviewOption
+                      isAspectRatioOneToOne
+                    />
+                  </Box>
+
+                  <Stack
+                    gap={ 2 }
+                    sx={ {
+                      maxWidth: theme.inputField.maxWidth,
+                    } }
+                  >
+                    <TextInputField
+                      isOptional={ false }
+                      label="RELEASE DATE"
+                      name="releaseDate"
+                      placeholder="Select date"
+                      ref={ releaseDateRef as React.Ref<HTMLInputElement> }
+                      tooltipText="TO BE UPDATED"
+                      type="date"
+                    />
+                    <TextInputField
+                      isOptional={ true }
+                      label="ORIGINAL RELEASE DATE"
+                      max={ new Date().toISOString().split("T")[0] }
+                      name="originalReleaseDate"
+                      placeholder="Select date"
+                      tooltipText="TO BE UPDATED"
+                      type="date"
+                    />
+                    <DropdownSelectField
+                      isOptional={ true }
+                      label="RELEASE CODE TYPE"
+                      name="releaseCodeType"
+                      options={ [...RELEASE_CODE_TYPE_OPTIONS] }
+                      placeholder="Select one"
+                      tooltipText="TO BE UPDATED"
+                    />
+                    <TextInputField
+                      disabled={
+                        values.releaseCodeType === NONE_OPTION ||
+                        !values.releaseCodeType
+                      }
+                      isOptional={ true }
+                      label="RELEASE CODE NUMBER"
+                      name="releaseCodeNumber"
+                      placeholder="000000000000"
+                      tooltipText="TO BE UPDATED"
+                    />
+                  </Stack>
+
+                  <Box
+                    sx={ {
+                      display: "flex",
+                      flex: 1,
+                      gap: 1.5,
+                      minWidth: 0,
+                      mt: 2,
+                    } }
+                  >
+                    <Button
+                      type="button"
+                      variant="primary"
+                      width="compact"
+                      onClick={ () => handleProceedOrSave("proceed") }
+                    >
+                      Proceed
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      width="compact"
+                      onClick={ () => handleProceedOrSave("save") }
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Stack>
+              </Box>
+
+              <Box sx={ { flex: 1, minWidth: 0 } }>
+                <Stack gap={ 3 }>
+                  <Stack
+                    gap={ 2 }
+                    sx={ {
+                      flexDirection: ["column", "column", "row"],
+                    } }
+                  >
+                    <TextInputField
+                      isOptional={ false }
+                      label="RELEASE TITLE"
+                      name="releaseTitle"
+                      placeholder="Give your release a title"
+                      ref={ releaseTitleRef as React.Ref<HTMLInputElement> }
+                    />
+
+                    <TextInputField
+                      disabled={ true }
+                      isOptional={ false }
+                      label="ARTIST NAME"
+                      name="artistName"
+                      startAdornment={
+                        <LockIcon
+                          sx={ {
+                            color: theme.colors.white,
+                            height: "auto",
+                            marginLeft: 1,
+                            marginRight: 1,
+                            width: 22,
+                          } }
+                        />
+                      }
+                    />
+                  </Stack>
+
+                  <HorizontalLine />
+
+                  <Typography variant="h4">TRACKS</Typography>
+
+                  <Box sx={ { padding: 2 } }>Track list (placeholder)</Box>
+
+                  <Box
+                    sx={ {
+                      display: "flex",
+                      flexDirection: ["column", "column", "row"],
+                      gap: 2,
+                    } }
+                  >
+                    <Box width="100%">
+                      <Link
+                        aria-label="Add new track"
+                        sx={ { textDecoration: "none" } }
+                        to={ addTrackPath }
+                      >
+                        <DashedOutline
+                          sx={ {
+                            alignItems: "center",
+                            display: "flex",
+                            flex: 1,
+                            justifyContent: "center",
+                            padding: 3.5,
+                          } }
+                        >
+                          <AddOutlined sx={ { marginRight: 0.5 } } /> Add new
+                          track
+                        </DashedOutline>
+                      </Link>
+                    </Box>
+                  </Box>
+
+                  <HorizontalLine />
+                </Stack>
+              </Box>
+            </Box>
+          </Form>
+
+          <UnsavedChangesModal
+            isOpen={ isLeaveModalOpen }
+            message={ UNSAVED_MESSAGE }
+            onLeave={ handleLeaveConfirm }
+            onStay={ onStay }
+          />
+        </>
+      );
+    }
+  );
+
+ReleaseDetailsFormContent.displayName = "ReleaseDetailsFormContent";
 
 /**
  * * Shared page for creating a new release and viewing release details.
  */
 const ReleaseDetails: FunctionComponent = () => {
-  const navigate = useNavigate();
   const { releaseId } = useParams<"releaseId">();
 
-  // TODO: Fetch release details.
+  const coverArtUrlRef = useRef<HTMLDivElement>(null);
+  const isDirtyRef = useRef(false);
+  const releaseDateRef = useRef<HTMLInputElement>(null);
+  const releaseTitleRef = useRef<HTMLInputElement>(null);
 
-  const addTrackPath = releaseId
-    ? `/home/releases/${releaseId}/track/new`
-    : "/home/releases/new/track/new";
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+
+  const { data: { firstName = "", lastName = "" } = emptyProfile } =
+    useGetProfileQuery();
+
+  const artistName = `${firstName} ${lastName}`.trim() || "Artist";
+
+  const initialValues = useMemo<ReleaseFormValues>(
+    () => ({
+      artistName,
+      coverArtUrl: undefined,
+      originalReleaseDate: "",
+      releaseCodeNumber: "",
+      releaseCodeType: "",
+      releaseDate: "",
+      releaseTitle: "",
+    }),
+    [artistName]
+  );
+
+  const validationSchema = useMemo(
+    () =>
+      Yup.object().shape({
+        coverArtUrl: commonYupValidation.coverArtUrl,
+        originalReleaseDate: commonYupValidation.publicationDate
+          .nullable()
+          .transform((v, o) => (o === "" ? undefined : v)),
+        releaseCodeNumber: Yup.string(),
+        releaseCodeType: Yup.string(),
+        releaseDate: commonYupValidation.releaseReleaseDate,
+        releaseTitle: commonYupValidation.title,
+      }),
+    []
+  );
+
+  const addTrackPath =
+    releaseId === undefined
+      ? "/home/releases/new/track/new"
+      : `/home/releases/${releaseId}/track/new`;
+
+  const handleCloseLeaveModal = useCallback(() => {
+    setIsLeaveModalOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isDirtyRef.current) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   return (
-    <>
-      <Stack alignItems="center" direction="row" gap={ 2.5 }>
-        <Button
-          color="white"
-          variant="outlined"
-          width="icon"
-          onClick={ () => navigate(-1) }
-        >
-          <ArrowBackIcon />
-        </Button>
-
-        <Typography variant="h3">
-          { /* // TODO: Update with release title. */ }
-          { releaseId ? "RELEASE DETAILS (release.title)" : "CREATE NEW RELEASE" }
-        </Typography>
-
-        { releaseId && (
-          // TODO: Update with standalone delete button component.
-          <Tooltip title={ <ReleaseDeletionHelp /> }>
-            <Stack ml="auto">
-              <Button
-                color="white"
-                disabled={ true }
-                sx={ { marginLeft: "auto" } }
-                variant="outlined"
-                width="icon"
-              >
-                <DeleteIcon fontSize="small" sx={ { color: "white" } } />
-              </Button>
-            </Stack>
-          </Tooltip>
-        ) }
-      </Stack>
-
-      <Box
-        pb={ 7 }
-        pt={ 3 }
-        sx={ {
-          display: "flex",
-          flexDirection: ["column", "column", "row"],
-          gap: 8,
-        } }
-      >
-        <Box sx={ { flex: 1, minWidth: 0 } }>
-          <Box
-            sx={ {
-              padding: 2,
-            } }
-          >
-            { /* // TODO: Add cover art, release date, etc into formik context. */ }
-            Release details form (placeholder)
-            <Box
-              sx={ {
-                display: "flex",
-                flex: 1,
-                gap: 1.5,
-                minWidth: 0,
-                mt: 2,
-              } }
-            >
-              <Button
-                // TODO: update disabled state.
-                disabled={ true }
-                variant="primary"
-                width="compact"
-                // TODO: Add logic to proceed to next step.
-                onClick={ () => null }
-              >
-                Proceed
-              </Button>
-
-              <Button
-                // TODO: update disabled state.
-                disabled={ true }
-                variant="outlined"
-                width="compact"
-                // TODO: Add logic to save release.
-                onClick={ () => null }
-              >
-                Save
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-
-        <Box sx={ { flex: 1, minWidth: 0 } }>
-          <Stack gap={ 3 }>
-            { /* // TODO: add Release title and Artist name inputs to formik context. */ }
-            <HorizontalLine />
-
-            <Typography variant="h4">TRACKS</Typography>
-
-            { /* // TODO: conditionally render Box with track list. */ }
-            <Box
-              sx={ {
-                padding: 2,
-              } }
-            >
-              Track list (placeholder)
-            </Box>
-
-            <Box
-              sx={ {
-                display: "flex",
-                flexDirection: ["column", "column", "row"],
-                gap: 2,
-              } }
-            >
-              <Box width="100%">
-                <Link
-                  aria-label="Add new track"
-                  sx={ {
-                    textDecoration: "none",
-                  } }
-                  to={ addTrackPath }
-                >
-                  <DashedOutline
-                    sx={ {
-                      alignItems: "center",
-                      display: "flex",
-                      flex: 1,
-                      justifyContent: "center",
-                      padding: 3.5,
-                    } }
-                  >
-                    <AddOutlined sx={ { marginRight: 0.5 } } /> Add new track
-                  </DashedOutline>
-                </Link>
-              </Box>
-            </Box>
-
-            <HorizontalLine />
-          </Stack>
-        </Box>
-      </Box>
-    </>
+    <Formik
+      enableReinitialize={ true }
+      initialValues={ initialValues }
+      validationSchema={ validationSchema }
+      onSubmit={ () => {
+        /* // * Stub; requests handled at 'handleProceedOrSave' */
+      } }
+    >
+      <ReleaseDetailsFormContent
+        addTrackPath={ addTrackPath }
+        coverArtUrlRef={ coverArtUrlRef }
+        isDirtyRef={ isDirtyRef }
+        isLeaveModalOpen={ isLeaveModalOpen }
+        releaseDateRef={ releaseDateRef }
+        releaseId={ releaseId }
+        releaseTitleRef={ releaseTitleRef }
+        setIsLeaveModalOpen={ setIsLeaveModalOpen }
+        onStay={ handleCloseLeaveModal }
+      />
+    </Formik>
   );
 };
 
