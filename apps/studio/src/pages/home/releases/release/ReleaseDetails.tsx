@@ -76,14 +76,47 @@ const ReleaseDetails: FunctionComponent = () => {
               padding: 2,
             } }
           >
-            <Typography variant="subtitle1">
-              Release details form (placeholder)
-            </Typography>
+            { /* // TODO: Add cover art, release date, etc into formik context. */ }
+            Release details form (placeholder)
+            <Box
+              sx={ {
+                display: "flex",
+                flex: 1,
+                gap: 1.5,
+                minWidth: 0,
+                mt: 2,
+              } }
+            >
+              <Button
+                // TODO: update disabled state.
+                disabled={ true }
+                variant="primary"
+                width="compact"
+                // TODO: Add logic to proceed to next step.
+                onClick={ () => null }
+              >
+                Proceed
+              </Button>
+
+              <Button
+                // TODO: update disabled state.
+                disabled={ true }
+                variant="outlined"
+                width="compact"
+                // TODO: Add logic to save release.
+                onClick={ () => null }
+              >
+                Save
+              </Button>
+            </Box>
           </Box>
         </Box>
 
         <Box sx={ { flex: 1, minWidth: 0 } }>
           <Stack gap={ 3 }>
+            { /* // TODO: add Release title and Artist name inputs to formik context. */ }
+            <HorizontalLine />
+
             <Typography variant="h4">TRACKS</Typography>
 
             { /* // TODO: conditionally render Box with track list. */ }
@@ -92,9 +125,7 @@ const ReleaseDetails: FunctionComponent = () => {
                 padding: 2,
               } }
             >
-              <Typography variant="subtitle1">
-                Track list (placeholder)
-              </Typography>
+              Track list (placeholder)
             </Box>
 
             <Box
@@ -118,7 +149,7 @@ const ReleaseDetails: FunctionComponent = () => {
                       display: "flex",
                       flex: 1,
                       justifyContent: "center",
-                      padding: 4,
+                      padding: 3.5,
                     } }
                   >
                     <AddOutlined sx={ { marginRight: 0.5 } } /> Add new track
@@ -128,19 +159,6 @@ const ReleaseDetails: FunctionComponent = () => {
             </Box>
 
             <HorizontalLine />
-
-            <Box sx={ { flex: 1, minWidth: 0 } }>
-              <Button
-                // TODO: update disabled state.
-                disabled={ true }
-                variant="primary"
-                width="compact"
-                // TODO: Add logic to proceed to next step.
-                onClick={ () => null }
-              >
-                Proceed
-              </Button>
-            </Box>
           </Stack>
         </Box>
       </Box>
