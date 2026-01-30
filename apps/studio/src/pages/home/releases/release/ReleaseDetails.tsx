@@ -194,12 +194,23 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
               pb={ 7 }
               pt={ 3 }
               sx={ {
+                alignItems: { md: "stretch", xs: "center" },
                 display: "flex",
                 flexDirection: ["column", "column", "row"],
                 gap: 8,
+                justifyContent: { md: "flex-start", xs: "center" },
+                maxWidth: "970px",
               } }
             >
-              <Box sx={ { flex: 1, minWidth: 0 } }>
+              <Box
+                sx={ {
+                  alignItems: { md: "stretch", xs: "center" },
+                  display: ["flex", "flex", "unset"],
+                  flex: 1,
+                  justifyContent: { md: "flex-start", xs: "center" },
+                  minWidth: 368,
+                } }
+              >
                 <Stack gap={ 1 }>
                   <Typography variant="h4">COVER ART</Typography>
                   <Box ref={ coverArtUrlRef }>
@@ -269,6 +280,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       display: "flex",
                       flex: 1,
                       gap: 1.5,
+                      justifyContent: { md: "flex-start", xs: "center" },
                       minWidth: 0,
                       mt: 2,
                     } }
@@ -294,7 +306,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                 </Stack>
               </Box>
 
-              <Box sx={ { flex: 1, minWidth: 0 } }>
+              <Box sx={ { flex: "0 0 auto", minWidth: 0 } }>
                 <Stack gap={ 3 }>
                   <Stack
                     gap={ 2 }
