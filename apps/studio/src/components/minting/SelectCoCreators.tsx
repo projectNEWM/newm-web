@@ -91,7 +91,7 @@ const FormContent: FunctionComponent<FormContentProps> = ({
 
   const collabPricePerArtistUsd = songEstimate?.mintPaymentOptions?.find(
     (option) => option.paymentType === PaymentType.PAYPAL
-  )?.collabPricePerArtist;
+  )?.collabPricePerArtistUsd;
 
   /**
    * Call onChange callbacks when form values change.
