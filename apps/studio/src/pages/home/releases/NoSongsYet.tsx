@@ -52,20 +52,13 @@ const NoSongsYet: FunctionComponent = () => {
             Take Your Music Global
           </Typography>
           <Typography
-            sx={ { color: theme.colors.grey100, fontSize: 16, fontWeight: 300 } }
-          >
-            Manage your releases from initial upload through global
-            distribution.
-          </Typography>
-          <Typography
             sx={ {
               color: theme.colors.white,
               fontSize: 16,
               fontWeight: 300,
-              mt: 0.5,
             } }
           >
-            Click the <strong>Create New Release</strong> button above to begin.
+            Click <strong>Create New Release</strong> to get started!
           </Typography>
         </>
       ) : (
