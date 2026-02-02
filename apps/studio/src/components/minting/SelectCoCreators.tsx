@@ -39,7 +39,7 @@ interface FormContentProps extends FormikProps<FormValues> {
 /**
  * Add, update, and remove owners and creditors when minting a song.
  */
-const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
+const SelectCoCreators: FunctionComponent<SelectCoCreatorsProps> = ({
   owners,
   creditors,
   featured,
@@ -269,4 +269,4 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   );
 };
 
-export default SelectCoCeators;
+export default SelectCoCreators;
