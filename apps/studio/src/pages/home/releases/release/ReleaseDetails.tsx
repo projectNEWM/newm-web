@@ -83,8 +83,15 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
     }) => {
       const navigate = useNavigate();
       const theme = useTheme();
-      const { dirty, errors, isSubmitting, setTouched, validateForm, values } =
-        useFormikContext<ReleaseFormValues>();
+      const {
+        dirty,
+        errors,
+        isSubmitting,
+        setSubmitting,
+        setTouched,
+        validateForm,
+        values,
+      } = useFormikContext<ReleaseFormValues>();
 
       useEffect(() => {
         setHasUnsavedChanges(dirty);
@@ -109,10 +116,13 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
 
       const handleProceedOrSave = useCallback(
         (action: "proceed" | "save") => {
+          setSubmitting(true);
+
           validateForm()
             .then((formErrors) => {
               const hasErrors = Object.keys(formErrors).length > 0;
               if (hasErrors) {
+                setSubmitting(false);
                 setTouched(REQUIRED_FIELDS);
                 return;
               }
@@ -131,9 +141,12 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
             })
             .catch(() => {
               setTouched(REQUIRED_FIELDS);
+            })
+            .finally(() => {
+              setSubmitting(false);
             });
         },
-        [navigate, releaseId, setTouched, validateForm]
+        [navigate, releaseId, setSubmitting, setTouched, validateForm]
       );
 
       const handleBackClick = useCallback(() => {
