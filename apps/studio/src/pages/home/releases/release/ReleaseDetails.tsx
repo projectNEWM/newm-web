@@ -474,6 +474,8 @@ const ReleaseDetails: FunctionComponent = () => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (isDirtyRef.current) {
         event.preventDefault();
+        // * Deprecated per spec but still required by most browsers to show the dialog.
+        event.returnValue = "";
       }
     };
 
