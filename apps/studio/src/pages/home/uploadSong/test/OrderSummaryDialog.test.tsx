@@ -13,8 +13,14 @@ import { openPayPalPopup } from "../../../../common/paypalUtils";
 
 // Mock dependencies
 jest.mock("formik");
-jest.mock("../../../../modules/song");
-jest.mock("../../../../modules/crypto");
+jest.mock("../../../../modules/song", () => ({
+  ...jest.requireActual("../../../../modules/song"),
+  useGetMintSongEstimateQuery: jest.fn(),
+}));
+jest.mock("../../../../modules/crypto", () => ({
+  ...jest.requireActual("../../../../modules/crypto"),
+  useGetNewmUsdConversionRateQuery: jest.fn(),
+}));
 jest.mock("../../../../common/paypalUtils");
 
 // Helper to render with theme
@@ -182,19 +188,27 @@ describe("OrderSummaryDialog", () => {
       );
     });
 
-    it("should switch from ADA to NEWM payment type on mount", () => {
-      mockUseFormikContext.mockReturnValue({
-        setFieldValue: mockSetFieldValue,
-        submitForm: mockSubmitForm,
-        values: { ...defaultFormValues, paymentType: PaymentType.ADA },
-      } as any);
-
+    it("should be NEWM payment after selecting PayPal and then NEWM", () => {
       renderWithTheme(<OrderSummaryDialog open={ true } onClose={ mockOnClose } />);
+
+      // Select PayPal
+      const paypalRadio = screen.getByRole("radio", {
+        name: /Pay with PayPal/i,
+      });
+      fireEvent.click(paypalRadio);
 
       expect(mockSetFieldValue).toHaveBeenCalledWith(
         "paymentType",
-        PaymentType.NEWM
+        PaymentType.PAYPAL
       );
+
+      // Select NEWM again
+      const newmRadio = screen.getByRole("radio", {
+        name: /Pay with \$NEWM/i,
+      });
+      fireEvent.click(newmRadio);
+
+      expect(newmRadio).toBeChecked();
     });
   });
 

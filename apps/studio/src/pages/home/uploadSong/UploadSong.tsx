@@ -99,7 +99,7 @@ const UploadSong: FunctionComponent = () => {
         status: CollaborationStatus.Editing,
       },
     ],
-    paymentType: PaymentType.ADA,
+    paymentType: PaymentType.NEWM,
     phonographicCopyrightOwner: undefined,
     phonographicCopyrightYear: undefined,
     publicationDate: undefined,

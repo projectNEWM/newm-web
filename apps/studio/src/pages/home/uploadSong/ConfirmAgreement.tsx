@@ -2,22 +2,18 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useFormikContext } from "formik";
 import { Box, Typography } from "@mui/material";
 import { Button } from "@newm-web/elements";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import PriceSummaryDialog from "./PriceSummaryDialog";
 import OrderSummaryDialog from "./OrderSummaryDialog";
 import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
 
 interface ConfirmAgreementProps {
-  readonly shouldShowPriceSummary?: boolean;
+  readonly shouldShowOrderSummary?: boolean;
 }
 
 const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
-  shouldShowPriceSummary = true,
+  shouldShowOrderSummary = true,
 }) => {
-  const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
-
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
+  const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState(false);
 
   const { values, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongThunkRequest>();
@@ -27,8 +23,8 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   };
 
   const handleButtonClick = () => {
-    if (shouldShowPriceSummary) {
-      setIsPaymentSummaryOpen(!isPaymentSummaryOpen);
+    if (shouldShowOrderSummary) {
+      setIsOrderSummaryOpen(!isOrderSummaryOpen);
     }
   };
 
@@ -55,25 +51,19 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
         <Button
           disabled={ !values.consentsToContract }
           isLoading={ isSubmitting }
-          type={ shouldShowPriceSummary ? "button" : "submit" }
+          type={ shouldShowOrderSummary ? "button" : "submit" }
           width="compact"
           onClick={ handleButtonClick }
         >
-          { shouldShowPriceSummary ? "Proceed to checkout" : "Resubmit release" }
+          { shouldShowOrderSummary ? "Proceed to checkout" : "Resubmit release" }
         </Button>
 
-        { shouldShowPriceSummary &&
-          (webStudioReleaseDistributionPaymentEnhancements ? (
-            <OrderSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          ) : (
-            <PriceSummaryDialog
-              open={ isPaymentSummaryOpen }
-              onClose={ () => setIsPaymentSummaryOpen(false) }
-            />
-          )) }
+        { shouldShowOrderSummary && (
+          <OrderSummaryDialog
+            open={ isOrderSummaryOpen }
+            onClose={ () => setIsOrderSummaryOpen(false) }
+          />
+        ) }
       </Box>
     </Box>
   );

@@ -195,7 +195,7 @@ const EditSong: FunctionComponent = () => {
               status: CollaborationStatus.Editing,
             },
           ],
-    paymentType: PaymentType.ADA,
+    paymentType: PaymentType.NEWM,
     phonographicCopyrightOwner,
     phonographicCopyrightYear,
     publicationDate,
@@ -400,7 +400,7 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: (
-                <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
+                <ConfirmAgreement shouldShowOrderSummary={ !isDeclined } />
               ),
               path: "confirm",
               progressStepTitle: "Distribute",

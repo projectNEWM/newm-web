@@ -5,6 +5,7 @@ import { Formik, FormikProps } from "formik";
 import { FunctionComponent, useEffect, useState } from "react";
 import theme from "@newm-web/theme";
 import { formatUsdAmount, usePrevious } from "@newm-web/utils";
+import { PaymentType } from "@newm-web/types";
 import AddOwnerModal from "./AddOwnerModal";
 import FeaturedArtists from "./FeaturedArtists";
 import {
@@ -38,7 +39,7 @@ interface FormContentProps extends FormikProps<FormValues> {
 /**
  * Add, update, and remove owners and creditors when minting a song.
  */
-const SelectCoCeators: FunctionComponent<SelectCoCreatorsProps> = ({
+const SelectCoCreators: FunctionComponent<SelectCoCreatorsProps> = ({
   owners,
   creditors,
   featured,
@@ -81,11 +82,16 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   handleSubmit,
   isAddDeleteDisabled,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const prevValues = usePrevious(values);
   const { data: songEstimate } = useGetMintSongEstimateQuery({
     collaborators: 1,
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const prevValues = usePrevious(values);
+
+  const collabPricePerArtistUsd = songEstimate?.mintPaymentOptions?.find(
+    (option) => option.paymentType === PaymentType.PAYPAL
+  )?.collabPricePerArtistUsd;
 
   /**
    * Call onChange callbacks when form values change.
@@ -169,11 +175,10 @@ const FormContent: FunctionComponent<FormContentProps> = ({
           </Button>
 
           <Typography mr={ 2 } mt={ 1.5 } variant="subtitle2">
-            { `An additional ${
-              formatUsdAmount(Number(songEstimate?.collabPriceUsd), {
-                precision: 2,
-              }) || "N/A"
-            } fee is added for every additional collaborator receiving royalty splits.` }
+            { `An additional ${formatUsdAmount(Number(collabPricePerArtistUsd), {
+              precision: 2,
+              returnZeroValueForNullish: false,
+            })} fee is added for every additional collaborator receiving royalty splits.` }
             <Tooltip
               title={
                 "This cost is increased with each additional artist because " +
@@ -264,4 +269,4 @@ const FormContent: FunctionComponent<FormContentProps> = ({
   );
 };
 
-export default SelectCoCeators;
+export default SelectCoCreators;
