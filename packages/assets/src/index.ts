@@ -40,6 +40,7 @@ import gradientRing from "./lib/images/gradient-ring.png";
 import referralBannerBackground from "./lib/images/referral-banner-background.webp";
 import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
 import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
+import { default as NEWMMonsterGuitar } from "./lib/images/NEWMMonsterGuitar.png";
 
 export {
   AddImage,
@@ -68,6 +69,7 @@ export {
   NEWMMarketplaceLogo,
   NEWMMonsterPercussion,
   NEWMMonsterRock,
+  NEWMMonsterGuitar,
   Owner,
   PeopleIcon,
   PlayButton,

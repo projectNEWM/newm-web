@@ -1,4 +1,10 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Box,
   Drawer,
@@ -39,6 +45,7 @@ import {
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
 } from "../../common";
+import { useUnsavedChanges } from "../../contexts/UnsavedChangesContext";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { ReferralBanner } from "../../components";
 
@@ -55,7 +62,19 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
   const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
     useFlags();
 
+  const { hasUnsavedChanges, requestNavigation } = useUnsavedChanges();
   const theme = useTheme();
+
+  const handleInternalNavClick = useCallback(
+    (path: string) => (event?: React.MouseEvent) => {
+      if (hasUnsavedChanges) {
+        event?.preventDefault();
+        requestNavigation(path);
+      }
+      setMobileOpen(false);
+    },
+    [hasUnsavedChanges, requestNavigation, setMobileOpen]
+  );
 
   const [isReferralBannerDismissed, setIsReferralBannerDismissed] =
     useState(true);
@@ -168,7 +187,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ UploadIcon }
               label="UPLOAD A SONG"
               to="/home/upload-song"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/upload-song") }
             />
           ) }
 
@@ -181,14 +200,16 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ LibraryIcon }
               label={ webStudioAlbumPhaseOne ? "RELEASES" : "LIBRARY" }
               to={ webStudioAlbumPhaseOne ? "/home/releases" : "/home/library" }
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick(
+                webStudioAlbumPhaseOne ? "/home/releases" : "/home/library"
+              ) }
             />
 
             <SideBarNavLink
               Icon={ CollaboratorsIcon }
               label="COLLABORATORS"
               to="/home/collaborators"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/collaborators") }
             />
           </Stack>
 
@@ -201,7 +222,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ WalletIcon }
               label="WALLET"
               to="/home/wallet"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/wallet") }
             />
           </Stack>
 
@@ -214,14 +235,14 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ ProfileIcon }
               label="PROFILE"
               to="/home/profile"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/profile") }
             />
 
             <SideBarNavLink
               Icon={ SettingsIcon }
               label="SETTINGS"
               to="/home/settings"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/settings") }
             />
           </Stack>
 
