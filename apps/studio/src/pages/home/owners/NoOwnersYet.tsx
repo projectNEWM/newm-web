@@ -19,6 +19,12 @@ const NoOwnersYet: FunctionComponent<NoOwnersYetProps> = ({
 
   const navigate = useNavigate();
 
+  const ctaLabel = hasSongsUploaded
+    ? "Invite other collaborators"
+    : webStudioAlbumPhaseTwo
+    ? "Create your first release"
+    : "Upload your first song";
+
   return (
     <Box
       sx={ {
@@ -49,11 +55,7 @@ const NoOwnersYet: FunctionComponent<NoOwnersYetProps> = ({
           )
         }
       >
-        { hasSongsUploaded && !webStudioAlbumPhaseTwo
-          ? "Invite other collaborators"
-          : webStudioAlbumPhaseTwo
-          ? "Create your first release"
-          : "Upload your first song" }
+        { ctaLabel }
       </Button>
     </Box>
   );
