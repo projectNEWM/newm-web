@@ -1,10 +1,10 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
 import { useFlags } from "launchdarkly-react-client-sdk";
 
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 
 import * as Yup from "yup";
 
@@ -44,22 +44,67 @@ import {
   usePatchSongThunk,
 } from "../../../../../modules/song";
 import { setToastMessage } from "../../../../../modules/ui";
+import {
+  type RequestNavigationOptions,
+  useUnsavedChanges,
+} from "../../../../../contexts/UnsavedChangesContext";
 
 interface EditTrackFormValues extends PatchSongThunkRequest {
   agreesToCoverArtGuidelines?: boolean;
 }
+
+const EDIT_TRACK_UNSAVED_MODAL_OPTIONS: RequestNavigationOptions = {
+  message:
+    "You haven't saved your changes to the track. If you exit now, your track metadata won't be saved.",
+  title: "Wait! Don't lose your progress.",
+};
+
+/**
+ * * Syncs Formik dirty state to unsaved changes context and sets edit-track modal copy.
+ */
+const EditTrackUnsavedSync: FunctionComponent = () => {
+  const { dirty } = useFormikContext<EditTrackFormValues>();
+  const { setHasUnsavedChanges, setUnsavedModalContent } = useUnsavedChanges();
+
+  useEffect(() => {
+    setHasUnsavedChanges(dirty);
+    if (dirty) {
+      setUnsavedModalContent(EDIT_TRACK_UNSAVED_MODAL_OPTIONS);
+    } else {
+      setUnsavedModalContent(null);
+    }
+    return () => {
+      setHasUnsavedChanges(false);
+      setUnsavedModalContent(null);
+    };
+  }, [dirty, setHasUnsavedChanges, setUnsavedModalContent]);
+
+  return null;
+};
 
 const EditTrack: FunctionComponent = () => {
   const { webStudioDisableTrackDistributionAndMinting } = useFlags();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const theme = useTheme();
   const { releaseId, trackId } = useParams<"releaseId" | "trackId">() as {
     releaseId?: string;
     trackId?: string;
   };
-  const windowWidth = useWindowDimensions()?.width;
+  const isDirtyRef = useRef(false);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isDirtyRef.current) {
+        event.preventDefault();
+        // * Deprecated per spec but still required by most browsers to show the dialog.
+        event.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -289,13 +334,97 @@ const EditTrack: FunctionComponent = () => {
   };
 
   return (
+    <Box pb={ 7 } pt={ 5 }>
+      <Formik
+        enableReinitialize={ true }
+        initialValues={ initialValues }
+        validationSchema={ Yup.object().shape({
+          agreesToCoverArtGuidelines: validations.agreesToCoverArtGuidelines,
+          barcodeNumber: validations.barcodeNumber,
+          barcodeType: validations.barcodeType,
+          compositionCopyrightOwner: validations.copyrightOwner,
+          compositionCopyrightYear: validations.copyrightYear,
+          coverArtUrl: validations.coverArtUrl,
+          creditors: validations.creditors,
+          description: validations.description,
+          genres: validations.genres,
+          ipi: validations.ipi,
+          isrc: validations.isrc,
+          iswc: validations.iswc,
+          moods: validations.moods,
+          owners: validations.owners,
+          publicationDate: validations.publicationDate,
+          releaseDate: validations.releaseDate,
+          title: validations.title,
+        }) }
+        onSubmit={ handleSubmit }
+      >
+        { ({ isSubmitting }) => (
+          <EditTrackFormContent
+            deleteSong={ deleteSong }
+            isDeclined={ isDeclined }
+            isDeleteModalActive={ isDeleteModalActive }
+            isDirtyRef={ isDirtyRef }
+            isSongDeletable={ isSongDeletable }
+            isSubmitting={ isSubmitting }
+            navigate={ navigate }
+            setIsDeleteModalActive={ setIsDeleteModalActive }
+            title={ title }
+            trackId={ trackId }
+          />
+        ) }
+      </Formik>
+    </Box>
+  );
+};
+
+interface EditTrackFormContentProps {
+  readonly deleteSong: (args: { archived: boolean; songId: string }) => void;
+  readonly isDeclined: boolean;
+  readonly isDeleteModalActive: boolean;
+  readonly isDirtyRef: React.MutableRefObject<boolean>;
+  readonly isSongDeletable: boolean;
+  readonly isSubmitting: boolean;
+  readonly navigate: ReturnType<typeof useNavigate>;
+  readonly setIsDeleteModalActive: (value: boolean) => void;
+  readonly title: string | undefined;
+  readonly trackId: string | undefined;
+}
+
+const EditTrackFormContent: FunctionComponent<EditTrackFormContentProps> = ({
+  deleteSong,
+  isDeclined,
+  isDeleteModalActive,
+  isDirtyRef,
+  isSongDeletable,
+  isSubmitting,
+  navigate,
+  setIsDeleteModalActive,
+  title,
+  trackId,
+}) => {
+  const theme = useTheme();
+  const windowWidth = useWindowDimensions()?.width;
+  const { dirty } = useFormikContext<EditTrackFormValues>();
+  const { requestNavigation } = useUnsavedChanges();
+
+  isDirtyRef.current = dirty;
+
+  return (
     <>
-      <Stack alignItems="center" direction="row" gap={ 2.5 }>
+      <Stack alignItems="center" direction="row" gap={ 2.5 } mb={ 5 }>
         <Button
           color="white"
           variant="outlined"
           width="icon"
-          onClick={ () => navigate(-1) }
+          onClick={ () => {
+            if (dirty) {
+              isDirtyRef.current = false;
+              requestNavigation(null);
+            } else {
+              navigate(-1);
+            }
+          } }
         >
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
@@ -312,14 +441,11 @@ const EditTrack: FunctionComponent = () => {
             <Stack ml="auto">
               <Button
                 color="white"
-                // render other status for
                 disabled={ !isSongDeletable }
                 sx={ { marginLeft: "auto" } }
                 variant="outlined"
                 width="icon"
-                onClick={ () => {
-                  setIsDeleteModalActive(true);
-                } }
+                onClick={ () => setIsDeleteModalActive(true) }
               >
                 <DeleteIcon fontSize="small" sx={ { color: "white" } } />
               </Button>
@@ -334,89 +460,67 @@ const EditTrack: FunctionComponent = () => {
                   songId: trackId ?? "",
                 });
               } }
-              secondaryAction={ () => {
-                setIsDeleteModalActive(false);
-              } }
+              secondaryAction={ () => setIsDeleteModalActive(false) }
             />
           ) }
         </>
       </Stack>
-      <Box pb={ 7 } pt={ 5 }>
-        <Formik
-          enableReinitialize={ true }
-          initialValues={ initialValues }
-          validationSchema={ Yup.object().shape({
-            agreesToCoverArtGuidelines: validations.agreesToCoverArtGuidelines,
-            barcodeNumber: validations.barcodeNumber,
-            barcodeType: validations.barcodeType,
-            compositionCopyrightOwner: validations.copyrightOwner,
-            compositionCopyrightYear: validations.copyrightYear,
-            coverArtUrl: validations.coverArtUrl,
-            creditors: validations.creditors,
-            description: validations.description,
-            genres: validations.genres,
-            ipi: validations.ipi,
-            isrc: validations.isrc,
-            iswc: validations.iswc,
-            moods: validations.moods,
-            owners: validations.owners,
-            publicationDate: validations.publicationDate,
-            releaseDate: validations.releaseDate,
-            title: validations.title,
-          }) }
-          onSubmit={ handleSubmit }
+
+      <Form noValidate>
+        <EditTrackUnsavedSync />
+        <Stack
+          spacing={ 6 }
+          sx={ {
+            alignItems: ["center", "center", "unset"],
+          } }
         >
-          { ({ isSubmitting }) => (
-            <Form noValidate>
-              <Stack
-                spacing={ 6 }
-                sx={ {
-                  alignItems: ["center", "center", "unset"],
+          <Stack spacing={ 2 }>
+            <Typography variant="h4">BASIC DETAILS</Typography>
+            <BasicTrackDetails
+              isDeclined={ isDeclined }
+              isInEditMode={ true }
+              trackId={ trackId }
+            />
+          </Stack>
+
+          <Stack spacing={ 2 }>
+            <Typography variant="h4">ADVANCED DETAILS</Typography>
+            <AdvancedTrackDetails />
+          </Stack>
+
+          <Box>
+            <HorizontalLine mb={ 5 } />
+            <Stack direction="row" gap={ 2 }>
+              <Button
+                isLoading={ isSubmitting }
+                type="submit"
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
+              >
+                Save
+              </Button>
+
+              <Button
+                variant="outlined"
+                width="compact"
+                onClick={ () => {
+                  if (dirty) {
+                    isDirtyRef.current = false;
+                    requestNavigation(null);
+                  } else {
+                    navigate(-1);
+                  }
                 } }
               >
-                <Stack spacing={ 2 }>
-                  <Typography variant="h4">BASIC DETAILS</Typography>
-                  <BasicTrackDetails
-                    isDeclined={ isDeclined }
-                    isInEditMode={ true }
-                    trackId={ trackId }
-                  />
-                </Stack>
-
-                <Stack spacing={ 2 }>
-                  <Typography variant="h4">ADVANCED DETAILS</Typography>
-                  <AdvancedTrackDetails />
-                </Stack>
-
-                <Box>
-                  <HorizontalLine mb={ 5 } />
-                  <Stack direction="row" gap={ 2 }>
-                    <Button
-                      isLoading={ isSubmitting }
-                      type="submit"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
-                    >
-                      Save
-                    </Button>
-
-                    <Button
-                      variant="outlined"
-                      width="compact"
-                      onClick={ () => navigate(-1) }
-                    >
-                      Cancel
-                    </Button>
-                  </Stack>
-                </Box>
-              </Stack>
-            </Form>
-          ) }
-        </Formik>
-      </Box>
+                Cancel
+              </Button>
+            </Stack>
+          </Box>
+        </Stack>
+      </Form>
     </>
   );
 };
