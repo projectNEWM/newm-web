@@ -417,14 +417,7 @@ const EditTrackFormContent: FunctionComponent<EditTrackFormContentProps> = ({
           color="white"
           variant="outlined"
           width="icon"
-          onClick={ () => {
-            if (dirty) {
-              isDirtyRef.current = false;
-              requestNavigation(null);
-            } else {
-              navigate(-1);
-            }
-          } }
+          onClick={ () => (dirty ? requestNavigation(null) : navigate(-1)) }
         >
           <ArrowBackIcon sx={ { color: "white" } } />
         </Button>
@@ -506,14 +499,7 @@ const EditTrackFormContent: FunctionComponent<EditTrackFormContentProps> = ({
               <Button
                 variant="outlined"
                 width="compact"
-                onClick={ () => {
-                  if (dirty) {
-                    isDirtyRef.current = false;
-                    requestNavigation(null);
-                  } else {
-                    navigate(-1);
-                  }
-                } }
+                onClick={ () => (dirty ? requestNavigation(null) : navigate(-1)) }
               >
                 Cancel
               </Button>
