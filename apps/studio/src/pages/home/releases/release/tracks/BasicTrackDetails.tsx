@@ -29,11 +29,7 @@ import {
   NEWM_STUDIO_FAQ_URL,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "../../../../../common";
-import {
-  DistributionPricingDialog,
-  PlaySong,
-  PricingPlansDialog,
-} from "../../../../../components";
+import { DistributionPricingDialog, PlaySong } from "../../../../../components";
 import SelectCoCreators from "../../../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -57,8 +53,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
   isInEditMode = false,
   trackId = "",
 }) => {
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
-
   const theme = useTheme();
   const {
     data: {
@@ -162,20 +156,13 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected &&
-        (webStudioReleaseDistributionPaymentEnhancements ? (
-          <DistributionPricingDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        ) : (
-          <PricingPlansDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        )) }
+      { !isArtistPricePlanSelected && (
+        <DistributionPricingDialog
+          open={ isPricingPlansOpen }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
+        />
+      ) }
       <Stack direction="column" spacing={ 3 }>
         <Stack
           sx={ {

@@ -37,6 +37,7 @@ const DistributionPricingDialog: FunctionComponent<
 
   const handleOptionClick = () => {
     updateProfile({ dspPlanSubscribed: true }).then(() => {
+      // TODO: Is localstorage still necessary after latest fix and PricingPlansDialog refactor?
       LocalStorage.setItem(LocalStorageKey.isStudioPricingPlanAccepted, "true");
       onConfirm();
     });

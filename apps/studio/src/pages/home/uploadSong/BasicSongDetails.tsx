@@ -32,11 +32,7 @@ import {
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
   useAppDispatch,
 } from "../../../common";
-import {
-  DistributionPricingDialog,
-  PlaySong,
-  PricingPlansDialog,
-} from "../../../components";
+import { DistributionPricingDialog, PlaySong } from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -61,15 +57,13 @@ import {
 } from "../../../modules/ui";
 import { SongRouteParams } from "../../../common/types";
 
-interface BasicDonDetailsProps {
+interface BasicSongDetailsProps {
   readonly isInEditMode?: boolean;
 }
 
-const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
+const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   isInEditMode,
 }) => {
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
-
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -203,20 +197,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected &&
-        (webStudioReleaseDistributionPaymentEnhancements ? (
-          <DistributionPricingDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        ) : (
-          <PricingPlansDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        )) }
+      { !isArtistPricePlanSelected && (
+        <DistributionPricingDialog
+          open={ isPricingPlansOpen }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
+        />
+      ) }
       <Stack direction="column" spacing={ 3 }>
         { shouldShowOutletsWarning && (
           <Stack
