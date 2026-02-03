@@ -30,7 +30,10 @@ import {
 } from "@newm-web/elements";
 import { scrollToError } from "@newm-web/utils";
 
-import { useUnsavedChanges } from "../../../../contexts/UnsavedChangesContext";
+import {
+  type RequestNavigationOptions,
+  useUnsavedChanges,
+} from "../../../../contexts/UnsavedChangesContext";
 import { NONE_OPTION, commonYupValidation } from "../../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../../modules/session";
 import ReleaseDeletionHelp from "../ReleaseDeletionHelp";
@@ -42,6 +45,12 @@ const REQUIRED_FIELDS = {
   releaseDate: true,
   releaseTitle: true,
 } as const;
+
+const RELEASE_UNSAVED_MODAL_OPTIONS: RequestNavigationOptions = {
+  message:
+    "You haven't saved your changes to the release. If you exit now, your release metadata won't be saved.",
+  title: "Wait! Don't lose your progress.",
+};
 
 export interface ReleaseFormValues {
   artistName: string;
@@ -60,8 +69,14 @@ interface ReleaseDetailsFormContentProps {
   readonly releaseDateRef: React.RefObject<HTMLInputElement | null>;
   readonly releaseId: string | undefined;
   readonly releaseTitleRef: React.RefObject<HTMLInputElement | null>;
-  readonly requestNavigation: (path: string | null) => void;
+  readonly requestNavigation: (
+    path: string | null,
+    options?: RequestNavigationOptions
+  ) => void;
   readonly setHasUnsavedChanges: (value: boolean) => void;
+  readonly setUnsavedModalContent: (
+    options: RequestNavigationOptions | null
+  ) => void;
 }
 
 /**
@@ -80,6 +95,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
       releaseTitleRef,
       requestNavigation,
       setHasUnsavedChanges,
+      setUnsavedModalContent,
     }) => {
       const navigate = useNavigate();
       const theme = useTheme();
@@ -96,6 +112,16 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
       useEffect(() => {
         setHasUnsavedChanges(dirty);
       }, [dirty, setHasUnsavedChanges]);
+
+      useEffect(() => {
+        if (dirty) {
+          setUnsavedModalContent(RELEASE_UNSAVED_MODAL_OPTIONS);
+        } else {
+          setUnsavedModalContent(null);
+        }
+
+        return () => setUnsavedModalContent(null);
+      }, [dirty, setUnsavedModalContent]);
 
       useEffect(() => {
         scrollToError(errors, isSubmitting, [
@@ -151,7 +177,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
 
       const handleBackClick = useCallback(() => {
         if (dirty) {
-          requestNavigation(null);
+          requestNavigation(null, RELEASE_UNSAVED_MODAL_OPTIONS);
         } else {
           navigate(-1);
         }
@@ -161,7 +187,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
         (event: React.MouseEvent) => {
           if (dirty) {
             event.preventDefault();
-            requestNavigation(addTrackPath);
+            requestNavigation(addTrackPath, RELEASE_UNSAVED_MODAL_OPTIONS);
           }
         },
         [addTrackPath, dirty, requestNavigation]
@@ -421,7 +447,8 @@ ReleaseDetailsFormContent.displayName = "ReleaseDetailsFormContent";
  */
 const ReleaseDetails: FunctionComponent = () => {
   const { releaseId } = useParams<"releaseId">();
-  const { requestNavigation, setHasUnsavedChanges } = useUnsavedChanges();
+  const { requestNavigation, setHasUnsavedChanges, setUnsavedModalContent } =
+    useUnsavedChanges();
 
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
   const isDirtyRef = useRef(false);
@@ -501,6 +528,7 @@ const ReleaseDetails: FunctionComponent = () => {
         releaseTitleRef={ releaseTitleRef }
         requestNavigation={ requestNavigation }
         setHasUnsavedChanges={ setHasUnsavedChanges }
+        setUnsavedModalContent={ setUnsavedModalContent }
       />
     </Formik>
   );
