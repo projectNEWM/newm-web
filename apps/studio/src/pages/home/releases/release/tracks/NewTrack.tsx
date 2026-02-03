@@ -1,6 +1,12 @@
-import type { FunctionComponent } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
+import {
+  type FunctionComponent,
+  type MutableRefObject,
+  useEffect,
+  useRef,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
 
 import * as Yup from "yup";
 
@@ -15,6 +21,10 @@ import { PaymentType } from "@newm-web/types";
 import AdvancedTrackDetails from "./AdvancedTrackDetails";
 import BasicTrackDetails from "./BasicTrackDetails";
 import { TrackFormValues } from "./trackFormTypes";
+import {
+  type RequestNavigationOptions,
+  useUnsavedChanges,
+} from "../../../../../contexts/UnsavedChangesContext";
 import { commonYupValidation } from "../../../../../common";
 import {
   useGetGenresQuery,
@@ -32,15 +42,55 @@ import {
   useUploadSongThunk,
 } from "../../../../../modules/song";
 
+const NEW_TRACK_UNSAVED_MODAL_OPTIONS: RequestNavigationOptions = {
+  message:
+    "You haven't added the track to your release. If you exit now, your track metadata won't be saved.",
+  title: "Wait! Don't lose your progress.",
+};
+
+/**
+ * Syncs Formik dirty state to unsaved changes context and sets track-specific modal copy.
+ */
+const NewTrackUnsavedSync: FunctionComponent = () => {
+  const { dirty } = useFormikContext<TrackFormValues>();
+  const { setHasUnsavedChanges, setUnsavedModalContent } = useUnsavedChanges();
+
+  useEffect(() => {
+    setHasUnsavedChanges(dirty);
+    if (dirty) {
+      setUnsavedModalContent(NEW_TRACK_UNSAVED_MODAL_OPTIONS);
+    } else {
+      setUnsavedModalContent(null);
+    }
+    return () => {
+      setHasUnsavedChanges(false);
+      setUnsavedModalContent(null);
+    };
+  }, [dirty, setHasUnsavedChanges, setUnsavedModalContent]);
+
+  return null;
+};
+
 /**
  * * Shared page for creating a new track and viewing track details.
  */
 const NewTrack: FunctionComponent = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
   const { releaseId } = useParams<"releaseId">();
+  const isDirtyRef = useRef(false);
 
-  const windowWidth = useWindowDimensions()?.width;
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (isDirtyRef.current) {
+        event.preventDefault();
+        // * Deprecated per spec but still required by most browsers to show the dialog.
+        event.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
@@ -158,13 +208,69 @@ const NewTrack: FunctionComponent = () => {
   };
 
   return (
+    <Box pb={ 7 } pt={ 5 }>
+      <Formik
+        enableReinitialize={ true }
+        initialValues={ initialValues }
+        validationSchema={ Yup.object().shape({
+          agreesToCoverArtGuidelines: validations.agreesToCoverArtGuidelines,
+          barcodeNumber: validations.barcodeNumber,
+          barcodeType: validations.barcodeType,
+          compositionCopyrightOwner: validations.compositionCopyrightOwner,
+          compositionCopyrightYear: validations.compositionCopyrightYear,
+          coverArtUrl: validations.coverArtUrl,
+          creditors: validations.creditors,
+          description: validations.description,
+          genres: validations.genres,
+          ipi: validations.ipi,
+          isrc: validations.isrc,
+          iswc: validations.iswc,
+          moods: validations.moods,
+          owners: validations.owners,
+          publicationDate: validations.publicationDate,
+          releaseDate: validations.releaseDate,
+          title: validations.title,
+        }) }
+        onSubmit={ handleSubmit }
+      >
+        { ({ isSubmitting }) => (
+          <NewTrackFormContent
+            isDirtyRef={ isDirtyRef }
+            isSubmitting={ isSubmitting }
+            navigate={ navigate }
+          />
+        ) }
+      </Formik>
+    </Box>
+  );
+};
+
+interface NewTrackFormContentProps {
+  readonly isDirtyRef: MutableRefObject<boolean>;
+  readonly isSubmitting: boolean;
+  readonly navigate: ReturnType<typeof useNavigate>;
+}
+
+const NewTrackFormContent: FunctionComponent<NewTrackFormContentProps> = ({
+  isDirtyRef,
+  isSubmitting,
+  navigate,
+}) => {
+  const theme = useTheme();
+  const windowWidth = useWindowDimensions()?.width;
+  const { dirty } = useFormikContext<TrackFormValues>();
+  const { requestNavigation } = useUnsavedChanges();
+
+  isDirtyRef.current = dirty;
+
+  return (
     <>
-      <Stack alignItems="center" direction="row" gap={ 2.5 }>
+      <Stack alignItems="center" direction="row" gap={ 2.5 } mb={ 5 }>
         <Button
           color="white"
           variant="outlined"
           width="icon"
-          onClick={ () => navigate(-1) }
+          onClick={ () => (dirty ? requestNavigation(null) : navigate(-1)) }
         >
           <ArrowBackIcon />
         </Button>
@@ -172,78 +278,50 @@ const NewTrack: FunctionComponent = () => {
         <Typography variant="h3">ADD NEW TRACK</Typography>
       </Stack>
 
-      <Box pb={ 7 } pt={ 5 }>
-        <Formik
-          enableReinitialize={ true }
-          initialValues={ initialValues }
-          validationSchema={ Yup.object().shape({
-            agreesToCoverArtGuidelines: validations.agreesToCoverArtGuidelines,
-            barcodeNumber: validations.barcodeNumber,
-            barcodeType: validations.barcodeType,
-            compositionCopyrightOwner: validations.compositionCopyrightOwner,
-            compositionCopyrightYear: validations.compositionCopyrightYear,
-            coverArtUrl: validations.coverArtUrl,
-            creditors: validations.creditors,
-            description: validations.description,
-            genres: validations.genres,
-            ipi: validations.ipi,
-            isrc: validations.isrc,
-            iswc: validations.iswc,
-            moods: validations.moods,
-            owners: validations.owners,
-            publicationDate: validations.publicationDate,
-            releaseDate: validations.releaseDate,
-            title: validations.title,
-          }) }
-          onSubmit={ handleSubmit }
+      <Form noValidate>
+        <NewTrackUnsavedSync />
+        <Stack
+          spacing={ 6 }
+          sx={ {
+            alignItems: ["center", "center", "unset"],
+          } }
         >
-          { ({ isSubmitting }) => (
-            <Form noValidate>
-              <Stack
-                spacing={ 6 }
-                sx={ {
-                  alignItems: ["center", "center", "unset"],
-                } }
+          <Stack spacing={ 2 }>
+            <Typography variant="h4">BASIC DETAILS</Typography>
+            <BasicTrackDetails />
+          </Stack>
+
+          <Stack spacing={ 2 }>
+            <Typography variant="h4">ADVANCED DETAILS</Typography>
+            <AdvancedTrackDetails />
+          </Stack>
+
+          <Box>
+            <HorizontalLine mb={ 5 } />
+            <Stack direction="row" gap={ 2 }>
+              <Button
+                isLoading={ isSubmitting }
+                type="submit"
+                width={
+                  windowWidth && windowWidth > theme.breakpoints.values.md
+                    ? "compact"
+                    : "default"
+                }
               >
-                <Stack spacing={ 2 }>
-                  <Typography variant="h4">BASIC DETAILS</Typography>
-                  <BasicTrackDetails />
-                </Stack>
+                Add Track
+              </Button>
 
-                <Stack spacing={ 2 }>
-                  <Typography variant="h4">ADVANCED DETAILS</Typography>
-                  <AdvancedTrackDetails />
-                </Stack>
-
-                <Box>
-                  <HorizontalLine mb={ 5 } />
-                  <Stack direction="row" gap={ 2 }>
-                    <Button
-                      isLoading={ isSubmitting }
-                      type="submit"
-                      width={
-                        windowWidth && windowWidth > theme.breakpoints.values.md
-                          ? "compact"
-                          : "default"
-                      }
-                    >
-                      Add Track
-                    </Button>
-
-                    <Button
-                      variant="outlined"
-                      width="compact"
-                      onClick={ () => navigate(-1) }
-                    >
-                      Cancel
-                    </Button>
-                  </Stack>
-                </Box>
-              </Stack>
-            </Form>
-          ) }
-        </Formik>
-      </Box>
+              <Button
+                variant="outlined"
+                width="compact"
+                onClick={ () => (dirty ? requestNavigation(null) : navigate(-1)) }
+              >
+                Cancel
+              </Button>
+            </Stack>
+          </Box>
+        </Stack>
+      </Form>
     </>
   );
 };
