@@ -78,7 +78,7 @@ describe("<UnsavedChangesProvider />", () => {
     expect(screen.getByRole("button", { name: "Discard" })).toBeInTheDocument();
   });
 
-  it("calls navigate with path when Leave is clicked after requestNavigation(path)", () => {
+  it("calls navigate with path when 'Discard' is clicked after requestNavigation(path)", () => {
     const Consumer = () => {
       const { requestNavigation } = useUnsavedChanges();
       return (
@@ -104,7 +104,7 @@ describe("<UnsavedChangesProvider />", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/home/profile");
   });
 
-  it("calls navigate(-1) when Leave is clicked after requestNavigation(null)", () => {
+  it("calls navigate(-1) when 'Discard' is clicked after requestNavigation(null)", () => {
     const Consumer = () => {
       const { requestNavigation } = useUnsavedChanges();
       return (
@@ -127,7 +127,7 @@ describe("<UnsavedChangesProvider />", () => {
     expect(mockNavigate).toHaveBeenCalledWith(-1);
   });
 
-  it("closes modal and does not call navigate when Stay is clicked", () => {
+  it("closes modal and does not call navigate when 'Keep editing' is clicked", () => {
     const Consumer = () => {
       const { requestNavigation } = useUnsavedChanges();
       return (
