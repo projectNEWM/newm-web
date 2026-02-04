@@ -25,10 +25,10 @@ describe("<UnsavedChangesModal />", () => {
       );
 
       expect(
-        screen.queryByRole("button", { name: /stay/i })
+        screen.queryByRole("button", { name: /keep editing/i })
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("button", { name: /leave/i })
+        screen.queryByRole("button", { name: /discard/i })
       ).not.toBeInTheDocument();
     });
   });
@@ -76,7 +76,7 @@ describe("<UnsavedChangesModal />", () => {
       expect(screen.getByText(title)).toBeInTheDocument();
     });
 
-    it("renders Stay and Leave buttons", () => {
+    it("renders 'Keep editing' and 'Discard' buttons", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
@@ -85,11 +85,15 @@ describe("<UnsavedChangesModal />", () => {
         />
       );
 
-      expect(screen.getByRole("button", { name: "Stay" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Leave" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Keep editing" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Discard" })
+      ).toBeInTheDocument();
     });
 
-    it("calls onStay when Stay button is clicked", () => {
+    it("calls onStay when 'Keep editing' button is clicked", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
@@ -98,13 +102,13 @@ describe("<UnsavedChangesModal />", () => {
         />
       );
 
-      fireEvent.click(screen.getByRole("button", { name: "Stay" }));
+      fireEvent.click(screen.getByRole("button", { name: "Keep editing" }));
 
       expect(mockOnStay).toHaveBeenCalledTimes(1);
       expect(mockOnLeave).not.toHaveBeenCalled();
     });
 
-    it("calls onLeave when Leave button is clicked", () => {
+    it("calls onLeave when 'Discard' button is clicked", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
@@ -113,7 +117,7 @@ describe("<UnsavedChangesModal />", () => {
         />
       );
 
-      fireEvent.click(screen.getByRole("button", { name: "Leave" }));
+      fireEvent.click(screen.getByRole("button", { name: "Discard" }));
 
       expect(mockOnLeave).toHaveBeenCalledTimes(1);
       expect(mockOnStay).not.toHaveBeenCalled();

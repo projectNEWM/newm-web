@@ -37,6 +37,9 @@ export const UnsavedChangesModal: FunctionComponent<
         flex={ 1 }
         justifyContent="center"
         maxWidth={ 600 }
+        sx={ {
+          margin: "0 20px",
+        } }
       >
         <Stack
           gap={ 2 }
@@ -48,24 +51,39 @@ export const UnsavedChangesModal: FunctionComponent<
             rowGap: 1,
           } }
         >
-          <Stack gap={ 1 } textAlign="start">
-            { !!title && <Typography variant="h5">{ title }</Typography> }
-            <Typography variant="body2">{ message }</Typography>
+          <Stack gap={ 1 } mb={ 1 } textAlign="start">
+            { !!title && (
+              <Typography
+                sx={ {
+                  fontSize: 20,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                } }
+              >
+                { title }
+              </Typography>
+            ) }
+            <Typography
+              sx={ { fontSize: 14, fontWeight: 400 } }
+              variant="subtitle1"
+            >
+              { message }
+            </Typography>
           </Stack>
 
           <HorizontalLine />
 
-          <Stack flexDirection="row" gap={ 1 } justifyContent="end" mb={ 1 } mt={ 1 }>
+          <Stack flexDirection="row" gap={ 2 } justifyContent="end" mb={ 1 } mt={ 1 }>
+            <Button variant="primary" width="compact" onClick={ onStay }>
+              Keep editing
+            </Button>
             <Button
               color="music"
               variant="secondary"
               width="compact"
-              onClick={ onStay }
+              onClick={ onLeave }
             >
-              Stay
-            </Button>
-            <Button variant="primary" width="compact" onClick={ onLeave }>
-              Leave
+              Discard
             </Button>
           </Stack>
         </Stack>
