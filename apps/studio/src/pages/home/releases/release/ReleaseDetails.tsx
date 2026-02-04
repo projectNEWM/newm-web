@@ -119,9 +119,16 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
         } else {
           setUnsavedModalContent(null);
         }
-
-        return () => setUnsavedModalContent(null);
       }, [dirty, setUnsavedModalContent]);
+
+      // * Reset context only on unmount; setters from context are stable.
+      useEffect(() => {
+        return () => {
+          setHasUnsavedChanges(false);
+          setUnsavedModalContent(null);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
 
       useEffect(() => {
         scrollToError(errors, isSubmitting, [

@@ -62,11 +62,16 @@ const NewTrackUnsavedSync: FunctionComponent = () => {
     } else {
       setUnsavedModalContent(null);
     }
+  }, [dirty, setHasUnsavedChanges, setUnsavedModalContent]);
+
+  // * Reset context only on unmount; setters from context are stable.
+  useEffect(() => {
     return () => {
       setHasUnsavedChanges(false);
       setUnsavedModalContent(null);
     };
-  }, [dirty, setHasUnsavedChanges, setUnsavedModalContent]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 };
