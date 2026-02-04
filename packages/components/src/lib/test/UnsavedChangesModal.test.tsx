@@ -76,7 +76,7 @@ describe("<UnsavedChangesModal />", () => {
       expect(screen.getByText(title)).toBeInTheDocument();
     });
 
-    it("renders Stay and Leave buttons", () => {
+    it("renders 'Keep editing' and 'Discard' buttons", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
@@ -93,7 +93,7 @@ describe("<UnsavedChangesModal />", () => {
       ).toBeInTheDocument();
     });
 
-    it("calls onStay when Stay button is clicked", () => {
+    it("calls onStay when 'Keep editing' button is clicked", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
@@ -108,7 +108,7 @@ describe("<UnsavedChangesModal />", () => {
       expect(mockOnLeave).not.toHaveBeenCalled();
     });
 
-    it("calls onLeave when Leave button is clicked", () => {
+    it("calls onLeave when 'Discard' button is clicked", () => {
       renderWithContext(
         <UnsavedChangesModal
           isOpen={ true }
