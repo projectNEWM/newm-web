@@ -15,7 +15,6 @@ import {
   UploadSongField,
 } from "@newm-web/elements";
 import {
-  LocalStorage,
   scrollToError,
   useExtractProperty,
   useWindowDimensions,
@@ -24,7 +23,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LocalStorageKey, MintingStatus } from "@newm-web/types";
+import { MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { UploadSongFormValues } from "./UploadSong";
 import {

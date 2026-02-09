@@ -1,6 +1,6 @@
 import { Button, Dialog } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { LocalStorage, formatUsdAmount } from "@newm-web/utils";
+import { formatUsdAmount } from "@newm-web/utils";
 import {
   Box,
   DialogActions,
@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Check } from "@mui/icons-material";
-import { LocalStorageKey, PaymentType } from "@newm-web/types";
+import { PaymentType } from "@newm-web/types";
 import { FunctionComponent } from "react";
 import { NEWM_STUDIO_OUTLETS_URL } from "../../common/constants";
 import { useUpdateProfileThunk } from "../../modules/session";

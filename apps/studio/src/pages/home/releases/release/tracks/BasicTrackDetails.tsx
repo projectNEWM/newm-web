@@ -17,12 +17,7 @@ import {
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
-import {
-  LocalStorage,
-  scrollToError,
-  useExtractProperty,
-} from "@newm-web/utils";
-import { LocalStorageKey } from "@newm-web/types";
+import { scrollToError, useExtractProperty } from "@newm-web/utils";
 
 import { TrackFormValues } from "./trackFormTypes";
 import {

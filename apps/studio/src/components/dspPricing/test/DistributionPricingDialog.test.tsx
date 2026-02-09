@@ -1,6 +1,5 @@
 import { fireEvent, waitFor } from "@testing-library/react";
-import { LocalStorage } from "@newm-web/utils";
-import { LocalStorageKey, PaymentType } from "@newm-web/types";
+import { PaymentType } from "@newm-web/types";
 import { NEWM_STUDIO_OUTLETS_URL, renderWithContext } from "../../../common";
 import * as sessionModule from "../../../modules/session";
 /**
