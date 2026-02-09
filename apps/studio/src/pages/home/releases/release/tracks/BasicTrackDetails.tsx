@@ -92,20 +92,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
     setFieldValue("isMinting", true);
   };
 
-  // Handle the one-time pricing plan acceptance
-  useEffect(() => {
-    const hasAcceptedPricingPlan =
-      LocalStorage.getItem(LocalStorageKey.isStudioPricingPlanAccepted) ===
-      "true";
-
-    if (hasAcceptedPricingPlan) {
-      if (!webStudioDisableTrackDistributionAndMinting) {
-        setFieldValue("isMinting", true);
-      }
-      LocalStorage.removeItem(LocalStorageKey.isStudioPricingPlanAccepted);
-    }
-  }, [setFieldValue, webStudioDisableTrackDistributionAndMinting]);
-
   // Monitor feature flag changes, particularly seen for pricing plan acceptance
   useEffect(() => {
     if (webStudioDisableTrackDistributionAndMinting) {

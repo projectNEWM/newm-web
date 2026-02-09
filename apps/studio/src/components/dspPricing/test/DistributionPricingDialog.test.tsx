@@ -171,26 +171,6 @@ describe("<DistributionPricingDialog />", () => {
       });
     });
 
-    it("sets the pricing plan accepted flag in localStorage", async () => {
-      const { getByText } = renderWithContext(
-        <DistributionPricingDialog
-          open={ true }
-          onCancel={ mockOnCancel }
-          onConfirm={ mockOnConfirm }
-        />
-      );
-
-      const getStartedButton = getByText("Get started");
-      fireEvent.click(getStartedButton);
-
-      await waitFor(() => {
-        expect(LocalStorage.setItem).toHaveBeenCalledWith(
-          LocalStorageKey.isStudioPricingPlanAccepted,
-          "true"
-        );
-      });
-    });
-
     it("calls the onConfirm callback", async () => {
       const { getByText } = renderWithContext(
         <DistributionPricingDialog
