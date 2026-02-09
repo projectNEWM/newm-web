@@ -15,14 +15,6 @@ import DistributionPricingDialog from "../DistributionPricingDialog";
 const mockUpdateProfile = jest.fn();
 const mockUseGetMintSongEstimateQuery = jest.fn();
 
-// Mock LocalStorage
-jest.mock("@newm-web/utils", () => ({
-  ...jest.requireActual("@newm-web/utils"),
-  LocalStorage: {
-    setItem: jest.fn(),
-  },
-}));
-
 // Mock the session module
 jest.mock("../../../modules/session", () => {
   const actual = jest.requireActual("../../../modules/session");
