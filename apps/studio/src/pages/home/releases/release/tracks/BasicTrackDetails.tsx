@@ -17,23 +17,14 @@ import {
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
-import {
-  LocalStorage,
-  scrollToError,
-  useExtractProperty,
-} from "@newm-web/utils";
-import { LocalStorageKey } from "@newm-web/types";
+import { scrollToError, useExtractProperty } from "@newm-web/utils";
 
 import { TrackFormValues } from "./trackFormTypes";
 import {
   NEWM_STUDIO_FAQ_URL,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "../../../../../common";
-import {
-  DistributionPricingDialog,
-  PlaySong,
-  PricingPlansDialog,
-} from "../../../../../components";
+import { DistributionPricingDialog, PlaySong } from "../../../../../components";
 import SelectCoCreators from "../../../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -57,8 +48,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
   isInEditMode = false,
   trackId = "",
 }) => {
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
-
   const theme = useTheme();
   const {
     data: {
@@ -97,20 +86,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
     setIsPricingPlansOpen(false);
     setFieldValue("isMinting", true);
   };
-
-  // Handle the one-time pricing plan acceptance
-  useEffect(() => {
-    const hasAcceptedPricingPlan =
-      LocalStorage.getItem(LocalStorageKey.isStudioPricingPlanAccepted) ===
-      "true";
-
-    if (hasAcceptedPricingPlan) {
-      if (!webStudioDisableTrackDistributionAndMinting) {
-        setFieldValue("isMinting", true);
-      }
-      LocalStorage.removeItem(LocalStorageKey.isStudioPricingPlanAccepted);
-    }
-  }, [setFieldValue, webStudioDisableTrackDistributionAndMinting]);
 
   // Monitor feature flag changes, particularly seen for pricing plan acceptance
   useEffect(() => {
@@ -162,20 +137,13 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected &&
-        (webStudioReleaseDistributionPaymentEnhancements ? (
-          <DistributionPricingDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        ) : (
-          <PricingPlansDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        )) }
+      { !isArtistPricePlanSelected && (
+        <DistributionPricingDialog
+          open={ isPricingPlansOpen }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
+        />
+      ) }
       <Stack direction="column" spacing={ 3 }>
         <Stack
           sx={ {

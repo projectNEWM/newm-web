@@ -25,7 +25,6 @@ export { default as PlaySong } from "./PlaySong";
 export { default as PlaySongAdvanced } from "./PlaySongAdvanced";
 export { default as Popup } from "./Popup";
 export { default as PortfolioSkeleton } from "./skeletons/PortfolioSkeleton";
-export { default as PricingPlansDialog } from "./dspPricing/PricingPlansDialog";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as ProfileSkeleton } from "./skeletons/ProfileSkeleton";
 export { default as ProgressBar } from "./ProgressBar";

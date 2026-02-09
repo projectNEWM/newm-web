@@ -15,7 +15,6 @@ import {
   UploadSongField,
 } from "@newm-web/elements";
 import {
-  LocalStorage,
   scrollToError,
   useExtractProperty,
   useWindowDimensions,
@@ -24,7 +23,7 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LocalStorageKey, MintingStatus } from "@newm-web/types";
+import { MintingStatus } from "@newm-web/types";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { UploadSongFormValues } from "./UploadSong";
 import {
@@ -32,11 +31,7 @@ import {
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
   useAppDispatch,
 } from "../../../common";
-import {
-  DistributionPricingDialog,
-  PlaySong,
-  PricingPlansDialog,
-} from "../../../components";
+import { DistributionPricingDialog, PlaySong } from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -61,15 +56,13 @@ import {
 } from "../../../modules/ui";
 import { SongRouteParams } from "../../../common/types";
 
-interface BasicDonDetailsProps {
+interface BasicSongDetailsProps {
   readonly isInEditMode?: boolean;
 }
 
-const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
+const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   isInEditMode,
 }) => {
-  const { webStudioReleaseDistributionPaymentEnhancements } = useFlags();
-
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -128,21 +121,6 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     setIsPricingPlansOpen(true);
     setFieldValue("isMinting", true);
   };
-
-  // Handle the one-time pricing plan acceptance
-  useEffect(() => {
-    const hasAcceptedPricingPlan =
-      LocalStorage.getItem(LocalStorageKey.isStudioPricingPlanAccepted) ===
-      "true";
-
-    if (hasAcceptedPricingPlan) {
-      if (!webStudioDisableTrackDistributionAndMinting) {
-        setFieldValue("isMinting", true);
-      }
-      LocalStorage.removeItem(LocalStorageKey.isStudioPricingPlanAccepted);
-    }
-  }, [setFieldValue, webStudioDisableTrackDistributionAndMinting]);
-
   // Monitor feature flag changes, particularly seen for pricing plan acceptance
   useEffect(() => {
     if (webStudioDisableTrackDistributionAndMinting) {
@@ -203,20 +181,13 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected &&
-        (webStudioReleaseDistributionPaymentEnhancements ? (
-          <DistributionPricingDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        ) : (
-          <PricingPlansDialog
-            open={ isPricingPlansOpen }
-            onCancel={ handlePricingPlanCancel }
-            onConfirm={ handlePricingPlanConfirm }
-          />
-        )) }
+      { !isArtistPricePlanSelected && (
+        <DistributionPricingDialog
+          open={ isPricingPlansOpen }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
+        />
+      ) }
       <Stack direction="column" spacing={ 3 }>
         { shouldShowOutletsWarning && (
           <Stack

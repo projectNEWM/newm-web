@@ -1,6 +1,5 @@
 import { fireEvent, waitFor } from "@testing-library/react";
-import { LocalStorage } from "@newm-web/utils";
-import { LocalStorageKey, PaymentType } from "@newm-web/types";
+import { PaymentType } from "@newm-web/types";
 import { NEWM_STUDIO_OUTLETS_URL, renderWithContext } from "../../../common";
 import * as sessionModule from "../../../modules/session";
 /**
@@ -15,14 +14,6 @@ import DistributionPricingDialog from "../DistributionPricingDialog";
 // Mock functions that will be used in jest.mock factories
 const mockUpdateProfile = jest.fn();
 const mockUseGetMintSongEstimateQuery = jest.fn();
-
-// Mock LocalStorage
-jest.mock("@newm-web/utils", () => ({
-  ...jest.requireActual("@newm-web/utils"),
-  LocalStorage: {
-    setItem: jest.fn(),
-  },
-}));
 
 // Mock the session module
 jest.mock("../../../modules/session", () => {
@@ -168,26 +159,6 @@ describe("<DistributionPricingDialog />", () => {
         expect(mockUpdateProfile).toHaveBeenCalledWith({
           dspPlanSubscribed: true,
         });
-      });
-    });
-
-    it("sets the pricing plan accepted flag in localStorage", async () => {
-      const { getByText } = renderWithContext(
-        <DistributionPricingDialog
-          open={ true }
-          onCancel={ mockOnCancel }
-          onConfirm={ mockOnConfirm }
-        />
-      );
-
-      const getStartedButton = getByText("Get started");
-      fireEvent.click(getStartedButton);
-
-      await waitFor(() => {
-        expect(LocalStorage.setItem).toHaveBeenCalledWith(
-          LocalStorageKey.isStudioPricingPlanAccepted,
-          "true"
-        );
       });
     });
 
