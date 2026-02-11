@@ -5,6 +5,9 @@ import {
   useRef,
   useState,
 } from "react";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import {
   Box,
   Drawer,
@@ -14,12 +17,6 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import {
-  ProfileImage,
-  SideBarHeader,
-  SideBarNavLink,
-} from "@newm-web/elements";
-import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
 import {
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
@@ -31,19 +28,27 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
+
+import {
+  ProfileImage,
+  SideBarHeader,
+  SideBarNavLink,
+} from "@newm-web/elements";
+import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
 import {
   LocalStorage,
   resizeCloudinaryImage,
   useWindowDimensions,
 } from "@newm-web/utils";
 import theme from "@newm-web/theme";
-import { useFlags } from "launchdarkly-react-client-sdk";
 import { LocalStorageKey } from "@newm-web/types";
+
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
+  useBreakpoint,
 } from "../../common";
 import { useUnsavedChanges } from "../../contexts/UnsavedChangesContext";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
@@ -59,11 +64,16 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
   setMobileOpen,
 }: SideBarProps) => {
   // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseOne, webStudioArtistReferralCampaign } =
-    useFlags();
+  const {
+    webStudioAlbumPhaseOne,
+    webStudioArtistReferralCampaign,
+    webStudioDisableDistributionAndSales,
+  } = useFlags();
 
   const { hasUnsavedChanges, requestNavigation } = useUnsavedChanges();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
 
   const handleInternalNavClick = useCallback(
     (path: string) => (event?: React.MouseEvent) => {
@@ -144,6 +154,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         flexDirection: "column",
         height: "100%",
         justifyContent: "space-between",
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 5 : 0,
         minWidth: theme.spacing(28.75),
         overflowY: "auto",
         padding: 1.25,

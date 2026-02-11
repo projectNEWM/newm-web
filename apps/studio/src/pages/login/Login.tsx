@@ -1,3 +1,5 @@
+import { FunctionComponent, MouseEventHandler, useState } from "react";
+
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import {
   Button,
@@ -6,16 +8,25 @@ import {
   PasswordInputField,
   TextInputField,
 } from "@newm-web/elements";
-import { FunctionComponent, MouseEventHandler, useState } from "react";
+
 import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
-import { commonYupValidation, useAuthenticatedRedirect } from "../../common";
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import {
+  commonYupValidation,
+  useAuthenticatedRedirect,
+  useBreakpoint,
+} from "../../common";
 import { history } from "../../common/history";
 import { AppleLogin, GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 import { useLoginThunk } from "../../modules/session";
 
 const Login: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
 
   const [login, { isLoading }] = useLoginThunk();
   const [maskPassword, setMaskPassword] = useState(true);
@@ -53,6 +64,7 @@ const Login: FunctionComponent = () => {
         backgroundColor: theme.colors.black,
         display: "flex",
         flexDirection: "column",
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 5 : 0,
         width: "100%",
       } }
     >

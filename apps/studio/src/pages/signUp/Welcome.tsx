@@ -1,18 +1,28 @@
+import { FunctionComponent, useState } from "react";
+
+import { FormikValues, useFormikContext } from "formik";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Box, Stack, Typography, useTheme } from "@mui/material";
+
 import {
   Button,
   HorizontalLine,
   PasswordInputField,
   TextInputField,
 } from "@newm-web/elements";
-import { FunctionComponent, useState } from "react";
-import { FormikValues, useFormikContext } from "formik";
-import { useAuthenticatedRedirect } from "../../common";
+
+import { useAuthenticatedRedirect, useBreakpoint } from "../../common";
 import { history } from "../../common/history";
 import { AppleLogin, GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 
 const SignUp: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const { values } = useFormikContext();
   const { referrer, newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
@@ -25,7 +35,12 @@ const SignUp: FunctionComponent = () => {
   useAuthenticatedRedirect();
 
   return (
-    <Box alignItems="center" display="flex" flexDirection="column">
+    <Box
+      alignItems="center"
+      display="flex"
+      flexDirection="column"
+      mt={ webStudioDisableDistributionAndSales && isDesktop ? 3 : 0 }
+    >
       <Stack sx={ { alignItems: "center", gap: 1, width: "100%" } }>
         <Button
           color="music"

@@ -42,6 +42,7 @@ const Home: FunctionComponent = () => {
     webStudioAlbumPhaseOne,
     webStudioAlbumPhaseTwo,
     webStudioArtistReferralCampaign,
+    webStudioDisableDistributionAndSales,
   } = useFlags();
 
   const routeLocation = useLocation();
@@ -115,7 +116,11 @@ const Home: FunctionComponent = () => {
             width: { sm: `calc(100% - ${drawerWidth}px)` },
           } }
         >
-          <Box left="2rem" position="absolute" top="2rem">
+          <Box
+            left="2rem"
+            position="absolute"
+            top={ webStudioDisableDistributionAndSales ? 20 : 32 }
+          >
             <IconButton onClick={ () => setMobileOpen(true) }>
               <MenuIcon sx={ { color: "white" } } />
             </IconButton>
