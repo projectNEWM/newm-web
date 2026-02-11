@@ -152,7 +152,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         flexDirection: "column",
         height: "100%",
         justifyContent: "space-between",
-        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 5 : 0,
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 8 : 0,
         minWidth: theme.spacing(28.75),
         overflowY: "auto",
         padding: 1.25,
