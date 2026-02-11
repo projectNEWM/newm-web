@@ -18,7 +18,7 @@ const OfficialStatementCTA: FunctionComponent<OfficialStatementCTAProps> = ({
 
   return (
     <>
-      NEWM Studio distribution and Stream Token sales have been discontinued.
+      NEWM Studio is stopping distribution services and Stream Token sales.
       Please read our team&apos;s&nbsp;
       <Link
         href={ href }
@@ -32,7 +32,8 @@ const OfficialStatementCTA: FunctionComponent<OfficialStatementCTAProps> = ({
       >
         { linkText }
       </Link>
-      &nbsp;for next steps regarding your releases.
+      &nbsp;for more information, key dates and instructions on how to migrate
+      your catalog.
     </>
   );
 };
