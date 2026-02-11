@@ -15,7 +15,6 @@ import {
   Link,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
 import {
   PeopleAlt as CollaboratorsIcon,
@@ -72,7 +71,6 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
 
   const { hasUnsavedChanges, requestNavigation } = useUnsavedChanges();
 
-  const theme = useTheme();
   const { isDesktop } = useBreakpoint();
 
   const handleInternalNavClick = useCallback(
