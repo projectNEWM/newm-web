@@ -1,9 +1,12 @@
 /**
- * Fixed position background image with darkened overlay.
+ * * Fixed position background image with darkened overlay.
  */
 
-import { styled } from "@mui/material/styles";
 import { ReactNode } from "react";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { styled } from "@mui/material/styles";
 
 interface BackgroundProps {
   children: ReactNode;
@@ -21,20 +24,37 @@ const BackgroundImage = styled("div")({
   width: "100%",
 });
 
-const BackgroundOverlay = styled("div")({
-  backgroundColor: "rgba(0, 0, 0, 0.25)",
-  bottom: 0,
-  display: "flex",
-  left: 0,
-  position: "absolute",
-  right: 0,
-  top: 0,
-});
-
-const Background = ({ children }: BackgroundProps) => (
-  <BackgroundImage>
-    <BackgroundOverlay>{ children }</BackgroundOverlay>
-  </BackgroundImage>
+const BackgroundOverlay = styled("div")<{ applyOffset?: boolean }>(
+  ({ theme, applyOffset }) => ({
+    backgroundColor: "rgba(0, 0, 0, 0.25)",
+    bottom: 0,
+    display: "flex",
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0,
+    // TODO(webStudioDisableDistributionAndSales): Remove the below breakpoint logic once the feature flag is removed.
+    ...(applyOffset && {
+      [theme.breakpoints.down("xl")]: {
+        [theme.breakpoints.up(960)]: {
+          top: theme.spacing(2), // * 16px with default 8px spacing.
+        },
+      },
+    }),
+  })
 );
+
+const Background = ({ children }: BackgroundProps) => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+  const applyOffset = webStudioDisableDistributionAndSales;
+
+  return (
+    <BackgroundImage>
+      <BackgroundOverlay applyOffset={ applyOffset }>
+        { children }
+      </BackgroundOverlay>
+    </BackgroundImage>
+  );
+};
 
 export default Background;
