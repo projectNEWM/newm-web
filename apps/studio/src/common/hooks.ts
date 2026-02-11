@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { selectSession } from "../modules/session";
 import type { AppDispatch, RootState } from "../store";
 
@@ -34,4 +35,12 @@ export const useAuthenticatedRedirect = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
+};
+
+export const useBreakpoint = () => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = !isDesktop;
+
+  return { isDesktop, isMobile };
 };
