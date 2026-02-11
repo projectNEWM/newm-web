@@ -1,5 +1,6 @@
 import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import theme from "@newm-web/theme";
 import { renderWithContext } from "./utils/render";
 import Banner from "../Banner";
 
@@ -69,8 +70,9 @@ describe("<Banner />", () => {
     const banner = screen.getByTestId("banner");
     expect(banner).toHaveStyle({ position: "fixed" });
     expect(banner).toHaveStyle({ top: "0px" });
-    // * zIndex is theme.zIndex.snackbar - 1 (MUI default snackbar is 1400, so this is 1399)
-    expect(banner).toHaveStyle({ zIndex: "1399" });
+    // Derive expected zIndex from theme instead of hardcoding
+    const expectedZIndex = theme.zIndex.snackbar - 1;
+    expect(banner).toHaveStyle({ zIndex: String(expectedZIndex) });
   });
 
   it("does not apply fixed positioning when fixed is false", () => {
@@ -79,7 +81,8 @@ describe("<Banner />", () => {
     const banner = screen.getByTestId("banner");
     expect(banner).not.toHaveStyle({ position: "fixed" });
     expect(banner).not.toHaveStyle({ top: "0px" });
-    expect(banner).not.toHaveStyle({ zIndex: "1399" });
+    const expectedZIndex = theme.zIndex.snackbar - 1;
+    expect(banner).not.toHaveStyle({ zIndex: String(expectedZIndex) });
   });
 
   it("applies full width when fullWidth is true", () => {
@@ -100,15 +103,16 @@ describe("<Banner />", () => {
     renderWithContext(<Banner textAlign="left" title="Test" />);
 
     const banner = screen.getByTestId("banner");
-    expect(banner).toBeInTheDocument();
-    // MUI Box applies textAlign prop, verified by component rendering
+    // MUI Box applies textAlign as a style attribute
+    expect(banner).toHaveStyle({ textAlign: "left" });
   });
 
   it("defaults textAlign to center", () => {
     renderWithContext(<Banner title="Test" />);
 
     const banner = screen.getByTestId("banner");
-    expect(banner).toBeInTheDocument();
+    // Default textAlign is center
+    expect(banner).toHaveStyle({ textAlign: "center" });
   });
 
   it("applies sx prop to root Box", () => {
@@ -122,7 +126,8 @@ describe("<Banner />", () => {
     renderWithContext(<Banner title="Test" titleSx={ { fontWeight: 100 } } />);
 
     const title = screen.getByText("Test");
-    expect(title).toBeInTheDocument();
+    // Verify fontWeight is actually applied via computed styles
+    expect(title).toHaveStyle({ fontWeight: "100" });
   });
 
   it("applies default paddingX styles", () => {
@@ -160,7 +165,8 @@ describe("<Banner />", () => {
     renderWithContext(<Banner description="Description" title="Title" />);
 
     const description = screen.getByText("Description");
-    expect(description).toBeInTheDocument();
+    // Verify fontWeight 400 is actually applied
+    expect(description).toHaveStyle({ fontWeight: "400" });
   });
 
   it("merges sx prop with default styles", () => {
