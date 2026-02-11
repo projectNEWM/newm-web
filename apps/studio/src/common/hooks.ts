@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import { useMediaQuery, useTheme } from "@mui/material";
+
 import { selectSession } from "../modules/session";
 import type { AppDispatch, RootState } from "../store";
 
@@ -42,5 +44,5 @@ export const useBreakpoint = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const isMobile = !isDesktop;
 
-  return { isDesktop, isMobile };
+  return useMemo(() => ({ isDesktop, isMobile }), [isDesktop, isMobile]);
 };
