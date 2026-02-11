@@ -40,22 +40,30 @@ const Banner: FunctionComponent<BannerProps> = ({
   return (
     <Box
       data-testid="banner"
-      sx={ {
-        background: bg,
-        color: color,
-        paddingX: 3,
-        paddingY: { md: 2, xs: 1 },
-        position: fixed ? "fixed" : undefined,
-        top: fixed ? 0 : undefined,
-        width: fullWidth ? "100%" : undefined,
-        // * Place Banner just below Snackbars (see packages/components/**/Alert.tsx)
-        zIndex: fixed ? theme.zIndex.snackbar - 1 : undefined,
-        ...sx,
-      } }
+      sx={
+        [
+          {
+            background: bg,
+            color: color,
+            paddingX: 3,
+            paddingY: { md: 2, xs: 1 },
+            ...(fixed && {
+              position: "fixed",
+              top: 0,
+              // * Place Banner just below Snackbars (see packages/components/**/Alert.tsx)
+              zIndex: theme.zIndex.snackbar - 1,
+            }),
+            ...(fullWidth && {
+              width: "100%",
+            }),
+          },
+          sx,
+        ] as SxProps<Theme>
+      }
       textAlign={ textAlign }
     >
       <Stack spacing={ description ? 0.5 : 0 }>
-        <Typography sx={ { ...titleSx } } variant="h4">
+        <Typography sx={ titleSx } variant="h4">
           { title }
         </Typography>
 
