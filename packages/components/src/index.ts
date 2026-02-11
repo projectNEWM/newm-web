@@ -1,4 +1,5 @@
 export { default as Alert } from "./lib/Alert";
+export { default as Banner } from "./lib/Banner";
 export * from "./lib/ActionMenu";
 export { default as ActionMenu } from "./lib/ActionMenu";
 export * from "./lib/ActionMenuTrigger";
