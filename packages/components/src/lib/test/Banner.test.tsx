@@ -69,7 +69,8 @@ describe("<Banner />", () => {
     const banner = screen.getByTestId("banner");
     expect(banner).toHaveStyle({ position: "fixed" });
     expect(banner).toHaveStyle({ top: "0px" });
-    expect(banner).toHaveStyle({ zIndex: "1300" });
+    // * zIndex is theme.zIndex.snackbar - 1 (MUI default snackbar is 1400, so this is 1399)
+    expect(banner).toHaveStyle({ zIndex: "1399" });
   });
 
   it("does not apply fixed positioning when fixed is false", () => {
@@ -78,7 +79,7 @@ describe("<Banner />", () => {
     const banner = screen.getByTestId("banner");
     expect(banner).not.toHaveStyle({ position: "fixed" });
     expect(banner).not.toHaveStyle({ top: "0px" });
-    expect(banner).not.toHaveStyle({ zIndex: "1300" });
+    expect(banner).not.toHaveStyle({ zIndex: "1399" });
   });
 
   it("applies full width when fullWidth is true", () => {

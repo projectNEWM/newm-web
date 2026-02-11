@@ -48,8 +48,8 @@ const Banner: FunctionComponent<BannerProps> = ({
         position: fixed ? "fixed" : undefined,
         top: fixed ? 0 : undefined,
         width: fullWidth ? "100%" : undefined,
-        // * 1400 is our packages/components/**/Alert.tsx
-        zIndex: fixed ? 1300 : undefined,
+        // * Place Banner just below Snackbars (see packages/components/**/Alert.tsx)
+        zIndex: fixed ? theme.zIndex.snackbar - 1 : undefined,
         ...sx,
       } }
       textAlign={ textAlign }
