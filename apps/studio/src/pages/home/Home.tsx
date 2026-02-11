@@ -25,7 +25,7 @@ import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
 import { useGetStudioClientConfigQuery } from "../../modules/content";
-import { identifyReferralHeroUser } from "../../common";
+import { identifyReferralHeroUser, useBreakpoint } from "../../common";
 import NotFoundPage from "../NotFoundPage";
 import { UnsavedChangesProvider } from "../../contexts/UnsavedChangesContext";
 
@@ -33,7 +33,10 @@ const RELEASES_BASE_PATH = "releases";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const navigate = useNavigate();
 
   // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
@@ -119,7 +122,7 @@ const Home: FunctionComponent = () => {
           <Box
             left="2rem"
             position="absolute"
-            top={ webStudioDisableDistributionAndSales ? 20 : 32 }
+            top={ webStudioDisableDistributionAndSales && !isDesktop ? 20 : 32 }
           >
             <IconButton onClick={ () => setMobileOpen(true) }>
               <MenuIcon sx={ { color: "white" } } />
