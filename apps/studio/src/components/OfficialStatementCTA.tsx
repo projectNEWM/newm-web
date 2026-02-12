@@ -2,9 +2,7 @@ import { FunctionComponent, ReactNode } from "react";
 
 import { Link, useTheme } from "@mui/material";
 
-import { NEWM_IO_URL } from "../common";
-
-const ANNOUNCEMENT_URL = `${NEWM_IO_URL}sunset/`;
+import { NEWM_STUDIO_OFFICIAL_STATEMENT_URL } from "../common";
 
 interface OfficialStatementCTAProps {
   readonly children?: ReactNode;
@@ -13,7 +11,7 @@ interface OfficialStatementCTAProps {
 }
 
 const OfficialStatementCTA: FunctionComponent<OfficialStatementCTAProps> = ({
-  href = ANNOUNCEMENT_URL,
+  href = NEWM_STUDIO_OFFICIAL_STATEMENT_URL,
   linkText = "official statement",
 }) => {
   const theme = useTheme();
