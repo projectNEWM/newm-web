@@ -11,8 +11,11 @@ import {
 import { browserName } from "react-device-detect";
 
 import Hls from "hls.js";
+
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
+
+import { FULL_SUPPORT_BROWSERS, LIMITED_SUPPORT_BROWSERS } from "./constants";
 import { UseHlsJsParams, UseHlsJsResult, WindowDimensions } from "./types";
 
 const hasWindow = typeof window !== "undefined";
@@ -345,11 +348,13 @@ export const useBetterMediaQuery = (mediaQueryString: string) => {
 };
 
 export const useBrowserSupport = () => {
-  const fullSupportBrowsers = ["Chrome", "Brave", "Edge"];
-  const limitedSupportBrowsers = ["Firefox"];
+  const isFullSupport = (FULL_SUPPORT_BROWSERS as readonly string[]).includes(
+    browserName
+  );
 
-  const isFullSupport = fullSupportBrowsers.includes(browserName);
-  const isLimitedSupport = limitedSupportBrowsers.includes(browserName);
+  const isLimitedSupport = (
+    LIMITED_SUPPORT_BROWSERS as readonly string[]
+  ).includes(browserName);
 
   return {
     isFullSupport,
