@@ -31,6 +31,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy mobile-wallet-connector
+        env:
+          DOCKER_BUILDKIT: '0'
         run: |
           npm install --prefix .github/workflows/cdk
           sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js

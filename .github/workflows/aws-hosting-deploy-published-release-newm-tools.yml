@@ -31,6 +31,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy tools
+        env:
+          DOCKER_BUILDKIT: '0'
         run: |
           npm install --prefix .github/workflows/cdk
           APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_ENV=production NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD=${{ secrets.LAUNCHDARKLY_CLIENT_ID_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
