@@ -1,15 +1,18 @@
-import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import theme from "@newm-web/theme";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+import theme from "@newm-web/theme";
 import {
   GOOGLE_CLIENT_ID,
   REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
 } from "@newm-web/env";
 import { Maintenance, UnsupportedBrowserBanner } from "@newm-web/components";
+
 import {
   Background,
   ConnectWalletModal,
@@ -17,6 +20,7 @@ import {
   IdenfyModal,
   IdenfyPingUserStatus,
   IdenfySuccessSession,
+  InfoBanner,
   InvitesModal,
   PingEarningsInProgressWrapper,
   PingSaleEnd,
@@ -79,6 +83,8 @@ const App = () => {
               <UnsupportedBrowserBanner />
               <LDUserUpdater />
               <ScrollToTop />
+
+              <InfoBanner />
 
               <Background>
                 <BrowserRouter history={ history }>

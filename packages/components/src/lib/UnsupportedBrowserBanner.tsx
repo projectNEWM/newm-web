@@ -1,17 +1,16 @@
-import { Container, Stack, Typography, useTheme } from "@mui/material";
-import { Alert, Button } from "@newm-web/elements";
-import { browserName } from "react-device-detect";
 import { FunctionComponent, useEffect, useState } from "react";
+
+import { Container, Stack, Typography, useTheme } from "@mui/material";
+
+import { Alert, Button } from "@newm-web/elements";
+import { useBrowserSupport } from "@newm-web/utils";
 
 const UnsupportedBrowserBanner: FunctionComponent = () => {
   const theme = useTheme();
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const fullSupportBrowsers = ["Chrome", "Brave", "Edge"];
-  const limitedSupportBrowsers = ["Firefox"];
-  const isFullSupport = fullSupportBrowsers.includes(browserName);
-  const isLimitedSupport = limitedSupportBrowsers.includes(browserName);
+  const { isLimitedSupport, isFullSupport } = useBrowserSupport();
 
   const title = isLimitedSupport
     ? "Limited browser support"

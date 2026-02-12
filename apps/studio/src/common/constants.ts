@@ -9,6 +9,7 @@ export const NEWM_SUPPORT_LINK =
 export const NEWM_CLICKUP_FORM_URL =
   "https://projectnewm.atlassian.net/servicedesk/customer/portal/1";
 export const NEWM_IO_URL = "https://newm.io/";
+export const NEWM_STUDIO_OFFICIAL_STATEMENT_URL = `${NEWM_IO_URL}sunset/`;
 export const NEWM_STUDIO_DISCORD_URL =
   "https://discord.com/channels/931903540056694856/1153293933468713041";
 export const NEWM_STUDIO_FAQ_URL = "https://newm.io/artist-faq";

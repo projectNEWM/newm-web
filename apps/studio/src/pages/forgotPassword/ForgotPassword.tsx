@@ -1,24 +1,38 @@
-import * as Yup from "yup";
-import { Box, Container } from "@mui/material";
 import { FunctionComponent, useCallback, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { FormikHelpers, FormikValues } from "formik";
+import * as Yup from "yup";
+
+import { Box, Container } from "@mui/material";
+
 import theme from "@newm-web/theme";
 import { WizardForm } from "@newm-web/elements";
-import { useLocation } from "react-router-dom";
 import { removeTrailingSlash } from "@newm-web/utils";
+
 import InitiateReset from "./InitiateReset";
 import VerifyEmail from "./VerifyEmail";
 import ResetPassword from "./ResetPassword";
 import NotFoundPage from "../NotFoundPage";
 import { resetPassword, sendVerificationEmail } from "../../modules/session";
-import { commonYupValidation, useAppDispatch } from "../../common";
+import {
+  commonYupValidation,
+  useAppDispatch,
+  useBreakpoint,
+} from "../../common";
 import { ResponsiveNEWMLogo } from "../../components";
 
 const rootPath = "forgot-password";
 
 const ForgotPassword: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const dispatch = useAppDispatch();
   const currentPathLocation = useLocation();
+
+  const { isDesktop } = useBreakpoint();
 
   const initialValues = {
     authCode: "",
@@ -105,6 +119,7 @@ const ForgotPassword: FunctionComponent = () => {
         backgroundColor: theme.colors.black,
         display: "flex",
         flexDirection: "column",
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 5 : 0,
         pt: 7.5,
         px: 2,
       } }

@@ -1,14 +1,23 @@
-import * as Yup from "yup";
-import { Box, useTheme } from "@mui/material";
-import { FormikValues } from "formik";
 import { FunctionComponent, useCallback, useMemo } from "react";
-import { WizardForm } from "@newm-web/elements";
 import { useLocation } from "react-router-dom";
+
+import { Box, useTheme } from "@mui/material";
+
+import * as Yup from "yup";
+import { FormikValues } from "formik";
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { WizardForm } from "@newm-web/elements";
 import { removeTrailingSlash } from "@newm-web/utils";
+
 import Verification from "./Verification";
 import Welcome from "./Welcome";
 import NotFoundPage from "../NotFoundPage";
-import { commonYupValidation, useAppDispatch } from "../../common";
+import {
+  commonYupValidation,
+  useAppDispatch,
+  useBreakpoint,
+} from "../../common";
 import { createAccount, sendVerificationEmail } from "../../modules/session";
 
 const rootPath = "sign-up";
@@ -22,7 +31,11 @@ interface AccountValues {
 }
 
 const SignUp: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const dispatch = useAppDispatch();
   const currentPathLocation = useLocation();
 
@@ -114,6 +127,7 @@ const SignUp: FunctionComponent = () => {
         display: "flex",
         flex: 1,
         justifyContent: "center",
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 2 : 0,
         maxWidth: "100%",
         pt: 5,
         px: 2,
