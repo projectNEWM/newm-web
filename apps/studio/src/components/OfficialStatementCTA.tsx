@@ -11,7 +11,7 @@ interface OfficialStatementCTAProps {
 }
 
 const OfficialStatementCTA: FunctionComponent<OfficialStatementCTAProps> = ({
-  href = NEWM_IO_URL,
+  href = `${NEWM_IO_URL}sunset/`,
   linkText = "official statement",
 }) => {
   const theme = useTheme();
