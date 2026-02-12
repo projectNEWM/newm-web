@@ -43,8 +43,10 @@ const Discography: FunctionComponent = () => {
         { webStudioDisableDistributionAndSales ? (
           <Tooltip title={ <OfficialStatementCTA /> }>
             <Box
+              aria-disabled="true"
               aria-label="Create New Release"
               component="span"
+              role="button"
               sx={ {
                 cursor: "not-allowed",
                 textDecoration: "none",
