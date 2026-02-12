@@ -1,9 +1,15 @@
 import { FunctionComponent, useMemo } from "react";
-import { Box, Container, useTheme } from "@mui/material";
-import { WizardForm } from "@newm-web/elements";
-import * as Yup from "yup";
-import { getUpdatedValues, removeTrailingSlash } from "@newm-web/utils";
 import { useLocation } from "react-router-dom";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import * as Yup from "yup";
+
+import { Box, Container, useTheme } from "@mui/material";
+
+import { WizardForm } from "@newm-web/elements";
+import { getUpdatedValues, removeTrailingSlash } from "@newm-web/utils";
+
 import Begin from "./Begin";
 import SelectNickname from "./SelectNickname";
 import SelectRole from "./SelectRole";
@@ -13,7 +19,7 @@ import AddLastName from "./AddLastName";
 import SelectLocation from "./SelectLocation";
 import NotFoundPage from "../NotFoundPage";
 import { useGetRolesQuery } from "../../modules/content";
-import { commonYupValidation } from "../../common";
+import { commonYupValidation, useBreakpoint } from "../../common";
 import {
   ProfileFormValues,
   emptyProfile,
@@ -24,7 +30,11 @@ import {
 const rootPath = "create-profile";
 
 const CreateProfile: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const currentPathLocation = useLocation();
 
   const { data: roles = [] } = useGetRolesQuery();
@@ -127,6 +137,7 @@ const CreateProfile: FunctionComponent = () => {
         display: "flex",
         flex: 1,
         maxWidth: "100%",
+        mt: webStudioDisableDistributionAndSales && isDesktop ? 4 : 0,
         pt: 7.5,
         px: 2,
         textAlign: "center",
