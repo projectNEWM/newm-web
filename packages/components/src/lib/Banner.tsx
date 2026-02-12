@@ -50,8 +50,7 @@ const Banner: FunctionComponent<BannerProps> = ({
             ...(fixed && {
               position: "fixed",
               top: 0,
-              // * Place Banner just below Snackbars (see packages/components/**/Alert.tsx)
-              zIndex: theme.zIndex.snackbar - 1,
+              zIndex: theme.zIndex.modal,
             }),
             ...(fullWidth && {
               width: "100%",

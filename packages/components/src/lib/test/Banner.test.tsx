@@ -71,7 +71,7 @@ describe("<Banner />", () => {
     expect(banner).toHaveStyle({ position: "fixed" });
     expect(banner).toHaveStyle({ top: "0px" });
     // Derive expected zIndex from theme instead of hardcoding
-    const expectedZIndex = theme.zIndex.snackbar - 1;
+    const expectedZIndex = theme.zIndex.modal;
     expect(banner).toHaveStyle({ zIndex: String(expectedZIndex) });
   });
 
@@ -81,7 +81,7 @@ describe("<Banner />", () => {
     const banner = screen.getByTestId("banner");
     expect(banner).not.toHaveStyle({ position: "fixed" });
     expect(banner).not.toHaveStyle({ top: "0px" });
-    const expectedZIndex = theme.zIndex.snackbar - 1;
+    const expectedZIndex = theme.zIndex.modal;
     expect(banner).not.toHaveStyle({ zIndex: String(expectedZIndex) });
   });
 
