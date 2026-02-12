@@ -8,6 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { browserName } from "react-device-detect";
+
 import Hls from "hls.js";
 import { isProd } from "@newm-web/env";
 import { Song } from "@newm-web/types";
@@ -340,4 +342,17 @@ export const useBetterMediaQuery = (mediaQueryString: string) => {
   }, [mediaQueryString]);
 
   return matches;
+};
+
+export const useBrowserSupport = () => {
+  const fullSupportBrowsers = ["Chrome", "Brave", "Edge"];
+  const limitedSupportBrowsers = ["Firefox"];
+
+  const isFullSupport = fullSupportBrowsers.includes(browserName);
+  const isLimitedSupport = limitedSupportBrowsers.includes(browserName);
+
+  return {
+    isFullSupport,
+    isLimitedSupport,
+  };
 };
