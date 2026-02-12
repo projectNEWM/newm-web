@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import { useFlags } from "launchdarkly-react-client-sdk";
 
 import { styled } from "@mui/material/styles";
+import { useBrowserSupport } from "@newm-web/utils";
 
 interface BackgroundProps {
   children: ReactNode;
@@ -46,7 +47,9 @@ const BackgroundOverlay = styled("div")<{ applyOffset?: boolean }>(
 
 const Background = ({ children }: BackgroundProps) => {
   const { webStudioDisableDistributionAndSales } = useFlags();
-  const applyOffset = webStudioDisableDistributionAndSales;
+  const { isFullSupport } = useBrowserSupport();
+
+  const applyOffset = webStudioDisableDistributionAndSales && isFullSupport;
 
   return (
     <BackgroundImage>
