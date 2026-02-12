@@ -143,7 +143,16 @@ const Home: FunctionComponent = () => {
               path=""
             />
 
-            <Route element={ <UploadSong /> } path="upload-song/*" />
+            <Route
+              element={
+                webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : (
+                  <UploadSong />
+                )
+              }
+              path="upload-song/*"
+            />
 
             <Route
               element={

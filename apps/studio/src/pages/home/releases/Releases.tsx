@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { useFlags } from "launchdarkly-react-client-sdk";
 
@@ -16,7 +16,9 @@ import NotFoundPage from "../../NotFoundPage";
 
 const Releases: FunctionComponent = () => {
   // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseTwo } = useFlags();
+  // TODO(webStudioDisableDistributionAndSales): Remove once flag is retired.
+  const { webStudioAlbumPhaseTwo, webStudioDisableDistributionAndSales } =
+    useFlags();
 
   return (
     <Container
@@ -40,11 +42,40 @@ const Releases: FunctionComponent = () => {
 
         { webStudioAlbumPhaseTwo && (
           <>
-            <Route element={ <ReleaseDetails /> } path="new/*" />
+            <Route
+              element={
+                webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : (
+                  <ReleaseDetails />
+                )
+              }
+              path="new/*"
+            />
             <Route element={ <ReleaseDetails /> } path=":releaseId/*" />
 
-            <Route element={ <NewTrack /> } path="new/track/new" />
-            <Route element={ <NewTrack /> } path=":releaseId/track/new" />
+            <Route
+              element={
+                webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : (
+                  <NewTrack />
+                )
+              }
+              path="new/track/new"
+            />
+
+            <Route
+              element={
+                webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : (
+                  <NewTrack />
+                )
+              }
+              path=":releaseId/track/new"
+            />
+
             <Route
               element={ <TrackDetailsRouter /> }
               path=":releaseId/track/:trackId"
