@@ -162,7 +162,8 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   const isSubmitDisabled =
     !values.agreesToCoverArtGuidelines ||
     (isMintingVisible && (!wallet || !isVerified)) ||
-    (values.isMinting && isDistributionDisabled);
+    (values.isMinting && isDistributionDisabled) ||
+    isDistributionDisabled;
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -536,7 +537,13 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
           <Box>
             <HorizontalLine mb={ 5 } />
 
-            <Tooltip title={ tooltipContent }>
+            <Tooltip
+              title={
+                isSubmitDisabled && isDistributionDisabled
+                  ? tooltipContent
+                  : undefined
+              }
+            >
               <span>
                 <Button
                   disabled={ isSubmitDisabled }
