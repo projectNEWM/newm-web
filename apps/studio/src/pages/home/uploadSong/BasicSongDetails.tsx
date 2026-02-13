@@ -1,4 +1,12 @@
+import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { useFormikContext } from "formik";
+
 import { Box, Link, Stack, Typography, useTheme } from "@mui/material";
+
 import {
   Alert,
   Button,
@@ -11,6 +19,7 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
+  Tooltip,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
@@ -19,19 +28,20 @@ import {
   useExtractProperty,
   useWindowDimensions,
 } from "@newm-web/utils";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import { useFormikContext } from "formik";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { MintingStatus } from "@newm-web/types";
-import { useFlags } from "launchdarkly-react-client-sdk";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+
 import { UploadSongFormValues } from "./UploadSong";
 import {
   NEWM_STUDIO_FAQ_URL,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
   useAppDispatch,
 } from "../../../common";
-import { DistributionPricingDialog, PlaySong } from "../../../components";
+import {
+  DistributionPricingDialog,
+  OfficialStatementCTA,
+  PlaySong,
+} from "../../../components";
 import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
@@ -76,6 +86,25 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   const songDetailsRef = useRef<HTMLDivElement>(null);
 
   const {
+    webStudioDisableTrackDistributionAndMinting,
+    webStudioDisableDistributionAndSales,
+  } = useFlags();
+
+  const isDistributionDisabled =
+    webStudioDisableDistributionAndSales ||
+    webStudioDisableTrackDistributionAndMinting;
+  const shouldUseNewTooltip = webStudioDisableDistributionAndSales; // * New flag takes precedence.
+  const tooltipContent = shouldUseNewTooltip ? (
+    <OfficialStatementCTA />
+  ) : webStudioDisableTrackDistributionAndMinting ? (
+    <>
+      Track distribution and minting are temporarily disabled, but we&apos;re
+      working on it! You can still upload your tracks and song details to save
+      for later. Check back in a bit for updates.
+    </>
+  ) : undefined;
+
+  const {
     data: {
       verificationStatus,
       dspPlanSubscribed: isArtistPricePlanSelected,
@@ -83,7 +112,6 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
       appleMusicProfile,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -134,7 +162,8 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   const isSubmitDisabled =
     !values.agreesToCoverArtGuidelines ||
     (isMintingVisible && (!wallet || !isVerified)) ||
-    (values.isMinting && webStudioDisableTrackDistributionAndMinting);
+    (values.isMinting && isDistributionDisabled) ||
+    isDistributionDisabled;
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -408,19 +437,11 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
                     "Distribute your track to all major streaming platforms " +
                     "and generate stream tokens for royalty claiming."
                   }
-                  disabled={
-                    isDeclined || webStudioDisableTrackDistributionAndMinting
-                  }
+                  disabled={ isDeclined || isDistributionDisabled }
                   includeBorder={ false }
                   name="isMinting"
                   title="DISTRIBUTE & MINT SONG"
-                  toggleTooltipText={
-                    webStudioDisableTrackDistributionAndMinting
-                      ? "Track distribution and minting are temporarily disabled, " +
-                        "but we're working on it! You can still upload your tracks and " +
-                        "song details to save for later. Check back in a bit for updates."
-                      : undefined
-                  }
+                  toggleTooltipText={ tooltipContent }
                   onClick={ () => {
                     if (!isArtistPricePlanSelected) handlePricingPlanOpen();
                   } }
@@ -516,18 +537,28 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
           <Box>
             <HorizontalLine mb={ 5 } />
 
-            <Button
-              disabled={ isSubmitDisabled }
-              isLoading={ isSubmitting }
-              type="submit"
-              width={
-                windowWidth && windowWidth > theme.breakpoints.values.md
-                  ? "compact"
-                  : "default"
+            <Tooltip
+              title={
+                isSubmitDisabled && isDistributionDisabled
+                  ? tooltipContent
+                  : undefined
               }
             >
-              { isMintingVisible ? "Next" : isInEditMode ? "Save" : "Upload" }
-            </Button>
+              <span>
+                <Button
+                  disabled={ isSubmitDisabled }
+                  isLoading={ isSubmitting }
+                  type="submit"
+                  width={
+                    windowWidth && windowWidth > theme.breakpoints.values.md
+                      ? "compact"
+                      : "default"
+                  }
+                >
+                  { isMintingVisible ? "Next" : isInEditMode ? "Save" : "Upload" }
+                </Button>
+              </span>
+            </Tooltip>
           </Box>
         </Stack>
       </Stack>

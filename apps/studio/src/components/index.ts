@@ -1,4 +1,4 @@
-// List exports in alphabetical order by component name
+// ! List exports in alphabetical order by component name.
 
 export { default as AddProfileInformation } from "./createProfile/AddProfileInformation";
 export { default as Background } from "./Background";
@@ -17,6 +17,7 @@ export { default as InvitesModal } from "./invites/InvitesModal";
 export { default as LogoutButton } from "./home/LogoutButton";
 export { default as MarketplaceTabSkeleton } from "./skeletons/MarketplaceTabSkeleton";
 export { default as NEWMLogo } from "./NEWMLogo";
+export { default as OfficialStatementCTA } from "./OfficialStatementCTA";
 export { default as Owners } from "./minting/Owners";
 export { default as PingEarningsInProgressWrapper } from "./PingEarningsInProgressWrapper";
 export { default as PingSaleEnd } from "./sales/PingSaleEnd";
