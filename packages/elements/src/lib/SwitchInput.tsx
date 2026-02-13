@@ -1,3 +1,5 @@
+import { FunctionComponent, ReactNode } from "react";
+
 import {
   IconButton,
   Stack,
@@ -6,8 +8,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { FunctionComponent, ReactNode } from "react";
 import HelpIcon from "@mui/icons-material/Help";
+
 import Switch from "./Switch";
 import Tooltip from "./styled/Tooltip";
 
@@ -16,7 +18,7 @@ export interface SwitchInputProps extends SwitchProps {
   readonly description?: string;
   readonly includeBorder?: boolean;
   readonly title: string;
-  readonly toggleTooltipText?: string;
+  readonly toggleTooltipText?: ReactNode;
   readonly tooltipText?: string;
 }
 
