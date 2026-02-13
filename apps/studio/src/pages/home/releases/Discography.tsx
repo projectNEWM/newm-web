@@ -2,18 +2,25 @@ import { FunctionComponent, useState } from "react";
 
 import { Box, Typography } from "@mui/material";
 
-import { GradientDashedOutline, IconMessage, Link } from "@newm-web/elements";
-import { AddSong } from "@newm-web/assets";
-
 import { useFlags } from "launchdarkly-react-client-sdk";
 
+import {
+  GradientDashedOutline,
+  IconMessage,
+  Link,
+  Tooltip,
+} from "@newm-web/elements";
+import { AddSong } from "@newm-web/assets";
+
 import SongList from "./SongList";
+import OfficialStatementCTA from "../../../components/OfficialStatementCTA";
 import { SearchBox } from "../../../components";
 import { useGetSongCountQuery } from "../../../modules/song";
 
 const Discography: FunctionComponent = () => {
   // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
-  const { webStudioAlbumPhaseTwo } = useFlags();
+  const { webStudioAlbumPhaseTwo, webStudioDisableDistributionAndSales } =
+    useFlags();
 
   const [query, setQuery] = useState("");
 
@@ -33,23 +40,38 @@ const Discography: FunctionComponent = () => {
       </Typography>
 
       <Box sx={ { mb: 5.5 } }>
-        <Link
-          aria-label="Create New Release"
-          sx={ {
-            textDecoration: "none",
-          } }
-          to={
-            webStudioAlbumPhaseTwo ? "/home/releases/new" : "/home/upload-song"
-          }
-        >
-          <GradientDashedOutline
-            sx={ {
-              padding: 3,
-            } }
+        { webStudioDisableDistributionAndSales ? (
+          <Tooltip title={ <OfficialStatementCTA /> }>
+            <Box
+              aria-disabled="true"
+              aria-label="Create New Release"
+              component="span"
+              role="button"
+              sx={ {
+                cursor: "not-allowed",
+                textDecoration: "none",
+              } }
+            >
+              <GradientDashedOutline sx={ { padding: 3 } }>
+                <IconMessage icon={ <AddSong /> } message="Create New Release" />
+              </GradientDashedOutline>
+            </Box>
+          </Tooltip>
+        ) : (
+          <Link
+            aria-label="Create New Release"
+            sx={ { textDecoration: "none" } }
+            to={
+              webStudioAlbumPhaseTwo
+                ? "/home/releases/new"
+                : "/home/upload-song"
+            }
           >
-            <IconMessage icon={ <AddSong /> } message="Create New Release" />
-          </GradientDashedOutline>
-        </Link>
+            <GradientDashedOutline sx={ { padding: 3 } }>
+              <IconMessage icon={ <AddSong /> } message="Create New Release" />
+            </GradientDashedOutline>
+          </Link>
+        ) }
       </Box>
 
       { totalCountOfSongs || query ? (
