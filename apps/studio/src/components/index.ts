@@ -43,3 +43,4 @@ export { default as UpdateWalletAddressModal } from "./UpdateWalletAddressModal"
 export { default as ViewPDF } from "./ViewPDF";
 export { default as WalletEnvMismatchModal } from "./WalletEnvMismatchModal";
 export { default as InfoBanner } from "./InfoBanner";
+export { default as OfficialStatementCTA } from "./OfficialStatementCTA";
