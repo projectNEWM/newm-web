@@ -36,6 +36,8 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Deploy to Lambda Function
+        env:
+          DOCKER_BUILDKIT: '0'
         run: |
           npm install --prefix .github/workflows/cdk
           APPNAME=tools APPID=Tools QUALIFIER=Garage NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING=${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
