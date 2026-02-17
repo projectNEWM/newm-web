@@ -4,6 +4,7 @@ import * as path from "path";
 import * as cdk from "aws-cdk-lib";
 import * as ssm from "aws-cdk-lib/aws-ssm";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import { Platform } from "aws-cdk-lib/aws-ecr-assets";
 import { Construct } from "constructs";
 import { Tags } from "aws-cdk-lib";
 
@@ -48,6 +49,7 @@ class WebDeployStack extends cdk.Stack {
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKeyStaging,
           },
           file: path.join("apps", appName, "Dockerfile"),
+          platform: Platform.LINUX_AMD64,
         }),
         environment: {
           NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
