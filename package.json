@@ -19,7 +19,7 @@
     "@sentry/react": "7.72.0",
     "@swc/helpers": "~0.5.2",
     "async-mutex": "^0.3.2",
-    "axios": "^1.5.0",
+    "axios": "^1.13.5",
     "buffer": "^6.0.3",
     "cloudinary-react": "^1.7.1",
     "cross-env": "^7.0.3",
