@@ -6,7 +6,7 @@ import {
   SyntheticEvent,
   forwardRef,
 } from "react";
-import { useAutocomplete } from "@mui/base/useAutocomplete";
+import useAutocomplete from "@mui/material/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "@newm-web/theme";
 import { Box, SxProps } from "@mui/material";
@@ -56,12 +56,12 @@ const DropdownSelect: ForwardRefRenderFunction<
     inputValue,
   } = useAutocomplete({
     clearOnBlur: true,
-    getOptionLabel: (option) => option,
+    getOptionLabel: (option: string) => option,
     id: name,
     // Removes warning for empty string not being a valid option
-    isOptionEqualToValue: (option, value) =>
+    isOptionEqualToValue: (option: string, value: string) =>
       value === "" ? true : option === value,
-    onChange: (event, newValue) => {
+    onChange: (event: SyntheticEvent, newValue: string | null) => {
       // Updates as empty string instead of invalid null error for empty field
       // or for partial edit of selected input causing invalid undefined error
       onChange?.(event, newValue ?? "");

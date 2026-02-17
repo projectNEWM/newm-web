@@ -8,7 +8,7 @@ import {
   SyntheticEvent,
   forwardRef,
 } from "react";
-import { useAutocomplete } from "@mui/base/useAutocomplete";
+import useAutocomplete from "@mui/material/useAutocomplete";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import theme from "@newm-web/theme";
 import { Box, Stack } from "@mui/material";
@@ -69,10 +69,10 @@ const DropdownMultiSelect: ForwardRefRenderFunction<
     value: selected,
   } = useAutocomplete({
     disableCloseOnSelect: true,
-    getOptionLabel: (option) => option,
+    getOptionLabel: (option: string) => option,
     id: name,
     multiple: true,
-    onChange: (event, newValue) => {
+    onChange: (event: SyntheticEvent, newValue: ReadonlyArray<string>) => {
       handleChange?.(event, newValue);
     },
     options,

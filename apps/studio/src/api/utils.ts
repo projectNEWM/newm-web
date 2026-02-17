@@ -1,4 +1,4 @@
-import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import type { BaseQueryApi } from "@reduxjs/toolkit/query";
 import Cookies from "js-cookie";
 import { Mutex } from "async-mutex";
 import { AxiosRequestConfig } from "axios";

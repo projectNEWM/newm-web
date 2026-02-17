@@ -29,7 +29,7 @@ export const asThunkHook = <Returned, Arg>(
       async (arg: Arg) => {
         setIsLoading(true);
         try {
-          const action = thunk(arg) as any; // eslint-disable-line
+          const action = thunk(arg as Arg & undefined) as any; // eslint-disable-line
           const result = (await dispatch(action)) as PayloadAction<Returned>;
 
           // Check if the thunk execution was successful
