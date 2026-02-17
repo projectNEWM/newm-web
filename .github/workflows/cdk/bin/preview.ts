@@ -3,6 +3,7 @@ import "source-map-support/register";
 import * as path from "path";
 import * as cdk from "aws-cdk-lib";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import { Platform } from "aws-cdk-lib/aws-ecr-assets";
 import { Construct } from "constructs";
 
 const appName = process.env.APPNAME || "APPNAME";
@@ -39,6 +40,7 @@ class WebPreviewStack extends cdk.Stack {
             NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING: recaptchaKey,
           },
           file: path.join("apps", appName, "Dockerfile"),
+          platform: Platform.LINUX_AMD64,
         }),
         environment: {
           NX_CLOUD_ACCESS_TOKEN: nxCloudAccessToken,
