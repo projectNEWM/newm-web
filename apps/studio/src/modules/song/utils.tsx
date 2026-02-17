@@ -6,7 +6,7 @@ import {
   signWalletTransaction,
 } from "@newm.io/cardano-dapp-wallet-connector";
 import { SilentError } from "@newm-web/utils";
-import { MintingStatus } from "@newm-web/types";
+import { MintingStatus, PaymentType } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
@@ -21,6 +21,12 @@ import {
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { sessionApi } from "../session";
+import { setIsPayPalModalOpen } from "../ui";
+import {
+  closePayPalPopup,
+  getPayPalPopup,
+  navigatePayPalPopup,
+} from "../../common";
 
 const EDITABLE_COLLABORATOR_STATUSES = [
   CollaborationStatus.Editing,
@@ -173,7 +179,9 @@ export const mapCollaboratorsToCollaborations = (
     email: collaborator.email,
     featured: collaborator.isFeatured,
     role: collaborator.role,
-    royaltyRate: collaborator.royaltyRate || 0,
+    ...(collaborator.royaltyRate
+      ? { royaltyRate: collaborator.royaltyRate }
+      : {}),
     songId,
   }));
 };
@@ -286,22 +294,38 @@ export const convertMillisecondsToSongFormat = (
  *
  * @param songId id of the song to submit a minting payment for
  * @param dispatch thunk dispatch helper
+ * @param paymentType type of payment that will be used for minting
  */
 export const submitMintSongPayment = async (
   songId: string,
-  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>,
+  paymentType: PaymentType
 ) => {
   const wallet = await enableWallet();
 
   const getPaymentResp = await dispatch(
-    songApi.endpoints.getMintSongPayment.initiate(songId)
+    songApi.endpoints.getMintSongPayment.initiate(
+      { paymentType, songId },
+      { forceRefetch: true }
+    )
   );
 
   if ("error" in getPaymentResp || !getPaymentResp.data) {
     throw new SilentError();
   }
 
-  const paymentHex = getPaymentResp.data.cborHex;
+  const paymentOptionSelected = getPaymentResp.data.mintPaymentOptions.find(
+    (option) => option.paymentType === paymentType
+  );
+
+  if (!paymentOptionSelected) {
+    throw new SilentError(
+      "No valid payment option found for the selected payment type."
+    );
+  }
+
+  const paymentHex = paymentOptionSelected.cborHex;
+
   const utxoCborHexList = await wallet.getUtxos(paymentHex);
   const changeAddress = await getWalletChangeAddress(wallet);
 
@@ -334,7 +358,89 @@ export const submitMintSongPayment = async (
 };
 
 /**
- * Returns true if an invite includes ownership of a song.
+ * Allows user to submit PayPal payment for minting a song.
+ * This function will open a PayPal payment window
+ * and will close it once the payment is successful or cancelled.
+ *
+ * @param songId id of the song to submit a minting payment for
+ * @param dispatch thunk dispatch helper
+ * @returns a promise that resolves when the payment is submitted
+ * @throws Will throw an error if the payment submission fails.
+ * */
+export const submitPayPalPayment = async (
+  songId: string,
+  dispatch: ThunkDispatch<unknown, unknown, AnyAction>
+): Promise<void> => {
+  return new Promise(async (resolve, reject) => {
+    const getPaymentResp = await dispatch(
+      songApi.endpoints.createPayPalOrderPayment.initiate({ songId })
+    );
+
+    if ("error" in getPaymentResp || !getPaymentResp.data) {
+      closePayPalPopup();
+      reject(new SilentError());
+      return;
+    }
+
+    const { checkoutUrl, orderId } = getPaymentResp.data;
+
+    // Show overlay while the popup is in use
+    dispatch(setIsPayPalModalOpen(true));
+    navigatePayPalPopup(checkoutUrl);
+
+    // Cleanup PayPal process to remove modal, stop watchers, and close pop-up
+    const cleanUpPayPalPopup = () => {
+      if (paypalWatcher !== null) {
+        clearInterval(paypalWatcher);
+      }
+      if (getPayPalPopup()) {
+        closePayPalPopup();
+      }
+
+      window.removeEventListener("message", handlePayPalMessage);
+
+      dispatch(setIsPayPalModalOpen(false));
+    };
+
+    // Handle any post messages that are derived from the pop-up
+    const handlePayPalMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data === "paypal-payment-success") {
+        try {
+          const submitResp = await dispatch(
+            songApi.endpoints.submitPayPalOrderPayment.initiate({ orderId })
+          );
+          if ("error" in submitResp) {
+            reject(new SilentError());
+          } else {
+            resolve();
+          }
+        } catch (e) {
+          reject(e);
+        } finally {
+          cleanUpPayPalPopup();
+        }
+      } else if (event.data === "paypal-popup-cancelled") {
+        // Cancelled page button is clicked
+        cleanUpPayPalPopup();
+        reject(new Error("PayPal payment cancelled"));
+      }
+    };
+
+    window.addEventListener("message", handlePayPalMessage);
+
+    // Detect manual close before redirect callback happens
+    const paypalWatcher = setInterval(() => {
+      if (!getPayPalPopup()) {
+        cleanUpPayPalPopup();
+        reject(new Error("PayPal payment cancelled"));
+      }
+    }, 500);
+  });
+};
+
+/** Returns true if an invite includes ownership of a song.
  * @param invites array of invites for the user
  * @returns true if any of invites contains an ownership amount greater than 0
  */
@@ -364,6 +470,7 @@ export const getCollaboratorInfo = (
     email: collaborator.email,
     firstName: collaborator.user.firstName,
     lastName: collaborator.user.lastName,
+    nickname: collaborator.user.nickname,
     pictureUrl: collaborator.user.pictureUrl,
   };
 };

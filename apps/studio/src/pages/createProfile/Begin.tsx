@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { GradientTypography, Typography } from "@newm-web/elements";
+import { GradientTypography } from "@newm-web/elements";
 import { ResponsiveNEWMLogo } from "../../components";
 
 const Begin: FunctionComponent = () => {

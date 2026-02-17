@@ -1,64 +1,86 @@
 import AddImage from "./lib/icons/AddImage";
 import AddSong from "./lib/icons/AddSong";
-import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
-import bgImage from "./lib/images/bg-img.webp";
 import Charli3Logo from "./lib/icons/Charli3Logo";
 import CheckboxIcon from "./lib/icons/CheckboxIcon";
 import CheckCircle from "./lib/icons/CheckCircle";
+import CheckCircleRadioIcon from "./lib/icons/CheckCircleRadioIcon";
 import CheckIcon from "./lib/icons/CheckIcon";
 import CloseCircleFill from "./lib/icons/CloseCircleFill";
 import CloseIcon from "./lib/icons/CloseIcon";
 import DiscordLogo from "./lib/icons/DiscordLogo";
+import Document from "./lib/icons/Document";
 import DropdownAdornment from "./lib/icons/DropdownAdornment";
 import FoldersIcon from "./lib/icons/FoldersIcon";
 import GlobalFill from "./lib/icons/GlobalFill";
 import InfoCircleLine from "./lib/icons/InfoCircleLine";
 import InstagramLogo from "./lib/icons/InstagramLogo";
+import ItunesLogo from "./lib/icons/ItunesLogo";
 import NEWMLogo from "./lib/icons/NEWMLogo";
 import NEWMLogoSmInverse from "./lib/icons/NEWMLogoSmInverse";
 import NEWMMarketplaceLogo from "./lib/icons/NEWMMarketplaceLogo";
 import Owner from "./lib/icons/Owner";
 import PeopleIcon from "./lib/icons/PeopleIcon";
 import PlayButton from "./lib/icons/PlayButton";
-import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
-import SoundWave from "./lib/icons/SoundWave";
 import Search from "./lib/icons/Search";
+import SelectedCheckboxIcon from "./lib/icons/SelectedCheckboxIcon";
+import SoundCloudLogo from "./lib/icons/SoundCloudLogo";
+import SoundWave from "./lib/icons/SoundWave";
+import SpotifyLogo from "./lib/icons/SpotifyLogo";
+import Suitcase from "./lib/icons/Suitcase";
 import TimeCircleLine from "./lib/icons/TimeCircleLine";
-import TwitterLogo from "./lib/icons/TwitterLogo";
 import UnselectedCheckboxIcon from "./lib/icons/UnselectedCheckboxIcon";
 import UploadIcon from "./lib/icons/UploadIcon";
 import VerticalEllipsis from "./lib/icons/VerticalEllipsis";
 import WalletIcon from "./lib/icons/WalletIcon";
 import XLogo from "./lib/icons/XLogo";
+import artistAgreementPreview from "./lib/images/artist-agreement-preview.jpg";
+import auroraBackground from "./lib/images/aurora-background.webp";
+import bgImage from "./lib/images/bg-img.webp";
+import gradientRing from "./lib/images/gradient-ring.png";
+import referralBannerBackground from "./lib/images/referral-banner-background.webp";
+import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
+import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
+import { default as NEWMMonsterGuitar } from "./lib/images/NEWMMonsterGuitar.png";
 
 export {
-  AddSong,
   AddImage,
+  AddSong,
   artistAgreementPreview,
+  auroraBackground,
   bgImage,
   Charli3Logo,
   CheckboxIcon,
   CheckCircle,
+  CheckCircleRadioIcon,
   CheckIcon,
   CloseCircleFill,
   CloseIcon,
   DiscordLogo,
+  Document,
   DropdownAdornment,
   FoldersIcon,
   GlobalFill,
+  gradientRing,
   InfoCircleLine,
   InstagramLogo,
+  ItunesLogo,
   NEWMLogo,
   NEWMLogoSmInverse,
   NEWMMarketplaceLogo,
+  NEWMMonsterPercussion,
+  NEWMMonsterRock,
+  NEWMMonsterGuitar,
   Owner,
   PeopleIcon,
   PlayButton,
-  SelectedCheckboxIcon,
+  referralBannerBackground,
   Search,
+  SelectedCheckboxIcon,
+  SoundCloudLogo,
   SoundWave,
+  SpotifyLogo,
+  Suitcase,
   TimeCircleLine,
-  TwitterLogo,
   UnselectedCheckboxIcon,
   UploadIcon,
   VerticalEllipsis,

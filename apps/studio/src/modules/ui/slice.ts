@@ -5,7 +5,9 @@ const initialState: UIState = {
   isConnectWalletModalOpen: false,
   isIdenfyModalOpen: false,
   isInvitesModalOpen: false,
+  isPayPalModalOpen: false,
   isProgressBarModalOpen: false,
+  isReferralDashboardModalOpen: false,
   isWalletEnvMismatchModalOpen: false,
   progressBarModal: {
     animationSeconds: 0,
@@ -53,8 +55,17 @@ const uiSlice = createSlice({
     setIsInvitesModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isInvitesModalOpen = payload;
     },
+    setIsPayPalModalOpen: (state, { payload }: PayloadAction<boolean>) => {
+      state.isPayPalModalOpen = payload;
+    },
     setIsProgressBarModalOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isProgressBarModalOpen = payload;
+    },
+    setIsReferralDashboardModalOpen: (
+      state,
+      { payload }: PayloadAction<boolean>
+    ) => {
+      state.isReferralDashboardModalOpen = payload;
     },
     setIsWalletEnvMismatchModalOpen: (
       state,
@@ -81,16 +92,18 @@ const uiSlice = createSlice({
 });
 
 export const {
-  clearToastMessage,
-  setToastMessage,
-  setProgressBarModal,
-  setUpdateWalletAddressModal,
   clearProgressBarModal,
-  setIsProgressBarModalOpen,
-  setIsIdenfyModalOpen,
+  clearToastMessage,
   setIsConnectWalletModalOpen,
+  setIsIdenfyModalOpen,
   setIsInvitesModalOpen,
+  setIsPayPalModalOpen,
+  setIsProgressBarModalOpen,
+  setIsReferralDashboardModalOpen,
   setIsWalletEnvMismatchModalOpen,
+  setProgressBarModal,
+  setToastMessage,
+  setUpdateWalletAddressModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

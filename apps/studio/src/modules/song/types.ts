@@ -1,5 +1,10 @@
-import { MintingStatus, Song, SortOrder } from "@newm-web/types";
-import { OnUploadProgress } from "../../api/types";
+import {
+  MintingStatus,
+  OnUploadProgress,
+  PaymentType,
+  Song,
+  SortOrder,
+} from "@newm-web/types";
 
 export interface SongState {
   artistAgreement: string;
@@ -17,6 +22,8 @@ export interface GetSongStreamData {
 }
 
 export interface GetSongsRequest {
+  // endDate for the song earnings
+  readonly endDate?: string;
   readonly genres?: string[];
   readonly ids?: string[];
   readonly limit?: number;
@@ -27,6 +34,9 @@ export interface GetSongsRequest {
   readonly ownerIds?: string[];
   readonly phrase?: string;
   readonly sortOrder?: SortOrder;
+  readonly sortedBy?: string;
+  // startDate for the song earnings
+  readonly startDate?: string;
 }
 
 export interface Owner {
@@ -68,6 +78,7 @@ export interface Collaborator {
  */
 export interface PostSongRequest {
   readonly album?: string;
+  readonly archived?: boolean;
   readonly barcodeNumber?: string;
   readonly barcodeType?: string;
   readonly compositionCopyrightOwner?: string;
@@ -76,6 +87,7 @@ export interface PostSongRequest {
   readonly coverRemixSample?: boolean;
   readonly description?: string;
   readonly genres: ReadonlyArray<string>;
+  readonly instrumental?: boolean;
   readonly ipis?: ReadonlyArray<string>;
   readonly isrc?: string;
   readonly iswc?: string;
@@ -91,8 +103,22 @@ export interface PostSongRequest {
   readonly track?: number;
 }
 
-export interface UploadSongRequest
-  extends Omit<PostSongRequest, "coverArtUrl"> {
+/**
+ * PatchSong as stored in the NEWM API.
+ */
+export interface PatchSongRequest
+  extends Omit<PostSongRequest, "title" | "genres"> {
+  readonly genres?: ReadonlyArray<string>;
+  readonly id: string;
+  readonly title?: string;
+}
+
+/**
+ * Type for thunk request to upload a song.
+ * It does not have to be the same as the API request.
+ */
+export interface UploadSongThunkRequest
+  extends Omit<PostSongRequest, "instrumental" | "coverArtUrl"> {
   readonly artistName: string;
   readonly audio?: any;
   readonly companyName: string;
@@ -102,11 +128,38 @@ export interface UploadSongRequest
   readonly featured: Array<Featured>;
   readonly ipi?: string;
   readonly isCoverRemixSample?: boolean;
-  // eslint-disable-line
   readonly isExplicit: boolean;
+  readonly isInstrumental?: boolean;
   readonly isMinting: boolean;
   readonly owners: Array<Owner>;
+  readonly paymentType: PaymentType;
   readonly stageName: string;
+}
+
+/**
+ * Type for thunk request to patch a song.
+ * It does not have to be the same as the API request.
+ */
+export interface PatchSongThunkRequest
+  extends Omit<PatchSongRequest, "instrumental" | "coverArtUrl">,
+    Pick<
+      UploadSongThunkRequest,
+      | "artistName"
+      | "companyName"
+      | "consentsToContract"
+      | "coverArtUrl"
+      | "creditors"
+      | "featured"
+      | "ipi"
+      | "isExplicit"
+      | "isInstrumental"
+      | "isMinting"
+      | "owners"
+      | "stageName"
+      | "paymentType"
+    > {
+  readonly mintingStatus?: MintingStatus;
+  readonly shouldRedirect?: boolean;
 }
 
 export interface UploadSongResponse {
@@ -131,11 +184,6 @@ export interface DeleteSongRequest {
   readonly archived?: boolean;
   readonly showToast?: boolean;
   readonly songId: string;
-}
-
-export interface PatchSongRequest extends Partial<UploadSongRequest> {
-  readonly id: string;
-  readonly shouldRedirect?: boolean;
 }
 
 export interface UpdateCollaborationsRequest {
@@ -165,14 +213,14 @@ export interface Contributor {
 }
 
 export interface GetSongCountRequest {
-  genres?: string[];
-  ids?: string[];
-  mintingStatuses?: MintingStatus[];
-  moods?: string[];
-  newerThan?: string;
-  olderThan?: string;
-  ownerIds?: string[];
-  phrase?: string;
+  readonly genres?: string[];
+  readonly ids?: string[];
+  readonly mintingStatuses?: MintingStatus[];
+  readonly moods?: string[];
+  readonly newerThan?: string;
+  readonly olderThan?: string;
+  readonly ownerIds?: string[];
+  readonly phrase?: string;
 }
 
 export interface GetSongCountResponse {
@@ -255,6 +303,7 @@ export interface CollaboratorInfo {
   genre?: string;
   id?: string;
   lastName?: string;
+  nickname?: string;
   pictureUrl?: string;
   role?: string;
   walletAddress?: string;
@@ -297,6 +346,10 @@ export interface ProcessStreamTokenAgreementRequest {
   songId: string;
 }
 
+export interface CreateMintSongPaymentResponse {
+  readonly cborHex: string;
+}
+
 export interface CreateMintSongPaymentRequest {
   readonly changeAddress: string;
   readonly songId: string;
@@ -308,8 +361,13 @@ export interface SubmitTransactionRequest {
   readonly songId: string;
 }
 
-export interface CborHexResponse {
-  readonly cborHex: string;
+export interface getMintSongPaymentResponse {
+  readonly mintPaymentOptions: ReadonlyArray<MintPaymentOptions>;
+}
+
+export interface getMintSongPaymentRequest {
+  paymentType: PaymentType;
+  songId: string;
 }
 
 export interface GetEarliestReleaseDateResponse {
@@ -317,9 +375,38 @@ export interface GetEarliestReleaseDateResponse {
 }
 
 export interface GetUserWalletSongsRequest {
+  // Comma-separated list of song genres for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly genres?: string[];
+  // Comma-separated list of song UUID's for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly ids?: string[];
+  // Maximum number of paginated results to retrieve. Default is 25.
   readonly limit?: number;
+  // Comma-separated list of song Song minting statuses for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly mintingStatuses?: MintingStatus[];
+  // Comma-separated list of song moods to for filtering results.
+  // Prefix each value with - to exclude and + (optional) to include. Defaults to inclusion if no prefix is specified.
+  readonly moods?: string[];
+  // ISO-8601 formated newest (minimum) timestamp to filter-out results.
+  // If missing, defaults to no filtering out.
+  readonly newerThan?: string;
+  // Start offset of paginated results to retrieve. Default is 0.
   readonly offset?: number;
+  // ISO-8601 formated oldest (maximum) timestamp to filter-out results. If missing, defaults to no filtering out.
+  readonly olderThan?: string;
+  // Comma-separated list of owner UUID's for filtering results. A value of "me" can be used instead of
+  // the caller's UUID.Prefix each value with - to exclude and + (optional) to include.
+  // Defaults to inclusion if no prefix is specified.
+  readonly ownerIds?: string[];
+  // Case-insensitive phrase to filter out songs by searching the Song title, description, album and
+  // nftName fields as well as the Song Owner nickname if set, otherwise firstName and lastName.
+  readonly phrase?: string;
+  // Sort order of the results based on createdAt field.
+  // Valid values are desc (newest first) and asc (oldest first). Default is asc.
   readonly sortOrder?: SortOrder;
+  // The list of UTxOs from walletApi.getUtxos().
   readonly utxoCborHexList: ReadonlyArray<string>;
 }
 
@@ -339,17 +426,51 @@ export interface GetMintSongEstimateRequest {
   readonly collaborators: number;
 }
 
+export interface MintPaymentOptions {
+  readonly cborHex: string;
+  readonly collabPrice: string;
+  readonly collabPricePerArtist: string;
+  readonly collabPricePerArtistUsd: string;
+  readonly collabPriceUsd: string;
+  readonly dspPrice: string;
+  readonly dspPriceUsd: string;
+  readonly mintPrice: string;
+  readonly mintPriceUsd: string;
+  readonly paymentType: PaymentType;
+  readonly price: string;
+  readonly priceUsd: string;
+  readonly usdToPaymentTypeExchangeRate: string;
+}
+
 export interface GetMintSongEstimateResponse {
   readonly adaPrice: string;
   readonly cborHex: string;
   readonly collabPerArtistPriceAda: string;
   readonly collabPerArtistPriceUsd: string;
+  readonly collabPrice?: string;
   readonly collabPriceAda: string;
+  readonly collabPricePerArtist?: string;
   readonly collabPriceUsd: string;
   readonly dspPriceAda: string;
   readonly dspPriceUsd: string;
+  readonly mintPaymentOptions?: ReadonlyArray<MintPaymentOptions>;
+  readonly mintPrice?: string;
   readonly mintPriceAda: string;
   readonly mintPriceUsd: string;
   readonly usdAdaExchangeRate: string;
   readonly usdPrice: string;
+  readonly usdToPaymentTypeExchangeRate?: string;
+}
+
+export interface CreatePayPalOrderPaymentResponse {
+  readonly checkoutUrl: string;
+  readonly orderId: string;
+}
+
+export interface CreatePayPalOrderPaymentRequest {
+  readonly songId: string;
+}
+
+export interface SubmitPayPalOrderPaymentRequest {
+  readonly orderId: string;
 }

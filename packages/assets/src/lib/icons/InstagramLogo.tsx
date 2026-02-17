@@ -1,4 +1,6 @@
-const InstagramLogo = () => (
+import { createSvgIcon } from "@mui/material";
+
+const InstagramLogo = createSvgIcon(
   <svg
     fill="none"
     height="20"
@@ -30,7 +32,8 @@ const InstagramLogo = () => (
         <rect fill="white" height="20" width="20" />
       </clipPath>
     </defs>
-  </svg>
+  </svg>,
+  "InstagramLogo"
 );
 
 export default InstagramLogo;

@@ -43,6 +43,7 @@ export interface UploadImageProps {
     readonly height: number;
     readonly width: number;
   };
+  readonly minFileSizeMB?: number;
   readonly minimumSizeLabel?: string;
   readonly onBlur: VoidFunction;
   readonly onChange: (file: FileWithPreview) => void;
@@ -73,6 +74,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
   hasPreviewOption = false,
   isSuccessIconDisplayed = true,
   maxFileSizeMB,
+  minFileSizeMB,
   minDimensions,
   minimumSizeLabel = "Minimum size",
   onBlur,
@@ -94,6 +96,9 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
       try {
         fileRejections.forEach((rejection) => {
           rejection.errors.forEach((error) => {
+            if (error.code === "file-invalid-type") {
+              throw new Error("File type must be .jpg, .jpeg, or .png.");
+            }
             throw new Error(error.message);
           });
         });
@@ -103,6 +108,12 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
         if (maxFileSizeMB && firstFile.size > maxFileSizeMB * 1000 * 1000) {
           throw new Error(
             `Image must be less than or equal to ${maxFileSizeMB}MB`
+          );
+        }
+
+        if (minFileSizeMB && firstFile.size < minFileSizeMB * 1000 * 1000) {
+          throw new Error(
+            `Image must be greater than or equal to ${minFileSizeMB * 1000}KB`
           );
         }
 
@@ -134,6 +145,7 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     },
     [
       maxFileSizeMB,
+      minFileSizeMB,
       isAspectRatioOneToOne,
       minDimensions,
       onChange,
@@ -151,7 +163,6 @@ const UploadImage: FunctionComponent<UploadImageProps> = ({
     accept: {
       "image/jpg": [".jpg", ".jpeg"],
       "image/png": [".png"],
-      "image/webp": [".webp"],
     },
     multiple: false,
     onDrop: allowImageChange ? handleDrop : undefined,

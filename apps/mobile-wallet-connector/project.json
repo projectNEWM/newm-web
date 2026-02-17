@@ -1,0 +1,59 @@
+{
+  "name": "mobile-wallet-connector",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mobile-wallet-connector",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/mobile-wallet-connector"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/mobile-wallet-connector"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mobile-wallet-connector:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mobile-wallet-connector:build:development",
+          "dev": true,
+          "port": 4300
+        },
+        "production": {
+          "buildTarget": "mobile-wallet-connector:build:production",
+          "dev": false,
+          "port": 3000
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "mobile-wallet-connector:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/mobile-wallet-connector/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": []
+}

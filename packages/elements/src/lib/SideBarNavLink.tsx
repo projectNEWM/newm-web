@@ -5,7 +5,7 @@ import theme from "@newm-web/theme";
 
 interface ButtonProps {
   readonly children: ReactNode;
-  readonly onClick?: VoidFunction;
+  readonly onClick?: (event?: React.MouseEvent) => void;
   readonly style: CSSProperties;
 }
 
@@ -25,7 +25,7 @@ interface SideBarNavLinkProps {
   readonly Icon: React.ComponentType<SvgIconProps>;
   readonly href?: string;
   readonly label: string;
-  readonly onClick?: VoidFunction;
+  readonly onClick?: (event?: React.MouseEvent) => void;
   readonly to?: string;
 }
 

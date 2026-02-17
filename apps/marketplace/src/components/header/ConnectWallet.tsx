@@ -1,6 +1,6 @@
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import currency from "currency.js";
 import { FunctionComponent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   DisconnectWalletButton,
   WalletEnvMismatchModal,
@@ -8,14 +8,61 @@ import {
 } from "@newm-web/components";
 import { Button } from "@newm-web/elements";
 import { Grid } from "@mui/material";
-import { getIsWalletEnvMismatch } from "@newm-web/utils";
+import {
+  LOVELACE_CONVERSION,
+  LocalStorage,
+  NEWM_ASSET_NAME,
+  NEWM_POLICY_ID,
+  getIsWalletEnvMismatch,
+} from "@newm-web/utils";
+import { DEXHUNTER_MARKETPLACE_PARTNER_CODE } from "@newm-web/env";
+import { LocalStorageKey } from "@newm-web/types";
+import { useDispatch, useSelector } from "react-redux";
+import { useFlags } from "launchdarkly-react-client-sdk";
+import {
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../../modules/wallet/api";
+import { selectUi, setIsConnectWalletModalOpen } from "../../modules/ui";
+import {
+  selectWallet,
+  setWalletAdaBalance,
+  setWalletAddress,
+  setWalletNewmBalance,
+} from "../../modules/wallet";
 
 const ConnectWallet: FunctionComponent = () => {
-  const [walletAddress, setWalletAddress] = useState("");
-  const [walletBalance, setWalletBalance] = useState("");
-  const [isWalletModalOpen, setisWalletModalOpen] = useState(false);
+  const defaultUsdPrice = { usdPrice: 0 };
+
+  const { webMarketplaceDisabledWallets } = useFlags();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [isWalletEnvModalOpen, setIsWalletEnvModalOpen] = useState(false);
-  const { wallet, getBalance, getAddress } = useConnectWallet();
+
+  const { isConnectWalletModalOpen } = useSelector(selectUi);
+  const { walletAdaBalance, walletNewmBalance, walletAddress } =
+    useSelector(selectWallet);
+
+  const { wallet, getBalance, getAddress, getTokenBalance } =
+    useConnectWallet();
+  const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
+    useGetAdaUsdConversionRateQuery();
+  const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
+    useGetNewmUsdConversionRateQuery();
+
+  const adaUsdBalance =
+    typeof walletAdaBalance === "number"
+      ? (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION
+      : undefined;
+  const newmUsdBalance =
+    typeof walletNewmBalance === "number"
+      ? (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION
+      : undefined;
+
+  const isNewmBalanceBadgeDismissed = !!LocalStorage.getItem(
+    LocalStorageKey.isStudioNewmBalanceBadgeDismissed
+  );
 
   const handleConnectWallet = async () => {
     if (!wallet) return;
@@ -28,11 +75,28 @@ const ConnectWallet: FunctionComponent = () => {
   };
 
   const handleDisconnectWallet = () => {
-    setisWalletModalOpen(true);
+    dispatch(setIsConnectWalletModalOpen(true));
+  };
+
+  const handleResetWallet = () => {
+    dispatch(setWalletAdaBalance(0));
+    dispatch(setWalletNewmBalance(0));
+    dispatch(setWalletAddress(""));
   };
 
   const handleCloseWalletEnvModal = () => {
     setIsWalletEnvModalOpen(false);
+  };
+
+  const handleDismissNewmBalanceBadge = () => {
+    LocalStorage.setItem(
+      LocalStorageKey.isStudioNewmBalanceBadgeDismissed,
+      "true"
+    );
+  };
+
+  const handleClaimEarnings = () => {
+    router.push("/claim-earnings");
   };
 
   /**
@@ -41,11 +105,23 @@ const ConnectWallet: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getBalance((value) => {
-        const adaBalance = currency(value, { symbol: "" }).format();
-        setWalletBalance(adaBalance);
+        dispatch(setWalletAdaBalance(value));
       });
     }
-  }, [wallet, getBalance]);
+  }, [wallet, getBalance, dispatch]);
+
+  /**
+   * Gets the NEWM balance from the wallet and updates the state.
+   */
+  useEffect(() => {
+    const callback = (value: number) => {
+      dispatch(setWalletNewmBalance(value));
+    };
+
+    if (wallet) {
+      getTokenBalance(NEWM_POLICY_ID, callback, NEWM_ASSET_NAME);
+    }
+  }, [wallet, getTokenBalance, dispatch]);
 
   /**
    * Gets an address from the wallet and updates the state.
@@ -53,17 +129,19 @@ const ConnectWallet: FunctionComponent = () => {
   useEffect(() => {
     if (wallet) {
       getAddress((value) => {
-        setWalletAddress(value);
+        dispatch(setWalletAddress(value));
       });
     }
-  }, [wallet, getAddress]);
+  }, [wallet, getAddress, dispatch]);
 
   return (
     <Grid>
       <WalletModal
-        isOpen={ isWalletModalOpen }
-        onClose={ () => setisWalletModalOpen(false) }
+        isOpen={ isConnectWalletModalOpen }
+        omitWallets={ webMarketplaceDisabledWallets }
+        onClose={ () => dispatch(setIsConnectWalletModalOpen(false)) }
         onConnect={ handleConnectWallet }
+        onDisconnect={ handleResetWallet }
       />
 
       <WalletEnvMismatchModal
@@ -73,15 +151,24 @@ const ConnectWallet: FunctionComponent = () => {
 
       { wallet ? (
         <DisconnectWalletButton
+          adaBalance={ walletAdaBalance }
+          adaUsdBalance={ adaUsdBalance }
           address={ walletAddress }
-          balance={ walletBalance }
+          isClaimEarningsEnabled={ true }
+          isNewmBalanceBadgeEnabled={ !isNewmBalanceBadgeDismissed }
+          newmBalance={ walletNewmBalance }
+          newmUsdBalance={ newmUsdBalance }
+          partnerCode={ DEXHUNTER_MARKETPLACE_PARTNER_CODE }
+          partnerName="NEWMMarketplace"
+          onClaimEarnings={ handleClaimEarnings }
           onDisconnect={ handleDisconnectWallet }
+          onDismissNewmBalanceBadge={ handleDismissNewmBalanceBadge }
         />
       ) : (
         <Button
           gradient="crypto"
           width="compact"
-          onClick={ () => setisWalletModalOpen(true) }
+          onClick={ () => dispatch(setIsConnectWalletModalOpen(true)) }
         >
           Connect Wallet
         </Button>

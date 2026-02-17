@@ -14,6 +14,8 @@ import ErrorMessage from "./styled/ErrorMessage";
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  readonly characterCountLimit?: number;
+  readonly currentCharacterCount?: number;
   readonly endAdornment?: JSX.Element;
   readonly errorMessage?: string;
   readonly isOptional?: boolean;
@@ -61,6 +63,8 @@ export const TextArea: ForwardRefRenderFunction<
     onBlur,
     startAdornment,
     endAdornment,
+    characterCountLimit,
+    currentCharacterCount,
     disabled = false,
     isOptional = true,
     widthType = "default",
@@ -112,7 +116,7 @@ export const TextArea: ForwardRefRenderFunction<
           color={ theme.colors.grey100 }
           columnGap={ 0.5 }
           display="flex"
-          fontWeight={ 500 }
+          fontWeight={ 700 }
         >
           { label }
 
@@ -165,7 +169,35 @@ export const TextArea: ForwardRefRenderFunction<
         </StyledRootElement>
       </Box>
 
-      { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
+      <Stack
+        alignItems="center"
+        flexDirection="row"
+        justifyContent="space-between"
+      >
+        { !!errorMessage && <ErrorMessage>{ errorMessage }</ErrorMessage> }
+        { currentCharacterCount !== undefined &&
+          characterCountLimit !== undefined && (
+            <Typography
+              color={
+                currentCharacterCount > characterCountLimit
+                  ? theme.colors.red
+                  : theme.colors.grey100
+              }
+              component="span"
+              style={ {
+                fontWeight:
+                  currentCharacterCount > characterCountLimit
+                    ? theme.typography.fontWeightBold
+                    : theme.typography.fontWeightMedium,
+                marginLeft: "auto",
+                marginTop: "4px",
+              } }
+              variant="subtitle2"
+            >
+              { `${currentCharacterCount}/${characterCountLimit}` }
+            </Typography>
+          ) }
+      </Stack>
     </Stack>
   );
 };

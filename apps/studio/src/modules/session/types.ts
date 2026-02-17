@@ -41,6 +41,7 @@ export interface NewmOAuthRequest {
   readonly accessToken?: string;
   readonly code?: string;
   readonly redirectUri?: string;
+  readonly referrer?: string;
 }
 
 export interface NewmAuthResponse {
@@ -84,6 +85,7 @@ export interface ProfileFormValues
   readonly email?: string;
   readonly firstName?: string;
   readonly lastName?: string;
+  readonly location?: string;
   readonly pictureUrl?: string | File;
   readonly role?: string;
 }
@@ -111,6 +113,7 @@ export interface CreateAccountRequest {
   readonly newPassword: string;
   readonly nickname?: string;
   readonly pictureUrl?: string;
+  readonly referrer?: string;
   readonly role?: string;
   readonly verificationStatus?: Readonly<VerificationStatus>;
 }

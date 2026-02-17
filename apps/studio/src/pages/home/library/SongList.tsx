@@ -2,6 +2,7 @@ import React, { MouseEvent, useEffect, useMemo, useState } from "react";
 import {
   Box,
   IconButton,
+  Link,
   Table,
   TableBody,
   TableContainer,
@@ -31,7 +32,7 @@ import {
   SortOrder,
 } from "@newm-web/types";
 import { useNavigate } from "react-router-dom";
-import { MintingStatus } from "./MintingStatus";
+import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
 import NoSongsYet from "./NoSongsYet";
 import TableHead from "./Table/TableHead";
 import { SongStreamPlaybackIcon } from "../../../components";
@@ -40,7 +41,11 @@ import {
   useFetchSongStreamThunk,
   useGetSongsQuery,
 } from "../../../modules/song";
-import { NEWM_SUPPORT_EMAIL, PlayerState } from "../../../common";
+import {
+  NEWM_SUPPORT_EMAIL,
+  PlayerState,
+  isSongEditable as isSongEditableUtil,
+} from "../../../common";
 
 interface SongListProps {
   query: string;
@@ -211,15 +216,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
 
   const handleRowClick = (
     event: MouseEvent<HTMLButtonElement | HTMLTableRowElement>,
-    {
-      songId,
-      hasStartedMintingProcess,
-    }: { hasStartedMintingProcess: boolean; songId: string }
+    { songId, isSongEditable }: { isSongEditable: boolean; songId: string }
   ) => {
     event.stopPropagation();
-    navigate(
-      `${hasStartedMintingProcess ? "view-details" : "edit-song"}/${songId}`
-    );
+    navigate(`${isSongEditable ? "edit-song" : "view-details"}/${songId}`);
   };
 
   const handlePageChange = (
@@ -243,6 +243,32 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
     window.location.href = mailtoLink;
   };
 
+  const getTooltipContent = (mintingStatus: MintingStatusType) => {
+    const isErrorMintingStatus =
+      ErrorOccurredMintingStatuses.includes(mintingStatus);
+
+    let content: JSX.Element | string = "";
+
+    if (isErrorMintingStatus) {
+      content = (
+        <span>
+          An error has occurred. Please reach out to{ " " }
+          <Link href={ `mailto:${NEWM_SUPPORT_EMAIL}` }>
+            { NEWM_SUPPORT_EMAIL }
+          </Link>{ " " }
+          for assistance distributing your release.
+        </span>
+      );
+    } else if (mintingStatus === MintingStatusType.Declined) {
+      content =
+        "One or more issues occurred resulting in your " +
+        "distribution being declined. Please check your " +
+        "email for information on how to correct and resubmit your release.";
+    }
+
+    return content;
+  };
+
   useEffect(() => {
     setPage(1);
   }, [query]);
@@ -253,10 +279,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       return song.id === playerState.currentPlayingSongId;
     });
 
-    if (!isSongFound) {
+    if (!isSongFound && !isLoading) {
       stopSong();
     }
-  }, [playerState.currentPlayingSongId, songData, stopSong]);
+  }, [playerState.currentPlayingSongId, songData, stopSong, isLoading]);
 
   // sets the # of rows per page depending on viewport height
   useEffect(() => {
@@ -293,8 +319,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
         <TableHead />
         <TableBody>
           { songData.map((song) => {
-            const hasStartedMintingProcess =
-              song.mintingStatus !== MintingStatusType.Undistributed;
+            const isSongEditable = isSongEditableUtil(song.mintingStatus);
 
             const isSongStale =
               isMoreThanThresholdSecondsLater(song.createdAt, 1200) &&
@@ -319,7 +344,7 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                     ? undefined
                     : (event) =>
                         handleRowClick(event, {
-                          hasStartedMintingProcess,
+                          isSongEditable,
                           songId: song.id,
                         })
                 }
@@ -384,14 +409,16 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                   </Box>
                 </TableCell>
                 <TableCell sx={ { display: { sm: "table-cell", xs: "none" } } }>
-                  <Box
-                    sx={ {
-                      alignItems: "center",
-                      display: "flex",
-                    } }
-                  >
-                    <MintingStatus mintingStatus={ song.mintingStatus } />
-                  </Box>
+                  <Tooltip title={ getTooltipContent(song.mintingStatus) }>
+                    <Box
+                      sx={ {
+                        alignItems: "center",
+                        display: "flex",
+                      } }
+                    >
+                      <MintingStatus mintingStatus={ song.mintingStatus } />
+                    </Box>
+                  </Tooltip>
                 </TableCell>
                 <TableCell sx={ { display: { lg: "table-cell", xs: "none" } } }>
                   { song.genres.join(", ") }
@@ -428,15 +455,15 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
                       width="icon"
                       onClick={ (event) =>
                         handleRowClick(event, {
-                          hasStartedMintingProcess,
+                          isSongEditable,
                           songId: song.id,
                         })
                       }
                     >
-                      { hasStartedMintingProcess ? (
-                        <VisibilityIcon sx={ { color: theme.colors.music } } />
-                      ) : (
+                      { isSongEditable ? (
                         <EditIcon sx={ { color: theme.colors.music } } />
+                      ) : (
+                        <VisibilityIcon sx={ { color: theme.colors.music } } />
                       ) }
                     </Button>
                   ) }

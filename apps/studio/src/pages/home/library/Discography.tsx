@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { Typography } from "@newm-web/elements";
+import { Typography } from "@mui/material";
 import SongList from "./SongList";
 import { SearchBox } from "../../../components";
 import { useGetSongCountQuery } from "../../../modules/song";

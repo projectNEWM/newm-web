@@ -1,12 +1,21 @@
-import { FunctionComponent } from "react";
-import { Box, Drawer, IconButton, Link, Stack, useTheme } from "@mui/material";
 import {
-  ProfileImage,
-  SideBarHeader,
-  SideBarNavLink,
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Link,
+  Stack,
   Typography,
-} from "@newm-web/elements";
-import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
+} from "@mui/material";
 import {
   PeopleAlt as CollaboratorsIcon,
   LiveHelp as FaqIcon,
@@ -18,15 +27,31 @@ import {
   FileUploadOutlined as UploadIcon,
   AccountBalanceWalletRounded as WalletIcon,
 } from "@mui/icons-material";
-import { resizeCloudinaryImage, useWindowDimensions } from "@newm-web/utils";
+
+import {
+  ProfileImage,
+  SideBarHeader,
+  SideBarNavLink,
+} from "@newm-web/elements";
+import { DiscordLogo, NEWMLogo } from "@newm-web/assets";
+import {
+  LocalStorage,
+  resizeCloudinaryImage,
+  useWindowDimensions,
+} from "@newm-web/utils";
 import theme from "@newm-web/theme";
+import { LocalStorageKey } from "@newm-web/types";
+
 import {
   NEWM_CLICKUP_FORM_URL,
   NEWM_IO_URL,
   NEWM_STUDIO_DISCORD_URL,
   NEWM_STUDIO_FAQ_URL,
+  useBreakpoint,
 } from "../../common";
+import { useUnsavedChanges } from "../../contexts/UnsavedChangesContext";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
+import { ReferralBanner } from "../../components";
 
 interface SideBarProps {
   mobileVersion?: boolean;
@@ -37,13 +62,89 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
   mobileVersion,
   setMobileOpen,
 }: SideBarProps) => {
-  const theme = useTheme();
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  const {
+    webStudioAlbumPhaseOne,
+    webStudioArtistReferralCampaign,
+    webStudioDisableDistributionAndSales,
+  } = useFlags();
+
+  const { hasUnsavedChanges, requestNavigation } = useUnsavedChanges();
+
+  const { isDesktop } = useBreakpoint();
+
+  const handleInternalNavClick = useCallback(
+    (path: string) => (event?: React.MouseEvent) => {
+      if (hasUnsavedChanges) {
+        event?.preventDefault();
+        requestNavigation(path);
+      }
+      setMobileOpen(false);
+    },
+    [hasUnsavedChanges, requestNavigation, setMobileOpen]
+  );
+
+  const [isReferralBannerDismissed, setIsReferralBannerDismissed] =
+    useState(true);
 
   const { data: { firstName, lastName, nickname, pictureUrl } = emptyProfile } =
     useGetProfileQuery();
 
+  const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(true);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const lastCallToActionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!webStudioArtistReferralCampaign) return;
+
+    setIsReferralBannerDismissed(
+      LocalStorage.getItem(LocalStorageKey.isReferralBannerDismissed) === "true"
+    );
+  }, [webStudioArtistReferralCampaign]);
+
+  const handleReferralBannerDismiss = () => {
+    setIsReferralBannerDismissed(true);
+    LocalStorage.setItem(LocalStorageKey.isReferralBannerDismissed, "true");
+  };
+
+  // Function to check if the banner is near the bottom
+  const checkIfBannerIsNearBottom = () => {
+    if (!sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+    const banner = sidebar.querySelector(".referral-banner") as HTMLElement;
+
+    if (!banner) return;
+
+    const bannerBottom = banner.offsetTop;
+
+    // Adjust the threshold as needed
+    if (!lastCallToActionRef.current) return;
+    const lastCallToAction = lastCallToActionRef.current;
+    const threshold =
+      lastCallToAction.offsetTop + lastCallToAction.clientHeight;
+
+    setIsCloseButtonVisible(bannerBottom < threshold);
+  };
+
+  useEffect(() => {
+    if (!sidebarRef.current) return;
+
+    const sidebar = sidebarRef.current;
+
+    sidebar.addEventListener("scroll", checkIfBannerIsNearBottom);
+
+    checkIfBannerIsNearBottom(); // Initial check
+
+    return () => {
+      sidebar.removeEventListener("scroll", checkIfBannerIsNearBottom);
+    };
+    // When referral banner is dismissed the banner position will change
+  }, [isReferralBannerDismissed]);
+
   return (
     <Box
+      ref={ sidebarRef }
       sx={ {
         background: theme.colors.black,
         borderRight: `2px solid ${theme.colors.grey600}`,
@@ -51,6 +152,7 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
         flexDirection: "column",
         height: "100%",
         justifyContent: "space-between",
+        marginTop: webStudioDisableDistributionAndSales && isDesktop ? 8 : 0,
         minWidth: theme.spacing(28.75),
         overflowY: "auto",
         padding: 1.25,
@@ -88,35 +190,39 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
           </Typography>
         </Stack>
 
-        <Box mb={ 3 } mt={ 4 } width="100%">
-          <SideBarNavLink
-            Icon={ UploadIcon }
-            label="UPLOAD A SONG"
-            to="/home/upload-song"
-            onClick={ () => setMobileOpen(false) }
-          />
+        <Box mb={ 2 } mt={ 3 } width="100%">
+          { !webStudioAlbumPhaseOne && (
+            <SideBarNavLink
+              Icon={ UploadIcon }
+              label="UPLOAD A SONG"
+              to="/home/upload-song"
+              onClick={ handleInternalNavClick("/home/upload-song") }
+            />
+          ) }
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2 } mt={ 3 }>
             <SideBarHeader>MY CAREER</SideBarHeader>
           </Box>
 
           <Stack mt={ 0.75 } spacing={ 0.5 } sx={ { width: "100%" } }>
             <SideBarNavLink
               Icon={ LibraryIcon }
-              label="LIBRARY"
-              to="/home/library"
-              onClick={ () => setMobileOpen(false) }
+              label={ webStudioAlbumPhaseOne ? "RELEASES" : "LIBRARY" }
+              to={ webStudioAlbumPhaseOne ? "/home/releases" : "/home/library" }
+              onClick={ handleInternalNavClick(
+                webStudioAlbumPhaseOne ? "/home/releases" : "/home/library"
+              ) }
             />
 
             <SideBarNavLink
               Icon={ CollaboratorsIcon }
               label="COLLABORATORS"
               to="/home/collaborators"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/collaborators") }
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>MY PERFORMANCE</SideBarHeader>
           </Box>
 
@@ -125,11 +231,11 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ WalletIcon }
               label="WALLET"
               to="/home/wallet"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/wallet") }
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 3.5 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>MY SETTINGS</SideBarHeader>
           </Box>
 
@@ -138,22 +244,27 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
               Icon={ ProfileIcon }
               label="PROFILE"
               to="/home/profile"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/profile") }
             />
 
             <SideBarNavLink
               Icon={ SettingsIcon }
               label="SETTINGS"
               to="/home/settings"
-              onClick={ () => setMobileOpen(false) }
+              onClick={ handleInternalNavClick("/home/settings") }
             />
           </Stack>
 
-          <Box ml={ 2.5 } mt={ 4 }>
+          <Box ml={ 2.5 } mt={ 2.5 }>
             <SideBarHeader>SUPPORT</SideBarHeader>
           </Box>
 
-          <Stack mt={ 1.5 } spacing={ 0.5 } sx={ { width: "100%" } }>
+          <Stack
+            mt={ 1.5 }
+            ref={ lastCallToActionRef }
+            spacing={ 0.5 }
+            sx={ { width: "100%" } }
+          >
             <SideBarNavLink
               href={ NEWM_STUDIO_FAQ_URL }
               Icon={ FaqIcon }
@@ -169,12 +280,30 @@ export const SideBar: FunctionComponent<SideBarProps> = ({
             <SideBarNavLink
               href={ NEWM_CLICKUP_FORM_URL }
               Icon={ SupportIcon }
-              label="SUPPORT"
+              label="SUBMIT A TICKET"
               onClick={ () => setMobileOpen(false) }
             />
           </Stack>
         </Box>
       </Box>
+
+      { webStudioArtistReferralCampaign && (
+        <Box
+          bottom={ 0 }
+          className="referral-banner"
+          mb={ 1 }
+          mt="auto"
+          mx={ -1 }
+          position={ !isReferralBannerDismissed ? "sticky" : undefined }
+          zIndex={ 2 }
+        >
+          <ReferralBanner
+            isCloseButtonVisible={ isCloseButtonVisible }
+            isReferralBannerDismissed={ isReferralBannerDismissed }
+            onBannerDismiss={ handleReferralBannerDismiss }
+          />
+        </Box>
+      ) }
 
       <Box
         alignItems="center"

@@ -1,11 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+import { axiosBaseQuery } from "@newm-web/utils";
 import { Tags } from "./types";
 import { baseUrls } from "../../buildParams";
-import {
-  axiosBaseQuery,
-  fetchBaseQueryWithReauth,
-  prepareHeaders,
-} from "../utils";
+import { fetchBaseQueryWithReauth, prepareHeaders } from "../utils";
 
 export const baseQuery = axiosBaseQuery({
   baseUrl: baseUrls.newm,
@@ -22,7 +19,9 @@ const api = createApi({
     Tags.Languages,
     Tags.Profile,
     Tags.Roles,
+    Tags.Sale,
     Tags.Song,
+    Tags.Earnings,
   ],
 });
 

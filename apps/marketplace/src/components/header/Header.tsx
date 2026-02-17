@@ -35,6 +35,7 @@ const Header: FunctionComponent = () => {
               cursor: "pointer",
               minHeight: ["48px", "64px", "64px"],
               minWidth: ["126px", "168px", "168px"],
+              outline: 0,
             } }
             tabIndex={ 0 }
             onClick={ () => router.push("/") }
@@ -46,6 +47,7 @@ const Header: FunctionComponent = () => {
             alignItems: "center",
             flex: 1,
             flexBasis: ["100%", "100%", "auto"],
+            mb: [2, 4, 0],
             mt: [0, 2, 3.5],
             order: [4, 4, 2],
           } }
@@ -60,6 +62,8 @@ const Header: FunctionComponent = () => {
             mr: [2, 2, 7.5],
             mt: [2, 2, 3.5],
             order: [2, 2, 3],
+            position: "relative",
+            zIndex: 1000,
           } }
         >
           <ConnectWallet />

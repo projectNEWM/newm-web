@@ -1,11 +1,9 @@
 import { FunctionComponent } from "react";
-import { Box, Link, useTheme } from "@mui/material";
-import { Button, GradientTypography, Typography } from "@newm-web/elements";
+import { Box, Link, Typography, useTheme } from "@mui/material";
+import { Button, GradientTypography } from "@newm-web/elements";
+import { NEWM_TERMS_OF_SERVICE_URL } from "@newm-web/utils";
 import { ResponsiveNEWMLogo } from "../../components";
-import {
-  NEWM_PRIVACY_POLICY_URL,
-  NEWM_STUDIO_TERMS_OF_SERVICE_URL,
-} from "../../common";
+import { NEWM_PRIVACY_POLICY_URL } from "../../common";
 
 const Complete: FunctionComponent = () => {
   const theme = useTheme();
@@ -22,7 +20,7 @@ const Complete: FunctionComponent = () => {
       } }
     >
       <div>
-        <Box mb={ 4 }>
+        <Box display="flex" justifyContent="center" mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
         <Typography sx={ { display: "block" } } variant="h1">
@@ -46,7 +44,7 @@ const Complete: FunctionComponent = () => {
           Enter NEWM
         </Button>
 
-        <Typography color="grey200" variant="subtitle1">
+        <Typography color={ theme.colors.grey200 } variant="subtitle1">
           By clicking &apos;Enter NEWM&apos;, you agree to
           <br />
           NEWM&apos;s{ " " }
@@ -62,7 +60,7 @@ const Complete: FunctionComponent = () => {
           { " & " }
           <Link
             color={ theme.colors.grey200 }
-            href={ NEWM_STUDIO_TERMS_OF_SERVICE_URL }
+            href={ NEWM_TERMS_OF_SERVICE_URL }
             rel="noopener"
             target="_blank"
             variant="subtitle1"

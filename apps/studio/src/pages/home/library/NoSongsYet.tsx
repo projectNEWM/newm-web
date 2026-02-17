@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Stack, Table } from "@mui/material";
-import { Button, HorizontalLine, Typography } from "@newm-web/elements";
+import { Stack, Table, Typography } from "@mui/material";
+import { Button, HorizontalLine } from "@newm-web/elements";
 import { useNavigate } from "react-router-dom";
 import theme from "@newm-web/theme";
 import TableHead from "./Table/TableHead";

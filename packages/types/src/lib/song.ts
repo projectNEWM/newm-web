@@ -3,6 +3,12 @@ export enum MarketplaceStatus {
   Selling = "Selling",
 }
 
+export enum PaymentType {
+  ADA = "ADA",
+  NEWM = "NEWM",
+  PAYPAL = "PAYPAL",
+}
+
 export enum MintingStatus {
   ArweaveUploadException = "ArweaveUploadException",
   AwaitingAudioEncoding = "AwaitingAudioEncoding",
@@ -39,14 +45,18 @@ export interface Song {
   readonly createdAt: string;
   readonly description?: string;
   readonly duration?: number;
+  readonly earnings?: number;
   readonly genres: ReadonlyArray<string>;
   readonly id: string;
+  readonly instrumental?: boolean;
   readonly ipis?: ReadonlyArray<string>;
   readonly isrc?: string;
   readonly iswc?: string;
   readonly language?: string;
   readonly lyricsUrl?: string;
   readonly marketplaceStatus: MarketplaceStatus;
+  readonly mintCost?: number;
+  readonly mintPaymentType?: PaymentType;
   readonly mintingStatus: MintingStatus;
   readonly moods?: ReadonlyArray<string>;
   readonly nftName?: string;
@@ -55,7 +65,7 @@ export interface Song {
   readonly parentalAdvisory?: string;
   readonly phonographicCopyrightOwner: string;
   readonly phonographicCopyrightYear: string;
-  readonly price?: string; //TODO: Update name after key added to song endpoint
+  readonly price?: string;
   readonly publicationDate?: string;
   readonly releaseDate?: string;
   readonly streamUrl?: string;
@@ -70,7 +80,17 @@ export interface PlayerState {
   readonly song?: Song;
 }
 
+export interface SongSmartLink {
+  readonly id: string;
+  readonly storeName: string;
+  readonly url: string;
+}
+
 export enum SortOrder {
   Asc = "asc",
   Desc = "desc",
+}
+
+export enum MusicService {
+  Spotify = "Spotify",
 }

@@ -1,206 +1,273 @@
-import { type KeyboardEvent, useCallback, useEffect, useState } from "react";
-import { IconButton, Stack, Typography, useTheme } from "@mui/material";
+import { type KeyboardEvent, MouseEvent, useCallback } from "react";
+import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
+  formatNewmAmount,
+  formatUsdAmount,
   getImageSrc,
   resizeCloudinaryImage,
-  useWindowDimensions,
 } from "@newm-web/utils";
-import { SongCardSkeleton } from "@newm-web/elements";
+import { Clickable, ResponsiveImage } from "@newm-web/elements";
+import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {
-  coverArtUrl?: string;
-  isPlayable?: boolean;
-  isPlaying?: boolean;
-  onPlayPauseClick?: () => void;
-  onPriceClick?: () => void;
-  onSubtitleClick?: () => void;
-  onTitleClick?: () => void;
-  price?: string;
-  subtitle: string;
-  title: string;
+  readonly audioProgress?: number;
+  readonly coverArtUrl?: string;
+  readonly imageDimensions?: number;
+  readonly isLoading?: boolean;
+  readonly isPlayable?: boolean;
+  readonly isPlaying?: boolean;
+  readonly onCardClick?: () => void;
+  readonly onPlayPauseClick?: () => void;
+  readonly onSubtitleClick?: () => void;
+  readonly priceInNewm?: number;
+  readonly priceInUsd?: number;
+  readonly priceVariant?: "pill" | "text";
+  readonly subtitle?: string;
+  readonly title?: string;
 }
 
-export const SongCard = ({
+const SongCard = ({
   coverArtUrl,
-  title,
+  audioProgress = 0,
+  imageDimensions = 400,
+  isLoading = false,
   isPlayable,
   isPlaying,
-  onTitleClick,
+  onCardClick,
   onPlayPauseClick,
-  onPriceClick,
   onSubtitleClick,
-  price,
+  priceInNewm,
+  priceInUsd,
   subtitle,
+  title,
+  priceVariant = "text",
 }: SongCardProps) => {
   const theme = useTheme();
-  const windowWidth = useWindowDimensions()?.width;
 
-  const [isWidthAboveMd, setIsWidthAboveMd] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onCardClick) return;
 
-  useEffect(() => {
-    if (windowWidth !== undefined) {
-      setIsLoading(false);
-    }
-  }, [windowWidth]);
-
-  useEffect(() => {
-    setIsWidthAboveMd(
-      !!(windowWidth && windowWidth > theme.breakpoints.values.md)
-    );
-  }, [theme.breakpoints.values.md, windowWidth]);
-
-  const handlePriceClick = () => {
-    onPriceClick?.();
+    event.preventDefault();
+    event.stopPropagation();
+    onCardClick();
   };
 
-  const handleTitleClick = () => {
-    onTitleClick?.();
+  const handlePlayPauseClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onPlayPauseClick) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    onPlayPauseClick();
   };
 
-  const handleSubtitleClick = () => {
-    onSubtitleClick?.();
+  const handleSubtitleClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onSubtitleClick) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    onSubtitleClick();
   };
 
   const handleKeyPress = useCallback(
-    (action?: () => void) => (event: KeyboardEvent<HTMLDivElement>) => {
-      if ((event.key === "Enter" || event.key === " ") && action) {
-        action();
-      }
-    },
+    (action?: (e: MouseEvent | KeyboardEvent) => void) =>
+      (event: KeyboardEvent) => {
+        if ((event.key === "Enter" || event.key === " ") && action) {
+          action(event);
+        }
+      },
     []
   );
 
-  const commonPriceStyles = {
-    alignSelf: "start",
-    background: "rgba(0, 0, 0, 0.4)",
-    borderRadius: "6px",
-    gridArea: "1 / 1 / 2 / 2",
-    justifySelf: "end",
-    margin: [0.5, 1],
-    px: 1,
-    py: 0.5,
-  };
-
   if (isLoading) {
-    return <SongCardSkeleton />;
+    return (
+      <SongCardSkeleton
+        isPriceVisible={ !!priceInNewm || !!priceInUsd }
+        isSubtitleVisible={ !!subtitle }
+        isTitleVisible={ !!title }
+      />
+    );
   }
 
   return (
-    <Stack sx={ { maxWidth: ["150px", "150px", "260px"], rowGap: 0.5 } }>
-      <Stack alignItems="center" display="grid" justifyItems="center">
-        <img
-          alt="Song cover art"
-          height={ isWidthAboveMd ? 260 : 150 }
-          src={
-            coverArtUrl
-              ? resizeCloudinaryImage(coverArtUrl, {
-                  height: 200,
-                  width: 200,
-                })
-              : getImageSrc(bgImage)
-          }
-          style={ {
-            borderRadius: "4px",
-            gridArea: "1 / 1 / 2 / 2",
-            objectFit: "cover",
-          } }
-          width={ isWidthAboveMd ? 260 : 150 }
-        />
-        { isPlayable && (
-          <IconButton
-            aria-label={ `${isPlaying ? "Stop" : "Play"} song` }
+    <Clickable
+      sx={ {
+        display: "flex",
+        justifyContent: "flex-start",
+        position: "relative",
+        width: "100%",
+      } }
+      onClick={ onCardClick ? handleCardClick : undefined }
+      onKeyDown={ handleKeyPress(onCardClick ? handleCardClick : undefined) }
+    >
+      <Stack sx={ { rowGap: 0.5 } } width="100%">
+        <Stack
+          alignItems="center"
+          justifyItems="center"
+          overflow="hidden"
+          position="relative"
+        >
+          { priceVariant === "pill" && (
+            <Stack
+              bgcolor="rgba(0, 0, 0, 0.4)"
+              borderRadius="6px"
+              position="absolute"
+              px={ 1.5 }
+              py={ 1 }
+              right={ theme.spacing(1.5) }
+              top={ theme.spacing(1) }
+            >
+              <Typography fontWeight={ 700 } variant="h4">
+                From { formatNewmAmount(priceInNewm) }
+              </Typography>
+            </Stack>
+          ) }
+
+          <ResponsiveImage
+            aria-label="Song cover art"
+            src={
+              coverArtUrl
+                ? resizeCloudinaryImage(coverArtUrl, {
+                    height: imageDimensions,
+                    width: imageDimensions,
+                  })
+                : getImageSrc(bgImage)
+            }
             sx={ {
-              backgroundColor: "rgba(0, 0, 0, 0.3)",
-              color: theme.colors.white,
-              gridArea: "1 / 1 / 2 / 2",
+              borderRadius: "4px",
+              objectFit: "cover",
             } }
-            onClick={ onPlayPauseClick }
+          />
+
+          <Box
+            alignItems="center"
+            bottom={ 0 }
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            left={ 0 }
+            position="absolute"
+            right={ 0 }
+            top={ 0 }
           >
-            { isPlaying ? (
-              <Stop sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
-            ) : (
-              <PlayArrow sx={ { fontSize: isWidthAboveMd ? "60px" : "40px" } } />
+            { !!isPlayable && (
+              <IconButton
+                aria-label={ `${isPlaying ? "Stop" : "Play"} song` }
+                sx={ {
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    transform: "scale(1.025)",
+                  },
+                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  color: theme.colors.white,
+                  transition: "transform 100ms",
+                } }
+                onClick={ handlePlayPauseClick }
+                onKeyDown={ handleKeyPress(handlePlayPauseClick) }
+              >
+                { isPlaying ? (
+                  <Stop sx={ { fontSize: ["40px", "40px", "60px"] } } />
+                ) : (
+                  <PlayArrow sx={ { fontSize: ["40px", "40px", "60px"] } } />
+                ) }
+              </IconButton>
             ) }
-          </IconButton>
-        ) }
-        { price && (
-          <Stack
-            role="button"
-            sx={
-              onPriceClick
-                ? {
-                    "&:active": {
-                      background: "rgba(0, 0, 0, 0.6)",
-                    },
-                    "&:focus": {
-                      boxShadow: "0 0 0 1px rgba(255, 255, 255, 0.5)",
-                      outline: "none",
-                    },
-                    "&:hover": {
-                      background: "rgba(0, 0, 0, 0.5)",
-                    },
-                    cursor: "pointer",
-                    ...commonPriceStyles,
-                  }
-                : commonPriceStyles
-            }
-            tabIndex={ onPriceClick ? 0 : undefined }
-            onClick={ onPriceClick ? handlePriceClick : undefined }
-            onKeyDown={
-              onPriceClick ? handleKeyPress(handlePriceClick) : undefined
-            }
-          >
-            <Typography fontWeight={ 700 } variant="h4">
-              { price } Ɲ
-            </Typography>
+          </Box>
+
+          { isPlaying && (
+            <LinearProgress
+              color="success"
+              sx={ {
+                backgroundColor: theme.colors.grey500,
+                borderBottomLeftRadius: "4px",
+                borderBottomRightRadius: "4px",
+                height: "4px",
+                marginTop: "-4px",
+                width: "100%",
+              } }
+              value={ audioProgress }
+              variant="determinate"
+            />
+          ) }
+        </Stack>
+        <Stack
+          direction="row"
+          gap={ 0.5 }
+          justifyContent="space-between"
+          mt={ 0.5 }
+        >
+          <Stack direction="column">
+            { !!title && (
+              <Typography fontWeight={ 700 } textAlign="left" variant="h4">
+                { title }
+              </Typography>
+            ) }
+
+            { !!subtitle && (
+              <Typography
+                fontWeight={ 500 }
+                role={ onSubtitleClick ? "button" : undefined }
+                sx={
+                  onSubtitleClick
+                    ? {
+                        "&:hover": { textDecoration: "underline" },
+                        cursor: "pointer",
+                        width: "fit-content",
+                      }
+                    : undefined
+                }
+                tabIndex={ onSubtitleClick ? 0 : undefined }
+                textAlign="left"
+                variant="subtitle1"
+                onClick={ handleSubtitleClick }
+                onKeyDown={ handleKeyPress(handleSubtitleClick) }
+              >
+                { subtitle }
+              </Typography>
+            ) }
           </Stack>
-        ) }
+
+          { priceVariant === "text" && (
+            <Stack
+              alignItems="flex-end"
+              display="flex"
+              flexDirection={ title ? "column" : "row" }
+              whiteSpace="nowrap"
+            >
+              { !!priceInNewm && (
+                <Typography
+                  fontWeight={ 700 }
+                  sx={ { opacity: 0.9 } }
+                  textAlign="right"
+                  variant="h4"
+                >
+                  { formatNewmAmount(priceInNewm) }
+                </Typography>
+              ) }
+              { !!priceInUsd && (
+                <Typography
+                  fontSize={ title ? "12px" : "15px" }
+                  variant="subtitle1"
+                >
+                  &nbsp;(
+                  { formatUsdAmount(priceInUsd, { includeEstimateSymbol: true }) }
+                  )
+                </Typography>
+              ) }
+            </Stack>
+          ) }
+        </Stack>
       </Stack>
-      <Typography
-        fontWeight={ 700 }
-        mt={ 0.5 }
-        role={ onTitleClick ? "button" : undefined }
-        sx={
-          onTitleClick
-            ? {
-                "&:hover": { textDecoration: "underline" },
-                cursor: "pointer",
-                width: "fit-content",
-              }
-            : undefined
-        }
-        tabIndex={ onTitleClick ? 0 : undefined }
-        variant="h4"
-        onClick={ onTitleClick ? handleTitleClick : undefined }
-        onKeyDown={ onTitleClick ? handleKeyPress(handleTitleClick) : undefined }
-      >
-        { title }
-      </Typography>
-      <Typography
-        fontWeight={ 500 }
-        mt={ 0.5 }
-        role={ onSubtitleClick ? "button" : undefined }
-        sx={
-          onSubtitleClick
-            ? {
-                "&:hover": { textDecoration: "underline" },
-                cursor: "pointer",
-                width: "fit-content",
-              }
-            : undefined
-        }
-        tabIndex={ onSubtitleClick ? 0 : undefined }
-        variant="subtitle1"
-        onClick={ onSubtitleClick ? handleSubtitleClick : undefined }
-        onKeyDown={
-          onSubtitleClick ? handleKeyPress(handleSubtitleClick) : undefined
-        }
-      >
-        { subtitle }
-      </Typography>
-    </Stack>
+    </Clickable>
   );
 };
+
+export default SongCard;

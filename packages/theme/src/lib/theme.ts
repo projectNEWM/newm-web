@@ -36,6 +36,7 @@ declare module "@mui/material/styles" {
       yellow: string;
     };
     gradients: {
+      activeBackground: string;
       company: string;
       crypto: string;
       magazine: string;
@@ -91,6 +92,7 @@ declare module "@mui/material/styles" {
       yellow?: string;
     };
     gradients?: {
+      activeBackground?: string;
       company?: string;
       crypto?: string;
       magazine?: string;
@@ -204,13 +206,18 @@ const theme = createTheme({
   },
 
   gradients: {
-    company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%);",
-    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%);",
-    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%);",
-    music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%);",
+    activeBackground: "linear-gradient(53deg, #C341F014 0%, #F53C6914 100%)",
+    company: "linear-gradient(53.48deg, #5091EB 0%, #C341F0 100%)",
+    crypto: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%)",
+    magazine: "linear-gradient(53.48deg, #F53C69 0%, #FF6E32 100%)",
+    music: "linear-gradient(53.48deg, #C341F0 0%, #F53C69 100%)",
+
+    // * 'newm' uses an adjusted NEWM gradient to visually match the CTA design.
+    // * Slight deviation from Figma's var(--Gradients-Gradient-NEWM-45).
+    // * Meets the same intent as the design pattern.
     // eslint-disable-next-line max-len
-    newm: "linear-gradient(45.38deg, #FFC33C 14.22%, #FF6E32 28.39%, #F53C69 42.57%, #C341F0 56.74%, #5091EB 70.91%, #41BE91 85.83%);",
-    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%);",
+    newm: "linear-gradient(12deg, #FFC33C 0%, #FF6E32 24%, #F53C69 41%, #C341F0 59%, #5091EB 70%, #41BE91 90%)",
+    partners: "linear-gradient(53.48deg, #FF6E32 0%, #FFC33C 100%)",
   },
 
   inputField: {
@@ -381,6 +388,13 @@ const responsiveTheme: Theme = {
       [breakpoints.down("md")]: {
         fontSize: "32px",
         lineHeight: "48px",
+      },
+    },
+    h2: {
+      ...theme.typography.h2,
+      [breakpoints.down("md")]: {
+        fontSize: "28px",
+        lineHeight: "36px",
       },
     },
   },

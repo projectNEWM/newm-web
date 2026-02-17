@@ -27,6 +27,7 @@ The following commands will then run each app:
 
 - NEWM Studio: `nx serve studio` (runs at `http://localhost:3000`)
 - NEWM Marketplace: `nx serve marketplace` (runs at `http://localhost:4200`)
+- NEWM Mobile Wallet Connector: `nx serve mobile-wallet-connector` (runs at `http://localhost:4300`)
 
 ## Nx
 

@@ -6,12 +6,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, ProfileImage, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
-import { MintingStatus } from "@newm-web/types";
 import { resizeCloudinaryImage } from "@newm-web/utils";
+import { MintingStatus } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import MintSong from "./MintSong";
 import SongInfo from "./SongInfo";
-import { SongRouteParams } from "./types";
-import { NEWM_SUPPORT_EMAIL } from "../../../common";
+import { SongRouteParams } from "../../../common/types";
+import { MarketplaceTab } from "./MarketplaceTab";
+import { NEWM_SUPPORT_EMAIL, isSongEditable } from "../../../common";
 import { setToastMessage } from "../../../modules/ui";
 import {
   emptySong,
@@ -51,6 +53,7 @@ const TabPanel: FunctionComponent<TabPanelProps> = ({
 const colorMap: ColorMap = {
   0: "music",
   1: "crypto",
+  2: "partners",
 };
 
 const ViewDetails: FunctionComponent = () => {
@@ -67,7 +70,16 @@ const ViewDetails: FunctionComponent = () => {
     isLoading,
   } = useGetSongQuery(songId);
 
+  const { webStudioManageMarketplaceSales } = useFlags();
+
   const hasAccess = useHasSongAccess(songId);
+  const isSongMintedOrReleased = [
+    MintingStatus.Minted,
+    MintingStatus.Released,
+  ].includes(mintingStatus);
+
+  const shouldRenderMarketplaceTab =
+    isSongMintedOrReleased && webStudioManageMarketplaceSales;
 
   const handleChange = (event: SyntheticEvent, nextTab: number) => {
     setTab(nextTab);
@@ -88,7 +100,7 @@ const ViewDetails: FunctionComponent = () => {
   /**
    * Redirect if user manually navigates to this page before minting is complete
    */
-  if (!isLoading && mintingStatus === MintingStatus.Undistributed) {
+  if (!isLoading && isSongEditable(mintingStatus)) {
     navigate(`/home/library/edit-song/${songId}`, { replace: true });
   }
 
@@ -165,6 +177,9 @@ const ViewDetails: FunctionComponent = () => {
         >
           <Tab aria-controls="tabpanel-0" id="tab-0" label="INFO" />
           <Tab aria-controls="tabpanel-1" id="tab-1" label="MINTING" />
+          { shouldRenderMarketplaceTab && (
+            <Tab aria-controls="tabpanel-2" id="tab-2" label="MARKETPLACE" />
+          ) }
         </Tabs>
 
         <TabPanel index={ 0 } value={ tab }>
@@ -172,6 +187,9 @@ const ViewDetails: FunctionComponent = () => {
         </TabPanel>
         <TabPanel index={ 1 } value={ tab }>
           <MintSong />
+        </TabPanel>
+        <TabPanel index={ 2 } value={ tab }>
+          <MarketplaceTab />
         </TabPanel>
       </Box>
     </>

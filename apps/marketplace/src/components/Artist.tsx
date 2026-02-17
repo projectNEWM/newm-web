@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { resizeCloudinaryImage } from "@newm-web/utils";
 import { FunctionComponent } from "react";
 import { Clickable } from "@newm-web/elements";
@@ -6,8 +6,8 @@ import ArtistSkeleton from "./skeletons/ArtistSkeleton";
 
 interface ArtistProps {
   readonly imageUrl: string;
-  readonly isLoading: boolean;
-  readonly onSelectArtist: (param: string) => void;
+  readonly isLoading?: boolean;
+  readonly onSelectArtist: VoidFunction;
   readonly orientation: "row" | "column";
   readonly subtitle: string;
   readonly title: string;
@@ -20,30 +20,25 @@ interface ArtistProps {
 const Artist: FunctionComponent<ArtistProps> = ({
   imageUrl,
   title,
-  isLoading,
+  isLoading = false,
   subtitle,
   orientation,
   onSelectArtist,
 }) => {
-  const theme = useTheme();
-
   if (isLoading) {
     return <ArtistSkeleton orientation={ orientation } />;
   }
 
   return (
-    <Clickable
-      aria-label={ `${title}-artist-profile` }
-      onClick={ () => onSelectArtist(title) }
-    >
+    <Clickable aria-label={ `${title}-artist-profile` } onClick={ onSelectArtist }>
       <Stack columnGap={ 3.5 } direction={ orientation } rowGap={ 2 }>
         <Box
           alt={ `${title}-artist-profile` }
           component="img"
           height={ [150, 150, 200] }
           src={ resizeCloudinaryImage(imageUrl, {
-            height: 200,
-            width: 200,
+            height: 280,
+            width: 280,
           }) }
           style={ { borderRadius: "50%", maxWidth: "100%" } }
           width={ [150, 150, 200] }
@@ -54,12 +49,7 @@ const Artist: FunctionComponent<ArtistProps> = ({
           textAlign={ orientation === "row" ? "start" : "center" }
         >
           <Typography variant="h4">{ title }</Typography>
-          <Typography
-            sx={ { color: theme.colors.grey100, fontWeight: 400 } }
-            variant="h4"
-          >
-            { subtitle }
-          </Typography>
+          <Typography variant="subtitle1">{ subtitle }</Typography>
         </Stack>
       </Stack>
     </Clickable>

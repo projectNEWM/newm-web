@@ -8,14 +8,16 @@ const TextInputField: ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <Field name={ props.name }>
-      { ({ field, meta }: FieldProps) => (
-        <TextInput
-          errorMessage={ meta.touched ? meta.error : "" }
-          ref={ ref }
-          { ...field }
-          { ...props }
-        />
-      ) }
+      { ({ field, form, meta }: FieldProps) => {
+        return (
+          <TextInput
+            errorMessage={ meta.touched ? meta.error : "" }
+            ref={ ref }
+            { ...field }
+            { ...props }
+          />
+        );
+      } }
     </Field>
   );
 };

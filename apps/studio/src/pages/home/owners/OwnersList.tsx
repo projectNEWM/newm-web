@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { Stack } from "@mui/material";
-import { Button, Typography } from "@newm-web/elements";
+import { Stack, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import OwnersTable from "./OwnersTable";
 import {
   CollaborationStatus,
@@ -47,14 +47,14 @@ const OwnersList: FunctionComponent = () => {
         } }
       >
         <Typography variant="h3">COLLABORATORS</Typography>
-        { invites?.length ? (
+        { !!invites?.length && (
           <Button
             width="compact"
             onClick={ () => dispatch(setIsInvitesModalOpen(!isInvitesModalOpen)) }
           >
             Invitation pending
           </Button>
-        ) : null }
+        ) }
       </Stack>
 
       { totalCollaborators || query ? (

@@ -1,7 +1,8 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { Box, Link, Stack, Typography, useTheme } from "@mui/material";
 import {
   Alert,
   Button,
+  CheckboxField,
   DropdownMultiSelectField,
   DropdownSelectField,
   ErrorMessage,
@@ -10,13 +11,11 @@ import {
   SwitchInputField,
   TextAreaField,
   TextInputField,
-  Typography,
   UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
 import {
   scrollToError,
-  useEffectAfterMount,
   useExtractProperty,
   useWindowDimensions,
 } from "@newm-web/utils";
@@ -24,9 +23,16 @@ import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 import { useFormikContext } from "formik";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../common";
-import { PlaySong, PricingPlansDialog } from "../../../components";
-import SelectCoCeators from "../../../components/minting/SelectCoCreators";
+import { MintingStatus } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
+import { UploadSongFormValues } from "./UploadSong";
+import {
+  NEWM_STUDIO_FAQ_URL,
+  SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
+  useAppDispatch,
+} from "../../../common";
+import { DistributionPricingDialog, PlaySong } from "../../../components";
+import SelectCoCreators from "../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
@@ -41,19 +47,20 @@ import {
   Creditor,
   Featured,
   Owner,
-  UploadSongRequest,
+  emptySong,
+  useGetSongQuery,
 } from "../../../modules/song";
 import {
   setIsConnectWalletModalOpen,
   setIsIdenfyModalOpen,
 } from "../../../modules/ui";
-import { SongRouteParams } from "../library/types";
+import { SongRouteParams } from "../../../common/types";
 
-interface BasicDonDetailsProps {
+interface BasicSongDetailsProps {
   readonly isInEditMode?: boolean;
 }
 
-const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
+const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   isInEditMode,
 }) => {
   const theme = useTheme();
@@ -64,6 +71,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
   const audioRef = useRef<HTMLDivElement>(null);
   const coCreatorsRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
+  const agreesToCoverArtGuidelinesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const songDetailsRef = useRef<HTMLDivElement>(null);
 
@@ -75,42 +83,58 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       appleMusicProfile,
     } = emptyProfile,
   } = useGetProfileQuery();
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
   const { songId } = useParams<"songId">() as SongRouteParams;
+  const { data: song = emptySong } = useGetSongQuery(songId, { skip: !songId });
   const shouldShowOutletsWarning = !appleMusicProfile || !spotifyProfile;
-
+  const isDeclined = song.mintingStatus === MintingStatus.Declined;
   const languageOptions = useExtractProperty(languages, "language_name");
 
   const windowWidth = useWindowDimensions()?.width;
 
   const isVerified = verificationStatus === VerificationStatus.Verified;
 
-  const { values, errors, touched, setFieldValue, isSubmitting } =
-    useFormikContext<UploadSongRequest>();
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    isSubmitting,
+    dirty,
+    initialValues,
+  } = useFormikContext<UploadSongFormValues>();
 
   // DSP pricing plan mint song toggling
-
   const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
-  const handlePricingPlanClose = () => {
+  const handlePricingPlanCancel = () => {
     setIsPricingPlansOpen(false);
+    setFieldValue("isMinting", false);
+  };
+  const handlePricingPlanConfirm = () => {
+    setIsPricingPlansOpen(false);
+    setFieldValue("isMinting", true);
   };
   const handlePricingPlanOpen = () => {
     setIsPricingPlansOpen(true);
+    setFieldValue("isMinting", true);
   };
-
-  useEffectAfterMount(() => {
-    if (!isPricingPlansOpen && isArtistPricePlanSelected) {
-      setFieldValue("isMinting", true);
-    } else {
+  // Monitor feature flag changes, particularly seen for pricing plan acceptance
+  useEffect(() => {
+    if (webStudioDisableTrackDistributionAndMinting) {
       setFieldValue("isMinting", false);
     }
-  }, [isArtistPricePlanSelected, isPricingPlansOpen, setFieldValue]);
+  }, [webStudioDisableTrackDistributionAndMinting, setFieldValue]);
 
+  const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
   const isMintingVisible = values.isMinting && isArtistPricePlanSelected;
 
-  const isSubmitDisabled = isMintingVisible && (!wallet || !isVerified);
+  const isSubmitDisabled =
+    !values.agreesToCoverArtGuidelines ||
+    (isMintingVisible && (!wallet || !isVerified)) ||
+    (values.isMinting && webStudioDisableTrackDistributionAndMinting);
 
   const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
     setFieldValue("owners", owners);
@@ -133,6 +157,10 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
       { element: audioRef.current, error: errors.audio },
       { element: coverArtUrlRef.current, error: errors.coverArtUrl },
       {
+        element: agreesToCoverArtGuidelinesRef.current,
+        error: errors.agreesToCoverArtGuidelines,
+      },
+      {
         element: songDetailsRef.current,
         error: errors.title || errors.genres || errors.moods,
       },
@@ -145,12 +173,19 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
     ]);
   }, [errors, isSubmitting]);
 
+  useEffect(() => {
+    if (hasCoverArtChanged) {
+      setFieldValue("agreesToCoverArtGuidelines", false);
+    }
+  }, [setFieldValue, hasCoverArtChanged]);
+
   return (
     <Stack>
       { !isArtistPricePlanSelected && (
-        <PricingPlansDialog
+        <DistributionPricingDialog
           open={ isPricingPlansOpen }
-          onClose={ handlePricingPlanClose }
+          onCancel={ handlePricingPlanCancel }
+          onConfirm={ handlePricingPlanConfirm }
         />
       ) }
       <Stack direction="column" spacing={ 3 }>
@@ -180,11 +215,11 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               }
               severity="warning"
             >
-              <Typography color="yellow" mb={ 0.5 }>
+              <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                 Outlet Profile Information Missing
               </Typography>
               <Typography
-                color="yellow"
+                color={ theme.colors.yellow }
                 fontWeight={ 400 }
                 maxWidth="460px"
                 variant="subtitle1"
@@ -215,7 +250,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           >
             { isInEditMode ? (
               <>
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG
                 </Typography>
 
@@ -233,7 +268,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               </>
             ) : (
               <>
-                <Typography color="grey100" fontWeight={ 500 }>
+                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
                   SONG FILE
                 </Typography>
 
@@ -248,7 +283,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             spacing={ 0.5 }
             width="100%"
           >
-            <Typography color="grey100" fontWeight={ 500 }>
+            <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
               SONG COVER ART
             </Typography>
 
@@ -257,6 +292,7 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
               emptyMessage="Drag and drop or browse your image"
               maxFileSizeMB={ 10 }
               minDimensions={ { height: 1400, width: 1400 } }
+              minFileSizeMB={ 0.1 }
               name="coverArtUrl"
               rootSx={ { alignSelf: "center", width: "100%" } }
               hasPreviewOption
@@ -277,6 +313,37 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
             ],
           } }
         >
+          { hasCoverArtChanged && (
+            <CheckboxField
+              checked={
+                (isInEditMode && !dirty) || values.agreesToCoverArtGuidelines
+              }
+              label={
+                <Typography
+                  sx={ {
+                    color: "white",
+                    fontSize: 12,
+                  } }
+                  variant="subtitle1"
+                >
+                  I confirm that the cover art meets the specified guidelines,
+                  and submitting cover art that does not comply may result in a
+                  declined track distribution. For a full list of these
+                  guidelines, please see our{ " " }
+                  <Link
+                    href={ NEWM_STUDIO_FAQ_URL }
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    FAQ
+                  </Link>
+                  .
+                </Typography>
+              }
+              name="agreesToCoverArtGuidelines"
+              ref={ agreesToCoverArtGuidelinesRef }
+            />
+          ) }
           <Stack
             ref={ songDetailsRef }
             sx={ {
@@ -317,6 +384,8 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
           </Stack>
 
           <TextAreaField
+            characterCountLimit={ SONG_DESCRIPTION_MAX_CHARACTER_COUNT }
+            currentCharacterCount={ values.description?.length }
             label="DESCRIPTION"
             name="description"
             placeholder="Tell us about your song"
@@ -334,23 +403,34 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 } }
               >
                 <SwitchInputField
+                  data-testid="isMinting"
                   description={
-                    "Minting a song will create an NFT that reflects " +
-                    "ownership, makes streaming royalties available for " +
-                    "purchase, and enables royalty distribution to your account."
+                    "Distribute your track to all major streaming platforms " +
+                    "and generate stream tokens for royalty claiming."
+                  }
+                  disabled={
+                    isDeclined || webStudioDisableTrackDistributionAndMinting
                   }
                   includeBorder={ false }
                   name="isMinting"
                   title="DISTRIBUTE & MINT SONG"
+                  toggleTooltipText={
+                    webStudioDisableTrackDistributionAndMinting
+                      ? "Track distribution and minting are temporarily disabled, " +
+                        "but we're working on it! You can still upload your tracks and " +
+                        "song details to save for later. Check back in a bit for updates."
+                      : undefined
+                  }
                   onClick={ () => {
                     if (!isArtistPricePlanSelected) handlePricingPlanOpen();
                   } }
                 />
 
                 { isMintingVisible && (
-                  <SelectCoCeators
+                  <SelectCoCreators
                     creditors={ values.creditors }
                     featured={ values.featured }
+                    isAddDeleteDisabled={ isDeclined }
                     owners={ values.owners }
                     onChangeCreditors={ handleChangeCreditors }
                     onChangeFeatured={ handleChangeFeatured }
@@ -387,10 +467,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 }
                 severity="warning"
               >
-                <Typography color="yellow" mb={ 0.5 }>
+                <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                   Verify your profile
                 </Typography>
-                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                <Typography
+                  color={ theme.colors.yellow }
+                  fontWeight={ 400 }
+                  variant="subtitle1"
+                >
                   Profile verification is required to mint. Please verify your
                   profile.
                 </Typography>
@@ -415,10 +499,14 @@ const BasicSongDetails: FunctionComponent<BasicDonDetailsProps> = ({
                 severity="warning"
                 sx={ { py: 2.5 } }
               >
-                <Typography color="yellow" mb={ 0.5 }>
+                <Typography color={ theme.colors.yellow } mb={ 0.5 }>
                   Connect a wallet
                 </Typography>
-                <Typography color="yellow" fontWeight={ 400 } variant="subtitle1">
+                <Typography
+                  color={ theme.colors.yellow }
+                  fontWeight={ 400 }
+                  variant="subtitle1"
+                >
                   To continue, please connect a wallet.
                 </Typography>
               </Alert>

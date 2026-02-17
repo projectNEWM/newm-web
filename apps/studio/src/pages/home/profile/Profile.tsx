@@ -40,7 +40,10 @@ import {
   commonYupValidation,
   useAppDispatch,
 } from "../../../common";
-import { useGetRolesQuery } from "../../../modules/content";
+import {
+  useGetCountriesQuery,
+  useGetRolesQuery,
+} from "../../../modules/content";
 import {
   ProfileFormValues,
   UpdateProfileRequest,
@@ -58,6 +61,7 @@ const Profile: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const { state } = useLocation();
 
+  const locationRef = useRef<HTMLDivElement>(null);
   const companyNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -69,6 +73,7 @@ const Profile: FunctionComponent = () => {
 
   const windowWidth = useWindowDimensions()?.width;
   const { data: roles = [] } = useGetRolesQuery();
+  const { data: locations = [] } = useGetCountriesQuery();
 
   const {
     data: {
@@ -160,10 +165,11 @@ const Profile: FunctionComponent = () => {
         .required("Company name is required"),
     }),
     firstName: commonYupValidation.firstName,
-    instagramUrl: commonYupValidation.websiteUrl,
+    instagramUrl: commonYupValidation.instagramUrl,
     ipi: commonYupValidation.ipi,
     isni: commonYupValidation.isni,
     lastName: commonYupValidation.lastName,
+    location: commonYupValidation.location,
     nickname: commonYupValidation.nickname,
     role: commonYupValidation.role(roles),
     soundCloudProfile: Yup.string()
@@ -178,7 +184,7 @@ const Profile: FunctionComponent = () => {
         REGEX_SPOTIFY_PROFILE,
         "URL must be in the format similar to \"https://open.spotify.com/artist/your-artist-id\""
       ),
-    twitterUrl: commonYupValidation.websiteUrl,
+    twitterUrl: commonYupValidation.xUrl,
     websiteUrl: commonYupValidation.websiteUrl,
   });
 
@@ -244,6 +250,7 @@ const Profile: FunctionComponent = () => {
     <Container
       maxWidth={ false }
       sx={ {
+        marginTop: 10.5,
         marginX: [null, null, 3],
         overflow: "auto",
         paddingBottom: 8,
@@ -293,6 +300,7 @@ const Profile: FunctionComponent = () => {
       >
         { ({ dirty, errors, handleReset, isSubmitting }) => {
           scrollToError(errors, isSubmitting, [
+            { element: locationRef.current, error: errors.location },
             { element: roleRef.current, error: errors.role },
             { element: firstNameRef.current, error: errors.firstName },
             { element: lastNameRef.current, error: errors.lastName },
@@ -357,6 +365,7 @@ const Profile: FunctionComponent = () => {
                     <Stack
                       alignItems={ ["center", "center", "flex-start"] }
                       gap={ 1 }
+                      ref={ locationRef }
                       width="100%"
                     >
                       <Stack
@@ -376,17 +385,6 @@ const Profile: FunctionComponent = () => {
                           <CheckCircleIcon color="success" />
                         ) : null }
                       </Stack>
-
-                      { location ? (
-                        <TextInputField
-                          disabled={ true }
-                          isOptional={ false }
-                          label="LOCATION"
-                          name="location"
-                          readOnly={ true }
-                          type="text"
-                        />
-                      ) : null }
                     </Stack>
                   </Stack>
 
@@ -395,15 +393,39 @@ const Profile: FunctionComponent = () => {
                       <Typography fontWeight="700" variant="h4">
                         YOUR PUBLIC PROFILE
                       </Typography>
-                      <TextInputField
-                        label="STAGE NAME"
-                        name="nickname"
-                        placeholder="Stage name"
-                        type="text"
-                      />
+
                       <Stack
                         ref={ roleRef }
                         sx={ {
+                          columnGap: 1,
+                          flexDirection: ["column", "column", "row"],
+                          justifyContent: "space-between",
+                          rowGap: 2,
+                        } }
+                      >
+                        <TextInputField
+                          label="STAGE NAME"
+                          name="nickname"
+                          placeholder="Stage name"
+                          type="text"
+                        />
+                        <DropdownSelectField
+                          isOptional={ false }
+                          label="LOCATION"
+                          name="location"
+                          options={ locations }
+                          placeholder="Select or search your country"
+                          tooltipText={
+                            "Providing this info will enable streaming platforms to make " +
+                            "your music easier to find for your fans & listeners."
+                          }
+                          widthType="default"
+                        />
+                      </Stack>
+                      <Stack
+                        ref={ roleRef }
+                        sx={ {
+                          columnGap: 1,
                           flexDirection: ["column", "column", "row"],
                           justifyContent: "space-between",
                           rowGap: 2,

@@ -7,8 +7,10 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { FunctionComponent, useEffect } from "react";
 
-interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
+export interface ModalProps extends Omit<MuiModalProps, "open" | "onClose"> {
   readonly isCloseButtonVisible?: boolean;
+  readonly isCloseOnClickBackgroundEnabled?: boolean;
+  readonly isFullScreen?: boolean;
   readonly isOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly onClose: (event: React.SyntheticEvent<any> | Event) => void;
@@ -21,7 +23,10 @@ const Modal: FunctionComponent<ModalProps> = ({
   isOpen = false,
   onClose,
   isCloseButtonVisible = true,
+  isCloseOnClickBackgroundEnabled = false,
+  isFullScreen = true,
   children,
+  ...rest
 }) => {
   const theme = useTheme();
 
@@ -37,13 +42,31 @@ const Modal: FunctionComponent<ModalProps> = ({
 
   return (
     <MuiModal
-      disableAutoFocus={ true }
       open={ isOpen }
-      sx={ { m: 2, mb: 10, mt: 1 } }
+      sx={ { display: isFullScreen ? "flex" : "grid", overflow: "auto" } }
+      onClose={ isCloseOnClickBackgroundEnabled ? onClose : undefined }
+      { ...rest }
     >
-      <Box display="flex" flex={ 1 } flexDirection="column" height="100%">
+      <Box
+        sx={ {
+          alignSelf: "center",
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          height: isFullScreen ? "100%" : undefined,
+          justifySelf: "center",
+          pb: 10,
+          position: "relative",
+          pt: 6,
+          px: [0, 6, 6],
+        } }
+      >
         { isCloseButtonVisible && (
-          <Box display="flex" justifyContent="flex-end" mb={ 1 }>
+          <Box
+            position="absolute"
+            right={ theme.spacing(1) }
+            top={ theme.spacing(1) }
+          >
             <CloseIcon
               sx={ {
                 color: theme.colors.white,

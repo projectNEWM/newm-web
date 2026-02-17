@@ -7,15 +7,15 @@ import {
   isCloudinaryUrl,
   sleep,
 } from "@newm-web/utils";
-import { Song } from "@newm-web/types";
+import { MintingStatus, PaymentType, Song } from "@newm-web/types";
 import {
   Collaboration,
   CollaborationStatus,
   DeleteSongRequest,
   GetUserWalletSongsRequest,
-  PatchSongRequest,
+  PatchSongThunkRequest,
   UpdateCollaborationsRequest,
-  UploadSongRequest,
+  UploadSongThunkRequest,
 } from "./types";
 import { extendedApi as songApi } from "./api";
 import { receiveArtistAgreement } from "./slice";
@@ -27,6 +27,7 @@ import {
   getCollaborationsToUpdate,
   mapCollaboratorsToCollaborations,
   submitMintSongPayment,
+  submitPayPalPayment,
 } from "./utils";
 import { handleUploadProgress } from "../../modules/ui/utils";
 import { UploadSongError } from "../../common";
@@ -49,7 +50,7 @@ import { GenerateArtistAgreementBody, lambdaApi } from "../../api";
  */
 export const uploadSong = createAsyncThunk(
   "song/uploadSong",
-  async (body: UploadSongRequest, { dispatch }) => {
+  async (body: UploadSongThunkRequest, { dispatch }) => {
     let songId = "";
     const progressDisclaimer =
       "Please do not refresh the page or navigate away while the " +
@@ -109,23 +110,19 @@ export const uploadSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split("-")[0];
-      const defaultCopyright = body.artistName || body.companyName;
-
       // create the song in the NEWM API
       const songResp = await dispatch(
         songApi.endpoints.uploadSong.initiate({
           album: body.album,
           barcodeNumber: body.barcodeNumber || undefined,
           barcodeType,
-          compositionCopyrightOwner:
-            body.compositionCopyrightOwner || defaultCopyright,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner: body.compositionCopyrightOwner,
+          compositionCopyrightYear: body.compositionCopyrightYear,
           coverArtUrl,
           coverRemixSample: body.isCoverRemixSample,
           description: body.description,
           genres: body.genres,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
@@ -133,10 +130,8 @@ export const uploadSong = createAsyncThunk(
           lyricsUrl: body.lyricsUrl,
           moods: body.moods,
           parentalAdvisory,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          phonographicCopyrightYear: body.phonographicCopyrightYear,
           publicationDate: body.publicationDate || undefined,
           releaseDate: body.releaseDate || undefined,
           title: body.title,
@@ -172,6 +167,13 @@ export const uploadSong = createAsyncThunk(
       );
 
       if ("error" in uploadSongAudioResponse) throw new UploadSongError();
+
+      const paymentMessage =
+        body.paymentType === PaymentType.PAYPAL
+          ? "Creating PayPal order. " +
+            "Please complete PayPal payment when prompted."
+          : "Requesting minting payment. " +
+            "Please sign transaction when prompted.";
 
       if (body.isMinting) {
         const collaborators = generateCollaborators(
@@ -237,14 +239,17 @@ export const uploadSong = createAsyncThunk(
           setProgressBarModal({
             animationSeconds: 6,
             disclaimer: progressDisclaimer,
-            message:
-              "Requesting minting payment. " +
-              "Please sign transaction when prompted.",
+            message: paymentMessage,
+
             progress: 95,
           })
         );
 
-        await submitMintSongPayment(songId, dispatch);
+        if (body.paymentType === PaymentType.PAYPAL) {
+          await submitPayPalPayment(songId, dispatch);
+        } else {
+          await submitMintSongPayment(songId, dispatch, body.paymentType);
+        }
       }
 
       // display most recent status and allow progress animation to complete
@@ -252,10 +257,7 @@ export const uploadSong = createAsyncThunk(
         setProgressBarModal({
           animationSeconds: 0.25,
           disclaimer: progressDisclaimer,
-          message: body.isMinting
-            ? "Requesting minting payment. " +
-              "Please sign transaction when prompted."
-            : "Uploading song audio...",
+          message: body.isMinting ? paymentMessage : "Uploading song audio...",
           progress: 100,
         })
       );
@@ -358,7 +360,7 @@ export const generateArtistAgreement = createAsyncThunk(
  */
 export const patchSong = createAsyncThunk(
   "song/patchSong",
-  async (body: PatchSongRequest, { dispatch }) => {
+  async (body: PatchSongThunkRequest, { dispatch }) => {
     try {
       let coverArtUrl: string | undefined;
 
@@ -402,23 +404,19 @@ export const patchSong = createAsyncThunk(
           ? barcodeTypeMapping[body.barcodeType]
           : undefined;
 
-      const releaseYear = body.releaseDate?.split("-")[0];
-      const defaultCopyright = body.artistName || body.companyName;
-
       // patch song information
       const patchSongResp = await dispatch(
         songApi.endpoints.patchSong.initiate({
           album: body.album,
           barcodeNumber: body.barcodeNumber || undefined,
           barcodeType,
-          compositionCopyrightOwner:
-            body.compositionCopyrightOwner || defaultCopyright,
-          compositionCopyrightYear:
-            body.compositionCopyrightYear || releaseYear,
+          compositionCopyrightOwner: body.compositionCopyrightOwner,
+          compositionCopyrightYear: body.compositionCopyrightYear,
           coverArtUrl,
           description: body.description,
           genres: body.genres,
           id: body.id,
+          instrumental: body.isInstrumental,
           ipis,
           isrc: body.isrc || undefined,
           iswc: body.iswc || undefined,
@@ -426,10 +424,8 @@ export const patchSong = createAsyncThunk(
           lyricsUrl: body.lyricsUrl,
           moods: body.moods,
           parentalAdvisory,
-          phonographicCopyrightOwner:
-            body.phonographicCopyrightOwner || defaultCopyright,
-          phonographicCopyrightYear:
-            body.phonographicCopyrightYear || releaseYear,
+          phonographicCopyrightOwner: body.phonographicCopyrightOwner,
+          phonographicCopyrightYear: body.phonographicCopyrightYear,
           publicationDate: body.publicationDate || undefined,
           releaseDate: body.releaseDate || undefined,
           title: body.title,
@@ -439,10 +435,11 @@ export const patchSong = createAsyncThunk(
 
       if ("error" in patchSongResp) return;
 
+      const isDeclined = body.mintingStatus === MintingStatus.Declined;
+
       if (
-        body.owners?.length ||
-        body.creditors?.length ||
-        body.featured?.length
+        !isDeclined &&
+        (body.owners?.length || body.creditors?.length || body.featured?.length)
       ) {
         await dispatch(
           updateCollaborations({
@@ -490,7 +487,20 @@ export const patchSong = createAsyncThunk(
 
           if ("error" in processStreamTokenAgreementResponse) return;
 
-          await submitMintSongPayment(body.id, dispatch);
+          // If declined, don't collect payment again
+          if (isDeclined) {
+            const reprocessSongResp = await dispatch(
+              songApi.endpoints.reprocessSong.initiate(body.id)
+            );
+
+            if ("error" in reprocessSongResp) return;
+          } else {
+            if (body.paymentType === PaymentType.PAYPAL) {
+              await submitPayPalPayment(body.id, dispatch);
+            } else {
+              await submitMintSongPayment(body.id, dispatch, body.paymentType);
+            }
+          }
         }
       }
 
@@ -508,6 +518,11 @@ export const patchSong = createAsyncThunk(
         history.push("/home/library");
       }
     } catch (error) {
+      // if error is a SilentError, do nothing so it doesn't clear toast
+      if (error instanceof SilentError) {
+        return;
+      }
+
       // non-endpoint related error occur, show toast
       if (error instanceof Error) {
         dispatch(
