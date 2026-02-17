@@ -52,7 +52,7 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
             mainText: theme.colors.white as `#${string}`,
             subText: theme.colors.grey100 as `#${string}`,
           } }
-          defaultToken="682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f634e45574d"
+          defaultTokenIn="682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f634e45574d"
           orderTypes={ ["SWAP", "LIMIT"] }
           partnerCode={ partnerCode }
           partnerName={ partnerName }
@@ -63,8 +63,8 @@ const SwapNewmModal: FunctionComponent<SwapNewmModalProps> = ({
           supportedTokens={ [
             "682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f634e45574d",
           ] }
+          swapWidth={ 400 }
           theme="dark"
-          width="450"
         />
       </Box>
     </Modal>

@@ -1,4 +1,4 @@
-import { BaseQueryApi, BaseQueryFn } from "@reduxjs/toolkit/dist/query";
+import type { BaseQueryApi, BaseQueryFn } from "@reduxjs/toolkit/query";
 import { AxiosProgressEvent, AxiosRequestConfig } from "axios";
 
 export type OnUploadProgress = (event: AxiosProgressEvent) => void;

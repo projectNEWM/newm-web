@@ -1,4 +1,4 @@
-import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import type { BaseQueryApi } from "@reduxjs/toolkit/query";
 import { AxiosRequestConfig } from "axios";
 import { executeRecaptcha } from "@newm-web/utils";
 import { recaptchaEndpointActionMap } from "./constants";
