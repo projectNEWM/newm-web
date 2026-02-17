@@ -36,6 +36,8 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Deploy to Lambda Function
+        env:
+          DOCKER_BUILDKIT: '0'
         run: |
           npm install --prefix .github/workflows/cdk
           sed -i 's|const nextConfig = .*|const nextConfig = { basePath: "/wallet-connect", |' apps/mobile-wallet-connector/next.config.js
