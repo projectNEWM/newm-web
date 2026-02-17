@@ -80,8 +80,8 @@ export const commonYupValidation = {
   audio: Yup.mixed().required("This field is required"),
   barcodeNumber: Yup.string().when("barcodeType", {
     is: (barcodeType: string) => !!barcodeType && barcodeType !== NONE_OPTION,
-    otherwise: Yup.string(),
-    then: Yup.string()
+    otherwise: (schema) => schema,
+    then: (schema) => schema
       .test("barcodeNumberTest", function (value = "") {
         const { barcodeType } = this.parent;
         const { regEx, message } = getBarcodeRegex(barcodeType);
@@ -106,7 +106,7 @@ export const commonYupValidation = {
   creditors: (roles: string[]) =>
     Yup.array().when("isMinting", {
       is: (value: boolean) => !!value,
-      then: Yup.array().test({
+      then: (schema) => schema.test({
         message: "Creditors must have a role",
         test: (creditors = []) =>
           creditors.every(({ role }) => roles.includes(role)),
@@ -197,7 +197,7 @@ export const commonYupValidation = {
   ),
   owners: Yup.array().when("isMinting", {
     is: (value: boolean) => !!value,
-    then: Yup.array()
+    then: (schema) => schema
       .min(1, "At least one owner is required when minting")
       .test({
         message: "Owner percentages must be between 00.01% and 100%",
