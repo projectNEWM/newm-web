@@ -156,8 +156,8 @@ const Profile: FunctionComponent = () => {
     companyIpRights: Yup.bool(),
     companyName: Yup.string().when("companyIpRights", {
       is: true,
-      otherwise: Yup.string(),
-      then: Yup.string()
+      otherwise: (schema) => schema,
+      then: (schema) => schema
         .max(
           MAX_CHARACTER_COUNT,
           `Must be ${MAX_CHARACTER_COUNT} characters or less`
