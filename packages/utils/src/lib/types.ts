@@ -14,7 +14,9 @@ export interface WindowDimensions {
 
 export interface UseWrappedThunkResponse<Returned> {
   readonly data?: Returned;
+  readonly isError: boolean;
   readonly isLoading: boolean;
+  readonly isSuccess: boolean;
 }
 
 export type CustomError = {
@@ -26,6 +28,16 @@ export type CustomError = {
     };
   };
   status: number;
+};
+
+export type CloudinaryError = {
+  error: {
+    data?: {
+      error?: {
+        message?: string;
+      };
+    };
+  };
 };
 
 export interface EmptyResponse {
@@ -54,6 +66,7 @@ export interface UseHlsJsParams {
 }
 
 export interface UseHlsJsResult {
+  readonly audioProgress: number;
   readonly playSong: (song: Song) => void;
   readonly stopSong: (song?: Song) => void;
 }

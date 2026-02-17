@@ -1,0 +1,53 @@
+name: Deploy NEWM Marketplace to AWS Hosting on merge
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/aws-hosting-merge-deploy-newm-marketplace.yml
+      - apps/marketplace/**
+      - packages/**
+      - package-lock.json
+  workflow_dispatch:
+    
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required to interact with GitHub's OIDC Token endpoint.
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_GARAGE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Lambda-ify
+        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/marketplace/Dockerfile
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Deploy to Lambda Function
+        run: |
+          npm install --prefix .github/workflows/cdk
+          APPNAME=marketplace APPID=Marketplace QUALIFIER=Garage NEXT_PUBLIC_ENV=staging NEXT_PUBLIC_RECAPTCHA_SITE_KEY_STAGING=${{ secrets.RECAPTCHA_SITE_KEY_STAGING }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_STAGING=${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }} NEXT_PUBLIC_DEXHUNTER_MARKETPLACE_PARTNER_CODE=${{ secrets.DEXHUNTER_MARKETPLACE_PARTNER_CODE }} NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_GA_MARKETPLACE_ID=${{ secrets.GA_MARKETPLACE_ID }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+        
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Marketplace updated in staging. View at https://fan.square.newm.io ."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_MARKETPLACE_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

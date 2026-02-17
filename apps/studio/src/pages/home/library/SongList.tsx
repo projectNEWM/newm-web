@@ -279,10 +279,10 @@ export default function SongList({ totalCountOfSongs, query }: SongListProps) {
       return song.id === playerState.currentPlayingSongId;
     });
 
-    if (!isSongFound) {
+    if (!isSongFound && !isLoading) {
       stopSong();
     }
-  }, [playerState.currentPlayingSongId, songData, stopSong]);
+  }, [playerState.currentPlayingSongId, songData, stopSong, isLoading]);
 
   // sets the # of rows per page depending on viewport height
   useEffect(() => {

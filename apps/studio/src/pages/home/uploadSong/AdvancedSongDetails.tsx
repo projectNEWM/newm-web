@@ -30,7 +30,7 @@ import {
 } from "../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 import { CoverRemixSample } from "../../../components";
-import { SongRouteParams } from "../library/types";
+import { SongRouteParams } from "../../../common/types";
 
 const AdvancedSongDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
@@ -286,7 +286,6 @@ const AdvancedSongDetails = () => {
             "optional; if you do not already have an IPI or choose not to obtain " +
             "one, leave this field blank."
           }
-          type="number"
         />
         <TextInputField
           label="ISWC"

@@ -2,17 +2,26 @@
 import { FunctionComponent, ReactNode } from "react";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Provider } from "react-redux";
-import { Container, Stack, ThemeProvider } from "@mui/material";
+import { Container, CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import { NEWMLogo } from "@newm-web/assets";
 import theme from "@newm-web/theme";
-import { StyledComponentsRegistry } from "@newm-web/components";
-import "./global.css";
+import {
+  LDProvider,
+  Maintenance,
+  StyledComponentsRegistry,
+  UnsupportedBrowserBanner,
+} from "@newm-web/components";
+import "global.css";
+import { Favicon } from "@newm-web/elements";
 import store from "../store";
 import { ConnectWallet, Toast } from "../components";
 
 interface RootLayoutProps {
   readonly children: ReactNode;
 }
+
+// Define context for LaunchDarkly
+const ldContext = { anonymous: true, kind: "user", name: "Wallet Guest" };
 
 const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
   return (
@@ -23,6 +32,7 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           content="Connect your wallet to the NEWM mobile app."
           name="description"
         />
+        <Favicon />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link
           crossOrigin="anonymous"
@@ -49,28 +59,35 @@ const RootLayout: FunctionComponent<RootLayoutProps> = ({ children }) => {
           <AppRouterCacheProvider options={ { enableCssLayer: true } }>
             <Provider store={ store }>
               <ThemeProvider theme={ theme }>
-                <Toast />
-                <Stack
-                  alignItems="flex-end"
-                  minHeight={ ["68px", "68px", "44px"] }
-                  mr={ 5 }
-                  mt={ 5 }
-                >
-                  <ConnectWallet />
-                </Stack>
-                <Container sx={ { textAlign: "center" } }>
-                  <Stack
-                    alignItems="center"
-                    justifyContent="center"
-                    mb={ 10 }
-                    mt={ 2 }
-                  >
-                    <Stack mb={ 10 }>
-                      <NEWMLogo />
+                <CssBaseline />
+                <LDProvider context={ ldContext }>
+                  <Maintenance flagName="webWalletMaintenanceMode">
+                    <UnsupportedBrowserBanner />
+                    <Toast />
+
+                    <Stack
+                      alignItems="flex-end"
+                      minHeight={ ["68px", "68px", "44px"] }
+                      mr={ 5 }
+                      mt={ 5 }
+                    >
+                      <ConnectWallet />
                     </Stack>
-                    { children }
-                  </Stack>
-                </Container>
+                    <Container sx={ { textAlign: "center" } }>
+                      <Stack
+                        alignItems="center"
+                        justifyContent="center"
+                        mb={ 10 }
+                        mt={ 2 }
+                      >
+                        <Stack mb={ 10 }>
+                          <NEWMLogo />
+                        </Stack>
+                        { children }
+                      </Stack>
+                    </Container>
+                  </Maintenance>
+                </LDProvider>
               </ThemeProvider>
             </Provider>
           </AppRouterCacheProvider>

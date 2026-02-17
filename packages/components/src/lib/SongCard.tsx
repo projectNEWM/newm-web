@@ -1,17 +1,25 @@
 import { type KeyboardEvent, MouseEvent, useCallback } from "react";
-import { Box, IconButton, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { PlayArrow, Stop } from "@mui/icons-material";
 import { bgImage } from "@newm-web/assets";
 import {
   formatNewmAmount,
+  formatUsdAmount,
   getImageSrc,
   resizeCloudinaryImage,
 } from "@newm-web/utils";
 import { Clickable, ResponsiveImage } from "@newm-web/elements";
-import currency from "currency.js";
 import SongCardSkeleton from "./skeletons/SongCardSkeleton";
 
 interface SongCardProps {
+  readonly audioProgress?: number;
   readonly coverArtUrl?: string;
   readonly imageDimensions?: number;
   readonly isLoading?: boolean;
@@ -22,14 +30,16 @@ interface SongCardProps {
   readonly onSubtitleClick?: () => void;
   readonly priceInNewm?: number;
   readonly priceInUsd?: number;
+  readonly priceVariant?: "pill" | "text";
   readonly subtitle?: string;
   readonly title?: string;
 }
 
 const SongCard = ({
-  imageDimensions = 400,
   coverArtUrl,
-  title,
+  audioProgress = 0,
+  imageDimensions = 400,
+  isLoading = false,
   isPlayable,
   isPlaying,
   onCardClick,
@@ -38,26 +48,33 @@ const SongCard = ({
   priceInNewm,
   priceInUsd,
   subtitle,
-  isLoading = false,
+  title,
+  priceVariant = "text",
 }: SongCardProps) => {
   const theme = useTheme();
 
   const handleCardClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onCardClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onCardClick?.();
+    onCardClick();
   };
 
   const handlePlayPauseClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onPlayPauseClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onPlayPauseClick?.();
+    onPlayPauseClick();
   };
 
   const handleSubtitleClick = (event: MouseEvent | KeyboardEvent) => {
+    if (!onSubtitleClick) return;
+
     event.preventDefault();
     event.stopPropagation();
-    onSubtitleClick?.();
+    onSubtitleClick();
   };
 
   const handleKeyPress = useCallback(
@@ -92,7 +109,28 @@ const SongCard = ({
       onKeyDown={ handleKeyPress(onCardClick ? handleCardClick : undefined) }
     >
       <Stack sx={ { rowGap: 0.5 } } width="100%">
-        <Stack alignItems="center" justifyItems="center" position="relative">
+        <Stack
+          alignItems="center"
+          justifyItems="center"
+          overflow="hidden"
+          position="relative"
+        >
+          { priceVariant === "pill" && (
+            <Stack
+              bgcolor="rgba(0, 0, 0, 0.4)"
+              borderRadius="6px"
+              position="absolute"
+              px={ 1.5 }
+              py={ 1 }
+              right={ theme.spacing(1.5) }
+              top={ theme.spacing(1) }
+            >
+              <Typography fontWeight={ 700 } variant="h4">
+                From { formatNewmAmount(priceInNewm) }
+              </Typography>
+            </Stack>
+          ) }
+
           <ResponsiveImage
             aria-label="Song cover art"
             src={
@@ -143,24 +181,69 @@ const SongCard = ({
               </IconButton>
             ) }
           </Box>
+
+          { isPlaying && (
+            <LinearProgress
+              color="success"
+              sx={ {
+                backgroundColor: theme.colors.grey500,
+                borderBottomLeftRadius: "4px",
+                borderBottomRightRadius: "4px",
+                height: "4px",
+                marginTop: "-4px",
+                width: "100%",
+              } }
+              value={ audioProgress }
+              variant="determinate"
+            />
+          ) }
         </Stack>
         <Stack
-          direction="column"
+          direction="row"
           gap={ 0.5 }
           justifyContent="space-between"
           mt={ 0.5 }
         >
-          <Stack direction="row" gap={ 1 } justifyContent="space-between">
+          <Stack direction="column">
             { !!title && (
               <Typography fontWeight={ 700 } textAlign="left" variant="h4">
                 { title }
               </Typography>
             ) }
 
-            <Stack display="flex" flexDirection="row" whiteSpace="nowrap">
+            { !!subtitle && (
+              <Typography
+                fontWeight={ 500 }
+                role={ onSubtitleClick ? "button" : undefined }
+                sx={
+                  onSubtitleClick
+                    ? {
+                        "&:hover": { textDecoration: "underline" },
+                        cursor: "pointer",
+                        width: "fit-content",
+                      }
+                    : undefined
+                }
+                tabIndex={ onSubtitleClick ? 0 : undefined }
+                textAlign="left"
+                variant="subtitle1"
+                onClick={ handleSubtitleClick }
+                onKeyDown={ handleKeyPress(handleSubtitleClick) }
+              >
+                { subtitle }
+              </Typography>
+            ) }
+          </Stack>
+
+          { priceVariant === "text" && (
+            <Stack
+              alignItems="flex-end"
+              display="flex"
+              flexDirection={ title ? "column" : "row" }
+              whiteSpace="nowrap"
+            >
               { !!priceInNewm && (
                 <Typography
-                  fontSize={ title ? "14px" : "16px" }
                   fontWeight={ 700 }
                   sx={ { opacity: 0.9 } }
                   textAlign="right"
@@ -171,36 +254,15 @@ const SongCard = ({
               ) }
               { !!priceInUsd && (
                 <Typography
-                  fontSize={ title ? "14px" : "15px" }
+                  fontSize={ title ? "12px" : "15px" }
                   variant="subtitle1"
                 >
-                  &nbsp;(≈ { currency(priceInUsd).format() })
+                  &nbsp;(
+                  { formatUsdAmount(priceInUsd, { includeEstimateSymbol: true }) }
+                  )
                 </Typography>
               ) }
             </Stack>
-          </Stack>
-
-          { !!subtitle && (
-            <Typography
-              fontWeight={ 500 }
-              role={ onSubtitleClick ? "button" : undefined }
-              sx={
-                onSubtitleClick
-                  ? {
-                      "&:hover": { textDecoration: "underline" },
-                      cursor: "pointer",
-                      width: "fit-content",
-                    }
-                  : undefined
-              }
-              tabIndex={ onSubtitleClick ? 0 : undefined }
-              textAlign="left"
-              variant="subtitle1"
-              onClick={ handleSubtitleClick }
-              onKeyDown={ handleKeyPress(handleSubtitleClick) }
-            >
-              { subtitle }
-            </Typography>
           ) }
         </Stack>
       </Stack>

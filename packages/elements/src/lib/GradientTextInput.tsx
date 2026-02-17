@@ -4,10 +4,9 @@ import {
   HTMLProps,
   forwardRef,
 } from "react";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import theme from "@newm-web/theme";
-import Typography from "./Typography";
 
 export interface GradientTextInputProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref"> {
@@ -101,15 +100,15 @@ const GradientTextInput: ForwardRefRenderFunction<
       </StyledRootElement>
 
       { errorMessage ? (
-        <Typography
-          sx={ { color: theme.colors.red } }
-          textAlign={ textAlign }
-          variant="h5"
-        >
+        <Typography color={ theme.colors.red } textAlign={ textAlign } variant="h5">
           { errorMessage }
         </Typography>
       ) : helperText ? (
-        <Typography color="grey100" textAlign={ textAlign } variant="h5">
+        <Typography
+          color={ theme.colors.grey100 }
+          textAlign={ textAlign }
+          variant="h5"
+        >
           { helperText }
         </Typography>
       ) : undefined }

@@ -1,9 +1,9 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import Cookies from "js-cookie";
 import { Mutex } from "async-mutex";
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { executeRecaptcha } from "@newm-web/utils";
-import { AxiosBaseQueryParams, BaseQuery } from "@newm-web/types";
+import { BaseQuery } from "@newm-web/types";
 import { logOutExpiredSession, receiveRefreshToken } from "./actions";
 import { recaptchaEndpointActionMap } from "./constants";
 import { RootState } from "../store";
@@ -105,18 +105,14 @@ export const getAuthHeaders = (api: BaseQueryApi) => {
  */
 export const getRecaptchaHeaders = async (api: BaseQueryApi) => {
   const { endpoint } = api;
-  const state = api.getState() as RootState;
-  const { isLoggedIn } = state.session;
-  const action = recaptchaEndpointActionMap[endpoint] || endpoint;
+  const action = recaptchaEndpointActionMap[endpoint];
 
-  if (!isLoggedIn) {
-    return {
-      "g-recaptcha-platform": "Web",
-      "g-recaptcha-token": await executeRecaptcha(action),
-    };
-  }
+  if (!action) return {};
 
-  return {};
+  return {
+    "g-recaptcha-platform": "Web",
+    "g-recaptcha-token": await executeRecaptcha(action),
+  };
 };
 
 /**
@@ -129,8 +125,11 @@ export const prepareHeaders = async (
   const authHeaders = getAuthHeaders(api);
   const recaptchaHeaders = await getRecaptchaHeaders(api);
 
+  // ensure auth header isn't sent if recaptcha headers are present
+  const shouldIncludeAuthHeaders = Object.keys(recaptchaHeaders).length === 0;
+
   return {
-    ...authHeaders,
+    ...(shouldIncludeAuthHeaders ? authHeaders : {}),
     ...recaptchaHeaders,
     ...headers,
   };

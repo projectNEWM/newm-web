@@ -1,13 +1,14 @@
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, IconButton, InputAdornment, Stack } from "@mui/material";
 import {
-  Button,
-  TextInputField,
-  Tooltip,
+  Box,
+  IconButton,
+  InputAdornment,
+  Stack,
   Typography,
-} from "@newm-web/elements";
+} from "@mui/material";
+import { Button, TextInputField, Tooltip } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import Details from "./Details";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
@@ -53,7 +54,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
     <Box>
       <Stack flexDirection="row" justifyContent="space-between">
         <Stack columnGap={ 1 } flexDirection="row" mt={ 1.5 }>
-          <Typography color="grey100" variant="h5">
+          <Typography color={ theme.colors.grey100 } variant="h5">
             ROYALTY SPLIT HOLDERS
           </Typography>
 
@@ -75,7 +76,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
           </Tooltip>
         </Stack>
 
-        <Typography color="grey100" variant="h5">
+        <Typography color={ theme.colors.grey100 } variant="h5">
           SPLITS
         </Typography>
       </Stack>
@@ -100,8 +101,7 @@ const Owners: FunctionComponent<OwnersProps> = ({
           >
             <Details
               email={ owner.email }
-              firstName={ collaboratorInfo.firstName }
-              lastName={ collaboratorInfo.lastName }
+              nickname={ collaboratorInfo.nickname }
               pictureUrl={ collaboratorInfo.pictureUrl }
               showStatus={ authorEmail !== owner.email }
               status={ owner.status }

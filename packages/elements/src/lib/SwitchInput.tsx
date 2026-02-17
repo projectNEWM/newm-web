@@ -3,19 +3,20 @@ import {
   Stack,
   SwitchProps,
   SxProps,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import HelpIcon from "@mui/icons-material/Help";
 import Switch from "./Switch";
 import Tooltip from "./styled/Tooltip";
-import Typography from "./Typography";
 
 export interface SwitchInputProps extends SwitchProps {
   readonly children?: ReactNode;
   readonly description?: string;
   readonly includeBorder?: boolean;
   readonly title: string;
+  readonly toggleTooltipText?: string;
   readonly tooltipText?: string;
 }
 
@@ -28,6 +29,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
   includeBorder = true,
   tooltipText = "",
   children,
+  toggleTooltipText,
   ...props
 }) => {
   const theme = useTheme();
@@ -53,7 +55,7 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
         <Stack pr={ [0, 0, 4] }>
           <Stack display="flex" flexDirection="row">
             <Typography
-              color="white"
+              color={ theme.colors.white }
               pr={ 1 }
               variant={ description ? "body1" : "subtitle1" }
             >
@@ -81,7 +83,11 @@ const SwitchInput: FunctionComponent<SwitchInputProps> = ({
             </Typography>
           ) }
         </Stack>
-        <Switch { ...props } />
+        <Tooltip title={ toggleTooltipText }>
+          <Stack>
+            <Switch { ...props } />
+          </Stack>
+        </Tooltip>
       </Stack>
       { props.checked ? children : null }
     </Stack>

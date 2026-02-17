@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { FormikValues, useFormikContext } from "formik";
-import { Box, Stack, useTheme } from "@mui/material";
-import { Button, PasswordInputField, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Button, PasswordInputField } from "@newm-web/elements";
 
 const ResetPassword: FunctionComponent = () => {
   const theme = useTheme();
@@ -38,6 +38,7 @@ const ResetPassword: FunctionComponent = () => {
       >
         <PasswordInputField
           aria-label="Enter your new password"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
@@ -46,6 +47,7 @@ const ResetPassword: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Confirm your new password"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"

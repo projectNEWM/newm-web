@@ -1,34 +1,30 @@
-import { useFormikContext } from "formik";
-import { Box, useTheme } from "@mui/material";
-import { useWindowDimensions } from "@newm-web/utils";
-import { Button, Typography } from "@newm-web/elements";
 import { FunctionComponent, useEffect, useState } from "react";
-import PriceSummaryDialog from "./PriceSummaryDialog";
+import { useFormikContext } from "formik";
+import { Box, Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
+import OrderSummaryDialog from "./OrderSummaryDialog";
 import { UploadSongThunkRequest } from "../../../modules/song";
 import { ConfirmContract } from "../../../components";
 
 interface ConfirmAgreementProps {
-  readonly shouldShowPriceSummary?: boolean;
+  readonly shouldShowOrderSummary?: boolean;
 }
 
 const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
-  shouldShowPriceSummary = true,
+  shouldShowOrderSummary = true,
 }) => {
-  const theme = useTheme();
-  const [isPaymentSummaryOpen, setIsPaymentSummaryOpen] = useState(false);
+  const [isOrderSummaryOpen, setIsOrderSummaryOpen] = useState(false);
 
   const { values, setFieldValue, isSubmitting } =
     useFormikContext<UploadSongThunkRequest>();
-
-  const windowWidth = useWindowDimensions()?.width;
 
   const handleConsentToContract = (value: boolean) => {
     setFieldValue("consentsToContract", value);
   };
 
   const handleButtonClick = () => {
-    if (shouldShowPriceSummary) {
-      setIsPaymentSummaryOpen(!isPaymentSummaryOpen);
+    if (shouldShowOrderSummary) {
+      setIsOrderSummaryOpen(!isOrderSummaryOpen);
     }
   };
 
@@ -42,35 +38,30 @@ const ConfirmAgreement: FunctionComponent<ConfirmAgreementProps> = ({
   return (
     <Box marginX={ ["auto", "auto", "unset"] } maxWidth={ "500px" }>
       <Typography mb={ 1.5 }>
-        You&apos;re almost ready. Please ensure all necessary track details have
-        been updated and review your ownership contract.
+        You&apos;re almost ready. Please ensure all necessary release details
+        have been updated and review your ownership contract.
       </Typography>
 
       <ConfirmContract
-        isCoCreator={ values.owners.length > 1 }
         songTitle={ values.title }
         onConfirm={ handleConsentToContract }
       />
 
-      <Box mt={ 6 }>
+      <Box mt={ 3 }>
         <Button
           disabled={ !values.consentsToContract }
           isLoading={ isSubmitting }
-          type={ shouldShowPriceSummary ? "button" : "submit" }
-          width={
-            windowWidth && windowWidth > theme.breakpoints.values.md
-              ? "compact"
-              : "default"
-          }
+          type={ shouldShowOrderSummary ? "button" : "submit" }
+          width="compact"
           onClick={ handleButtonClick }
         >
-          Distribute & Mint
+          { shouldShowOrderSummary ? "Proceed to checkout" : "Resubmit release" }
         </Button>
 
-        { shouldShowPriceSummary && (
-          <PriceSummaryDialog
-            open={ isPaymentSummaryOpen }
-            onClose={ () => setIsPaymentSummaryOpen(false) }
+        { shouldShowOrderSummary && (
+          <OrderSummaryDialog
+            open={ isOrderSummaryOpen }
+            onClose={ () => setIsOrderSummaryOpen(false) }
           />
         ) }
       </Box>

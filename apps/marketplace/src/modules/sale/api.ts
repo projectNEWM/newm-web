@@ -1,24 +1,108 @@
+import { transformApiSale } from "@newm-web/utils";
 import {
   ApiSale,
+  GenerateOrderRequest,
+  GenerateOrderResponse,
+  GenerateTransactionRequest,
+  GenerateTransactionResponse,
+  GetSaleCountParams,
+  GetSaleCountResponse,
   GetSaleResponse,
   GetSalesParams,
   GetSalesResponse,
-} from "./types";
-import { transformApiSale } from "./utils";
+} from "@newm-web/types";
+import { GetOrderFeesResponse } from "./types";
 import { newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
 import { Tags } from "../../api/newm/types";
 
 export const extendedApi = newmApi.injectEndpoints({
   endpoints: (build) => ({
-    getSale: build.query<GetSaleResponse, string>({
+    generateOrder: build.mutation<GenerateOrderResponse, GenerateOrderRequest>({
+      invalidatesTags: [Tags.Sale],
+
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
           dispatch(
             setToastMessage({
-              message: "An error occurred while fetching available songs",
+              message: "An error occurred while generating order",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/amount",
+      }),
+    }),
+    generateTransaction: build.mutation<
+      GenerateTransactionResponse,
+      GenerateTransactionRequest
+    >({
+      invalidatesTags: [Tags.Sale],
+
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while generating transaction",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/marketplace/orders/transaction",
+      }),
+    }),
+    getOrderFees: build.query<GetOrderFeesResponse, void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching order fees",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      providesTags: [Tags.OrderFees],
+
+      query: () => ({ method: "GET", url: "v1/marketplace/orders/fees" }),
+    }),
+    getSale: build.query<GetSaleResponse, string>({
+      providesTags: [Tags.Sale],
+
+      query: (saleId) => ({
+        method: "GET",
+        url: `v1/marketplace/sales/${saleId}`,
+      }),
+
+      transformResponse: (apiSale: ApiSale) => {
+        return transformApiSale(apiSale);
+      },
+    }),
+    getSaleCount: build.query<GetSaleCountResponse, GetSaleCountParams | void>({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while fetching number of songs",
               severity: "error",
             })
           );
@@ -27,17 +111,30 @@ export const extendedApi = newmApi.injectEndpoints({
 
       providesTags: [Tags.Sale],
 
-      query: (saleId) => ({
+      query: ({
+        ids,
+        artistIds,
+        genres,
+        moods,
+        songIds,
+        saleStatuses,
+        ...rest
+      } = {}) => ({
         method: "GET",
-        url: `/v1/marketplace/sales/${saleId}`,
+        params: {
+          ...(ids ? { ids: ids.join(",") } : {}),
+          ...(artistIds ? { artistIds: artistIds.join(",") } : {}),
+          ...(genres ? { genres: genres.join(",") } : {}),
+          ...(moods ? { moods: moods.join(",") } : {}),
+          ...(songIds ? { songIds: songIds.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
+          ...rest,
+        },
+        url: "v1/marketplace/sales/count",
       }),
-
-      transformResponse: (apiSale: ApiSale) => {
-        return transformApiSale(apiSale);
-      },
     }),
     getSales: build.query<GetSalesResponse, GetSalesParams | void>({
-      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+      async onQueryStarted(params, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (error) {
@@ -58,7 +155,7 @@ export const extendedApi = newmApi.injectEndpoints({
         genres,
         moods,
         songIds,
-        statuses,
+        saleStatuses,
         ...rest
       } = {}) => ({
         method: "GET",
@@ -68,10 +165,10 @@ export const extendedApi = newmApi.injectEndpoints({
           ...(genres ? { genres: genres.join(",") } : {}),
           ...(moods ? { moods: moods.join(",") } : {}),
           ...(songIds ? { songIds: songIds.join(",") } : {}),
-          ...(statuses ? { statuses: statuses.join(",") } : {}),
+          ...(saleStatuses ? { saleStatuses: saleStatuses.join(",") } : {}),
           ...rest,
         },
-        url: "/v1/marketplace/sales",
+        url: "v1/marketplace/sales",
       }),
 
       transformResponse: (apiSales: ReadonlyArray<ApiSale>) => {
@@ -81,6 +178,11 @@ export const extendedApi = newmApi.injectEndpoints({
   }),
 });
 
-export const { useGetSaleQuery, useGetSalesQuery } = extendedApi;
+export const {
+  useGetSaleQuery,
+  useGetSalesQuery,
+  useGetSaleCountQuery,
+  useGetOrderFeesQuery,
+} = extendedApi;
 
 export default extendedApi;

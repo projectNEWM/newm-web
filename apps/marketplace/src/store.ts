@@ -4,9 +4,11 @@ import { isProd } from "@newm-web/env";
 import { isReduxLoggingEnabled } from "./buildParams";
 import { newmApi } from "./api";
 import { uiReducer } from "./modules/ui";
+import { walletReducer } from "./modules/wallet";
 
 export const reducer = combineReducers({
   ui: uiReducer,
+  wallet: walletReducer,
   [newmApi.reducerPath]: newmApi.reducer,
 });
 

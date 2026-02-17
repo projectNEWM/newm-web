@@ -1,32 +1,91 @@
+import { FunctionComponent, useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Box, IconButton } from "@mui/material";
-import { FunctionComponent, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
+
+import { REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID } from "@newm-web/env";
+
+import Library from "./library/Library";
+import Releases from "./releases/Releases";
 import SideBar from "./SideBar";
 import UploadSong from "./uploadSong/UploadSong";
-import Library from "./library/Library";
 import Owners from "./owners/Owners";
 import Wallet from "./wallet/Wallet";
 import Profile from "./profile/Profile";
 import Settings from "./settings/Settings";
 import { emptyProfile, useGetProfileQuery } from "../../modules/session";
+import { useGetStudioClientConfigQuery } from "../../modules/content";
+import { identifyReferralHeroUser, useBreakpoint } from "../../common";
+import NotFoundPage from "../NotFoundPage";
+import { UnsavedChangesProvider } from "../../contexts/UnsavedChangesContext";
+
+const RELEASES_BASE_PATH = "releases";
 
 const Home: FunctionComponent = () => {
   const drawerWidth = 230;
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const navigate = useNavigate();
+
+  // TODO(webStudioAlbumPhaseOne): Remove flag once flag is retired.
+  // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
+  const {
+    webStudioAlbumPhaseOne,
+    webStudioAlbumPhaseTwo,
+    webStudioArtistReferralCampaign,
+    webStudioDisableDistributionAndSales,
+  } = useFlags();
+
+  const routeLocation = useLocation();
+
+  const libraryRedirectPath = routeLocation.pathname.replace(
+    "/home/library",
+    `/home/${RELEASES_BASE_PATH}`
+  );
 
   const [isMobileOpen, setMobileOpen] = useState(false);
 
+  // fetch and cache client config
+  useGetStudioClientConfigQuery();
+
   const {
-    data: { firstName = "", lastName = "", role, location } = emptyProfile,
+    data: {
+      email,
+      firstName = "",
+      lastName = "",
+      role,
+      location,
+    } = emptyProfile,
+    isFetching,
     isLoading,
+    error,
   } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (webStudioArtistReferralCampaign && !isFetching && !error && email) {
+      identifyReferralHeroUser(
+        REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID,
+        email,
+        true // ensures id check is forced if user logins with different account
+      );
+    }
+  }, [email, isFetching, error, webStudioArtistReferralCampaign]);
 
   const hasBasicDetails = !!(firstName && lastName && role && location);
 
-  if (!hasBasicDetails && !isLoading) {
+  if (!hasBasicDetails && !isFetching && !error) {
     if (!firstName || !lastName || !role) {
       navigate("/create-profile");
       return null;
@@ -41,42 +100,88 @@ const Home: FunctionComponent = () => {
   if (isLoading) return null;
 
   return (
-    <Box
-      sx={ {
-        backgroundColor: theme.colors.black,
-        display: "flex",
-        flexGrow: 1,
-      } }
-    >
-      <SideBar isMobileOpen={ isMobileOpen } setMobileOpen={ setMobileOpen } />
-
+    <UnsavedChangesProvider>
       <Box
-        component="main"
         sx={ {
+          backgroundColor: theme.colors.black,
+          display: "flex",
           flexGrow: 1,
-          marginLeft: { md: 30 },
-          paddingX: 3,
-          paddingY: 10.5,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
         } }
       >
-        <Box left="2rem" position="absolute" top="2rem">
-          <IconButton onClick={ () => setMobileOpen(true) }>
-            <MenuIcon sx={ { color: "white" } } />
-          </IconButton>
-        </Box>
-        <Routes>
-          <Route element={ <Navigate to="upload-song" replace /> } path="" />
+        <SideBar isMobileOpen={ isMobileOpen } setMobileOpen={ setMobileOpen } />
 
-          <Route element={ <UploadSong /> } path="upload-song/*" />
-          <Route element={ <Library /> } path="library/*" />
-          <Route element={ <Owners /> } path="collaborators/*" />
-          <Route element={ <Wallet /> } path="wallet" />
-          <Route element={ <Profile /> } path="profile" />
-          <Route element={ <Settings /> } path="settings" />
-        </Routes>
+        <Box
+          component="main"
+          sx={ {
+            flexGrow: 1,
+            marginLeft: { md: 30 },
+            paddingX: 3,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+          } }
+        >
+          <Box
+            left="2rem"
+            position="absolute"
+            top={ webStudioDisableDistributionAndSales && !isDesktop ? 20 : 32 }
+          >
+            <IconButton onClick={ () => setMobileOpen(true) }>
+              <MenuIcon sx={ { color: "white" } } />
+            </IconButton>
+          </Box>
+          <Routes>
+            <Route
+              element={
+                <Navigate
+                  to={
+                    webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo
+                      ? RELEASES_BASE_PATH
+                      : "upload-song"
+                  }
+                  replace
+                />
+              }
+              path=""
+            />
+
+            <Route
+              element={
+                webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : (
+                  <UploadSong />
+                )
+              }
+              path="upload-song/*"
+            />
+
+            <Route
+              element={
+                webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo ? (
+                  <Navigate
+                    to={ `${libraryRedirectPath}${routeLocation.search}${routeLocation.hash}` }
+                    replace
+                  />
+                ) : (
+                  <Library />
+                )
+              }
+              path="library/*"
+            />
+
+            { (webStudioAlbumPhaseOne || webStudioAlbumPhaseTwo) && (
+              <Route element={ <Releases /> } path={ `${RELEASES_BASE_PATH}/*` } />
+            ) }
+
+            <Route element={ <Owners /> } path="collaborators/*" />
+            <Route element={ <Wallet /> } path="wallet" />
+            <Route element={ <Profile /> } path="profile" />
+            <Route element={ <Settings /> } path="settings" />
+
+            <Route element={ <NotFoundPage /> } path="*" />
+          </Routes>
+        </Box>
       </Box>
-    </Box>
+    </UnsavedChangesProvider>
   );
 };
 

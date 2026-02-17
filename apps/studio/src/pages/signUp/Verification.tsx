@@ -1,19 +1,25 @@
 import { FunctionComponent, useState } from "react";
-import {
-  Button,
-  GradientTypography,
-  TextInputField,
-  Typography,
-} from "@newm-web/elements";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+
 import { FormikValues, useFormikContext } from "formik";
-import { Box, Stack, useTheme } from "@mui/material";
+
+import { Button, GradientTypography, TextInputField } from "@newm-web/elements";
+
 import { ResponsiveNEWMLogo } from "../../components";
 import { sendVerificationEmail } from "../../modules/session";
-import { useAppDispatch } from "../../common";
+import { useAppDispatch, useBreakpoint } from "../../common";
 
 const Verification: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const dispatch = useAppDispatch();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const [showResendLink, setShowResendLink] = useState(true);
   const { values } = useFormikContext<FormikValues>();
 
@@ -36,7 +42,12 @@ const Verification: FunctionComponent = () => {
         justifyContent: "space-between",
       } }
     >
-      <Box alignItems="center" display="flex" flexDirection="column">
+      <Box
+        alignItems="center"
+        display="flex"
+        flexDirection="column"
+        marginTop={ webStudioDisableDistributionAndSales && isDesktop ? 4 : 0 }
+      >
         <Box mb={ 4 }>
           <ResponsiveNEWMLogo />
         </Box>
@@ -71,7 +82,7 @@ const Verification: FunctionComponent = () => {
 
       <Box mt={ 2 } pb={ 4 }>
         { showResendLink ? (
-          <Typography color="grey100" fontWeight={ 500 }>
+          <Typography color={ theme.colors.grey100 } fontWeight={ 500 }>
             Didn&apos;t receive an email?
             <button
               style={ {

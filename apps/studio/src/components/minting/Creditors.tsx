@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Stack, useTheme } from "@mui/material";
-import { Button, DropdownSelectField, Typography } from "@newm-web/elements";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import { Button, DropdownSelectField } from "@newm-web/elements";
 import Details from "./Details";
 import {
   Creditor,
@@ -44,10 +44,10 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
   return (
     <Box>
       <Stack flexDirection="row" justifyContent="space-between" mb={ -0.5 }>
-        <Typography color="grey100" variant="h5">
+        <Typography color={ theme.colors.grey100 } variant="h5">
           CREDITS TO SHOW ON SONG DETAIL
         </Typography>
-        <Typography color="grey100" variant="h5">
+        <Typography color={ theme.colors.grey100 } variant="h5">
           ROLES
         </Typography>
       </Stack>
@@ -73,8 +73,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
           >
             <Details
               email={ creditor.email }
-              firstName={ collaboratorInfo.firstName }
-              lastName={ collaboratorInfo.lastName }
+              nickname={ collaboratorInfo.nickname }
               pictureUrl={ collaboratorInfo.pictureUrl }
             />
 
@@ -87,7 +86,7 @@ const Creditors: FunctionComponent<CreditorsProps> = ({
                   placeholder="Select role"
                 />
               ) : (
-                <Typography color="white" fontWeight={ 500 }>
+                <Typography color={ theme.colors.white } fontWeight={ 500 }>
                   { creditor.role }
                 </Typography>
               ) }

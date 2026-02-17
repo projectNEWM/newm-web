@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import emojiRegex from "emoji-regex";
 import {
   REGEX_9_TO_11_DIGITS,
   REGEX_EXACTLY_12_DIGITS,
@@ -10,16 +11,18 @@ import {
 import { BarcodeConfig, BarcodeType } from "./types";
 import {
   REGEX_EVEARA_PROHIBITED_CHARACTERS,
+  REGEX_INSTAGRAM_PROFILE,
   REGEX_ISRC_FORMAT,
   REGEX_ISWC_FORMAT,
   REGEX_JAN_FORMAT,
-  REGEX_SONG_TITLE,
+  REGEX_X_PROFILE,
 } from "./regex";
 import {
   MAX_CHARACTER_COUNT,
-  MAX_CHARACTER_COUNT_LONG,
   MIN_DISTRIBUTION_TIME,
   NONE_OPTION,
+  OFFICIAL_NAME_MAX_CHARACTER_COUNT,
+  SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "./constants";
 
 /**
@@ -110,15 +113,18 @@ export const commonYupValidation = {
       }),
     }),
   description: Yup.string().max(
-    MAX_CHARACTER_COUNT_LONG,
-    `Must be ${MAX_CHARACTER_COUNT_LONG} characters or less`
+    SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
+    `Must be ${SONG_DESCRIPTION_MAX_CHARACTER_COUNT} characters or less`
   ),
   email: Yup.string()
     .email("Please enter a vaild email")
     .required("Email is required"),
   firstName: Yup.string()
     .trim()
-    .max(15, "Must be 15 characters or less")
+    .max(
+      OFFICIAL_NAME_MAX_CHARACTER_COUNT,
+      `Must be ${OFFICIAL_NAME_MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("First name is required"),
   genre: (genreOptions: string[]) =>
     Yup.string().test(
@@ -134,13 +140,20 @@ export const commonYupValidation = {
       )
       .min(1, "At least one genre is required")
       .max(2, "Maximum of two genres allowed"),
+  instagramUrl: Yup.string()
+    .matches(REGEX_WEBSITE_URL, "Please enter a valid URL")
+    .matches(
+      REGEX_INSTAGRAM_PROFILE,
+      "Must be a valid \"instagram.com\" profile URL. Example: https://www.instagram.com/username"
+    ),
   ipi: Yup.string().matches(
     REGEX_9_TO_11_DIGITS,
     "Field should contain 9 to 11 digits"
   ),
   isni: Yup.string().matches(
     REGEX_ISNI_FORMAT,
-    "Invalid ISNI format. The first 15 characters are digits and the last character can be either a digit or the letter 'X'."
+    "Invalid ISNI format. The first 15 characters are digits and the last " +
+      "character can be either a digit or the letter 'X'."
   ),
   isrc: (languageCodes: string[]) =>
     Yup.string()
@@ -157,7 +170,10 @@ export const commonYupValidation = {
   ),
   lastName: Yup.string()
     .trim()
-    .max(20, "Must be 20 characters or less")
+    .max(
+      OFFICIAL_NAME_MAX_CHARACTER_COUNT,
+      `Must be ${OFFICIAL_NAME_MAX_CHARACTER_COUNT} characters or less`
+    )
     .required("Last name is required"),
   location: Yup.string().required("This field is required"),
   moods: Yup.array().max(5, "Maximum of 5 moods allowed"),
@@ -203,7 +219,7 @@ export const commonYupValidation = {
           if (!owners) return false;
 
           const percentageSum = owners.reduce((sum, owner) => {
-            return sum + owner.percentage;
+            return sum + Number(owner.percentage);
           }, 0);
 
           return percentageSum === 100;
@@ -227,12 +243,14 @@ export const commonYupValidation = {
     return Yup.date()
       .required("This field is required")
       .min(
-        minReleaseDate.toISOString().split("T")[0], // Compare using ISO format
+        minReleaseDate.toISOString().split("T")[0],
         `Release date must be on or after ${
           minReleaseDate.toISOString().split("T")[0]
         }`
       );
   },
+  /** Required release date for release-level form (no min-date constraint). */
+  releaseReleaseDate: Yup.date().required("This field is required"),
   role: (roles: string[]) =>
     Yup.string()
       .required("Role is required")
@@ -246,7 +264,11 @@ export const commonYupValidation = {
       REGEX_EVEARA_PROHIBITED_CHARACTERS,
       "Cannot contain special characters like %,*=#<>{}~@\\/;:?$\""
     )
-    .matches(REGEX_SONG_TITLE, "Cannot contain special characters")
+    .test(
+      "emoji-less",
+      "Must not contain emoji characters",
+      (value) => !!value && !emojiRegex().test(value)
+    )
     .max(
       MAX_CHARACTER_COUNT,
       `Must be ${MAX_CHARACTER_COUNT} characters or less`
@@ -255,6 +277,12 @@ export const commonYupValidation = {
     REGEX_WEBSITE_URL,
     "Please enter a valid URL"
   ),
+  xUrl: Yup.string()
+    .matches(REGEX_WEBSITE_URL, "Please enter a valid URL")
+    .matches(
+      REGEX_X_PROFILE,
+      "Must be a valid \"x.com\" or \"twitter.com\" profile URL. Example: https://x.com/username"
+    ),
   year: Yup.string()
     .matches(/^[0-9]+$/, "Year must only contain digits")
     .min(4, "Year must be 4 digits")

@@ -1,54 +1,43 @@
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
-import currency from "currency.js";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { DisconnectWalletButton as DisconnectWalletButtonComponent } from "@newm-web/components";
+import { DEXHUNTER_STUDIO_PARTNER_CODE } from "@newm-web/env";
+import { LOVELACE_CONVERSION } from "@newm-web/utils";
 import { useAppDispatch, useAppSelector } from "../common";
 import { setIsConnectWalletModalOpen } from "../modules/ui";
+import { selectWallet } from "../modules/wallet";
 import {
-  selectWallet,
-  setWalletAddress,
-  setWalletBalance,
-} from "../modules/wallet";
+  useGetAdaUsdConversionRateQuery,
+  useGetNewmUsdConversionRateQuery,
+} from "../modules/crypto";
 
 const DisconnectWalletButton: FunctionComponent = () => {
-  const dispatch = useAppDispatch();
-  const { walletAddress, walletBalance } = useAppSelector(selectWallet);
-  const { wallet, getBalance, getAddress } = useConnectWallet();
+  const defaultUsdPrice = { usdPrice: 0 };
 
-  /**
-   * Opens disconnect wallet modal
-   */
+  const dispatch = useAppDispatch();
+  const { walletAddress, walletAdaBalance, walletNewmBalance } =
+    useAppSelector(selectWallet);
+  const { data: { usdPrice: adaUsdPrice } = defaultUsdPrice } =
+    useGetAdaUsdConversionRateQuery();
+  const { data: { usdPrice: newmUsdPrice } = defaultUsdPrice } =
+    useGetNewmUsdConversionRateQuery();
+
+  const adaUsdBalance = (adaUsdPrice * walletAdaBalance) / LOVELACE_CONVERSION;
+  const newmUsdBalance =
+    (newmUsdPrice * walletNewmBalance) / LOVELACE_CONVERSION;
+
   const handleDisconnectWallet = () => {
     dispatch(setIsConnectWalletModalOpen(true));
   };
 
-  /**
-   * Gets the ADA balance from the wallet and updates the Redux state.
-   */
-  useEffect(() => {
-    if (wallet) {
-      getBalance((value) => {
-        const adaBalance = currency(value, { symbol: "" }).format();
-        dispatch(setWalletBalance(adaBalance));
-      });
-    }
-  }, [wallet, getBalance, dispatch]);
-
-  /**
-   * Gets an address from the wallet and updates the Redux state.
-   */
-  useEffect(() => {
-    if (wallet) {
-      getAddress((value) => {
-        dispatch(setWalletAddress(value));
-      });
-    }
-  }, [wallet, getAddress, dispatch]);
-
   return (
     <DisconnectWalletButtonComponent
+      adaBalance={ walletAdaBalance }
+      adaUsdBalance={ adaUsdBalance }
       address={ walletAddress }
-      balance={ walletBalance }
+      newmBalance={ walletNewmBalance }
+      newmUsdBalance={ newmUsdBalance }
+      partnerCode={ DEXHUNTER_STUDIO_PARTNER_CODE }
+      partnerName="NEWMStudio"
       onDisconnect={ handleDisconnectWallet }
     />
   );

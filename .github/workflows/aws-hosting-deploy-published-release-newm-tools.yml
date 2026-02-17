@@ -1,0 +1,48 @@
+name: Deploy NEWM Tools app to AWS on published release
+on:
+ release:
+   types: [ published ]
+ workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Tools release tag'
+        required: true
+
+jobs:
+  build_and_deploy_tools_release:
+    if: ${{ github.event_name == 'workflow_dispatch' && startsWith(inputs.release_tag, 'tools') || github.event_name == 'release' && startsWith(github.event.release.tag_name, 'tools') }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # required to interact with GitHub's OIDC Token endpoint.
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lambda-ify
+        run: echo "COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.7.1 /lambda-adapter /opt/extensions/lambda-adapter" >> apps/tools/Dockerfile
+
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_DEPLOY_ROLE_ARN_STUDIO }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy tools
+        run: |
+          npm install --prefix .github/workflows/cdk
+          APPNAME=tools APPID=Tools QUALIFIER=Studio NEXT_PUBLIC_ENV=production NX_CLOUD_ACCESS_TOKEN=${{ secrets.NX_CLOUD_ACCESS_TOKEN }} NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID_PROD=${{ secrets.LAUNCHDARKLY_CLIENT_ID_PROD }} npm run --prefix .github/workflows/cdk cdk:deploy deploy -- --require-approval never
+
+      - name: Send update to slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "NEWM Tools updated in production. View at https://tools.newm.io . View release notes at https://github.com/projectNEWM/newm-web/releases/tag/${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.event.release.tag_name }} ."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NEWM_TOOLS_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

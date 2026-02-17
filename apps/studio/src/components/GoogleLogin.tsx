@@ -12,9 +12,10 @@ import { useAppDispatch } from "../common";
 
 interface Props {
   readonly children?: ReactNode;
+  readonly referrer?: string;
 }
 
-const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
+const GoogleLogin: FunctionComponent<Props> = ({ referrer, children }) => {
   const dispatch = useAppDispatch();
   const [logIn] = useGoogleLoginThunk();
 
@@ -30,7 +31,7 @@ const GoogleLogin: FunctionComponent<Props> = ({ children }) => {
         );
       }
 
-      logIn(accessToken);
+      logIn({ accessToken, referrer });
     },
   });
 

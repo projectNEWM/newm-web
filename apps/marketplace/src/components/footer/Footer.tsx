@@ -1,10 +1,10 @@
 import { Telegram } from "@mui/icons-material";
 import { Box, Grid, useTheme } from "@mui/material";
 import { DiscordLogo, NEWMLogo, XLogo } from "@newm-web/assets";
+import { NEWM_DISCORD_URL } from "@newm-web/utils";
 import { FunctionComponent } from "react";
 import FooterLink from "./FooterLink";
 import {
-  NEWM_DISCORD_URL,
   NEWM_IO_URL,
   NEWM_MARKETPLACE_FAQ_URL,
   NEWM_MARKETPLACE_SUPPORT_URL,

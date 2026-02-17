@@ -1,8 +1,7 @@
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { Grid, Stack } from "@mui/material";
-import { Typography } from "@newm-web/elements";
+import { Grid, Stack, Typography } from "@mui/material";
 import { SongCard } from "@newm-web/components";
 import { useHlsJs } from "@newm-web/utils";
 import { MintingStatus, PlayerState, Song, SortOrder } from "@newm-web/types";
@@ -69,7 +68,7 @@ const Songs: FunctionComponent = () => {
     []
   );
 
-  const { playSong, stopSong } = useHlsJs(hlsJsParams);
+  const { audioProgress, playSong, stopSong } = useHlsJs(hlsJsParams);
 
   /**
    * Plays and/or stops the song depending on if it's currently playing or not.
@@ -160,6 +159,7 @@ const Songs: FunctionComponent = () => {
         return (
           <Grid key={ song.id } lg={ 3 } md={ 4 } sm={ 4 } xs={ 6 } item>
             <SongCard
+              audioProgress={ audioProgress }
               coverArtUrl={ song.coverArtUrl }
               isLoading={ isLoading }
               isPlayable={ !!song.streamUrl }

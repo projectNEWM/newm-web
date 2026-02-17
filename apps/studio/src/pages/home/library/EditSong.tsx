@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { resizeCloudinaryImage } from "@newm-web/utils";
-import { MintingStatus } from "@newm-web/types";
+import { MintingStatus, PaymentType } from "@newm-web/types";
+import { useFlags } from "launchdarkly-react-client-sdk";
 import DeleteSongModal from "./DeleteSongModal";
-import { SongRouteParams } from "./types";
+import { SongRouteParams } from "../../../common/types";
 import {
   NEWM_SUPPORT_EMAIL,
   commonYupValidation,
@@ -48,11 +49,14 @@ const EditSong: FunctionComponent = () => {
   const dispatch = useDispatch();
   const { songId } = useParams<"songId">() as SongRouteParams;
 
+  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
+
   const { data: genres = [] } = useGetGenresQuery();
   const { data: roles = [] } = useGetRolesQuery();
   const {
     data: {
       companyName = "",
+      dspPlanSubscribed: isArtistPricePlanSelected = false,
       email,
       firstName = "",
       lastName = "",
@@ -171,7 +175,10 @@ const EditSong: FunctionComponent = () => {
     ipi: ipis?.join(", "),
     isExplicit: parentalAdvisory === "Explicit",
     isInstrumental: instrumental,
-    isMinting: isSongEditable(mintingStatus),
+    isMinting:
+      isArtistPricePlanSelected &&
+      isSongEditable(mintingStatus) &&
+      !webStudioDisableTrackDistributionAndMinting,
     isrc,
     iswc,
     language,
@@ -189,6 +196,7 @@ const EditSong: FunctionComponent = () => {
               status: CollaborationStatus.Editing,
             },
           ],
+    paymentType: PaymentType.NEWM,
     phonographicCopyrightOwner,
     phonographicCopyrightYear,
     publicationDate,
@@ -397,10 +405,10 @@ const EditSong: FunctionComponent = () => {
             },
             {
               element: (
-                <ConfirmAgreement shouldShowPriceSummary={ !isDeclined } />
+                <ConfirmAgreement shouldShowOrderSummary={ !isDeclined } />
               ),
               path: "confirm",
-              progressStepTitle: "Distribute & Mint",
+              progressStepTitle: "Distribute",
               validationSchema: Yup.object().shape({
                 consentsToContract: validations.consentsToContract,
               }),

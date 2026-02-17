@@ -8,5 +8,6 @@ export default {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   coverageDirectory: "../../coverage/packages/studio",
+  transformIgnorePatterns: ["node_modules/(?!(@dexhunterio/swaps)/)"],
   setupFilesAfterEnv: ["<rootDir>/src/setupTests"],
 };

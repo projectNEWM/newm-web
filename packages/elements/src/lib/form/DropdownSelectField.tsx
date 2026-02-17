@@ -1,10 +1,12 @@
 import { ForwardRefRenderFunction, HTMLProps, forwardRef } from "react";
 import { Field, FieldProps } from "formik";
 import { WidthType } from "@newm-web/utils";
+import { SxProps } from "@mui/material";
 import DropdownSelect from "../DropdownSelect";
 
 export interface DropdownSelectFieldProps
   extends Omit<HTMLProps<HTMLInputElement>, "as" | "ref" | "onChange"> {
+  readonly containerSxOverrides?: SxProps;
   readonly disabled?: boolean;
   readonly isOptional?: boolean;
   readonly label?: string;
@@ -12,6 +14,7 @@ export interface DropdownSelectFieldProps
   readonly noResultsText?: string;
   readonly options: ReadonlyArray<string>;
   readonly placeholder?: string;
+  readonly shouldDisplayErrorMessage?: boolean;
   readonly tooltipText?: string;
   readonly widthType?: WidthType;
 }

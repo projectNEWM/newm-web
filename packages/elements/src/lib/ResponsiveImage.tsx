@@ -49,7 +49,12 @@ const ResponsiveImage: FunctionComponent<ResponsiveImageProps> = ({
         component="img"
         height="100%"
         ref={ imgRef }
-        sx={ { ...sx, display: isImageLoaded ? "inline-block" : "none" } }
+        sx={ {
+          ...sx,
+          display: isImageLoaded ? "inline-block" : "none",
+          // hide any cropping issues or empty space around image
+          transform: "scale(1.005)",
+        } }
         width="100%"
         onLoad={ () => setIsImageLoaded(true) }
         { ...rest }

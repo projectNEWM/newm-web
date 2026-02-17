@@ -1,6 +1,5 @@
 import { FunctionComponent, MouseEventHandler } from "react";
-import { Stack } from "@mui/material";
-import Typography from "./Typography";
+import { Stack, Typography } from "@mui/material";
 import ErrorMessage from "./styled/ErrorMessage";
 
 interface IconMessageProps {

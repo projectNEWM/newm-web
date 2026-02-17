@@ -125,7 +125,7 @@ export const updateInitialProfile = createAsyncThunk(
 );
 
 /**
- * Logs in and navigates to the library page.
+ * Logs in and navigates to the home route.
  */
 export const login = createAsyncThunk(
   "session/login",
@@ -136,38 +136,38 @@ export const login = createAsyncThunk(
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 /**
- * Logs in using Apple and navigates to the library page.
+ * Logs in using Apple and navigates to the home route.
  */
 export const appleLogin = createAsyncThunk(
   "session/appleLogin",
-  async ({ code, redirectUri }: NewmOAuthRequest, { dispatch }) => {
+  async ({ code, redirectUri, referrer }: NewmOAuthRequest, { dispatch }) => {
     const loginResponse = dispatch(
-      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri })
+      sessionApi.endpoints.appleLogin.initiate({ code, redirectUri, referrer })
     );
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 
 /**
- * Logs in using Google and navigates to the library page.
+ * Logs in using Google and navigates to the home route.
  */
 export const googleLogin = createAsyncThunk(
   "session/googleLogin",
-  async (accessToken: string, { dispatch }) => {
+  async ({ accessToken, referrer }: NewmOAuthRequest, { dispatch }) => {
     const loginResponse = dispatch(
-      sessionApi.endpoints.googleLogin.initiate({ accessToken })
+      sessionApi.endpoints.googleLogin.initiate({ accessToken, referrer })
     );
 
     if ("error" in loginResponse) return;
 
-    history.push("/home/upload-song");
+    history.push("/home");
   }
 );
 

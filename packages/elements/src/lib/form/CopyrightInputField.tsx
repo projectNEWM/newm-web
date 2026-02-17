@@ -47,18 +47,25 @@ const CopyrightInputField: ForwardRefRenderFunction<HTMLDivElement, Props> = (
   const errorMessage = errors[yearErrorsKey] || errors[ownerErrorsKey];
 
   return (
-    <Stack direction="column" ref={ ref } spacing={ 1 }>
+    <Stack
+      direction="column"
+      maxWidth={ theme.inputField.maxWidth }
+      ref={ ref }
+      spacing={ 0.5 }
+      width="100%"
+    >
       <Stack direction="row" justifyContent="space-between">
         <Typography
+          component="div"
           sx={ {
             color: theme.colors.grey100,
-            fontWeight: 500,
+            fontWeight: 700,
             opacity: rest.disabled ? 0.5 : 1,
             textTransform: "uppercase",
           } }
         >
           <Stack direction="row" spacing="4px">
-            <Box>{ label }</Box>
+            <Box component="label">{ label }</Box>
 
             { !!tooltipText && (
               <Tooltip title={ tooltipText }>

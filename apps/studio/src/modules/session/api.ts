@@ -62,11 +62,16 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/apple",
-      }),
+      query: (body) => {
+        const { referrer, ...bodyData } = body;
+
+        return {
+          body: bodyData,
+          method: "POST",
+          params: referrer ? { referrer: referrer } : undefined,
+          url: "v1/auth/login/apple",
+        };
+      },
     }),
 
     changePassword: build.mutation<EmptyResponse, ChangePasswordRequest>({
@@ -104,11 +109,16 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/users",
-      }),
+      query: (body) => {
+        const { referrer, ...bodyData } = body;
+
+        return {
+          body: bodyData,
+          method: "POST",
+          params: referrer ? { referrer: referrer } : undefined,
+          url: "v1/users",
+        };
+      },
     }),
 
     deleteAccount: build.mutation<EmptyResponse, DeleteAccountRequest>({
@@ -202,11 +212,16 @@ export const extendedApi = newmApi.injectEndpoints({
         }
       },
 
-      query: (body) => ({
-        body,
-        method: "POST",
-        url: "v1/auth/login/google",
-      }),
+      query: (body) => {
+        const { referrer, ...bodyData } = body;
+
+        return {
+          body: bodyData,
+          method: "POST",
+          params: referrer ? { referrer: referrer } : undefined,
+          url: "v1/auth/login/google",
+        };
+      },
     }),
 
     login: build.mutation<NewmAuthResponse, LoginRequest>({

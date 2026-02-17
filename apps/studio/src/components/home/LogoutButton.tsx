@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
-import { Button, Typography } from "@newm-web/elements";
+import { Typography } from "@mui/material";
+import { Button } from "@newm-web/elements";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { logOut, selectSession } from "../../modules/session";
 import { useAppDispatch, useAppSelector } from "../../common";

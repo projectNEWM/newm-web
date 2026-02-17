@@ -5,6 +5,7 @@ on:
       - .github/workflows/aws-hosting-pull-request-newm-studio.yml
       - apps/studio/**
       - packages/**
+      - package-lock.json
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
@@ -12,15 +13,21 @@ jobs:
     permissions:
       id-token: write # required to interact with GitHub's OIDC Token endpoint.
       contents: read
+      pull-requests: write # Explicitly allow writing to pull requests
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npx nx build studio
+      - run: npx nx build studio --no-cloud
         env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
           VITE_APPLE_CLIENT_ID: ${{ secrets.APPLE_CLIENT_ID }}
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           VITE_GA_STUDIO_ID: ${{ secrets.GA_STUDIO_ID }}
           VITE_RECAPTCHA_SITE_KEY_STAGING: ${{ secrets.RECAPTCHA_SITE_KEY_STAGING }}
+          VITE_LAUNCHDARKLY_CLIENT_ID_STAGING: ${{ secrets.LAUNCHDARKLY_CLIENT_ID_STAGING }}
+          VITE_REFERRALHERO_TRACKING_ID: ${{ secrets.REFERRALHERO_TRACKING_ID }}
+          VITE_REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING: ${{ secrets.REFERRALHERO_ARTIST_REFERRAL_CAMPAIGN_UUID_STAGING }}
+          VITE_DEXHUNTER_STUDIO_PARTNER_CODE: ${{ secrets.DEXHUNTER_STUDIO_PARTNER_CODE }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           VITE_ENV: staging
       - name: Configure AWS credentials
@@ -30,3 +37,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to S3
         run: aws --region ${{ secrets.AWS_REGION }} s3 sync ./dist/apps/studio s3://${{ secrets.AWS_PREVIEW_BUCKET }}/${{ github.event.pull_request.number }} --no-progress --delete
+      - name: Invalidate Cloudfront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STUDIO_DISTRIBUTION_GARAGE }} --paths '/*'
+      - name: Url to PR comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            Visit the studio preview URL for this PR :rocket: : https://${{ github.event.pull_request.number }}.artist.preview.newm.io/

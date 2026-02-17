@@ -1,18 +1,20 @@
 "use client";
 import { FunctionComponent } from "react";
-import { Box, Container } from "@mui/material";
-import { ArtistSpotlight, Sales } from "../components";
-import { mockSales } from "../temp/data";
+import { Container, Stack } from "@mui/material";
+import { useFlags } from "launchdarkly-react-client-sdk";
+import { ArtistSpotlight, LaunchBanner, RecentSongs } from "../components";
 
 const Home: FunctionComponent = () => {
+  const { webMarketplaceLaunchBanner } = useFlags();
   return (
-    <Container sx={ { flexGrow: 1 } }>
-      <Box mt={ [7.5, 5.5, 10] }>
-        <Sales sales={ mockSales } title="JUST RELEASED" />
-      </Box>
+    <Stack flexGrow={ 1 }>
+      { webMarketplaceLaunchBanner && <LaunchBanner /> }
 
-      <ArtistSpotlight />
-    </Container>
+      <Container sx={ { flexGrow: 1 } }>
+        <RecentSongs />
+        <ArtistSpotlight />
+      </Container>
+    </Stack>
   );
 };
 

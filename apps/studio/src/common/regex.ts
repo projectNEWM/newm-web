@@ -22,31 +22,36 @@ export const REGEX_ISWC_FORMAT = /^T-\d{9}-\d$/g;
 export const REGEX_JAN_FORMAT = /^(49|45)\d{1,11}$/;
 
 /**
- * Regular expression to match URLs with the specified domain followed by a path.
+ * Regular expression to match URLs with specified domains followed by a path.
  * Optionally match the scheme "http://" or "https://", optionally followed by "www.",
- * then ensure the URL includes the specified domain and a "/" followed by any characters except for spaces
+ * then ensure the URL includes one of the specified domains and a "/" followed by any characters except for spaces.
+ * @param domains A single domain string or an array of domain strings.
  */
-const generateRegexForDomainWithPath = (domain: string): RegExp => {
-  return new RegExp(`^(https?:\\/\\/(www\\.)?)?${domain.replace(/\./g, "\\.")}(\\/[^\\s]+)`, "i");
+const generateRegexForDomainsWithPath = (
+  domains: string | string[]
+): RegExp => {
+  const domainsArray = Array.isArray(domains) ? domains : [domains];
+  const domainsPattern = domainsArray
+    .map((domain) => domain.replace(/\./g, "\\."))
+    .join("|");
+  return new RegExp(
+    `^(https?:\\/\\/)?(www\\.)?(${domainsPattern})(\\/[^\\s]+)`,
+    "i"
+  );
 };
 
 export const REGEX_SPOTIFY_PROFILE =
-  generateRegexForDomainWithPath("open.spotify.com");
+  generateRegexForDomainsWithPath("open.spotify.com");
 export const REGEX_APPLE_MUSIC_PROFILE =
-  generateRegexForDomainWithPath("music.apple.com");
+  generateRegexForDomainsWithPath("music.apple.com");
 export const REGEX_SOUNDCLOUD_PROFILE =
-  generateRegexForDomainWithPath("soundcloud.com");
-
-/**
- * Matches strings containing alphanumeric characters (both lower and uppercase),
- * spaces, and most ASCII punctuation characters. It excludes some special characters like `%,*,=#<>{}~@\\/;:?$"`.
- * Main purpose is to prevent emojis.
- *
- * - `\w`: Matches any word character (alphanumeric + underscore).
- * - `\s`: Matches any whitespace character (spaces, tabs, line breaks).
- * - `!-/:-@[-``{-~`: Matches most ASCII punctuation characters.
- */
-export const REGEX_SONG_TITLE = /^[\w\s!-/:-@[-`{-~]*$/;
+  generateRegexForDomainsWithPath("soundcloud.com");
+export const REGEX_INSTAGRAM_PROFILE =
+  generateRegexForDomainsWithPath("instagram.com");
+export const REGEX_X_PROFILE = generateRegexForDomainsWithPath([
+  "twitter.com",
+  "x.com",
+]);
 
 /**
  * A regular expression pattern that matches strings excluding specific special characters

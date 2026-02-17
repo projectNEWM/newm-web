@@ -1,11 +1,13 @@
 import { CustomError, EmptyResponse } from "@newm-web/utils";
 import { MarketplaceStatus, MintingStatus, Song } from "@newm-web/types";
 import {
-  CborHexResponse,
   CloudinarySignatureResponse,
   CreateCollaborationRequest,
   CreateCollaborationResponse,
   CreateMintSongPaymentRequest,
+  CreateMintSongPaymentResponse,
+  CreatePayPalOrderPaymentRequest,
+  CreatePayPalOrderPaymentResponse,
   DeleteSongRequest,
   GetCollaborationsRequest,
   GetCollaborationsResponse,
@@ -28,11 +30,14 @@ import {
   PostSongRequest,
   ProcessStreamTokenAgreementRequest,
   ReplyCollaborationRequest,
+  SubmitPayPalOrderPaymentRequest,
   SubmitTransactionRequest,
   UpdateCollaborationRequest,
   UploadSongAudioRequest,
   UploadSongAudioResponse,
   UploadSongResponse,
+  getMintSongPaymentRequest,
+  getMintSongPaymentResponse,
 } from "./types";
 import { CloudinaryUploadOptions, Tags, newmApi } from "../../api";
 import { setToastMessage } from "../../modules/ui";
@@ -98,7 +103,7 @@ export const extendedApi = newmApi.injectEndpoints({
       }),
     }),
     createMintSongPayment: build.mutation<
-      CborHexResponse,
+      CreateMintSongPaymentResponse,
       CreateMintSongPaymentRequest
     >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -124,6 +129,29 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: `v1/songs/${songId}/mint/payment`,
+      }),
+    }),
+    createPayPalOrderPayment: build.mutation<
+      CreatePayPalOrderPaymentResponse,
+      CreatePayPalOrderPaymentRequest
+    >({
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while creating the PayPal order",
+              severity: "error",
+            })
+          );
+        }
+      },
+
+      query: (body) => ({
+        body,
+        method: "POST",
+        url: "v1/paypal/minting-distribution/orders",
       }),
     }),
     deleteCollaboration: build.mutation<void, string>({
@@ -337,7 +365,10 @@ export const extendedApi = newmApi.injectEndpoints({
         url: "v1/songs/mint/estimate",
       }),
     }),
-    getMintSongPayment: build.query<CborHexResponse, string>({
+    getMintSongPayment: build.query<
+      getMintSongPaymentResponse,
+      getMintSongPaymentRequest
+    >({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -350,11 +381,15 @@ export const extendedApi = newmApi.injectEndpoints({
           );
         }
       },
-      query: (songId) => ({
-        method: "GET",
-        songId,
-        url: `v1/songs/${songId}/mint/payment`,
-      }),
+      query: (request) => {
+        const { songId, ...params } = request;
+
+        return {
+          method: "GET",
+          params,
+          url: `v1/songs/${songId}/mint/payment`,
+        };
+      },
     }),
     getSong: build.query<Song, string>({
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -603,6 +638,7 @@ export const extendedApi = newmApi.injectEndpoints({
         url: `v1/songs/${songId}/redistribute`,
       }),
     }),
+
     submitMintSongPayment: build.mutation<void, SubmitTransactionRequest>({
       invalidatesTags: [Tags.Song],
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
@@ -622,6 +658,28 @@ export const extendedApi = newmApi.injectEndpoints({
         body,
         method: "POST",
         url: "v1/cardano/submitTransaction",
+      }),
+    }),
+    submitPayPalOrderPayment: build.mutation<
+      void,
+      SubmitPayPalOrderPaymentRequest
+    >({
+      invalidatesTags: [Tags.Song],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          dispatch(
+            setToastMessage({
+              message: "An error occurred while submitting the PayPal order",
+              severity: "error",
+            })
+          );
+        }
+      },
+      query: ({ orderId }) => ({
+        method: "POST",
+        url: `v1/paypal/minting-distribution/orders/${orderId}/capture`,
       }),
     }),
     updateCollaboration: build.mutation<void, UpdateCollaborationRequest>({
@@ -715,6 +773,7 @@ export const {
   useGetSongQuery,
   useGetSongStreamQuery,
   useGetSongsQuery,
+  useLazyGetSongsQuery,
 } = extendedApi;
 
 export default extendedApi;

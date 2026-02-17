@@ -1,0 +1,60 @@
+name: Create Marketplace Github release on version increment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if package.json version has been updated
+        id: version-updated
+        uses: MontyD/package-json-updated-action@1.0.1
+        with:
+          path: apps/marketplace/package.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current version
+        id: get-version
+        if: steps.version-updated.outputs.has-updated
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+        with:
+          path: apps/marketplace
+
+      - name: Create Release
+        if: steps.version-updated.outputs.has-updated
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: marketplace-${{ steps.get-version.outputs.current-version }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger production deployment
+        if: steps.version-updated.outputs.has-updated
+        run: |
+          response=$(curl -s -w "%{http_code}" -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/aws-hosting-deploy-published-release-newm-marketplace.yml/dispatches \
+            -d '{"ref":"master","inputs":{"release_tag":"marketplace-${{ steps.get-version.outputs.current-version }}"}}')
+          http_code=$(echo "$response" | tail -n1)
+          if [ "$http_code" -ne 204 ]; then
+            echo "Failed to trigger deploy workflow. HTTP Code: $http_code"
+            exit 1
+          fi

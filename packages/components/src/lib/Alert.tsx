@@ -29,10 +29,12 @@ const Alert: FunctionComponent<AlertProps> = ({
     setIsOpen(false);
   };
 
-  return isOpen ? (
+  // Without message check the alert is set to empty but the snackbar
+  // persists for a short period when clearToastMessage is called
+  return isOpen && !!message ? (
     <Snackbar
       anchorOrigin={ { horizontal: "right", vertical: "top" } }
-      autoHideDuration={ 6000 }
+      autoHideDuration={ severity === "error" ? null : 2000 }
       open={ isOpen }
       sx={ {
         "&.MuiSnackbar-root": {

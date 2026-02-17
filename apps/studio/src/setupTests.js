@@ -14,6 +14,7 @@ jest.mock("@newm-web/env", () => ({
 jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
   ...jest.requireActual,
   getWalletBalance: jest.fn(),
+  getSupportedWallets: jest.fn(),
   useConnectWallet: jest.fn(() => ({
     wallet: {},
     connect: jest.fn(),

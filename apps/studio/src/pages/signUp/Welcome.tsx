@@ -1,21 +1,30 @@
-import { Box, Stack, useTheme } from "@mui/material";
+import { FunctionComponent, useState } from "react";
+
+import { FormikValues, useFormikContext } from "formik";
+
+import { useFlags } from "launchdarkly-react-client-sdk";
+
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+
 import {
   Button,
   HorizontalLine,
   PasswordInputField,
   TextInputField,
-  Typography,
 } from "@newm-web/elements";
-import { FunctionComponent, useState } from "react";
-import { FormikValues, useFormikContext } from "formik";
-import { useAuthenticatedRedirect } from "../../common";
+
+import { useAuthenticatedRedirect, useBreakpoint } from "../../common";
 import { history } from "../../common/history";
 import { AppleLogin, GoogleLogin, ResponsiveNEWMLogo } from "../../components";
 
 const SignUp: FunctionComponent = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const theme = useTheme();
+  const { isDesktop } = useBreakpoint();
+
   const { values } = useFormikContext();
-  const { newPassword, confirmPassword } = values as FormikValues;
+  const { referrer, newPassword, confirmPassword } = values as FormikValues;
   const [maskPassword, setMaskPassword] = useState(true);
   const showEndAdornment = !!(newPassword || confirmPassword);
 
@@ -26,7 +35,12 @@ const SignUp: FunctionComponent = () => {
   useAuthenticatedRedirect();
 
   return (
-    <Box alignItems="center" display="flex" flexDirection="column">
+    <Box
+      alignItems="center"
+      display="flex"
+      flexDirection="column"
+      mt={ webStudioDisableDistributionAndSales && isDesktop ? 3 : 0 }
+    >
       <Stack sx={ { alignItems: "center", gap: 1, width: "100%" } }>
         <Button
           color="music"
@@ -60,6 +74,7 @@ const SignUp: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Password input field"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="newPassword"
@@ -67,6 +82,7 @@ const SignUp: FunctionComponent = () => {
         />
         <PasswordInputField
           aria-label="Confirm password input field"
+          autoComplete="new-password"
           externalMaskPassword={ maskPassword }
           handlePressEndAdornment={ togglePasswordMask }
           name="confirmPassword"
@@ -90,8 +106,8 @@ const SignUp: FunctionComponent = () => {
       </Stack>
 
       <Stack alignItems="center" my={ 3 } pb={ 8 } spacing={ 2 } width="100%">
-        <GoogleLogin>Join with Google</GoogleLogin>
-        <AppleLogin>Join with Apple</AppleLogin>
+        <GoogleLogin referrer={ referrer }>Join with Google</GoogleLogin>
+        <AppleLogin referrer={ referrer }>Join with Apple</AppleLogin>
       </Stack>
     </Box>
   );

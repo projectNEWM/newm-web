@@ -1,78 +1,73 @@
 "use client";
-import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
+
+import { Container, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { resizeCloudinaryImage, useBetterMediaQuery } from "@newm-web/utils";
 import { ProfileHeader, ProfileModal } from "@newm-web/components";
-import { ArtistSongs, SimilarArtists } from "../../../components";
-import { mockArtist } from "../../../temp/data";
+import { notFound } from "next/navigation";
+import { useGetArtistQuery } from "../../../modules/artist";
+import { ArtistSongs, BannerImage, SimilarArtists } from "../../../components";
 
 interface ArtistProps {
   readonly params: {
-    readonly id: string;
+    readonly artistId: string;
   };
 }
 
 const Artist: FunctionComponent<ArtistProps> = ({ params }) => {
-  const theme = useTheme();
+  const { isLoading, data: artist, error } = useGetArtistQuery(params.artistId);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
-  const isBelowSmBreakpoint = useBetterMediaQuery(
-    `(max-width: ${theme.breakpoints.values.sm}px)`
-  );
-
-  const resizedCoverImage = resizeCloudinaryImage(mockArtist.coverImageUrl, {
-    height: 200,
-    width: 1600,
-  });
+  const artistBannerUrl = artist?.bannerUrl;
+  const showBannerArea = isLoading || !!artistBannerUrl;
+  const profileHeaderLayout = showBannerArea ? "overlay" : "inline";
 
   const socials = {
-    instagramUrl: mockArtist.instagramUrl,
-    itunesUrl: mockArtist.itunesUrl,
-    soundCloudUrl: mockArtist.soundCloudUrl,
-    spotifyUrl: mockArtist.spotifyUrl,
-    websiteUrl: mockArtist.websiteUrl,
-    xUrl: mockArtist.xUrl,
+    instagramUrl: artist?.instagramUrl || "",
+    itunesUrl: artist?.appleMusicProfile || "",
+    soundCloudUrl: artist?.soundCloudProfile || "",
+    spotifyUrl: artist?.spotifyProfile || "",
+    websiteUrl: artist?.websiteUrl || "",
+    xUrl: artist?.twitterUrl || "",
   };
+
+  // If the artist is not found, redirect to the 404 page
+  if (!isLoading && (!artist || error)) {
+    notFound();
+  }
 
   return (
     <>
       <Stack direction="column">
-        <Box
-          aria-label="Artist banner"
-          sx={ {
-            backgroundImage: `url(${resizedCoverImage})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            height: isBelowSmBreakpoint ? "130px" : "200px",
-            width: "100%",
-          } }
-        />
+        { showBannerArea && (
+          <BannerImage imageUrl={ artistBannerUrl } isLoading={ isLoading } />
+        ) }
 
-        <Container sx={ { flexGrow: 1 } }>
+        <Container sx={ { flexGrow: 1, marginTop: showBannerArea ? 0 : 7 } }>
           <ProfileHeader
-            firstName={ mockArtist.firstName }
-            isVerified={ mockArtist.isVerified }
-            lastName={ mockArtist.lastName }
-            location={ mockArtist.location }
-            profileImageUrl={ mockArtist.profileImageUrl }
+            isLoading={ isLoading }
+            isVerified={ true }
+            layout={ profileHeaderLayout }
+            location={ artist?.location }
+            name={ artist?.name }
+            pictureUrl={ artist?.pictureUrl }
             socials={ socials }
             onClickAbout={ () => setIsAboutModalOpen(true) }
           />
 
-          <ArtistSongs />
+          <ArtistSongs artistId={ params.artistId } />
 
-          <SimilarArtists />
+          <SimilarArtists artistId={ artist?.id } genre={ artist?.genre } />
         </Container>
-
-        <ProfileModal
-          isOpen={ isAboutModalOpen }
-          name={ `${mockArtist.firstName} ${mockArtist.lastName}` }
-          socials={ socials }
-          onClose={ () => setIsAboutModalOpen(false) }
-        >
-          <Typography variant="subtitle1">{ mockArtist.description }</Typography>
-        </ProfileModal>
       </Stack>
+
+      <ProfileModal
+        isOpen={ isAboutModalOpen }
+        name={ artist?.name }
+        socials={ socials }
+        onClose={ () => setIsAboutModalOpen(false) }
+      >
+        <Typography variant="subtitle1">{ artist?.biography }</Typography>
+      </ProfileModal>
     </>
   );
 };
