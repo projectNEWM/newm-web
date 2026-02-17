@@ -134,7 +134,8 @@
   },
   "overrides": {
     "body-parser": "1.20.3",
-    "rollup": "4.22.4"
+    "rollup": "4.22.4",
+    "tar": "7.5.4"
   },
   "browserslist": {
     "production": [
