@@ -40,7 +40,7 @@ const Settings: FunctionComponent = () => {
    */
   const newPassword = commonYupValidation.newPassword.when("currentPassword", {
     is: (currentValue: string) => currentValue,
-    then: Yup.string()
+    then: (schema) => schema
       .required("New password is required")
       .notOneOf(
         [Yup.ref("currentPassword")],
@@ -55,7 +55,7 @@ const Settings: FunctionComponent = () => {
     "newPassword",
     {
       is: (currentValue: string) => currentValue,
-      then: Yup.string().required("Must match new password"),
+      then: (schema) => schema.required("Must match new password"),
     }
   );
 
