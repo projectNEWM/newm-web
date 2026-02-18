@@ -1,6 +1,9 @@
-import { SwitchProps } from "@mui/material";
-import { Field, FieldProps } from "formik";
 import { FunctionComponent, ReactNode } from "react";
+
+import { SwitchProps } from "@mui/material";
+
+import { Field, FieldProps } from "formik";
+
 import SwitchInput from "../SwitchInput";
 
 interface SwitchInputFieldProps extends SwitchProps {
@@ -9,7 +12,7 @@ interface SwitchInputFieldProps extends SwitchProps {
   readonly includeBorder?: boolean;
   readonly name: string;
   readonly title: string;
-  readonly toggleTooltipText?: string;
+  readonly toggleTooltipText?: ReactNode;
   readonly tooltipText?: string;
 }
 

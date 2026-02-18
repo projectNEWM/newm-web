@@ -42,7 +42,10 @@ interface EditSongFormValues extends PatchSongThunkRequest {
 }
 
 const EditSong: FunctionComponent = () => {
-  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
+  const {
+    webStudioDisableTrackDistributionAndMinting,
+    webStudioDisableDistributionAndSales,
+  } = useFlags();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -177,7 +180,8 @@ const EditSong: FunctionComponent = () => {
     isMinting:
       isArtistPricePlanSelected &&
       isSongEditable(mintingStatus) &&
-      !webStudioDisableTrackDistributionAndMinting,
+      !webStudioDisableTrackDistributionAndMinting &&
+      !webStudioDisableDistributionAndSales,
     isrc,
     iswc,
     language,
