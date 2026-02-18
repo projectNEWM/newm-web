@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import currency from "currency.js";
-import * as Yup from "yup";
-import { AlertTitle, Stack, Typography } from "@mui/material";
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Form, Formik, FormikValues } from "formik";
-import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+
+import currency from "currency.js";
+
+import * as Yup from "yup";
+
+import { AlertTitle, Stack, Typography } from "@mui/material";
+
 import {
   Alert,
   Button,
   HorizontalLine,
   PriceInputField,
   TextInputField,
+  Tooltip,
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 import {
@@ -20,14 +26,52 @@ import {
   formatUsdAmount,
   useWindowDimensions,
 } from "@newm-web/utils";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+
 import StartSaleModal from "./StartSaleModal";
+import { OfficialStatementCTA } from "../../../../components";
 import { SALE_DEFAULT_BUNDLE_AMOUNT } from "../../../../common";
 import { SongRouteParams } from "../../../../common/types";
 import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
 import { useGetProfileQuery } from "../../../../modules/session";
 
+const SundownButton = () => (
+  <Tooltip title={ <OfficialStatementCTA /> }>
+    <span style={ { width: "fit-content" } }>
+      <Button width="compact" disabled>
+        Create stream token sale
+      </Button>
+    </span>
+  </Tooltip>
+);
+
+const SundownAlert = ({
+  formattedStreamTokensInWallet,
+  isOnlyOneTokenAvailable,
+  streamTokensPercentage,
+}: {
+  formattedStreamTokensInWallet: string;
+  isOnlyOneTokenAvailable: boolean;
+  streamTokensPercentage: string;
+}) => {
+  return (
+    <Alert>
+      <AlertTitle color={ theme.colors.blue } sx={ { fontWeight: 600 } }>
+        { `You currently have ${formattedStreamTokensInWallet} stream token${
+          isOnlyOneTokenAvailable ? "" : "s"
+        } for this track.` }
+      </AlertTitle>
+      <Typography fontWeight={ 500 } variant="subtitle1">
+        { `This accounts for ${streamTokensPercentage} of this track's total minted stream tokens.` }
+      </Typography>
+    </Alert>
+  );
+};
+
 export const CreateSale = () => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   const [isSaleSummaryModalOpen, setIsSaleSummaryModalOpen] = useState(false);
   const windowWidth = useWindowDimensions()?.width;
   const { songId } = useParams<"songId">() as SongRouteParams;
@@ -120,20 +164,28 @@ export const CreateSale = () => {
 
   return (
     <>
-      <Alert>
-        <AlertTitle color={ theme.colors.blue } sx={ { fontWeight: 600 } }>
-          { `You currently have ${formattedStreamTokensInWallet} stream token${
-            isOnlyOneTokenAvailable ? "" : "s"
-          } for this track available to sell.` }
-        </AlertTitle>
-        <Typography
-          color={ theme.colors.blue }
-          fontWeight={ 500 }
-          variant="subtitle1"
-        >
-          { `This accounts for ${streamTokensPercentage} of this track's total minted stream tokens.` }
-        </Typography>
-      </Alert>
+      { webStudioDisableDistributionAndSales ? (
+        <SundownAlert
+          formattedStreamTokensInWallet={ formattedStreamTokensInWallet }
+          isOnlyOneTokenAvailable={ isOnlyOneTokenAvailable }
+          streamTokensPercentage={ streamTokensPercentage }
+        />
+      ) : (
+        <Alert>
+          <AlertTitle color={ theme.colors.blue } sx={ { fontWeight: 600 } }>
+            { `You currently have ${formattedStreamTokensInWallet} stream token${
+              isOnlyOneTokenAvailable ? "" : "s"
+            } for this track available to sell.` }
+          </AlertTitle>
+          <Typography
+            color={ theme.colors.blue }
+            fontWeight={ 500 }
+            variant="subtitle1"
+          >
+            { `This accounts for ${streamTokensPercentage} of this track's total minted stream tokens.` }
+          </Typography>
+        </Alert>
+      ) }
 
       <Formik
         initialValues={ initialValues }
@@ -168,75 +220,83 @@ export const CreateSale = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
-                marginTop: "40px",
+                marginTop: webStudioDisableDistributionAndSales ? 0 : "40px",
               } }
             >
-              <Stack
-                columnGap={ 2.5 }
-                flexDirection={ ["column", "column", "row"] }
-                rowGap={ 3.5 }
-              >
-                <TextInputField
-                  helperText={ `Percentage of my total stream tokens: ${
-                    percentageOfUserStreamTokens
-                      ? formattedPercentageOfUserStreamTokens
-                      : ""
-                  }` }
-                  isOptional={ false }
-                  label="STREAM TOKENS TO SELL"
-                  name="tokensToSell"
-                  placeholder="0"
-                  tooltipText="The total number of the track's stream tokens to be included in the sale."
-                  type="number"
-                />
+              { !webStudioDisableDistributionAndSales && (
+                <Stack
+                  columnGap={ 2.5 }
+                  flexDirection={ ["column", "column", "row"] }
+                  rowGap={ 3.5 }
+                >
+                  <TextInputField
+                    helperText={ `Percentage of my total stream tokens: ${
+                      percentageOfUserStreamTokens
+                        ? formattedPercentageOfUserStreamTokens
+                        : ""
+                    }` }
+                    isOptional={ false }
+                    label="STREAM TOKENS TO SELL"
+                    name="tokensToSell"
+                    placeholder="0"
+                    tooltipText="The total number of the track's stream tokens to be included in the sale."
+                    type="number"
+                  />
 
-                <PriceInputField
-                  currencyFieldName="saleCurrency"
-                  helperText={ `Price per stream token: ${
-                    perTokenPrice ? formattedPerTokenPrice : ""
-                  }` }
-                  isOptional={ false }
-                  label="TOTAL SALE VALUE"
-                  placeholder="0"
-                  priceFieldName="totalSaleValue"
-                  tooltipText="The total amount to be earned once the sale is fulfilled."
-                />
-              </Stack>
+                  <PriceInputField
+                    currencyFieldName="saleCurrency"
+                    helperText={ `Price per stream token: ${
+                      perTokenPrice ? formattedPerTokenPrice : ""
+                    }` }
+                    isOptional={ false }
+                    label="TOTAL SALE VALUE"
+                    placeholder="0"
+                    priceFieldName="totalSaleValue"
+                    tooltipText="The total amount to be earned once the sale is fulfilled."
+                  />
+                </Stack>
+              ) }
 
               <HorizontalLine />
 
-              <Button
-                disabled={ isGetWalletSongsLoading }
-                type="button"
-                width={
-                  windowWidth && windowWidth > theme.breakpoints.values.md
-                    ? "compact"
-                    : "default"
-                }
-                onClick={ () => {
-                  if (isValid) {
-                    setIsSaleSummaryModalOpen(true);
-                  } else {
-                    setTouched({
-                      tokensToSell: true,
-                      totalSaleValue: true,
-                    });
-                  }
-                } }
-              >
-                Create stream token sale
-              </Button>
+              { webStudioDisableDistributionAndSales ? (
+                <SundownButton />
+              ) : (
+                <>
+                  <Button
+                    disabled={ isGetWalletSongsLoading }
+                    type="button"
+                    width={
+                      windowWidth && windowWidth > theme.breakpoints.values.md
+                        ? "compact"
+                        : "default"
+                    }
+                    onClick={ () => {
+                      if (isValid) {
+                        setIsSaleSummaryModalOpen(true);
+                      } else {
+                        setTouched({
+                          tokensToSell: true,
+                          totalSaleValue: true,
+                        });
+                      }
+                    } }
+                  >
+                    Create stream token sale
+                  </Button>
 
-              <StartSaleModal
-                handleClose={ () => setIsSaleSummaryModalOpen(false) }
-                handleStartSale={ submitForm }
-                isLoading={ isStartSaleLoading }
-                isOpen={ isSaleSummaryModalOpen }
-                saleCurrency={ saleCurrency }
-                tokensToSell={ tokensToSell }
-                totalSaleValue={ totalSaleValue }
-                totalTokensOwnedByUser={ streamTokensInWallet }
-              />
+                  <StartSaleModal
+                    handleClose={ () => setIsSaleSummaryModalOpen(false) }
+                    handleStartSale={ submitForm }
+                    isLoading={ isStartSaleLoading }
+                    isOpen={ isSaleSummaryModalOpen }
+                    saleCurrency={ saleCurrency }
+                    tokensToSell={ tokensToSell }
+                    totalSaleValue={ totalSaleValue }
+                    totalTokensOwnedByUser={ streamTokensInWallet }
+                  />
+                </>
+              ) }
             </Form>
           );
         } }
