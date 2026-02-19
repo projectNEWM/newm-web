@@ -36,6 +36,7 @@ import { useGetUserWalletSongsThunk } from "../../../../modules/song";
 import { useStartSaleThunk } from "../../../../modules/sale";
 import { useGetProfileQuery } from "../../../../modules/session";
 
+// TODO: Remove once 'webStudioDisableDistributionAndSales' retires.
 const SundownButton = () => (
   <Tooltip title={ <OfficialStatementCTA /> }>
     <span style={ { width: "fit-content" } }>
@@ -46,6 +47,7 @@ const SundownButton = () => (
   </Tooltip>
 );
 
+// TODO: Remove once 'webStudioDisableDistributionAndSales' retires.
 const SundownAlert = ({
   formattedStreamTokensInWallet,
   isOnlyOneTokenAvailable,

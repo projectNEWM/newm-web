@@ -20,6 +20,7 @@ interface ActiveSaleProps {
   readonly sale?: Sale;
 }
 
+// TODO: Remove once 'webStudioDisableDistributionAndSales' retires.
 const SundownButtons = ({
   saleId,
   isEndSaleLoading,

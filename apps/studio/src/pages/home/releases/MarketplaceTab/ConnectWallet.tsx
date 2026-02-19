@@ -11,6 +11,7 @@ import { Alert, Button } from "@newm-web/elements";
 import { useAppDispatch } from "../../../../common";
 import { setIsConnectWalletModalOpen } from "../../../../modules/ui";
 
+// TODO: Remove once 'webStudioDisableDistributionAndSales' retires.
 const SundownAlertCopy = ({
   wallet,
 }: {
