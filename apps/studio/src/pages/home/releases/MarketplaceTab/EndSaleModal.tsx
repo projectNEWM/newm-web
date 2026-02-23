@@ -1,5 +1,8 @@
 import { FunctionComponent } from "react";
+import { useFlags } from "launchdarkly-react-client-sdk";
+
 import { Box, Stack, Typography } from "@mui/material";
+
 import { Button, Modal } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
@@ -18,6 +21,8 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
   isLoading,
   isSoldOut = false,
 }) => {
+  const { webStudioDisableDistributionAndSales } = useFlags();
+
   return (
     <Modal isCloseButtonVisible={ false } isOpen={ isOpen } onClose={ handleClose }>
       <Box
@@ -44,18 +49,25 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
               Are you sure you want to end your stream token sale?
             </Typography>
 
-            { isSoldOut ? (
-              <Typography variant="subtitle2">
-                All earnings from your sold out stream token sale will be moved
-                to your wallet.
-              </Typography>
-            ) : (
-              <Typography variant="subtitle2">
-                The sale will be removed from the Marketplace, and all unsold
-                stream tokens will be returned to the wallet used when creating
-                the sale.
-              </Typography>
-            ) }
+            <Typography variant="subtitle2">
+              { webStudioDisableDistributionAndSales ? (
+                <>
+                  The sale will be removed from the Marketplace. All earnings
+                  and and any unsold stream tokens will be moved to your wallet.
+                </>
+              ) : isSoldOut ? (
+                <>
+                  All earnings from your sold out stream token sale will be
+                  moved to your wallet.
+                </>
+              ) : (
+                <>
+                  The sale will be removed from the Marketplace, and all unsold
+                  stream tokens will be returned to the wallet used when
+                  creating the sale.
+                </>
+              ) }
+            </Typography>
           </Stack>
           <Stack flexDirection="row" gap={ 1 } justifyContent="end" mt={ 1 }>
             <Button

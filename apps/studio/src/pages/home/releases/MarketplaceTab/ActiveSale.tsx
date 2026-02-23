@@ -88,8 +88,8 @@ export const ActiveSale: FunctionComponent<ActiveSaleProps> = ({ sale }) => {
 
         { webStudioDisableDistributionAndSales && (
           <Typography fontWeight={ 500 } variant="subtitle1">
-            Please end the sale and we&apos;ll return the unsold Stream Tokens
-            to your wallet.
+            Please end the sale and we&apos;ll move any earnings and unsold
+            Stream Tokens to your wallet.
           </Typography>
         ) }
 
@@ -145,6 +145,7 @@ export const ActiveSale: FunctionComponent<ActiveSaleProps> = ({ sale }) => {
           </>
         ) }
       </Stack>
+
       <EndSaleModal
         handleClose={ () => setIsEndSaleModalOpen(false) }
         handleEndSale={ handleEndSale }
