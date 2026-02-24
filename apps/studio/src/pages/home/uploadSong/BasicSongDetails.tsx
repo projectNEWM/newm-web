@@ -86,9 +86,13 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
   const songDetailsRef = useRef<HTMLDivElement>(null);
 
   const {
+    // webStudioAlbumPhaseTwo,
     webStudioDisableTrackDistributionAndMinting,
-    webStudioDisableDistributionAndSales,
+    // webStudioDisableDistributionAndSales,
   } = useFlags();
+
+  const webStudioDisableDistributionAndSales = false;
+  const webStudioAlbumPhaseTwo = false;
 
   const isDistributionDisabled =
     webStudioDisableDistributionAndSales ||
@@ -210,7 +214,7 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected && (
+      { !webStudioAlbumPhaseTwo && !isArtistPricePlanSelected && (
         <DistributionPricingDialog
           open={ isPricingPlansOpen }
           onCancel={ handlePricingPlanCancel }
@@ -443,7 +447,9 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
                   title="DISTRIBUTE & MINT SONG"
                   toggleTooltipText={ tooltipContent }
                   onClick={ () => {
-                    if (!isArtistPricePlanSelected) handlePricingPlanOpen();
+                    if (!webStudioAlbumPhaseTwo && !isArtistPricePlanSelected) {
+                      handlePricingPlanOpen();
+                    }
                   } }
                 />
 

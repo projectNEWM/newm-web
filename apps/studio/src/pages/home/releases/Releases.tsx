@@ -13,12 +13,24 @@ import TrackDetailsRouter from "./release/tracks/TrackDetailsRouter";
 import Distribute from "./release/distribute/Distribute";
 import NewTrack from "./release/tracks/NewTrack";
 import NotFoundPage from "../../NotFoundPage";
+import { emptyProfile, useGetProfileQuery } from "../../../modules/session";
 
 const Releases: FunctionComponent = () => {
   // TODO(webStudioAlbumPhaseTwo): Remove flag once flag is retired.
   // TODO(webStudioDisableDistributionAndSales): Remove once flag is retired.
   const { webStudioAlbumPhaseTwo, webStudioDisableDistributionAndSales } =
     useFlags();
+
+  const {
+    data: {
+      dspPlanSubscribed: isArtistPricePlanSelected = false,
+    } = emptyProfile,
+  } = useGetProfileQuery();
+
+  const shouldBlockReleaseCreation =
+    webStudioAlbumPhaseTwo &&
+    !webStudioDisableDistributionAndSales &&
+    !isArtistPricePlanSelected;
 
   return (
     <Container
@@ -46,6 +58,8 @@ const Releases: FunctionComponent = () => {
               element={
                 webStudioDisableDistributionAndSales ? (
                   <Navigate to="/home/releases" replace />
+                ) : shouldBlockReleaseCreation ? (
+                  <Navigate to="/home/releases" replace />
                 ) : (
                   <ReleaseDetails />
                 )
@@ -57,6 +71,8 @@ const Releases: FunctionComponent = () => {
             <Route
               element={
                 webStudioDisableDistributionAndSales ? (
+                  <Navigate to="/home/releases" replace />
+                ) : shouldBlockReleaseCreation ? (
                   <Navigate to="/home/releases" replace />
                 ) : (
                   <NewTrack />

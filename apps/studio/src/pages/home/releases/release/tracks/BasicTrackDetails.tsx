@@ -54,7 +54,11 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
       dspPlanSubscribed: isArtistPricePlanSelected = false,
     } = emptyProfile,
   } = useGetProfileQuery();
-  const { webStudioDisableTrackDistributionAndMinting } = useFlags();
+  const {
+    webStudioAlbumPhaseTwo,
+    webStudioDisableTrackDistributionAndMinting,
+  } = useFlags();
+
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -137,7 +141,7 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
 
   return (
     <Stack>
-      { !isArtistPricePlanSelected && (
+      { !webStudioAlbumPhaseTwo && !isArtistPricePlanSelected && (
         <DistributionPricingDialog
           open={ isPricingPlansOpen }
           onCancel={ handlePricingPlanCancel }
