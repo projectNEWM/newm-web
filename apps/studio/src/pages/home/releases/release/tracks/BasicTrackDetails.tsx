@@ -1,8 +1,6 @@
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, useEffect, useRef } from "react";
 
 import { useFormikContext } from "formik";
-
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 import { Box, Link, Stack, Typography, useTheme } from "@mui/material";
 
@@ -24,17 +22,13 @@ import {
   NEWM_STUDIO_FAQ_URL,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "../../../../../common";
-import { DistributionPricingDialog, PlaySong } from "../../../../../components";
+import { PlaySong } from "../../../../../components";
 import SelectCoCreators from "../../../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "../../../../../modules/content";
-import {
-  emptyProfile,
-  useGetProfileQuery,
-} from "../../../../../modules/session";
 import { Creditor, Featured, Owner } from "../../../../../modules/song";
 
 interface BasicTrackDetailsProps {
@@ -49,16 +43,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
   trackId = "",
 }) => {
   const theme = useTheme();
-  const {
-    data: {
-      dspPlanSubscribed: isArtistPricePlanSelected = false,
-    } = emptyProfile,
-  } = useGetProfileQuery();
-  const {
-    webStudioAlbumPhaseTwo,
-    webStudioDisableTrackDistributionAndMinting,
-  } = useFlags();
-
   const { data: genres = [] } = useGetGenresQuery();
   const { data: moodOptions = [] } = useGetMoodsQuery();
   const { data: languages = [] } = useGetLanguagesQuery();
@@ -79,24 +63,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
     isSubmitting,
     initialValues,
   } = useFormikContext<TrackFormValues>();
-
-  // DSP pricing plan mint song toggling
-  const [isPricingPlansOpen, setIsPricingPlansOpen] = useState(false);
-  const handlePricingPlanCancel = () => {
-    setIsPricingPlansOpen(false);
-    setFieldValue("isMinting", false);
-  };
-  const handlePricingPlanConfirm = () => {
-    setIsPricingPlansOpen(false);
-    setFieldValue("isMinting", true);
-  };
-
-  // Monitor feature flag changes, particularly seen for pricing plan acceptance
-  useEffect(() => {
-    if (webStudioDisableTrackDistributionAndMinting) {
-      setFieldValue("isMinting", false);
-    }
-  }, [webStudioDisableTrackDistributionAndMinting, setFieldValue]);
 
   const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
 
@@ -141,13 +107,6 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
 
   return (
     <Stack>
-      { !webStudioAlbumPhaseTwo && !isArtistPricePlanSelected && (
-        <DistributionPricingDialog
-          open={ isPricingPlansOpen }
-          onCancel={ handlePricingPlanCancel }
-          onConfirm={ handlePricingPlanConfirm }
-        />
-      ) }
       <Stack direction="column" spacing={ 3 }>
         <Stack
           sx={ {
