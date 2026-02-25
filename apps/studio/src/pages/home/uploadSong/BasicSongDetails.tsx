@@ -443,7 +443,9 @@ const BasicSongDetails: FunctionComponent<BasicSongDetailsProps> = ({
                   title="DISTRIBUTE & MINT SONG"
                   toggleTooltipText={ tooltipContent }
                   onClick={ () => {
-                    if (!isArtistPricePlanSelected) handlePricingPlanOpen();
+                    if (!isArtistPricePlanSelected) {
+                      handlePricingPlanOpen();
+                    }
                   } }
                 />
 
