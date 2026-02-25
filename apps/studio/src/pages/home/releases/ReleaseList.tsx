@@ -28,7 +28,7 @@ import {
   useWindowDimensions,
 } from "@newm-web/utils";
 import { MintingStatus as MintingStatusType } from "@newm-web/types";
-import { NEWMCoverArtPlaceholder } from "@newm-web/assets";
+import { NEWMCoverArtPlaceholderMin } from "@newm-web/assets";
 
 import NoSongsYet from "./NoSongsYet";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
@@ -334,7 +334,7 @@ export default function ReleaseList({
                       <Box
                         alt="NEWM Monster"
                         component="img"
-                        src={ getImageSrc(NEWMCoverArtPlaceholder) }
+                        src={ getImageSrc(NEWMCoverArtPlaceholderMin) }
                         sx={ {
                           borderRadius: "4px",
                           height: 40,

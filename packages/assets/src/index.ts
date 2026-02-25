@@ -41,7 +41,7 @@ import referralBannerBackground from "./lib/images/referral-banner-background.we
 import { default as NEWMMonsterPercussion } from "./lib/images/NEWMMonsterPercussion.png";
 import { default as NEWMMonsterRock } from "./lib/images/NEWMMonsterRock.png";
 import { default as NEWMMonsterGuitar } from "./lib/images/NEWMMonsterGuitar.png";
-import { default as NEWMCoverArtPlaceholder } from "./lib/images/cover-art-placeholder.png";
+import { default as NEWMCoverArtPlaceholderMin } from "./lib/images/cover-art-placeholder-min.png";
 
 export {
   AddImage,
@@ -65,7 +65,7 @@ export {
   InfoCircleLine,
   InstagramLogo,
   ItunesLogo,
-  NEWMCoverArtPlaceholder,
+  NEWMCoverArtPlaceholderMin,
   NEWMLogo,
   NEWMLogoSmInverse,
   NEWMMarketplaceLogo,
