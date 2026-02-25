@@ -53,7 +53,7 @@ export const EndSaleModal: FunctionComponent<EndSaleModalProps> = ({
               { webStudioDisableDistributionAndSales ? (
                 <>
                   The sale will be removed from the Marketplace. All earnings
-                  and and any unsold stream tokens will be moved to your wallet.
+                  and any unsold stream tokens will be moved to your wallet.
                 </>
               ) : isSoldOut ? (
                 <>
