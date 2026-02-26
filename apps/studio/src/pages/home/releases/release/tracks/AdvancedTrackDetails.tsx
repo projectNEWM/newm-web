@@ -21,8 +21,9 @@ import {
   useGetSongQuery,
 } from "../../../../../modules/song";
 import {
+  FIELDS_TOOLTIP_COPY_TEXT,
   MIN_DISTRIBUTION_TIME,
-  NEWM_STUDIO_FAQ_URL,
+  NEWM_STUDIO_COPYRIGHT_FAQ_URL,
   NONE_OPTION,
 } from "../../../../../common";
 import {
@@ -30,6 +31,9 @@ import {
   useGetProfileQuery,
 } from "../../../../../modules/session";
 import { CoverRemixSample } from "../../../../../components";
+
+// TODO: fields such as 'schedule release date', 'original publication date'?, 'release code **', and 'IPI'
+// TODO: will be removed from the track details page as part of phase 2.
 
 const AdvancedTrackDetails = () => {
   const { data: { firstName } = emptyProfile } = useGetProfileQuery();
@@ -132,11 +136,7 @@ const AdvancedTrackDetails = () => {
       <SwitchInputField
         name="isInstrumental"
         title="Is this song an instrumental?"
-        tooltipText={
-          "Songs without voices or lyrics should be indicated as an " +
-          "instrumental. Failure to accurately label the song will " +
-          "result in a declined distribution submission."
-        }
+        tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.instrumental }
       />
       <SwitchInputField
         name="isExplicit"
@@ -192,9 +192,9 @@ const AdvancedTrackDetails = () => {
               The copyright for a musical composition covers the music and
               lyrics of a song (not the recorded performance). It is typically
               owned by the songwriter and/or music publisher. If you are not the
-              copyright holder of the song composition, please review{ " " }
+              copyright holder of the track composition, please review{ " " }
               <Link
-                href={ NEWM_STUDIO_FAQ_URL }
+                href={ NEWM_STUDIO_COPYRIGHT_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -214,11 +214,11 @@ const AdvancedTrackDetails = () => {
           tooltipText={
             <span>
               The copyright in a sound recording covers the recording itself (it
-              does not cover the music or lyrics of the song). It is typically
+              does not cover the music or lyrics of the track). It is typically
               owned by the artist and/or record label. If you are not the
               copyright holder of the sound recording, please review{ " " }
               <Link
-                href={ NEWM_STUDIO_FAQ_URL }
+                href={ NEWM_STUDIO_COPYRIGHT_FAQ_URL }
                 rel="noopener noreferrer"
                 target="_blank"
               >

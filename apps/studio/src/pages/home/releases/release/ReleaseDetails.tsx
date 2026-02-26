@@ -34,7 +34,11 @@ import {
   type RequestNavigationOptions,
   useUnsavedChanges,
 } from "../../../../contexts/UnsavedChangesContext";
-import { NONE_OPTION, commonYupValidation } from "../../../../common";
+import {
+  FIELDS_TOOLTIP_COPY_TEXT,
+  NONE_OPTION,
+  commonYupValidation,
+} from "../../../../common";
 import { emptyProfile, useGetProfileQuery } from "../../../../modules/session";
 import ReleaseDeletionHelp from "../ReleaseDeletionHelp";
 
@@ -289,7 +293,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       name="releaseDate"
                       placeholder="Select date"
                       ref={ releaseDateRef as React.Ref<HTMLInputElement> }
-                      tooltipText="TO BE UPDATED"
+                      tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.releaseDate }
                       type="date"
                     />
                     <TextInputField
@@ -298,7 +302,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       max={ new Date().toISOString().split("T")[0] }
                       name="originalReleaseDate"
                       placeholder="Select date"
-                      tooltipText="TO BE UPDATED"
+                      tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.originalReleaseDate }
                       type="date"
                     />
                     <DropdownSelectField
@@ -307,7 +311,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       name="releaseCodeType"
                       options={ [...RELEASE_CODE_TYPE_OPTIONS] }
                       placeholder="Select one"
-                      tooltipText="TO BE UPDATED"
+                      tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.releaseCodeType }
                     />
                     <TextInputField
                       disabled={
@@ -318,7 +322,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       label="RELEASE CODE NUMBER"
                       name="releaseCodeNumber"
                       placeholder="000000000000"
-                      tooltipText="TO BE UPDATED"
+                      tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.releaseCodeNumber }
                     />
                   </Stack>
 

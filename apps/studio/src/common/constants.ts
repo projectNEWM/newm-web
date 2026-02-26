@@ -13,6 +13,7 @@ export const NEWM_STUDIO_OFFICIAL_STATEMENT_URL = `${NEWM_IO_URL}sunset/`;
 export const NEWM_STUDIO_DISCORD_URL =
   "https://discord.com/channels/931903540056694856/1153293933468713041";
 export const NEWM_STUDIO_FAQ_URL = "https://newm.io/artist-faq";
+export const NEWM_STUDIO_COPYRIGHT_FAQ_URL = `${NEWM_STUDIO_FAQ_URL}/#copyrights`;
 export const NEWM_STUDIO_TELEGRAM_URL = "https://t.me/NEWMartists";
 export const NEWM_STUDIO_OUTLETS_URL = "https://newm.io/artist-faq/#outlets";
 export const NEWM_PRIVACY_POLICY_URL = "https://newm.io/privacy-policy/";
@@ -62,3 +63,23 @@ export const SALE_COMPLETE_UPDATED_EVENT = "saleCompleteUpdated";
  * Stream token sale default bundle amount
  */
 export const SALE_DEFAULT_BUNDLE_AMOUNT = 1;
+
+export const FIELDS_TOOLTIP_COPY_TEXT = {
+  instrumental: `Tracks without vocals or lyrics should be indicated as an instrumental.
+   Failure to accurately label the track could result in a declined distribution submission.`,
+
+  originalReleaseDate: `If your release has already been distributed on other platforms,
+     you may input the original release date here, but it's not required.`,
+
+  releaseCodeNumber: `A release code number is a unique code that identifies your release.
+   If you do not already have one, leave this field blank,
+    and a new release code number will be auto-generated for you.`,
+
+  releaseCodeType: `If you already have a release code, 
+  select the code type here and enter the code in the next field. If not, 
+  leave this field blank and a new release code will be auto-generated for you.`,
+
+  releaseDate: `When setting a release date, remember to factor in approval
+    from any collaborators and/or featured artists, as well as quality assurance checks,
+    which can take up to 15 days.`,
+} as const;
