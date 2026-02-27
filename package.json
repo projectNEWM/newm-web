@@ -62,7 +62,7 @@
     "@nx/eslint-plugin": "18.0.4",
     "@nx/jest": "18.0.4",
     "@nx/js": "18.0.4",
-    "@nx/next": "18.0.4",
+    "@nx/next": "22.5.1",
     "@nx/react": "18.0.4",
     "@nx/storybook": "18.0.4",
     "@nx/vite": "18.0.4",
