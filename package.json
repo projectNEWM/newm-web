@@ -74,7 +74,7 @@
     "@storybook/react-vite": "^7.5.3",
     "@storybook/test-runner": "^0.16.0",
     "@storybook/testing-library": "^0.2.2",
-    "@swc-node/register": "~1.8.0",
+    "@swc-node/register": "~1.11.1",
     "@swc/cli": "~0.1.62",
     "@swc/core": "~1.15.11",
     "@swc/plugin-styled-components": "^1.5.67",
