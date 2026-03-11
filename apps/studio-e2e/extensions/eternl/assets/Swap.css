@@ -1,0 +1,7 @@
+
+.rotate180[data-v-cdd1f0b8] {
+  transition: transform 0.5s ease-in-out;
+}
+.rotate180[data-v-cdd1f0b8]:hover {
+  transform: rotate(180deg);
+}

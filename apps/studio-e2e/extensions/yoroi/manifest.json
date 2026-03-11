@@ -1,0 +1,79 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "version": "5.4.401",
+    "name": "Yoroi Nightly",
+    "manifest_version": 3,
+    "description": "A simple, secure and fast Cardano ADA wallet.",
+    "action": {
+        "default_title": "Yoroi Nightly",
+        "default_icon": {
+            "16": "img/nightly-16.png",
+            "48": "img/nightly-48.png",
+            "128": "img/nightly-128.png"
+        }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{6abdeba8-579b-11ea-8e2d-0242ac130003}"
+        }
+    },
+    "icons": {
+        "16": "img/nightly-16.png",
+        "48": "img/nightly-48.png",
+        "128": "img/nightly-128.png"
+    },
+    "background": {
+        "service_worker": "js/background-service-worker.js"
+    },
+    "permissions": [
+        "storage",
+        "system.display"
+    ],
+    "host_permissions": [
+        "*://connect.trezor.io/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://connect.trezor.io/*/popup.html*"
+            ],
+            "js": [
+                "js/trezor-content-script.js"
+            ]
+        },
+        {
+            "matches": [
+                "file://*/*",
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "js/inject.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "default-src 'self' ; frame-src https://adapools.yoroiwallet.com https://widget.changelly.com/ https://connect.trezor.io/ https://emurgo.github.io/ https://www.youtube.com/; script-src 'self' 'wasm-unsafe-eval'; object-src 'self' ; connect-src https://*.yoroiwallet.com https://*.emurgornd.com https://analytics.emurgo-rnd.com/ https://api2.amplitude.com https://api.muesliswap.com https://api.handle.me/ https://api.unstoppabledomains.com/ https://a.cexplorer.io/ https://aggregator.muesliswap.com/ https://onchain2.muesliswap.com/; style-src * 'unsafe-inline' 'self'  blob:; img-src 'self' https://static.adapools.org/ https://ipfs.io/ipfs/ https://img.cexplorer.io/ https://corsproxy.io/ https: data: ;"
+    },
+    "protocol_handlers": [
+        {
+            "protocol": "web+cardano",
+            "name": "Yoroi",
+            "uriTemplate": "main_window.html#/send-from-uri?q=%s"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/cardanoApiInject.js",
+                "js/initialInject.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}
