@@ -16,10 +16,15 @@ import {
 } from "@newm-web/elements";
 import theme from "@newm-web/theme";
 
+import PlayTrack from "./PlayTrack";
 import { emptySong, useGetSongQuery } from "../../../../../../modules/song";
-import { CoverRemixSample, PlaySong } from "../../../../../../components";
+import { CoverRemixSample } from "../../../../../../components";
+import {
+  FIELDS_TOOLTIP_COPY_NODE,
+  FIELDS_TOOLTIP_COPY_TEXT,
+} from "../../../constants";
 
-const SongInfo = () => {
+const TrackInfo = () => {
   const windowWidth = useWindowDimensions()?.width;
   const { trackId } = useParams<"trackId">() as { trackId: string };
 
@@ -117,7 +122,7 @@ const SongInfo = () => {
                 width="100%"
               >
                 <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
-                  SONG
+                  TRACK
                 </Typography>
 
                 <SolidOutline
@@ -129,7 +134,7 @@ const SongInfo = () => {
                     justifyContent: "center",
                   } }
                 >
-                  <PlaySong id={ trackId || "" } />
+                  <PlayTrack id={ trackId || "" } />
                 </SolidOutline>
               </Stack>
 
@@ -139,7 +144,7 @@ const SongInfo = () => {
                 width="100%"
               >
                 <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
-                  SONG COVER ART
+                  TRACK COVER ART
                 </Typography>
 
                 <UploadImageField
@@ -179,7 +184,7 @@ const SongInfo = () => {
                 <TextInputField
                   disabled={ true }
                   isOptional={ false }
-                  label="SONG TITLE"
+                  label="TRACK TITLE"
                   name="title"
                   title={ values.title || "" }
                 />
@@ -187,7 +192,15 @@ const SongInfo = () => {
                 <TextInputField
                   disabled={ true }
                   isOptional={ false }
-                  label="GENRE"
+                  label="PRIMARY GENRE"
+                  name="genres"
+                  title={ values.genres?.join(", ") || "" }
+                />
+
+                <TextInputField
+                  disabled={ true }
+                  isOptional={ true }
+                  label="SECONDARY GENRE"
                   name="genres"
                   title={ values.genres?.join(", ") || "" }
                 />
@@ -232,21 +245,14 @@ const SongInfo = () => {
               <SwitchInputField
                 disabled={ true }
                 name="isInstrumental"
-                title="Is this song an instrumental?"
-                tooltipText={
-                  "Songs without voices or lyrics should be indicated as an " +
-                  "instrumental. Failure to accurately label the song will " +
-                  "result in a declined distribution submission."
-                }
+                title="Is this track an instrumental?"
+                tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.instrumental }
               />
               <SwitchInputField
                 disabled={ true }
                 name="isExplicit"
-                title="Does the song contain explicit content?"
-                tooltipText={
-                  "Explicit content includes strong or discriminatory language, " +
-                  "or depictions of sex, violence or substance abuse."
-                }
+                title="Does the track contain explicit content?"
+                tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.explicit }
               />
               <CoverRemixSample disabled={ true } />
               <Stack
@@ -255,29 +261,6 @@ const SongInfo = () => {
                 gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
                 rowGap={ [2, null, 3] }
               >
-                <TextInputField
-                  disabled={ true }
-                  isOptional={ false }
-                  label="SCHEDULE RELEASE DATE"
-                  name="releaseDate"
-                  tooltipText={
-                    "When selecting a date to release your song on our " +
-                    "platform, please remember to factor in approval from any " +
-                    "contributors/featured artists as well as mint processing time " +
-                    "which can take up to 15 days."
-                  }
-                  type="date"
-                />
-                <TextInputField
-                  disabled={ true }
-                  label="ORIGINAL PUBLICATION DATE"
-                  name="publicationDate"
-                  tooltipText={
-                    "If your song has already been launched on other platforms you " +
-                    "may input the release date here, but it is not required."
-                  }
-                  type="date"
-                />
                 <CopyrightInputField
                   copyrightType="composition"
                   disabled={ true }
@@ -285,12 +268,7 @@ const SongInfo = () => {
                   label="COMPOSITION COPYRIGHT"
                   ownerFieldName="compositionCopyrightOwner"
                   placeholder=""
-                  tooltipText={
-                    "The copyright for a musical composition covers the " +
-                    "music and lyrics of a song (not the recorded " +
-                    "performance). It is typically owned by the songwriter " +
-                    "and/or music publisher."
-                  }
+                  tooltipText={ FIELDS_TOOLTIP_COPY_NODE.compositionCopyright }
                   yearFieldName="compositionCopyrightYear"
                 />
                 <CopyrightInputField
@@ -300,28 +278,10 @@ const SongInfo = () => {
                   label="SOUND RECORDING COPYRIGHT"
                   ownerFieldName="phonographicCopyrightOwner"
                   placeholder=""
-                  tooltipText={
-                    "The copyright in a sound recording covers the " +
-                    "recording itself (it does not cover the music " +
-                    "or lyrics of the song). It is typically owned by " +
-                    "the artist and/or record label."
-                  }
+                  tooltipText={ FIELDS_TOOLTIP_COPY_NODE.phonographicCopyright }
                   yearFieldName="phonographicCopyrightYear"
                 />
-                <TextInputField
-                  disabled={ true }
-                  label="RELEASE CODE TYPE"
-                  name="barcodeType"
-                />
-                <TextInputField
-                  disabled={ true }
-                  label="RELEASE CODE NUMBER"
-                  name="barcodeNumber"
-                  tooltipText={
-                    "A release code number is a unique code that identifies " +
-                    "your release."
-                  }
-                />
+
                 <TextInputField
                   disabled={ true }
                   label="ISRC"
@@ -333,16 +293,7 @@ const SongInfo = () => {
                     "recording."
                   }
                 />
-                <TextInputField
-                  disabled={ true }
-                  label="IPI"
-                  name="ipi"
-                  tooltipText={
-                    "An IPI is a nine-digit number used to identify songwriters, " +
-                    "composers, and music publishers."
-                  }
-                  type="number"
-                />
+
                 <TextInputField
                   disabled={ true }
                   label="ISWC"
@@ -363,4 +314,4 @@ const SongInfo = () => {
   );
 };
 
-export default SongInfo;
+export default TrackInfo;

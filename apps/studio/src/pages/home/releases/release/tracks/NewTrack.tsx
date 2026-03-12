@@ -104,7 +104,6 @@ const NewTrack: FunctionComponent = () => {
       companyName = "",
       email,
       firstName = "",
-      ipi: userIpi,
       lastName = "",
       nickname: stageName = "",
       role,
@@ -145,8 +144,7 @@ const NewTrack: FunctionComponent = () => {
     ],
     description: "",
     featured: [],
-    genres: [],
-    ipi: userIpi,
+    genres: [], // TODO: Remove once fully migrated to Track type.
     isCoverRemixSample: false,
     isExplicit: false,
     isInstrumental: false,
@@ -166,8 +164,10 @@ const NewTrack: FunctionComponent = () => {
     paymentType: PaymentType.NEWM,
     phonographicCopyrightOwner: undefined,
     phonographicCopyrightYear: undefined,
-    publicationDate: undefined,
-    releaseDate: undefined,
+    primaryGenre: [],
+    publicationDate: undefined, // TODO: Remove once fully migrated to Track type.
+    releaseDate: undefined, // TODO: Remove once fully migrated to Track type.
+    secondaryGenre: [],
     stageName,
     title: "",
   };

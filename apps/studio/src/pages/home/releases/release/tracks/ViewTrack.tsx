@@ -111,6 +111,7 @@ const ViewTrack: FunctionComponent = () => {
 
         { title && <Typography variant="h3">{ title.toUpperCase() }</Typography> }
 
+        { /* // TODO: Replace with TrackDeletionHelp once API is updated. */ }
         <Tooltip title={ <ReleaseDeletionHelp /> }>
           <Stack ml="auto">
             <Button
@@ -128,7 +129,7 @@ const ViewTrack: FunctionComponent = () => {
 
       <Box pb={ 7 } pt={ 5 }>
         <Tabs
-          aria-label="Edit song details"
+          aria-label="Edit track details"
           sx={ {
             ".Mui-selected": {
               background: theme.gradients[colorMap[tab]],

@@ -13,7 +13,6 @@ import * as Yup from "yup";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
-import LockIcon from "@mui/icons-material/Lock";
 import { AddOutlined } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -43,6 +42,13 @@ import { emptyProfile, useGetProfileQuery } from "../../../../modules/session";
 import ReleaseDeletionHelp from "../ReleaseDeletionHelp";
 
 const RELEASE_CODE_TYPE_OPTIONS = [NONE_OPTION, "EAN", "UPC", "JAN"] as const;
+const RELEASE_TYPE_OPTIONS = [
+  NONE_OPTION,
+  "Album",
+  "Single",
+  "EP",
+  "Compilation",
+] as const;
 
 const REQUIRED_FIELDS = {
   coverArtUrl: true,
@@ -373,30 +379,21 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                       flexDirection: ["column", "column", "row"],
                     } }
                   >
+                    <DropdownSelectField
+                      isOptional={ false }
+                      label="RELEASE TYPE"
+                      name="releaseType"
+                      options={ [...RELEASE_TYPE_OPTIONS] }
+                      placeholder="Select one"
+                      tooltipText="TO BE UPDATED"
+                    />
+
                     <TextInputField
                       isOptional={ false }
                       label="RELEASE TITLE"
                       name="releaseTitle"
                       placeholder="Give your release a title"
                       ref={ releaseTitleRef as React.Ref<HTMLInputElement> }
-                    />
-
-                    <TextInputField
-                      disabled={ true }
-                      isOptional={ false }
-                      label="ARTIST NAME"
-                      name="artistName"
-                      startAdornment={
-                        <LockIcon
-                          sx={ {
-                            color: theme.colors.white,
-                            height: "auto",
-                            marginLeft: 1,
-                            marginRight: 1,
-                            width: 22,
-                          } }
-                        />
-                      }
                     />
                   </Stack>
                 </Box>
@@ -408,7 +405,7 @@ const ReleaseDetailsFormContent: FunctionComponent<ReleaseDetailsFormContentProp
                     TRACKS
                   </Typography>
 
-                  <Box sx={ { padding: 2 } }>Track list (placeholder)</Box>
+                  <Box sx={ { padding: 2 } }>Track list - Coming Soon!</Box>
 
                   <Box
                     sx={ {

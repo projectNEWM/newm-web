@@ -34,34 +34,11 @@ import NoSongsYet from "./NoSongsYet";
 import { ErrorOccurredMintingStatuses, MintingStatus } from "./MintingStatus";
 import TableHead from "./Table/TableHead";
 import ReleaseDeletionHelp from "./ReleaseDeletionHelp";
+import { Release } from "../../../modules/releases";
 import { convertMillisecondsToSongFormat } from "../../../modules/song";
 import { NEWM_SUPPORT_LINK } from "../../../common";
 
 // ! DO NOT USE IN PRODUCTION YET <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-// * Tentative type definition for releases.
-// eslint-disable-next-line max-len
-// * based on: https://github.com/projectNEWM/newm-server/blob/master/newm-server/src/main/kotlin/io/newm/server/features/song/model/Release.kt
-// TODO: Move to a shared types file once we have the real data.
-export interface Release {
-  archived?: boolean | null;
-  barcodeNumber?: string | null;
-  barcodeType?: string | null;
-  coverArtUrl?: string | null;
-  createdAt?: string | null;
-  errorMessage?: string | null;
-  genres?: string[] | null;
-  hasSubmittedForDistribution?: boolean | null;
-  id: string;
-  locked?: boolean | null;
-  mintingStatus?: MintingStatusType | null;
-  ownerId?: string | null;
-  publicationDate?: string | null;
-  releaseDate?: string | null;
-  releaseType?: string | null;
-  title?: string | null;
-  totalTracksLength?: number | null;
-}
 
 interface ReleaseListProps {
   query: string;
