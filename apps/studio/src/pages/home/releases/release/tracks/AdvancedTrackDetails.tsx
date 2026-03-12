@@ -3,46 +3,44 @@ import { useParams } from "react-router-dom";
 
 import { useFormikContext } from "formik";
 
-import { Link, Stack } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 
 import { isValueInArray, scrollToError } from "@newm-web/utils";
 import {
   CopyrightInputField,
-  DropdownSelectField,
+  ErrorMessage,
+  HorizontalLine,
   SwitchInputField,
   TextInputField,
 } from "@newm-web/elements";
 import { MintingStatus } from "@newm-web/types";
 
+import SelectCoCreators from "../../../../../components/minting/SelectCoCreators";
 import {
+  Creditor,
+  Featured,
+  Owner,
   UploadSongThunkRequest,
   emptySong,
-  useGetEarliestReleaseDateQuery,
   useGetSongQuery,
 } from "../../../../../modules/song";
-import {
-  FIELDS_TOOLTIP_COPY_TEXT,
-  MIN_DISTRIBUTION_TIME,
-  NEWM_STUDIO_COPYRIGHT_FAQ_URL,
-  NONE_OPTION,
-} from "../../../../../common";
-import {
-  emptyProfile,
-  useGetProfileQuery,
-} from "../../../../../modules/session";
+import { NONE_OPTION } from "../../../../../common";
 import { CoverRemixSample } from "../../../../../components";
-
-// TODO: fields such as 'schedule release date', 'original publication date'?, 'release code **', and 'IPI'
-// TODO: will be removed from the track details page as part of phase 2.
+import {
+  FIELDS_TOOLTIP_COPY_NODE,
+  FIELDS_TOOLTIP_COPY_TEXT,
+} from "../../constants";
 
 const AdvancedTrackDetails = () => {
-  const { data: { firstName } = emptyProfile } = useGetProfileQuery();
+  const theme = useTheme();
   const { trackId } = useParams<"trackId">();
-  const { data: song = emptySong } = useGetSongQuery(trackId as string, {
+
+  // TODO: Replace with useGetTrackQuery once API is updated.
+  const { data: track = emptySong } = useGetSongQuery(trackId as string, {
     skip: !trackId,
   });
 
-  const isDeclined = song.mintingStatus === MintingStatus.Declined;
+  const isDeclined = track.mintingStatus === MintingStatus.Declined;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isrcRef = useRef<any>(null);
@@ -51,24 +49,12 @@ const AdvancedTrackDetails = () => {
   const releaseDateRef = useRef<HTMLInputElement | null>(null);
   const compositionCopyrightRef = useRef<HTMLDivElement | null>(null);
   const phonographicCopyrightRef = useRef<HTMLDivElement | null>(null);
+  const coCreatorsRef = useRef<HTMLDivElement | null>(null);
   const ipiRef = useRef<HTMLInputElement | null>(null);
   const iswcRef = useRef<HTMLInputElement | null>(null);
 
-  const { isSubmitting, setFieldValue, errors, values } =
+  const { isSubmitting, setFieldValue, errors, touched, values } =
     useFormikContext<UploadSongThunkRequest>();
-
-  const { data: { date: earliestReleaseDate } = {} } =
-    useGetEarliestReleaseDateQuery(undefined, {
-      // endpoint throws error if user hasn't added first name
-      skip: !firstName,
-    });
-
-  // Minimum date for schedule release date picker when no earliest release date
-  const minDistributionDate = new Date(
-    Date.now() + MIN_DISTRIBUTION_TIME * 24 * 60 * 60 * 1000
-  )
-    .toISOString()
-    .split("T")[0];
 
   useEffect(() => {
     if (values.barcodeType === NONE_OPTION || values.barcodeType === "") {
@@ -124,8 +110,22 @@ const AdvancedTrackDetails = () => {
         element: iswcRef.current,
         error: errors.iswc,
       },
+      { element: coCreatorsRef.current, error: errors.creditors },
+      { element: coCreatorsRef.current, error: errors.owners },
     ]);
   }, [errors, isSubmitting, isrcRef]);
+
+  const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
+    setFieldValue("owners", owners);
+  };
+
+  const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
+    setFieldValue("creditors", creditors);
+  };
+
+  const handleChangeFeatured = (featured: ReadonlyArray<Featured>) => {
+    setFieldValue("featured", featured);
+  };
 
   return (
     <Stack
@@ -135,16 +135,13 @@ const AdvancedTrackDetails = () => {
     >
       <SwitchInputField
         name="isInstrumental"
-        title="Is this song an instrumental?"
+        title="Is this track an instrumental?"
         tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.instrumental }
       />
       <SwitchInputField
         name="isExplicit"
-        title="Does the song contain explicit content?"
-        tooltipText={
-          "Explicit content includes strong or discriminatory language, " +
-          "or depictions of sex, violence or substance abuse."
-        }
+        title="Does the track contain explicit content?"
+        tooltipText={ FIELDS_TOOLTIP_COPY_TEXT.explicit }
       />
       <CoverRemixSample />
       <Stack
@@ -153,110 +150,6 @@ const AdvancedTrackDetails = () => {
         gridTemplateColumns={ ["repeat(1, 1fr)", null, "repeat(2, 1fr)"] }
         rowGap={ [2, null, 3] }
       >
-        <TextInputField
-          disabled={ isDeclined }
-          isOptional={ false }
-          label="SCHEDULE RELEASE DATE"
-          min={ earliestReleaseDate ? earliestReleaseDate : minDistributionDate }
-          name="releaseDate"
-          placeholder="Select a day"
-          ref={ releaseDateRef }
-          tooltipText={
-            "When selecting a date to release your song on our " +
-            "platform, please remember to factor in approval from any " +
-            "contributors/featured artists as well as mint processing time " +
-            "which can take up to 15 days."
-          }
-          type="date"
-        />
-        <TextInputField
-          label="ORIGINAL PUBLICATION DATE"
-          max={ new Date().toISOString().split("T")[0] }
-          name="publicationDate"
-          placeholder="Select a day"
-          ref={ publicationDateRef }
-          tooltipText={
-            "If your song has already been launched on other platforms you " +
-            "may input the release date here, but it is not required."
-          }
-          type="date"
-        />
-        <CopyrightInputField
-          copyrightType="composition"
-          disabled={ isDeclined }
-          label="COMPOSITION COPYRIGHT"
-          ownerFieldName="compositionCopyrightOwner"
-          ref={ compositionCopyrightRef }
-          tooltipText={
-            <span>
-              The copyright for a musical composition covers the music and
-              lyrics of a song (not the recorded performance). It is typically
-              owned by the songwriter and/or music publisher. If you are not the
-              copyright holder of the track composition, please review{ " " }
-              <Link
-                href={ NEWM_STUDIO_COPYRIGHT_FAQ_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                copyright requirements
-              </Link>{ " " }
-              in our FAQ.
-            </span>
-          }
-          yearFieldName="compositionCopyrightYear"
-        />
-        <CopyrightInputField
-          copyrightType="phonographic"
-          disabled={ isDeclined }
-          label="SOUND RECORDING COPYRIGHT"
-          ownerFieldName="phonographicCopyrightOwner"
-          ref={ phonographicCopyrightRef }
-          tooltipText={
-            <span>
-              The copyright in a sound recording covers the recording itself (it
-              does not cover the music or lyrics of the track). It is typically
-              owned by the artist and/or record label. If you are not the
-              copyright holder of the sound recording, please review{ " " }
-              <Link
-                href={ NEWM_STUDIO_COPYRIGHT_FAQ_URL }
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                copyright requirements
-              </Link>{ " " }
-              in our FAQ.
-            </span>
-          }
-          yearFieldName="phonographicCopyrightYear"
-        />
-        <DropdownSelectField
-          disabled={ isDeclined }
-          label="RELEASE CODE TYPE"
-          name="barcodeType"
-          options={ [NONE_OPTION, "EAN", "UPC", "JAN"] }
-          placeholder="Select one"
-          tooltipText={
-            "If you already have a release code, select the code type here " +
-            "and enter the code in the next field. If not, leave this field " +
-            "blank and an EAN release code will be auto-generated for you."
-          }
-        />
-        <TextInputField
-          disabled={
-            values.barcodeType === NONE_OPTION ||
-            !values.barcodeType ||
-            isDeclined
-          }
-          label="RELEASE CODE NUMBER"
-          name="barcodeNumber"
-          placeholder="0000000000"
-          ref={ barcodeNumberRef }
-          tooltipText={
-            "A release code number is a unique code that identifies your " +
-            "release. If you do not already have one, leave this field blank, " +
-            "and an EAN release code number will be auto-generated for you."
-          }
-        />
         <TextInputField
           disabled={ isDeclined }
           label="ISRC"
@@ -274,19 +167,7 @@ const AdvancedTrackDetails = () => {
             setFieldValue("isrc", event.target.value.toUpperCase())
           }
         />
-        <TextInputField
-          label="IPI"
-          name="ipi"
-          placeholder="000000000"
-          ref={ ipiRef }
-          tooltipText={
-            "An IPI is a nine-digit number used to identify songwriters, " +
-            "composers, and music publishers; they are automatically assigned " +
-            "to rights holders through membership to a PRO. This information is " +
-            "optional; if you do not already have an IPI or choose not to obtain " +
-            "one, leave this field blank."
-          }
-        />
+
         <TextInputField
           label="ISWC"
           mask="T-999999999-9"
@@ -295,13 +176,68 @@ const AdvancedTrackDetails = () => {
           placeholder="T-000000000-0"
           ref={ iswcRef }
           tooltipText={
-            "An ISWC is the unique identification code of your song " +
+            "An ISWC is the unique identification code of your track " +
             "(unlike ISRC which is linked to  the specific recording). " +
             "This information is optional; if you do not already have an " +
             "ISWC or choose not to obtain one, whether this is an original " +
-            "song or a cover, leave this field blank."
+            "track or a cover, leave this field blank."
           }
         />
+
+        <CopyrightInputField
+          copyrightType="composition"
+          disabled={ isDeclined }
+          label="COMPOSITION COPYRIGHT"
+          ownerFieldName="compositionCopyrightOwner"
+          ref={ compositionCopyrightRef }
+          tooltipText={ FIELDS_TOOLTIP_COPY_NODE.compositionCopyright }
+          yearFieldName="compositionCopyrightYear"
+        />
+
+        <CopyrightInputField
+          copyrightType="phonographic"
+          disabled={ isDeclined }
+          label="SOUND RECORDING COPYRIGHT"
+          ownerFieldName="phonographicCopyrightOwner"
+          ref={ phonographicCopyrightRef }
+          tooltipText={ FIELDS_TOOLTIP_COPY_NODE.phonographicCopyright }
+          yearFieldName="phonographicCopyrightYear"
+        />
+      </Stack>
+
+      <HorizontalLine />
+
+      <Stack spacing={ 3 }>
+        <Box
+          ref={ coCreatorsRef }
+          sx={ {
+            backgroundColor: theme.colors.grey600,
+            border: `2px solid ${theme.colors.grey400}`,
+            borderRadius: "4px",
+          } }
+        >
+          <SelectCoCreators
+            creditors={ values.creditors }
+            featured={ values.featured }
+            isAddDeleteDisabled={ isDeclined }
+            owners={ values.owners }
+            onChangeCreditors={ handleChangeCreditors }
+            onChangeFeatured={ handleChangeFeatured }
+            onChangeOwners={ handleChangeOwners }
+          />
+        </Box>
+
+        { !!touched.owners && !!errors.owners && (
+          <Box mt={ 0.5 }>
+            <ErrorMessage>{ errors.owners as string }</ErrorMessage>
+          </Box>
+        ) }
+
+        { !!touched.creditors && !!errors.creditors && (
+          <Box mt={ 0.5 }>
+            <ErrorMessage>{ errors.creditors as string }</ErrorMessage>
+          </Box>
+        ) }
       </Stack>
     </Stack>
   );

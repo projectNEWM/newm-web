@@ -2,34 +2,31 @@ import { FunctionComponent, useEffect, useRef } from "react";
 
 import { useFormikContext } from "formik";
 
-import { Box, Link, Stack, Typography, useTheme } from "@mui/material";
+import { Link, Stack, Typography, useTheme } from "@mui/material";
 
 import {
   CheckboxField,
   DropdownMultiSelectField,
   DropdownSelectField,
-  ErrorMessage,
+  HorizontalLine,
   SolidOutline,
   TextAreaField,
   TextInputField,
-  UploadImageField,
   UploadSongField,
 } from "@newm-web/elements";
 import { scrollToError, useExtractProperty } from "@newm-web/utils";
 
 import { TrackFormValues } from "./trackFormTypes";
+import PlayTrack from "./tabs/PlayTrack";
 import {
   NEWM_STUDIO_FAQ_URL,
   SONG_DESCRIPTION_MAX_CHARACTER_COUNT,
 } from "../../../../../common";
-import { PlaySong } from "../../../../../components";
-import SelectCoCreators from "../../../../../components/minting/SelectCoCreators";
 import {
   useGetGenresQuery,
   useGetLanguagesQuery,
   useGetMoodsQuery,
 } from "../../../../../modules/content";
-import { Creditor, Featured, Owner } from "../../../../../modules/song";
 
 interface BasicTrackDetailsProps {
   readonly isDeclined?: boolean;
@@ -49,34 +46,15 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
   const languageOptions = useExtractProperty(languages, "language_name");
 
   const audioRef = useRef<HTMLDivElement>(null);
-  const coCreatorsRef = useRef<HTMLDivElement>(null);
   const coverArtUrlRef = useRef<HTMLDivElement>(null);
   const agreesToCoverArtGuidelinesRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const songDetailsRef = useRef<HTMLDivElement>(null);
+  const trackDetailsRef = useRef<HTMLDivElement>(null);
 
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    isSubmitting,
-    initialValues,
-  } = useFormikContext<TrackFormValues>();
+  const { values, errors, setFieldValue, isSubmitting, initialValues } =
+    useFormikContext<TrackFormValues>();
 
   const hasCoverArtChanged = values.coverArtUrl !== initialValues.coverArtUrl;
-
-  const handleChangeOwners = (owners: ReadonlyArray<Owner>) => {
-    setFieldValue("owners", owners);
-  };
-
-  const handleChangeCreditors = (creditors: ReadonlyArray<Creditor>) => {
-    setFieldValue("creditors", creditors);
-  };
-
-  const handleChangeFeatured = (featured: ReadonlyArray<Featured>) => {
-    setFieldValue("featured", featured);
-  };
 
   useEffect(() => {
     scrollToError(errors, isSubmitting, [
@@ -87,15 +65,13 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
         error: errors.agreesToCoverArtGuidelines,
       },
       {
-        element: songDetailsRef.current,
+        element: trackDetailsRef.current,
         error: errors.title || errors.genres || errors.moods,
       },
       {
         element: descriptionRef.current,
         error: errors.description,
       },
-      { element: coCreatorsRef.current, error: errors.creditors },
-      { element: coCreatorsRef.current, error: errors.owners },
     ]);
   }, [errors, isSubmitting]);
 
@@ -128,7 +104,7 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
             { isInEditMode ? (
               <>
                 <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
-                  SONG
+                  TRACK
                 </Typography>
 
                 <SolidOutline
@@ -140,41 +116,48 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
                     justifyContent: "center",
                   } }
                 >
-                  <PlaySong id={ trackId } />
+                  <PlayTrack id={ trackId } />
                 </SolidOutline>
               </>
             ) : (
-              <>
-                <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
-                  SONG FILE
-                </Typography>
-
-                <UploadSongField name="audio" />
-              </>
+              <Stack
+                direction={ ["column", "column", "row"] }
+                spacing={ 1.5 }
+                sx={ {
+                  alignItems: ["stretch", "stretch", "flex-start"],
+                  gap: [2, null, 2],
+                  width: "100%",
+                } }
+              >
+                <Stack
+                  spacing={ 0.5 }
+                  sx={ {
+                    flex: ["1 1 auto", "1 1 auto", "0 0 320px"],
+                    maxWidth: ["100%", "100%", "320px"],
+                    minWidth: 0,
+                  } }
+                >
+                  <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
+                    TRACK FILE
+                  </Typography>
+                  <UploadSongField name="audio" />
+                </Stack>
+                <Stack
+                  spacing={ 0.5 }
+                  sx={ {
+                    flex: ["1 1 auto", "1 1 auto", "1 1 0"],
+                    minWidth: "100%",
+                  } }
+                >
+                  <TextInputField
+                    isOptional={ false }
+                    label="TRACK TITLE"
+                    name="title"
+                    placeholder="Give your track a name..."
+                  />
+                </Stack>
+              </Stack>
             ) }
-          </Stack>
-
-          <Stack
-            maxWidth={ theme.inputField.maxWidth }
-            ref={ coverArtUrlRef }
-            spacing={ 0.5 }
-            width="100%"
-          >
-            <Typography color={ theme.colors.grey100 } fontWeight={ 700 }>
-              SONG COVER ART
-            </Typography>
-
-            <UploadImageField
-              changeImageButtonText="Change cover"
-              emptyMessage="Drag and drop or browse your image"
-              maxFileSizeMB={ 10 }
-              minDimensions={ { height: 1400, width: 1400 } }
-              minFileSizeMB={ 0.1 }
-              name="coverArtUrl"
-              rootSx={ { alignSelf: "center", width: "100%" } }
-              hasPreviewOption
-              isAspectRatioOneToOne
-            />
           </Stack>
         </Stack>
 
@@ -220,7 +203,7 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
             />
           ) }
           <Stack
-            ref={ songDetailsRef }
+            ref={ trackDetailsRef }
             sx={ {
               columnGap: [undefined, undefined, 1.5],
               display: "grid",
@@ -228,19 +211,20 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
               rowGap: [2, null, 3],
             } }
           >
-            <TextInputField
+            <DropdownMultiSelectField
               isOptional={ false }
-              label="SONG TITLE"
-              name="title"
-              placeholder="Give your track a name..."
+              label="PRIMARY GENRE"
+              name="primaryGenre"
+              options={ genres ?? [] }
+              placeholder="Select primary genre"
             />
 
             <DropdownMultiSelectField
-              isOptional={ false }
-              label="GENRE"
-              name="genres"
-              options={ genres }
-              placeholder="Select all that apply"
+              isOptional={ true }
+              label="SECONDARY GENRE"
+              name="secondaryGenre"
+              options={ genres ?? [] }
+              placeholder="Select secondary genre"
             />
 
             <DropdownSelectField
@@ -267,37 +251,7 @@ const BasicTrackDetails: FunctionComponent<BasicTrackDetailsProps> = ({
             ref={ descriptionRef }
           />
 
-          <Stack spacing={ 3 }>
-            <Box
-              sx={ {
-                backgroundColor: theme.colors.grey600,
-                border: `2px solid ${theme.colors.grey400}`,
-                borderRadius: "4px",
-              } }
-            >
-              <SelectCoCreators
-                creditors={ values.creditors }
-                featured={ values.featured }
-                isAddDeleteDisabled={ isDeclined }
-                owners={ values.owners }
-                onChangeCreditors={ handleChangeCreditors }
-                onChangeFeatured={ handleChangeFeatured }
-                onChangeOwners={ handleChangeOwners }
-              />
-            </Box>
-
-            { !!touched.owners && !!errors.owners && (
-              <Box mt={ 0.5 }>
-                <ErrorMessage>{ errors.owners as string }</ErrorMessage>
-              </Box>
-            ) }
-
-            { !!touched.creditors && !!errors.creditors && (
-              <Box mt={ 0.5 }>
-                <ErrorMessage>{ errors.creditors as string }</ErrorMessage>
-              </Box>
-            ) }
-          </Stack>
+          <HorizontalLine />
         </Stack>
       </Stack>
     </Stack>

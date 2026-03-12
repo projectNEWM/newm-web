@@ -64,6 +64,7 @@ export const SALE_COMPLETE_UPDATED_EVENT = "saleCompleteUpdated";
  */
 export const SALE_DEFAULT_BUNDLE_AMOUNT = 1;
 
+// * KEPT FOR BACKWARDS COMPATIBILITY --- REMOVE ONCE FULLY MIGRATED TO RELEASES & TRACKS.
 export const FIELDS_TOOLTIP_COPY_TEXT = {
   instrumental: `Tracks without vocals or lyrics should be indicated as an instrumental.
    Failure to accurately label the track could result in a declined distribution submission.`,

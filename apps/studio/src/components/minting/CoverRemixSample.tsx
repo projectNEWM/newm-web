@@ -19,7 +19,7 @@ export const CoverRemixSample: FunctionComponent<CoverRemixSampleProps> = ({
       disabled={ disabled }
       name="isCoverRemixSample"
       title={
-        "Is this song a cover, remix, mixtape, mashup, " +
+        "Is this track a cover, remix, mixtape, mashup, " +
         "or contain samples and/or any part of the intellectual property of another work?"
       }
     >
